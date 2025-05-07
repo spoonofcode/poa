@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
+import com.spoonofcode.poa.feature.appsettings.di.appSettingsModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
@@ -24,6 +25,7 @@ val appModule = module {
         settingsModule,
 
         // features
+        appSettingsModule,
         homeModule,
         loginModule,
         profileModule,

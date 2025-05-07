@@ -36,6 +36,16 @@ internal class ProfileScreen(
     ): @Composable ColumnScope.() -> Unit {
         super.reloadScreen = { viewModel.initView() }
 
+        super.topBarActions = listOf(
+            TopBarAction(
+                icon = Icons.Default.Settings,
+                description = stringResource(resource = Res.string.settings),
+                onClick = { viewModel.navigateToSettings() }
+            ),
+        )
+
+        super.reloadScreen = { viewModel.initView() }
+
         return ContentView(
             viewState = viewState,
         )
