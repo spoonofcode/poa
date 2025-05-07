@@ -3,13 +3,31 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinCocoapods)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
+        ios.deploymentTarget = "18.0"
+
+        podfile = project.file("../iosApp/Podfile")
+
+        pod("GoogleSignIn")
+
+        framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -78,3 +96,8 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.spoonofcode.poa.resources"
+    generateResClass = always
+}
