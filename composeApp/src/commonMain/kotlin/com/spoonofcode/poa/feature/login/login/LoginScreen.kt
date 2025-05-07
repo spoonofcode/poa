@@ -16,7 +16,7 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.dojo_pro
+import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.email
 import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.let_s_get_started
@@ -64,7 +64,7 @@ internal class LoginScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                RoundedImage(imageRes = Res.drawable.dojo_pro)
+                RoundedImage(imageRes = Res.drawable.poa)
                 Spacers.VerticalBetweenFields()
                 Texts.HL(stringResource(resource = Res.string.let_s_get_started))
             }

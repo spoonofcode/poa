@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.data_could_not_be_loaded
-import com.spoonofcode.poa.resources.dojo_pro
+import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.reload
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -25,7 +25,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorView(
-    iconRes: DrawableResource = Res.drawable.dojo_pro,
+    iconRes: DrawableResource = Res.drawable.poa,
     sizeDp: Dp = 160.dp,
     reload: () -> Unit = {},
 ) {

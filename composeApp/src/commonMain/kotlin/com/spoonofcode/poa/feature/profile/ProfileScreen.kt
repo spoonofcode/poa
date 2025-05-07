@@ -15,7 +15,7 @@ import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.dojo_pro
+import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
 import com.spoonofcode.poa.resources.settings
 import org.jetbrains.compose.resources.StringResource
@@ -50,7 +50,7 @@ internal class ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
-                RoundedImage(imageRes = Res.drawable.dojo_pro)
+                RoundedImage(imageRes = Res.drawable.poa)
                 Spacers.VerticalBetweenFields()
             }
 

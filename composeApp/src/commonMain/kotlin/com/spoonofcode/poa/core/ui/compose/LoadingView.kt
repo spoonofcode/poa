@@ -9,12 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.dojo_pro
+import com.spoonofcode.poa.resources.poa
 import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun LoadingView(
-    iconRes: DrawableResource = Res.drawable.dojo_pro,
+    iconRes: DrawableResource = Res.drawable.poa,
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(Paddings.screenPadding),
