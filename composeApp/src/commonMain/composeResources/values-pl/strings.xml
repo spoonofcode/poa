@@ -1,4 +1,48 @@
 <resources>
     <!-- SECTION General -->
-    <string name="click_me">Kliknij mnie!</string>
+    <string name="accept">Akceptuj</string>
+    <string name="app_name">POA</string>
+    <string name="cancel">Anuluj</string>
+    <string name="description">Opis</string>
+    <string name="end">Zakończ</string>
+    <string name="level">Poziom</string>
+    <string name="settings">Ustawienia</string>
+    <string name="start">Rozpocznij</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="submit">Wyślij</string>
+    <string name="time">Czas</string>
+    <string name="title">Tytuł</string>
+    <string name="type">Typ</string>
+    <string name="email">E-mail</string>
+    <string name="password">Hasło</string>
+    <string name="search">Szukaj</string>
+    <string name="date">Data</string>
+    <string name="location">Lokalizacja</string>
+    <string name="reload">Odśwież</string>
+    <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
+
+
+    <!-- SECTION Home -->
+    <string name="home">Home</string>
+
+    <!-- SECTION Login -->
+    <string name="let_s_get_started">Zaczynajmy</string>
+    <string name="forget_password">Zapomniałeś hasła?</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="sign_up">Zarejestruj się</string>
+
+    <!-- SECTION Register -->
+    <string name="register">Rejestracja</string>
+    <string name="first_name">Imię</string>
+    <string name="last_name">Nazwisko</string>
+
+    <!-- SECTION Forgot Password -->
+    <string name="forgot_password">Zapomniane hasło</string>
+
+    <!-- SECTION Profile -->
+    <string name="profile">Profil</string>
+
+    <!-- SECTION Shop -->
+    <string name="shop">Sklep</string>
 </resources>
