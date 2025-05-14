@@ -9,7 +9,9 @@ import com.spoonofcode.poa.feature.appsettings.di.appSettingsModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
+import com.spoonofcode.poa.feature.search.di.searchModule
 import com.spoonofcode.poa.feature.shop.di.shopModule
+import com.spoonofcode.poa.feature.nft.di.nftInfoModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -29,7 +31,9 @@ val appModule = module {
         homeModule,
         loginModule,
         profileModule,
+        searchModule,
         shopModule,
+        nftInfoModule,
     )
     single {
         HttpClient {

@@ -38,4 +38,23 @@
     <!-- SECTION Register -->
     <string name="forgot_password">Forgot password</string>
 
+    <!-- SECTION Profile -->
+    <string name="profile">Profile</string>
+
+    <!-- SECTION Shop -->
+    <string name="shop">Shop</string>
+
+    <!-- SECTION NFT Info -->
+    <string name="nft_info">NFT Info</string>
+    <string name="edit_nft_info">Edit NFT</string>
+
+    <!-- SECTION Search NFT Info -->
+    <string name="filter">Filter</string>
+    <string name="search_nft">Search NFT</string>
+
+    <!-- SECTION Filter NFT Info -->
+    <string name="filter_nft">Filter NFT</string>
+    <string name="apply_filter">Apply filter</string>
+    <string name="blockchain">Blockchain</string>
+    <string name="serie">Serie</string>
 </resources>

@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.home
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
@@ -43,6 +44,8 @@ internal class HomeScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.BLB("HOME")
+
+            // TODO Add Plus floating button to add nft (scan)
         }
     }
 

@@ -45,4 +45,18 @@
 
     <!-- SECTION Shop -->
     <string name="shop">Sklep</string>
+
+    <!-- SECTION NFT Info -->
+    <string name="nft_info">NFT Info</string>
+    <string name="edit_nft_info">Edytuj NFT</string>
+
+    <!-- SECTION Search NFT -->
+    <string name="filter">Filtruj</string>
+    <string name="search_nft">Szukaj NFT</string>
+
+    <!-- SECTION Filter NFT Info -->
+    <string name="filter_nft">Filtruj NFT</string>
+    <string name="apply_filter">Zastosuj filtr</string>
+    <string name="blockchain">Blockchain</string>
+    <string name="serie">Seria</string>
 </resources>

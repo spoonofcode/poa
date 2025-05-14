@@ -25,8 +25,8 @@ object DropDownMenus {
         enabled: Boolean,
         label: String,
         value: String,
-        values: Map<Int, String>,
-        onValueChange: (Int) -> Unit,
+        values: Map<String, String>,
+        onValueChange: (String) -> Unit,
     ) {
         var expanded by remember { mutableStateOf(false) }
 

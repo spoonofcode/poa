@@ -16,6 +16,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import com.spoonofcode.poa.feature.search.SearchTab
 import com.spoonofcode.poa.core.ui.Paddings.bottomScreenPadding
 import com.spoonofcode.poa.feature.home.HomeTab
 import com.spoonofcode.poa.feature.profile.ProfileTab
@@ -31,6 +32,7 @@ class MainHostScreen : Screen {
             Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
                 NavigationBar {
                     TabNavigationItem(HomeTab)
+                    TabNavigationItem(SearchTab)
                     TabNavigationItem(ShopTab)
                     TabNavigationItem(ProfileTab)
                 }
