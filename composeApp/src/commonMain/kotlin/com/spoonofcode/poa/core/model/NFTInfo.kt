@@ -15,7 +15,7 @@ data class NFTInfo(
     val readCtr: String,
     val owner: String,
     val ownerEmail: String,
-    val contractAdress: String,
+    val contractAddress: String,
     val tokenId: String,
     val secret: String,
     val nftImage: String,

@@ -12,8 +12,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Schema
 import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -124,20 +127,20 @@ internal class SearchScreen(
                     text = item.tagId,
                 )
                 NFTInfoItemRowElement(
-                    elementValue = item.timestamp.date.toString(),
-                    icon = Icons.Default.Timer,
-                    contentDescription = "Date and time",
+                    elementValue = item.nftName,
+                    icon = Icons.Default.Paid,
+                    contentDescription = "NFT name",
                 )
 
                 NFTInfoItemRowElement(
                     elementValue = item.series,
-                    icon = Icons.Default.LocationOn,
+                    icon = Icons.Default.WebStories,
                     contentDescription = "Series",
                 )
 
                 NFTInfoItemRowElement(
                     elementValue = item.blockchain,
-                    icon = Icons.Default.Person,
+                    icon = Icons.Default.Schema,
                     contentDescription = "Blockchain",
                 )
             }

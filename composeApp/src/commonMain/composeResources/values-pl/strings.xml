@@ -49,6 +49,13 @@
     <!-- SECTION NFT Info -->
     <string name="nft_info">NFT Info</string>
     <string name="edit_nft_info">Edytuj NFT</string>
+    <string name="series">Seria</string>
+    <string name="owner">Właściciel</string>
+    <string name="owner_email">Email właściciela</string>
+    <string name="contract_address">Adres kontraktu</string>
+    <string name="token_id">Token Id</string>
+    <string name="nft_name">NFT Nazwa</string>
+    <string name="link">Link</string>
 
     <!-- SECTION Search NFT -->
     <string name="filter">Filtruj</string>
