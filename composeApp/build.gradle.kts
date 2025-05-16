@@ -44,8 +44,12 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
+        iosTarget.binaries.all {
+            // pulls the system framework in and links it
+            linkerOpts("-framework", "CoreNFC")
+        }
     }
-    
+
     sourceSets {
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
