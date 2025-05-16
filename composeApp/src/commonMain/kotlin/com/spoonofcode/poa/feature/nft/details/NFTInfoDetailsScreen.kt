@@ -205,7 +205,7 @@ internal data class NFTInfoDetailsScreen(
     fun NFTAnimation(nftAnimation: String) {
         Box {
             LoopingVideo(
-                url = "https://raw.seadn.io/files/2a839046d7178aea08c51551c82d9f5e.mp4",
+                url = nftAnimation,
                 modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f),
                 mute = true      // silent background animation
             )
