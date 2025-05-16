@@ -21,7 +21,7 @@
     <string name="location">Lokalizacja</string>
     <string name="reload">Odśwież</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
-
+    <string name="demo">Demo</string>
 
     <!-- SECTION Home -->
     <string name="home">Home</string>
