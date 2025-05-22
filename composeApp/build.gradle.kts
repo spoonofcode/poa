@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.mokkery)
+    alias(libs.plugins.allopen)
 }
 
 kotlin {
@@ -80,7 +82,9 @@ kotlin {
 
             implementation(libs.connectivity.core)
             implementation(libs.connectivity.device)
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.content.negotiation)
@@ -99,9 +103,12 @@ kotlin {
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.turbine)
             implementation(libs.koin.test)
-            implementation(libs.mockative)
         }
     }
+}
+
+allOpen {
+    annotation("com.spoonofcode.dojopro.core.test.OpenForMokkery")
 }
 
 android {

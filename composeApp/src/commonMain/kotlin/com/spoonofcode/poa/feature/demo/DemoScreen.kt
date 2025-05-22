@@ -7,6 +7,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import com.spoonofcode.poa.core.nfc.NfcReader
 import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.poa.core.ui.BaseScreen
@@ -74,6 +75,10 @@ internal class DemoScreen(
     @Preview
     @Composable
     private fun DemoScreenPreview() {
-        DemoScreen()
+        ContentView(
+            content = ContentView(
+                viewState = DemoViewState(),
+            )
+        )
     }
 }

@@ -13,9 +13,7 @@ data class NetworkConfigAndroid(
     override val baseUrl: String = "https://$host:$port",
 ) : NetworkConfig
 
-actual val networkModule = module {
-    singleOf(::SessionManager)
-    singleOf(::NetworkManager)
+actual val platformNetworkModule = module {
     single { NetworkConfigAndroid() } bind NetworkConfig::class
 }
 
