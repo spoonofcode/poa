@@ -11,6 +11,41 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.mokkery)
     alias(libs.plugins.allopen)
+    alias(libs.plugins.kover)
+}
+
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(80)
+            }
+        }
+
+        filters {
+            excludes {
+                classes("MainKt")
+                classes("*.MainActivity")
+
+                // Generated Classes & Resources
+                packages("*.generated.*")
+                packages("*resources*")
+
+                // Dependecy Injection
+                packages("*di*")
+
+                // Compose Related
+                classes("*ComposeSingletons*")
+                annotatedBy("androidx.compose.runtime.Composable")
+
+                // Voyager
+                classes("*.*Screen")
+
+                // ViewStates
+                classes("*.*ViewState")
+            }
+        }
+    }
 }
 
 kotlin {
