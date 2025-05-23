@@ -108,7 +108,7 @@ kotlin {
 }
 
 allOpen {
-    annotation("com.spoonofcode.dojopro.core.test.OpenForMokkery")
+    annotation("com.spoonofcode.poa.core.test.OpenForMokkery")
 }
 
 android {

@@ -32,6 +32,14 @@ interface CrudRepository<RQ, RS> {
     suspend fun update(id: Int, request: RQ): Boolean
     suspend fun delete(id: Int): Boolean
     suspend fun readAll(): List<RS>
+    suspend fun doRequest(
+        urlPath: String,
+        method: HttpMethod,
+        sessionTokenRequired: Boolean = true,
+        requestBody: RQ? = null,
+        customRequestBody: String? = null,
+        queryParams: Map<String, String> = emptyMap()
+    ): HttpResponse
 }
 
 abstract class GenericCrudRepository<RQ : Any, RS : Any>(
@@ -172,13 +180,13 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         return response
     }
 
-    suspend fun doRequest(
+    override suspend fun doRequest(
         urlPath: String,
         method: HttpMethod,
-        sessionTokenRequired: Boolean = true,
-        requestBody: RQ? = null,
-        customRequestBody: String? = null,
-        queryParams: Map<String, String> = emptyMap(),
+        sessionTokenRequired: Boolean,
+        requestBody: RQ?,
+        customRequestBody: String?,
+        queryParams: Map<String, String>,
     ): HttpResponse {
         // Common request-setup block
         val requestBuilder: HttpRequestBuilder.() -> Unit = {
