@@ -1,5 +1,9 @@
 package com.spoonofcode.poa.feature.home.di
 
-import org.koin.core.module.Module
+import com.spoonofcode.poa.feature.home.HomeViewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
-expect val homeModule: Module
+val homeModule = module {
+    viewModelOf(::HomeViewModel)
+}

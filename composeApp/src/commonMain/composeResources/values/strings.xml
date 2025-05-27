@@ -20,6 +20,7 @@
     <string name="location">Location</string>
     <string name="reload">Reload</string>
     <string name="data_could_not_be_loaded">Data could not be loaded</string>
+    <string name="demo">Demo</string>
 
     <!-- SECTION Home -->
     <string name="home">Home</string>
@@ -38,4 +39,30 @@
     <!-- SECTION Register -->
     <string name="forgot_password">Forgot password</string>
 
+    <!-- SECTION Profile -->
+    <string name="profile">Profile</string>
+
+    <!-- SECTION Shop -->
+    <string name="shop">Shop</string>
+
+    <!-- SECTION NFT Info -->
+    <string name="nft_info">NFT Info</string>
+    <string name="edit_nft_info">Edit NFT</string>
+    <string name="series">Series</string>
+    <string name="owner">Owner</string>
+    <string name="owner_email">Owner Email</string>
+    <string name="contract_address">Contract Address</string>
+    <string name="token_id">Token Id</string>
+    <string name="nft_name">NFT Name</string>
+    <string name="link">Link</string>
+
+    <!-- SECTION Search NFT Info -->
+    <string name="filter">Filter</string>
+    <string name="search_nft">Search NFT</string>
+
+    <!-- SECTION Filter NFT Info -->
+    <string name="filter_nft">Filter NFT</string>
+    <string name="apply_filter">Apply filter</string>
+    <string name="blockchain">Blockchain</string>
+    <string name="serie">Serie</string>
 </resources>

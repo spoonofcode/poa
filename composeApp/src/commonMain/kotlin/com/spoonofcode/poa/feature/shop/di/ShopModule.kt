@@ -1,5 +1,9 @@
 package com.spoonofcode.poa.feature.shop.di
 
-import org.koin.core.module.Module
+import com.spoonofcode.poa.feature.shop.ShopViewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
 
-expect val shopModule: Module
+val shopModule = module {
+    viewModelOf(::ShopViewModel)
+}

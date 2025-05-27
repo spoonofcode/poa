@@ -1,0 +1,19 @@
+package com.spoonofcode.poa.core.data.di
+
+import com.spoonofcode.poa.core.data.repository.filterRepositoryMock
+import com.spoonofcode.poa.core.data.repository.loginGoogleRepositoryMock
+import com.spoonofcode.poa.core.data.repository.loginRepositoryMock
+import com.spoonofcode.poa.core.data.repository.profileRepositoryMock
+import com.spoonofcode.poa.core.data.repository.registerRepositoryMock
+import com.spoonofcode.poa.core.data.repository.userRepositoryMock
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.module
+
+val dataTestModule = module {
+    singleOf(::filterRepositoryMock)
+    singleOf(::loginRepositoryMock)
+    singleOf(::loginGoogleRepositoryMock)
+    singleOf(::profileRepositoryMock)
+    singleOf(::registerRepositoryMock)
+    singleOf(::userRepositoryMock)
+}

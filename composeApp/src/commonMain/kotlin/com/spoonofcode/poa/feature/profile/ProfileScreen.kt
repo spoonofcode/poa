@@ -20,6 +20,7 @@ import com.spoonofcode.poa.resources.profile
 import com.spoonofcode.poa.resources.settings
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProfileScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.profile,
@@ -76,10 +77,9 @@ internal class ProfileScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
+    @Preview
     @Composable
-    fun InitializedProfileScreenPreview() {
+    private fun InitializedProfileScreenPreview() {
         ContentView(
             content = ContentView(
                 viewState = ProfileViewState(

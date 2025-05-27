@@ -81,13 +81,12 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         )
     }
 
-
     // TODO This functions should be private but now
     //  Android Studio will be support previews in commonMain
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ContentView(
-        snackbarHostState: SnackbarHostState? = null,
+        snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
         screenTopAppBarTitle: StringResource? = null,
         backNavigationEnable: Boolean = true,
         onBackClick: () -> Unit = {},
@@ -98,7 +97,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         Scaffold(
             snackbarHost = {
                 SnackbarHost(
-                    hostState = snackbarHostState!!,
+                    hostState = snackbarHostState,
                     snackbar = { snackbarData -> Snackbar(snackbarData) }
                 )
             },

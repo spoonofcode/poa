@@ -1,7 +1,9 @@
 package com.spoonofcode.poa.core.network
 
 import com.russhwolf.settings.Settings
+import com.spoonofcode.poa.core.test.OpenForMokkery
 
+@OpenForMokkery
 class SessionManager(private val settings: Settings) {
     fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 

@@ -9,6 +9,43 @@ plugins {
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.mokkery)
+    alias(libs.plugins.allopen)
+    alias(libs.plugins.kover)
+}
+
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(80)
+            }
+        }
+
+        filters {
+            excludes {
+                classes("MainKt")
+                classes("*.MainActivity")
+
+                // Generated Classes & Resources
+                packages("*.generated.*")
+                packages("*resources*")
+
+                // Dependecy Injection
+                packages("*di*")
+
+                // Compose Related
+                classes("*ComposeSingletons*")
+                annotatedBy("androidx.compose.runtime.Composable")
+
+                // Voyager
+                classes("*.*Screen")
+
+                // ViewStates
+                classes("*.*ViewState")
+            }
+        }
+    }
 }
 
 kotlin {
@@ -44,8 +81,12 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
+        iosTarget.binaries.all {
+            // pulls the system framework in and links it
+            linkerOpts("-framework", "CoreNFC")
+        }
     }
-    
+
     sourceSets {
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
@@ -54,6 +95,8 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.media3.exoplayer)
+            implementation(libs.androidx.media3.ui.compose)
             implementation(libs.androidx.security)
             implementation(libs.androidx.splash.screen)
             implementation(libs.koin.android)
@@ -74,7 +117,9 @@ kotlin {
 
             implementation(libs.connectivity.core)
             implementation(libs.connectivity.device)
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.content.negotiation)
@@ -93,9 +138,12 @@ kotlin {
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.turbine)
             implementation(libs.koin.test)
-            implementation(libs.mockative)
         }
     }
+}
+
+allOpen {
+    annotation("com.spoonofcode.poa.core.test.OpenForMokkery")
 }
 
 android {
