@@ -21,8 +21,8 @@ actual class GoogleAuthUiProvider(
             request = getCredentialRequest()
         ).credential
         handleSignIn(credential)
-    } catch (e: Exception) {
-        null
+    } catch (exception: Exception) {
+        throw exception
     }
 
     actual suspend fun signOut() {
@@ -53,6 +53,6 @@ actual class GoogleAuthUiProvider(
     private fun getGoogleIdOption(): GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
         .setAutoSelectEnabled(true)
-        .setServerClientId("518437212895-i1comth892l27krflb1os4vq4rnch9sd.apps.googleusercontent.com") // TODO #29-Change with system web client id
+        .setServerClientId("504758671015-ion5ot94c1n7siadgat4qno8o05d71g3.apps.googleusercontent.com") // TODO #29-Change with system web client id
         .build()
 }

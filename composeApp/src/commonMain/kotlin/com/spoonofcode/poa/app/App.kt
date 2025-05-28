@@ -6,7 +6,6 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.theme.AppTheme
-import com.spoonofcode.poa.feature.demo.DemoScreen
 import com.spoonofcode.poa.feature.login.login.LoginScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
@@ -25,12 +24,14 @@ fun App() {
 
 @Composable
 private fun getStartScreen(sessionInitialized: Boolean): Screen {
-    return DemoScreen()
+//    return DemoScreen()
 
 //    return if (sessionInitialized) {
 //        MainHostScreen()
 //    } else {
 //        LoginScreen()
 //    }
+
+    return LoginScreen()
 
 }

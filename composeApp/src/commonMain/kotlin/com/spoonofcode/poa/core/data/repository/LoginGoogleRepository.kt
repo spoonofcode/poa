@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.test.OpenForMokkery
 
 @OpenForMokkery
 class LoginGoogleRepository : GenericCrudRepository<LoginGoogleRequest, LoginGoogle>(
-    resourceName = "login/google",
+    resourceName = "/api/login/google",
     requestSerializer = LoginGoogleRequest.serializer(),
     responseSerializer = LoginGoogle.serializer(),
     sessionTokenRequired = false,
