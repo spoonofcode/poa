@@ -7,4 +7,5 @@ import org.koin.dsl.module
 
 actual val platformLoginModule = module {
     factoryOf(::GoogleAuthProvider) bind GoogleAuthProvider::class
+    factoryOf(::FirebasePushService)
 }

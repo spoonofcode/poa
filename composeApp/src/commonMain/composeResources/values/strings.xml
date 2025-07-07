@@ -1,5 +1,6 @@
 <resources>
     <!-- SECTION General -->
+    <string name="chat">Chat</string>
     <string name="accept">Accept</string>
     <string name="app_name">POA</string>
     <string name="cancel">Cancel</string>
@@ -20,6 +21,9 @@
     <string name="location">Location</string>
     <string name="reload">Reload</string>
     <string name="data_could_not_be_loaded">Data could not be loaded</string>
+    <string name="message_title">Message title</string>
+    <string name="message_text">Message text</string>
+    <string name="remote_user_token">Remote user token</string>
     <string name="demo">Demo</string>
 
     <!-- SECTION Home -->
@@ -65,4 +69,7 @@
     <string name="apply_filter">Apply filter</string>
     <string name="blockchain">Blockchain</string>
     <string name="serie">Serie</string>
+
+    <!-- SECTION Message FCM -->
+    <string name="message_fcm">MessageFCM</string>
 </resources>

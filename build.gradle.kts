@@ -10,4 +10,5 @@ plugins {
     alias(libs.plugins.mokkery) apply false
     alias(libs.plugins.allopen) apply false
     alias(libs.plugins.kover) apply false
+    alias(libs.plugins.google.services) apply false
 }

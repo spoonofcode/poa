@@ -13,6 +13,8 @@ import com.spoonofcode.poa.core.domain.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.LoginUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.poa.core.domain.RegisterUseCase
+import com.spoonofcode.poa.core.domain.SendMessageFCMUseCase
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -30,4 +32,5 @@ val domainModule = module {
     singleOf(::GetFilteredNFTInfosUseCase)
     singleOf(::GetFilteredNFTInfosByTextUseCase)
     singleOf(::GetNFTInfoByIdUseCase)
+    factoryOf(::SendMessageFCMUseCase)
 }

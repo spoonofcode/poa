@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.appsettings
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.HasSpecialSettingsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.feature.chat.ChatScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -29,6 +30,12 @@ internal class AppSettingsViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
+        }
+    }
+
+    fun navigateToMessageFCM() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = ChatScreen())
         }
     }
 
