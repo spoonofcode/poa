@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:usesCleartextTraffic="false"
+        android:networkSecurityConfig="@xml/network_security_config"
         >
         <activity
             android:theme="@style/Theme.Poa.SplashScreen"
