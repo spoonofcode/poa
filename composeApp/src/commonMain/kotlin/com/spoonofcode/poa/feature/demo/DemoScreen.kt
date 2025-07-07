@@ -63,10 +63,11 @@ internal class DemoScreen(
             Texts.BLB("Tap an NFC tag")
             tag?.let {
                 Texts.BLB("ID  : ${it.id}")
+                println("ID  : ${it.id}")
                 Texts.BLB("Tech: ${it.techList.joinToString()}")
-                Texts.BLB("ID  : ${it.id}")
                 it.ndef?.let { ndef ->
                     Texts.BLB("NDEF: $ndef")
+                    println("$ndef")
                 }
             } ?: Texts.BLB("Waiting…")
         }
