@@ -102,6 +102,7 @@ internal class LoginScreen(
             GoogleSignInButton(onGoogleSignInResult = { googleUser ->
                 // send Google id token to your server
                 val googleUserToken = requireNotNull(googleUser?.token)
+                println("BARTEK googleUserToken = $googleUserToken")
                 signInWithGoogle(googleUserToken)
             })
 

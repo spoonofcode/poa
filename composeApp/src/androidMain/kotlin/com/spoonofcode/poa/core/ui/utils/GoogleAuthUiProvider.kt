@@ -38,8 +38,8 @@ actual class GoogleAuthUiProvider(
                     displayName = googleIdTokenCredential.displayName ?: "",
                     profileImageUrl = googleIdTokenCredential.profilePictureUri?.toString()
                 )
-            } catch (e: GoogleIdTokenParsingException) {
-                null
+            } catch (exception: GoogleIdTokenParsingException) {
+                throw exception
             }
         }
 

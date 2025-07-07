@@ -7,8 +7,8 @@ import org.koin.dsl.module
 data class NetworkConfigAndroid(
     override val host: String = "10.0.2.2",
     override val port: String = "8443",
-//    override val baseUrl: String = "https://$host:$port",
-    override val baseUrl: String = "http://auth.prof-of-wear.com/",
+    override val baseUrl: String = "https://$host:$port",
+//    override val baseUrl: String = "https://auth.proof-of-wear.com",
 ) : NetworkConfig
 
 actual val platformNetworkModule = module {
