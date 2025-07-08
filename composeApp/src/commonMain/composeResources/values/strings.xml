@@ -72,4 +72,5 @@
 
     <!-- SECTION Message FCM -->
     <string name="message_fcm">MessageFCM</string>
+    <string name="gen_1_series">Gen 1 Series</string>
 </resources>

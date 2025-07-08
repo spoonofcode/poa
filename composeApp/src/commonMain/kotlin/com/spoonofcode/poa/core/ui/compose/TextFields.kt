@@ -49,6 +49,39 @@ object TextFields {
     }
 
     @Composable
+    fun OutlinedLong(
+        value: String,
+        onValueChange: (String) -> Unit,
+        modifier: Modifier = Modifier.fillMaxWidth(),
+        enabled: Boolean = true,
+        readOnly: Boolean = false,
+        label: String? = null,
+        innerLabel: String? = null,
+        trailingIcon: @Composable (() -> Unit)? = null,
+        isError: Boolean = false,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+    ) {
+        label?.let {
+            Texts.BLB(text = it)
+        }
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = modifier,
+            enabled = enabled,
+            readOnly = readOnly,
+            label = { innerLabel?.let { Text(text = it) } },
+            trailingIcon = trailingIcon,
+            isError = isError,
+            visualTransformation = visualTransformation,
+            singleLine = false,
+            minLines = 4,
+            maxLines = 4,
+        )
+        Spacers.VerticalBetweenFields()
+    }
+
+    @Composable
     fun OutlinedPassword(
         value: String,
         onValueChange: (String) -> Unit,

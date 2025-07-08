@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun requestNotificationPermission() {
+    private fun requestNotificationPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             val hasPermission =
                 checkSelfPermission(

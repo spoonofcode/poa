@@ -8,8 +8,9 @@ data class ChatViewState(
     val remoteToken: String = "",
     val messageTitle: String = "",
     val messageText: String = "",
+    val imageUrl: String = "",
     val firebaseMessageToken: String = "",
     val topics: List<String> = listOf("Sports", "Music", "Travel", "Technology", "Books"),
-    val selectedTopicsToSend: List<String> = emptyList(),
+    val selectedTopicsToSend: List<String> = listOf("Sports"),
     val selectedTopicsToSubscribe: List<String> = emptyList(),
 ) : BaseViewState()

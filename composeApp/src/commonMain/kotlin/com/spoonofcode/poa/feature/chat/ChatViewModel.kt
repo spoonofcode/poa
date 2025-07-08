@@ -55,10 +55,11 @@ class ChatViewModel(
         viewModelScope.launch {
             val currentState = currentState()
             val messageDto = MessageFCM(
-                token = currentState.remoteToken,
+                tokens = listOf(currentState.remoteToken),
                 notification = NotificationFCM(
                     title = currentState.messageTitle,
                     body = currentState.messageText,
+                    imageUrl = currentState.imageUrl,
                 )
             )
             try {
