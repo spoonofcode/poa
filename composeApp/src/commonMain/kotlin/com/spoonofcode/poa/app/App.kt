@@ -18,7 +18,7 @@ fun App() {
 
     AppTheme {
         Navigator(getStartScreen(sessionManager.isSessionInitialized())) { navigator ->
-            navigator.push(NFTInfoDetailsScreen(nftInfoId = "1"))
+//            navigator.push(NFTInfoDetailsScreen(nftInfoId = "1"))
             SlideTransition(navigator = navigator)
         }
     }
@@ -27,12 +27,13 @@ fun App() {
 @Composable
 private fun getStartScreen(sessionInitialized: Boolean): Screen {
 //    return DemoScreen()
+    return MainHostScreen()
 
-    return if (sessionInitialized) {
-        MainHostScreen()
-    } else {
-        LoginScreen()
-    }
+//    return if (sessionInitialized) {
+//        MainHostScreen()
+//    } else {
+//        LoginScreen()
+//    }
 
 //    return LoginScreen()
 

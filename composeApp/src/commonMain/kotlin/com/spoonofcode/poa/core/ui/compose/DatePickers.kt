@@ -31,9 +31,11 @@ import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Duration.Companion.days
+import kotlin.time.ExperimentalTime
 
 object DatePickers {
 
+    @OptIn(ExperimentalTime::class)
     @Composable
     fun DatePicker(
         value: LocalDate = LocalDateTimeUtils.now().date,
@@ -120,7 +122,7 @@ object DatePickers {
         Spacers.VerticalBetweenFields()
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
     @Composable
     private fun DatePickerDialog(
         onAccept: (Long?) -> Unit,
