@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.chat
+package com.spoonofcode.poa.feature.messagefcm
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.SendMessageFCMUseCase
@@ -10,15 +10,15 @@ import com.spoonofcode.poa.core.ui.utils.FirebasePushService
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-class ChatViewModel(
+class MessageFCMViewModel(
     private val sendMessageFCMUseCase: SendMessageFCMUseCase,
     private val firebasePushService: FirebasePushService,
-) : BaseViewModel<ChatViewState>(ChatViewState()) {
+) : BaseViewModel<MessageFCMViewState>(MessageFCMViewState()) {
 
     fun onRemoteTokenChange(newToken: String) {
         updateState {
             copy(
-                remoteToken = newToken,
+                fcmRemoteUserToken = newToken,
             )
         }
     }
@@ -26,7 +26,7 @@ class ChatViewModel(
     fun onMessageTitleChange(messageTitle: String) {
         updateState {
             copy(
-                messageTitle = messageTitle,
+                notificationTitle = messageTitle,
             )
         }
     }
@@ -34,7 +34,7 @@ class ChatViewModel(
     fun onMessageTextChange(messageText: String) {
         updateState {
             copy(
-                messageText = messageText,
+                notificationBody = messageText,
             )
         }
     }
@@ -42,10 +42,9 @@ class ChatViewModel(
     fun getFirebaseMessageToken() {
         viewModelScope.launch {
             val token = firebasePushService.getMessageToken()
-
             updateState {
                 copy(
-                    firebaseMessageToken = token,
+                    fcmUserToken = token,
                 )
             }
         }
@@ -55,11 +54,11 @@ class ChatViewModel(
         viewModelScope.launch {
             val currentState = currentState()
             val messageDto = MessageFCM(
-                tokens = listOf(currentState.remoteToken),
+                tokens = listOf(currentState.fcmRemoteUserToken),
                 notification = NotificationFCM(
-                    title = currentState.messageTitle,
-                    body = currentState.messageText,
-                    imageUrl = currentState.imageUrl,
+                    title = currentState.notificationTitle,
+                    body = currentState.notificationBody,
+                    imageUrl = currentState.notificationImageUrl,
                 )
             )
             try {
@@ -80,8 +79,8 @@ class ChatViewModel(
             val messageDto = MessageFCM(
                 topics = currentState.selectedTopicsToSend,
                 notification = NotificationFCM(
-                    title = currentState.messageTitle,
-                    body = currentState.messageText,
+                    title = currentState.notificationTitle,
+                    body = currentState.notificationBody,
                 )
             )
             try {

@@ -6,10 +6,10 @@ import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
 import com.spoonofcode.poa.feature.appsettings.di.appSettingsModule
-import com.spoonofcode.poa.feature.chat.di.chatModule
 import com.spoonofcode.poa.feature.demo.di.demoModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
+import com.spoonofcode.poa.feature.messagefcm.di.messageFCMModule
 import com.spoonofcode.poa.feature.nft.di.nftInfoModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
 import com.spoonofcode.poa.feature.search.di.searchModule
@@ -29,15 +29,15 @@ val appModule = module {
         settingsModule,
 
         // features
-        demoModule,
         appSettingsModule,
+        demoModule,
         homeModule,
         loginModule,
         profileModule,
+        messageFCMModule,
+        nftInfoModule,
         searchModule,
         shopModule,
-        nftInfoModule,
-        chatModule,
     )
     single {
         HttpClient {
