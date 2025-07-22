@@ -1,13 +1,18 @@
 package com.spoonofcode.poa.feature.appsettings
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.HasSpecialSettingsUseCase
+import com.spoonofcode.poa.core.domain.LogoutUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.feature.login.login.LoginScreen
+import com.spoonofcode.poa.feature.messagefcm.MessageFCMScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class AppSettingsViewModel(
-    private val hasSpecialSettingsUseCase: HasSpecialSettingsUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : BaseViewModel<AppSettingsViewState>(AppSettingsViewState()) {
 
     init {
@@ -18,7 +23,6 @@ internal class AppSettingsViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                val hasSpecialSettings = hasSpecialSettingsUseCase()
                 updateState {
                     copy(
                         isLoadingView = false,
@@ -29,6 +33,26 @@ internal class AppSettingsViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
+        }
+    }
+
+    fun navigateToMessageFCM() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = MessageFCMScreen())
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            logoutUseCase()
+            viewModelNavigator.replaceAll(listOf(LoginScreen()))
+        }
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            deleteAccountUseCase()
+            viewModelNavigator.replaceAll(listOf(LoginScreen()))
         }
     }
 

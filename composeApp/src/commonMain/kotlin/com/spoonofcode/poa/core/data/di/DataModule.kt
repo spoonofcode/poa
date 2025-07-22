@@ -11,6 +11,7 @@ import com.spoonofcode.poa.core.data.repository.RegisterRepository
 import com.spoonofcode.poa.core.data.repository.RoleRepository
 import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.data.repository.BlockchainRepository
+import com.spoonofcode.poa.core.data.repository.MessageFCMRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -26,4 +27,5 @@ val dataModule = module {
     singleOf(::NFTInfoRepository)
     singleOf(::NFTSerieRepository)
     singleOf(::BlockchainRepository)
+    singleOf(::MessageFCMRepository)
 }

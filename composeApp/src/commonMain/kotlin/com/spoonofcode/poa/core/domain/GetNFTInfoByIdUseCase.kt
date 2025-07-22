@@ -2,14 +2,16 @@ package com.spoonofcode.poa.core.domain
 
 import com.spoonofcode.poa.core.data.repository.NFTInfoRepository
 import com.spoonofcode.poa.core.model.NFTInfo
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
 // TODO Fix this use case
 class GetNFTInfoByIdUseCase(
     private val nftInfoRepository: NFTInfoRepository,
 ) {
+    @OptIn(ExperimentalTime::class)
     suspend operator fun invoke(
         nftInfoId: String
     ): NFTInfo = NFTInfo(

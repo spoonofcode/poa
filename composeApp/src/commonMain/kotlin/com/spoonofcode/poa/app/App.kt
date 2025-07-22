@@ -7,6 +7,7 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.theme.AppTheme
 import com.spoonofcode.poa.feature.login.login.LoginScreen
+import com.spoonofcode.poa.feature.nft.details.NFTInfoDetailsScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 
@@ -17,6 +18,7 @@ fun App() {
 
     AppTheme {
         Navigator(getStartScreen(sessionManager.isSessionInitialized())) { navigator ->
+//            navigator.push(NFTInfoDetailsScreen(nftInfoId = "1"))
             SlideTransition(navigator = navigator)
         }
     }
@@ -25,12 +27,13 @@ fun App() {
 @Composable
 private fun getStartScreen(sessionInitialized: Boolean): Screen {
 //    return DemoScreen()
+    return MainHostScreen()
 
-    return if (sessionInitialized) {
-        MainHostScreen()
-    } else {
-        LoginScreen()
-    }
+//    return if (sessionInitialized) {
+//        MainHostScreen()
+//    } else {
+//        LoginScreen()
+//    }
 
 //    return LoginScreen()
 

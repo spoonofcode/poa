@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.AddRoleToUserUseCase
+import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.GetAllUsersUseCase
 import com.spoonofcode.poa.core.domain.GetFilteredNFTInfosByTextUseCase
 import com.spoonofcode.poa.core.domain.GetFilteredNFTInfosUseCase
@@ -11,23 +12,28 @@ import com.spoonofcode.poa.core.domain.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.HasSpecialSettingsUseCase
 import com.spoonofcode.poa.core.domain.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.LoginUseCase
+import com.spoonofcode.poa.core.domain.LogoutUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.poa.core.domain.RegisterUseCase
-import org.koin.core.module.dsl.singleOf
+import com.spoonofcode.poa.core.domain.SendMessageFCMUseCase
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val domainModule = module {
-    singleOf(::LoginUseCase)
-    singleOf(::LoginGoogleUseCase)
-    singleOf(::RegisterUseCase)
-    singleOf(::RefreshAccessTokenUseCase)
-    singleOf(::GetProfileUseCase)
-    singleOf(::GetRolesByUserIdUseCase)
-    singleOf(::GetAllUsersUseCase)
-    singleOf(::AddRoleToUserUseCase)
-    singleOf(::GetUserByIdUseCase)
-    singleOf(::HasSpecialSettingsUseCase)
-    singleOf(::GetFilteredNFTInfosUseCase)
-    singleOf(::GetFilteredNFTInfosByTextUseCase)
-    singleOf(::GetNFTInfoByIdUseCase)
+    factoryOf(::DeleteAccountUseCase)
+    factoryOf(::LoginUseCase)
+    factoryOf(::LoginGoogleUseCase)
+    factoryOf(::LogoutUseCase)
+    factoryOf(::RegisterUseCase)
+    factoryOf(::RefreshAccessTokenUseCase)
+    factoryOf(::GetProfileUseCase)
+    factoryOf(::GetRolesByUserIdUseCase)
+    factoryOf(::GetAllUsersUseCase)
+    factoryOf(::AddRoleToUserUseCase)
+    factoryOf(::GetUserByIdUseCase)
+    factoryOf(::HasSpecialSettingsUseCase)
+    factoryOf(::GetFilteredNFTInfosUseCase)
+    factoryOf(::GetFilteredNFTInfosByTextUseCase)
+    factoryOf(::GetNFTInfoByIdUseCase)
+    factoryOf(::SendMessageFCMUseCase)
 }

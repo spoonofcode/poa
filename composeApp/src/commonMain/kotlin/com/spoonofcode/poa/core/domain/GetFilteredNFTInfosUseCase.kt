@@ -4,9 +4,10 @@ import com.spoonofcode.poa.core.data.repository.FilterRepository
 import com.spoonofcode.poa.core.data.repository.NFTInfoRepository
 import com.spoonofcode.poa.core.model.NFTInfo
 import com.spoonofcode.poa.feature.search.filter.FilterViewState
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
 class GetFilteredNFTInfosUseCase(
     private val nftInfoRepository: NFTInfoRepository,
@@ -29,6 +30,7 @@ class GetFilteredNFTInfosUseCase(
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun getMockedNFTInfos(): List<NFTInfo> {
         return listOf(
             NFTInfo(

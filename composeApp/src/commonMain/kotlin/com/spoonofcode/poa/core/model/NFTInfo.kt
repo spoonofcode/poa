@@ -1,13 +1,14 @@
 package com.spoonofcode.poa.core.model
 
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 @Serializable
-data class NFTInfo(
+data class NFTInfo @OptIn(ExperimentalTime::class) constructor(
     val tagId: String,
     val publicId: String,
     val series: String,
