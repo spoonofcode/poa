@@ -5,8 +5,10 @@
     <string name="blockchain">Blockchain</string>
     <string name="cancel">Anuluj</string>
     <string name="chat">Chat</string>
+    <string name="collection_name">Collection name</string>
     <string name="contract_address">Adres kontraktu</string>
     <string name="copy_to_clipboard">Copy to Clipboard</string>
+    <string name="custom_link">Custom link</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
     <string name="date">Data</string>
     <string name="delete">Usuń</string>
@@ -32,6 +34,7 @@
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Tekst wiadomość</string>
     <string name="message_title">Tytuł wiadomość</string>
+    <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Nazwa</string>
     <string name="notification_body">Notification text</string>
@@ -39,6 +42,7 @@
     <string name="owner">Właściciel</string>
     <string name="owner_email">Email właściciela</string>
     <string name="password">Hasło</string>
+    <string name="product">Product</string>
     <string name="profile">Profil</string>
     <string name="register">Rejestracja</string>
     <string name="reload">Odśwież</string>
@@ -58,4 +62,5 @@
     <string name="title">Tytuł</string>
     <string name="token_id">Token Id</string>
     <string name="type">Typ</string>
+    <string name="website_link">Website link</string>
 </resources>

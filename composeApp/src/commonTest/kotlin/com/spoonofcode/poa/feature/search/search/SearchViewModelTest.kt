@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.search.search
 
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.FilterRepository
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterRepository
 import com.spoonofcode.poa.feature.search.SearchViewModel
 import com.spoonofcode.poa.feature.search.di.searchTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,13 +11,13 @@ import kotlin.test.BeforeTest
 class SearchViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: SearchViewModel
-    private lateinit var filterRepository: FilterRepository
+    private lateinit var NFTInfoFilterRepository: NFTInfoFilterRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(searchTestModule)            // Koin test module with mocks
         super.setup()
-        filterRepository = getKoin().get()
+        NFTInfoFilterRepository = getKoin().get()
     }
     // TODO POA-#8 - Fix and add missing Unit tests
 

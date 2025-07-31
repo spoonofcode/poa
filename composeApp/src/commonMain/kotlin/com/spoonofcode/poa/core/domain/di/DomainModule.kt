@@ -3,6 +3,9 @@ package com.spoonofcode.poa.core.domain.di
 import com.spoonofcode.poa.core.domain.AddRoleToUserUseCase
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.GetAllUsersUseCase
+import com.spoonofcode.poa.core.domain.GetFilteredProductsByTextUseCase
+import com.spoonofcode.poa.core.domain.GetFilteredProductsUseCase
+import com.spoonofcode.poa.core.domain.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.old.GetFilteredNFTInfosByTextUseCase
 import com.spoonofcode.poa.core.domain.old.GetFilteredNFTInfosUseCase
 import com.spoonofcode.poa.core.domain.old.GetNFTInfoByIdUseCase
@@ -36,4 +39,7 @@ val domainModule = module {
     factoryOf(::GetFilteredNFTInfosByTextUseCase)
     factoryOf(::GetNFTInfoByIdUseCase)
     factoryOf(::SendMessageFCMUseCase)
+    factoryOf(::GetFilteredProductsByTextUseCase)
+    factoryOf(::GetFilteredProductsUseCase)
+    factoryOf(::GetProductByIdUseCase)
 }

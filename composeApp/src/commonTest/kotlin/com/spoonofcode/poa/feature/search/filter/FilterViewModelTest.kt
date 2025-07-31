@@ -2,13 +2,12 @@ package com.spoonofcode.poa.feature.search.filter
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.FilterData
-import com.spoonofcode.poa.core.data.repository.FilterRepository
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterData
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterRepository
 import com.spoonofcode.poa.feature.search.di.searchTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.answering.throws
 import dev.mokkery.every
-import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,13 +24,13 @@ class FilterViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: FilterViewModel
 
-    private lateinit var filterRepository: FilterRepository
+    private lateinit var NFTInfoFilterRepository: NFTInfoFilterRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(searchTestModule)
         super.setup()
-        filterRepository = getKoin().get()
+        NFTInfoFilterRepository = getKoin().get()
     }
 
     // TODO POA-#8 - Fix and add missing Unit tests
@@ -66,7 +65,7 @@ class FilterViewModelTest : BaseViewModelTest() {
         val startDateTime = LocalDateTime(2025, 5, 1, 8, 0, 0)
         val endDateTime = LocalDateTime(2025, 5, 1, 10, 0, 0)
 
-        every { filterRepository.getSelectedFilters() } returns FilterData(
+        every { NFTInfoFilterRepository.getSelectedFilters() } returns NFTInfoFilterData(
 //            selectedClubId = CLUB_1.id,
 //            selectedCoachId = USER_1.id,
 //            selectedLevelId = LEVEL_1.id,
@@ -157,8 +156,8 @@ class FilterViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         verifySuspend {
-            filterRepository.setSelectedFilters(
-                newFilterData = FilterData(
+            NFTInfoFilterRepository.setSelectedFilters(
+                newNFTInfoFilterData = NFTInfoFilterData(
 //                    selectedClubId = CLUB_1.id,
 //                    selectedCoachId = USER_1.id,
 //                    selectedLevelId = LEVEL_1.id,
@@ -175,7 +174,7 @@ class FilterViewModelTest : BaseViewModelTest() {
     @Ignore
     @Test
     fun `apply filter ERROR`() = runTest {
-        every { filterRepository.setSelectedFilters(any()) } throws Exception("test exception")
+        every { NFTInfoFilterRepository.setSelectedFilters(any()) } throws Exception("test exception")
 
         viewModel = getSut()
         advanceUntilIdle()

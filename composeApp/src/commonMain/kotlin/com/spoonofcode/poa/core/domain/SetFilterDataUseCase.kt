@@ -1,18 +1,17 @@
 package com.spoonofcode.poa.core.domain
 
-import com.spoonofcode.poa.core.data.repository.FilterData
-import com.spoonofcode.poa.core.data.repository.FilterRepository
-import kotlinx.datetime.LocalDateTime
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterData
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterRepository
 
 class SetFilterDataUseCase(
-    private val filterRepository: FilterRepository,
+    private val NFTInfoFilterRepository: NFTInfoFilterRepository,
 ) {
     suspend operator fun invoke(
         selectedSerieId: String? = null,
         selectedBlockchainId: String? = null,
     ) {
-        filterRepository.setSelectedFilters(
-            newFilterData = FilterData(
+        NFTInfoFilterRepository.setSelectedFilters(
+            newNFTInfoFilterData = NFTInfoFilterData(
                 selectedSerieId = selectedSerieId,
                 selectedBlockchainId = selectedBlockchainId,
             )

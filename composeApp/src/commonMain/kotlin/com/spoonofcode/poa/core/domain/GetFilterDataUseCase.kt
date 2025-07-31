@@ -1,11 +1,11 @@
 package com.spoonofcode.poa.core.domain
 
-import com.spoonofcode.poa.core.data.repository.FilterData
-import com.spoonofcode.poa.core.data.repository.FilterRepository
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterData
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterRepository
 import kotlinx.datetime.LocalDateTime
 
 class GetFilterDataUseCase(
-    private val filterRepository: FilterRepository,
+    private val NFTInfoFilterRepository: NFTInfoFilterRepository,
 ) {
     suspend operator fun invoke(
         selectedClubId: Int? = null,
@@ -14,7 +14,7 @@ class GetFilterDataUseCase(
         selectedTypeId: Int? = null,
         startDateTime: LocalDateTime? = null,
         endDateTime: LocalDateTime? = null,
-    ): FilterData {
-        return filterRepository.getSelectedFilters()
+    ): NFTInfoFilterData {
+        return NFTInfoFilterRepository.getSelectedFilters()
     }
 }

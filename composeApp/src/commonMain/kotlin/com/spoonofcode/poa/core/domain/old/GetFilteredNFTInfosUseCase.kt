@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.domain.old
 
-import com.spoonofcode.poa.core.data.repository.FilterRepository
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoFilterRepository
 import com.spoonofcode.poa.core.data.repository.old.NFTInfoRepository
 import com.spoonofcode.poa.core.model.old.NFTInfo
 import com.spoonofcode.poa.feature.search.filter.FilterViewState
@@ -11,14 +11,14 @@ import kotlin.time.ExperimentalTime
 
 class GetFilteredNFTInfosUseCase(
     private val nftInfoRepository: NFTInfoRepository,
-    private val filterRepository: FilterRepository,
+    private val NFTInfoFilterRepository: NFTInfoFilterRepository,
 ) {
     suspend operator fun invoke(): List<NFTInfo> {
         // TODO Change with data from API
 //        val nftInfos = nftInfoRepository.readAll()
         val nftInfos = getMockedNFTInfos()
 
-        val selectedFilter = filterRepository.getSelectedFilters()
+        val selectedFilter = NFTInfoFilterRepository.getSelectedFilters()
         return nftInfos.filter { nftInfo ->
             val matchesSeriesFilter = selectedFilter.selectedSerieId == null ||
                     selectedFilter.selectedSerieId == FilterViewState.ALL_OPTION_NAME ||

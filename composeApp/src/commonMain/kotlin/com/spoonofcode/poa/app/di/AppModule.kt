@@ -11,6 +11,7 @@ import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
 import com.spoonofcode.poa.feature.messagefcm.di.messageFCMModule
 import com.spoonofcode.poa.feature.nft.di.nftInfoModule
+import com.spoonofcode.poa.feature.product.di.productModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
 import com.spoonofcode.poa.feature.search.di.searchModule
 import com.spoonofcode.poa.feature.shop.di.shopModule
@@ -34,6 +35,7 @@ val appModule = module {
         homeModule,
         loginModule,
         profileModule,
+        productModule,
         messageFCMModule,
         nftInfoModule,
         searchModule,
