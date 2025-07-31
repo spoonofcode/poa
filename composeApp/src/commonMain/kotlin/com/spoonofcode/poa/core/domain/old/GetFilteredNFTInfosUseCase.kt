@@ -1,8 +1,8 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.old
 
 import com.spoonofcode.poa.core.data.repository.FilterRepository
-import com.spoonofcode.poa.core.data.repository.NFTInfoRepository
-import com.spoonofcode.poa.core.model.NFTInfo
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoRepository
+import com.spoonofcode.poa.core.model.old.NFTInfo
 import com.spoonofcode.poa.feature.search.filter.FilterViewState
 import kotlin.time.Clock
 import kotlinx.datetime.TimeZone

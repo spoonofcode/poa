@@ -3,10 +3,9 @@ package com.spoonofcode.poa.feature.nft.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.feature.nft.edit.NFTInfoEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
-import com.spoonofcode.poa.core.domain.GetNFTInfoByIdUseCase
+import com.spoonofcode.poa.core.domain.old.GetNFTInfoByIdUseCase
 
 internal class NFTInfoDetailsViewModel(
     private val getNFTInfoByIdUseCase: GetNFTInfoByIdUseCase,

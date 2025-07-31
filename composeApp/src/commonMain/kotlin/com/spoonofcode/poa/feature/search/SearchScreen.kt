@@ -11,11 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Paid
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Schema
-import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -26,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.spoonofcode.poa.core.ext.formatedLocalDate
-import com.spoonofcode.poa.core.model.NFTInfo
+import com.spoonofcode.poa.core.model.old.NFTInfo
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements

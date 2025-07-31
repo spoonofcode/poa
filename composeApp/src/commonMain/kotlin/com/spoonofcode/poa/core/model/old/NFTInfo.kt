@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.model
+package com.spoonofcode.poa.core.model.old
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone

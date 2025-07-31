@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.search.filter
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.GetFilterDataUseCase
-import com.spoonofcode.poa.core.domain.LoadSportEventFilterFormDataUseCase
+import com.spoonofcode.poa.core.domain.old.LoadSportEventFilterFormDataUseCase
 import com.spoonofcode.poa.core.domain.SetFilterDataUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.SnackbarEvent

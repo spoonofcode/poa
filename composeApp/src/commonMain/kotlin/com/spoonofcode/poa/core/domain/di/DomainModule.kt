@@ -3,9 +3,9 @@ package com.spoonofcode.poa.core.domain.di
 import com.spoonofcode.poa.core.domain.AddRoleToUserUseCase
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.GetAllUsersUseCase
-import com.spoonofcode.poa.core.domain.GetFilteredNFTInfosByTextUseCase
-import com.spoonofcode.poa.core.domain.GetFilteredNFTInfosUseCase
-import com.spoonofcode.poa.core.domain.GetNFTInfoByIdUseCase
+import com.spoonofcode.poa.core.domain.old.GetFilteredNFTInfosByTextUseCase
+import com.spoonofcode.poa.core.domain.old.GetFilteredNFTInfosUseCase
+import com.spoonofcode.poa.core.domain.old.GetNFTInfoByIdUseCase
 import com.spoonofcode.poa.core.domain.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.GetRolesByUserIdUseCase
 import com.spoonofcode.poa.core.domain.GetUserByIdUseCase

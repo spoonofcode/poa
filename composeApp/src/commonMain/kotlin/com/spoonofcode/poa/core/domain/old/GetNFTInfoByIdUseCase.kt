@@ -1,7 +1,7 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.old
 
-import com.spoonofcode.poa.core.data.repository.NFTInfoRepository
-import com.spoonofcode.poa.core.model.NFTInfo
+import com.spoonofcode.poa.core.data.repository.old.NFTInfoRepository
+import com.spoonofcode.poa.core.model.old.NFTInfo
 import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime

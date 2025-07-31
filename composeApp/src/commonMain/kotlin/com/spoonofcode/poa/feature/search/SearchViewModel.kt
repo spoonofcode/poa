@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.search
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.GetFilteredNFTInfosByTextUseCase
-import com.spoonofcode.poa.core.domain.GetFilteredNFTInfosUseCase
+import com.spoonofcode.poa.core.domain.old.GetFilteredNFTInfosByTextUseCase
+import com.spoonofcode.poa.core.domain.old.GetFilteredNFTInfosUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.nft.details.NFTInfoDetailsScreen
 import com.spoonofcode.poa.feature.search.filter.FilterScreen

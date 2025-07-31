@@ -1,6 +1,6 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.old
 
-import com.spoonofcode.poa.core.model.NFTInfo
+import com.spoonofcode.poa.core.model.old.NFTInfo
 
 class GetFilteredNFTInfosByTextUseCase {
     operator fun invoke(

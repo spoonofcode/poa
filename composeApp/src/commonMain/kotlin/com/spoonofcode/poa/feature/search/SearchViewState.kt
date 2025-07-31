@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.search
 
-import com.spoonofcode.poa.core.model.NFTInfo
+import com.spoonofcode.poa.core.model.old.NFTInfo
 import com.spoonofcode.poa.core.ui.BaseViewState
 
 internal data class SearchViewState(

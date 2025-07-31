@@ -1,7 +1,7 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.poa.core.data.repository.old
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
-import com.spoonofcode.poa.core.model.NFTSerie
+import com.spoonofcode.poa.core.model.old.NFTSerie
 
 class NFTSerieRepository : GenericCrudRepository<NFTSerie, NFTSerie>(
     resourceName = "series",

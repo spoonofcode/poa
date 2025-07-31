@@ -1,8 +1,8 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.poa.core.data.repository.old
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
-import com.spoonofcode.poa.core.model.NFTInfo
-import com.spoonofcode.poa.core.model.NFTInfoRequest
+import com.spoonofcode.poa.core.model.old.NFTInfo
+import com.spoonofcode.poa.core.model.old.NFTInfoRequest
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
