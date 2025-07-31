@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.product.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.GetProductByIdUseCase
+import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch

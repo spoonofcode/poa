@@ -1,13 +1,10 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.product
 
 import com.spoonofcode.poa.core.data.repository.ProductFilterRepository
 import com.spoonofcode.poa.core.data.repository.ProductRepository
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.feature.search.filter.FilterViewState
-import kotlin.time.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlin.time.ExperimentalTime
 
 class GetFilteredProductsUseCase(

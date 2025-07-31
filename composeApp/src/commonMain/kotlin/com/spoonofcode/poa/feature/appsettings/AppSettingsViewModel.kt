@@ -2,8 +2,7 @@ package com.spoonofcode.poa.feature.appsettings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
-import com.spoonofcode.poa.core.domain.HasSpecialSettingsUseCase
-import com.spoonofcode.poa.core.domain.LogoutUseCase
+import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.login.login.LoginScreen
 import com.spoonofcode.poa.feature.messagefcm.MessageFCMScreen
