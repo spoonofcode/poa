@@ -4,7 +4,7 @@ import com.spoonofcode.poa.core.data.repository.ProductFilterRepository
 import com.spoonofcode.poa.core.data.repository.ProductRepository
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
-import com.spoonofcode.poa.feature.search.filter.FilterViewState
+import com.spoonofcode.poa.feature.product.filter.ProductFilterViewState
 import kotlin.time.ExperimentalTime
 
 class GetFilteredProductsUseCase(
@@ -19,10 +19,10 @@ class GetFilteredProductsUseCase(
         val selectedFilter = productFilterRepository.getSelectedFilters()
         return products.filter { product ->
             val matchesNameFilter = selectedFilter.selectedName == null ||
-                    selectedFilter.selectedName == FilterViewState.ALL_OPTION_NAME ||
+                    selectedFilter.selectedName == ProductFilterViewState.ALL_OPTION_NAME ||
                     product.name == selectedFilter.selectedName
             val matchesCollectionNameFilter = selectedFilter.selectedCollectionName == null ||
-                    selectedFilter.selectedCollectionName == FilterViewState.ALL_OPTION_NAME ||
+                    selectedFilter.selectedCollectionName == ProductFilterViewState.ALL_OPTION_NAME ||
                     product.collectionName == selectedFilter.selectedCollectionName
             matchesNameFilter && matchesCollectionNameFilter
         }

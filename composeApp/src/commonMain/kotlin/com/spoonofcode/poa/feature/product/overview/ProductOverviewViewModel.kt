@@ -5,7 +5,6 @@ import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
-import com.spoonofcode.poa.feature.search.filter.FilterScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -59,9 +58,9 @@ internal class ProductOverviewViewModel(
     }
 
     fun navigateToFilter() {
-        viewModelScope.launch {
-            viewModelNavigator.push(FilterScreen())
-        }
+//        viewModelScope.launch {
+//            viewModelNavigator.push(FilterScreen())
+//        }
     }
 
     private fun showLoadingView() {

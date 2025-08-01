@@ -20,6 +20,7 @@
     <string name="email">Email</string>
     <string name="end">End</string>
     <string name="filter">Filter</string>
+    <string name="filter_products">Filter products</string>
     <string name="filter_nft">Filter NFT</string>
     <string name="first_name">First Name</string>
     <string name="forget_password">Forget password?</string>

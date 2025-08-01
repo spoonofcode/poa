@@ -9,8 +9,8 @@ class ProductFilterRepository {
 
     private var selectedFilters = ProductFilterData()
 
-    fun setSelectedFilters(newProductFilterData: ProductFilterData) {
-        selectedFilters = newProductFilterData
+    fun setSelectedFilters(productFilterData: ProductFilterData) {
+        selectedFilters = productFilterData
     }
 
     fun getSelectedFilters(): ProductFilterData = selectedFilters
