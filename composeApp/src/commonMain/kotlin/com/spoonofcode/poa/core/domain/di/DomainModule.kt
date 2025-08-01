@@ -16,6 +16,8 @@ import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.poa.core.domain.login.RegisterUseCase
 import com.spoonofcode.poa.core.domain.SendMessageFCMUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -34,6 +36,8 @@ val domainModule = module {
     factoryOf(::HasSpecialSettingsUseCase)
     factoryOf(::SendMessageFCMUseCase)
     factoryOf(::GetFilteredProductsByTextUseCase)
+    factoryOf(::GetPartnersFilteredByCategoryUseCase)
+    factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetFilteredProductsUseCase)
     factoryOf(::GetProductByIdUseCase)
 }

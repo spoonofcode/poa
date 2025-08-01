@@ -34,7 +34,6 @@ internal class ProductOverviewViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
-
         }
     }
 

@@ -3,6 +3,8 @@ package com.spoonofcode.poa.core.data.di
 import com.spoonofcode.poa.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.poa.core.data.repository.LoginRepository
 import com.spoonofcode.poa.core.data.repository.MessageFCMRepository
+import com.spoonofcode.poa.core.data.repository.PartnerFilterRepository
+import com.spoonofcode.poa.core.data.repository.PartnerRepository
 import com.spoonofcode.poa.core.data.repository.ProductFilterRepository
 import com.spoonofcode.poa.core.data.repository.ProductRepository
 import com.spoonofcode.poa.core.data.repository.ProfileRepository
@@ -21,6 +23,8 @@ val dataModule = module {
     singleOf(::RegisterRepository)
     singleOf(::ProductFilterRepository)
     singleOf(::ProductRepository)
+    singleOf(::PartnerRepository)
+    singleOf(::PartnerFilterRepository)
     singleOf(::ProfileRepository)
     singleOf(::RoleRepository)
     singleOf(::MessageFCMRepository)
