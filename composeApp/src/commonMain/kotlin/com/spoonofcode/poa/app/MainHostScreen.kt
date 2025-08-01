@@ -16,12 +16,12 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import com.spoonofcode.poa.feature.search.SearchTab
 import com.spoonofcode.poa.core.ui.Paddings.bottomScreenPadding
 import com.spoonofcode.poa.feature.home.HomeTab
+import com.spoonofcode.poa.feature.partner.overview.PartnerOverviewTab
 import com.spoonofcode.poa.feature.product.overview.ProductOverviewTab
 import com.spoonofcode.poa.feature.profile.ProfileTab
-import com.spoonofcode.poa.feature.shop.ShopTab
+import com.spoonofcode.poa.feature.scan.ScanTab
 
 class MainHostScreen : Screen {
 
@@ -33,8 +33,8 @@ class MainHostScreen : Screen {
             Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
                 NavigationBar {
                     TabNavigationItem(HomeTab)
-                    TabNavigationItem(SearchTab)
-                    TabNavigationItem(ShopTab)
+                    TabNavigationItem(PartnerOverviewTab)
+                    TabNavigationItem(ScanTab)
                     TabNavigationItem(ProductOverviewTab)
                     TabNavigationItem(ProfileTab)
                 }

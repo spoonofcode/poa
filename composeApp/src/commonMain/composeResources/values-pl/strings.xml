@@ -34,6 +34,8 @@
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Tekst wiadomość</string>
     <string name="message_title">Tytuł wiadomość</string>
+    <string name="partners">Partnerzy</string>
+    <string name="products">Produkty</string>
     <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Nazwa</string>
@@ -47,6 +49,7 @@
     <string name="register">Rejestracja</string>
     <string name="reload">Odśwież</string>
     <string name="remote_user_token">Remote user token</string>
+    <string name="scan">Scan</string>
     <string name="search">Szukaj</string>
     <string name="search_nft">Szukaj NFT</string>
     <string name="serie">Seria</string>
