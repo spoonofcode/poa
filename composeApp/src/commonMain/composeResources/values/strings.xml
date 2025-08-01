@@ -5,8 +5,10 @@
     <string name="blockchain">Blockchain</string>
     <string name="cancel">Cancel</string>
     <string name="chat">Chat</string>
+    <string name="collection_name">Collection name</string>
     <string name="contract_address">Contract Address</string>
     <string name="copy_to_clipboard">Copy to Clipboard</string>
+    <string name="custom_link">Custom link</string>
     <string name="data_could_not_be_loaded">Data could not be loaded</string>
     <string name="date">Date</string>
     <string name="delete">Delete</string>
@@ -18,6 +20,7 @@
     <string name="email">Email</string>
     <string name="end">End</string>
     <string name="filter">Filter</string>
+    <string name="filter_products">Filter products</string>
     <string name="filter_nft">Filter NFT</string>
     <string name="first_name">First Name</string>
     <string name="forget_password">Forget password?</string>
@@ -32,6 +35,9 @@
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>
     <string name="message_title">Message title</string>
+    <string name="partners">Partners</string>
+    <string name="products">Products</string>
+    <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Name</string>
     <string name="notification_body">Notification text</string>
@@ -39,10 +45,12 @@
     <string name="owner">Owner</string>
     <string name="owner_email">Owner Email</string>
     <string name="password">Password</string>
+    <string name="product">Product</string>
     <string name="profile">Profile</string>
     <string name="register">Register</string>
     <string name="reload">Reload</string>
     <string name="remote_user_token">Remote user token</string>
+    <string name="scan">Scan</string>
     <string name="search">Search</string>
     <string name="search_nft">Search NFT</string>
     <string name="serie">Serie</string>
@@ -58,4 +66,5 @@
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
     <string name="type">Type</string>
+    <string name="website_link">Website link</string>
 </resources>

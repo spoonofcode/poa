@@ -2,8 +2,8 @@ package com.spoonofcode.poa.feature.login.login
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.core.domain.LoginGoogleUseCase
-import com.spoonofcode.poa.core.domain.LoginUseCase
+import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
+import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
