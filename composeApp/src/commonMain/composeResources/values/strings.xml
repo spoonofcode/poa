@@ -31,6 +31,7 @@
     <string name="last_name">Last Name</string>
     <string name="let_s_get_started">Let’s get started</string>
     <string name="link">Link</string>
+    <string name="links">Links</string>
     <string name="location">Location</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>

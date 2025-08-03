@@ -31,6 +31,7 @@
     <string name="let_s_get_started">Zaczynajmy</string>
     <string name="level">Poziom</string>
     <string name="link">Link</string>
+    <string name="links">Linki</string>
     <string name="location">Lokalizacja</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Tekst wiadomość</string>

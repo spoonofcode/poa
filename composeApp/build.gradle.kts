@@ -118,6 +118,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.compose.icons.fontawesome)
             implementation(libs.connectivity.core)
             implementation(libs.connectivity.device)
             implementation(libs.koin.core)
