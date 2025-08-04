@@ -85,8 +85,7 @@ internal class ProfileScreen(
                 viewState = ProfileViewState(
                     profile = Profile(
                         name = "Bartosz luczak (Lycha)",
-                        numberOfEventsCreatedByUser = 1,
-                        numberOfEventsUserParticipatedIn = 2
+                        numberOfProductsOwnedByUser = 2
                     )
                 ),
             )

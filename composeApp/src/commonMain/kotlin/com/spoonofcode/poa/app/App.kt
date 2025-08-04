@@ -27,12 +27,12 @@ private fun getStartScreen(sessionInitialized: Boolean): Screen {
 //    return DemoScreen()
 //    return MainHostScreen()
 
-//    return if (sessionInitialized) {
-//        MainHostScreen()
-//    } else {
-//        LoginScreen()
-//    }
+    return if (sessionInitialized) {
+        MainHostScreen()
+    } else {
+        LoginScreen()
+    }
 
-    return LoginScreen()
+//    return LoginScreen()
 
 }

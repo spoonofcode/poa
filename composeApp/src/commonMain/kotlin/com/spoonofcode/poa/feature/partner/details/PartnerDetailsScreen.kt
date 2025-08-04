@@ -1,43 +1,22 @@
 package com.spoonofcode.poa.feature.partner.details
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Carousels
-import com.spoonofcode.poa.core.ui.compose.SocialIconsRow
+import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.link
 import com.spoonofcode.poa.resources.links
 import com.spoonofcode.poa.resources.partner
 import com.spoonofcode.poa.resources.partner_beauty_saute
-import com.spoonofcode.poa.resources.products
-import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Brands
-import compose.icons.fontawesomeicons.brands.Facebook
-import compose.icons.fontawesomeicons.brands.Google
-import compose.icons.fontawesomeicons.brands.Instagram
-import compose.icons.fontawesomeicons.brands.Linkedin
-import compose.icons.fontawesomeicons.brands.Twitter
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -45,7 +24,7 @@ import kotlin.time.ExperimentalTime
 
 internal class PartnerDetailsScreen(
     override val screenTopAppBarTitle: StringResource = Res.string.partner,
-    val partnerId: Int,
+//    val partnerId: Int,
 ) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
 
     @Composable
@@ -79,7 +58,13 @@ internal class PartnerDetailsScreen(
             Texts.BM(viewState.partner.description)
             Spacers.VerticalBetweenFields()
             Texts.BM(stringResource(Res.string.links))
-            SocialIconsRow()
+            SocialIcons(
+                websiteUrl = viewState.partner.websiteLink,
+                instagramUrl = viewState.partner.instagramLink,
+                facebookUrl = viewState.partner.facebookLink,
+                youtubeUrl = viewState.partner.youtubeLink,
+                xUrl = viewState.partner.xLink,
+            )
 
             Spacers.VerticalBetweenFields()
 //            Carousels.CustomCarousel(
