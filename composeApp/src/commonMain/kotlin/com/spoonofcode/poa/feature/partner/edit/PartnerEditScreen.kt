@@ -1,18 +1,13 @@
 package com.spoonofcode.poa.feature.partner.edit
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.home
-import com.spoonofcode.poa.resources.nft_info
 import com.spoonofcode.poa.resources.partner
-import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerEditScreen(
     override val backNavigationEnable: Boolean = false,
@@ -52,15 +47,12 @@ internal class PartnerEditScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
-//    @Composable
-//    fun InitializedHomeScreenPreview() {
-//        ContentView(
-//            content = ContentView(
-//                viewState = PartnerEditViewState(),
-//            )
-//        )
-//    }
+    @Preview
+    @Composable
+    fun InitializedHomeScreenPreview() {
+        ContentView(
+            viewState = PartnerEditViewState(),
+        )
+    }
     // endregion
 }

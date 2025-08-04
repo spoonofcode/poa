@@ -76,19 +76,7 @@ internal class DemoScreen(
     @Composable
     private fun DemoScreenPreview() {
         ContentView(
-            content = ContentView(
-                viewState = DemoViewState(),
-            ),
-            snackbarHostState = TODO(),
-            screenTopAppBarTitle = TODO(),
-            backNavigationEnable = TODO(),
-            topBarActions = TODO(),
-            reloadScreen = TODO(),
-            verticalScrollEnable = TODO(),
-            contentPadding = TODO(),
-            onBackClick = TODO(),
-            isLoadingView = TODO(),
-            iErrorView = TODO()
+            viewState = DemoViewState(),
         )
     }
 }

@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.product
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
     override val backNavigationEnable: Boolean = false,
@@ -47,15 +48,12 @@ internal class ProductEditScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
-//    @Composable
-//    fun InitializedHomeScreenPreview() {
-//        ContentView(
-//            content = ContentView(
-//                viewState = ProductEditViewState(),
-//            )
-//        )
-//    }
+    @Preview
+    @Composable
+    fun InitializedHomeScreenPreview() {
+        ContentView(
+            viewState = ProductEditViewState(),
+        )
+    }
     // endregion
 }

@@ -26,6 +26,7 @@ import com.spoonofcode.poa.resources.partners
 import com.spoonofcode.poa.resources.search
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
@@ -101,16 +102,15 @@ internal class PartnerOverviewScreen(
         }
     }
 
-//    // region previews
-//    // TODO This functions should be private and with @Preview annotation but now
-//    //  Android Studio will be support previews in commonMain
-//    @Composable
-//    fun InitializedPartnerOverviewScreenPreview() {
-//        ContentView(
-//            content = ContentView(
-//                viewState = PartnerOverviewViewState(),
-//            )
-//        )
-//    }
-//    // endregion
+    // region previews
+    @Preview
+    @Composable
+    fun InitializedPartnerOverviewScreenPreview() {
+        ContentView(
+            viewState = PartnerOverviewViewState(),
+            changeSearchText = {},
+            selectPartner = {},
+        )
+    }
+    // endregion
 }

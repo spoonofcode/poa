@@ -95,7 +95,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun ContentView(
+    private fun ContentView(
         snackbarHostState: SnackbarHostState,
         screenTopAppBarTitle: StringResource?,
         backNavigationEnable: Boolean,

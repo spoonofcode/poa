@@ -1,8 +1,10 @@
 package com.spoonofcode.poa.feature.profile
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -14,6 +16,7 @@ import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.core.ui.theme.AppTheme
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
@@ -76,19 +79,24 @@ internal class ProfileScreen(
     }
 
     // region previews
-//    @Preview
-//    @Composable
-//    private fun InitializedProfileScreenPreview() {
-//        ContentView(
-//            content = ContentView(
-//                viewState = ProfileViewState(
-//                    profile = Profile(
-//                        name = "Bartosz luczak (Lycha)",
-//                        numberOfProductsOwnedByUser = 2
-//                    )
-//                ),
-//            )
-//        )
-//    }
+    @Preview
+    @Composable
+    private fun InitializedProfileScreenPreview() {
+        AppTheme {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                ContentView(
+                    viewState = ProfileViewState(
+                        profile = Profile(
+                            name = "Bartosz luczak (Lycha)",
+                            numberOfProductsOwnedByUser = 2
+                        )
+                    ),
+                )
+            }
+        }
+    }
     // endregion
 }

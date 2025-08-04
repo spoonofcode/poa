@@ -22,6 +22,7 @@ import com.spoonofcode.poa.resources.partner
 import com.spoonofcode.poa.resources.partner_beauty_saute
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.ExperimentalTime
 
 internal class PartnerDetailsScreen(
@@ -137,16 +138,13 @@ internal class PartnerDetailsScreen(
         )
     }
 
-//    // region previews
-//    // TODO This functions should be private and with @Preview annotation but now
-//    //  Android Studio will be support previews in commonMain
-//    @Composable
-//    fun InitializedPartnerDetailsScreenPreview() {
-//        ContentView(
-//            content = ContentView(
-//                viewState = PartnerDetailsViewState(),
-//            )
-//        )
-//    }
-//    // endregion
+    // region previews
+    @Preview
+    @Composable
+    fun InitializedPartnerDetailsScreenPreview() {
+        ContentView(
+            viewState = PartnerDetailsViewState(),
+        )
+    }
+    // endregion
 }

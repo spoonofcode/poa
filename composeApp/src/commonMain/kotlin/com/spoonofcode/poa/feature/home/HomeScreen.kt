@@ -7,9 +7,9 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.home
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
@@ -49,15 +49,12 @@ internal class HomeScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
-//    @Composable
-//    fun InitializedHomeScreenPreview() {
-//        ContentView(
-//            content = ContentView(
-//                viewState = HomeViewState(),
-//            )
-//        )
-//    }
+    @Preview
+    @Composable
+    fun InitializedHomeScreenPreview() {
+        ContentView(
+            viewState = HomeViewState(),
+        )
+    }
     // endregion
 }
