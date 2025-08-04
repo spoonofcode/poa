@@ -1,24 +1,19 @@
 package com.spoonofcode.poa.feature.profile
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.core.ui.theme.AppTheme
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
@@ -84,23 +79,16 @@ internal class ProfileScreen(
     @Preview
     @Composable
     private fun InitializedProfileScreenPreview() {
-        AppTheme {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White),
-                content = ContentView(
-                    viewState = ProfileViewState(
-                        isLoadingView = false,
-                        isErrorView = false,
-                        profile = Profile(
-                            name = "Bartosz luczak (Lycha)",
-                            numberOfProductsOwnedByUser = 2
-                        )
-                    ),
+        PreviewContent(
+            content = ContentView(
+                viewState = ProfileViewState(
+                    profile = Profile(
+                        name = "Bartosz luczak (Lycha)",
+                        numberOfProductsOwnedByUser = 2
+                    )
                 )
             )
-        }
+        )
     }
     // endregion
 }

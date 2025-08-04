@@ -9,13 +9,16 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.profile.ProfileViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.links
 import com.spoonofcode.poa.resources.partner
@@ -49,7 +52,6 @@ internal class PartnerDetailsScreen(
         viewModel: PartnerDetailsViewModel,
         viewState: PartnerDetailsViewState,
     ): @Composable ColumnScope.() -> Unit {
-
         return ContentView(
             viewState = viewState,
         )
@@ -87,63 +89,26 @@ internal class PartnerDetailsScreen(
         }
     }
 
-    @OptIn(ExperimentalTime::class)
-    private fun getMockedProducts(): List<Product> {
-        return listOf(
-            Product(
-                id = 1,
-                name = "Product 1",
-                description = "Description product 1",
-                tagId = "04A971E2E51090",
-                collectionName = "Collection 1",
-                websiteLink = "https://beautysaute.pl/",
-                customLink = "https://beautysaute.pl/",
-                ownerUser = User(
-                    id = 1,
-                    firstName = "Bartosz",
-                    lastName = "Luczak",
-                    email = "bartosz.luczak@gmail.com"
-                ),
-            ),
-            Product(
-                id = 2,
-                name = "Product 2",
-                description = "Description product 2",
-                tagId = "04A972E2E52090",
-                collectionName = "Collection 2",
-                websiteLink = "https://beautysaute.pl/",
-                customLink = "https://beautysaute.pl/",
-                ownerUser = User(
-                    id = 2,
-                    firstName = "Bartosz",
-                    lastName = "Luczak",
-                    email = "bartosz.luczak@gmail.com"
-                ),
-            ),
-            Product(
-                id = 3,
-                name = "Product 3",
-                description = "Description product 3",
-                tagId = "04A973E3E53090",
-                collectionName = "Collection 3",
-                websiteLink = "https://beautysaute.pl/",
-                customLink = "https://beautysaute.pl/",
-                ownerUser = User(
-                    id = 3,
-                    firstName = "Bartosz",
-                    lastName = "Luczak",
-                    email = "bartosz.luczak@gmail.com"
-                ),
-            ),
-        )
-    }
-
     // region previews
     @Preview
     @Composable
     fun InitializedPartnerDetailsScreenPreview() {
-        ContentView(
-            viewState = PartnerDetailsViewState(),
+        PreviewContent(
+            content = ContentView(
+                viewState = PartnerDetailsViewState(
+                    partner = Partner(
+                        id = 1,
+                        name = "Beauty Saute",
+                        description = "Beauty Sautè to więcej niż odzież – to filozofia.",
+                        email = "beauty.saute@gmail.com",
+                        websiteLink = "https://beautysaute.pl/",
+                        instagramLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                        facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
+                        youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                        xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                    )
+                )
+            )
         )
     }
     // endregion

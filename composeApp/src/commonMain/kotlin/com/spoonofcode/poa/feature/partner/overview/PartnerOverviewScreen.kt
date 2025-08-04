@@ -106,10 +106,12 @@ internal class PartnerOverviewScreen(
     @Preview
     @Composable
     fun InitializedPartnerOverviewScreenPreview() {
-        ContentView(
-            viewState = PartnerOverviewViewState(),
-            changeSearchText = {},
-            selectPartner = {},
+        PreviewContent(
+            content = ContentView(
+                viewState = PartnerOverviewViewState(),
+                changeSearchText = {},
+                selectPartner = {},
+            )
         )
     }
     // endregion

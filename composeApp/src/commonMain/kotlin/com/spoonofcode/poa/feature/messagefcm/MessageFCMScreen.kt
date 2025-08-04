@@ -16,10 +16,9 @@ import com.spoonofcode.poa.resources.get_user_token
 import com.spoonofcode.poa.resources.nft_info
 import com.spoonofcode.poa.resources.notification_body
 import com.spoonofcode.poa.resources.notification_title
-import com.spoonofcode.poa.resources.register
 import com.spoonofcode.poa.resources.remote_user_token
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class MessageFCMScreen() : BaseScreen<MessageFCMViewModel, MessageFCMViewState>() {
@@ -132,14 +131,23 @@ internal class MessageFCMScreen() : BaseScreen<MessageFCMViewModel, MessageFCMVi
         }
     }
 
-//    @Preview
-//    @Composable
-//    private fun ChatScreenPreview() {
-//        ContentView(
-//            snackbarHostState = remember { SnackbarHostState() },
-//            content = ContentView(
-//                viewState = ChatViewState(),
-//            )
-//        )
-//    }
+    // region previews
+    @Preview
+    @Composable
+    private fun InitScreenPreview() {
+        PreviewContent(
+            content = ContentView(
+                viewState = MessageFCMViewState(),
+                onMessageTextChange = {},
+                onMessageTitleChange = {},
+                sendToUser = {},
+                sendToTopics = {},
+                onRemoteTokenChange = {},
+                getFirebaseMessageToken = {},
+                clickOnTopicToSend = {},
+                clickOnTopicToSubscribe = {},
+            )
+        )
+    }
+    // endregion
 }

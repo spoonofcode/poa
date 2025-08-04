@@ -45,7 +45,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
 
     protected open fun provideTopAppBarTitle(): StringResource? = null
 
-    protected open fun provideContentPadding(): PaddingValues = PaddingValues(Paddings.screenPadding)
+    protected open fun provideContentPadding(): PaddingValues =
+        PaddingValues(Paddings.screenPadding)
 
     protected open fun provideTopBarActions(viewModel: VM): List<TopBarAction> = emptyList()
 
@@ -96,16 +97,16 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun ContentView(
-        snackbarHostState: SnackbarHostState,
-        screenTopAppBarTitle: StringResource?,
-        backNavigationEnable: Boolean,
-        topBarActions: List<TopBarAction>,
-        reloadScreen: () -> Unit,
-        verticalScrollEnable: Boolean,
-        contentPadding: PaddingValues,
-        onBackClick: () -> Unit,
-        isLoadingView: Boolean,
-        iErrorView: Boolean,
+        snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+        screenTopAppBarTitle: StringResource? = provideTopAppBarTitle(),
+        backNavigationEnable: Boolean = false,
+        topBarActions: List<TopBarAction> = emptyList(),
+        reloadScreen: () -> Unit = {},
+        verticalScrollEnable: Boolean = false,
+        contentPadding: PaddingValues = provideContentPadding(),
+        onBackClick: () -> Unit = {},
+        isLoadingView: Boolean = false,
+        iErrorView: Boolean = false,
         content: @Composable ColumnScope.() -> Unit,
     ) {
         Scaffold(
@@ -159,6 +160,27 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                 )
             }
         }
+    }
+
+    @Composable
+    fun PreviewContent(
+//        viewState: VS,
+        content: @Composable ColumnScope.() -> Unit
+    ) {
+        val snackbarHostState = remember { SnackbarHostState() }
+        ContentView(
+            snackbarHostState = snackbarHostState,
+            screenTopAppBarTitle = provideTopAppBarTitle(),
+            backNavigationEnable = backNavigationEnable,
+            topBarActions = emptyList(),
+            reloadScreen = { },
+            verticalScrollEnable = verticalScrollEnable,
+            contentPadding = provideContentPadding(),
+            onBackClick = { },
+            isLoadingView = false,
+            iErrorView = false,
+            content = content
+        )
     }
 
     @Immutable
