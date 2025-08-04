@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
-import com.spoonofcode.poa.core.ui.BaseScreenSafe
+import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
@@ -27,7 +27,7 @@ import kotlin.time.ExperimentalTime
 
 internal class PartnerDetailsScreen(
     private val partnerId: Int,
-) : BaseScreenSafe<PartnerDetailsViewModel, PartnerDetailsViewState>() {
+) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
