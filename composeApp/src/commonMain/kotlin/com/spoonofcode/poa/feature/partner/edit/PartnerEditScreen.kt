@@ -7,19 +7,21 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.home
+import com.spoonofcode.poa.resources.nft_info
+import com.spoonofcode.poa.resources.partner
 import org.jetbrains.compose.resources.StringResource
 
 internal class PartnerEditScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.home,
     override val backNavigationEnable: Boolean = false,
-    override val contentPadding: PaddingValues = PaddingValues(
-        start = Paddings.screenPadding,
-        top = Paddings.screenPadding,
-        bottom = Paddings.screenPadding,
-    )
 ) : BaseScreen<PartnerEditViewModel, PartnerEditViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.partner
+
+    override fun provideReloadAction(viewModel: PartnerEditViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
@@ -29,9 +31,6 @@ internal class PartnerEditScreen(
         viewModel: PartnerEditViewModel,
         viewState: PartnerEditViewState
     ): @Composable ColumnScope.() -> Unit {
-
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
         )
@@ -55,13 +54,13 @@ internal class PartnerEditScreen(
     // region previews
     // TODO This functions should be private and with @Preview annotation but now
     //  Android Studio will be support previews in commonMain
-    @Composable
-    fun InitializedHomeScreenPreview() {
-        ContentView(
-            content = ContentView(
-                viewState = PartnerEditViewState(),
-            )
-        )
-    }
+//    @Composable
+//    fun InitializedHomeScreenPreview() {
+//        ContentView(
+//            content = ContentView(
+//                viewState = PartnerEditViewState(),
+//            )
+//        )
+//    }
     // endregion
 }

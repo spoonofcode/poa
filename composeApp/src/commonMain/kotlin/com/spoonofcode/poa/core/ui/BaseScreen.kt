@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,13 +39,17 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
-    open val screenTopAppBarTitle: StringResource? = null,
-    open val backNavigationEnable: Boolean = true,
-    open val verticalScrollEnable: Boolean = true,
-    open val contentPadding: PaddingValues = PaddingValues(Paddings.screenPadding),
-    open var topBarActions: List<TopBarAction> = emptyList(),
-    open var reloadScreen: () -> Unit = {},
+    protected open val backNavigationEnable: Boolean = true,
+    protected open val verticalScrollEnable: Boolean = true,
 ) : Screen {
+
+    protected open fun provideTopAppBarTitle(): StringResource? = null
+
+    protected open fun provideContentPadding(): PaddingValues = PaddingValues(Paddings.screenPadding)
+
+    protected open fun provideTopBarActions(viewModel: VM): List<TopBarAction> = emptyList()
+
+    protected open fun provideReloadAction(viewModel: VM): () -> Unit = {}
 
     @Composable
     protected abstract fun provideViewModel(): VM
@@ -52,46 +57,55 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     @Composable
     protected abstract fun provideContentView(
         viewModel: VM,
-        viewState: VS
+        viewState: VS,
     ): @Composable ColumnScope.() -> Unit
 
     @Composable
     override fun Content() {
         val navigator: Navigator =
             LocalNavigator.currentOrThrow.parent ?: LocalNavigator.currentOrThrow
+
         val snackbarHostState = remember { SnackbarHostState() }
         val viewModel = provideViewModel()
         val viewState by viewModel.viewState.collectAsState()
 
-        NavigationHandler(
-            navigationFlow = viewModel.navigationFlow,
-            navigator = navigator
-        )
+        val topBarActions = provideTopBarActions(viewModel)
+        val reloadScreen = remember { provideReloadAction(viewModel) }
 
+        NavigationHandler(viewModel.navigationFlow, navigator)
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
         ContentView(
             snackbarHostState = snackbarHostState,
-            screenTopAppBarTitle = screenTopAppBarTitle,
+            screenTopAppBarTitle = provideTopAppBarTitle(),
             backNavigationEnable = backNavigationEnable,
+            topBarActions = topBarActions,
+            reloadScreen = reloadScreen,
+            verticalScrollEnable = verticalScrollEnable,
+            contentPadding = provideContentPadding(),
             onBackClick = { navigator.pop() },
             isLoadingView = viewState.isLoadingView,
             iErrorView = viewState.isErrorView,
-            content = provideContentView(viewModel, viewState),
+            content = provideContentView(
+                viewModel = viewModel,
+                viewState = viewState,
+            )
         )
     }
 
-    // TODO This functions should be private but now
-    //  Android Studio will be support previews in commonMain
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun ContentView(
-        snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-        screenTopAppBarTitle: StringResource? = null,
-        backNavigationEnable: Boolean = true,
-        onBackClick: () -> Unit = {},
-        isLoadingView: Boolean = false,
-        iErrorView: Boolean = false,
+        snackbarHostState: SnackbarHostState,
+        screenTopAppBarTitle: StringResource?,
+        backNavigationEnable: Boolean,
+        topBarActions: List<TopBarAction>,
+        reloadScreen: () -> Unit,
+        verticalScrollEnable: Boolean,
+        contentPadding: PaddingValues,
+        onBackClick: () -> Unit,
+        isLoadingView: Boolean,
+        iErrorView: Boolean,
         content: @Composable ColumnScope.() -> Unit,
     ) {
         Scaffold(
@@ -132,28 +146,22 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             },
             modifier = Modifier.viewEnable(isLoadingView.not()).fillMaxSize()
         ) { innerPadding ->
-
             when {
                 isLoadingView -> LoadingView()
-                iErrorView -> ErrorView(
-                    reload = reloadScreen,
+                iErrorView -> ErrorView(reload = reloadScreen)
+                else -> Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .addIf(verticalScrollEnable) { verticalScroll(rememberScrollState()) }
+                        .padding(innerPadding)
+                        .padding(contentPadding),
+                    content = content
                 )
-
-                else ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .addIf(verticalScrollEnable) {
-                                verticalScroll(rememberScrollState())
-                            }
-                            .padding(innerPadding)
-                            .padding(contentPadding),
-                        content = content
-                    )
             }
         }
     }
 
+    @Immutable
     data class TopBarAction(
         val icon: ImageVector,
         val description: String,

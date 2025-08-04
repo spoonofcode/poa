@@ -131,7 +131,6 @@ abstract class BaseScreenSafe<VM : BaseViewModel<VS>, VS : BaseViewState>(
                             {}
                         },
                         actions = {
-                            println("TopBarActions count: ${topBarActions.size}")
                             topBarActions.forEach { spec ->
                                 IconButton(onClick = spec.onClick) {
                                     Icon(

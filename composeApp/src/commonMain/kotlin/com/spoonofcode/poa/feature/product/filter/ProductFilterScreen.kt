@@ -5,16 +5,20 @@ import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
+import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.apply_filter
 import com.spoonofcode.poa.resources.filter_products
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class ProductFilterScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.filter_products,
-) : BaseScreen<ProductFilterViewModel, ProductFilterViewState>() {
+internal class ProductFilterScreen() :
+    BaseScreen<ProductFilterViewModel, ProductFilterViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.filter_products
+
+    override fun provideReloadAction(viewModel: ProductFilterViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductFilterViewModel>()
@@ -24,8 +28,6 @@ internal class ProductFilterScreen(
         viewModel: ProductFilterViewModel,
         viewState: ProductFilterViewState
     ): @Composable ColumnScope.() -> Unit {
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
             changeCollectionName = { viewModel.changeCollectionName(it) },

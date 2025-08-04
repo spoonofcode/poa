@@ -21,10 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.BaseScreenSafe.TopBarAction
 import com.spoonofcode.poa.core.ui.compose.LoopingVideo
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.collection_name
 import com.spoonofcode.poa.resources.custom_link
@@ -32,18 +34,30 @@ import com.spoonofcode.poa.resources.delete
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.edit
 import com.spoonofcode.poa.resources.name
+import com.spoonofcode.poa.resources.partner
 import com.spoonofcode.poa.resources.product
 import com.spoonofcode.poa.resources.website_link
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.product,
     val productId: String,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState>() {
 
+    override fun provideTopAppBarTitle() = Res.string.product
+
     @Composable
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
+
+    override fun provideTopBarActions(
+        viewModel: ProductDetailsViewModel,
+    ) = listOf(
+        TopBarAction(Icons.Default.Edit, "Edit") { viewModel.editProduct() },
+        TopBarAction(Icons.Default.Delete, "Delete") { viewModel.deleteProduct() }
+    )
+
+    override fun provideReloadAction(viewModel: ProductDetailsViewModel): () -> Unit =
+        { viewModel.initView(productId = productId) }
 
     @Composable
     override fun provideContentView(
@@ -54,21 +68,6 @@ internal data class ProductDetailsScreen(
         LaunchedEffect(Unit) {
             viewModel.initView(productId = productId)
         }
-
-        super.reloadScreen = { viewModel.initView(productId = productId) }
-
-        super.topBarActions = listOf(
-            TopBarAction(
-                icon = Icons.Default.Edit,
-                description = stringResource(resource = Res.string.edit),
-                onClick = { viewModel.editProduct() }
-            ),
-            TopBarAction(
-                icon = Icons.Default.Delete,
-                description = stringResource(resource = Res.string.delete),
-                onClick = { viewModel.deleteProduct() }
-            ),
-        )
 
         return ContentView(
             viewState = viewState,

@@ -17,15 +17,26 @@ import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
-import com.spoonofcode.poa.resources.settings
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProfileScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.profile,
     override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<ProfileViewModel, ProfileViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.profile
+
+    override fun provideTopBarActions(
+        viewModel: ProfileViewModel,
+    ) = listOf(
+        TopBarAction(
+            icon = Icons.Default.Settings,
+            description = "settings",
+            onClick = { viewModel.navigateToSettings() }
+        ),
+    )
+
+    override fun provideReloadAction(viewModel: ProfileViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileViewModel>()
@@ -35,18 +46,6 @@ internal class ProfileScreen(
         viewModel: ProfileViewModel,
         viewState: ProfileViewState
     ): @Composable ColumnScope.() -> Unit {
-        super.reloadScreen = { viewModel.initView() }
-
-        super.topBarActions = listOf(
-            TopBarAction(
-                icon = Icons.Default.Settings,
-                description = stringResource(resource = Res.string.settings),
-                onClick = { viewModel.navigateToSettings() }
-            ),
-        )
-
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
         )
@@ -77,19 +76,19 @@ internal class ProfileScreen(
     }
 
     // region previews
-    @Preview
-    @Composable
-    private fun InitializedProfileScreenPreview() {
-        ContentView(
-            content = ContentView(
-                viewState = ProfileViewState(
-                    profile = Profile(
-                        name = "Bartosz luczak (Lycha)",
-                        numberOfProductsOwnedByUser = 2
-                    )
-                ),
-            )
-        )
-    }
+//    @Preview
+//    @Composable
+//    private fun InitializedProfileScreenPreview() {
+//        ContentView(
+//            content = ContentView(
+//                viewState = ProfileViewState(
+//                    profile = Profile(
+//                        name = "Bartosz luczak (Lycha)",
+//                        numberOfProductsOwnedByUser = 2
+//                    )
+//                ),
+//            )
+//        )
+//    }
     // endregion
 }

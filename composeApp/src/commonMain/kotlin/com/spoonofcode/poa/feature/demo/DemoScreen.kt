@@ -7,7 +7,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import com.spoonofcode.poa.core.nfc.NfcReader
 import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.poa.core.ui.BaseScreen
@@ -79,7 +78,17 @@ internal class DemoScreen(
         ContentView(
             content = ContentView(
                 viewState = DemoViewState(),
-            )
+            ),
+            snackbarHostState = TODO(),
+            screenTopAppBarTitle = TODO(),
+            backNavigationEnable = TODO(),
+            topBarActions = TODO(),
+            reloadScreen = TODO(),
+            verticalScrollEnable = TODO(),
+            contentPadding = TODO(),
+            onBackClick = TODO(),
+            isLoadingView = TODO(),
+            iErrorView = TODO()
         )
     }
 }

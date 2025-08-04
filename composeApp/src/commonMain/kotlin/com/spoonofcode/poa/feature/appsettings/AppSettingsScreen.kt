@@ -9,13 +9,15 @@ import com.spoonofcode.poa.resources.delete_account
 import com.spoonofcode.poa.resources.message_fcm
 import com.spoonofcode.poa.resources.settings
 import com.spoonofcode.poa.resources.sign_out
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class AppSettingsScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.settings,
-) : BaseScreen<AppSettingsViewModel, AppSettingsViewState>() {
+internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSettingsViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.settings
+
+    override fun provideReloadAction(viewModel: AppSettingsViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<AppSettingsViewModel>()
@@ -25,8 +27,6 @@ internal class AppSettingsScreen(
         viewModel: AppSettingsViewModel,
         viewState: AppSettingsViewState
     ): @Composable ColumnScope.() -> Unit {
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
             navigateToMessageFCM = { viewModel.navigateToMessageFCM() },

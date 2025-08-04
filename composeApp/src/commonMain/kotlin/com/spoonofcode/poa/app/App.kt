@@ -7,8 +7,6 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.theme.AppTheme
 import com.spoonofcode.poa.feature.login.login.LoginScreen
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
-import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 
@@ -29,13 +27,11 @@ private fun getStartScreen(sessionInitialized: Boolean): Screen {
 //    return DemoScreen()
 //    return MainHostScreen()
 
-//    return if (sessionInitialized) {
-//        MainHostScreen()
-//    } else {
-//        LoginScreen()
-//    }
+    return if (sessionInitialized) {
+        MainHostScreen()
+    } else {
+        LoginScreen()
+    }
 
 //    return LoginScreen()
-    return PartnerDetailsScreen(partnerId = 1)
-
 }

@@ -14,12 +14,11 @@ import com.spoonofcode.poa.resources.last_name
 import com.spoonofcode.poa.resources.password
 import com.spoonofcode.poa.resources.register
 import com.spoonofcode.poa.resources.sign_up
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-internal class RegisterScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.register,
-) : BaseScreen<RegisterViewModel, RegisterViewState>() {
+internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.register
 
     @Composable
     override fun provideViewModel() = koinViewModel<RegisterViewModel>()
