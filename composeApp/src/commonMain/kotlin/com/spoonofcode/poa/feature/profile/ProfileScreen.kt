@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.feature.profile
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
@@ -86,16 +88,18 @@ internal class ProfileScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-            ) {
-                ContentView(
+                    .background(Color.White),
+                content = ContentView(
                     viewState = ProfileViewState(
+                        isLoadingView = false,
+                        isErrorView = false,
                         profile = Profile(
                             name = "Bartosz luczak (Lycha)",
                             numberOfProductsOwnedByUser = 2
                         )
                     ),
                 )
-            }
+            )
         }
     }
     // endregion
