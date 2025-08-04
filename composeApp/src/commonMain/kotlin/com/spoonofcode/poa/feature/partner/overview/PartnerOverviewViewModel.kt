@@ -52,7 +52,7 @@ internal class PartnerOverviewViewModel(
 
     fun selectPartner(partnerId: Int) {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerDetailsScreen())
+            viewModelNavigator.push(PartnerDetailsScreen(partnerId = partnerId))
         }
     }
 

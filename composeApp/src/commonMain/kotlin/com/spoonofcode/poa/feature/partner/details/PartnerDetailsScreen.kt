@@ -3,12 +3,15 @@ package com.spoonofcode.poa.feature.partner.details
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
-import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.BaseScreenSafe
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
@@ -17,15 +20,25 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.links
 import com.spoonofcode.poa.resources.partner
 import com.spoonofcode.poa.resources.partner_beauty_saute
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.ExperimentalTime
 
 internal class PartnerDetailsScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.partner,
-//    val partnerId: Int,
-) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
+    private val partnerId: Int,
+) : BaseScreenSafe<PartnerDetailsViewModel, PartnerDetailsViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.partner
+
+    override fun provideTopBarActions(
+        viewModel: PartnerDetailsViewModel,
+    ) = listOf(
+        TopBarAction(Icons.Default.Edit, "Edit") { viewModel.editPartner() },
+        TopBarAction(Icons.Default.Delete, "Delete") { viewModel.deletePartner() }
+    )
+
+    override fun provideReloadAction(viewModel: PartnerDetailsViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()
@@ -33,10 +46,8 @@ internal class PartnerDetailsScreen(
     @Composable
     override fun provideContentView(
         viewModel: PartnerDetailsViewModel,
-        viewState: PartnerDetailsViewState
+        viewState: PartnerDetailsViewState,
     ): @Composable ColumnScope.() -> Unit {
-
-        super.reloadScreen = { viewModel.initView() }
 
         return ContentView(
             viewState = viewState,
