@@ -1,15 +1,16 @@
 package com.spoonofcode.poa.feature.partner.details
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
-import com.spoonofcode.poa.core.model.Partner
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil3.CoilImage
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -18,8 +19,6 @@ import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.links
 import com.spoonofcode.poa.resources.partner
-import com.spoonofcode.poa.resources.partner_beauty_saute
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -37,7 +36,7 @@ internal class PartnerDetailsScreen(
     )
 
     override fun provideReloadAction(viewModel: PartnerDetailsViewModel): () -> Unit =
-        { viewModel.initView() }
+        { viewModel.initView(partnerId = partnerId) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()
@@ -47,6 +46,11 @@ internal class PartnerDetailsScreen(
         viewModel: PartnerDetailsViewModel,
         viewState: PartnerDetailsViewState,
     ): @Composable ColumnScope.() -> Unit {
+
+        LaunchedEffect(Unit) {
+            viewModel.initView(partnerId = partnerId)
+        }
+
         return ContentView(
             viewState = viewState,
         )
@@ -57,11 +61,12 @@ internal class PartnerDetailsScreen(
         viewState: PartnerDetailsViewState,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Image(
-                painter = painterResource(resource = Res.drawable.partner_beauty_saute),
-                contentDescription = "Card image",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+            CoilImage(
+                imageModel = { viewState.partner.imageLink }, // loading a network image or local resource using an URL.
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
+                )
             )
             Spacers.VerticalBetweenFields()
             Texts.BM(viewState.partner.description)
@@ -91,17 +96,7 @@ internal class PartnerDetailsScreen(
         PreviewContent(
             content = ContentView(
                 viewState = PartnerDetailsViewState(
-                    partner = Partner(
-                        id = 1,
-                        name = "Beauty Saute",
-                        description = "Beauty Sautè to więcej niż odzież – to filozofia.",
-                        email = "beauty.saute@gmail.com",
-                        websiteLink = "https://beautysaute.pl/",
-                        instagramLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
-                        facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
-                        youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
-                        xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
-                    )
+                    partner = PartnerMockData.PARTNER_1
                 )
             )
         )

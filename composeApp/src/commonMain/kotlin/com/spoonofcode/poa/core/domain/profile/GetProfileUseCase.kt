@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.profile
 
 import com.spoonofcode.poa.core.data.repository.ProfileRepository
 import com.spoonofcode.poa.core.model.Profile

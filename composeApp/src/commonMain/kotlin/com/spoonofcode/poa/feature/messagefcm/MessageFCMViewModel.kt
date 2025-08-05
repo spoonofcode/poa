@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.messagefcm
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.SendMessageFCMUseCase
+import com.spoonofcode.poa.core.domain.messagefcm.SendMessageFCMUseCase
 import com.spoonofcode.poa.core.model.MessageFCM
 import com.spoonofcode.poa.core.model.NotificationFCM
 import com.spoonofcode.poa.core.ui.BaseViewModel

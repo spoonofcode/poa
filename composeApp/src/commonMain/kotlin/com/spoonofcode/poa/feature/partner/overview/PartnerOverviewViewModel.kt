@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.partner.overview
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.domain.partner.GetAllPartnerCategoriesUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
@@ -11,6 +12,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class PartnerOverviewViewModel(
     private val getPartnersFilteredByCategoryUseCase: GetPartnersFilteredByCategoryUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
+    private val getAllPartnerCategoriesUseCase: GetAllPartnerCategoriesUseCase,
 ) : BaseViewModel<PartnerOverviewViewState>(PartnerOverviewViewState()) {
 
     init {
@@ -22,11 +24,13 @@ internal class PartnerOverviewViewModel(
             showLoadingView()
             try {
                 val filteredPartners = getPartnersFilteredByCategoryUseCase()
+                val partnerCategories = getAllPartnerCategoriesUseCase()
                 updateState {
                     copy(
                         isLoadingView = false,
                         initPartners = filteredPartners,
                         filteredPartners = filteredPartners,
+                        partnerCategories = partnerCategories,
                     )
                 }
             } catch (ce: CancellationException) {
@@ -34,6 +38,18 @@ internal class PartnerOverviewViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
+        }
+    }
+
+    fun clickCategory(categoryId: Int) {
+        updateState {
+            copy(
+                selectedPartnerCategories = if (selectedPartnerCategories.contains(categoryId)) {
+                    selectedPartnerCategories - categoryId
+                } else {
+                    selectedPartnerCategories + categoryId
+                }
+            )
         }
     }
 

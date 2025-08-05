@@ -135,6 +135,7 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
+            implementation(libs.landscapist.coil)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

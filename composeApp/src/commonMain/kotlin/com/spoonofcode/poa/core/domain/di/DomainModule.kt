@@ -1,21 +1,23 @@
 package com.spoonofcode.poa.core.domain.di
 
-import com.spoonofcode.poa.core.domain.AddRoleToUserUseCase
+import com.spoonofcode.poa.core.domain.role.AddRoleToUserUseCase
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
-import com.spoonofcode.poa.core.domain.GetAllUsersUseCase
+import com.spoonofcode.poa.core.domain.user.GetAllUsersUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
-import com.spoonofcode.poa.core.domain.GetProfileUseCase
-import com.spoonofcode.poa.core.domain.GetRolesByUserIdUseCase
-import com.spoonofcode.poa.core.domain.GetUserByIdUseCase
+import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
+import com.spoonofcode.poa.core.domain.role.GetRolesByUserIdUseCase
+import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.HasSpecialSettingsUseCase
 import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.poa.core.domain.login.RegisterUseCase
-import com.spoonofcode.poa.core.domain.SendMessageFCMUseCase
+import com.spoonofcode.poa.core.domain.messagefcm.SendMessageFCMUseCase
+import com.spoonofcode.poa.core.domain.partner.GetAllPartnerCategoriesUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import org.koin.core.module.dsl.factoryOf
@@ -36,6 +38,8 @@ val domainModule = module {
     factoryOf(::HasSpecialSettingsUseCase)
     factoryOf(::SendMessageFCMUseCase)
     factoryOf(::GetFilteredProductsByTextUseCase)
+    factoryOf(::GetPartnerByIdUseCase)
+    factoryOf(::GetAllPartnerCategoriesUseCase)
     factoryOf(::GetPartnersFilteredByCategoryUseCase)
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetFilteredProductsUseCase)

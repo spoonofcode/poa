@@ -10,6 +10,7 @@ internal data class PartnerDetailsViewState(
         id = 1,
         name = "Beauty Saute",
         description = "Beauty Sautè to więcej niż odzież – to filozofia.",
+        imageLink = "https://beautysaute.pl/environment/cache/images/0_0_storefrontImages_11a16d30-d85a-422f-917d-195c30274147.png",
         email = "beauty.saute@gmail.com",
         websiteLink = "https://beautysaute.pl/",
         instagramLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
