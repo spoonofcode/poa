@@ -10,15 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.spoonofcode.poa.core.model.Partner
-import com.spoonofcode.poa.core.model.Product
-import com.spoonofcode.poa.core.model.Profile
-import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.profile.ProfileViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.links
 import com.spoonofcode.poa.resources.partner
@@ -26,7 +22,6 @@ import com.spoonofcode.poa.resources.partner_beauty_saute
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.time.ExperimentalTime
 
 internal class PartnerDetailsScreen(
     private val partnerId: Int,

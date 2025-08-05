@@ -165,7 +165,6 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     // TODO #18 Fix previews
     @Composable
     protected fun PreviewContent(
-//        viewState: VS,
         content: @Composable ColumnScope.() -> Unit
     ) {
         val snackbarHostState = remember { SnackbarHostState() }
