@@ -10,13 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProfileScreen(
@@ -48,12 +51,14 @@ internal class ProfileScreen(
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
+            navigateToPartnerPanel = { viewModel.navigateToPartnerPanel() },
         )
     }
 
     @Composable
     private fun ContentView(
         viewState: ProfileViewState,
+        navigateToPartnerPanel: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -72,6 +77,10 @@ internal class ProfileScreen(
                 Spacers.VerticalBetweenFields()
             }
 
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.partner_panel),
+                onClick = navigateToPartnerPanel
+            )
         }
     }
 
@@ -86,7 +95,8 @@ internal class ProfileScreen(
                         name = "Bartosz luczak (Lycha)",
                         numberOfProductsOwnedByUser = 2
                     )
-                )
+                ),
+                navigateToPartnerPanel = {},
             )
         )
     }

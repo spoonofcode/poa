@@ -36,9 +36,7 @@
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>
     <string name="message_title">Message title</string>
-    <string name="partner">Partner</string>
-    <string name="partners">Partners</string>
-    <string name="products">Products</string>
+    <string name="my_products">My products</string>
     <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Name</string>
@@ -46,8 +44,13 @@
     <string name="notification_title">Notification title</string>
     <string name="owner">Owner</string>
     <string name="owner_email">Owner Email</string>
+    <string name="partner">Partner</string>
+    <string name="partner_info">Partner info</string>
+    <string name="partner_panel">Partner panel</string>
+    <string name="partners">Partners</string>
     <string name="password">Password</string>
     <string name="product">Product</string>
+    <string name="products">Products</string>
     <string name="profile">Profile</string>
     <string name="register">Register</string>
     <string name="reload">Reload</string>
