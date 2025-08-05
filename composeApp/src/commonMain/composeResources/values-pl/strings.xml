@@ -31,12 +31,12 @@
     <string name="let_s_get_started">Zaczynajmy</string>
     <string name="level">Poziom</string>
     <string name="link">Link</string>
+    <string name="links">Linki</string>
     <string name="location">Lokalizacja</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Tekst wiadomość</string>
     <string name="message_title">Tytuł wiadomość</string>
-    <string name="partners">Partnerzy</string>
-    <string name="products">Produkty</string>
+    <string name="my_products">Moje produkty</string>
     <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Nazwa</string>
@@ -45,7 +45,12 @@
     <string name="owner">Właściciel</string>
     <string name="owner_email">Email właściciela</string>
     <string name="password">Hasło</string>
+    <string name="partner">Partner</string>
+    <string name="partner_info">Partner info</string>
+    <string name="partner_panel">Partner panel</string>
+    <string name="partners">Partners</string>
     <string name="product">Product</string>
+    <string name="products">Produkty</string>
     <string name="profile">Profil</string>
     <string name="register">Rejestracja</string>
     <string name="reload">Odśwież</string>

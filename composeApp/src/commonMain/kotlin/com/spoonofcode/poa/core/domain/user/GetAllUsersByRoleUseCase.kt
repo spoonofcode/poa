@@ -1,12 +1,12 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.user
 
 import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.model.User
 
-class GetUserByIdUseCase(
+class GetAllUsersByRoleUseCase(
     private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(
-        userId: Int
-    ): User = userRepository.read(id = userId)
+        roleId: Int
+    ): List<User> = userRepository.readAllUsersByRole(roleId = roleId)
 }

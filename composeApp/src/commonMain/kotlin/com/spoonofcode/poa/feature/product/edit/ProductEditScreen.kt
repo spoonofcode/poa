@@ -1,25 +1,22 @@
 package com.spoonofcode.poa.feature.product.edit
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.home
-import org.jetbrains.compose.resources.StringResource
+import com.spoonofcode.poa.resources.product
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.home,
     override val backNavigationEnable: Boolean = false,
-    override val contentPadding: PaddingValues = PaddingValues(
-        start = Paddings.screenPadding,
-        top = Paddings.screenPadding,
-        bottom = Paddings.screenPadding,
-    )
 ) : BaseScreen<ProductEditViewModel, ProductEditViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.product
+
+    override fun provideReloadAction(viewModel: ProductEditViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductEditViewModel>()
@@ -29,8 +26,6 @@ internal class ProductEditScreen(
         viewModel: ProductEditViewModel,
         viewState: ProductEditViewState
     ): @Composable ColumnScope.() -> Unit {
-
-        super.reloadScreen = { viewModel.initView() }
 
         return ContentView(
             viewState = viewState,
@@ -53,14 +48,11 @@ internal class ProductEditScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
+    @Preview
     @Composable
     fun InitializedHomeScreenPreview() {
         ContentView(
-            content = ContentView(
-                viewState = ProductEditViewState(),
-            )
+            viewState = ProductEditViewState(),
         )
     }
     // endregion

@@ -30,16 +30,29 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.filter
 import com.spoonofcode.poa.resources.search
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProductOverviewScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.search,
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.search
+
+    override fun provideReloadAction(viewModel: ProductOverviewViewModel): () -> Unit =
+        { viewModel.initView() }
+
+
+    override fun provideTopBarActions(
+        viewModel: ProductOverviewViewModel,
+    ) = listOf(
+        TopBarAction(
+            icon = Icons.Default.FilterList,
+            description = "filter",
+            onClick = { viewModel.navigateToFilter() }
+        ),
+    )
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
@@ -49,16 +62,6 @@ internal class ProductOverviewScreen(
         viewModel: ProductOverviewViewModel,
         viewState: ProductOverviewViewState
     ): @Composable ColumnScope.() -> Unit {
-        super.topBarActions = listOf(
-            TopBarAction(
-                icon = Icons.Default.FilterList,
-                description = stringResource(resource = Res.string.filter),
-                onClick = { viewModel.navigateToFilter() }
-            ),
-        )
-
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
             changeSearchText = { viewModel.changeSearchText(it) },

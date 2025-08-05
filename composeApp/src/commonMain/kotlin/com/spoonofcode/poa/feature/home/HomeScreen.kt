@@ -9,17 +9,22 @@ import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.home
-import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class HomeScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.home,
     override val backNavigationEnable: Boolean = false,
-    override val contentPadding: PaddingValues = PaddingValues(
+) : BaseScreen<HomeViewModel, HomeViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.home
+
+    override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,
         top = Paddings.screenPadding,
         bottom = Paddings.screenPadding,
     )
-) : BaseScreen<HomeViewModel, HomeViewState>() {
+
+    override fun provideReloadAction(viewModel: HomeViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
@@ -29,9 +34,6 @@ internal class HomeScreen(
         viewModel: HomeViewModel,
         viewState: HomeViewState
     ): @Composable ColumnScope.() -> Unit {
-
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
         )
@@ -47,14 +49,11 @@ internal class HomeScreen(
     }
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
+    @Preview
     @Composable
     fun InitializedHomeScreenPreview() {
         ContentView(
-            content = ContentView(
-                viewState = HomeViewState(),
-            )
+            viewState = HomeViewState(),
         )
     }
     // endregion

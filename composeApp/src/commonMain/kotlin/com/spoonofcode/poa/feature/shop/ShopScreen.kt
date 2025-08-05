@@ -7,14 +7,16 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.MyWebView
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.partner
 import com.spoonofcode.poa.resources.shop
 import org.jetbrains.compose.resources.StringResource
 
 internal class ShopScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.shop,
     override val backNavigationEnable: Boolean = false,
-    override val contentPadding: PaddingValues = PaddingValues()
 ) : BaseScreen<ShopViewModel, ShopViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.shop
+    override fun provideContentPadding() = PaddingValues()
 
     @Composable
     override fun provideViewModel() = koinViewModel<ShopViewModel>()

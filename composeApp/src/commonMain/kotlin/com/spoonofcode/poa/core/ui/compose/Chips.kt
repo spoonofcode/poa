@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FilterChip
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.poa.core.model.PartnerCategory
 
 object Chips {
     @Composable
@@ -56,6 +58,44 @@ object Chips {
                         } else null
                     )
                 }
+            }
+        }
+    }
+
+    // TODO Make generic version of this composable
+    @Composable
+    fun HorizontalScrollableFilterChipRow(
+        categories: List<PartnerCategory>,
+        selectedCategories: Set<Int>,
+        onCategorySelected: (Int) -> Unit
+    ) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(categories.size) { index ->
+                val category = categories[index]
+                val isSelected = category.id in selectedCategories
+                FilterChip(
+                    selected = isSelected,
+                    onClick = { onCategorySelected(category.id) },
+                    label = {
+                        Text(text = category.name)
+                    },
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    colors = FilterChipDefaults.filterChipColors(),
+                    leadingIcon = if (isSelected) {
+                        {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                            )
+                        }
+                    } else null
+                )
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.core.model
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,6 +11,7 @@ data class LoginGoogle(
 
 @Serializable
 data class LoginGoogleRequest(
-    @SerialName("id_token")
+    //TODO #13 Switch to POA backend API
+//    @SerialName("id_token")
     val googleUserToken: String
 )

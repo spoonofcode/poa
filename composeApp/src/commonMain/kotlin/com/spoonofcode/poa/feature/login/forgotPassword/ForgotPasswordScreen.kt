@@ -11,12 +11,12 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.email
 import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.sign_up
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-internal class ForgotPasswordScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.forget_password,
-) : BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
+internal class ForgotPasswordScreen() :
+    BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.forget_password
 
     @Composable
     override fun provideViewModel() = koinViewModel<ForgotPasswordViewModel>()

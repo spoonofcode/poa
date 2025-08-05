@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.scan
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -11,22 +10,20 @@ import androidx.compose.runtime.getValue
 import com.spoonofcode.poa.core.nfc.NfcReader
 import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.scan
-import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ScanScreen(
-    override val screenTopAppBarTitle: StringResource = Res.string.scan,
     override val backNavigationEnable: Boolean = false,
-    override val contentPadding: PaddingValues = PaddingValues(
-        start = Paddings.screenPadding,
-        top = Paddings.screenPadding,
-        bottom = Paddings.screenPadding,
-    )
 ) : BaseScreen<ScanViewModel, ScanViewState>() {
+
+    override fun provideTopAppBarTitle() = Res.string.scan
+
+    override fun provideReloadAction(viewModel: ScanViewModel): () -> Unit =
+        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ScanViewModel>()
@@ -36,9 +33,6 @@ internal class ScanScreen(
         viewModel: ScanViewModel,
         viewState: ScanViewState
     ): @Composable ColumnScope.() -> Unit {
-
-        super.reloadScreen = { viewModel.initView() }
-
         return ContentView(
             viewState = viewState,
         )
@@ -79,14 +73,11 @@ internal class ScanScreen(
 
 
     // region previews
-    // TODO This functions should be private and with @Preview annotation but now
-    //  Android Studio will be support previews in commonMain
+    @Preview
     @Composable
     fun InitializedScanScreenPreview() {
         ContentView(
-            content = ContentView(
-                viewState = ScanViewState(),
-            )
+            viewState = ScanViewState(),
         )
     }
     // endregion

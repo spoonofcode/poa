@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -118,6 +117,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.compose.icons.fontawesome)
             implementation(libs.connectivity.core)
             implementation(libs.connectivity.device)
             implementation(libs.koin.core)
@@ -135,6 +135,7 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
+            implementation(libs.landscapist.coil)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -165,11 +166,24 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+    signingConfigs {
+        create("customDebug") {
+            storeFile = file("certificates/new-debug.keystore")
+            storePassword = "poa123"
+            keyAlias = "newdebugkey"
+            keyPassword = "poa123"
         }
     }
+    buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("customDebug")
+        }
+    }
+//    buildTypes {
+//        getByName("release") {
+//            isMinifyEnabled = false
+//        }
+//    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
