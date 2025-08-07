@@ -9,13 +9,13 @@ internal class PartnerPanelViewModel() : BaseViewModel<PartnerPanelViewState>(Pa
 
     fun navigateToPartnerEdit() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen())
+            viewModelNavigator.push(PartnerEditScreen(true,1))
         }
     }
 
     fun navigateToPartnerProducts() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen())
+            viewModelNavigator.push(PartnerEditScreen(true, 1))
         }
     }
 

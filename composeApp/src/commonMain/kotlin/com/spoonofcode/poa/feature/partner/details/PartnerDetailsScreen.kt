@@ -22,6 +22,7 @@ import com.spoonofcode.poa.resources.partner
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+
 internal class PartnerDetailsScreen(
     private val partnerId: Int,
 ) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
