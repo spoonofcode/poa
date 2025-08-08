@@ -40,6 +40,8 @@
     <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Nazwa</string>
+    <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="owner">Właściciel</string>

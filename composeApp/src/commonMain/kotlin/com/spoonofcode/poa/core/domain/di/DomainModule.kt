@@ -16,6 +16,8 @@ import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
 import com.spoonofcode.poa.core.domain.login.RegisterUseCase
 import com.spoonofcode.poa.core.domain.messagefcm.SendMessageFCMUseCase
+import com.spoonofcode.poa.core.domain.notification.GetAllNotificationsUseCase
+import com.spoonofcode.poa.core.domain.notification.GetNotificationByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.GetAllPartnerCategoriesUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
@@ -44,4 +46,6 @@ val domainModule = module {
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetFilteredProductsUseCase)
     factoryOf(::GetProductByIdUseCase)
+    factoryOf(::GetNotificationByIdUseCase)
+    factoryOf(::GetAllNotificationsUseCase)
 }
