@@ -2,12 +2,15 @@ package com.spoonofcode.poa.feature.partner.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
+import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
+import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerEditViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
+    private val updatePartnerUseCase: UpdatePartnerUseCase
 ) : BaseViewModel<PartnerEditViewState>(PartnerEditViewState()) {
 
     fun initView(partnerId: Int) {
@@ -29,6 +32,23 @@ internal class PartnerEditViewModel(
         }
     }
 
+    fun onStateChange(updatedPartner: Partner) {
+        updateState { copy(partner = updatedPartner) }
+    }
+
+    fun saveChanges() {
+        viewModelScope.launch {
+            showLoadingView()
+            try {
+                updatePartnerUseCase(viewState.value.partner)
+                viewModelNavigator.pop()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                showErrorView()
+            }
+        }
+    }
 
     private fun showLoadingView() {
         updateState {
