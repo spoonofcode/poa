@@ -8,6 +8,7 @@ data class Product(
     val name: String,
     val description: String,
     val tagId: String,
+    val seriesId: String,
     val collectionName: String,
     val websiteLink: String? = null,
     val customLink: String? = null,
@@ -18,6 +19,8 @@ data class Product(
 data class ProductRequest(
     val name: String,
     val description: String,
+    val tagId: String,
+    val seriesId: String,
     val collectionName: String,
     val websiteLink: String? = null,
     val customLink: String? = null,
