@@ -20,6 +20,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.LoopingVideo
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -75,6 +78,14 @@ internal data class ProductDetailsScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
 //            ProductAnimation(viewState.product!!.nftAnimation)
+
+            CoilImage(
+                imageModel = { viewState.product!!.imageLink },
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
+                )
+            )
 
             Texts.BLB(viewState.product!!.tagId)
 

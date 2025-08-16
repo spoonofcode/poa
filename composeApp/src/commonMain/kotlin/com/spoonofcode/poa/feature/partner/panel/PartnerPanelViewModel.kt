@@ -2,11 +2,12 @@ package com.spoonofcode.poa.feature.partner.panel
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.partner.edit.PartnerEditScreen
+import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewScreen
 import kotlinx.coroutines.launch
 
-internal class PartnerPanelViewModel() : BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
+internal class PartnerPanelViewModel() :
+    BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
 
     fun navigateToPartnerEdit() {
         viewModelScope.launch {
@@ -16,7 +17,7 @@ internal class PartnerPanelViewModel() : BaseViewModel<PartnerPanelViewState>(Pa
 
     fun navigateToPartnerProducts() {
         viewModelScope.launch {
-            viewModelNavigator.push(NotificationEditScreen(seriesIds = listOf("1")))
+            viewModelNavigator.push(ProductSeriesOverviewScreen())
         }
     }
 

@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.link
@@ -18,7 +19,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationEditScreen(
-    override val backNavigationEnable: Boolean = true,
     val seriesIds: List<String>,
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState>() {
 
@@ -55,6 +55,8 @@ internal class NotificationEditScreen(
         sendNotification: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+
+            Texts.BLB("Selected Series ID: ${viewState.seriesIds}")
 
             TextFields.Outlined(
                 value = viewState.title,

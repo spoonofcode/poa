@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.partner.di
 
 import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
+import com.spoonofcode.poa.feature.partner.edit.PartnerEditViewModel
 import com.spoonofcode.poa.feature.partner.overview.PartnerOverviewViewModel
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelViewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -10,4 +11,5 @@ val partnerModule = module {
     viewModelOf(::PartnerDetailsViewModel)
     viewModelOf(::PartnerOverviewViewModel)
     viewModelOf(::PartnerPanelViewModel)
+    viewModelOf(::PartnerEditViewModel)
 }

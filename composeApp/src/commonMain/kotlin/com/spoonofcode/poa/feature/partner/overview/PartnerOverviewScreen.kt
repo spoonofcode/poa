@@ -105,7 +105,7 @@ internal class PartnerOverviewScreen(
                 modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
             ) {
                 CoilImage(
-                    imageModel = { item.imageLink }, // loading a network image or local resource using an URL.
+                    imageModel = { item.imageLink },
                     imageOptions = ImageOptions(
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.Center

@@ -16,6 +16,7 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesIdsUseCase
+import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
@@ -48,8 +49,10 @@ val domainModule = module {
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetFilteredProductsUseCase)
     factoryOf(::GetProductByIdUseCase)
+    factoryOf(::GetAllProductSeriesUseCase)
     factoryOf(::GetAllProductSeriesIdsUseCase)
     factoryOf(::GetNotificationByIdUseCase)
     factoryOf(::GetAllNotificationsUseCase)
     factoryOf(::SendNotificationUseCase)
+
 }

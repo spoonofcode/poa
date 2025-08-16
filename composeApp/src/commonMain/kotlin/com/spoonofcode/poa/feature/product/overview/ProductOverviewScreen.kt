@@ -30,6 +30,7 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.search
 import org.jetbrains.compose.resources.stringResource
 
@@ -38,7 +39,7 @@ internal class ProductOverviewScreen(
     override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState>() {
 
-    override fun provideTopAppBarTitle() = Res.string.search
+    override fun provideTopAppBarTitle() = Res.string.my_products
 
     override fun provideReloadAction(viewModel: ProductOverviewViewModel): () -> Unit =
         { viewModel.initView() }
