@@ -5,26 +5,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
@@ -109,73 +104,25 @@ internal class ProductSeriesOverviewScreen(
                 modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Texts.BLB(
-                        text = item.seriesId,
+                    CoilImage(
+                        imageModel = { item.imageLink },
+                        imageOptions = ImageOptions(
+                            contentScale = ContentScale.Crop,
+                            alignment = Alignment.Center
+                        ),
+                        modifier = Modifier.size(64.dp)
                     )
+
                     Spacers.HorizontalBetweenFields()
+
+                    Texts.BLB(text = item.seriesId)
+
+                    Spacers.Weight1(this)
+
                     Checkbox(
                         checked = checkedProductSeries,
                         onCheckedChange = { onClick() }
                     )
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun ProductItemRowElement(
-        elementValue: String,
-        icon: ImageVector,
-        contentDescription: String,
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .clickable {
-//                    checkedStates[item] = !checked
-                }
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription,
-            )
-            Spacers.HorizontalBetweenFields()
-            Texts.BM(
-                text = elementValue,
-            )
-        }
-    }
-
-    @Composable
-    fun CheckboxListExample() {
-        // Sample data
-        val items = listOf("Milk", "Eggs", "Bread", "Cheese", "Butter")
-        // Track checkbox states
-        val checkedStates = remember { mutableStateMapOf<String, Boolean>() }
-
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text("Shopping List", style = MaterialTheme.typography.titleLarge)
-            Spacer(modifier = Modifier.height(16.dp))
-
-            items.forEach { item ->
-                val checked = checkedStates[item] ?: false
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp)
-                        .clickable {
-                            checkedStates[item] = !checked
-                        }
-                ) {
-                    Checkbox(
-                        checked = checked,
-                        onCheckedChange = {
-                            checkedStates[item] = it
-                        }
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(item)
                 }
             }
         }
