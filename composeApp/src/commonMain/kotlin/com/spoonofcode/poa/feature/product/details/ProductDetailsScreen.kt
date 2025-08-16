@@ -36,7 +36,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
-    val productId: String,
+    val productId: Int,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.product

@@ -73,7 +73,7 @@ internal class ProductOverviewScreen(
     internal fun ContentView(
         viewState: ProductOverviewViewState,
         changeSearchText: (String) -> Unit,
-        selectProduct: (String) -> Unit,
+        selectProduct: (Int) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
@@ -88,7 +88,7 @@ internal class ProductOverviewScreen(
                 items(viewState.filteredProducts) { product ->
                     ProductItem(
                         item = product,
-                        onClick = { selectProduct(product.tagId) }
+                        onClick = { selectProduct(product.id) }
                     )
                 }
             }

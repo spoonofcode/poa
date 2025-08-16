@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.notification.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -11,20 +12,17 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.link
 import com.spoonofcode.poa.resources.notification
 import com.spoonofcode.poa.resources.send_notification
-import com.spoonofcode.poa.resources.sign_up
 import com.spoonofcode.poa.resources.text
 import com.spoonofcode.poa.resources.title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationEditScreen(
-    override val backNavigationEnable: Boolean = false,
+    override val backNavigationEnable: Boolean = true,
+    val seriesIds: List<String>,
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
-
-    override fun provideReloadAction(viewModel: NotificationEditViewModel): () -> Unit =
-        { viewModel.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
@@ -34,6 +32,11 @@ internal class NotificationEditScreen(
         viewModel: NotificationEditViewModel,
         viewState: NotificationEditViewState
     ): @Composable ColumnScope.() -> Unit {
+
+        LaunchedEffect(Unit) {
+            viewModel.initView(seriesIds = seriesIds)
+        }
+
         return ContentView(
             viewState = viewState,
             changeTitle = { viewModel.changeTitle(it) },

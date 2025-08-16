@@ -16,7 +16,7 @@ internal class PartnerPanelViewModel() : BaseViewModel<PartnerPanelViewState>(Pa
 
     fun navigateToPartnerProducts() {
         viewModelScope.launch {
-            viewModelNavigator.push(NotificationEditScreen())
+            viewModelNavigator.push(NotificationEditScreen(seriesIds = listOf("1")))
         }
     }
 

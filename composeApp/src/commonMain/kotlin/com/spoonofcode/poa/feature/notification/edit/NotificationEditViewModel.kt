@@ -13,13 +13,13 @@ internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
 ) : BaseViewModel<NotificationEditViewState>(NotificationEditViewState()) {
 
-    init {
-        initView()
+    fun initView(seriesIds: List<String>) {
+        viewModelScope.launch {
+            updateState {
+                copy(seriesIds = seriesIds)
+            }
+        }
     }
-
-    fun initView() {
-    }
-
 
     fun changeTitle(title: String) {
         viewModelScope.launch {
@@ -54,6 +54,7 @@ internal class NotificationEditViewModel(
                         title = viewState.value.title,
                         text = viewState.value.text,
                         link = viewState.value.link,
+                        seriesIds = viewState.value.seriesIds,
                     )
                 )
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))

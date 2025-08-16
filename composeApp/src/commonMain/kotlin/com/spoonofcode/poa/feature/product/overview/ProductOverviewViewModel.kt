@@ -50,7 +50,7 @@ internal class ProductOverviewViewModel(
         }
     }
 
-    fun selectProduct(productId: String) {
+    fun selectProduct(productId: Int) {
         viewModelScope.launch {
             viewModelNavigator.push(ProductDetailsScreen(productId = productId))
         }

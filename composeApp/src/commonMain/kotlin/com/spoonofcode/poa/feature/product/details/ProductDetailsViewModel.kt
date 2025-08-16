@@ -12,7 +12,7 @@ internal class ProductDetailsViewModel(
 //    private val deleteProductUseCase: DeleteProductUseCase,
 ) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
 
-    fun initView(productId: String) {
+    fun initView(productId: Int) {
         viewModelScope.launch {
             showLoadingView()
             try {
