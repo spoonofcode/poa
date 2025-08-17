@@ -7,6 +7,6 @@ class SendNotificationUseCase(
     private val notificationRepository: NotificationRepository,
 ) {
     suspend operator fun invoke(notification: NotificationRequest) {
-        notificationRepository.sendNotification(notification)
+        notificationRepository.create(notification)
     }
 }
