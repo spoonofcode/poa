@@ -32,8 +32,39 @@ internal class PartnerEditViewModel(
         }
     }
 
-    fun onStateChange(updatedPartner: Partner) {
-        updateState { copy(partner = updatedPartner) }
+    fun changeName(name: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(name = name)) }
+    }
+
+    fun changeDescription(description: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(description = description)) }
+    }
+
+    fun changeWebsiteLink(link: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(websiteLink = link)) }
+    }
+
+    fun changeInstagramLink(link: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(instagramLink = link)) }
+    }
+
+    fun changeFacebookLink(link: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(facebookLink = link)) }
+    }
+
+    fun changeYoutubeLink(link: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(youtubeLink = link)) }
+    }
+
+    fun changeXLink(link: String) {
+        val currentPartner = currentState().partner
+        updateState { copy(partner = currentPartner.copy(xLink = link)) }
     }
 
     fun saveChanges() {
@@ -42,7 +73,6 @@ internal class PartnerEditViewModel(
             try {
                 updatePartnerUseCase(viewState.value.partner)
                 viewModelNavigator.pop()
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 showErrorView()

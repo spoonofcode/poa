@@ -13,7 +13,16 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.resources.*
+import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.description
+import com.spoonofcode.poa.resources.facebook
+import com.spoonofcode.poa.resources.instagram
+import com.spoonofcode.poa.resources.partner
+import com.spoonofcode.poa.resources.partner_name
+import com.spoonofcode.poa.resources.save_changes
+import com.spoonofcode.poa.resources.website
+import com.spoonofcode.poa.resources.x
+import com.spoonofcode.poa.resources.youtube
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -43,7 +52,13 @@ internal class PartnerEditScreen(
         return {
             ContentView(
                 viewState = viewState,
-                onStateChange = viewModel::onStateChange,
+                onNameChange = viewModel::changeName,
+                onDescriptionChange = viewModel::changeDescription,
+                onWebsiteLinkChange = viewModel::changeWebsiteLink,
+                onInstagramLinkChange = viewModel::changeInstagramLink,
+                onFacebookLinkChange = viewModel::changeFacebookLink,
+                onYoutubeLinkChange = viewModel::changeYoutubeLink,
+                onXLinkChange = viewModel::changeXLink,
                 onSaveChanges = viewModel::saveChanges
             )
         }
@@ -52,7 +67,13 @@ internal class PartnerEditScreen(
     @Composable
     private fun ContentView(
         viewState: PartnerEditViewState,
-        onStateChange: (Partner) -> Unit,
+        onNameChange: (String) -> Unit,
+        onDescriptionChange: (String) -> Unit,
+        onWebsiteLinkChange: (String) -> Unit,
+        onInstagramLinkChange: (String) -> Unit,
+        onFacebookLinkChange: (String) -> Unit,
+        onYoutubeLinkChange: (String) -> Unit,
+        onXLinkChange: (String) -> Unit,
         onSaveChanges: () -> Unit,
     ) {
         val partner = viewState.partner
@@ -67,47 +88,43 @@ internal class PartnerEditScreen(
 
         TextFields.Outlined(
             value = partner.name,
-            onValueChange = { onStateChange(partner.copy(name = it)) },
+            onValueChange = onNameChange,
             label = stringResource(resource = Res.string.partner_name),
         )
         TextFields.Outlined(
             value = partner.description,
-            onValueChange = { onStateChange(partner.copy(description = it)) },
+            onValueChange = onDescriptionChange,
             label = stringResource(resource = Res.string.description),
         )
         TextFields.Outlined(
             value = partner.websiteLink.orEmpty(),
-            onValueChange = { onStateChange(partner.copy(websiteLink = it)) },
+            onValueChange = onWebsiteLinkChange,
             label = stringResource(resource = Res.string.website),
         )
         TextFields.Outlined(
             value = partner.instagramLink.orEmpty(),
-            onValueChange = { onStateChange(partner.copy(instagramLink = it)) },
+            onValueChange = onInstagramLinkChange,
             label = stringResource(resource = Res.string.instagram),
         )
         TextFields.Outlined(
             value = partner.facebookLink.orEmpty(),
-            onValueChange = { onStateChange(partner.copy(facebookLink = it)) },
+            onValueChange = onFacebookLinkChange,
             label = stringResource(resource = Res.string.facebook),
         )
         TextFields.Outlined(
             value = partner.youtubeLink.orEmpty(),
-            onValueChange = { onStateChange(partner.copy(youtubeLink = it)) },
+            onValueChange = onYoutubeLinkChange,
             label = stringResource(resource = Res.string.youtube),
         )
         TextFields.Outlined(
             value = partner.xLink.orEmpty(),
-            onValueChange = { onStateChange(partner.copy(xLink = it)) },
+            onValueChange = onXLinkChange,
             label = stringResource(resource = Res.string.x),
         )
 
         Buttons.PrimaryButton(
             text = stringResource(resource = Res.string.save_changes),
-            onClick = {
-                if (!viewState.isLoadingView) {
-                    onSaveChanges()
-                }
-            }
+            onClick = { onSaveChanges() },
         )
     }
 
@@ -117,11 +134,8 @@ internal class PartnerEditScreen(
         PreviewContent(
             content = {
                 ContentView(
-                    viewState = PartnerEditViewState(
-                        partner = PartnerMockData.PARTNER_1
-                    ),
-                    onStateChange = {},
-                    onSaveChanges = {}
+                    viewState = PartnerEditViewState(partner = PartnerMockData.PARTNER_1),
+                    {}, {}, {}, {}, {}, {}, {}, {}
                 )
             }
         )

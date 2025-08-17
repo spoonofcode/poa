@@ -15,7 +15,4 @@ val partnerModule = module {
     viewModelOf(::PartnerEditViewModel)
     viewModelOf(::PartnerOverviewViewModel)
     viewModelOf(::PartnerPanelViewModel)
-
-    factory { UpdatePartnerUseCase(get(), get()) }
-    factory { GetPartnerByIdUseCase(get()) }
 }
