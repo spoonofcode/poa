@@ -8,5 +8,4 @@ class NotificationRepository : GenericCrudRepository<NotificationRequest, Notifi
     resourceName = "notifications",
     requestSerializer = NotificationRequest.serializer(),
     responseSerializer = Notification.serializer(),
-) {
-}
+)
