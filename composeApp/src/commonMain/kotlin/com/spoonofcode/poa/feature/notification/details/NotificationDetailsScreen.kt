@@ -66,8 +66,6 @@ internal class NotificationDetailsScreen(
             }
         }
     }
-
-
 }
 
 // region previews
