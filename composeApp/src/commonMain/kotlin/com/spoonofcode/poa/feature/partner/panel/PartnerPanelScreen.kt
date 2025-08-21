@@ -22,14 +22,14 @@ internal class PartnerPanelScreen() :
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerPanelViewModel,
+    override fun provideContent(
+        viewModel: PartnerPanelViewModel?,
         viewState: PartnerPanelViewState,
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            navigateToPartnerEdit = { viewModel.navigateToPartnerEdit() },
-            navigateToPartnerProducts = { viewModel.navigateToPartnerProducts() },
+            navigateToPartnerEdit = { viewModel?.navigateToPartnerEdit() },
+            navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
         )
     }
 
@@ -52,18 +52,14 @@ internal class PartnerPanelScreen() :
             )
         }
     }
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedPartnerPanelScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = PartnerPanelViewState(),
-                navigateToPartnerEdit = {},
-                navigateToPartnerProducts = {},
-            )
-        )
-    }
-    // endregion
 }
+
+// region previews
+@Preview
+@Composable
+fun PartnerPanelScreenContentPreview() {
+    PartnerPanelScreen().PreviewContent(
+        viewState = PartnerPanelViewState(),
+    )
+}
+// endregion

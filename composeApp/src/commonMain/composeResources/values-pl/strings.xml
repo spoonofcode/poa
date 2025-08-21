@@ -39,9 +39,12 @@
     <string name="message_text">Tekst wiadomość</string>
     <string name="message_title">Tytuł wiadomość</string>
     <string name="my_products">Moje produkty</string>
+    <string name="my_product_series">Moje serie produktów</string>
     <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Nazwa</string>
+    <string name="notification">Powiadomienie</string>
+    <string name="notifications">Powiadomienia</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="owner">Właściciel</string>
@@ -64,6 +67,7 @@
     <string name="search_nft">Szukaj NFT</string>
     <string name="serie">Seria</string>
     <string name="series">Seria</string>
+    <string name="send_notification">Wyślij powiadomienie</string>
     <string name="settings">Ustawienia</string>
     <string name="shop">Sklep</string>
     <string name="sign_in">Zaloguj się</string>
@@ -71,6 +75,7 @@
     <string name="sign_up">Zarejestruj się</string>
     <string name="start">Rozpocznij</string>
     <string name="submit">Wyślij</string>
+    <string name="text">Text</string>
     <string name="time">Czas</string>
     <string name="title">Tytuł</string>
     <string name="token_id">Token Id</string>

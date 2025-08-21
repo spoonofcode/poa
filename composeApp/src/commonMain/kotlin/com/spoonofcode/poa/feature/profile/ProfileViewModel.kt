@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.profile
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.appsettings.AppSettingsScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ internal class ProfileViewModel(
                 updateState {
                     copy(
                         profile = profile,
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                     )
                 }
             } catch (ce: CancellationException) {
@@ -50,8 +51,7 @@ internal class ProfileViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -59,8 +59,7 @@ internal class ProfileViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

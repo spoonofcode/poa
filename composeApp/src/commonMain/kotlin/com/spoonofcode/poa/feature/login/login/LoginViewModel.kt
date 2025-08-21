@@ -5,6 +5,7 @@ import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.register.RegisterScreen
@@ -78,8 +79,7 @@ internal class LoginViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -88,7 +88,7 @@ internal class LoginViewModel(
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(
-                isLoadingView = false
+                screenState = ScreenState.CONTENT
             )
         }
     }

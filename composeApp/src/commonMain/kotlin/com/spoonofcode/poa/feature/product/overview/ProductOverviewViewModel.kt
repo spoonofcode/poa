@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -24,7 +25,7 @@ internal class ProductOverviewViewModel(
                 val filteredProducts = getFilteredProductsUseCase()
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                         initProducts = filteredProducts,
                         filteredProducts = filteredProducts,
                     )
@@ -50,7 +51,7 @@ internal class ProductOverviewViewModel(
         }
     }
 
-    fun selectProduct(productId: String) {
+    fun selectProduct(productId: Int) {
         viewModelScope.launch {
             viewModelNavigator.push(ProductDetailsScreen(productId = productId))
         }
@@ -65,8 +66,7 @@ internal class ProductOverviewViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -74,8 +74,7 @@ internal class ProductOverviewViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

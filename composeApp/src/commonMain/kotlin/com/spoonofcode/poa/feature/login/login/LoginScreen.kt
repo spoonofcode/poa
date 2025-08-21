@@ -16,14 +16,15 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.email
 import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.let_s_get_started
 import com.spoonofcode.poa.resources.password
+import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.sign_in
 import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
@@ -33,18 +34,18 @@ internal class LoginScreen(
     override fun provideViewModel() = koinViewModel<LoginViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: LoginViewModel,
+    override fun provideContent(
+        viewModel: LoginViewModel?,
         viewState: LoginViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeEmail = { viewModel.changeEmail(it) },
-            changePassword = { viewModel.changePassword(it) },
-            forgotPassword = { viewModel.forgotPassword() },
-            signIn = { viewModel.signIn() },
-            signInWithGoogle = { viewModel.signInWithGoogle(it) },
-            signUp = { viewModel.signUp() },
+            changeEmail = { viewModel?.changeEmail(it) },
+            changePassword = { viewModel?.changePassword(it) },
+            forgotPassword = { viewModel?.forgotPassword() },
+            signIn = { viewModel?.signIn() },
+            signInWithGoogle = { viewModel?.signInWithGoogle(it) },
+            signUp = { viewModel?.signUp() },
         )
     }
 
@@ -115,3 +116,13 @@ internal class LoginScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun LoginScreenContentPreview() {
+    LoginScreen().PreviewContent(
+        LoginViewState()
+    )
+}
+// endregion

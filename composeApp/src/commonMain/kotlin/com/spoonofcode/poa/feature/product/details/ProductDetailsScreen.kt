@@ -20,6 +20,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.LoopingVideo
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -34,9 +37,10 @@ import com.spoonofcode.poa.resources.product
 import com.spoonofcode.poa.resources.website_link
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal data class ProductDetailsScreen(
-    val productId: String,
+    val productId: Int,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.product
@@ -45,23 +49,23 @@ internal data class ProductDetailsScreen(
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
     override fun provideTopBarActions(
-        viewModel: ProductDetailsViewModel,
+        viewModel: ProductDetailsViewModel?,
     ) = listOf(
-        TopBarAction(Icons.Default.Edit, "Edit") { viewModel.editProduct() },
-        TopBarAction(Icons.Default.Delete, "Delete") { viewModel.deleteProduct() }
+        TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.editProduct() },
+        TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deleteProduct() }
     )
 
     override fun provideReloadAction(viewModel: ProductDetailsViewModel): () -> Unit =
         { viewModel.initView(productId = productId) }
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductDetailsViewModel,
+    override fun provideContent(
+        viewModel: ProductDetailsViewModel?,
         viewState: ProductDetailsViewState
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
-            viewModel.initView(productId = productId)
+            viewModel?.initView(productId = productId)
         }
 
         return ContentView(
@@ -75,6 +79,14 @@ internal data class ProductDetailsScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
 //            ProductAnimation(viewState.product!!.nftAnimation)
+
+            CoilImage(
+                imageModel = { viewState.product!!.imageLink },
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
+                )
+            )
 
             Texts.BLB(viewState.product!!.tagId)
 
@@ -179,3 +191,13 @@ internal data class ProductDetailsScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+fun ProductDetailsScreenContentPreview() {
+    ProductDetailsScreen(productId = 1).PreviewContent(
+        viewState = ProductDetailsViewState(),
+    )
+}
+// endregion

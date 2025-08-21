@@ -29,8 +29,8 @@ internal class ScanScreen(
     override fun provideViewModel() = koinViewModel<ScanViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ScanViewModel,
+    override fun provideContent(
+        viewModel: ScanViewModel?,
         viewState: ScanViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
@@ -70,15 +70,14 @@ internal class ScanScreen(
             } ?: Texts.BLB("Waiting…")
         }
     }
-
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedScanScreenPreview() {
-        ContentView(
-            viewState = ScanViewState(),
-        )
-    }
-    // endregion
 }
+
+// region previews
+@Preview
+@Composable
+private fun ScanScreenContentPreview() {
+    ScanScreen().PreviewContent(
+        ScanViewState()
+    )
+}
+// endregion

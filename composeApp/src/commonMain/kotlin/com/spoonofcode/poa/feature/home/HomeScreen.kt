@@ -2,6 +2,8 @@ package com.spoonofcode.poa.feature.home
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
@@ -17,6 +19,15 @@ internal class HomeScreen(
 
     override fun provideTopAppBarTitle() = Res.string.home
 
+    override fun provideTopBarActions(
+        viewModel: HomeViewModel?,
+    ) = listOf(
+        TopBarAction(
+            Icons.Default.Notifications,
+            "Notification"
+        ) { viewModel?.navigateToNotifications() },
+    )
+
     override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,
         top = Paddings.screenPadding,
@@ -30,8 +41,8 @@ internal class HomeScreen(
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: HomeViewModel,
+    override fun provideContent(
+        viewModel: HomeViewModel?,
         viewState: HomeViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
@@ -47,14 +58,14 @@ internal class HomeScreen(
             Texts.BLB("HOME")
         }
     }
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedHomeScreenPreview() {
-        ContentView(
-            viewState = HomeViewState(),
-        )
-    }
-    // endregion
 }
+
+// region previews
+@Preview
+@Composable
+private fun HomeScreenContentPreview() {
+    HomeScreen().PreviewContent(
+        HomeViewState()
+    )
+}
+// endregion

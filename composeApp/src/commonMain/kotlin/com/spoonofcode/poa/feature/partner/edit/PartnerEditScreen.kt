@@ -7,8 +7,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData
-import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.TextFields
@@ -40,26 +38,26 @@ internal class PartnerEditScreen(
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerEditViewModel,
+    override fun provideContent(
+        viewModel: PartnerEditViewModel?,
         viewState: PartnerEditViewState
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(partnerId) {
-            viewModel.initView(partnerId = partnerId)
+            viewModel?.initView(partnerId = partnerId)
         }
 
         return {
             ContentView(
                 viewState = viewState,
-                onNameChange = viewModel::changeName,
-                onDescriptionChange = viewModel::changeDescription,
-                onWebsiteLinkChange = viewModel::changeWebsiteLink,
-                onInstagramLinkChange = viewModel::changeInstagramLink,
-                onFacebookLinkChange = viewModel::changeFacebookLink,
-                onYoutubeLinkChange = viewModel::changeYoutubeLink,
-                onXLinkChange = viewModel::changeXLink,
-                onSaveChanges = viewModel::saveChanges
+                onNameChange = { viewModel?.changeName(it) },
+                onDescriptionChange = { viewModel?.changeDescription(it) },
+                onWebsiteLinkChange = { viewModel?.changeWebsiteLink(it) },
+                onInstagramLinkChange = { viewModel?.changeInstagramLink(it) },
+                onFacebookLinkChange = { viewModel?.changeFacebookLink(it) },
+                onYoutubeLinkChange = { viewModel?.changeYoutubeLink(it) },
+                onXLinkChange = { viewModel?.changeXLink(it) },
+                onSaveChanges = { viewModel?.saveChanges() },
             )
         }
     }
@@ -127,17 +125,14 @@ internal class PartnerEditScreen(
             onClick = { onSaveChanges() },
         )
     }
-
-    @Preview
-    @Composable
-    fun InitializedPartnerEditScreenPreview() {
-        PreviewContent(
-            content = {
-                ContentView(
-                    viewState = PartnerEditViewState(partner = PartnerMockData.PARTNER_1),
-                    {}, {}, {}, {}, {}, {}, {}, {}
-                )
-            }
-        )
-    }
 }
+
+// region previews
+@Preview
+@Composable
+fun PartnerEditScreenContentPreview() {
+    PartnerEditScreen(partnerId = 1).PreviewContent(
+        viewState = PartnerEditViewState(),
+    )
+}
+// endregion
