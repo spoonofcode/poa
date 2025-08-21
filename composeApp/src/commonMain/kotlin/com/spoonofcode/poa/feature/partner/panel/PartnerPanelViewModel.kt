@@ -5,17 +5,18 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.partner.edit.PartnerEditScreen
 import kotlinx.coroutines.launch
 
-internal class PartnerPanelViewModel() : BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
+internal class PartnerPanelViewModel() :
+    BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
 
     fun navigateToPartnerEdit() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen())
+            viewModelNavigator.push(PartnerEditScreen(backNavigationEnable = true, partnerId = 1))
         }
     }
 
     fun navigateToPartnerProducts() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen())
+            viewModelNavigator.push(PartnerEditScreen(backNavigationEnable = true, partnerId = 1))
         }
     }
 

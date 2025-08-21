@@ -18,6 +18,7 @@
     <string name="edit">Edytuj</string>
     <string name="edit_nft_info">Edytuj NFT</string>
     <string name="email">E-mail</string>
+    <string name="facebook">Facebook</string>
     <string name="filter">Filtruj</string>
     <string name="filter_products">Filtruj produkty</string>
     <string name="filter_nft">Filtruj NFT</string>
@@ -27,6 +28,7 @@
     <string name="gen_1_series">Gen 1 Series</string>
     <string name="get_user_token">Get user token</string>
     <string name="home">Home</string>
+    <string name="instagram">Instagram</string>
     <string name="last_name">Nazwisko</string>
     <string name="let_s_get_started">Zaczynajmy</string>
     <string name="level">Poziom</string>
@@ -46,6 +48,7 @@
     <string name="owner_email">Email właściciela</string>
     <string name="password">Hasło</string>
     <string name="partner">Partner</string>
+    <string name="partner_name">Partner</string>
     <string name="partner_info">Partner info</string>
     <string name="partner_panel">Partner panel</string>
     <string name="partners">Partners</string>
@@ -55,6 +58,7 @@
     <string name="register">Rejestracja</string>
     <string name="reload">Odśwież</string>
     <string name="remote_user_token">Remote user token</string>
+    <string name="save_changes">Zapisz zmiany</string>
     <string name="scan">Scan</string>
     <string name="search">Szukaj</string>
     <string name="search_nft">Szukaj NFT</string>
@@ -71,5 +75,8 @@
     <string name="title">Tytuł</string>
     <string name="token_id">Token Id</string>
     <string name="type">Typ</string>
+    <string name="website">Strona</string>
     <string name="website_link">Website link</string>
+    <string name="x">X</string>
+    <string name="youtube">Youtube</string>
 </resources>

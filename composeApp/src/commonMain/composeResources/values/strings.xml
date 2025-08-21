@@ -32,6 +32,11 @@
     <string name="let_s_get_started">Let’s get started</string>
     <string name="link">Link</string>
     <string name="links">Links</string>
+    <string name="website">Website</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="youtube">Youtube</string>
+    <string name="x">X</string>
     <string name="location">Location</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>
@@ -45,6 +50,7 @@
     <string name="owner">Owner</string>
     <string name="owner_email">Owner Email</string>
     <string name="partner">Partner</string>
+    <string name="partner_name">Partner name</string>
     <string name="partner_info">Partner info</string>
     <string name="partner_panel">Partner panel</string>
     <string name="partners">Partners</string>
@@ -55,6 +61,7 @@
     <string name="register">Register</string>
     <string name="reload">Reload</string>
     <string name="remote_user_token">Remote user token</string>
+    <string name="save_changes">Save changes</string>
     <string name="scan">Scan</string>
     <string name="search">Search</string>
     <string name="search_nft">Search NFT</string>
