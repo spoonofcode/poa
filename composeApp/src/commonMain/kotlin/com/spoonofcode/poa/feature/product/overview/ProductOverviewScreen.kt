@@ -25,14 +25,18 @@ import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.product.filter.ProductFilterScreen
+import com.spoonofcode.poa.feature.product.filter.ProductFilterViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.search
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
@@ -151,3 +155,15 @@ internal class ProductOverviewScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+fun ProductOverviewScreenContentPreview() {
+    ProductOverviewScreen().PreviewContent(
+        viewState = ProductOverviewViewState(
+            screenState = ScreenState.CONTENT,
+        ),
+    )
+}
+// endregion

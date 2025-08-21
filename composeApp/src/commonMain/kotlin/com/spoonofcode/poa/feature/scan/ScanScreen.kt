@@ -70,15 +70,14 @@ internal class ScanScreen(
             } ?: Texts.BLB("Waiting…")
         }
     }
-
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedScanScreenPreview() {
-        ContentView(
-            viewState = ScanViewState(),
-        )
-    }
-    // endregion
 }
+
+// region previews
+@Preview
+@Composable
+private fun ScanScreenContentPreview() {
+    ScanScreen().PreviewContent(
+        ScanViewState()
+    )
+}
+// endregion

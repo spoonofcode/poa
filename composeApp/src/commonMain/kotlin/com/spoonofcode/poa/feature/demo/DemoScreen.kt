@@ -12,6 +12,8 @@ import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.appsettings.AppSettingsScreen
+import com.spoonofcode.poa.feature.appsettings.AppSettingsViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.demo
 import org.jetbrains.compose.resources.stringResource
@@ -80,3 +82,13 @@ internal class DemoScreen(
         )
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun DemoScreenContentPreview() {
+    DemoScreen().PreviewContent(
+        DemoViewState()
+    )
+}
+// endregion

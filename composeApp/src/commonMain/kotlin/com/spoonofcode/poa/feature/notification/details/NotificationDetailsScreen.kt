@@ -70,13 +70,15 @@ internal class NotificationDetailsScreen(
         }
     }
 
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedNotificationDetailsScreenPreview() {
-        NotificationDetailsScreen(notificationId = 1).PreviewContent(
-            viewState = NotificationDetailsViewState(),
-        )
-    }
-    // endregion
+
 }
+
+// region previews
+@Preview
+@Composable
+private fun NotificationDetailsScreenContentPreview() {
+    NotificationDetailsScreen(notificationId = 1).PreviewContent(
+        NotificationDetailsViewState()
+    )
+}
+// endregion

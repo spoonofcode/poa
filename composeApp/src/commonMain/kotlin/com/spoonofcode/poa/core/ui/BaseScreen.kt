@@ -186,7 +186,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     }
 
     @Composable
-    protected fun PreviewContent(
+    fun PreviewContent(
         viewState: VS,
     ) {
         ContentView(

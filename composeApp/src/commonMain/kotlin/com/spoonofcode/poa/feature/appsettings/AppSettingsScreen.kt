@@ -10,6 +10,7 @@ import com.spoonofcode.poa.resources.message_fcm
 import com.spoonofcode.poa.resources.settings
 import com.spoonofcode.poa.resources.sign_out
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSettingsViewState>() {
@@ -60,3 +61,13 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun AppSettingsScreenContentPreview() {
+    AppSettingsScreen().PreviewContent(
+        AppSettingsViewState()
+    )
+}
+// endregion

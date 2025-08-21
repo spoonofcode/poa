@@ -7,11 +7,14 @@ import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.home.HomeScreen
+import com.spoonofcode.poa.feature.home.HomeViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.email
 import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ForgotPasswordScreen() :
     BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
@@ -55,3 +58,13 @@ internal class ForgotPasswordScreen() :
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun ForgotPasswordScreenContentPreview() {
+    ForgotPasswordScreen().PreviewContent(
+        ForgotPasswordViewState()
+    )
+}
+// endregion

@@ -56,3 +56,13 @@ internal class PartnerEditScreen(
     }
     // endregion
 }
+
+// region previews
+@Preview
+@Composable
+fun PartnerEditScreenContentPreview() {
+    PartnerEditScreen().PreviewContent(
+        viewState = PartnerEditViewState(),
+    )
+}
+// endregion

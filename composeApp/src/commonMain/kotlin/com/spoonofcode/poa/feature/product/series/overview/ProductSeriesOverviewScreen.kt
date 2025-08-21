@@ -28,10 +28,13 @@ import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.product.overview.ProductOverviewScreen
+import com.spoonofcode.poa.feature.product.overview.ProductOverviewViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_product_series
 import com.spoonofcode.poa.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductSeriesOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
@@ -128,3 +131,13 @@ internal class ProductSeriesOverviewScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+fun ProductSeriesOverviewScreenContentPreview() {
+    ProductSeriesOverviewScreen().PreviewContent(
+        viewState = ProductSeriesOverviewViewState(),
+    )
+}
+// endregion

@@ -5,11 +5,11 @@ import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.apply_filter
 import com.spoonofcode.poa.resources.filter_products
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProductFilterScreen() :
@@ -61,3 +61,13 @@ internal class ProductFilterScreen() :
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+fun ProductFilterScreenContentPreview() {
+    ProductFilterScreen().PreviewContent(
+        viewState = ProductFilterViewState(),
+    )
+}
+// endregion

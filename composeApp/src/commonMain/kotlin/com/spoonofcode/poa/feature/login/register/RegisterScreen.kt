@@ -15,6 +15,7 @@ import com.spoonofcode.poa.resources.password
 import com.spoonofcode.poa.resources.register
 import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewState>() {
 
@@ -87,3 +88,13 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun RegisterScreenContentPreview() {
+    RegisterScreen().PreviewContent(
+        RegisterViewState()
+    )
+}
+// endregion

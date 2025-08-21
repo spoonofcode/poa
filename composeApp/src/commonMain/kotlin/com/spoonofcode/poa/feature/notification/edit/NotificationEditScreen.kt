@@ -98,3 +98,13 @@ internal class NotificationEditScreen(
     }
     // endregion
 }
+
+// region previews
+@Preview
+@Composable
+private fun NotificationEditScreenContentPreview() {
+    NotificationEditScreen(seriesIds = emptyList()).PreviewContent(
+        NotificationEditViewState()
+    )
+}
+// endregion

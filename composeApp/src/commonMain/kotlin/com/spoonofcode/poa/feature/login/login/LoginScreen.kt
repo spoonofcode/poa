@@ -15,6 +15,8 @@ import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
+import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.email
@@ -24,6 +26,7 @@ import com.spoonofcode.poa.resources.password
 import com.spoonofcode.poa.resources.sign_in
 import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
@@ -115,3 +118,13 @@ internal class LoginScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun LoginScreenContentPreview() {
+    LoginScreen().PreviewContent(
+        LoginViewState()
+    )
+}
+// endregion

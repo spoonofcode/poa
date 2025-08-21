@@ -28,6 +28,8 @@ import com.spoonofcode.poa.core.ui.compose.LoopingVideo
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
+import com.spoonofcode.poa.feature.partner.panel.PartnerPanelViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.collection_name
 import com.spoonofcode.poa.resources.custom_link
@@ -37,6 +39,7 @@ import com.spoonofcode.poa.resources.product
 import com.spoonofcode.poa.resources.website_link
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal data class ProductDetailsScreen(
     val productId: Int,
@@ -190,3 +193,13 @@ internal data class ProductDetailsScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+fun ProductDetailsScreenContentPreview() {
+    ProductDetailsScreen(productId = 1).PreviewContent(
+        viewState = ProductDetailsViewState(),
+    )
+}
+// endregion
