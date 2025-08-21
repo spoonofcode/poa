@@ -2,7 +2,6 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
-import com.spoonofcode.poa.core.model.PartnerRequest
 import com.spoonofcode.poa.core.model.ProfileRequest
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

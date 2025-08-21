@@ -25,6 +25,7 @@ import com.spoonofcode.poa.core.domain.role.AddRoleToUserUseCase
 import com.spoonofcode.poa.core.domain.role.GetRolesByUserIdUseCase
 import com.spoonofcode.poa.core.domain.user.GetAllUsersUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
+import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -49,10 +50,10 @@ val domainModule = module {
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetFilteredProductsUseCase)
     factoryOf(::GetProductByIdUseCase)
+    factoryOf(::UpdatePartnerUseCase)
     factoryOf(::GetAllProductSeriesUseCase)
     factoryOf(::GetAllProductSeriesIdsUseCase)
     factoryOf(::GetNotificationByIdUseCase)
     factoryOf(::GetAllNotificationsUseCase)
     factoryOf(::SendNotificationUseCase)
-
 }
