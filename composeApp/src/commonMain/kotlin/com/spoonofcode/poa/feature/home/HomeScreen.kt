@@ -9,8 +9,6 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.demo.DemoScreen
-import com.spoonofcode.poa.feature.demo.DemoViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.home
 import org.jetbrains.compose.ui.tooling.preview.Preview

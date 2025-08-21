@@ -10,8 +10,6 @@ import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.utils.LocalClipboardManager
-import com.spoonofcode.poa.feature.login.register.RegisterScreen
-import com.spoonofcode.poa.feature.login.register.RegisterViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.copy_to_clipboard
 import com.spoonofcode.poa.resources.get_user_token

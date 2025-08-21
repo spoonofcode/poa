@@ -28,8 +28,6 @@ import com.spoonofcode.poa.core.ui.compose.LoopingVideo
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
-import com.spoonofcode.poa.feature.partner.panel.PartnerPanelViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.collection_name
 import com.spoonofcode.poa.resources.custom_link

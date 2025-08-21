@@ -5,8 +5,6 @@ import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
-import com.spoonofcode.poa.feature.product.details.ProductDetailsViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.product
 import org.jetbrains.compose.ui.tooling.preview.Preview

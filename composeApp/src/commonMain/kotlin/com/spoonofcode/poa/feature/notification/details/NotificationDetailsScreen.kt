@@ -3,13 +3,10 @@ package com.spoonofcode.poa.feature.notification.details
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.spoonofcode.poa.core.data.mockdata.NotificationMockData
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.messagefcm.MessageFCMScreen
-import com.spoonofcode.poa.feature.messagefcm.MessageFCMViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification
 import org.jetbrains.compose.ui.tooling.preview.Preview

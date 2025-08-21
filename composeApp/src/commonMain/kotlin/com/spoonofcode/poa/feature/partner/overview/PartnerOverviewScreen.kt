@@ -23,8 +23,6 @@ import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Chips.HorizontalScrollableFilterChipRow
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partners
 import com.spoonofcode.poa.resources.search
