@@ -3,13 +3,13 @@ package com.spoonofcode.poa.feature.partner.overview
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.PartnerCategory
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal data class PartnerOverviewViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
+    override val screenState: ScreenState = ScreenState.LOADING,
     val searchText: String = "",
     val partnerCategories: List<PartnerCategory> = emptyList(),
     val selectedPartnerCategories: Set<Int> = emptySet(),
     val initPartners: List<Partner> = emptyList(),
     val filteredPartners: List<Partner> = emptyList(),
-) : BaseViewState()
+) : BaseViewState(screenState)

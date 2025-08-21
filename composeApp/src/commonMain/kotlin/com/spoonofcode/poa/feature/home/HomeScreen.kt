@@ -20,12 +20,12 @@ internal class HomeScreen(
     override fun provideTopAppBarTitle() = Res.string.home
 
     override fun provideTopBarActions(
-        viewModel: HomeViewModel,
+        viewModel: HomeViewModel?,
     ) = listOf(
         TopBarAction(
             Icons.Default.Notifications,
             "Notification"
-        ) { viewModel.navigateToNotifications() },
+        ) { viewModel?.navigateToNotifications() },
     )
 
     override fun provideContentPadding() = PaddingValues(
@@ -41,8 +41,8 @@ internal class HomeScreen(
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: HomeViewModel,
+    override fun provideContent(
+        viewModel: HomeViewModel?,
         viewState: HomeViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(

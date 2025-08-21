@@ -29,8 +29,8 @@ internal class MessageFCMScreen() : BaseScreen<MessageFCMViewModel, MessageFCMVi
     override fun provideViewModel() = koinViewModel<MessageFCMViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: MessageFCMViewModel,
+    override fun provideContent(
+        viewModel: MessageFCMViewModel?,
         viewState: MessageFCMViewState,
     ): @Composable ColumnScope.() -> Unit {
 
@@ -40,14 +40,14 @@ internal class MessageFCMScreen() : BaseScreen<MessageFCMViewModel, MessageFCMVi
 
         return ContentView(
             viewState = viewState,
-            onMessageTextChange = { viewModel.onMessageTextChange(it) },
-            onMessageTitleChange = { viewModel.onMessageTitleChange(it) },
-            sendToUser = { viewModel.sendToUser() },
-            sendToTopics = { viewModel.sendToTopics() },
-            onRemoteTokenChange = { viewModel.onRemoteTokenChange(it) },
-            getFirebaseMessageToken = { viewModel.getFirebaseMessageToken() },
-            clickOnTopicToSend = { viewModel.clickOnTopicToSend(it) },
-            clickOnTopicToSubscribe = { viewModel.clickOnTopicToSubscribe(it) },
+            onMessageTextChange = { viewModel?.onMessageTextChange(it) },
+            onMessageTitleChange = { viewModel?.onMessageTitleChange(it) },
+            sendToUser = { viewModel?.sendToUser() },
+            sendToTopics = { viewModel?.sendToTopics() },
+            onRemoteTokenChange = { viewModel?.onRemoteTokenChange(it) },
+            getFirebaseMessageToken = { viewModel?.getFirebaseMessageToken() },
+            clickOnTopicToSend = { viewModel?.clickOnTopicToSend(it) },
+            clickOnTopicToSubscribe = { viewModel?.clickOnTopicToSubscribe(it) },
         )
     }
 
@@ -135,18 +135,8 @@ internal class MessageFCMScreen() : BaseScreen<MessageFCMViewModel, MessageFCMVi
     @Preview
     @Composable
     private fun InitScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = MessageFCMViewState(),
-                onMessageTextChange = {},
-                onMessageTitleChange = {},
-                sendToUser = {},
-                sendToTopics = {},
-                onRemoteTokenChange = {},
-                getFirebaseMessageToken = {},
-                clickOnTopicToSend = {},
-                clickOnTopicToSubscribe = {},
-            )
+        MessageFCMScreen().PreviewContent(
+            viewState = MessageFCMViewState(),
         )
     }
     // endregion

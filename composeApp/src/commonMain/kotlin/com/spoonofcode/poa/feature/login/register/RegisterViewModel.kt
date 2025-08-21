@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.domain.login.RegisterUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -66,8 +67,7 @@ internal class RegisterViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -76,7 +76,7 @@ internal class RegisterViewModel(
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(
-                isLoadingView = false
+                screenState = ScreenState.CONTENT,
             )
         }
     }

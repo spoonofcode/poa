@@ -24,14 +24,14 @@ internal class ProductFilterScreen() :
     override fun provideViewModel() = koinViewModel<ProductFilterViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductFilterViewModel,
+    override fun provideContent(
+        viewModel: ProductFilterViewModel?,
         viewState: ProductFilterViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeCollectionName = { viewModel.changeCollectionName(it) },
-            applyFilter = { viewModel.applyFilter() },
+            changeCollectionName = { viewModel?.changeCollectionName(it) },
+            applyFilter = { viewModel?.applyFilter() },
         )
     }
 

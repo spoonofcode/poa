@@ -18,6 +18,8 @@ import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.notification.details.NotificationDetailsScreen
+import com.spoonofcode.poa.feature.notification.details.NotificationDetailsViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notifications
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -35,13 +37,13 @@ internal class NotificationOverviewScreen(
     override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: NotificationOverviewViewModel,
+    override fun provideContent(
+        viewModel: NotificationOverviewViewModel?,
         viewState: NotificationOverviewViewState
     ): @Composable (ColumnScope.() -> Unit) {
         return ContentView(
             viewState = viewState,
-            selectNotification = { viewModel.selectNotification(it) },
+            selectNotification = { viewModel?.selectNotification(it) },
         )
     }
 
@@ -95,11 +97,8 @@ internal class NotificationOverviewScreen(
     @Preview
     @Composable
     fun InitializedNotificationOverviewScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = NotificationOverviewViewState(),
-                selectNotification = {},
-            )
+        NotificationOverviewScreen().PreviewContent(
+            viewState = NotificationOverviewViewState(),
         )
     }
     // endregion

@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.notification.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.notification.GetAllNotificationsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.details.NotificationDetailsScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -22,7 +23,7 @@ internal class NotificationOverviewViewModel(
                 val allNotifications = getAllNotificationsUseCase()
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                         initNotifications = allNotifications,
                     )
                 }
@@ -43,8 +44,7 @@ internal class NotificationOverviewViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -52,8 +52,7 @@ internal class NotificationOverviewViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

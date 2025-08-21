@@ -29,8 +29,8 @@ internal class ScanScreen(
     override fun provideViewModel() = koinViewModel<ScanViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ScanViewModel,
+    override fun provideContent(
+        viewModel: ScanViewModel?,
         viewState: ScanViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(

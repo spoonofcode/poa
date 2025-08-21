@@ -16,7 +16,6 @@ internal class ForgotPasswordViewModel(
             updateState {
                 copy(
                     email = email,
-                    isLoadingView = false,
                 )
             }
         }

@@ -2,10 +2,10 @@ package com.spoonofcode.poa.feature.partner.details
 
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal data class PartnerDetailsViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
+    override val screenState: ScreenState = ScreenState.LOADING,
     val partner: Partner = Partner(
         id = 1,
         name = "Beauty Saute",
@@ -18,4 +18,4 @@ internal data class PartnerDetailsViewState(
         youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
         xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
     ),
-) : BaseViewState()
+) : BaseViewState(screenState)

@@ -43,21 +43,32 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     protected open val verticalScrollEnable: Boolean = true,
 ) : Screen {
 
+    protected open fun provideNavigationBackAction(viewModel: VM): () -> Unit =
+        { viewModel.navigateBack() }
+
     protected open fun provideTopAppBarTitle(): StringResource? = null
 
     protected open fun provideContentPadding(): PaddingValues =
         PaddingValues(Paddings.screenPadding)
 
-    protected open fun provideTopBarActions(viewModel: VM): List<TopBarAction> = emptyList()
+    protected open fun provideTopBarActions(
+        viewModel: VM?, // Is nullable because we need this for previews
+    ): List<TopBarAction> = emptyList()
 
     protected open fun provideReloadAction(viewModel: VM): () -> Unit = {}
+
+    @Composable
+    protected open fun provideDialogs(
+        viewModel: VM?, // Is nullable because we need this for previews
+        viewState: VS,
+    ): @Composable () -> Unit = {}
 
     @Composable
     protected abstract fun provideViewModel(): VM
 
     @Composable
-    protected abstract fun provideContentView(
-        viewModel: VM,
+    protected abstract fun provideContent(
+        viewModel: VM?,  // Is nullable because we need this for previews
         viewState: VS,
     ): @Composable ColumnScope.() -> Unit
 
@@ -71,26 +82,34 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         val viewState by viewModel.viewState.collectAsState()
 
         val topBarActions = provideTopBarActions(viewModel)
-        val reloadScreen = remember { provideReloadAction(viewModel) }
+        val reloadAction = remember { provideReloadAction(viewModel) }
+
+        val dialogs = provideDialogs(
+            viewModel = viewModel,
+            viewState = viewState,
+        )
+
+        val content = provideContent(
+            viewModel = viewModel,
+            viewState = viewState,
+        )
+
 
         NavigationHandler(viewModel.navigationFlow, navigator)
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
         ContentView(
             snackbarHostState = snackbarHostState,
-            screenTopAppBarTitle = provideTopAppBarTitle(),
+            topAppBarTitle = provideTopAppBarTitle(),
             backNavigationEnable = backNavigationEnable,
             topBarActions = topBarActions,
-            reloadScreen = reloadScreen,
+            reloadAction = reloadAction,
             verticalScrollEnable = verticalScrollEnable,
             contentPadding = provideContentPadding(),
-            onBackClick = { navigator.pop() },
-            isLoadingView = viewState.isLoadingView,
-            iErrorView = viewState.isErrorView,
-            content = provideContentView(
-                viewModel = viewModel,
-                viewState = viewState,
-            )
+            navigationBackAction = { navigator.pop() },
+            screenState = viewState.screenState,
+            dialogs = dialogs,
+            content = content,
         )
     }
 
@@ -98,17 +117,20 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     @Composable
     private fun ContentView(
         snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-        screenTopAppBarTitle: StringResource? = provideTopAppBarTitle(),
+        topAppBarTitle: StringResource? = provideTopAppBarTitle(),
         backNavigationEnable: Boolean = false,
-        topBarActions: List<TopBarAction> = emptyList(),
-        reloadScreen: () -> Unit = {},
+        topBarActions: List<TopBarAction>,
+        reloadAction: () -> Unit = {},
         verticalScrollEnable: Boolean = false,
         contentPadding: PaddingValues = provideContentPadding(),
-        onBackClick: () -> Unit = {},
-        isLoadingView: Boolean = false,
-        iErrorView: Boolean = false,
+        navigationBackAction: () -> Unit = {},
+        screenState: ScreenState,
+        dialogs: @Composable (() -> Unit),
         content: @Composable ColumnScope.() -> Unit,
     ) {
+
+        dialogs()
+
         Scaffold(
             snackbarHost = {
                 SnackbarHost(
@@ -117,12 +139,12 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                 )
             },
             topBar = {
-                if (screenTopAppBarTitle != null) {
+                if (topAppBarTitle != null) {
                     CenterAlignedTopAppBar(
-                        title = { Texts.TM(stringResource(resource = screenTopAppBarTitle)) },
+                        title = { Texts.TM(stringResource(resource = topAppBarTitle)) },
                         navigationIcon = if (backNavigationEnable) {
                             {
-                                IconButton(onClick = onBackClick) {
+                                IconButton(onClick = navigationBackAction) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Default.ArrowBackIos,
                                         contentDescription = "Back"
@@ -145,12 +167,13 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                     )
                 }
             },
-            modifier = Modifier.viewEnable(isLoadingView.not()).fillMaxSize()
+            modifier = Modifier.viewEnable(screenState != ScreenState.LOADING).fillMaxSize()
         ) { innerPadding ->
-            when {
-                isLoadingView -> LoadingView()
-                iErrorView -> ErrorView(reload = reloadScreen)
-                else -> Column(
+            when (screenState) {
+                ScreenState.INITIAL -> {}
+                ScreenState.LOADING -> LoadingView()
+                ScreenState.ERROR -> ErrorView(reload = reloadAction)
+                ScreenState.CONTENT -> Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .addIf(verticalScrollEnable) { verticalScroll(rememberScrollState()) }
@@ -162,24 +185,15 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         }
     }
 
-    // TODO #18 Fix previews
     @Composable
     protected fun PreviewContent(
-        content: @Composable ColumnScope.() -> Unit
+        viewState: VS,
     ) {
-        val snackbarHostState = remember { SnackbarHostState() }
         ContentView(
-            snackbarHostState = snackbarHostState,
-            screenTopAppBarTitle = provideTopAppBarTitle(),
-            backNavigationEnable = backNavigationEnable,
-            topBarActions = emptyList(),
-            reloadScreen = { },
-            verticalScrollEnable = verticalScrollEnable,
-            contentPadding = provideContentPadding(),
-            onBackClick = { },
-            isLoadingView = false,
-            iErrorView = false,
-            content = content
+            topBarActions = provideTopBarActions(viewModel = null),
+            screenState = viewState.screenState,
+            dialogs = provideDialogs(viewModel = null, viewState = viewState),
+            content = provideContent(viewModel = null, viewState = viewState),
         )
     }
 

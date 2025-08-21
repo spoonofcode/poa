@@ -48,23 +48,23 @@ internal data class ProductDetailsScreen(
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
     override fun provideTopBarActions(
-        viewModel: ProductDetailsViewModel,
+        viewModel: ProductDetailsViewModel?,
     ) = listOf(
-        TopBarAction(Icons.Default.Edit, "Edit") { viewModel.editProduct() },
-        TopBarAction(Icons.Default.Delete, "Delete") { viewModel.deleteProduct() }
+        TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.editProduct() },
+        TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deleteProduct() }
     )
 
     override fun provideReloadAction(viewModel: ProductDetailsViewModel): () -> Unit =
         { viewModel.initView(productId = productId) }
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductDetailsViewModel,
+    override fun provideContent(
+        viewModel: ProductDetailsViewModel?,
         viewState: ProductDetailsViewState
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
-            viewModel.initView(productId = productId)
+            viewModel?.initView(productId = productId)
         }
 
         return ContentView(

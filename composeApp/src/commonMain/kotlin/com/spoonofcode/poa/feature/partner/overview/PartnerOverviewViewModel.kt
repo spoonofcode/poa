@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.partner.GetAllPartnerCategoriesUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -27,7 +28,7 @@ internal class PartnerOverviewViewModel(
                 val partnerCategories = getAllPartnerCategoriesUseCase()
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                         initPartners = filteredPartners,
                         filteredPartners = filteredPartners,
                         partnerCategories = partnerCategories,
@@ -75,8 +76,7 @@ internal class PartnerOverviewViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -84,8 +84,7 @@ internal class PartnerOverviewViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

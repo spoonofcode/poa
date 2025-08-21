@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.product.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -19,7 +20,7 @@ internal class ProductDetailsViewModel(
                 val product = getProductByIdUseCase(productId = productId)
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                         product = product
                     )
                 }
@@ -57,8 +58,7 @@ internal class ProductDetailsViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -66,8 +66,7 @@ internal class ProductDetailsViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }
@@ -76,7 +75,7 @@ internal class ProductDetailsViewModel(
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(
-                isLoadingView = false
+                screenState = ScreenState.LOADING
             )
         }
     }

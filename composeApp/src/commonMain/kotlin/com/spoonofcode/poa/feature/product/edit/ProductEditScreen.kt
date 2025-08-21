@@ -22,8 +22,8 @@ internal class ProductEditScreen(
     override fun provideViewModel() = koinViewModel<ProductEditViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductEditViewModel,
+    override fun provideContent(
+        viewModel: ProductEditViewModel?,
         viewState: ProductEditViewState
     ): @Composable ColumnScope.() -> Unit {
 

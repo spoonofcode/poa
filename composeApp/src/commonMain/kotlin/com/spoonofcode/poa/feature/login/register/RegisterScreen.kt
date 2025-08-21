@@ -24,17 +24,17 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
     override fun provideViewModel() = koinViewModel<RegisterViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: RegisterViewModel,
+    override fun provideContent(
+        viewModel: RegisterViewModel?,
         viewState: RegisterViewState,
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeEmail = { viewModel.changeEmail(it) },
-            changePassword = { viewModel.changePassword(it) },
-            changeFirstName = { viewModel.changeFirstName(it) },
-            changeLastName = { viewModel.changeLastName(it) },
-            signUp = { viewModel.signUp() },
+            changeEmail = { viewModel?.changeEmail(it) },
+            changePassword = { viewModel?.changePassword(it) },
+            changeFirstName = { viewModel?.changeFirstName(it) },
+            changeLastName = { viewModel?.changeLastName(it) },
+            signUp = { viewModel?.signUp() },
         )
     }
 

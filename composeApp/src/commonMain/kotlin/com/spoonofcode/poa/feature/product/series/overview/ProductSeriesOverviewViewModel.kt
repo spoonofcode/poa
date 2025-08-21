@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.product.series.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -24,7 +25,7 @@ internal class ProductSeriesOverviewViewModel(
                     productSeries.map { product -> product.seriesId }.associateWith { false }
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                         productSeries = productSeries,
                         checkedProductSeriesIds = selectedProductSeriesIds
                     )
@@ -68,8 +69,7 @@ internal class ProductSeriesOverviewViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -77,8 +77,7 @@ internal class ProductSeriesOverviewViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

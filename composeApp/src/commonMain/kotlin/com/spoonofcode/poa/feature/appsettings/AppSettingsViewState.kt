@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.appsettings
 
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal data class AppSettingsViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
-) : BaseViewState()
+    override val screenState: ScreenState = ScreenState.LOADING,
+) : BaseViewState(screenState)

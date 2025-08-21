@@ -1,12 +1,12 @@
 package com.spoonofcode.poa.feature.notification.edit
 
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal data class NotificationEditViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
+    override val screenState: ScreenState = ScreenState.CONTENT,
     val seriesIds: List<String> = emptyList(),
     val title: String = "",
     val text: String = "",
     val link: String = "",
-) : BaseViewState()
+) : BaseViewState(screenState)

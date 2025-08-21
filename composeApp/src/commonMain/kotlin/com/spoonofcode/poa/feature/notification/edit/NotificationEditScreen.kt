@@ -28,21 +28,21 @@ internal class NotificationEditScreen(
     override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: NotificationEditViewModel,
+    override fun provideContent(
+        viewModel: NotificationEditViewModel?,
         viewState: NotificationEditViewState
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
-            viewModel.initView(seriesIds = seriesIds)
+            viewModel?.initView(seriesIds = seriesIds)
         }
 
         return ContentView(
             viewState = viewState,
-            changeTitle = { viewModel.changeTitle(it) },
-            changeText = { viewModel.changeText(it) },
-            changeLink = { viewModel.changeLink(it) },
-            sendNotification = { viewModel.sendNotification() },
+            changeTitle = { viewModel?.changeTitle(it) },
+            changeText = { viewModel?.changeText(it) },
+            changeLink = { viewModel?.changeLink(it) },
+            sendNotification = { viewModel?.sendNotification() },
         )
     }
 

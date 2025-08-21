@@ -23,15 +23,15 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
     override fun provideViewModel() = koinViewModel<AppSettingsViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: AppSettingsViewModel,
+    override fun provideContent(
+        viewModel: AppSettingsViewModel?,
         viewState: AppSettingsViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            navigateToMessageFCM = { viewModel.navigateToMessageFCM() },
-            signOut = { viewModel.signOut() },
-            deleteAccount = { viewModel.deleteAccount() },
+            navigateToMessageFCM = { viewModel?.navigateToMessageFCM() },
+            signOut = { viewModel?.signOut() },
+            deleteAccount = { viewModel?.deleteAccount() },
         )
     }
 

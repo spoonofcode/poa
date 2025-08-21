@@ -36,6 +36,12 @@ abstract class BaseViewModel<VS : BaseViewState>(
         observeNetworkState()
     }
 
+    open fun navigateBack() {
+        viewModelScope.launch {
+            viewModelNavigator.pop()
+        }
+    }
+
     fun currentState(): VS = viewState.value
 
     fun updateState(

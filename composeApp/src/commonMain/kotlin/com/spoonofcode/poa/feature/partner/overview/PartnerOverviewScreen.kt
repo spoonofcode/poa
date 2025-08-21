@@ -23,6 +23,8 @@ import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Chips.HorizontalScrollableFilterChipRow
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
+import com.spoonofcode.poa.feature.partner.details.PartnerDetailsViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partners
 import com.spoonofcode.poa.resources.search
@@ -43,16 +45,16 @@ internal class PartnerOverviewScreen(
     override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerOverviewViewModel,
+    override fun provideContent(
+        viewModel: PartnerOverviewViewModel?,
         viewState: PartnerOverviewViewState
     ): @Composable ColumnScope.() -> Unit {
 
         return ContentView(
             viewState = viewState,
-            clickCategory = { viewModel.clickCategory(it) },
-            changeSearchText = { viewModel.changeSearchText(it) },
-            selectPartner = { viewModel.selectPartner(it) },
+            clickCategory = { viewModel?.clickCategory(it) },
+            changeSearchText = { viewModel?.changeSearchText(it) },
+            selectPartner = { viewModel?.selectPartner(it) },
         )
     }
 
@@ -119,13 +121,8 @@ internal class PartnerOverviewScreen(
     @Preview
     @Composable
     fun InitializedPartnerOverviewScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = PartnerOverviewViewState(),
-                clickCategory = {},
-                changeSearchText = {},
-                selectPartner = {},
-            )
+        PartnerOverviewScreen().PreviewContent(
+            viewState = PartnerOverviewViewState(),
         )
     }
     // endregion

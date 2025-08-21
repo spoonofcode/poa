@@ -5,6 +5,7 @@ import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.domain.notification.SendNotificationUseCase
 import com.spoonofcode.poa.core.model.NotificationRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -69,8 +70,7 @@ internal class NotificationEditViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -78,8 +78,7 @@ internal class NotificationEditViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }
@@ -88,7 +87,7 @@ internal class NotificationEditViewModel(
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(
-                isLoadingView = false
+                screenState = ScreenState.CONTENT
             )
         }
     }

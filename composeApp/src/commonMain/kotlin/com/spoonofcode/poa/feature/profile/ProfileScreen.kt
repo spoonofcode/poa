@@ -29,12 +29,12 @@ internal class ProfileScreen(
     override fun provideTopAppBarTitle() = Res.string.profile
 
     override fun provideTopBarActions(
-        viewModel: ProfileViewModel,
+        viewModel: ProfileViewModel?,
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.Settings,
             description = "settings",
-            onClick = { viewModel.navigateToSettings() }
+            onClick = { viewModel?.navigateToSettings() }
         ),
     )
 
@@ -45,13 +45,13 @@ internal class ProfileScreen(
     override fun provideViewModel() = koinViewModel<ProfileViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProfileViewModel,
+    override fun provideContent(
+        viewModel: ProfileViewModel?,
         viewState: ProfileViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            navigateToPartnerPanel = { viewModel.navigateToPartnerPanel() },
+            navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
         )
     }
 
@@ -88,15 +88,12 @@ internal class ProfileScreen(
     @Preview
     @Composable
     private fun InitializedProfileScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = ProfileViewState(
-                    profile = Profile(
-                        name = "Bartosz luczak (Lycha)",
-                        numberOfProductsOwnedByUser = 2
-                    )
-                ),
-                navigateToPartnerPanel = {},
+        ProfileScreen().PreviewContent(
+            ProfileViewState(
+                profile = Profile(
+                    name = "Bartosz luczak (Lycha)",
+                    numberOfProductsOwnedByUser = 2
+                )
             )
         )
     }

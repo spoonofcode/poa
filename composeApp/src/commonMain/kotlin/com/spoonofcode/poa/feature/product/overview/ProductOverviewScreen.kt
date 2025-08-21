@@ -46,12 +46,12 @@ internal class ProductOverviewScreen(
 
 
     override fun provideTopBarActions(
-        viewModel: ProductOverviewViewModel,
+        viewModel: ProductOverviewViewModel?,
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.FilterList,
             description = "filter",
-            onClick = { viewModel.navigateToFilter() }
+            onClick = { viewModel?.navigateToFilter() }
         ),
     )
 
@@ -59,14 +59,14 @@ internal class ProductOverviewScreen(
     override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductOverviewViewModel,
+    override fun provideContent(
+        viewModel: ProductOverviewViewModel?,
         viewState: ProductOverviewViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeSearchText = { viewModel.changeSearchText(it) },
-            selectProduct = { viewModel.selectProduct(it) },
+            changeSearchText = { viewModel?.changeSearchText(it) },
+            selectProduct = { viewModel?.selectProduct(it) },
         )
     }
 

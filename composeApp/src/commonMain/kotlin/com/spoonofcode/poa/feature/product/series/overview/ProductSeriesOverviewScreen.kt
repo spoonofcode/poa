@@ -47,14 +47,14 @@ internal class ProductSeriesOverviewScreen(
     override fun provideViewModel() = koinViewModel<ProductSeriesOverviewViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductSeriesOverviewViewModel,
+    override fun provideContent(
+        viewModel: ProductSeriesOverviewViewModel?,
         viewState: ProductSeriesOverviewViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            checkedProductSeries = { viewModel.checkedProductSeries(it) },
-            navigateToNotification = { viewModel.navigateToNotification() },
+            checkedProductSeries = { viewModel?.checkedProductSeries(it) },
+            navigateToNotification = { viewModel?.navigateToNotification() },
         )
     }
 

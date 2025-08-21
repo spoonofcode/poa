@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.partner.edit
 
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal class PartnerEditViewModel(
 ) : BaseViewModel<PartnerEditViewState>(PartnerEditViewState()) {
@@ -16,8 +17,7 @@ internal class PartnerEditViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -25,8 +25,7 @@ internal class PartnerEditViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

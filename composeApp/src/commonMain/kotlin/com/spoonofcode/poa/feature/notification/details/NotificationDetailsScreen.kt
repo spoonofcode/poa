@@ -8,6 +8,8 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.messagefcm.MessageFCMScreen
+import com.spoonofcode.poa.feature.messagefcm.MessageFCMViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -25,13 +27,13 @@ internal class NotificationDetailsScreen(
     override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: NotificationDetailsViewModel,
+    override fun provideContent(
+        viewModel: NotificationDetailsViewModel?,
         viewState: NotificationDetailsViewState,
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
-            viewModel.initView(notificationId = notificationId)
+            viewModel?.initView(notificationId = notificationId)
         }
 
         return ContentView(
@@ -72,12 +74,8 @@ internal class NotificationDetailsScreen(
     @Preview
     @Composable
     fun InitializedNotificationDetailsScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = NotificationDetailsViewState(
-                    notification = NotificationMockData.NOTIFICATION_1
-                )
-            )
+        NotificationDetailsScreen(notificationId = 1).PreviewContent(
+            viewState = NotificationDetailsViewState(),
         )
     }
     // endregion

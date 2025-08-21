@@ -22,14 +22,14 @@ internal class ForgotPasswordScreen() :
     override fun provideViewModel() = koinViewModel<ForgotPasswordViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ForgotPasswordViewModel,
+    override fun provideContent(
+        viewModel: ForgotPasswordViewModel?,
         viewState: ForgotPasswordViewState,
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeEmail = { viewModel.changeEmail(it) },
-            resetPassword = { viewModel.resetPassword() },
+            changeEmail = { viewModel?.changeEmail(it) },
+            resetPassword = { viewModel?.resetPassword() },
         )
     }
 

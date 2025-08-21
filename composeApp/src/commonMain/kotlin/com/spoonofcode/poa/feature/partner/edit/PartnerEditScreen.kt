@@ -22,8 +22,8 @@ internal class PartnerEditScreen(
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerEditViewModel,
+    override fun provideContent(
+        viewModel: PartnerEditViewModel?,
         viewState: PartnerEditViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(

@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.product.edit
 
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal class ProductEditViewModel(
 ) : BaseViewModel<ProductEditViewState>(ProductEditViewState()) {
@@ -16,8 +17,7 @@ internal class ProductEditViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -25,8 +25,7 @@ internal class ProductEditViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }
