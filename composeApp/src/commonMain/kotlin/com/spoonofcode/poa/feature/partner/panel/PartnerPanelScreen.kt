@@ -28,7 +28,9 @@ internal class PartnerPanelScreen() :
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            navigateToPartnerEdit = { viewModel.navigateToPartnerEdit() },
+            // --- POPRAWKA ---
+            // Używamy nowej, poprawnej nazwy funkcji, która nawiguje do listy partnerów
+            navigateToMyPartners = { viewModel.navigateToMyPartners() },
             navigateToPartnerProducts = { viewModel.navigateToPartnerProducts() },
         )
     }
@@ -36,13 +38,13 @@ internal class PartnerPanelScreen() :
     @Composable
     private fun ContentView(
         viewState: PartnerPanelViewState,
-        navigateToPartnerEdit: () -> Unit,
+        navigateToMyPartners: () -> Unit, // Zmieniamy nazwę, aby była spójna
         navigateToPartnerProducts: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.partner_info),
-                onClick = navigateToPartnerEdit
+                onClick = navigateToMyPartners // <-- Używamy nowej, poprawnej nazwy
             )
             Spacers.VerticalBetweenFields()
 
@@ -60,7 +62,7 @@ internal class PartnerPanelScreen() :
         PreviewContent(
             content = ContentView(
                 viewState = PartnerPanelViewState(),
-                navigateToPartnerEdit = {},
+                navigateToMyPartners = {}, // <-- Używamy nowej, poprawnej nazwy
                 navigateToPartnerProducts = {},
             )
         )

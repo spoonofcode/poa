@@ -2,22 +2,23 @@ package com.spoonofcode.poa.feature.partner.panel
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.feature.partner.edit.PartnerEditScreen
+import com.spoonofcode.poa.feature.partner.mypartners.MyPartnersScreen // <-- Musimy nawigować do nowego ekranu listy
 import kotlinx.coroutines.launch
 
 internal class PartnerPanelViewModel() :
     BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
 
-    fun navigateToPartnerEdit() {
+    // Zmieniamy nazwę, aby pasowała do tego, co robi: nawiguje do ekranu z listą
+    fun navigateToMyPartners() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen(backNavigationEnable = true, partnerId = 1))
+            // Zamiast nawigować do edycji, nawigujemy do nowego ekranu listy
+            viewModelNavigator.push(MyPartnersScreen())
         }
     }
 
     fun navigateToPartnerProducts() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen(backNavigationEnable = true, partnerId = 1))
+            // Tutaj w przyszłości będzie nawigacja do produktów partnera
         }
     }
-
 }
