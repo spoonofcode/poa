@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.login.login
 
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal data class LoginViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
+    override val screenState: ScreenState = ScreenState.CONTENT,
     val email: String = "bartosz.luczak@gmail.com",
     val password: String = "bartosz123",
-) : BaseViewState()
+) : BaseViewState(screenState)

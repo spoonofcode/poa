@@ -43,16 +43,16 @@ internal class PartnerOverviewScreen(
     override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerOverviewViewModel,
+    override fun provideContent(
+        viewModel: PartnerOverviewViewModel?,
         viewState: PartnerOverviewViewState
     ): @Composable ColumnScope.() -> Unit {
 
         return ContentView(
             viewState = viewState,
-            clickCategory = { viewModel.clickCategory(it) },
-            changeSearchText = { viewModel.changeSearchText(it) },
-            selectPartner = { viewModel.selectPartner(it) },
+            clickCategory = { viewModel?.clickCategory(it) },
+            changeSearchText = { viewModel?.changeSearchText(it) },
+            selectPartner = { viewModel?.selectPartner(it) },
         )
     }
 
@@ -105,7 +105,7 @@ internal class PartnerOverviewScreen(
                 modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
             ) {
                 CoilImage(
-                    imageModel = { item.imageLink }, // loading a network image or local resource using an URL.
+                    imageModel = { item.imageLink },
                     imageOptions = ImageOptions(
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.Center
@@ -114,19 +114,14 @@ internal class PartnerOverviewScreen(
             }
         }
     }
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedPartnerOverviewScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = PartnerOverviewViewState(),
-                clickCategory = {},
-                changeSearchText = {},
-                selectPartner = {},
-            )
-        )
-    }
-    // endregion
 }
+
+// region previews
+@Preview
+@Composable
+fun PartnerOverviewScreenContentPreview() {
+    PartnerOverviewScreen().PreviewContent(
+        viewState = PartnerOverviewViewState(),
+    )
+}
+// endregion

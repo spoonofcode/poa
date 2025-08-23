@@ -7,30 +7,45 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.theme.AppTheme
 import com.spoonofcode.poa.feature.login.login.LoginScreen
+import com.spoonofcode.poa.feature.notification.details.NotificationDetailsScreen
+import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 
 @Composable
 @Preview
-fun App() {
+fun App(notificationId: String?) {
     val sessionManager: SessionManager = getKoin().get()
 
     AppTheme {
-        Navigator(getStartScreen(sessionManager.isSessionInitialized())) { navigator ->
+        Navigator(
+            screens = getStartScreens(
+                sessionInitialized = sessionManager.isSessionInitialized(),
+                notificationId = notificationId
+            )
+        ) { navigator ->
             SlideTransition(navigator = navigator)
         }
     }
 }
 
 @Composable
-private fun getStartScreen(sessionInitialized: Boolean): Screen {
+private fun getStartScreens(sessionInitialized: Boolean, notificationId: String?): List<Screen> {
 //    return DemoScreen()
 //    return MainHostScreen()
 
     return if (sessionInitialized) {
-        MainHostScreen()
+        if (notificationId.isNullOrEmpty()) {
+            listOf(MainHostScreen())
+        } else {
+            listOf(
+                MainHostScreen(),
+                NotificationOverviewScreen(),
+                NotificationDetailsScreen(notificationId = notificationId.toInt())
+            )
+        }
     } else {
-        LoginScreen()
+        listOf(LoginScreen())
     }
 
 //    return LoginScreen()

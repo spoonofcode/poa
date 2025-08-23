@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -30,10 +29,10 @@ internal class PartnerDetailsScreen(
     override fun provideTopAppBarTitle() = Res.string.partner
 
     override fun provideTopBarActions(
-        viewModel: PartnerDetailsViewModel,
+        viewModel: PartnerDetailsViewModel?,
     ) = listOf(
-        TopBarAction(Icons.Default.Edit, "Edit") { viewModel.editPartner() },
-        TopBarAction(Icons.Default.Delete, "Delete") { viewModel.deletePartner() }
+        TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.editPartner() },
+        TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deletePartner() }
     )
 
     override fun provideReloadAction(viewModel: PartnerDetailsViewModel): () -> Unit =
@@ -43,13 +42,13 @@ internal class PartnerDetailsScreen(
     override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerDetailsViewModel,
+    override fun provideContent(
+        viewModel: PartnerDetailsViewModel?,
         viewState: PartnerDetailsViewState,
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
-            viewModel.initView(partnerId = partnerId)
+            viewModel?.initView(partnerId = partnerId)
         }
 
         return ContentView(
@@ -89,18 +88,14 @@ internal class PartnerDetailsScreen(
 //            )
         }
     }
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedPartnerDetailsScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = PartnerDetailsViewState(
-                    partner = PartnerMockData.PARTNER_1
-                )
-            )
-        )
-    }
-    // endregion
 }
+
+// region previews
+@Preview
+@Composable
+fun PartnerDetailsScreenContentPreview() {
+    PartnerDetailsScreen(partnerId = 1).PreviewContent(
+        viewState = PartnerDetailsViewState(),
+    )
+}
+// endregion

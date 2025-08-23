@@ -12,6 +12,7 @@ import com.spoonofcode.poa.resources.email
 import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ForgotPasswordScreen() :
     BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
@@ -22,14 +23,14 @@ internal class ForgotPasswordScreen() :
     override fun provideViewModel() = koinViewModel<ForgotPasswordViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ForgotPasswordViewModel,
+    override fun provideContent(
+        viewModel: ForgotPasswordViewModel?,
         viewState: ForgotPasswordViewState,
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeEmail = { viewModel.changeEmail(it) },
-            resetPassword = { viewModel.resetPassword() },
+            changeEmail = { viewModel?.changeEmail(it) },
+            resetPassword = { viewModel?.resetPassword() },
         )
     }
 
@@ -55,3 +56,13 @@ internal class ForgotPasswordScreen() :
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun ForgotPasswordScreenContentPreview() {
+    ForgotPasswordScreen().PreviewContent(
+        ForgotPasswordViewState()
+    )
+}
+// endregion

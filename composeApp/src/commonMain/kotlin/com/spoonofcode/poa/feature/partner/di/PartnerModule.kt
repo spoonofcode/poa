@@ -17,4 +17,5 @@ val partnerModule = module {
     viewModelOf(::PartnerOverviewViewModel)
     viewModelOf(::MyPartnersViewModel)
     viewModelOf(::PartnerPanelViewModel)
+    viewModelOf(::PartnerEditViewModel)
 }

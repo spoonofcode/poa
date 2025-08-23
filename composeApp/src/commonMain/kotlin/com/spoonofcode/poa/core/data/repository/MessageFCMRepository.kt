@@ -17,7 +17,6 @@ class MessageFCMRepository : GenericBaseRepository<MessageFCM, MessageFCM>(
     requestSerializer = MessageFCM.serializer(),
     responseSerializer = MessageFCM.serializer(),
 ) {
-
     suspend fun sendMessage(body: MessageFCM) {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
@@ -36,5 +35,4 @@ class MessageFCMRepository : GenericBaseRepository<MessageFCM, MessageFCM>(
             responseOrException(response).body<String>()
         }
     }
-
 }

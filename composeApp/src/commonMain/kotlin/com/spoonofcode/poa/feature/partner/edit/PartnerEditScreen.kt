@@ -2,13 +2,6 @@ package com.spoonofcode.poa.feature.partner.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.layout.ContentScale
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.coil3.CoilImage
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData
-import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.TextFields

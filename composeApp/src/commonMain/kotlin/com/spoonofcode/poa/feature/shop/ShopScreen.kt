@@ -7,9 +7,8 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.MyWebView
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.partner
 import com.spoonofcode.poa.resources.shop
-import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ShopScreen(
     override val backNavigationEnable: Boolean = false,
@@ -22,8 +21,8 @@ internal class ShopScreen(
     override fun provideViewModel() = koinViewModel<ShopViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ShopViewModel,
+    override fun provideContent(
+        viewModel: ShopViewModel?,
         viewState: ShopViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(viewState = viewState)
@@ -38,3 +37,13 @@ internal class ShopScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun ShopScreenContentPreview() {
+    ShopScreen().PreviewContent(
+        ShopViewState()
+    )
+}
+// endregion

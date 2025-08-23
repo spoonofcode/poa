@@ -25,32 +25,35 @@ import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.search
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
 ) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState>() {
 
-    override fun provideTopAppBarTitle() = Res.string.search
+    override fun provideTopAppBarTitle() = Res.string.my_products
 
     override fun provideReloadAction(viewModel: ProductOverviewViewModel): () -> Unit =
         { viewModel.initView() }
 
 
     override fun provideTopBarActions(
-        viewModel: ProductOverviewViewModel,
+        viewModel: ProductOverviewViewModel?,
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.FilterList,
             description = "filter",
-            onClick = { viewModel.navigateToFilter() }
+            onClick = { viewModel?.navigateToFilter() }
         ),
     )
 
@@ -58,14 +61,14 @@ internal class ProductOverviewScreen(
     override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: ProductOverviewViewModel,
+    override fun provideContent(
+        viewModel: ProductOverviewViewModel?,
         viewState: ProductOverviewViewState
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            changeSearchText = { viewModel.changeSearchText(it) },
-            selectProduct = { viewModel.selectProduct(it) },
+            changeSearchText = { viewModel?.changeSearchText(it) },
+            selectProduct = { viewModel?.selectProduct(it) },
         )
     }
 
@@ -73,7 +76,7 @@ internal class ProductOverviewScreen(
     internal fun ContentView(
         viewState: ProductOverviewViewState,
         changeSearchText: (String) -> Unit,
-        selectProduct: (String) -> Unit,
+        selectProduct: (Int) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
@@ -88,7 +91,7 @@ internal class ProductOverviewScreen(
                 items(viewState.filteredProducts) { product ->
                     ProductItem(
                         item = product,
-                        onClick = { selectProduct(product.tagId) }
+                        onClick = { selectProduct(product.id) }
                     )
                 }
             }
@@ -150,3 +153,15 @@ internal class ProductOverviewScreen(
         }
     }
 }
+
+// region previews
+@Preview
+@Composable
+fun ProductOverviewScreenContentPreview() {
+    ProductOverviewScreen().PreviewContent(
+        viewState = ProductOverviewViewState(
+            screenState = ScreenState.CONTENT,
+        ),
+    )
+}
+// endregion

@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.messagefcm.SendMessageFCMUseCase
 import com.spoonofcode.poa.core.model.MessageFCM
 import com.spoonofcode.poa.core.model.NotificationFCM
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.core.ui.utils.FirebasePushService
 import kotlinx.coroutines.launch
@@ -136,8 +137,7 @@ class MessageFCMViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

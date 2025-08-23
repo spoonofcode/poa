@@ -13,16 +13,13 @@ class MainActivity : ComponentActivity() {
         initUrlOpener(applicationContext)
         requestNotificationPermission()
 
-        val screen = intent.getStringExtra("screen")
-        val itemId = intent.getStringExtra("item_id")
-
-        println("BARTEK screen: $screen")
-        println("BARTEK itemId: $itemId")
+        // Check or we navigate from Notification
+        val notificationId = intent.getStringExtra(NOTIFICATION_ID_KEY)
 
         appContext = this
         installSplashScreen()
         setContent {
-            App()
+            App(notificationId)
         }
     }
 
@@ -36,7 +33,10 @@ class MainActivity : ComponentActivity() {
             if (hasPermission.not()) {
                 requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 0)
             }
-
         }
+    }
+
+    private companion object {
+        private const val NOTIFICATION_ID_KEY = "notificationId"
     }
 }

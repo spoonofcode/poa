@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.demo
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 
 internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
@@ -14,17 +15,15 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
-
+    
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

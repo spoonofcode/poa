@@ -26,13 +26,13 @@ internal class DemoScreen(
     override fun provideViewModel() = koinViewModel<DemoViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: DemoViewModel,
+    override fun provideContent(
+        viewModel: DemoViewModel?,
         viewState: DemoViewState,
     ): @Composable ColumnScope.() -> Unit {
 
         LaunchedEffect(Unit) {
-            viewModel.initView()
+            viewModel?.initView()
         }
 
         return ContentView(
@@ -80,3 +80,13 @@ internal class DemoScreen(
         )
     }
 }
+
+// region previews
+@Preview
+@Composable
+private fun DemoScreenContentPreview() {
+    DemoScreen().PreviewContent(
+        DemoViewState()
+    )
+}
+// endregion

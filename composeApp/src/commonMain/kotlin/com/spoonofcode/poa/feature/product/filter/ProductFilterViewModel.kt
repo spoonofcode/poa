@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.GetProductFilterDataUseCase
 import com.spoonofcode.poa.core.domain.product.SetProductFilterDataUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.product.filter.ProductFilterViewState.Companion.ALL_OPTION_ID
 import com.spoonofcode.poa.feature.product.filter.ProductFilterViewState.Companion.ALL_OPTION_NAME
@@ -27,10 +28,11 @@ internal class ProductFilterViewModel(
 //                val productFilterFormData = loadProductFilterFormDataUseCase()
                 val productFilterData = getProductFilterDataUseCase()
                 val selectedName = productFilterData.selectedName ?: ALL_OPTION_ID
-                val selectedCollectionName = productFilterData.selectedCollectionName ?: ALL_OPTION_ID
+                val selectedCollectionName =
+                    productFilterData.selectedCollectionName ?: ALL_OPTION_ID
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                     )
                 }
             } catch (ce: CancellationException) {
@@ -69,17 +71,10 @@ internal class ProductFilterViewModel(
 
     private fun addAllOption(): Map<Int, String> = mapOf(ALL_OPTION_ID to ALL_OPTION_NAME)
 
-    private fun navigateBack() {
-        viewModelScope.launch {
-            viewModelNavigator.pop()
-        }
-    }
-
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -87,8 +82,7 @@ internal class ProductFilterViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }
@@ -97,7 +91,7 @@ internal class ProductFilterViewModel(
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(
-                isLoadingView = false
+                screenState = ScreenState.CONTENT,
             )
         }
     }

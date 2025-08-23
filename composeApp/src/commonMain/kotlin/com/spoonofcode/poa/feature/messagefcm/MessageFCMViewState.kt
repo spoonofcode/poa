@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.messagefcm
 
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 data class MessageFCMViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
+    override val screenState: ScreenState = ScreenState.CONTENT,
     val fcmUserToken: String = "",
     val fcmRemoteUserToken: String = "",
     val notificationTitle: String = "",
@@ -13,4 +13,4 @@ data class MessageFCMViewState(
     val topics: List<String> = listOf("Sports", "Music", "Travel", "Technology", "Books"),
     val selectedTopicsToSend: List<String> = emptyList(),
     val selectedTopicsToSubscribe: List<String> = emptyList(),
-) : BaseViewState()
+) : BaseViewState(screenState)

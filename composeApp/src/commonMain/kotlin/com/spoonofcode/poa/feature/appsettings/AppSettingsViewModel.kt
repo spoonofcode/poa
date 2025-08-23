@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.login.login.LoginScreen
 import com.spoonofcode.poa.feature.messagefcm.MessageFCMScreen
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ internal class AppSettingsViewModel(
             try {
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                     )
                 }
             } catch (ce: CancellationException) {
@@ -58,8 +59,7 @@ internal class AppSettingsViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -67,8 +67,7 @@ internal class AppSettingsViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }

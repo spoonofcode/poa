@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.home
 
 import com.spoonofcode.poa.core.ui.BaseViewState
+import com.spoonofcode.poa.core.ui.ScreenState
 
 internal data class HomeViewState(
-    override val isLoadingView: Boolean = false,
-    override val isErrorView: Boolean = false,
-) : BaseViewState()
+    override val screenState: ScreenState = ScreenState.LOADING,
+) : BaseViewState(screenState)
