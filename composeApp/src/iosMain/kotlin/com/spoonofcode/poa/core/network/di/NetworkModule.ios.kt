@@ -6,6 +6,7 @@ import org.koin.dsl.module
 
 data class NetworkConfigIOS(
     override val host: String = "localhost",
+//    override val host: String = "spoonofcode.pl",
     override val port: String = "8443",
     override val baseUrl: String = "https://$host:$port",
 ) : NetworkConfig
