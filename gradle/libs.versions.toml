@@ -9,6 +9,7 @@ androidx-security = "1.0.0"
 androidx-splash = "1.0.1"
 compose-icons = "1.1.1"
 compose-multiplatform = "1.8.2"
+compottie = "2.0.0-rc05"
 connectivity = "2.1.0"
 firebaseBom = "34.0.0"
 googleid = "1.1.1"
@@ -37,6 +38,9 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 androidx-media3-ui-compose = { module = "androidx.media3:media3-ui-compose", version.ref = "media3Exoplayer" }
 androidx-security = { module = "androidx.security:security-crypto", version.ref = "androidx-security" }
 androidx-splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splash" }
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
+compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
 connectivity-core = { module = "dev.jordond.connectivity:connectivity-core", version.ref = "connectivity" }
 connectivity-device = { module = "dev.jordond.connectivity:connectivity-device", version.ref = "connectivity" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

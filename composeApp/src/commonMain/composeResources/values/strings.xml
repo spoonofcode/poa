@@ -66,6 +66,8 @@
     <string name="remote_user_token">Remote user token</string>
     <string name="save_changes">Save changes</string>
     <string name="scan">Scan</string>
+    <string name="scan_info">Place the NFC tag on the back of your device</string>
+    <string name="scanning_in_progress">Scanning in progress</string>
     <string name="search">Search</string>
     <string name="search_nft">Search NFT</string>
     <string name="serie">Serie</string>

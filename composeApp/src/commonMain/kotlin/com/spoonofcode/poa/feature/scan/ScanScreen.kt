@@ -1,23 +1,32 @@
 package com.spoonofcode.poa.feature.scan
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.nfc.NfcReader
 import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.LottieAnimation
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.scan
+import com.spoonofcode.poa.resources.scan_info
+import com.spoonofcode.poa.resources.scanning_in_progress
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ScanScreen(
     override val backNavigationEnable: Boolean = false,
+    override val verticalScrollEnable: Boolean = false,
 ) : BaseScreen<ScanViewModel, ScanViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.scan
@@ -35,39 +44,37 @@ internal class ScanScreen(
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
+            checkProduct = { viewModel?.checkProduct(it) }
         )
     }
 
     @Composable
     private fun ContentView(
         viewState: ScanViewState,
+        checkProduct: (String) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Texts.BLB("HOME")
+            val reader: NfcReader = rememberNfcReader()
+            val tag by reader.tags.collectAsState(initial = null)
 
-            NfcScreen()
+            LaunchedEffect(Unit) { reader.start() }
+            DisposableEffect(Unit) { onDispose { reader.stop() } }
 
-            // TODO Add Plus floating button to add nft (scan)
-        }
-    }
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                tag?.let {
+                    checkProduct(it.id)
+                } ?: LottieAnimation(
+                    animationFilePath = viewState.animationFilePath,
+                    contentDescription = viewState.contentDescription,
+                )
 
-    @Composable
-    fun NfcScreen(reader: NfcReader = rememberNfcReader()) {
-        val tag by reader.tags.collectAsState(initial = null)
-
-        LaunchedEffect(Unit) { reader.start() }
-        DisposableEffect(Unit) { onDispose { reader.stop() } }
-
-        Column {
-            Texts.BLB("Tap an NFC tag")
-            tag?.let {
-                Texts.BLB("ID  : ${it.id}")
-                Texts.BLB("Tech: ${it.techList.joinToString()}")
-                Texts.BLB("ID  : ${it.id}")
-                it.ndef?.let { ndef ->
-                    Texts.BLB("NDEF: $ndef")
-                }
-            } ?: Texts.BLB("Waiting…")
+                Texts.BL(stringResource(Res.string.scan_info))
+                Texts.BM(stringResource(Res.string.scanning_in_progress))
+            }
         }
     }
 }
