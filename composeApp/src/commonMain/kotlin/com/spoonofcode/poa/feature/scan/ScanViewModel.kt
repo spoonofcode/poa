@@ -1,15 +1,14 @@
 package com.spoonofcode.poa.feature.scan
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
+import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
-    private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val getProductByTagIdUseCase: GetProductByTagIdUseCase,
 ) : BaseViewModel<ScanViewState>(ScanViewState()) {
 
     fun initView() {
@@ -24,13 +23,8 @@ internal class ScanViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                val product = getProductByIdUseCase(productId = 1)
-                viewModelNavigator.replaceAll(
-                    listOf(
-                        MainHostScreen(),
-                        ProductDetailsScreen(productId = 1),
-                    )
-                )
+                val product = getProductByTagIdUseCase(tagId = tagId)
+                viewModelNavigator.push(ProductDetailsScreen(productId = product.id))
             } catch (e: Exception) {
                 showErrorView()
             }

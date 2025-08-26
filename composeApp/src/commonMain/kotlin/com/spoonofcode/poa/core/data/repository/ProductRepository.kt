@@ -17,6 +17,19 @@ class ProductRepository : GenericCrudRepository<ProductRequest, Product>(
     requestSerializer = ProductRequest.serializer(),
     responseSerializer = Product.serializer(),
 ) {
+    suspend fun readProductByTagId(tagId: String): Product {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "products",
+                method = HttpMethod.Get,
+                queryParams = mapOf("tagId" to tagId)
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(Product.serializer(), responseBody)
+        }
+    }
+
     suspend fun readProductsOwnedByUser(ownerUserId: Int): List<Product> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
