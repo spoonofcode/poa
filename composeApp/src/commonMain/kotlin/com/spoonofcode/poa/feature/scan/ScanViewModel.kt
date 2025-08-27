@@ -24,7 +24,12 @@ internal class ScanViewModel(
             showLoadingView()
             try {
                 val product = getProductByTagIdUseCase(tagId = tagId)
-                viewModelNavigator.push(ProductDetailsScreen(productId = product.id))
+                viewModelNavigator.push(
+                    ProductDetailsScreen(
+                        productId = product.id,
+                        hasOwnerUser = product.ownerUser != null,
+                    )
+                )
             } catch (e: Exception) {
                 showErrorView()
             }
