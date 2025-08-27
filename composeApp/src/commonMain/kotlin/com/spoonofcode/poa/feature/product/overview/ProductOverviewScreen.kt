@@ -111,9 +111,6 @@ internal class ProductOverviewScreen(
             Column(
                 modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
             ) {
-                Texts.BLB(
-                    text = item.tagId,
-                )
                 ProductItemRowElement(
                     elementValue = item.name,
                     icon = Icons.Default.Paid,
@@ -126,11 +123,13 @@ internal class ProductOverviewScreen(
                     contentDescription = "Collection name",
                 )
 
-                ProductItemRowElement(
-                    elementValue = item.tagId,
-                    icon = Icons.Default.Schema,
-                    contentDescription = "Tag id",
-                )
+                item.tagId?.let {
+                    ProductItemRowElement(
+                        elementValue = it,
+                        icon = Icons.Default.Schema,
+                        contentDescription = "Tag id",
+                    )
+                }
             }
         }
     }
