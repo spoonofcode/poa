@@ -29,16 +29,4 @@ class PartnerRepository : GenericCrudRepository<PartnerRequest, Partner>(
             Json.decodeFromString(ListSerializer(Partner.serializer()), responseBody)
         }
     }
-    suspend fun getMyPartners(userId: Int): List<Partner> {
-        return withContext(Dispatchers.IO) {
-            val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/partners", // Używamy nowego endpointu
-                method = HttpMethod.Get,
-                sessionTokenRequired = true
-            )
-
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(Partner.serializer()), responseBody)
-        }
-    }
 }

@@ -32,34 +32,33 @@ class MyPartnersScreen : BaseScreen<MyPartnersViewModel, MyPartnersViewState>() 
     override fun provideViewModel() = koinViewModel<MyPartnersViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: MyPartnersViewModel,
+    override fun provideContent(
+        viewModel: MyPartnersViewModel?,
         viewState: MyPartnersViewState
     ): @Composable ColumnScope.() -> Unit {
-        return {
-            ContentView(
-                viewState = viewState,
-                onPartnerClick = { partnerId -> viewModel.onPartnerClick(partnerId) }
-            )
-        }
+        return ContentView(
+            viewState = viewState,
+            onPartnerClick = { partnerId -> viewModel?.onPartnerClick(partnerId) }
+        )
     }
-
     @Composable
     private fun ContentView(
         viewState: MyPartnersViewState,
         onPartnerClick: (Int) -> Unit
-    ) {
-        if (viewState.partners.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(stringResource(Res.string.no_partners_found))
-            }
-        } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(viewState.partners) { partner ->
-                    PartnerListItem(
-                        partner = partner,
-                        onClick = { onPartnerClick(partner.id) }
-                    )
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            if (viewState.partners.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(stringResource(Res.string.no_partners_found))
+                }
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(viewState.partners) { partner ->
+                        PartnerListItem(
+                            partner = partner,
+                            onClick = { onPartnerClick(partner.id) }
+                        )
+                    }
                 }
             }
         }

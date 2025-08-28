@@ -18,33 +18,33 @@ internal class PartnerPanelScreen() :
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
+    override fun provideReloadAction(viewModel: PartnerPanelViewModel): () -> Unit = { }
+
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 
     @Composable
-    override fun provideContentView(
-        viewModel: PartnerPanelViewModel,
+    override fun provideContent(
+        viewModel: PartnerPanelViewModel?,
         viewState: PartnerPanelViewState,
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            // --- POPRAWKA ---
-            // Używamy nowej, poprawnej nazwy funkcji, która nawiguje do listy partnerów
-            navigateToMyPartners = { viewModel.navigateToMyPartners() },
-            navigateToPartnerProducts = { viewModel.navigateToPartnerProducts() },
+            navigateToMyPartners = { viewModel?.navigateToMyPartners() },
+            navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
         )
     }
 
     @Composable
     private fun ContentView(
         viewState: PartnerPanelViewState,
-        navigateToMyPartners: () -> Unit, // Zmieniamy nazwę, aby była spójna
+        navigateToMyPartners: () -> Unit,
         navigateToPartnerProducts: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.partner_info),
-                onClick = navigateToMyPartners // <-- Używamy nowej, poprawnej nazwy
+                onClick = navigateToMyPartners
             )
             Spacers.VerticalBetweenFields()
 
@@ -59,12 +59,8 @@ internal class PartnerPanelScreen() :
     @Preview
     @Composable
     fun InitializedPartnerPanelScreenPreview() {
-        PreviewContent(
-            content = ContentView(
-                viewState = PartnerPanelViewState(),
-                navigateToMyPartners = {}, // <-- Używamy nowej, poprawnej nazwy
-                navigateToPartnerProducts = {},
-            )
+        PartnerPanelScreen().PreviewContent(
+            viewState = PartnerPanelViewState()
         )
     }
     // endregion

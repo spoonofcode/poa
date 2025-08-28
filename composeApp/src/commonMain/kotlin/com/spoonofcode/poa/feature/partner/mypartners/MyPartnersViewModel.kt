@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.partner.mypartners
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.partner.GetMyPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.edit.PartnerEditScreen
 import kotlinx.coroutines.launch
 
@@ -21,7 +22,7 @@ class MyPartnersViewModel(
                 val partners = getMyPartnersUseCase()
                 updateState {
                     copy(
-                        isLoadingView = false,
+                        screenState = ScreenState.CONTENT,
                         partners = partners
                     )
                 }
@@ -41,8 +42,7 @@ class MyPartnersViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                isLoadingView = true,
-                isErrorView = false,
+                screenState = ScreenState.LOADING,
             )
         }
     }
@@ -50,8 +50,7 @@ class MyPartnersViewModel(
     private fun showErrorView() {
         updateState {
             copy(
-                isLoadingView = false,
-                isErrorView = true,
+                screenState = ScreenState.ERROR,
             )
         }
     }
