@@ -1,7 +1,9 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
+import com.spoonofcode.poa.core.model.AddProductUserRequest
 import com.spoonofcode.poa.core.model.AddRoleToUserRequest
+import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
 import com.spoonofcode.poa.core.test.OpenForMokkery
@@ -30,6 +32,32 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
 
             val responseBody = responseOrException(response).body<String>()
             Json.decodeFromString(ListSerializer(User.serializer()), responseBody)
+        }
+    }
+
+    suspend fun readUserProducts(userId: Int): List<Product> {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/products",
+                method = HttpMethod.Get,
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(ListSerializer(Product.serializer()), responseBody)
+        }
+    }
+
+    suspend fun addProductToUser(productId: Int, userId: Int) {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/products",
+                method = HttpMethod.Post,
+                customRequestBody = Json.encodeToString(
+                    AddProductUserRequest.serializer(),
+                    AddProductUserRequest(productId = productId)
+                ),
+            )
+            responseOrException(response).body<String>()
         }
     }
 

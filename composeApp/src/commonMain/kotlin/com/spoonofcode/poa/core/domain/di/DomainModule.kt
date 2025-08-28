@@ -27,6 +27,8 @@ import com.spoonofcode.poa.core.domain.user.GetAllUsersUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
+import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.GetUserProducts
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -52,6 +54,8 @@ val domainModule = module {
     factoryOf(::GetFilteredProductsUseCase)
     factoryOf(::GetProductByIdUseCase)
     factoryOf(::GetProductByTagIdUseCase)
+    factoryOf(::GetUserProducts)
+    factoryOf(::AddProductToUserUseCase)
     factoryOf(::UpdatePartnerUseCase)
     factoryOf(::GetAllProductSeriesUseCase)
     factoryOf(::GetAllProductSeriesIdsUseCase)

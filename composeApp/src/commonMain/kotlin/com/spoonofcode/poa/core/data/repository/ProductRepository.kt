@@ -9,7 +9,6 @@ import io.ktor.http.HttpMethod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class ProductRepository : GenericCrudRepository<ProductRequest, Product>(
@@ -27,19 +26,6 @@ class ProductRepository : GenericCrudRepository<ProductRequest, Product>(
 
             val responseBody = responseOrException(response).body<String>()
             Json.decodeFromString(Product.serializer(), responseBody)
-        }
-    }
-
-    suspend fun readProductsOwnedByUser(ownerUserId: Int): List<Product> {
-        return withContext(Dispatchers.IO) {
-            val response: HttpResponse = doRequest(
-                urlPath = "products",
-                method = HttpMethod.Get,
-                queryParams = mapOf("ownerUserId" to ownerUserId.toString())
-            )
-
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(Product.serializer()), responseBody)
         }
     }
 }

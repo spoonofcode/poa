@@ -30,6 +30,7 @@ import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.add_product
 import com.spoonofcode.poa.resources.collection_name
 import com.spoonofcode.poa.resources.custom_link
 import com.spoonofcode.poa.resources.description
@@ -77,12 +78,14 @@ internal data class ProductDetailsScreen(
 
         return ContentView(
             viewState = viewState,
+            addProduct = { viewModel?.addProduct() },
         )
     }
 
     @Composable
     internal fun ContentView(
         viewState: ProductDetailsViewState,
+        addProduct: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
 //            ProductAnimation(viewState.product!!.nftAnimation)
@@ -95,11 +98,11 @@ internal data class ProductDetailsScreen(
                 )
             )
 
-            Texts.BLB(viewState.product!!.tagId)
+            viewState.product?.tagId?.let { Texts.BLB(it) }
 
             ProductItemRowElement(
                 label = Res.string.name,
-                elementValue = viewState.product.name,
+                elementValue = viewState.product!!.name,
                 icon = Icons.Default.Paid,
                 contentDescription = "Product name",
             )
@@ -134,8 +137,8 @@ internal data class ProductDetailsScreen(
 
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
-                    text = stringResource(Res.string.scan_info),
-                    onClick = {}
+                    text = stringResource(Res.string.add_product),
+                    onClick = addProduct
                 )
             }
         }

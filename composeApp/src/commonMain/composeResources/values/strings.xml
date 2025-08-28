@@ -1,5 +1,6 @@
 <resources>
     <string name="accept">Accept</string>
+    <string name="add_product">Add product</string>
     <string name="app_name">POA</string>
     <string name="apply_filter">Apply filter</string>
     <string name="blockchain">Blockchain</string>

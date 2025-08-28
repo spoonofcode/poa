@@ -23,12 +23,12 @@ import com.spoonofcode.poa.feature.product.overview.ProductOverviewTab
 import com.spoonofcode.poa.feature.profile.ProfileTab
 import com.spoonofcode.poa.feature.scan.ScanTab
 
-class MainHostScreen : Screen {
+class MainHostScreen(val selectedTab: Tab = HomeTab) : Screen {
 
     @Composable
     override fun Content() {
         TabNavigator(
-            tab = HomeTab
+            tab = selectedTab
         ) {
             Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
                 NavigationBar {
