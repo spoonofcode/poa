@@ -26,6 +26,8 @@ import com.spoonofcode.poa.core.domain.role.GetRolesByUserIdUseCase
 import com.spoonofcode.poa.core.domain.user.GetAllUsersUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
+import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
+import com.spoonofcode.poa.core.domain.product.EditProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserProducts
@@ -56,6 +58,8 @@ val domainModule = module {
     factoryOf(::GetProductByTagIdUseCase)
     factoryOf(::GetUserProducts)
     factoryOf(::AddProductToUserUseCase)
+    factoryOf(::DeleteProductUseCase)
+    factoryOf(::EditProductUseCase)
     factoryOf(::UpdatePartnerUseCase)
     factoryOf(::GetAllProductSeriesUseCase)
     factoryOf(::GetAllProductSeriesIdsUseCase)
