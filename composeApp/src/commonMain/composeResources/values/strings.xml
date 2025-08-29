@@ -20,6 +20,7 @@
     <string name="edit_nft_info">Edit NFT</string>
     <string name="email">Email</string>
     <string name="end">End</string>
+    <string name="expiration_date">Expiration date</string>
     <string name="filter">Filter</string>
     <string name="filter_products">Filter products</string>
     <string name="filter_nft">Filter NFT</string>

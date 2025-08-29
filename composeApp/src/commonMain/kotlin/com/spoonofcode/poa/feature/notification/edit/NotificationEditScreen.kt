@@ -4,16 +4,19 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.DatePickers
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.expiration_date
 import com.spoonofcode.poa.resources.link
 import com.spoonofcode.poa.resources.notification
 import com.spoonofcode.poa.resources.send_notification
 import com.spoonofcode.poa.resources.text
 import com.spoonofcode.poa.resources.title
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -37,6 +40,7 @@ internal class NotificationEditScreen(
         viewState = viewState,
         changeTitle = { viewModel?.changeTitle(it) },
         changeText = { viewModel?.changeText(it) },
+        changeExpirationDateTime = { viewModel?.changeExpirationDateTime(it) },
         changeLink = { viewModel?.changeLink(it) },
         sendNotification = { viewModel?.sendNotification() },
     )
@@ -46,6 +50,7 @@ internal class NotificationEditScreen(
         viewState: NotificationEditViewState,
         changeTitle: (String) -> Unit,
         changeText: (String) -> Unit,
+        changeExpirationDateTime: (LocalDateTime) -> Unit,
         changeLink: (String) -> Unit,
         sendNotification: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -64,7 +69,15 @@ internal class NotificationEditScreen(
                 value = viewState.text,
                 onValueChange = { changeText(it) },
                 label = stringResource(resource = Res.string.text),
-                minLines = 10,
+                minLines = 8,
+            )
+
+            DatePickers.DatePickerWithTimer(
+                label = stringResource(resource = Res.string.expiration_date),
+                value = viewState.expirationDateTime,
+                onValueChange = {
+                    changeExpirationDateTime(it)
+                },
             )
 
             TextFields.Outlined(
@@ -79,20 +92,6 @@ internal class NotificationEditScreen(
             )
         }
     }
-
-    // region previews
-    @Preview
-    @Composable
-    fun InitializedHomeScreenPreview() {
-        ContentView(
-            viewState = NotificationEditViewState(),
-            changeTitle = {},
-            changeText = {},
-            changeLink = {},
-            sendNotification = {},
-        )
-    }
-    // endregion
 }
 
 // region previews

@@ -8,6 +8,7 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDateTime
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationEditViewModel(
@@ -38,6 +39,14 @@ internal class NotificationEditViewModel(
         }
     }
 
+    fun changeExpirationDateTime(startDateTime: LocalDateTime) {
+        viewModelScope.launch {
+            updateState {
+                copy(expirationDateTime = startDateTime)
+            }
+        }
+    }
+
     fun changeLink(link: String) {
         viewModelScope.launch {
             updateState {
@@ -50,12 +59,14 @@ internal class NotificationEditViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
+                val currentState = currentState()
                 sendNotificationUseCase(
                     notification = NotificationRequest(
-                        title = viewState.value.title,
-                        text = viewState.value.text,
-                        link = viewState.value.link,
-                        seriesIds = viewState.value.seriesIds,
+                        title = currentState.title,
+                        text = currentState.text,
+                        link = currentState.link,
+                        seriesIds = currentState.seriesIds,
+                        expirationDateTime = currentState.expirationDateTime
                     )
                 )
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))

@@ -61,13 +61,13 @@ internal class NotificationDetailsScreen(
 
             Texts.BL(notification.text)
 
-            if (notification.expirationDate !== null) {
+            if (notification.expirationDateTime !== null) {
                 Spacers.VerticalBetweenFields()
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Countdown(notification.expirationDate)
+                    Countdown(notification.expirationDateTime)
                 }
             }
 
