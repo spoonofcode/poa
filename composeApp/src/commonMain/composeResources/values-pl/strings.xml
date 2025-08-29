@@ -1,5 +1,6 @@
 <resources>
     <string name="accept">Akceptuj</string>
+    <string name="add_product">Dodaj product</string>
     <string name="app_name">POA</string>
     <string name="apply_filter">Zastosuj filtr</string>
     <string name="blockchain">Blockchain</string>
@@ -65,6 +66,8 @@
     <string name="remote_user_token">Remote user token</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="scan">Scan</string>
+    <string name="scan_info">Umieść tag NFC z tyłu urządzenia</string>
+    <string name="scanning_in_progress">Trwa skanowanie</string>
     <string name="search">Szukaj</string>
     <string name="search_nft">Szukaj NFT</string>
     <string name="serie">Seria</string>

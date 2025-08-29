@@ -23,7 +23,7 @@ import com.spoonofcode.poa.feature.product.overview.ProductOverviewTab
 import com.spoonofcode.poa.feature.profile.ProfileTab
 import com.spoonofcode.poa.feature.scan.ScanTab
 
-class MainHostScreen : Screen {
+class MainHostScreen() : Screen {
 
     @Composable
     override fun Content() {

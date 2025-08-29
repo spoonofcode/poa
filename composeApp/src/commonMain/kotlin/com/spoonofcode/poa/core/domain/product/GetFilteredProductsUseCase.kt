@@ -2,15 +2,18 @@ package com.spoonofcode.poa.core.domain.product
 
 import com.spoonofcode.poa.core.data.repository.ProductFilterRepository
 import com.spoonofcode.poa.core.data.repository.ProductRepository
+import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.feature.product.filter.ProductFilterViewState
 
 class GetFilteredProductsUseCase(
-    private val productRepository: ProductRepository,
+    private val sessionManager: SessionManager,
+    private val userRepository: UserRepository,
     private val productFilterRepository: ProductFilterRepository,
 ) {
     suspend operator fun invoke(): List<Product> {
-        val products = productRepository.readAll()
+        val products = userRepository.readUserProducts(sessionManager.getSessionUserId())
 
         val selectedFilter = productFilterRepository.getSelectedFilters()
         return products.filter { product ->

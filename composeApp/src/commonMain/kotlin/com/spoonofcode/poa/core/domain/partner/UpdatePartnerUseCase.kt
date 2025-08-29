@@ -11,7 +11,6 @@ class UpdatePartnerUseCase(
 ) {
     suspend operator fun invoke(partner: Partner) {
         val currentUserId = sessionManager.getSessionUserId()
-        requireNotNull(currentUserId) { "User ID cannot be null when updating a partner" }
 
         val partnerRequest = PartnerRequest(
             userId = currentUserId,

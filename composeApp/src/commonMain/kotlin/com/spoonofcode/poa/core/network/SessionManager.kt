@@ -35,9 +35,9 @@ class SessionManager(private val settings: Settings) {
         settings.putInt(SESSION_USER_ID, userId)
     }
 
-    fun getSessionUserId(): Int? {
-        return settings.getIntOrNull(SESSION_USER_ID)
-    }
+    fun getSessionUserId(): Int = requireNotNull(
+        settings.getIntOrNull(SESSION_USER_ID)
+    ) { "User ID cannot be null" }
 
     fun clearSessionUserId() {
         settings.remove(SESSION_USER_ID)

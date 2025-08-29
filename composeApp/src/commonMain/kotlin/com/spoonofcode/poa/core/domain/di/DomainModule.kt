@@ -23,6 +23,11 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseC
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
 import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesIdsUseCase
+import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
+import com.spoonofcode.poa.core.domain.product.EditProductUseCase
+import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
+import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.GetUserProducts
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -47,6 +52,11 @@ val domainModule = module {
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetFilteredProductsUseCase)
     factoryOf(::GetProductByIdUseCase)
+    factoryOf(::GetProductByTagIdUseCase)
+    factoryOf(::GetUserProducts)
+    factoryOf(::AddProductToUserUseCase)
+    factoryOf(::DeleteProductUseCase)
+    factoryOf(::EditProductUseCase)
     factoryOf(::UpdatePartnerUseCase)
     factoryOf(::GetMyPartnersUseCase)
     factoryOf(::GetAllProductSeriesIdsUseCase)
