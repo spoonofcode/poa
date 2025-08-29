@@ -31,8 +31,8 @@ internal class ScanScreen(
 
     override fun provideTopAppBarTitle() = Res.string.scan
 
-    override fun provideReloadAction(viewModel: ScanViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideReloadAction(viewModel: ScanViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ScanViewModel>()

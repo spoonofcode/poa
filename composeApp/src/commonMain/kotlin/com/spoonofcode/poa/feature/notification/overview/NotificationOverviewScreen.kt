@@ -28,8 +28,8 @@ internal class NotificationOverviewScreen(
 
     override fun provideTopAppBarTitle() = Res.string.notifications
 
-    override fun provideReloadAction(viewModel: NotificationOverviewViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideReloadAction(viewModel: NotificationOverviewViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()

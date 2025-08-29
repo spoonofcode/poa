@@ -32,8 +32,8 @@ internal class PartnerEditScreen(
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideReloadAction(viewModel: PartnerEditViewModel): () -> Unit =
-        { viewModel.initView(partnerId = partnerId) }
+    override fun provideReloadAction(viewModel: PartnerEditViewModel?): () -> Unit =
+        { viewModel?.initView(partnerId = partnerId) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()

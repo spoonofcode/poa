@@ -35,8 +35,8 @@ internal class PartnerDetailsScreen(
         TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deletePartner() }
     )
 
-    override fun provideReloadAction(viewModel: PartnerDetailsViewModel): () -> Unit =
-        { viewModel.initView(partnerId = partnerId) }
+    override fun provideReloadAction(viewModel: PartnerDetailsViewModel?): () -> Unit =
+        { viewModel?.initView(partnerId = partnerId) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()

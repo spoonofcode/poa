@@ -34,8 +34,8 @@ internal class HomeScreen(
         bottom = Paddings.screenPadding,
     )
 
-    override fun provideReloadAction(viewModel: HomeViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideReloadAction(viewModel: HomeViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()

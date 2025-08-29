@@ -41,8 +41,8 @@ internal class ProfileScreen(
         ),
     )
 
-    override fun provideReloadAction(viewModel: ProfileViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideReloadAction(viewModel: ProfileViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileViewModel>()

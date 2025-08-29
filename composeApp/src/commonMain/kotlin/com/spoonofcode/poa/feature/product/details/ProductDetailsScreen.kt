@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Schema
 import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -36,7 +35,6 @@ import com.spoonofcode.poa.resources.custom_link
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.name
 import com.spoonofcode.poa.resources.product
-import com.spoonofcode.poa.resources.scan_info
 import com.spoonofcode.poa.resources.website_link
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -63,24 +61,17 @@ internal data class ProductDetailsScreen(
         emptyList()
     }
 
-    override fun provideReloadAction(viewModel: ProductDetailsViewModel): () -> Unit =
-        { viewModel.initView(productId = productId) }
+    override fun provideInitAction(viewModel: ProductDetailsViewModel?): () -> Unit =
+        { viewModel?.initView(productId = productId) }
 
     @Composable
     override fun provideContent(
         viewModel: ProductDetailsViewModel?,
         viewState: ProductDetailsViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(Unit) {
-            viewModel?.initView(productId = productId)
-        }
-
-        return ContentView(
-            viewState = viewState,
-            addProduct = { viewModel?.addProduct() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        addProduct = { viewModel?.addProduct() },
+    )
 
     @Composable
     internal fun ContentView(
@@ -90,47 +81,49 @@ internal data class ProductDetailsScreen(
         return {
 //            ProductAnimation(viewState.product!!.nftAnimation)
 
+            val product = requireNotNull(viewState.product)
+
             CoilImage(
-                imageModel = { viewState.product!!.imageLink },
+                imageModel = { product.imageLink },
                 imageOptions = ImageOptions(
                     contentScale = ContentScale.Crop,
                     alignment = Alignment.Center
                 )
             )
 
-            viewState.product?.tagId?.let { Texts.BLB(it) }
+            viewState.product.tagId?.let { Texts.BLB(it) }
 
             ProductItemRowElement(
                 label = Res.string.name,
-                elementValue = viewState.product!!.name,
+                elementValue = product.name,
                 icon = Icons.Default.Paid,
                 contentDescription = "Product name",
             )
 
             ProductItemRowElement(
                 label = Res.string.description,
-                elementValue = viewState.product.description,
+                elementValue = product.description,
                 icon = Icons.Default.WebStories,
                 contentDescription = "Series",
             )
 
             ProductItemRowElement(
                 label = Res.string.collection_name,
-                elementValue = viewState.product.collectionName,
+                elementValue = product.collectionName,
                 icon = Icons.Default.Person,
                 contentDescription = "Owner",
             )
 
             ProductItemRowElement(
                 label = Res.string.website_link,
-                elementValue = viewState.product.websiteLink!!,
+                elementValue = product.websiteLink!!,
                 icon = Icons.Default.Mail,
                 contentDescription = "Owner Mail",
             )
 
             ProductItemRowElement(
                 label = Res.string.custom_link,
-                elementValue = viewState.product.customLink!!,
+                elementValue = product.customLink!!,
                 icon = Icons.Default.Schema,
                 contentDescription = "Level",
             )

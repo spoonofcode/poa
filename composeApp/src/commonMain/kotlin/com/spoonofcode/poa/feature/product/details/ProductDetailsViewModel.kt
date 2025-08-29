@@ -9,6 +9,7 @@ import com.spoonofcode.poa.core.model.ProductRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.product.edit.ProductEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -57,22 +58,21 @@ internal class ProductDetailsViewModel(
     fun editProduct() {
         viewModelScope.launch {
             try {
-                val currentState = currentState()
+                val product = requireNotNull(currentState().product)
                 editProductUseCase(
-                    productId = currentState.product!!.id,
+                    productId = product.id,
                     productRequest = ProductRequest(
-                        name = currentState.product.name,
-                        description = currentState.product.description,
-                        imageLink = currentState.product.imageLink,
-                        collectionName = currentState.product.collectionName,
-                        websiteLink = currentState.product.websiteLink,
-                        customLink = currentState.product.customLink,
-                        seriesId = currentState.product.seriesId,
-                        tagId = currentState.product.tagId,
-                        ownerUserId = currentState.product.ownerUser!!.id
+                        name = product.name,
+                        description = product.description,
+                        imageLink = product.imageLink,
+                        collectionName = product.collectionName,
+                        websiteLink = product.websiteLink,
+                        customLink = product.customLink,
+                        seriesId = product.seriesId,
+                        tagId = product.tagId,
                     )
                 )
-                viewModelNavigator.pop()
+                viewModelNavigator.push(ProductEditScreen())
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

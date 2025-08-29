@@ -18,8 +18,6 @@ internal class PartnerPanelScreen() :
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
-    override fun provideReloadAction(viewModel: PartnerPanelViewModel): () -> Unit = { }
-
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 

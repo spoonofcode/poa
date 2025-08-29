@@ -43,8 +43,8 @@ internal class ProductSeriesOverviewScreen(
 
     override fun provideTopAppBarTitle() = Res.string.my_product_series
 
-    override fun provideReloadAction(viewModel: ProductSeriesOverviewViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideReloadAction(viewModel: ProductSeriesOverviewViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductSeriesOverviewViewModel>()

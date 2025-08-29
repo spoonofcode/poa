@@ -17,8 +17,8 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
 
     override fun provideTopAppBarTitle() = Res.string.settings
 
-    override fun provideReloadAction(viewModel: AppSettingsViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideReloadAction(viewModel: AppSettingsViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<AppSettingsViewModel>()

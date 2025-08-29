@@ -1,7 +1,13 @@
 package com.spoonofcode.poa.feature.partner.mypartners
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -25,8 +31,9 @@ class MyPartnersScreen : BaseScreen<MyPartnersViewModel, MyPartnersViewState>() 
     override fun provideTopAppBarTitle() = Res.string.my_partners
     override val verticalScrollEnable: Boolean = false
 
-    override fun provideReloadAction(viewModel: MyPartnersViewModel): () -> Unit =
-        viewModel::loadMyPartners
+    override fun provideReloadAction(viewModel: MyPartnersViewModel?): () -> Unit = {
+        viewModel?.loadMyPartners()
+    }
 
     @Composable
     override fun provideViewModel() = koinViewModel<MyPartnersViewModel>()
@@ -41,6 +48,7 @@ class MyPartnersScreen : BaseScreen<MyPartnersViewModel, MyPartnersViewState>() 
             onPartnerClick = { partnerId -> viewModel?.onPartnerClick(partnerId) }
         )
     }
+
     @Composable
     private fun ContentView(
         viewState: MyPartnersViewState,
