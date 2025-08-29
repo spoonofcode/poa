@@ -15,9 +15,8 @@ import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewScreen
-import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.poa

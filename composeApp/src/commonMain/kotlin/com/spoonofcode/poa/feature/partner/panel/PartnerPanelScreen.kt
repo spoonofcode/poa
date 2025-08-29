@@ -25,13 +25,11 @@ internal class PartnerPanelScreen() :
     override fun provideContent(
         viewModel: PartnerPanelViewModel?,
         viewState: PartnerPanelViewState,
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            navigateToMyPartners = { viewModel?.navigateToMyPartners() },
-            navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        navigateToMyPartners = { viewModel?.navigateToMyPartners() },
+        navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
+    )
 
     @Composable
     private fun ContentView(

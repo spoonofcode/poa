@@ -1,8 +1,10 @@
 package com.spoonofcode.poa.feature.messagefcm
 
+import androidx.compose.runtime.Immutable
 import com.spoonofcode.poa.core.ui.BaseViewState
 import com.spoonofcode.poa.core.ui.ScreenState
 
+@Immutable
 data class MessageFCMViewState(
     override val screenState: ScreenState = ScreenState.CONTENT,
     val fcmUserToken: String = "",
