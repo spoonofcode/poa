@@ -37,17 +37,15 @@ internal class LoginScreen(
     override fun provideContent(
         viewModel: LoginViewModel?,
         viewState: LoginViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            changeEmail = { viewModel?.changeEmail(it) },
-            changePassword = { viewModel?.changePassword(it) },
-            forgotPassword = { viewModel?.forgotPassword() },
-            signIn = { viewModel?.signIn() },
-            signInWithGoogle = { viewModel?.signInWithGoogle(it) },
-            signUp = { viewModel?.signUp() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        changeEmail = { viewModel?.changeEmail(it) },
+        changePassword = { viewModel?.changePassword(it) },
+        forgotPassword = { viewModel?.forgotPassword() },
+        signIn = { viewModel?.signIn() },
+        signInWithGoogle = { viewModel?.signInWithGoogle(it) },
+        signUp = { viewModel?.signUp() },
+    )
 
     @Composable
     internal fun ContentView(

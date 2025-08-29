@@ -11,11 +11,6 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class NotificationOverviewViewModel(
     private val getAllNotificationsUseCase: GetAllNotificationsUseCase,
 ) : BaseViewModel<NotificationOverviewViewState>(NotificationOverviewViewState()) {
-
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()

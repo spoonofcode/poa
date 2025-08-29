@@ -17,7 +17,7 @@ internal class NotificationDetailsScreen(
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
-    override fun provideReloadAction(viewModel: NotificationDetailsViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: NotificationDetailsViewModel?): () -> Unit =
         { viewModel?.initView(notificationId = notificationId) }
 
     @Composable
@@ -27,16 +27,9 @@ internal class NotificationDetailsScreen(
     override fun provideContent(
         viewModel: NotificationDetailsViewModel?,
         viewState: NotificationDetailsViewState,
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(Unit) {
-            viewModel?.initView(notificationId = notificationId)
-        }
-
-        return ContentView(
-            viewState = viewState,
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+    )
 
     @Composable
     private fun ContentView(

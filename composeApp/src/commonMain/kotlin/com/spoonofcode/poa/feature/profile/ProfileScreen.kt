@@ -40,7 +40,7 @@ internal class ProfileScreen(
         ),
     )
 
-    override fun provideReloadAction(viewModel: ProfileViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: ProfileViewModel?): () -> Unit =
         { viewModel?.initView() }
 
     @Composable
@@ -50,12 +50,10 @@ internal class ProfileScreen(
     override fun provideContent(
         viewModel: ProfileViewModel?,
         viewState: ProfileViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
+    )
 
     @Composable
     private fun ContentView(

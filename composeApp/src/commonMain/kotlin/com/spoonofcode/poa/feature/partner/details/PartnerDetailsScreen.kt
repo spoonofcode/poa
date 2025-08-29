@@ -5,7 +5,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import com.skydoves.landscapist.ImageOptions
@@ -36,7 +35,7 @@ internal class PartnerDetailsScreen(
         TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deletePartner() }
     )
 
-    override fun provideReloadAction(viewModel: PartnerDetailsViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: PartnerDetailsViewModel?): () -> Unit =
         { viewModel?.initView(partnerId = partnerId) }
 
     @Composable
@@ -46,16 +45,9 @@ internal class PartnerDetailsScreen(
     override fun provideContent(
         viewModel: PartnerDetailsViewModel?,
         viewState: PartnerDetailsViewState,
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(Unit) {
-            viewModel?.initView(partnerId = partnerId)
-        }
-
-        return ContentView(
-            viewState = viewState,
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+    )
 
     @Composable
     private fun ContentView(

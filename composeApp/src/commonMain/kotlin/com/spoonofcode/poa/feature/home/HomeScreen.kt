@@ -35,7 +35,7 @@ internal class HomeScreen(
         bottom = Paddings.screenPadding,
     )
 
-    override fun provideReloadAction(viewModel: HomeViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
         { viewModel?.initView() }
 
     @Composable
@@ -45,11 +45,9 @@ internal class HomeScreen(
     override fun provideContent(
         viewModel: HomeViewModel?,
         viewState: HomeViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+    )
 
     @Composable
     private fun ContentView(

@@ -12,10 +12,6 @@ internal class ProductSeriesOverviewViewModel(
     private val getAllProductSeriesUseCase: GetAllProductSeriesUseCase,
 ) : BaseViewModel<ProductSeriesOverviewViewState>(ProductSeriesOverviewViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()

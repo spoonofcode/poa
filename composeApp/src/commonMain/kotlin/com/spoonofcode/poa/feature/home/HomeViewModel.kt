@@ -14,10 +14,6 @@ internal class HomeViewModel(
     private val getAllProductSeriesIdsUseCase: GetAllProductSeriesIdsUseCase,
 ) : BaseViewModel<HomeViewState>(HomeViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
         subscribeNotifications()
     }

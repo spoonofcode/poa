@@ -44,7 +44,7 @@ internal class ProductOverviewScreen(
 
     override fun provideTopAppBarTitle() = Res.string.my_products
 
-    override fun provideReloadAction(viewModel: ProductOverviewViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: ProductOverviewViewModel?): () -> Unit =
         { viewModel?.initView() }
 
 
@@ -65,13 +65,11 @@ internal class ProductOverviewScreen(
     override fun provideContent(
         viewModel: ProductOverviewViewModel?,
         viewState: ProductOverviewViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            changeSearchText = { viewModel?.changeSearchText(it) },
-            selectProduct = { viewModel?.selectProduct(it) },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        changeSearchText = { viewModel?.changeSearchText(it) },
+        selectProduct = { viewModel?.selectProduct(it) },
+    )
 
     @Composable
     internal fun ContentView(

@@ -32,7 +32,7 @@ internal class PartnerEditScreen(
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideReloadAction(viewModel: PartnerEditViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: PartnerEditViewModel?): () -> Unit =
         { viewModel?.initView(partnerId = partnerId) }
 
     @Composable
@@ -42,25 +42,18 @@ internal class PartnerEditScreen(
     override fun provideContent(
         viewModel: PartnerEditViewModel?,
         viewState: PartnerEditViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(partnerId) {
-            viewModel?.initView(partnerId = partnerId)
-        }
-
-        return {
-            ContentView(
-                viewState = viewState,
-                onNameChange = { viewModel?.changeName(it) },
-                onDescriptionChange = { viewModel?.changeDescription(it) },
-                onWebsiteLinkChange = { viewModel?.changeWebsiteLink(it) },
-                onInstagramLinkChange = { viewModel?.changeInstagramLink(it) },
-                onFacebookLinkChange = { viewModel?.changeFacebookLink(it) },
-                onYoutubeLinkChange = { viewModel?.changeYoutubeLink(it) },
-                onXLinkChange = { viewModel?.changeXLink(it) },
-                onSaveChanges = { viewModel?.saveChanges() }
-            )
-        }
+    ): @Composable ColumnScope.() -> Unit = {
+        ContentView(
+            viewState = viewState,
+            onNameChange = { viewModel?.changeName(it) },
+            onDescriptionChange = { viewModel?.changeDescription(it) },
+            onWebsiteLinkChange = { viewModel?.changeWebsiteLink(it) },
+            onInstagramLinkChange = { viewModel?.changeInstagramLink(it) },
+            onFacebookLinkChange = { viewModel?.changeFacebookLink(it) },
+            onYoutubeLinkChange = { viewModel?.changeYoutubeLink(it) },
+            onXLinkChange = { viewModel?.changeXLink(it) },
+            onSaveChanges = { viewModel?.saveChanges() }
+        )
     }
 
     @Composable

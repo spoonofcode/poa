@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.notification.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -24,6 +23,9 @@ internal class NotificationEditScreen(
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
+    override fun provideInitAction(viewModel: NotificationEditViewModel?): () -> Unit =
+        { viewModel?.initView(seriesIds = seriesIds) }
+
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
 
@@ -31,20 +33,13 @@ internal class NotificationEditScreen(
     override fun provideContent(
         viewModel: NotificationEditViewModel?,
         viewState: NotificationEditViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(Unit) {
-            viewModel?.initView(seriesIds = seriesIds)
-        }
-
-        return ContentView(
-            viewState = viewState,
-            changeTitle = { viewModel?.changeTitle(it) },
-            changeText = { viewModel?.changeText(it) },
-            changeLink = { viewModel?.changeLink(it) },
-            sendNotification = { viewModel?.sendNotification() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        changeTitle = { viewModel?.changeTitle(it) },
+        changeText = { viewModel?.changeText(it) },
+        changeLink = { viewModel?.changeLink(it) },
+        sendNotification = { viewModel?.sendNotification() },
+    )
 
     @Composable
     private fun ContentView(

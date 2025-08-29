@@ -31,7 +31,7 @@ class MyPartnersScreen : BaseScreen<MyPartnersViewModel, MyPartnersViewState>() 
     override fun provideTopAppBarTitle() = Res.string.my_partners
     override val verticalScrollEnable: Boolean = false
 
-    override fun provideReloadAction(viewModel: MyPartnersViewModel?): () -> Unit = {
+    override fun provideInitAction(viewModel: MyPartnersViewModel?): () -> Unit = {
         viewModel?.loadMyPartners()
     }
 
@@ -42,12 +42,10 @@ class MyPartnersScreen : BaseScreen<MyPartnersViewModel, MyPartnersViewState>() 
     override fun provideContent(
         viewModel: MyPartnersViewModel?,
         viewState: MyPartnersViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            onPartnerClick = { partnerId -> viewModel?.onPartnerClick(partnerId) }
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        onPartnerClick = { partnerId -> viewModel?.onPartnerClick(partnerId) }
+    )
 
     @Composable
     private fun ContentView(

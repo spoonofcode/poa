@@ -15,10 +15,6 @@ internal class AppSettingsViewModel(
     private val deleteAccountUseCase: DeleteAccountUseCase,
 ) : BaseViewModel<AppSettingsViewState>(AppSettingsViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()

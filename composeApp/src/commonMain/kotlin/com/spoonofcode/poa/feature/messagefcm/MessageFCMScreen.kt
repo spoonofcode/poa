@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.messagefcm
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Chips
@@ -32,24 +31,17 @@ internal class MessageFCMScreen() : BaseScreen<MessageFCMViewModel, MessageFCMVi
     override fun provideContent(
         viewModel: MessageFCMViewModel?,
         viewState: MessageFCMViewState,
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(Unit) {
-//            viewModel.initView()
-        }
-
-        return ContentView(
-            viewState = viewState,
-            onMessageTextChange = { viewModel?.onMessageTextChange(it) },
-            onMessageTitleChange = { viewModel?.onMessageTitleChange(it) },
-            sendToUser = { viewModel?.sendToUser() },
-            sendToTopics = { viewModel?.sendToTopics() },
-            onRemoteTokenChange = { viewModel?.onRemoteTokenChange(it) },
-            getFirebaseMessageToken = { viewModel?.getFirebaseMessageToken() },
-            clickOnTopicToSend = { viewModel?.clickOnTopicToSend(it) },
-            clickOnTopicToSubscribe = { viewModel?.clickOnTopicToSubscribe(it) },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        onMessageTextChange = { viewModel?.onMessageTextChange(it) },
+        onMessageTitleChange = { viewModel?.onMessageTitleChange(it) },
+        sendToUser = { viewModel?.sendToUser() },
+        sendToTopics = { viewModel?.sendToTopics() },
+        onRemoteTokenChange = { viewModel?.onRemoteTokenChange(it) },
+        getFirebaseMessageToken = { viewModel?.getFirebaseMessageToken() },
+        clickOnTopicToSend = { viewModel?.clickOnTopicToSend(it) },
+        clickOnTopicToSubscribe = { viewModel?.clickOnTopicToSubscribe(it) },
+    )
 
     @Composable
     internal fun ContentView(

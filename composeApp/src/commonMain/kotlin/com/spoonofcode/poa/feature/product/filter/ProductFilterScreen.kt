@@ -17,7 +17,7 @@ internal class ProductFilterScreen() :
 
     override fun provideTopAppBarTitle() = Res.string.filter_products
 
-    override fun provideReloadAction(viewModel: ProductFilterViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: ProductFilterViewModel?): () -> Unit =
         { viewModel?.initView() }
 
     @Composable

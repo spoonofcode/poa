@@ -17,7 +17,7 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
 
     override fun provideTopAppBarTitle() = Res.string.settings
 
-    override fun provideReloadAction(viewModel: AppSettingsViewModel?): () -> Unit =
+    override fun provideInitAction(viewModel: AppSettingsViewModel?): () -> Unit =
         { viewModel?.initView() }
 
     @Composable
@@ -27,14 +27,12 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
     override fun provideContent(
         viewModel: AppSettingsViewModel?,
         viewState: AppSettingsViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            navigateToMessageFCM = { viewModel?.navigateToMessageFCM() },
-            signOut = { viewModel?.signOut() },
-            deleteAccount = { viewModel?.deleteAccount() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        navigateToMessageFCM = { viewModel?.navigateToMessageFCM() },
+        signOut = { viewModel?.signOut() },
+        deleteAccount = { viewModel?.deleteAccount() },
+    )
 
     @Composable
     internal fun ContentView(
