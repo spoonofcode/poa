@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.partner.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
+import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch

@@ -42,13 +42,14 @@
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>
     <string name="message_title">Message title</string>
+    <string name="my_partners">Partners</string>
     <string name="my_products">My products</string>
     <string name="my_product_series">My product series</string>
     <string name="name">Name</string>
     <string name="nft_info">NFT Info</string>
     <string name="nft_name">NFT Name</string>
+    <string name="no_partners_found">No partners found</string>
     <string name="notification">Notification</string>
-    <string name="notifications">Notifications</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="owner">Owner</string>
