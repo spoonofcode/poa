@@ -18,6 +18,8 @@ internal class PartnerPanelScreen() :
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
+    override fun provideReloadAction(viewModel: PartnerPanelViewModel): () -> Unit = { }
+
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 
@@ -28,7 +30,7 @@ internal class PartnerPanelScreen() :
     ): @Composable ColumnScope.() -> Unit {
         return ContentView(
             viewState = viewState,
-            navigateToPartnerEdit = { viewModel?.navigateToPartnerEdit() },
+            navigateToMyPartners = { viewModel?.navigateToMyPartners() },
             navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
         )
     }
@@ -36,13 +38,13 @@ internal class PartnerPanelScreen() :
     @Composable
     private fun ContentView(
         viewState: PartnerPanelViewState,
-        navigateToPartnerEdit: () -> Unit,
+        navigateToMyPartners: () -> Unit,
         navigateToPartnerProducts: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.partner_info),
-                onClick = navigateToPartnerEdit
+                onClick = navigateToMyPartners
             )
             Spacers.VerticalBetweenFields()
 
@@ -52,14 +54,14 @@ internal class PartnerPanelScreen() :
             )
         }
     }
-}
 
-// region previews
-@Preview
-@Composable
-fun PartnerPanelScreenContentPreview() {
-    PartnerPanelScreen().PreviewContent(
-        viewState = PartnerPanelViewState(),
-    )
+    // region previews
+    @Preview
+    @Composable
+    fun InitializedPartnerPanelScreenPreview() {
+        PartnerPanelScreen().PreviewContent(
+            viewState = PartnerPanelViewState()
+        )
+    }
+    // endregion
 }
-// endregion
