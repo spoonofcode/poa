@@ -52,6 +52,7 @@
     <string name="notification">Notification</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
+    <string name="open_link">Open Link</string>
     <string name="owner">Owner</string>
     <string name="owner_email">Owner Email</string>
     <string name="partner">Partner</string>
@@ -84,8 +85,11 @@
     <string name="submit">Submit</string>
     <string name="text">Text</string>
     <string name="time">Time</string>
+    <string name="time_is_up">Time is up!</string>
+    <string name="time_remaining">Time remaining:</string>
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
     <string name="type">Type</string>
     <string name="website_link">Website link</string>
+    <string name="visit_website">Visit website!</string>
 </resources>

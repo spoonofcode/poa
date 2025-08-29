@@ -64,6 +64,7 @@ internal class NotificationEditScreen(
                 value = viewState.text,
                 onValueChange = { changeText(it) },
                 label = stringResource(resource = Res.string.text),
+                minLines = 10,
             )
 
             TextFields.Outlined(

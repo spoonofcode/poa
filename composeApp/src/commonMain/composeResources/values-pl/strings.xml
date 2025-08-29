@@ -50,6 +50,7 @@
     <string name="notifications">Powiadomienia</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
+    <string name="open_link">Otwórz link</string>
     <string name="owner">Właściciel</string>
     <string name="owner_email">Email właściciela</string>
     <string name="password">Hasło</string>
@@ -82,6 +83,8 @@
     <string name="submit">Wyślij</string>
     <string name="text">Text</string>
     <string name="time">Czas</string>
+    <string name="time_is_up">Czas minął!</string>
+    <string name="time_remaining">Pozostały czas:</string>
     <string name="title">Tytuł</string>
     <string name="token_id">Token Id</string>
     <string name="type">Typ</string>

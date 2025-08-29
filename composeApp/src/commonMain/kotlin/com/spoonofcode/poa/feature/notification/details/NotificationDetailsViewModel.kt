@@ -30,7 +30,6 @@ internal class NotificationDetailsViewModel(
         }
     }
 
-
     fun deleteNotification() {
 //        viewModelScope.launch {
 //            showLoadingView()
@@ -47,7 +46,6 @@ internal class NotificationDetailsViewModel(
 //            }
 //        }
     }
-
 
     private fun showLoadingView() {
         updateState {

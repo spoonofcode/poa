@@ -1,14 +1,23 @@
 package com.spoonofcode.poa.feature.notification.details
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Countdown
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification
+import com.spoonofcode.poa.resources.open_link
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationDetailsScreen(
@@ -43,19 +52,32 @@ internal class NotificationDetailsScreen(
 //                    alignment = Alignment.Center
 //                )
 //            )
-            Spacers.VerticalBetweenFields()
-            Texts.BM(viewState.notification!!.title)
-            Spacers.VerticalBetweenFields()
-            Texts.BM(viewState.notification.text)
 
-            if (viewState.notification.link != null) {
+            val notification = requireNotNull(viewState.notification)
+
+            Texts.BL(notification.title)
+
+            Spacers.VerticalBetweenFields()
+
+            Texts.BL(notification.text)
+
+            if (notification.expirationDate !== null) {
                 Spacers.VerticalBetweenFields()
-                Texts.BM(viewState.notification.link)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Countdown(notification.expirationDate)
+                }
             }
 
-            if (viewState.notification.expirationDate != null) {
+            if (notification.link.isNullOrEmpty().not()) {
+                val urlOpener = remember { getUrlOpener() }
                 Spacers.VerticalBetweenFields()
-                Texts.BM(viewState.notification.expirationDate.toString())
+                Buttons.PrimaryButton(
+                    text = stringResource(Res.string.open_link),
+                    onClick = { urlOpener.openUrl(notification.link) }
+                )
             }
         }
     }
