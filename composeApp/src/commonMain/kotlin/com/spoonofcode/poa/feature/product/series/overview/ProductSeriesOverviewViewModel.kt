@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -36,16 +37,29 @@ internal class ProductSeriesOverviewViewModel(
 
     fun checkedProductSeries(productSeriesId: String) {
         val currentProductSeries = currentState().checkedProductSeriesIds.toMutableMap()
-
         val productSeriesIdToUpdate = currentProductSeries.keys.find { it == productSeriesId }
+        val isAlreadyChecked = currentProductSeries[productSeriesIdToUpdate]
 
-        currentProductSeries[productSeriesIdToUpdate as String] =
-            currentProductSeries[productSeriesIdToUpdate]!!.not()
-
-        updateState {
-            copy(
-                checkedProductSeriesIds = currentProductSeries.toMap()
-            )
+        if (isAlreadyChecked == true) {
+            currentProductSeries[productSeriesIdToUpdate as String] =
+                currentProductSeries[productSeriesIdToUpdate]!!.not()
+            updateState {
+                copy(
+                    checkedProductSeriesIds = currentProductSeries.toMap()
+                )
+            }
+        } else {
+            if (currentProductSeries.filter { it.value }.size >= MAX_SELECTED_PRODUCT_SERIES) {
+                showSnackbar(SnackbarEvent.Error(message = "You can select a maximum of 5 items."))
+            } else {
+                currentProductSeries[productSeriesIdToUpdate as String] =
+                    currentProductSeries[productSeriesIdToUpdate]!!.not()
+                updateState {
+                    copy(
+                        checkedProductSeriesIds = currentProductSeries.toMap()
+                    )
+                }
+            }
         }
     }
 
@@ -76,5 +90,9 @@ internal class ProductSeriesOverviewViewModel(
                 screenState = ScreenState.ERROR,
             )
         }
+    }
+
+    private companion object {
+        private const val MAX_SELECTED_PRODUCT_SERIES = 5
     }
 }
