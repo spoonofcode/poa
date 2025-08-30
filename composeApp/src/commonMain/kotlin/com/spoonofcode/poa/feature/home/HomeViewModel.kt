@@ -1,17 +1,15 @@
 package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesIdsUseCase
+import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.core.ui.utils.FirebasePushService
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    private val firebasePushService: FirebasePushService,
-    private val getAllProductSeriesIdsUseCase: GetAllProductSeriesIdsUseCase,
+    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<HomeViewState>(HomeViewState()) {
 
     fun initView() {
@@ -28,10 +26,7 @@ internal class HomeViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                val seriesIds = getAllProductSeriesIdsUseCase()
-                for (seriesId in seriesIds) {
-                    firebasePushService.subscribeToTopic(seriesId)
-                }
+                subscribeUserTopicsUseCase()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,

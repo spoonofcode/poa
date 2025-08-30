@@ -72,8 +72,10 @@
     <string name="scanning_in_progress">Trwa skanowanie</string>
     <string name="search">Szukaj</string>
     <string name="search_nft">Szukaj NFT</string>
+    <string name="selected_series">Wybrane serie: </string>
     <string name="serie">Seria</string>
     <string name="series">Seria</string>
+    <string name="series_number">Seria Nr. %1$d</string>
     <string name="send_notification">Wyślij powiadomienie</string>
     <string name="settings">Ustawienia</string>
     <string name="shop">Sklep</string>

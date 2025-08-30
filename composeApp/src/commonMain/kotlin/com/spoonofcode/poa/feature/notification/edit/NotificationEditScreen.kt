@@ -13,7 +13,9 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.expiration_date
 import com.spoonofcode.poa.resources.link
 import com.spoonofcode.poa.resources.notification
+import com.spoonofcode.poa.resources.selected_series
 import com.spoonofcode.poa.resources.send_notification
+import com.spoonofcode.poa.resources.series_number
 import com.spoonofcode.poa.resources.text
 import com.spoonofcode.poa.resources.title
 import kotlinx.datetime.LocalDateTime
@@ -55,8 +57,17 @@ internal class NotificationEditScreen(
         sendNotification: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-
-            Texts.BLB("Selected Series ID: ${viewState.seriesIds}")
+            if (viewState.seriesIds.isNotEmpty()) {
+                Texts.BLB(stringResource(Res.string.selected_series))
+                viewState.seriesIds.forEach { serieId ->
+                    Texts.BLB(
+                        text = stringResource(
+                            resource = Res.string.series_number,
+                            serieId
+                        )
+                    )
+                }
+            }
 
             TextFields.Outlined(
                 value = viewState.title,

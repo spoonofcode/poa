@@ -31,6 +31,7 @@ import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_product_series
 import com.spoonofcode.poa.resources.send_notification
+import com.spoonofcode.poa.resources.series_number
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -68,9 +69,8 @@ internal class ProductSeriesOverviewScreen(
                 verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
             ) {
                 items(viewState.productSeries) { product ->
-
                     val checkedProductSeries =
-                        viewState.checkedProductSeriesIds[product.seriesId] ?: false
+                        viewState.checkedProductSeriesIds.contains(product.seriesId)
 
                     ProductSeriesItem(
                         item = product,
@@ -114,7 +114,12 @@ internal class ProductSeriesOverviewScreen(
 
                     Spacers.HorizontalBetweenFields()
 
-                    Texts.BLB(text = item.seriesId)
+                    Texts.BLB(
+                        text = stringResource(
+                            resource = Res.string.series_number,
+                            item.seriesId
+                        )
+                    )
 
                     Spacers.Weight1(this)
 

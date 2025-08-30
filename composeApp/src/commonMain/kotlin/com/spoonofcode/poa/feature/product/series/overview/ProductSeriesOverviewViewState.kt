@@ -9,5 +9,5 @@ import com.spoonofcode.poa.core.ui.ScreenState
 internal data class ProductSeriesOverviewViewState(
     override val screenState: ScreenState = ScreenState.LOADING,
     val productSeries: List<Product> = emptyList(),
-    val checkedProductSeriesIds: Map<String, Boolean> = emptyMap(),
+    val checkedProductSeriesIds: Set<String> = emptySet(),
 ) : BaseViewState(screenState)

@@ -18,13 +18,10 @@ internal class ProductSeriesOverviewViewModel(
             showLoadingView()
             try {
                 val productSeries = getAllProductSeriesUseCase()
-                val selectedProductSeriesIds =
-                    productSeries.map { product -> product.seriesId }.associateWith { false }
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
                         productSeries = productSeries,
-                        checkedProductSeriesIds = selectedProductSeriesIds
                     )
                 }
             } catch (ce: CancellationException) {
@@ -36,31 +33,19 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     fun checkedProductSeries(productSeriesId: String) {
-        val currentProductSeries = currentState().checkedProductSeriesIds.toMutableMap()
-        val productSeriesIdToUpdate = currentProductSeries.keys.find { it == productSeriesId }
-        val isAlreadyChecked = currentProductSeries[productSeriesIdToUpdate]
+        val selected = currentState().checkedProductSeriesIds.toMutableSet()
+        val wasAdded = selected.contains(productSeriesId)
 
-        if (isAlreadyChecked == true) {
-            currentProductSeries[productSeriesIdToUpdate as String] =
-                currentProductSeries[productSeriesIdToUpdate]!!.not()
-            updateState {
-                copy(
-                    checkedProductSeriesIds = currentProductSeries.toMap()
-                )
-            }
-        } else {
-            if (currentProductSeries.filter { it.value }.size >= MAX_SELECTED_PRODUCT_SERIES) {
-                showSnackbar(SnackbarEvent.Error(message = "You can select a maximum of 5 items."))
-            } else {
-                currentProductSeries[productSeriesIdToUpdate as String] =
-                    currentProductSeries[productSeriesIdToUpdate]!!.not()
-                updateState {
-                    copy(
-                        checkedProductSeriesIds = currentProductSeries.toMap()
-                    )
-                }
-            }
+        if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
+            showSnackbar(
+                SnackbarEvent.Error("You can select a maximum of $MAX_SELECTED_PRODUCT_SERIES items.")
+            )
+            return
         }
+
+        if (wasAdded) selected.remove(productSeriesId) else selected.add(productSeriesId)
+
+        updateState { copy(checkedProductSeriesIds = selected) }
     }
 
     fun navigateToNotification() {
@@ -74,7 +59,7 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun getSelectedProductSeries(): List<String> =
-        currentState().checkedProductSeriesIds.filter { it.value }.keys.toList()
+        currentState().checkedProductSeriesIds.toList()
 
     private fun showLoadingView() {
         updateState {
