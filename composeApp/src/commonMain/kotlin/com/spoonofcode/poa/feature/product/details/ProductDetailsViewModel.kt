@@ -65,6 +65,7 @@ internal class ProductDetailsViewModel(
                         name = product.name,
                         description = product.description,
                         imageLink = product.imageLink,
+                        videoLink = product.videoLink,
                         collectionName = product.collectionName,
                         websiteLink = product.websiteLink,
                         customLink = product.customLink,

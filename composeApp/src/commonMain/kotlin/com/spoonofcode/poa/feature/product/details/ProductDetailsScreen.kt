@@ -80,17 +80,19 @@ internal data class ProductDetailsScreen(
         addProduct: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-//            ProductAnimation(viewState.product!!.nftAnimation)
-
             val product = requireNotNull(viewState.product)
 
-            CoilImage(
-                imageModel = { product.imageLink },
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center
+            if(product.videoLink != null) {
+                ProductVideoAnimation(product.videoLink)
+            } else {
+                CoilImage(
+                    imageModel = { product.imageLink },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    )
                 )
-            )
+            }
 
             viewState.product.tagId?.let { Texts.BLB(it) }
 
@@ -165,10 +167,10 @@ internal data class ProductDetailsScreen(
     }
 
     @Composable
-    fun ProductAnimation(productAnimation: String) {
+    fun ProductVideoAnimation(videoLink: String) {
         Box {
             LoopingVideo(
-                url = productAnimation,
+                url = videoLink,
                 modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f),
                 mute = true      // silent background animation
             )
