@@ -76,6 +76,7 @@
     <string name="serie">Seria</string>
     <string name="series">Seria</string>
     <string name="series_number">Seria Nr. %1$d</string>
+    <string name="series_no">Seria Nr</string>
     <string name="send_notification">Wyślij powiadomienie</string>
     <string name="settings">Ustawienia</string>
     <string name="shop">Sklep</string>

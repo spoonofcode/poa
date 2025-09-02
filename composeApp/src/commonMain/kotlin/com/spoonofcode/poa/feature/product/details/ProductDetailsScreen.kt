@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Person
@@ -36,6 +37,8 @@ import com.spoonofcode.poa.resources.custom_link
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.name
 import com.spoonofcode.poa.resources.product
+import com.spoonofcode.poa.resources.series_no
+import com.spoonofcode.poa.resources.series_number
 import com.spoonofcode.poa.resources.website_link
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -114,6 +117,13 @@ internal data class ProductDetailsScreen(
                 label = Res.string.collection_name,
                 elementValue = product.collectionName,
                 icon = Icons.Default.Person,
+                contentDescription = "Owner",
+            )
+
+            ProductItemRowElement(
+                label = Res.string.series_no,
+                elementValue = product.seriesId,
+                icon = Icons.Default.GraphicEq,
                 contentDescription = "Owner",
             )
 

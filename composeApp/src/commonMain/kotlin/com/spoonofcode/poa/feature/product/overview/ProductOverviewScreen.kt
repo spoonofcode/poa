@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Schema
 import androidx.compose.material.icons.filled.WebStories
@@ -120,6 +121,12 @@ internal class ProductOverviewScreen(
                     elementValue = item.collectionName,
                     icon = Icons.Default.WebStories,
                     contentDescription = "Collection name",
+                )
+
+                ProductItemRowElement(
+                    elementValue = item.seriesId,
+                    icon = Icons.Default.GraphicEq,
+                    contentDescription = "Series",
                 )
 
                 item.tagId?.let {

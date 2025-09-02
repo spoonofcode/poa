@@ -79,6 +79,7 @@
     <string name="serie">Serie</string>
     <string name="series">Series</string>
     <string name="series_number">Series No. %1$d</string>
+    <string name="series_no">Series No</string>
     <string name="send_notification">Send notification</string>
     <string name="settings">Settings</string>
     <string name="shop">Shop</string>
