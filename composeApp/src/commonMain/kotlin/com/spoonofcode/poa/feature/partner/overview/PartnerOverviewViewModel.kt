@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.partner.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.partner.GetAllPartnerCategoriesUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByCategoryUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerOverviewViewModel(
-    private val getPartnersFilteredByCategoryUseCase: GetPartnersFilteredByCategoryUseCase,
+    private val getPartnersUseCase: GetPartnersUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
-    private val getAllPartnerCategoriesUseCase: GetAllPartnerCategoriesUseCase,
+    private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
 ) : BaseViewModel<PartnerOverviewViewState>(PartnerOverviewViewState()) {
 
     init {
@@ -24,13 +24,13 @@ internal class PartnerOverviewViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                val filteredPartners = getPartnersFilteredByCategoryUseCase()
-                val partnerCategories = getAllPartnerCategoriesUseCase()
+                val partners = getPartnersUseCase()
+                val partnerCategories = getPartnerCategoriesUseCase()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
-                        initPartners = filteredPartners,
-                        filteredPartners = filteredPartners,
+                        initPartners = partners,
+                        filteredPartners = partners,
                         partnerCategories = partnerCategories,
                     )
                 }

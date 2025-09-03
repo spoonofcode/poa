@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.appsettings
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.RoleRepository
 import com.spoonofcode.poa.feature.appsettings.di.appSettingsTestModule
 import dev.mokkery.answering.throws
 import dev.mokkery.everySuspend

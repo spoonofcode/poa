@@ -2,7 +2,6 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
-import com.spoonofcode.poa.core.model.AddRoleToUserRequest
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
@@ -69,20 +68,6 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
             )
 
             responseOrException(response).body<List<String>>()
-        }
-    }
-
-    suspend fun addRoleToUser(roleId: Int, userId: Int) {
-        return withContext(Dispatchers.IO) {
-            val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/roles",
-                method = HttpMethod.Post,
-                customRequestBody = Json.encodeToString(
-                    AddRoleToUserRequest.serializer(),
-                    AddRoleToUserRequest(roleId = roleId)
-                ),
-            )
-            responseOrException(response).body<String>()
         }
     }
 }
