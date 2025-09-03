@@ -10,7 +10,7 @@ data class NotificationRequest(
     val link: String? = null,
     val imageUrl: String? = null,
     val seriesIds: List<String>,
-    val expirationDate: LocalDateTime? = null,
+    val expirationDateTime: LocalDateTime? = null,
 )
 
 @Serializable
@@ -19,5 +19,5 @@ data class Notification(
     val title: String,
     val text: String,
     val link: String? = null,
-    val expirationDate: LocalDateTime? = null,
+    val expirationDateTime: LocalDateTime? = null,
 )

@@ -29,6 +29,7 @@ object TextFields {
         innerLabel: String? = null,
         trailingIcon: @Composable (() -> Unit)? = null,
         isError: Boolean = false,
+        minLines: Int = 1,
         visualTransformation: VisualTransformation = VisualTransformation.None,
     ) {
         label?.let {
@@ -43,6 +44,7 @@ object TextFields {
             label = { innerLabel?.let { Text(text = it) } },
             trailingIcon = trailingIcon,
             isError = isError,
+            minLines = minLines,
             visualTransformation = visualTransformation,
         )
         Spacers.VerticalBetweenFields()

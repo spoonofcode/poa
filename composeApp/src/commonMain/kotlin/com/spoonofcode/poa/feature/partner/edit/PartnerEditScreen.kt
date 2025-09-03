@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.partner.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import com.skydoves.landscapist.ImageOptions
@@ -32,8 +31,8 @@ internal class PartnerEditScreen(
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideReloadAction(viewModel: PartnerEditViewModel): () -> Unit =
-        { viewModel.initView(partnerId = partnerId) }
+    override fun provideInitAction(viewModel: PartnerEditViewModel?): () -> Unit =
+        { viewModel?.initView(partnerId = partnerId) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
@@ -42,25 +41,18 @@ internal class PartnerEditScreen(
     override fun provideContent(
         viewModel: PartnerEditViewModel?,
         viewState: PartnerEditViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(partnerId) {
-            viewModel?.initView(partnerId = partnerId)
-        }
-
-        return {
-            ContentView(
-                viewState = viewState,
-                onNameChange = { viewModel?.changeName(it) },
-                onDescriptionChange = { viewModel?.changeDescription(it) },
-                onWebsiteLinkChange = { viewModel?.changeWebsiteLink(it) },
-                onInstagramLinkChange = { viewModel?.changeInstagramLink(it) },
-                onFacebookLinkChange = { viewModel?.changeFacebookLink(it) },
-                onYoutubeLinkChange = { viewModel?.changeYoutubeLink(it) },
-                onXLinkChange = { viewModel?.changeXLink(it) },
-                onSaveChanges = { viewModel?.saveChanges() }
-            )
-        }
+    ): @Composable ColumnScope.() -> Unit = {
+        ContentView(
+            viewState = viewState,
+            onNameChange = { viewModel?.changeName(it) },
+            onDescriptionChange = { viewModel?.changeDescription(it) },
+            onWebsiteLinkChange = { viewModel?.changeWebsiteLink(it) },
+            onInstagramLinkChange = { viewModel?.changeInstagramLink(it) },
+            onFacebookLinkChange = { viewModel?.changeFacebookLink(it) },
+            onYoutubeLinkChange = { viewModel?.changeYoutubeLink(it) },
+            onXLinkChange = { viewModel?.changeXLink(it) },
+            onSaveChanges = { viewModel?.saveChanges() }
+        )
     }
 
     @Composable

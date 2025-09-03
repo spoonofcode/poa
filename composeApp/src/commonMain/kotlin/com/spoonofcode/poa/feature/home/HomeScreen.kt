@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.home
@@ -34,8 +35,8 @@ internal class HomeScreen(
         bottom = Paddings.screenPadding,
     )
 
-    override fun provideReloadAction(viewModel: HomeViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
@@ -44,11 +45,9 @@ internal class HomeScreen(
     override fun provideContent(
         viewModel: HomeViewModel?,
         viewState: HomeViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+    )
 
     @Composable
     private fun ContentView(

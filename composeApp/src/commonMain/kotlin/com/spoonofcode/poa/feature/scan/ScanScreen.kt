@@ -31,8 +31,8 @@ internal class ScanScreen(
 
     override fun provideTopAppBarTitle() = Res.string.scan
 
-    override fun provideReloadAction(viewModel: ScanViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: ScanViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ScanViewModel>()
@@ -41,12 +41,10 @@ internal class ScanScreen(
     override fun provideContent(
         viewModel: ScanViewModel?,
         viewState: ScanViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            checkProduct = { viewModel?.checkProduct(it) }
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        checkProduct = { viewModel?.checkProduct(it) }
+    )
 
     @Composable
     private fun ContentView(

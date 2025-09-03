@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Person
@@ -16,7 +17,6 @@ import androidx.compose.material.icons.filled.Schema
 import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -28,6 +28,7 @@ import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.LoopingVideo
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.add_product
@@ -36,7 +37,8 @@ import com.spoonofcode.poa.resources.custom_link
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.name
 import com.spoonofcode.poa.resources.product
-import com.spoonofcode.poa.resources.scan_info
+import com.spoonofcode.poa.resources.series_no
+import com.spoonofcode.poa.resources.series_number
 import com.spoonofcode.poa.resources.website_link
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -63,24 +65,17 @@ internal data class ProductDetailsScreen(
         emptyList()
     }
 
-    override fun provideReloadAction(viewModel: ProductDetailsViewModel): () -> Unit =
-        { viewModel.initView(productId = productId) }
+    override fun provideInitAction(viewModel: ProductDetailsViewModel?): () -> Unit =
+        { viewModel?.initView(productId = productId) }
 
     @Composable
     override fun provideContent(
         viewModel: ProductDetailsViewModel?,
         viewState: ProductDetailsViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        LaunchedEffect(Unit) {
-            viewModel?.initView(productId = productId)
-        }
-
-        return ContentView(
-            viewState = viewState,
-            addProduct = { viewModel?.addProduct() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        addProduct = { viewModel?.addProduct() },
+    )
 
     @Composable
     internal fun ContentView(
@@ -88,49 +83,60 @@ internal data class ProductDetailsScreen(
         addProduct: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-//            ProductAnimation(viewState.product!!.nftAnimation)
+            val product = requireNotNull(viewState.product)
 
-            CoilImage(
-                imageModel = { viewState.product!!.imageLink },
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center
+            if(product.videoLink != null) {
+                ProductVideoAnimation(product.videoLink)
+            } else {
+                CoilImage(
+                    imageModel = { product.imageLink },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    )
                 )
-            )
+            }
 
-            viewState.product?.tagId?.let { Texts.BLB(it) }
+            viewState.product.tagId?.let { Texts.BLB(it) }
 
             ProductItemRowElement(
                 label = Res.string.name,
-                elementValue = viewState.product!!.name,
+                elementValue = product.name,
                 icon = Icons.Default.Paid,
                 contentDescription = "Product name",
             )
 
             ProductItemRowElement(
                 label = Res.string.description,
-                elementValue = viewState.product.description,
+                elementValue = product.description,
                 icon = Icons.Default.WebStories,
                 contentDescription = "Series",
             )
 
             ProductItemRowElement(
                 label = Res.string.collection_name,
-                elementValue = viewState.product.collectionName,
+                elementValue = product.collectionName,
                 icon = Icons.Default.Person,
                 contentDescription = "Owner",
             )
 
             ProductItemRowElement(
+                label = Res.string.series_no,
+                elementValue = product.seriesId,
+                icon = Icons.Default.GraphicEq,
+                contentDescription = "Owner",
+            )
+
+            ProductItemRowElement(
                 label = Res.string.website_link,
-                elementValue = viewState.product.websiteLink!!,
+                elementValue = product.websiteLink!!,
                 icon = Icons.Default.Mail,
                 contentDescription = "Owner Mail",
             )
 
             ProductItemRowElement(
                 label = Res.string.custom_link,
-                elementValue = viewState.product.customLink!!,
+                elementValue = product.customLink!!,
                 icon = Icons.Default.Schema,
                 contentDescription = "Level",
             )
@@ -171,10 +177,10 @@ internal data class ProductDetailsScreen(
     }
 
     @Composable
-    fun ProductAnimation(productAnimation: String) {
+    fun ProductVideoAnimation(videoLink: String) {
         Box {
             LoopingVideo(
-                url = productAnimation,
+                url = videoLink,
                 modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f),
                 mute = true      // silent background animation
             )

@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
@@ -12,22 +13,15 @@ internal class ProductSeriesOverviewViewModel(
     private val getAllProductSeriesUseCase: GetAllProductSeriesUseCase,
 ) : BaseViewModel<ProductSeriesOverviewViewState>(ProductSeriesOverviewViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
                 val productSeries = getAllProductSeriesUseCase()
-                val selectedProductSeriesIds =
-                    productSeries.map { product -> product.seriesId }.associateWith { false }
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
                         productSeries = productSeries,
-                        checkedProductSeriesIds = selectedProductSeriesIds
                     )
                 }
             } catch (ce: CancellationException) {
@@ -39,18 +33,19 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     fun checkedProductSeries(productSeriesId: String) {
-        val currentProductSeries = currentState().checkedProductSeriesIds.toMutableMap()
+        val selected = currentState().checkedProductSeriesIds.toMutableSet()
+        val wasAdded = selected.contains(productSeriesId)
 
-        val productSeriesIdToUpdate = currentProductSeries.keys.find { it == productSeriesId }
-
-        currentProductSeries[productSeriesIdToUpdate as String] =
-            currentProductSeries[productSeriesIdToUpdate]!!.not()
-
-        updateState {
-            copy(
-                checkedProductSeriesIds = currentProductSeries.toMap()
+        if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
+            showSnackbar(
+                SnackbarEvent.Error("You can select a maximum of $MAX_SELECTED_PRODUCT_SERIES items.")
             )
+            return
         }
+
+        if (wasAdded) selected.remove(productSeriesId) else selected.add(productSeriesId)
+
+        updateState { copy(checkedProductSeriesIds = selected) }
     }
 
     fun navigateToNotification() {
@@ -64,7 +59,7 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun getSelectedProductSeries(): List<String> =
-        currentState().checkedProductSeriesIds.filter { it.value }.keys.toList()
+        currentState().checkedProductSeriesIds.toList()
 
     private fun showLoadingView() {
         updateState {
@@ -80,5 +75,9 @@ internal class ProductSeriesOverviewViewModel(
                 screenState = ScreenState.ERROR,
             )
         }
+    }
+
+    private companion object {
+        private const val MAX_SELECTED_PRODUCT_SERIES = 5
     }
 }

@@ -13,10 +13,6 @@ internal class ProfileViewModel(
     private val getProfileUseCase: GetProfileUseCase
 ) : BaseViewModel<ProfileViewState>(ProfileViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()

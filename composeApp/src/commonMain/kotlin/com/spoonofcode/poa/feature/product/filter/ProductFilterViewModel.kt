@@ -16,11 +16,6 @@ internal class ProductFilterViewModel(
     private val setProductFilterDataUseCase: SetProductFilterDataUseCase,
     private val getProductFilterDataUseCase: GetProductFilterDataUseCase,
 ) : BaseViewModel<ProductFilterViewState>(ProductFilterViewState()) {
-
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()

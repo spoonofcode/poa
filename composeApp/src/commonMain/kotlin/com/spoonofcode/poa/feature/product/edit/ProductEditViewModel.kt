@@ -6,10 +6,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 internal class ProductEditViewModel(
 ) : BaseViewModel<ProductEditViewState>(ProductEditViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
     }
 

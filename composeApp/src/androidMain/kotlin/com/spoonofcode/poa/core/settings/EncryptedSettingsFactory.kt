@@ -11,9 +11,12 @@ lateinit var appContext: Context
 
 actual fun createEncryptedSettings(): Settings {
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+    val fileName = "poa-settings"
+
+    appContext.deleteSharedPreferences(fileName)
 
     val sharedPreferences = EncryptedSharedPreferences.create(
-        "poa-settings",
+        fileName,
         masterKeyAlias,
         appContext,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

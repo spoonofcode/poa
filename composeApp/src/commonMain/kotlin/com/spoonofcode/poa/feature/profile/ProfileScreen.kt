@@ -15,9 +15,8 @@ import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
-import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewScreen
-import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewViewState
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.poa
@@ -41,8 +40,8 @@ internal class ProfileScreen(
         ),
     )
 
-    override fun provideReloadAction(viewModel: ProfileViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: ProfileViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileViewModel>()
@@ -51,12 +50,10 @@ internal class ProfileScreen(
     override fun provideContent(
         viewModel: ProfileViewModel?,
         viewState: ProfileViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
+    )
 
     @Composable
     private fun ContentView(

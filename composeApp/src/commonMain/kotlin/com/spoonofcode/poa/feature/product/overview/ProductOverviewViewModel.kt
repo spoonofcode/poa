@@ -14,10 +14,6 @@ internal class ProductOverviewViewModel(
     private val getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase,
 ) : BaseViewModel<ProductOverviewViewState>(ProductOverviewViewState()) {
 
-    init {
-        initView()
-    }
-
     fun initView() {
         viewModelScope.launch {
             showLoadingView()

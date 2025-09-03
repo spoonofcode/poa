@@ -5,7 +5,6 @@ abstract class BaseViewState(
 )
 
 enum class ScreenState {
-    INITIAL,
     LOADING,
     ERROR,
     CONTENT,

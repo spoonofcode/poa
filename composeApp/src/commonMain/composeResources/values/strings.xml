@@ -20,6 +20,7 @@
     <string name="edit_nft_info">Edit NFT</string>
     <string name="email">Email</string>
     <string name="end">End</string>
+    <string name="expiration_date">Expiration date</string>
     <string name="filter">Filter</string>
     <string name="filter_products">Filter products</string>
     <string name="filter_nft">Filter NFT</string>
@@ -50,8 +51,10 @@
     <string name="nft_name">NFT Name</string>
     <string name="no_partners_found">No partners found</string>
     <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
+    <string name="open_link">Open Link</string>
     <string name="owner">Owner</string>
     <string name="owner_email">Owner Email</string>
     <string name="partner">Partner</string>
@@ -72,8 +75,11 @@
     <string name="scanning_in_progress">Scanning in progress</string>
     <string name="search">Search</string>
     <string name="search_nft">Search NFT</string>
+    <string name="selected_series">Selected series: </string>
     <string name="serie">Serie</string>
     <string name="series">Series</string>
+    <string name="series_number">Series No. %1$d</string>
+    <string name="series_no">Series No</string>
     <string name="send_notification">Send notification</string>
     <string name="settings">Settings</string>
     <string name="shop">Shop</string>
@@ -84,8 +90,11 @@
     <string name="submit">Submit</string>
     <string name="text">Text</string>
     <string name="time">Time</string>
+    <string name="time_is_up">Time is up!</string>
+    <string name="time_remaining">Time remaining:</string>
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
     <string name="type">Type</string>
     <string name="website_link">Website link</string>
+    <string name="visit_website">Visit website!</string>
 </resources>

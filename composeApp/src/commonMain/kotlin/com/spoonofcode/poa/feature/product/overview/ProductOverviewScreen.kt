@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Schema
 import androidx.compose.material.icons.filled.WebStories
@@ -29,6 +30,7 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
@@ -43,8 +45,8 @@ internal class ProductOverviewScreen(
 
     override fun provideTopAppBarTitle() = Res.string.my_products
 
-    override fun provideReloadAction(viewModel: ProductOverviewViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: ProductOverviewViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
 
     override fun provideTopBarActions(
@@ -64,13 +66,11 @@ internal class ProductOverviewScreen(
     override fun provideContent(
         viewModel: ProductOverviewViewModel?,
         viewState: ProductOverviewViewState
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            changeSearchText = { viewModel?.changeSearchText(it) },
-            selectProduct = { viewModel?.selectProduct(it) },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        changeSearchText = { viewModel?.changeSearchText(it) },
+        selectProduct = { viewModel?.selectProduct(it) },
+    )
 
     @Composable
     internal fun ContentView(
@@ -121,6 +121,12 @@ internal class ProductOverviewScreen(
                     elementValue = item.collectionName,
                     icon = Icons.Default.WebStories,
                     contentDescription = "Collection name",
+                )
+
+                ProductItemRowElement(
+                    elementValue = item.seriesId,
+                    icon = Icons.Default.GraphicEq,
+                    contentDescription = "Series",
                 )
 
                 item.tagId?.let {

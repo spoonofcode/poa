@@ -18,8 +18,6 @@ internal class PartnerPanelScreen() :
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
-    override fun provideReloadAction(viewModel: PartnerPanelViewModel): () -> Unit = { }
-
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 
@@ -27,13 +25,11 @@ internal class PartnerPanelScreen() :
     override fun provideContent(
         viewModel: PartnerPanelViewModel?,
         viewState: PartnerPanelViewState,
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            navigateToMyPartners = { viewModel?.navigateToMyPartners() },
-            navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        navigateToMyPartners = { viewModel?.navigateToPartnerEdit() },
+        navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
+    )
 
     @Composable
     private fun ContentView(

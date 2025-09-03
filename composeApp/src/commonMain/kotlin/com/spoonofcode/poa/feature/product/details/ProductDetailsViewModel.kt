@@ -5,10 +5,12 @@ import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
 import com.spoonofcode.poa.core.domain.product.EditProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.model.ProductRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.product.edit.ProductEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -17,6 +19,7 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val editProductUseCase: EditProductUseCase,
+    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
 
     fun initView(productId: Int) {
@@ -45,6 +48,7 @@ internal class ProductDetailsViewModel(
                 addProductToUserUseCase(
                     productId = currentState.product!!.id
                 )
+                subscribeUserTopicsUseCase()
                 viewModelNavigator.pop()
             } catch (ce: CancellationException) {
                 throw ce
@@ -57,22 +61,22 @@ internal class ProductDetailsViewModel(
     fun editProduct() {
         viewModelScope.launch {
             try {
-                val currentState = currentState()
+                val product = requireNotNull(currentState().product)
                 editProductUseCase(
-                    productId = currentState.product!!.id,
+                    productId = product.id,
                     productRequest = ProductRequest(
-                        name = currentState.product.name,
-                        description = currentState.product.description,
-                        imageLink = currentState.product.imageLink,
-                        collectionName = currentState.product.collectionName,
-                        websiteLink = currentState.product.websiteLink,
-                        customLink = currentState.product.customLink,
-                        seriesId = currentState.product.seriesId,
-                        tagId = currentState.product.tagId,
-                        ownerUserId = currentState.product.ownerUser!!.id
+                        name = product.name,
+                        description = product.description,
+                        imageLink = product.imageLink,
+                        videoLink = product.videoLink,
+                        collectionName = product.collectionName,
+                        websiteLink = product.websiteLink,
+                        customLink = product.customLink,
+                        seriesId = product.seriesId,
+                        tagId = product.tagId,
                     )
                 )
-                viewModelNavigator.pop()
+                viewModelNavigator.push(ProductEditScreen())
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

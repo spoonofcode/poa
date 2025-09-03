@@ -36,8 +36,8 @@ internal class PartnerOverviewScreen(
 
     override fun provideTopAppBarTitle() = Res.string.partners
 
-    override fun provideReloadAction(viewModel: PartnerOverviewViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: PartnerOverviewViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
@@ -46,15 +46,12 @@ internal class PartnerOverviewScreen(
     override fun provideContent(
         viewModel: PartnerOverviewViewModel?,
         viewState: PartnerOverviewViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        return ContentView(
-            viewState = viewState,
-            clickCategory = { viewModel?.clickCategory(it) },
-            changeSearchText = { viewModel?.changeSearchText(it) },
-            selectPartner = { viewModel?.selectPartner(it) },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        clickCategory = { viewModel?.clickCategory(it) },
+        changeSearchText = { viewModel?.changeSearchText(it) },
+        selectPartner = { viewModel?.selectPartner(it) },
+    )
 
     @Composable
     private fun ContentView(

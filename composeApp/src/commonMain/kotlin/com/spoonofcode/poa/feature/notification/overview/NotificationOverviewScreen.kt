@@ -28,8 +28,8 @@ internal class NotificationOverviewScreen(
 
     override fun provideTopAppBarTitle() = Res.string.notifications
 
-    override fun provideReloadAction(viewModel: NotificationOverviewViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: NotificationOverviewViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
@@ -38,12 +38,10 @@ internal class NotificationOverviewScreen(
     override fun provideContent(
         viewModel: NotificationOverviewViewModel?,
         viewState: NotificationOverviewViewState
-    ): @Composable (ColumnScope.() -> Unit) {
-        return ContentView(
-            viewState = viewState,
-            selectNotification = { viewModel?.selectNotification(it) },
-        )
-    }
+    ): @Composable (ColumnScope.() -> Unit) = ContentView(
+        viewState = viewState,
+        selectNotification = { viewModel?.selectNotification(it) },
+    )
 
     @Composable
     private fun ContentView(

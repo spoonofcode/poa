@@ -28,16 +28,14 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
     override fun provideContent(
         viewModel: RegisterViewModel?,
         viewState: RegisterViewState,
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            changeEmail = { viewModel?.changeEmail(it) },
-            changePassword = { viewModel?.changePassword(it) },
-            changeFirstName = { viewModel?.changeFirstName(it) },
-            changeLastName = { viewModel?.changeLastName(it) },
-            signUp = { viewModel?.signUp() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        changeEmail = { viewModel?.changeEmail(it) },
+        changePassword = { viewModel?.changePassword(it) },
+        changeFirstName = { viewModel?.changeFirstName(it) },
+        changeLastName = { viewModel?.changeLastName(it) },
+        signUp = { viewModel?.signUp() },
+    )
 
     @Composable
     internal fun ContentView(

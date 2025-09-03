@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
@@ -24,7 +26,13 @@ abstract class BaseViewModel<VS : BaseViewState>(
     val navigationFlow = viewModelNavigator.navigationEvents
 
     private val _viewState = MutableStateFlow(initialViewState)
-    val viewState = _viewState.asStateFlow()
+    val viewState = _viewState.onStart {
+        onStartViewState()
+    }.stateIn(
+        scope = viewModelScope,
+        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+        initialValue = initialViewState
+    )
 
     private val _isOnline = MutableStateFlow(false)
     private val isOnline: StateFlow<Boolean> = _isOnline
@@ -35,6 +43,8 @@ abstract class BaseViewModel<VS : BaseViewState>(
     init {
         observeNetworkState()
     }
+
+    open fun onStartViewState() {}
 
     open fun navigateBack() {
         viewModelScope.launch {

@@ -15,8 +15,8 @@ internal class ProductEditScreen(
 
     override fun provideTopAppBarTitle() = Res.string.product
 
-    override fun provideReloadAction(viewModel: ProductEditViewModel): () -> Unit =
-        { viewModel.initView() }
+    override fun provideInitAction(viewModel: ProductEditViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductEditViewModel>()
@@ -25,12 +25,9 @@ internal class ProductEditScreen(
     override fun provideContent(
         viewModel: ProductEditViewModel?,
         viewState: ProductEditViewState
-    ): @Composable ColumnScope.() -> Unit {
-
-        return ContentView(
-            viewState = viewState,
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+    )
 
     @Composable
     private fun ContentView(

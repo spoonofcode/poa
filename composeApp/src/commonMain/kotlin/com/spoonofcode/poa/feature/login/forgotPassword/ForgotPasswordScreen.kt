@@ -26,13 +26,11 @@ internal class ForgotPasswordScreen() :
     override fun provideContent(
         viewModel: ForgotPasswordViewModel?,
         viewState: ForgotPasswordViewState,
-    ): @Composable ColumnScope.() -> Unit {
-        return ContentView(
-            viewState = viewState,
-            changeEmail = { viewModel?.changeEmail(it) },
-            resetPassword = { viewModel?.resetPassword() },
-        )
-    }
+    ): @Composable ColumnScope.() -> Unit = ContentView(
+        viewState = viewState,
+        changeEmail = { viewModel?.changeEmail(it) },
+        resetPassword = { viewModel?.resetPassword() },
+    )
 
     @Composable
     internal fun ContentView(

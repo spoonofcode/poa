@@ -15,6 +15,7 @@ internal class ShopScreen(
 ) : BaseScreen<ShopViewModel, ShopViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.shop
+
     override fun provideContentPadding() = PaddingValues()
 
     @Composable
