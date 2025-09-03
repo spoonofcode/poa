@@ -14,7 +14,6 @@ import com.spoonofcode.poa.feature.partner.di.partnerModule
 import com.spoonofcode.poa.feature.product.di.productModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
 import com.spoonofcode.poa.feature.scan.di.scanModule
-import com.spoonofcode.poa.feature.shop.di.shopModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -39,7 +38,6 @@ val appModule = module {
         productModule,
         notificationModule,
         scanModule,
-        shopModule,
     )
     single {
         HttpClient {
