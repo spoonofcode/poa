@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.product.series.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.product.GetAllProductSeriesUseCase
+import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
@@ -10,14 +10,14 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProductSeriesOverviewViewModel(
-    private val getAllProductSeriesUseCase: GetAllProductSeriesUseCase,
+    private val getProductSeriesUseCase: GetProductSeriesUseCase,
 ) : BaseViewModel<ProductSeriesOverviewViewState>(ProductSeriesOverviewViewState()) {
 
     fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
-                val productSeries = getAllProductSeriesUseCase()
+                val productSeries = getProductSeriesUseCase()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,

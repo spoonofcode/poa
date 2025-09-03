@@ -6,7 +6,6 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.delete_account
-import com.spoonofcode.poa.resources.message_fcm
 import com.spoonofcode.poa.resources.settings
 import com.spoonofcode.poa.resources.sign_out
 import org.jetbrains.compose.resources.stringResource
@@ -29,7 +28,6 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
         viewState: AppSettingsViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        navigateToMessageFCM = { viewModel?.navigateToMessageFCM() },
         signOut = { viewModel?.signOut() },
         deleteAccount = { viewModel?.deleteAccount() },
     )
@@ -37,16 +35,10 @@ internal class AppSettingsScreen() : BaseScreen<AppSettingsViewModel, AppSetting
     @Composable
     internal fun ContentView(
         viewState: AppSettingsViewState,
-        navigateToMessageFCM: () -> Unit,
         signOut: () -> Unit,
         deleteAccount: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.message_fcm),
-                onClick = navigateToMessageFCM
-            )
-
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_out),
                 onClick = signOut

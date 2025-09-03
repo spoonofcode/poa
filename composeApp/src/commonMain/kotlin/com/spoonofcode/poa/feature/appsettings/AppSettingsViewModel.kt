@@ -6,7 +6,6 @@ import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.login.login.LoginScreen
-import com.spoonofcode.poa.feature.messagefcm.MessageFCMScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -29,12 +28,6 @@ internal class AppSettingsViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
-        }
-    }
-
-    fun navigateToMessageFCM() {
-        viewModelScope.launch {
-            viewModelNavigator.push(screen = MessageFCMScreen())
         }
     }
 
