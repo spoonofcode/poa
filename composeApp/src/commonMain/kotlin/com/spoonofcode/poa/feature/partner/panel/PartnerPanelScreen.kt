@@ -27,7 +27,7 @@ internal class PartnerPanelScreen() :
         viewState: PartnerPanelViewState,
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        navigateToMyPartners = { viewModel?.navigateToMyPartners() },
+        navigateToMyPartners = { viewModel?.navigateToPartnerEdit() },
         navigateToPartnerProducts = { viewModel?.navigateToPartnerProducts() },
     )
 

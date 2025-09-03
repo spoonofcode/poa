@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
 import com.spoonofcode.poa.core.domain.product.EditProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.model.ProductRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
@@ -18,6 +19,7 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val editProductUseCase: EditProductUseCase,
+    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
 
     fun initView(productId: Int) {
@@ -46,6 +48,7 @@ internal class ProductDetailsViewModel(
                 addProductToUserUseCase(
                     productId = currentState.product!!.id
                 )
+                subscribeUserTopicsUseCase()
                 viewModelNavigator.pop()
             } catch (ce: CancellationException) {
                 throw ce
