@@ -6,21 +6,20 @@ import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.domain.login.RegisterUseCase
-import com.spoonofcode.poa.core.domain.notification.GetNotificationsUseCase
 import com.spoonofcode.poa.core.domain.notification.GetNotificationByIdUseCase
+import com.spoonofcode.poa.core.domain.notification.GetNotificationsUseCase
 import com.spoonofcode.poa.core.domain.notification.SendNotificationUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnerCategoriesUseCase
-import com.spoonofcode.poa.core.domain.partner.GetMyPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
 import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
 import com.spoonofcode.poa.core.domain.product.EditProductUseCase
-import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
+import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductsUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
@@ -50,7 +49,6 @@ val domainModule = module {
     factoryOf(::DeleteProductUseCase)
     factoryOf(::EditProductUseCase)
     factoryOf(::UpdatePartnerUseCase)
-    factoryOf(::GetMyPartnersUseCase)
     factoryOf(::GetProductSeriesUseCase)
     factoryOf(::SendNotificationUseCase)
     factoryOf(::GetNotificationsUseCase)
