@@ -20,11 +20,10 @@ import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
-import com.spoonofcode.poa.core.domain.product.GetProductsUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
-import com.spoonofcode.poa.core.domain.user.GetUserProducts
+import com.spoonofcode.poa.core.domain.user.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -44,7 +43,7 @@ val domainModule = module {
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetProductByIdUseCase)
     factoryOf(::GetProductByTagIdUseCase)
-    factoryOf(::GetUserProducts)
+    factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
     factoryOf(::DeleteProductUseCase)
     factoryOf(::EditProductUseCase)
@@ -55,6 +54,5 @@ val domainModule = module {
     factoryOf(::GetNotificationByIdUseCase)
     factoryOf(::SubscribeUserTopicsUseCase)
     factoryOf(::SubscribeUserTopicsUseCase)
-    factoryOf(::GetProductsUseCase)
     factoryOf(::GetPartnersUseCase)
 }
