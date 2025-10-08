@@ -54,6 +54,7 @@
     <string name="notifications">Notifications</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
+    <string name="notification_type">Notification type</string>
     <string name="open_link">Open Link</string>
     <string name="owner">Owner</string>
     <string name="owner_email">Owner Email</string>
@@ -95,6 +96,8 @@
     <string name="time_remaining">Time remaining:</string>
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
+    <string name="to_selected_customers">To selected customers</string>
+    <string name="to_selected_series">To selected series</string>
     <string name="type">Type</string>
     <string name="website_link">Website link</string>
     <string name="visit_website">Visit website!</string>
