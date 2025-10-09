@@ -13,9 +13,9 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.expiration_date
 import com.spoonofcode.poa.resources.link
 import com.spoonofcode.poa.resources.notification
+import com.spoonofcode.poa.resources.selected_customers
 import com.spoonofcode.poa.resources.selected_series
 import com.spoonofcode.poa.resources.send_notification
-import com.spoonofcode.poa.resources.series_number
 import com.spoonofcode.poa.resources.text
 import com.spoonofcode.poa.resources.title
 import kotlinx.datetime.LocalDateTime
@@ -23,13 +23,14 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationEditScreen(
-    val seriesIds: List<String>,
+    val onlyToSelectedUsers: Boolean = false,
+    val itemIds: List<String>,
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
     override fun provideInitAction(viewModel: NotificationEditViewModel?): () -> Unit =
-        { viewModel?.initView(seriesIds = seriesIds) }
+        { viewModel?.initView(itemIds = itemIds) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
@@ -57,15 +58,14 @@ internal class NotificationEditScreen(
         sendNotification: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            if (viewState.seriesIds.isNotEmpty()) {
-                Texts.BLB(stringResource(Res.string.selected_series))
-                viewState.seriesIds.forEach { serieId ->
-                    Texts.BLB(
-                        text = stringResource(
-                            resource = Res.string.series_number,
-                            serieId
-                        )
-                    )
+            if (viewState.itemIds.isNotEmpty()) {
+                if (onlyToSelectedUsers) {
+                    Texts.BLB(stringResource(Res.string.selected_customers))
+                } else {
+                    Texts.BLB(stringResource(Res.string.selected_series))
+                }
+                viewState.itemIds.forEach { itemId ->
+                    Texts.BLB(text = itemId)
                 }
             }
 
@@ -109,7 +109,7 @@ internal class NotificationEditScreen(
 @Preview
 @Composable
 private fun NotificationEditScreenContentPreview() {
-    NotificationEditScreen(seriesIds = emptyList()).PreviewContent(
+    NotificationEditScreen(itemIds = emptyList()).PreviewContent(
         NotificationEditViewState()
     )
 }

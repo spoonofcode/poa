@@ -23,7 +23,6 @@ class RegisterUseCase(
             )
         )
         sessionManager.saveSessionUserId(userId = registerResponse.userId)
-        sessionManager.saveSessionUserEmail(userEmail = registerResponse.userEmail)
         sessionManager.saveSessionAccessToken(token = registerResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = registerResponse.jwtRefreshToken)
     }

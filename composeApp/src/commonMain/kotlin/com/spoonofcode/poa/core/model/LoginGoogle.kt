@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LoginGoogle(
     val userId: Int,
-    val userEmail: String,
     val jwtAccessToken: String,
     val jwtRefreshToken: String,
 )

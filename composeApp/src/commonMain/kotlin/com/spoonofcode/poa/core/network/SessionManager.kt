@@ -43,18 +43,6 @@ class SessionManager(private val settings: Settings) {
         settings.remove(SESSION_USER_ID)
     }
 
-    fun saveSessionUserEmail(userEmail: String) {
-        settings.putString(SESSION_USER_EMAIL, userEmail)
-    }
-
-    fun getSessionUserEmail(): String = requireNotNull(
-        settings.getStringOrNull(SESSION_USER_EMAIL)
-    ) { "User email cannot be null" }
-
-    fun clearSessionUserEmail() {
-        settings.remove(SESSION_USER_EMAIL)
-    }
-
     companion object {
         private const val SESSION_ACCESS_TOKEN = "session_access_token"
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"

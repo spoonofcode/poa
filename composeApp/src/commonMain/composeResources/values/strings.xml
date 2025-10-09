@@ -75,6 +75,7 @@
     <string name="scanning_in_progress">Scanning in progress</string>
     <string name="search">Search</string>
     <string name="search_nft">Search NFT</string>
+    <string name="selected_customers">Selected customers: </string>
     <string name="selected_series">Selected series: </string>
     <string name="serie">Serie</string>
     <string name="series">Series</string>

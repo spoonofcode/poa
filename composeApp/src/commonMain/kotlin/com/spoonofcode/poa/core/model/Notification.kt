@@ -9,7 +9,7 @@ data class NotificationRequest(
     val text: String,
     val link: String? = null,
     val imageUrl: String? = null,
-    val seriesIds: List<String>,
+    val topics: List<String>,
     val expirationDateTime: LocalDateTime? = null,
 )
 

@@ -49,17 +49,17 @@ internal class CustomerOverviewViewModel(
     }
 
     fun navigateToNotification() {
-//        viewModelScope.launch {
-//            viewModelNavigator.push(
-//                NotificationEditScreen(
-//                    seriesIds = getSelectedUsers()
-//                )
-//            )
-//        }
+        viewModelScope.launch {
+            viewModelNavigator.push(
+                NotificationEditScreen(
+                    itemIds = getSelectedUsers()
+                )
+            )
+        }
     }
 
-    private fun getSelectedUsers(): List<Int> =
-        currentState().checkedUserIds.toList()
+    private fun getSelectedUsers(): List<String> =
+        currentState().checkedUserIds.map { userId -> "userId$userId" }.toList()
 
     private fun showLoadingView() {
         updateState {
