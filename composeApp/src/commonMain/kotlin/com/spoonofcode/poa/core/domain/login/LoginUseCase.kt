@@ -19,6 +19,7 @@ class LoginUseCase(
             )
         )
         sessionManager.saveSessionUserId(userId = loginResponse.userId)
+        sessionManager.saveSessionUserEmail(userEmail = loginResponse.userEmail)
         sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
     }

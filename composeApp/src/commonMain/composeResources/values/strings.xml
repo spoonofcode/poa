@@ -19,8 +19,8 @@
     <string name="edit">Edit</string>
     <string name="edit_nft_info">Edit NFT</string>
     <string name="email">Email</string>
-    <string name="end">End</string>
     <string name="expiration_date">Expiration date</string>
+    <string name="facebook">Facebook</string>
     <string name="filter">Filter</string>
     <string name="filter_products">Filter products</string>
     <string name="filter_nft">Filter NFT</string>
@@ -30,19 +30,17 @@
     <string name="gen_1_series">Gen 1 Series</string>
     <string name="get_user_token">Get user token</string>
     <string name="home">Home</string>
+    <string name="id">ID</string>
+    <string name="instagram">Instagram</string>
     <string name="last_name">Last Name</string>
     <string name="let_s_get_started">Let’s get started</string>
     <string name="link">Link</string>
     <string name="links">Links</string>
-    <string name="website">Website</string>
-    <string name="facebook">Facebook</string>
-    <string name="instagram">Instagram</string>
-    <string name="youtube">Youtube</string>
-    <string name="x">X</string>
     <string name="location">Location</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>
     <string name="message_title">Message title</string>
+    <string name="my_customers">My customers</string>
     <string name="my_partners">Partners</string>
     <string name="my_products">My products</string>
     <string name="my_product_series">My product series</string>
@@ -99,6 +97,8 @@
     <string name="to_selected_customers">To selected customers</string>
     <string name="to_selected_series">To selected series</string>
     <string name="type">Type</string>
+    <string name="website">Website</string>
     <string name="website_link">Website link</string>
-    <string name="visit_website">Visit website!</string>
+    <string name="x">X</string>
+    <string name="youtube">Youtube</string>
 </resources>

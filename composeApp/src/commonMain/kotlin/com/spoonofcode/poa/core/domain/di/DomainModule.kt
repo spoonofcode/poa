@@ -11,6 +11,7 @@ import com.spoonofcode.poa.core.domain.notification.GetNotificationsUseCase
 import com.spoonofcode.poa.core.domain.notification.SendNotificationUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnerCategoriesUseCase
+import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
@@ -55,4 +56,5 @@ val domainModule = module {
     factoryOf(::SubscribeUserTopicsUseCase)
     factoryOf(::SubscribeUserTopicsUseCase)
     factoryOf(::GetPartnersUseCase)
+    factoryOf(::GetPartnerUsersUseCase)
 }

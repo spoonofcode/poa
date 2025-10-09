@@ -7,6 +7,7 @@ class DeleteAccountUseCase(
 ) {
     suspend operator fun invoke() {
         sessionManager.clearSessionUserId()
+        sessionManager.clearSessionUserEmail()
         sessionManager.clearSessionAccessToken()
         sessionManager.clearSessionRefreshToken()
     }
