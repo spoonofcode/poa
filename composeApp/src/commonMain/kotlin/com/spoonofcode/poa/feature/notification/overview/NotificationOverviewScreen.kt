@@ -1,20 +1,27 @@
 package com.spoonofcode.poa.feature.notification.overview
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.model.Notification
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -63,28 +70,51 @@ internal class NotificationOverviewScreen(
     }
 
     @Composable
-    private fun NotificationItem(
+    fun NotificationItem(
         item: Notification,
         onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        showChevron: Boolean = true,
     ) {
         ElevatedCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClick() },
+            onClick = onClick,
+            modifier = modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.large
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Texts.BM(item.title)
-                Texts.BM(item.text)
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = item.title,
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = item.text,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
 
-//                CoilImage(
-//                    imageModel = { item.imageLink }, // loading a network image or local resource using an URL.
-//                    imageOptions = ImageOptions(
-//                        contentScale = ContentScale.Crop,
-//                        alignment = Alignment.Center
-//                    )
-//                )
+                if (showChevron) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(start = 12.dp)
+                            .size(20.dp)
+                    )
+                }
             }
         }
     }
