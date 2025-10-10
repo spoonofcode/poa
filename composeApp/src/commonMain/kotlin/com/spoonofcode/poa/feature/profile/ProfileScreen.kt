@@ -16,15 +16,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Comment
+import androidx.compose.material.icons.filled.CommentBank
+import androidx.compose.material.icons.filled.Commit
+import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.CreditCard
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.DocumentScanner
 import androidx.compose.material.icons.filled.HeadsetMic
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.InterpreterMode
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ReceiptLong
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.filled.Rule
+import androidx.compose.material.icons.filled.Subscript
+import androidx.compose.material.icons.filled.Terminal
+import androidx.compose.material.icons.outlined.Contacts
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -43,12 +55,16 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
-import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.edit_profile
+import com.spoonofcode.poa.resources.faq
+import com.spoonofcode.poa.resources.logout
+import com.spoonofcode.poa.resources.notifications
+import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
-import com.spoonofcode.poa.resources.reload
+import com.spoonofcode.poa.resources.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -57,16 +73,6 @@ internal class ProfileScreen(
 ) : BaseScreen<ProfileViewModel, ProfileViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.profile
-
-    override fun provideTopBarActions(
-        viewModel: ProfileViewModel?,
-    ) = listOf(
-        TopBarAction(
-            icon = Icons.Default.Settings,
-            description = "settings",
-            onClick = { viewModel?.navigateToSettings() }
-        ),
-    )
 
     override fun provideInitAction(viewModel: ProfileViewModel?): () -> Unit =
         { viewModel?.initView() }
@@ -94,16 +100,18 @@ internal class ProfileScreen(
                 horizontalArrangement = Arrangement.Center,
             ) {
                 RoundedImage(imageRes = Res.drawable.poa)
-                Spacers.VerticalBetweenFields()
             }
+
+            Spacers.VerticalBetweenFields()
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Texts.HS(viewState.profile!!.name)
-                Spacers.VerticalBetweenFields()
             }
+
+            Spacers.VerticalBetweenFields()
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -112,18 +120,18 @@ internal class ProfileScreen(
                 FilledTonalButton(
                     onClick = { },
                 ) {
-                    Text(stringResource(resource = Res.string.reload))
+                    Text(stringResource(resource = Res.string.edit_profile))
                 }
-
-                Spacers.VerticalBetweenFields()
             }
+
+            Spacers.VerticalBetweenFields()
 
             // Section 1
             SectionCard {
                 ChevronItem(
-                    icon = Icons.Default.ReceiptLong,
-                    title = "My Orders",
-                    onClick = { }
+                    icon = Icons.Default.Person,
+                    title = stringResource(resource = Res.string.partner_panel),
+                    onClick = navigateToPartnerPanel
                 )
             }
 
@@ -132,43 +140,20 @@ internal class ProfileScreen(
             // Section 2
             SectionCard {
                 ChevronItem(
-                    icon = Icons.Default.AccountCircle,
-                    title = "My Details",
-                    onClick = { }
-                )
-                DividerItem()
-                ChevronItem(
-                    icon = Icons.Default.Home,
-                    title = "Address Book",
-                    onClick = { }
-                )
-                DividerItem()
-                ChevronItem(
-                    icon = Icons.Default.CreditCard,
-                    title = "Payment Methods",
-                    onClick = { }
-                )
-                DividerItem()
-                ChevronItem(
                     icon = Icons.Default.Notifications,
-                    title = "Notifications",
+                    title = stringResource(resource = Res.string.notifications),
                     onClick = { }
                 )
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            // Section 3
-            SectionCard {
+                DividerItem()
+                ChevronItem(
+                    icon = Icons.Default.Description,
+                    title = stringResource(resource = Res.string.terms_and_conditions),
+                    onClick = { }
+                )
+                DividerItem()
                 ChevronItem(
                     icon = Icons.Default.Help,
-                    title = "FAQs",
-                    onClick = { }
-                )
-                DividerItem()
-                ChevronItem(
-                    icon = Icons.Default.HeadsetMic,
-                    title = "Help Center",
+                    title = stringResource(resource = Res.string.faq),
                     onClick = { }
                 )
             }
@@ -178,18 +163,10 @@ internal class ProfileScreen(
             // Logout
             SectionCard {
                 ChevronItem(
-                    icon = Icons.Default.ReceiptLong, // swap to your logout icon
-                    title = "Logout",
+                    icon = Icons.Default.Logout,
+                    title = stringResource(resource = Res.string.logout),
                     titleColor = MaterialTheme.colorScheme.error,
                     iconTint = MaterialTheme.colorScheme.error,
-                    trailing = {
-                        // keep layout consistent: show chevron faintly
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                            contentDescription = null,
-                            modifier = Modifier.alpha(0.0f) // visually hide while keeping spacing
-                        )
-                    },
                     onClick = { }
                 )
             }
@@ -277,7 +254,7 @@ private fun ChevronItem(
 
 @Composable
 private fun DividerItem() {
-    Divider(
+    HorizontalDivider(
         modifier = Modifier
             .fillMaxWidth(),
         thickness = 0.6.dp

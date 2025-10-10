@@ -17,10 +17,12 @@
     <string name="demo">Demo</string>
     <string name="description">Description</string>
     <string name="edit">Edit</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="edit_nft_info">Edit NFT</string>
     <string name="email">Email</string>
     <string name="expiration_date">Expiration date</string>
     <string name="facebook">Facebook</string>
+    <string name="faq">FAQ</string>
     <string name="filter">Filter</string>
     <string name="filter_products">Filter products</string>
     <string name="filter_nft">Filter NFT</string>
@@ -37,6 +39,7 @@
     <string name="link">Link</string>
     <string name="links">Links</string>
     <string name="location">Location</string>
+    <string name="logout">Logout</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Message text</string>
     <string name="message_title">Message title</string>
@@ -89,6 +92,7 @@
     <string name="sign_up">Sign up</string>
     <string name="start">Start</string>
     <string name="submit">Submit</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="text">Text</string>
     <string name="time">Time</string>
     <string name="time_is_up">Time is up!</string>

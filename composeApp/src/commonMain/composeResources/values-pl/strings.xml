@@ -17,10 +17,12 @@
     <string name="demo">Demo</string>
     <string name="description">Opis</string>
     <string name="edit">Edytuj</string>
+    <string name="edit_profile">Edytuj Profil</string>
     <string name="edit_nft_info">Edytuj NFT</string>
     <string name="email">E-mail</string>
     <string name="expiration_date">Data ważności</string>
     <string name="facebook">Facebook</string>
+    <string name="faq">FAQ</string>
     <string name="filter">Filtruj</string>
     <string name="filter_products">Filtruj produkty</string>
     <string name="filter_nft">Filtruj NFT</string>
@@ -37,6 +39,7 @@
     <string name="link">Link</string>
     <string name="links">Linki</string>
     <string name="location">Lokalizacja</string>
+    <string name="logout">Wyloguj</string>
     <string name="message_fcm">MessageFCM</string>
     <string name="message_text">Tekst wiadomość</string>
     <string name="message_title">Tytuł wiadomość</string>
@@ -59,8 +62,8 @@
     <string name="new_partners">Nowi partnerzy</string>
     <string name="partner">Partner</string>
     <string name="partner_name">Partner</string>
-    <string name="partner_info">Partner info</string>
-    <string name="partner_panel">Partner panel</string>
+    <string name="partner_info">Informacje o partnerze</string>
+    <string name="partner_panel">Panel partnerski</string>
     <string name="partners">Partners</string>
     <string name="password">Hasło</string>
     <string name="product">Product</string>
@@ -89,6 +92,7 @@
     <string name="sign_up">Zarejestruj się</string>
     <string name="start">Rozpocznij</string>
     <string name="submit">Wyślij</string>
+    <string name="terms_and_conditions">Warunki i zasady</string>
     <string name="text">Text</string>
     <string name="time">Czas</string>
     <string name="time_is_up">Czas minął!</string>
