@@ -91,6 +91,8 @@ internal class LoginScreen(
                 onClick = { signIn() }
             )
 
+            Spacers.VerticalBetweenFields()
+
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.forget_password),
                 onClick = { forgotPassword() }

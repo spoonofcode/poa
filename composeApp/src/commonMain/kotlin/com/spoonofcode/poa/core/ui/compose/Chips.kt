@@ -82,7 +82,7 @@ object Chips {
                     selected = isSelected,
                     onClick = { onCategorySelected(category.id) },
                     label = {
-                        Texts.LM(text = category.name)
+                        Texts.LMB(text = category.name)
                     },
                     modifier = Modifier.padding(horizontal = 4.dp),
                     colors = FilterChipDefaults.filterChipColors(),
