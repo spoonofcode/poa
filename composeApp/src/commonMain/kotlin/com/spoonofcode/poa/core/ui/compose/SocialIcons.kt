@@ -59,7 +59,7 @@ fun SocialIcons(
     spacing: Dp = 12.dp,
     shape: Shape = CircleShape,
 ) {
-    val items = buildList<SocialItem> {
+    val items = buildList {
         if (!websiteUrl.isNullOrBlank()) add(SocialItem.Web(websiteUrl))
         if (!instagramUrl.isNullOrBlank()) add(SocialItem.Instagram(instagramUrl))
         if (!facebookUrl.isNullOrBlank()) add(SocialItem.Facebook(facebookUrl))

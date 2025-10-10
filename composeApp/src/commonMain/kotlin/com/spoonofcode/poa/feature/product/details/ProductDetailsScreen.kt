@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
+import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.LoopingVideo
@@ -134,8 +136,7 @@ internal data class ProductDetailsScreen(
                 ClickableInfoRow(
                     icon = Icons.Default.Link,
                     label = stringResource(Res.string.website_link),
-                    value = product.websiteLink,
-                    onClick = { }
+                    url = product.websiteLink,
                 )
 
                 HorizontalDivider()
@@ -143,8 +144,7 @@ internal data class ProductDetailsScreen(
                 ClickableInfoRow(
                     icon = Icons.Default.Schema,
                     label = stringResource(Res.string.custom_link),
-                    value = product.customLink,
-                    onClick = { }
+                    url = product.customLink,
                 )
             }
 
@@ -203,16 +203,17 @@ internal data class ProductDetailsScreen(
     private fun ClickableInfoRow(
         icon: ImageVector,
         label: String,
-        value: String?,
-        onClick: () -> Unit,
+        url: String?,
     ) {
-        if (value.isNullOrBlank()) return
+        if (url.isNullOrBlank()) return
+
+        val urlOpener = remember { getUrlOpener() }
 
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
-                .clickable(onClick = onClick)
+                .clickable(onClick = { urlOpener.openUrl(url) })
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = 1.dp
@@ -237,7 +238,7 @@ internal data class ProductDetailsScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = value,
+                        text = url,
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.onSurface
                         ),

@@ -1,35 +1,38 @@
 package com.spoonofcode.poa.feature.product.overview
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.GraphicEq
-import androidx.compose.material.icons.filled.Paid
-import androidx.compose.material.icons.filled.Schema
-import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
-import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
-import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
@@ -85,76 +88,80 @@ internal class ProductOverviewScreen(
                 innerLabel = stringResource(resource = Res.string.search),
             )
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
-            ) {
-                items(viewState.filteredProducts) { product ->
-                    ProductItem(
-                        item = product,
-                        onClick = { selectProduct(product.id) }
-                    )
-                }
+            ProductGrid(
+                products = viewState.filteredProducts,
+                onProductClick = { selectProduct(it.id) }
+            )
+        }
+    }
+
+    @Composable
+    fun ProductGrid(
+        products: List<Product>,
+        onProductClick: (Product) -> Unit,
+        modifier: Modifier = Modifier,
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(products, key = { it.id }) { product ->
+                ProductCard(
+                    product = product,
+                    onClick = { onProductClick(product) },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
 
     @Composable
-    fun ProductItem(
-        item: Product,
+    fun ProductCard(
+        product: Product,
         onClick: () -> Unit,
+        modifier: Modifier = Modifier,
     ) {
         ElevatedCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClick() },
+            onClick = onClick,
+            modifier = modifier,
+            shape = RoundedCornerShape(16.dp)
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
             ) {
-                ProductItemRowElement(
-                    elementValue = item.name,
-                    icon = Icons.Default.Paid,
-                    contentDescription = "Name",
+                CoilImage(
+                    imageModel = { product.imageLink },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    ),
+                    modifier = Modifier.fillMaxSize()
                 )
-
-                ProductItemRowElement(
-                    elementValue = item.collectionName,
-                    icon = Icons.Default.WebStories,
-                    contentDescription = "Collection name",
-                )
-
-                ProductItemRowElement(
-                    elementValue = item.seriesId,
-                    icon = Icons.Default.GraphicEq,
-                    contentDescription = "Series",
-                )
-
-                item.tagId?.let {
-                    ProductItemRowElement(
-                        elementValue = it,
-                        icon = Icons.Default.Schema,
-                        contentDescription = "Tag id",
-                    )
-                }
             }
-        }
-    }
 
-    @Composable
-    private fun ProductItemRowElement(
-        elementValue: String,
-        icon: ImageVector,
-        contentDescription: String,
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription,
-            )
-            Spacers.HorizontalBetweenFields()
-            Texts.BM(
-                text = elementValue,
-            )
+            Column(Modifier.padding(16.dp)) {
+                Text(
+                    product.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Black,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = product.collectionName,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
         }
     }
 }
