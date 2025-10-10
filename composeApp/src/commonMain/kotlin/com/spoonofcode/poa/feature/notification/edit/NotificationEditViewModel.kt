@@ -86,14 +86,6 @@ internal class NotificationEditViewModel(
         }
     }
 
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
-
     private fun showErrorSnackbar(e: Exception) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
