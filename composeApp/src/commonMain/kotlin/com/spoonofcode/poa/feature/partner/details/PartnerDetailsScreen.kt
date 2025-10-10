@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.partner.details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -79,15 +80,18 @@ internal class PartnerDetailsScreen(
             Spacers.VerticalBetweenFields()
             Texts.HSB(viewState.partner.description)
             Spacers.VerticalBetweenFields()
-            Texts.HS(stringResource(Res.string.links))
-            SocialIcons(
-                websiteUrl = viewState.partner.websiteLink,
-                instagramUrl = viewState.partner.instagramLink,
-                facebookUrl = viewState.partner.facebookLink,
-                youtubeUrl = viewState.partner.youtubeLink,
-                xUrl = viewState.partner.xLink,
-            )
-
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                SocialIcons(
+                    websiteUrl = viewState.partner.websiteLink,
+                    instagramUrl = viewState.partner.instagramLink,
+                    facebookUrl = viewState.partner.facebookLink,
+                    youtubeUrl = viewState.partner.youtubeLink,
+                    xUrl = viewState.partner.xLink,
+                )
+            }
             Spacers.VerticalBetweenFields()
         }
     }
