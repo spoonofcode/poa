@@ -62,9 +62,9 @@ internal class PartnerDetailsScreen(
                 )
             )
             Spacers.VerticalBetweenFields()
-            Texts.BM(viewState.partner.description)
+            Texts.HSB(viewState.partner.description)
             Spacers.VerticalBetweenFields()
-            Texts.BM(stringResource(Res.string.links))
+            Texts.HS(stringResource(Res.string.links))
             SocialIcons(
                 websiteUrl = viewState.partner.websiteLink,
                 instagramUrl = viewState.partner.instagramLink,
@@ -74,11 +74,6 @@ internal class PartnerDetailsScreen(
             )
 
             Spacers.VerticalBetweenFields()
-//            Carousels.CustomCarousel(
-//                title = stringResource(resource = Res.string.products),
-//                items = getMockedProducts(),
-//                onItemClick = { goToMyEvent(it) }
-//            )
         }
     }
 }

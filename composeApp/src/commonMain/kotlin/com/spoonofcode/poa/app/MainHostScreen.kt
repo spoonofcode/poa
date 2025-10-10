@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -17,6 +18,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.spoonofcode.poa.core.ui.Paddings.bottomScreenPadding
 import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.theme.AppTheme
 import com.spoonofcode.poa.feature.home.HomeTab
 import com.spoonofcode.poa.feature.partner.overview.PartnerOverviewTab
 import com.spoonofcode.poa.feature.product.overview.ProductOverviewTab
@@ -31,7 +33,9 @@ class MainHostScreen() : Screen {
             tab = HomeTab
         ) {
             Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
-                NavigationBar {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.background,
+                ) {
                     TabNavigationItem(HomeTab)
                     TabNavigationItem(PartnerOverviewTab)
                     TabNavigationItem(ScanTab)

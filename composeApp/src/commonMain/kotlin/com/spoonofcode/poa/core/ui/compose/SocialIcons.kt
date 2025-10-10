@@ -3,16 +3,23 @@ package com.spoonofcode.poa.core.ui.compose
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -26,7 +33,6 @@ import compose.icons.fontawesomeicons.brands.Youtube
 
 @Composable
 fun SocialIcons(
-    iconSize: Dp = 32.dp,
     websiteUrl: String? = null,
     instagramUrl: String? = null,
     facebookUrl: String? = null,
@@ -40,31 +46,46 @@ fun SocialIcons(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SocialIcon(Icons.Default.Web, iconSize, websiteUrl)
-        SocialIcon(FontAwesomeIcons.Brands.Instagram, iconSize, instagramUrl)
-        SocialIcon(FontAwesomeIcons.Brands.Facebook, iconSize, facebookUrl)
-        SocialIcon(FontAwesomeIcons.Brands.Youtube, iconSize, youtubeUrl)
-        SocialIcon(FontAwesomeIcons.Brands.Twitter, iconSize, xUrl)
+        SocialIcon(Icons.Default.Web, url = websiteUrl)
+        SocialIcon(FontAwesomeIcons.Brands.Instagram, url = instagramUrl)
+        SocialIcon(FontAwesomeIcons.Brands.Facebook, url = facebookUrl)
+        SocialIcon(FontAwesomeIcons.Brands.Youtube, url = youtubeUrl)
+        SocialIcon(FontAwesomeIcons.Brands.Twitter, url = xUrl)
     }
 }
 
 @Composable
-private fun SocialIcon(
+fun SocialIcon(
     icon: ImageVector,
-    size: Dp,
     url: String?,
+    modifier: Modifier = Modifier,
+    size: Dp = 32.dp,
+    backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    contentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    shape: Shape = CircleShape,
+    elevation: Dp = 3.dp
 ) {
     val urlOpener = remember { getUrlOpener() }
 
-    Icon(
-        imageVector = icon,
-        contentDescription = null,
-        modifier = Modifier
-            .size(size)
-            .clickable {
-                if (url != null) {
-                    urlOpener.openUrl(url)
-                }
-            }
-    )
+    Surface(
+        modifier = modifier
+            .size(size * 1.8f)
+            .clickable(enabled = url != null) {
+                url?.let { urlOpener.openUrl(it) }
+            },
+        shape = shape,
+        color = backgroundColor,
+        tonalElevation = elevation,
+        shadowElevation = elevation
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = contentColor,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxSize()
+                .aspectRatio(1f)
+        )
+    }
 }

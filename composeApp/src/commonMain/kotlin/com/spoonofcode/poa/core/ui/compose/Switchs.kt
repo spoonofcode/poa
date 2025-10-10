@@ -32,7 +32,7 @@ object Switchs {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Texts.BL(text = label)
+            Texts.HL(text = label)
             Switch(
                 checked = checked,
                 onCheckedChange = {
