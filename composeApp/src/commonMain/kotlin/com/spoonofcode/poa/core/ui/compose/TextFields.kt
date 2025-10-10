@@ -33,7 +33,7 @@ object TextFields {
         visualTransformation: VisualTransformation = VisualTransformation.None,
     ) {
         label?.let {
-            Texts.BL(text = it)
+            Texts.BLB(text = it)
         }
         OutlinedTextField(
             value = value,

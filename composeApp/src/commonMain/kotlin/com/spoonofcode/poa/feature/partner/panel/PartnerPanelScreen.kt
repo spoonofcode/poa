@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
@@ -42,6 +43,8 @@ internal class PartnerPanelScreen() :
                 text = stringResource(resource = Res.string.partner_info),
                 onClick = navigateToMyPartners
             )
+
+            Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.send_notification),
