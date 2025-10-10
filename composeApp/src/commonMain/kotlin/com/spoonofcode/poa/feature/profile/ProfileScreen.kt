@@ -73,7 +73,7 @@ internal class ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
-                Texts.HSB(viewState.profile!!.name)
+                Texts.BL(viewState.profile!!.name)
                 Spacers.VerticalBetweenFields()
             }
 

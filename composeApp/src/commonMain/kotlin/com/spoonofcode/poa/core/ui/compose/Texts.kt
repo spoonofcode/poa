@@ -8,6 +8,81 @@ import androidx.compose.ui.text.font.FontWeight
 
 object Texts {
     @Composable
+    fun DS(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.displaySmall,
+        )
+    }
+
+    @Composable
+    fun DSB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
+    fun DM(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.displayMedium,
+        )
+    }
+
+    @Composable
+    fun DMB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.displayMedium,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
+    fun DL(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.displayLarge,
+        )
+    }
+
+    @Composable
+    fun DLB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.displayLarge,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
     fun TS(
         text: String,
         modifier: Modifier = Modifier,
@@ -16,6 +91,19 @@ object Texts {
             text = text,
             modifier = modifier,
             style = MaterialTheme.typography.titleSmall,
+        )
+    }
+
+    @Composable
+    fun TSB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold,
         )
     }
 
@@ -32,6 +120,19 @@ object Texts {
     }
 
     @Composable
+    fun TMB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
     fun TL(
         text: String,
         modifier: Modifier = Modifier,
@@ -40,6 +141,19 @@ object Texts {
             text = text,
             modifier = modifier,
             style = MaterialTheme.typography.titleLarge,
+        )
+    }
+
+    @Composable
+    fun TLB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
         )
     }
 
@@ -64,7 +178,7 @@ object Texts {
             text = text,
             modifier = modifier,
             style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
     }
 
@@ -79,12 +193,38 @@ object Texts {
     }
 
     @Composable
+    fun HMB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
     fun HL(
         text: String,
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.headlineLarge
+        )
+    }
+
+    @Composable
+    fun HLB(
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        Text(
+            text = text,
+            modifier = modifier,
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.Bold,
         )
     }
 
@@ -106,8 +246,7 @@ object Texts {
             text = text,
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold,
-
-            )
+        )
     }
 
     @Composable
@@ -117,6 +256,17 @@ object Texts {
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium
+        )
+    }
+
+    @Composable
+    fun BMB(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
         )
     }
 
@@ -137,7 +287,70 @@ object Texts {
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
+    fun LS(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelSmall
+        )
+    }
+
+    @Composable
+    fun LSB(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
+    fun LM(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+        )
+    }
+
+    @Composable
+    fun LMB(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+
+    @Composable
+    fun LL(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+        )
+    }
+
+    @Composable
+    fun LLB(
+        text: String,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Bold,
         )
     }
 }

@@ -21,7 +21,7 @@ fun TopBar(
     iconBarActions: List<TopBarAction>,
 ) {
     CenterAlignedTopAppBar(
-        title = { Texts.TM(stringResource(resource = topAppBarTitle)) },
+        title = { Texts.TLB(stringResource(resource = topAppBarTitle)) },
         navigationIcon = if (backNavigationEnable) {
             {
                 IconButton(onClick = navigationBackAction) {
