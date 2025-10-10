@@ -47,5 +47,6 @@ class SessionManager(private val settings: Settings) {
         private const val SESSION_ACCESS_TOKEN = "session_access_token"
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
         private const val SESSION_USER_ID = "session_user_id"
+        private const val SESSION_USER_EMAIL = "session_user_email"
     }
 }

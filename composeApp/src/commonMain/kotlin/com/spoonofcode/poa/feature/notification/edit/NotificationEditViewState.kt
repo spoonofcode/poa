@@ -11,7 +11,7 @@ import kotlinx.datetime.LocalDateTime
 @Immutable
 internal data class NotificationEditViewState(
     override val screenState: ScreenState = ScreenState.CONTENT,
-    val seriesIds: List<String> = emptyList(),
+    val itemIds: List<String> = emptyList(),
     val title: String = "",
     val text: String = "",
     val link: String = "",

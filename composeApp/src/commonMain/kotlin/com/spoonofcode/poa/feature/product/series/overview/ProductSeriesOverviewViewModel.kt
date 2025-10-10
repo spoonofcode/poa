@@ -52,14 +52,14 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 NotificationEditScreen(
-                    seriesIds = getSelectedProductSeries()
+                    itemIds = getSelectedProductSeries()
                 )
             )
         }
     }
 
     private fun getSelectedProductSeries(): List<String> =
-        currentState().checkedProductSeriesIds.toList()
+        currentState().checkedProductSeriesIds.map { serieId -> "productSerieId$serieId" }.toList()
 
     private fun showLoadingView() {
         updateState {

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -31,6 +32,7 @@ import com.spoonofcode.poa.core.ui.compose.setSnackbarHostState
 import com.spoonofcode.poa.core.ui.ext.addIf
 import com.spoonofcode.poa.core.ui.ext.viewEnable
 import com.spoonofcode.poa.core.ui.navigation.NavigationHandler
+import com.spoonofcode.poa.core.ui.theme.AppTheme
 import org.jetbrains.compose.resources.StringResource
 
 abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
@@ -150,13 +152,13 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     fun PreviewContent(
         viewState: VS,
     ) {
-        val snackbarHostState = remember { SnackbarHostState() }
-        ContentView(
-            snackbarHostState = snackbarHostState,
-            viewModel = null,
-            viewState = viewState,
-        )
+        AppTheme {
+            val snackbarHostState = remember { SnackbarHostState() }
+            ContentView(
+                snackbarHostState = snackbarHostState,
+                viewModel = null,
+                viewState = viewState,
+            )
+        }
     }
-
-
 }

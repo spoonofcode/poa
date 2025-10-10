@@ -15,6 +15,7 @@ data class Product(
     val websiteLink: String? = null,
     val customLink: String? = null,
     val ownerUser: User? = null,
+    val partner: Partner,
 )
 
 @Serializable
@@ -29,4 +30,5 @@ data class ProductRequest(
     val websiteLink: String? = null,
     val customLink: String? = null,
     val ownerUserId: Int? = null,
+    val partnerId: Int? = null,
 )

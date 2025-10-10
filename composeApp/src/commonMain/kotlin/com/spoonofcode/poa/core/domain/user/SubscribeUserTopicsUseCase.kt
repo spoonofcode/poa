@@ -11,12 +11,21 @@ class SubscribeUserTopicsUseCase(
 ) {
     suspend operator fun invoke() {
         subscribeToGlobalTopic()
+        subscribeByUserId()
+        subscribeBySeriesId()
+    }
 
+    private suspend fun subscribeByUserId() {
+        val userId = sessionManager.getSessionUserId()
+        firebasePushService.subscribeToTopic("user$userId")
+    }
+
+    private suspend fun subscribeBySeriesId() {
         val userProductSeriesIds = userRepository.readUserProductSeriesIds(
             userId = sessionManager.getSessionUserId(),
         )
         userProductSeriesIds.forEach { seriesId ->
-            firebasePushService.subscribeToTopic(seriesId)
+            firebasePushService.subscribeToTopic("productSerieId$seriesId")
         }
     }
 

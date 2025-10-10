@@ -15,10 +15,10 @@ internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
 ) : BaseViewModel<NotificationEditViewState>(NotificationEditViewState()) {
 
-    fun initView(seriesIds: List<String>) {
+    fun initView(itemIds: List<String>) {
         viewModelScope.launch {
             updateState {
-                copy(seriesIds = seriesIds)
+                copy(itemIds = itemIds)
             }
         }
     }
@@ -65,7 +65,7 @@ internal class NotificationEditViewModel(
                         title = currentState.title,
                         text = currentState.text,
                         link = currentState.link,
-                        seriesIds = currentState.seriesIds,
+                        topics = currentState.itemIds,
                         expirationDateTime = currentState.expirationDateTime
                     )
                 )
@@ -82,14 +82,6 @@ internal class NotificationEditViewModel(
         updateState {
             copy(
                 screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
             )
         }
     }
