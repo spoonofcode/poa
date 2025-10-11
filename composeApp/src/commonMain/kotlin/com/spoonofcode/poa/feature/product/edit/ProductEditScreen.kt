@@ -18,7 +18,7 @@ import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.custom_link
-import com.spoonofcode.poa.resources.product
+import com.spoonofcode.poa.resources.edit_product
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -27,7 +27,7 @@ internal class ProductEditScreen(
     val productId: Int,
 ) : BaseScreen<ProductEditViewModel, ProductEditViewState>() {
 
-    override fun provideTopAppBarTitle() = Res.string.product
+    override fun provideTopAppBarTitle() = Res.string.edit_product
 
     override fun provideInitAction(viewModel: ProductEditViewModel?): () -> Unit =
         { viewModel?.initView(productId = productId) }

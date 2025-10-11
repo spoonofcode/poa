@@ -70,12 +70,14 @@ internal class ProfileScreen(
         viewState: ProfileViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
+        navigateToEditProfile= { viewModel?.navigateToEditProfile() },
         navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
     )
 
     @Composable
     private fun ContentView(
         viewState: ProfileViewState,
+        navigateToEditProfile: () -> Unit,
         navigateToPartnerPanel: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
@@ -102,7 +104,7 @@ internal class ProfileScreen(
                 horizontalArrangement = Arrangement.Center,
             ) {
                 FilledTonalButton(
-                    onClick = { },
+                    onClick = navigateToEditProfile,
                 ) {
                     Text(stringResource(resource = Res.string.edit_profile))
                 }

@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
+import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -28,6 +29,12 @@ internal class ProfileViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
+        }
+    }
+
+    fun navigateToEditProfile() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = ProfileEditScreen())
         }
     }
 
