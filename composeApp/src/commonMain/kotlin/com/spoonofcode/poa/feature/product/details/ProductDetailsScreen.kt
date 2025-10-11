@@ -39,9 +39,11 @@ import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.LoopingVideo
+import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
+import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.add_product
@@ -66,7 +68,7 @@ internal data class ProductDetailsScreen(
         viewModel: ProductDetailsViewModel?,
     ) = if (hasOwnerUser) {
         listOf(
-            TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.editProduct() },
+            TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.navigateToEditProduct() },
             TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deleteProduct() }
         )
     } else {
@@ -94,20 +96,9 @@ internal data class ProductDetailsScreen(
             val product = requireNotNull(viewState.product)
 
             if (product.videoLink != null) {
-                ProductVideoAnimation(product.videoLink)
+                VideoAnimation(product.videoLink)
             } else {
-                CoilImage(
-                    imageModel = { product.imageLink },
-                    imageOptions = ImageOptions(
-                        contentScale = ContentScale.Fit,
-                        alignment = Alignment.Center
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
-                        .shadow(4.dp, RoundedCornerShape(16.dp))
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
-                )
+                RoundedImage(imageLink = product.imageLink)
             }
 
             viewState.product.tagId?.let { Texts.BLB(it) }
@@ -154,48 +145,6 @@ internal data class ProductDetailsScreen(
                     onClick = addProduct
                 )
             }
-        }
-    }
-
-    @Composable
-    private fun ProductItemRowElement(
-        label: StringResource,
-        elementValue: String,
-        icon: ImageVector,
-        contentDescription: String,
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription,
-            )
-            Spacers.HorizontalBetweenFields()
-            Column {
-                Texts.BSB(
-                    text = stringResource(resource = label),
-                )
-                Texts.BM(
-                    text = elementValue,
-                )
-
-            }
-        }
-        Spacers.VerticalBetweenFields()
-    }
-
-    @Composable
-    fun ProductVideoAnimation(videoLink: String) {
-        Box {
-            LoopingVideo(
-                url = videoLink,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(4f / 3f)
-                    .clip(RoundedCornerShape(16.dp))
-                    .shadow(4.dp, RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                mute = true,
-            )
         }
     }
 

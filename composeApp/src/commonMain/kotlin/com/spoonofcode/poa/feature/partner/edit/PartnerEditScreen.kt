@@ -35,7 +35,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerEditScreen(
-    override val backNavigationEnable: Boolean = true,
     private val partnerId: Int,
 ) : BaseScreen<PartnerEditViewModel, PartnerEditViewState>() {
 

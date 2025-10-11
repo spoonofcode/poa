@@ -37,7 +37,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductSeriesOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-    override val backNavigationEnable: Boolean = true,
 ) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_product_series

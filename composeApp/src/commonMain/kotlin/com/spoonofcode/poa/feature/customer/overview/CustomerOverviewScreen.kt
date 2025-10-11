@@ -33,7 +33,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class CustomerOverviewScreen(
     val partnerId: Int,
     override val verticalScrollEnable: Boolean = false,
-    override val backNavigationEnable: Boolean = true,
 ) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_customers

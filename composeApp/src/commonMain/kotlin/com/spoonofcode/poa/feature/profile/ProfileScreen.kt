@@ -15,26 +15,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Comment
-import androidx.compose.material.icons.filled.CommentBank
-import androidx.compose.material.icons.filled.Commit
-import androidx.compose.material.icons.filled.Contacts
-import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.DocumentScanner
-import androidx.compose.material.icons.filled.HeadsetMic
 import androidx.compose.material.icons.filled.Help
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.InterpreterMode
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ReceiptLong
-import androidx.compose.material.icons.filled.Rule
-import androidx.compose.material.icons.filled.Subscript
-import androidx.compose.material.icons.filled.Terminal
-import androidx.compose.material.icons.outlined.Contacts
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -44,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -52,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.compose.RoundedImage
+import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -99,7 +83,7 @@ internal class ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
-                RoundedImage(imageRes = Res.drawable.poa)
+                CircleImage(imageRes = Res.drawable.poa)
             }
 
             Spacers.VerticalBetweenFields()

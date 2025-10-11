@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Buttons.GoogleSignInButton
-import com.spoonofcode.poa.core.ui.compose.RoundedImage
+import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
@@ -63,7 +63,7 @@ internal class LoginScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                RoundedImage(imageRes = Res.drawable.poa)
+                CircleImage(imageRes = Res.drawable.poa)
                 Spacers.VerticalBetweenFields()
                 Texts.HL(stringResource(resource = Res.string.let_s_get_started))
             }
