@@ -64,6 +64,8 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
 
             Spacers.VerticalBetweenFields()
 
+            Spacers.Weight1(this)
+
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
                 onClick = saveChanges
