@@ -43,17 +43,17 @@ fun Snackbar(
             action = {
                 visuals.actionLabel?.let { actionLabel ->
                     TextButton(onClick = { snackbarData.performAction() }) {
-                        Text(text = actionLabel)
+                        Texts.BM(text = actionLabel)
                     }
                 }
             }
         ) {
-            Text(text = visuals.message)
+            Texts.BM(text = visuals.message)
         }
     } else {
         // Fallback: standard Snackbar
         Snackbar {
-            Text(text = visuals.message)
+            Texts.BM(text = visuals.message)
         }
     }
 }

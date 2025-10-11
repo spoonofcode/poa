@@ -46,7 +46,7 @@ object Chips {
                     FilterChip(
                         selected = isSelected,
                         onClick = { onOptionClick(option) },
-                        label = { Text(option) },
+                        label = { Texts.LM(option) },
                         leadingIcon = if (isSelected) {
                             {
                                 Icon(
@@ -82,7 +82,7 @@ object Chips {
                     selected = isSelected,
                     onClick = { onCategorySelected(category.id) },
                     label = {
-                        Text(text = category.name)
+                        Texts.LMB(text = category.name)
                     },
                     modifier = Modifier.padding(horizontal = 4.dp),
                     colors = FilterChipDefaults.filterChipColors(),

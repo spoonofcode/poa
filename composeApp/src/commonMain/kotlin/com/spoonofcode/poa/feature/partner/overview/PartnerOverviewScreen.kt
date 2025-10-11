@@ -1,24 +1,25 @@
 package com.spoonofcode.poa.feature.partner.overview
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Chips.HorizontalScrollableFilterChipRow
 import com.spoonofcode.poa.core.ui.compose.TextFields
@@ -76,6 +77,7 @@ internal class PartnerOverviewScreen(
             )
 
             LazyColumn(
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
             ) {
                 items(viewState.filteredPartners) { partner ->
@@ -89,26 +91,27 @@ internal class PartnerOverviewScreen(
     }
 
     @Composable
-    private fun PartnerItem(
+    fun PartnerItem(
         item: Partner,
         onClick: () -> Unit,
+        modifier: Modifier = Modifier,
     ) {
         ElevatedCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onClick() },
+            onClick = onClick,
+            modifier = modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.large,
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
-            ) {
-                CoilImage(
-                    imageModel = { item.imageLink },
-                    imageOptions = ImageOptions(
-                        contentScale = ContentScale.Crop,
-                        alignment = Alignment.Center
-                    )
-                )
-            }
+            CoilImage(
+                imageModel = { item.imageLink },
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.large)
+            )
         }
     }
 }

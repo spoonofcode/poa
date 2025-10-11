@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
@@ -27,20 +28,26 @@ import com.spoonofcode.poa.core.model.GoogleAccount
 import com.spoonofcode.poa.core.ui.utils.GoogleAuthProvider
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.ic_google
+import com.spoonofcode.poa.resources.sign_in_with_google
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 object Buttons {
 
     @Composable
     fun PrimaryButton(
+        modifier: Modifier = Modifier,
         text: String,
         leftIcon: DrawableResource? = null,
         onClick: () -> Unit,
     ): Unit = Button(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 48.dp),
+        shape = MaterialTheme.shapes.medium,
         onClick = onClick,
     ) {
         if (leftIcon != null) {
@@ -61,7 +68,9 @@ object Buttons {
         onClick: () -> Unit,
     ): Unit =
         FilledTonalButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .heightIn(min = 48.dp),
+            shape = MaterialTheme.shapes.medium,
             onClick = onClick,
         ) {
             if (leftIcon != null) {
@@ -83,7 +92,7 @@ object Buttons {
         val googleAuthUiProvider = googleAuthProvider.getUiProvider()
         val coroutineScope = rememberCoroutineScope()
         PrimaryButton(
-            text = "Sign in with Google",
+            text = stringResource(resource = Res.string.sign_in_with_google),
             leftIcon = Res.drawable.ic_google,
             onClick = {
                 coroutineScope.launch {

@@ -1,15 +1,28 @@
 package com.spoonofcode.poa.feature.partner.panel
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Buttons.IconTextButton
+import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.partner_info
 import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.send_notification
+import com.spoonofcode.poa.resources.to_selected_customers
+import com.spoonofcode.poa.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -38,15 +51,24 @@ internal class PartnerPanelScreen() :
         navigateToNotificationType: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.partner_info),
-                onClick = navigateToMyPartners
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                IconTextButton(
+                    icon = Icons.Default.Person,
+                    text = stringResource(resource = Res.string.partner_info),
+                    onClick = navigateToMyPartners,
+                    modifier = Modifier.weight(1f)
+                )
 
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.send_notification),
-                onClick = navigateToNotificationType
-            )
+                IconTextButton(
+                    icon = Icons.Default.Send,
+                    text = stringResource(resource = Res.string.send_notification),
+                    onClick = navigateToNotificationType,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 

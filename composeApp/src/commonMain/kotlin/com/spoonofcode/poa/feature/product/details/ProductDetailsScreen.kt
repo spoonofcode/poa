@@ -1,46 +1,40 @@
 package com.spoonofcode.poa.feature.product.details
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.GraphicEq
-import androidx.compose.material.icons.filled.Mail
-import androidx.compose.material.icons.filled.Paid
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Schema
-import androidx.compose.material.icons.filled.WebStories
+import androidx.compose.material.icons.filled.OpenInNew
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.coil3.CoilImage
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.LoopingVideo
+import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
+import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.add_product
-import com.spoonofcode.poa.resources.collection_name
-import com.spoonofcode.poa.resources.custom_link
-import com.spoonofcode.poa.resources.description
-import com.spoonofcode.poa.resources.name
 import com.spoonofcode.poa.resources.product
-import com.spoonofcode.poa.resources.series_no
-import com.spoonofcode.poa.resources.series_number
-import com.spoonofcode.poa.resources.website_link
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -58,7 +52,7 @@ internal data class ProductDetailsScreen(
         viewModel: ProductDetailsViewModel?,
     ) = if (hasOwnerUser) {
         listOf(
-            TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.editProduct() },
+            TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.navigateToEditProduct() },
             TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deleteProduct() }
         )
     } else {
@@ -85,61 +79,45 @@ internal data class ProductDetailsScreen(
         return {
             val product = requireNotNull(viewState.product)
 
-            if(product.videoLink != null) {
-                ProductVideoAnimation(product.videoLink)
+            if (product.videoLink != null) {
+                VideoAnimation(product.videoLink)
             } else {
-                CoilImage(
-                    imageModel = { product.imageLink },
-                    imageOptions = ImageOptions(
-                        contentScale = ContentScale.Crop,
-                        alignment = Alignment.Center
-                    )
-                )
+                RoundedImage(imageLink = product.imageLink)
             }
 
             viewState.product.tagId?.let { Texts.BLB(it) }
 
-            ProductItemRowElement(
-                label = Res.string.name,
-                elementValue = product.name,
-                icon = Icons.Default.Paid,
-                contentDescription = "Product name",
-            )
+            Spacers.VerticalBetweenFields()
 
-            ProductItemRowElement(
-                label = Res.string.description,
-                elementValue = product.description,
-                icon = Icons.Default.WebStories,
-                contentDescription = "Series",
-            )
+            ElevatedCard(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                ) {
+                    Texts.BLB(text = product.name)
+                    Spacers.VerticalBetweenFields()
+                    Texts.BM(text = product.description)
+                }
 
-            ProductItemRowElement(
-                label = Res.string.collection_name,
-                elementValue = product.collectionName,
-                icon = Icons.Default.Person,
-                contentDescription = "Owner",
-            )
+            }
 
-            ProductItemRowElement(
-                label = Res.string.series_no,
-                elementValue = product.seriesId,
-                icon = Icons.Default.GraphicEq,
-                contentDescription = "Owner",
-            )
+            Spacers.VerticalBetweenFields()
 
-            ProductItemRowElement(
-                label = Res.string.website_link,
-                elementValue = product.websiteLink!!,
-                icon = Icons.Default.Mail,
-                contentDescription = "Owner Mail",
-            )
+            ElevatedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                ClickableInfoRow(
+                    url = product.websiteLink,
+                )
 
-            ProductItemRowElement(
-                label = Res.string.custom_link,
-                elementValue = product.customLink!!,
-                icon = Icons.Default.Schema,
-                contentDescription = "Level",
-            )
+                HorizontalDivider()
+
+                ClickableInfoRow(
+                    url = product.customLink,
+                )
+            }
 
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
@@ -151,39 +129,36 @@ internal data class ProductDetailsScreen(
     }
 
     @Composable
-    private fun ProductItemRowElement(
-        label: StringResource,
-        elementValue: String,
-        icon: ImageVector,
-        contentDescription: String,
+    private fun ClickableInfoRow(
+        url: String?,
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = icon,
-                contentDescription = contentDescription,
-            )
-            Spacers.HorizontalBetweenFields()
-            Column {
-                Texts.BSB(
-                    text = stringResource(resource = label),
-                )
-                Texts.BM(
-                    text = elementValue,
-                )
+        if (url.isNullOrBlank()) return
 
+        val urlOpener = remember { getUrlOpener() }
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .clickable(onClick = { urlOpener.openUrl(url) })
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 1.dp
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Texts.BMB(text = url)
+
+                Spacers.Weight1(this)
+
+                Icon(
+                    imageVector = Icons.Default.OpenInNew,
+                    contentDescription = "Open link",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
-        }
-        Spacers.VerticalBetweenFields()
-    }
-
-    @Composable
-    fun ProductVideoAnimation(videoLink: String) {
-        Box {
-            LoopingVideo(
-                url = videoLink,
-                modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f),
-                mute = true      // silent background animation
-            )
         }
     }
 }

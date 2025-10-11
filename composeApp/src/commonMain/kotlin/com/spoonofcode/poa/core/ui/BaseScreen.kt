@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -22,7 +21,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.ErrorView
 import com.spoonofcode.poa.core.ui.compose.LoadingView
 import com.spoonofcode.poa.core.ui.compose.Snackbar
@@ -46,7 +44,11 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     protected open fun provideTopAppBarTitle(): StringResource? = null
 
     protected open fun provideContentPadding(): PaddingValues =
-        PaddingValues(Paddings.screenPadding)
+        PaddingValues(
+            start = Paddings.screenPadding,
+            end = Paddings.screenPadding,
+            bottom = Paddings.screenPadding,
+        )
 
     protected open fun provideTopBarActions(
         viewModel: VM?, // Is nullable because we need this for previews

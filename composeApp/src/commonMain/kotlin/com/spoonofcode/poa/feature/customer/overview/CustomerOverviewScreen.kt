@@ -24,7 +24,6 @@ import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.id
 import com.spoonofcode.poa.resources.my_customers
 import com.spoonofcode.poa.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
@@ -33,7 +32,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class CustomerOverviewScreen(
     val partnerId: Int,
     override val verticalScrollEnable: Boolean = false,
-    override val backNavigationEnable: Boolean = true,
 ) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_customers
@@ -74,13 +72,14 @@ internal class CustomerOverviewScreen(
                         checkedCustomer = checkedCustomer,
                     )
                 }
-                item {
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.send_notification),
-                        onClick = { navigateToNotification() }
-                    )
-                }
             }
+
+            Spacers.Weight1(this)
+
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.send_notification),
+                onClick = { navigateToNotification() }
+            )
         }
     }
 
