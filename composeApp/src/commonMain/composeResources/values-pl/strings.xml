@@ -58,7 +58,7 @@
     <string name="register">Rejestracja</string>
     <string name="reload">Odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
-    <string name="scan">Scan</string>
+    <string name="scan">Skanuj</string>
     <string name="scan_info">Umieść tag NFC z tyłu urządzenia</string>
     <string name="scanning_in_progress">Trwa skanowanie</string>
     <string name="search">Szukaj</string>

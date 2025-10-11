@@ -24,7 +24,6 @@ import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.id
 import com.spoonofcode.poa.resources.my_customers
 import com.spoonofcode.poa.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
@@ -73,13 +72,14 @@ internal class CustomerOverviewScreen(
                         checkedCustomer = checkedCustomer,
                     )
                 }
-                item {
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.send_notification),
-                        onClick = { navigateToNotification() }
-                    )
-                }
             }
+
+            Spacers.Weight1(this)
+
+            Buttons.PrimaryButton(
+                text = stringResource(resource = Res.string.send_notification),
+                onClick = { navigateToNotification() }
+            )
         }
     }
 

@@ -37,11 +37,12 @@ object Buttons {
 
     @Composable
     fun PrimaryButton(
+        modifier: Modifier = Modifier,
         text: String,
         leftIcon: DrawableResource? = null,
         onClick: () -> Unit,
     ): Unit = Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,

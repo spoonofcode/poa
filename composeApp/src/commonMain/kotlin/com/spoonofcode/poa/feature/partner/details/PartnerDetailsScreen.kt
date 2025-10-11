@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,12 +20,9 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
-import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.links
 import com.spoonofcode.poa.resources.partner
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
@@ -37,13 +31,6 @@ internal class PartnerDetailsScreen(
 ) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
-
-    override fun provideTopBarActions(
-        viewModel: PartnerDetailsViewModel?,
-    ) = listOf(
-        TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.editPartner() },
-        TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deletePartner() }
-    )
 
     override fun provideInitAction(viewModel: PartnerDetailsViewModel?): () -> Unit =
         { viewModel?.initView(partnerId = partnerId) }

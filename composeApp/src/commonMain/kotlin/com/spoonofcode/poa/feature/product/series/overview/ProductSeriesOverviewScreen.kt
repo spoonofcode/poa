@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.product.series.overview
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -64,25 +65,31 @@ internal class ProductSeriesOverviewScreen(
         navigateToNotification: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
-            ) {
-                items(viewState.productSeries) { product ->
-                    val checkedProductSeries =
-                        viewState.checkedProductSeriesIds.contains(product.seriesId)
+            Box(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 60.dp),
+                    verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+                ) {
+                    items(viewState.productSeries) { product ->
+                        val checkedProductSeries =
+                            viewState.checkedProductSeriesIds.contains(product.seriesId)
 
-                    ProductSeriesItem(
-                        item = product,
-                        onClick = { checkedProductSeries(product.seriesId) },
-                        checkedProductSeries = checkedProductSeries,
-                    )
+                        ProductSeriesItem(
+                            item = product,
+                            onClick = { checkedProductSeries(product.seriesId) },
+                            checkedProductSeries = checkedProductSeries,
+                        )
+                    }
                 }
-                item {
-                    Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.send_notification),
-                        onClick = { navigateToNotification() }
-                    )
-                }
+
+                Buttons.PrimaryButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter),
+                    text = stringResource(resource = Res.string.send_notification),
+                    onClick = { navigateToNotification() }
+                )
             }
         }
     }

@@ -60,7 +60,6 @@ internal class NotificationDetailsScreen(
         return {
             val notification = requireNotNull(viewState.notification)
 
-// Prefer LocalUriHandler for simplicity; or keep your getUrlOpener() if you need custom logic
             val uriHandler = LocalUriHandler.current
 
             NotificationCard(
@@ -110,7 +109,7 @@ internal class NotificationDetailsScreen(
                             Icon(
                                 imageVector = Icons.Default.Schedule,
                                 contentDescription = null,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(24.dp)
                             )
                             Spacer(Modifier.width(8.dp))
                             Countdown(expiresAt)
