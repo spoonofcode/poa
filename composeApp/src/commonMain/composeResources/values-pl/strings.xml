@@ -24,6 +24,8 @@
     <string name="first_name">Imię</string>
     <string name="forget_password">Zapomniałeś hasła?</string>
     <string name="forgot_password">Zapomniane hasło</string>
+    <string name="from_all_partners">Od wszzystkich partnerów</string>
+    <string name="from_my_partners">Od moich partnerów</string>
     <string name="gen_1_series">Gen 1 Series</string>
     <string name="home">Home</string>
     <string name="id">ID</string>
@@ -41,6 +43,7 @@
     <string name="no_partners_found">Nie znaleziono partnerów</string>
     <string name="notification">Powiadomienie</string>
     <string name="notifications">Powiadomienia</string>
+    <string name="notifications_settings">Ustawienia powiadomień</string>
     <string name="notification_body">Tekst powiadomienia</string>
     <string name="notification_title">Tytuł powiadomienia</string>
     <string name="notification_type">Typ powiadomienia</string>
@@ -51,7 +54,7 @@
     <string name="partner_name">Partner</string>
     <string name="partner_info">Informacje o partnerze</string>
     <string name="partner_panel">Panel partnerski</string>
-    <string name="partners">Partners</string>
+    <string name="partners">Partnerzy</string>
     <string name="password">Hasło</string>
     <string name="privacy_policy">Polityka prywatności</string>
     <string name="product">Produkt</string>
@@ -87,6 +90,7 @@
     <string name="time_remaining">Pozostały czas:</string>
     <string name="title">Tytuł</string>
     <string name="token_id">Token Id</string>
+    <string name="to_all">Do wszystkich</string>
     <string name="to_selected_customers">Do wybranych klientów</string>
     <string name="to_selected_series">Do wybranych serii</string>
     <string name="type">Typ</string>

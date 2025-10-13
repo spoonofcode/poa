@@ -5,16 +5,20 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.WebStories
+import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons.IconTextButton
+import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification_type
+import com.spoonofcode.poa.resources.to_all
 import com.spoonofcode.poa.resources.to_selected_customers
 import com.spoonofcode.poa.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
@@ -34,6 +38,7 @@ internal class NotificationTypeScreen :
         viewState: NotificationTypeViewState,
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
+        navigateToAll = { viewModel?.navigateToAll() },
         navigateToPartnerCustomers = { viewModel?.navigateToPartnerCustomers() },
         navigateToPartnerProductSeries = { viewModel?.navigateToPartnerProductSeries() },
     )
@@ -41,6 +46,7 @@ internal class NotificationTypeScreen :
     @Composable
     private fun ContentView(
         viewState: NotificationTypeViewState,
+        navigateToAll: () -> Unit,
         navigateToPartnerCustomers: () -> Unit,
         navigateToPartnerProductSeries: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -50,9 +56,9 @@ internal class NotificationTypeScreen :
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 IconTextButton(
-                    icon = Icons.Default.Person,
-                    text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = navigateToPartnerCustomers,
+                    icon = Icons.Default.Groups,
+                    text = stringResource(resource = Res.string.to_all),
+                    onClick = navigateToAll,
                     modifier = Modifier.weight(1f)
                 )
 
@@ -61,6 +67,20 @@ internal class NotificationTypeScreen :
                     text = stringResource(resource = Res.string.to_selected_series),
                     onClick = navigateToPartnerProductSeries,
                     modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacers.VerticalBetweenFields()
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                IconTextButton(
+                    icon = Icons.Default.Person,
+                    text = stringResource(resource = Res.string.to_selected_customers),
+                    onClick = navigateToPartnerCustomers,
+                    modifier = Modifier.fillMaxWidth(0.5f)
                 )
             }
         }

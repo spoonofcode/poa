@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.FAQScreen
+import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
 import com.spoonofcode.poa.feature.tac.TACScreen
@@ -43,6 +44,12 @@ internal class ProfileViewModel(
     fun navigateToPartnerPanel() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = PartnerPanelScreen())
+        }
+    }
+
+    fun navigateToNotificationSettings() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = NotificationSettingsScreen())
         }
     }
 
