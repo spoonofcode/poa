@@ -72,6 +72,7 @@ internal class ProfileScreen(
         viewState = viewState,
         navigateToEditProfile = { viewModel?.navigateToEditProfile() },
         navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
+        navigateToFAQ = { viewModel?.navigateToFAQ() },
     )
 
     @Composable
@@ -79,6 +80,7 @@ internal class ProfileScreen(
         viewState: ProfileViewState,
         navigateToEditProfile: () -> Unit,
         navigateToPartnerPanel: () -> Unit,
+        navigateToFAQ: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -142,7 +144,7 @@ internal class ProfileScreen(
                 ChevronItem(
                     icon = Icons.Default.Help,
                     title = stringResource(resource = Res.string.faq),
-                    onClick = { }
+                    onClick = navigateToFAQ
                 )
             }
 
