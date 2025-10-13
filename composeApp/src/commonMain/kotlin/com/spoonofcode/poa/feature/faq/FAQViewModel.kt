@@ -14,7 +14,7 @@ internal class FAQViewModel() : BaseViewModel<FAQViewState>(FAQViewState()) {
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
-                        faqItems = faqItems,
+                        faqs = faqs,
                     )
                 }
             } catch (ce: CancellationException) {

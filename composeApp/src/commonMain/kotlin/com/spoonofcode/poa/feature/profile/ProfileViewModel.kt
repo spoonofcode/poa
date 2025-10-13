@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.FAQScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
+import com.spoonofcode.poa.feature.tac.TACScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -42,6 +43,12 @@ internal class ProfileViewModel(
     fun navigateToPartnerPanel() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = PartnerPanelScreen())
+        }
+    }
+
+    fun navigateToTAC() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = TACScreen())
         }
     }
 
