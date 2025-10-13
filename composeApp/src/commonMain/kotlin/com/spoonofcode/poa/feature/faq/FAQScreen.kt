@@ -34,7 +34,7 @@ internal class FAQScreen(
         viewState: FAQViewState,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            ExpandableList(items = viewState.faqItems.map { it.question to it.answer })
+            ExpandableList(items = viewState.faqs.map { it.question to it.answer })
         }
     }
 

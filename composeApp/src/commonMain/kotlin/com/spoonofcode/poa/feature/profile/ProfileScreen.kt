@@ -73,6 +73,7 @@ internal class ProfileScreen(
         navigateToEditProfile = { viewModel?.navigateToEditProfile() },
         navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
         navigateToFAQ = { viewModel?.navigateToFAQ() },
+        navigateToTAC = { viewModel?.navigateToTAC() },
     )
 
     @Composable
@@ -81,6 +82,7 @@ internal class ProfileScreen(
         navigateToEditProfile: () -> Unit,
         navigateToPartnerPanel: () -> Unit,
         navigateToFAQ: () -> Unit,
+        navigateToTAC: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -138,7 +140,7 @@ internal class ProfileScreen(
                 ChevronItem(
                     icon = Icons.Default.Description,
                     title = stringResource(resource = Res.string.terms_and_conditions),
-                    onClick = { }
+                    onClick = navigateToTAC
                 )
                 DividerItem()
                 ChevronItem(
