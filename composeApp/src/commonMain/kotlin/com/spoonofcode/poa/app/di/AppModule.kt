@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
 import com.spoonofcode.poa.feature.customer.di.customerModule
 import com.spoonofcode.poa.feature.demo.di.demoModule
+import com.spoonofcode.poa.feature.faq.di.faqModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
 import com.spoonofcode.poa.feature.notification.di.notificationModule
@@ -14,6 +15,7 @@ import com.spoonofcode.poa.feature.partner.di.partnerModule
 import com.spoonofcode.poa.feature.product.di.productModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
 import com.spoonofcode.poa.feature.scan.di.scanModule
+import com.spoonofcode.poa.feature.tac.di.tacModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -31,6 +33,7 @@ val appModule = module {
         // features
         customerModule,
         demoModule,
+        faqModule,
         homeModule,
         loginModule,
         partnerModule,
@@ -38,6 +41,7 @@ val appModule = module {
         productModule,
         notificationModule,
         scanModule,
+        tacModule,
     )
     single {
         HttpClient {

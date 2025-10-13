@@ -24,6 +24,8 @@
     <string name="first_name">First Name</string>
     <string name="forget_password">Forget password?</string>
     <string name="forgot_password">Forgot password</string>
+    <string name="from_all_partners">From all partners</string>
+    <string name="from_my_partners">From my partners</string>
     <string name="gen_1_series">Gen 1 Series</string>
     <string name="home">Home</string>
     <string name="id">ID</string>
@@ -41,6 +43,7 @@
     <string name="no_partners_found">No partners found</string>
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
+    <string name="notifications_settings">Notification settings</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="notification_type">Notification type</string>
@@ -53,10 +56,12 @@
     <string name="partner_panel">Partner panel</string>
     <string name="partners">Partners</string>
     <string name="password">Password</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="product">Product</string>
     <string name="products">Products</string>
     <string name="profile">Profile</string>
     <string name="register">Register</string>
+    <string name="read">Read</string>
     <string name="reload">Reload</string>
     <string name="save_changes">Save changes</string>
     <string name="scan">Scan</string>
@@ -76,13 +81,17 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_up">Sign up</string>
+    <string name="star_mandatory">* mandatory</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="terms_and_conditions_description">In order to access the app, you have to accept our terms and conditions</string>
     <string name="text">Text</string>
     <string name="time">Time</string>
     <string name="time_is_up">Time is up!</string>
     <string name="time_remaining">Time remaining:</string>
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
+    <string name="to_all">To all</string>
+    <string name="to_all_partners">To selected customers</string>
     <string name="to_selected_customers">To selected customers</string>
     <string name="to_selected_series">To selected series</string>
     <string name="type">Type</string>

@@ -72,6 +72,9 @@ internal class ProfileScreen(
         viewState = viewState,
         navigateToEditProfile = { viewModel?.navigateToEditProfile() },
         navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
+        navigateToNotificationSettings = { viewModel?.navigateToNotificationSettings() },
+        navigateToFAQ = { viewModel?.navigateToFAQ() },
+        navigateToTAC = { viewModel?.navigateToTAC() },
     )
 
     @Composable
@@ -79,6 +82,9 @@ internal class ProfileScreen(
         viewState: ProfileViewState,
         navigateToEditProfile: () -> Unit,
         navigateToPartnerPanel: () -> Unit,
+        navigateToNotificationSettings: () -> Unit,
+        navigateToFAQ: () -> Unit,
+        navigateToTAC: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -130,19 +136,19 @@ internal class ProfileScreen(
                 ChevronItem(
                     icon = Icons.Default.Notifications,
                     title = stringResource(resource = Res.string.notifications),
-                    onClick = { }
+                    onClick = navigateToNotificationSettings
                 )
                 DividerItem()
                 ChevronItem(
                     icon = Icons.Default.Description,
                     title = stringResource(resource = Res.string.terms_and_conditions),
-                    onClick = { }
+                    onClick = navigateToTAC
                 )
                 DividerItem()
                 ChevronItem(
                     icon = Icons.Default.Help,
                     title = stringResource(resource = Res.string.faq),
-                    onClick = { }
+                    onClick = navigateToFAQ
                 )
             }
 
