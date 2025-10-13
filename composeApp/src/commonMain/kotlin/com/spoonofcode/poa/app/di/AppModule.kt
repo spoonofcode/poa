@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
 import com.spoonofcode.poa.feature.customer.di.customerModule
 import com.spoonofcode.poa.feature.demo.di.demoModule
+import com.spoonofcode.poa.feature.faq.di.faqModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
 import com.spoonofcode.poa.feature.notification.di.notificationModule
@@ -31,6 +32,7 @@ val appModule = module {
         // features
         customerModule,
         demoModule,
+        faqModule,
         homeModule,
         loginModule,
         partnerModule,

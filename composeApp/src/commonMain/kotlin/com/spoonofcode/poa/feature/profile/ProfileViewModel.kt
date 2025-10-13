@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.feature.faq.FAQScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
 import kotlinx.coroutines.launch
@@ -41,6 +42,12 @@ internal class ProfileViewModel(
     fun navigateToPartnerPanel() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = PartnerPanelScreen())
+        }
+    }
+
+    fun navigateToFAQ() {
+        viewModelScope.launch {
+            viewModelNavigator.push(screen = FAQScreen())
         }
     }
 
