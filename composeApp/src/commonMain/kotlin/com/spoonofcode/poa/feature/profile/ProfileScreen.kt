@@ -72,6 +72,7 @@ internal class ProfileScreen(
         viewState = viewState,
         navigateToEditProfile = { viewModel?.navigateToEditProfile() },
         navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
+        navigateToNotificationSettings = { viewModel?.navigateToNotificationSettings() },
         navigateToFAQ = { viewModel?.navigateToFAQ() },
         navigateToTAC = { viewModel?.navigateToTAC() },
     )
@@ -81,6 +82,7 @@ internal class ProfileScreen(
         viewState: ProfileViewState,
         navigateToEditProfile: () -> Unit,
         navigateToPartnerPanel: () -> Unit,
+        navigateToNotificationSettings: () -> Unit,
         navigateToFAQ: () -> Unit,
         navigateToTAC: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -134,7 +136,7 @@ internal class ProfileScreen(
                 ChevronItem(
                     icon = Icons.Default.Notifications,
                     title = stringResource(resource = Res.string.notifications),
-                    onClick = { }
+                    onClick = navigateToNotificationSettings
                 )
                 DividerItem()
                 ChevronItem(

@@ -97,6 +97,8 @@ internal class NotificationEditScreen(
                 label = stringResource(resource = Res.string.link),
             )
 
+            Spacers.Weight1(this)
+
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.send_notification),
                 onClick = { sendNotification() }
