@@ -65,6 +65,10 @@ internal class ProfileViewModel(
         }
     }
 
+    fun logout(){
+        //TODO Add logout action
+    }
+
     private fun showLoadingView() {
         updateState {
             copy(

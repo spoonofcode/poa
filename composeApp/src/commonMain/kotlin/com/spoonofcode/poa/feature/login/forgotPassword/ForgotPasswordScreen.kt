@@ -9,15 +9,14 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.email
-import com.spoonofcode.poa.resources.forget_password
-import com.spoonofcode.poa.resources.sign_up
+import com.spoonofcode.poa.resources.reset_password
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ForgotPasswordScreen() :
     BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
 
-    override fun provideTopAppBarTitle() = Res.string.forget_password
+    override fun provideTopAppBarTitle() = Res.string.reset_password
 
     @Composable
     override fun provideViewModel() = koinViewModel<ForgotPasswordViewModel>()
@@ -48,7 +47,7 @@ internal class ForgotPasswordScreen() :
             Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.sign_up),
+                text = stringResource(resource = Res.string.reset_password),
                 onClick = { resetPassword() }
             )
         }

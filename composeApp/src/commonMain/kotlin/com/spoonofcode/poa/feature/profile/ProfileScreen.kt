@@ -75,6 +75,7 @@ internal class ProfileScreen(
         navigateToNotificationSettings = { viewModel?.navigateToNotificationSettings() },
         navigateToFAQ = { viewModel?.navigateToFAQ() },
         navigateToTAC = { viewModel?.navigateToTAC() },
+        logout = { viewModel?.logout() },
     )
 
     @Composable
@@ -85,6 +86,7 @@ internal class ProfileScreen(
         navigateToNotificationSettings: () -> Unit,
         navigateToFAQ: () -> Unit,
         navigateToTAC: () -> Unit,
+        logout: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -161,7 +163,7 @@ internal class ProfileScreen(
                     title = stringResource(resource = Res.string.logout),
                     titleColor = MaterialTheme.colorScheme.error,
                     iconTint = MaterialTheme.colorScheme.error,
-                    onClick = { }
+                    onClick = logout
                 )
             }
 
@@ -180,10 +182,10 @@ private fun SectionCard(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(12.dp),
         tonalElevation = 1.dp,
     ) {
-        Column(modifier = Modifier.padding(horizontal = 12.dp)) {
+        Column {
             content()
         }
     }

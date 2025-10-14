@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -19,11 +20,12 @@ import org.jetbrains.compose.resources.painterResource
 fun CircleImage(
     modifier: Modifier = Modifier,
     imageRes: DrawableResource,
+    imageSize: Dp = 120.dp,
 ) {
     // You can wrap the Image in a Surface with CircleShape
     Surface(
         modifier = modifier
-            .size(120.dp), // adjust to desired size
+            .size(imageSize), // adjust to desired size
         shape = CircleShape,
     ) {
         Image(

@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.model.Notification
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
-import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notifications
@@ -111,7 +110,6 @@ internal class NotificationOverviewScreen(
                         imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
                         contentDescription = null,
                         modifier = Modifier
-                            .padding(start = 12.dp)
                             .size(20.dp)
                     )
                 }

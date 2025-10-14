@@ -79,6 +79,8 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
 
             Spacers.VerticalBetweenFields()
 
+            Spacers.Weight1(this)
+
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_up),
                 onClick = { signUp() }

@@ -115,7 +115,7 @@ internal class ProductSeriesOverviewScreen(
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center
                         ),
-                        modifier = Modifier.size(64.dp)
+                        modifier = Modifier.size(80.dp)
                     )
 
                     Spacers.HorizontalBetweenFields()

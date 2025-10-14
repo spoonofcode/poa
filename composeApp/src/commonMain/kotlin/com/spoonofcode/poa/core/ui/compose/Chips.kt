@@ -71,8 +71,7 @@ object Chips {
     ) {
         LazyRow(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(categories.size) { index ->
