@@ -85,6 +85,7 @@ internal class ProductSeriesOverviewScreen(
                 }
 
                 Buttons.PrimaryButton(
+                    enabled = viewState.checkedProductSeriesIds.isNotEmpty(),
                     modifier = Modifier
                         .align(Alignment.BottomCenter),
                     text = stringResource(resource = Res.string.send_notification),

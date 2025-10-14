@@ -42,12 +42,14 @@ object Buttons {
         modifier: Modifier = Modifier,
         text: String,
         leftIcon: DrawableResource? = null,
+        enabled: Boolean = true,
         onClick: () -> Unit,
     ): Unit = Button(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,
+        enabled = enabled,
         onClick = onClick,
     ) {
         if (leftIcon != null) {

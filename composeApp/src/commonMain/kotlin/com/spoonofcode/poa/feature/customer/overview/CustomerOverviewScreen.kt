@@ -80,6 +80,7 @@ internal class CustomerOverviewScreen(
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
+                enabled = viewState.checkedUserIds.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
                 onClick = { navigateToNotification() }
             )

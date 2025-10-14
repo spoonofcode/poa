@@ -1,13 +1,31 @@
 package com.spoonofcode.poa.feature.notification.edit
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.DatePickers
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
-import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.expiration_date
@@ -24,6 +42,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationEditScreen(
     val onlyToSelectedUsers: Boolean = false,
+    val topics: List<String>,
     val itemIds: List<String>,
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState>() {
 
@@ -59,15 +78,28 @@ internal class NotificationEditScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             if (viewState.itemIds.isNotEmpty()) {
-                if (onlyToSelectedUsers) {
-                    Texts.BLB(stringResource(Res.string.selected_customers))
+//                if (onlyToSelectedUsers) {
+//                    Texts.BLB(stringResource(Res.string.selected_customers))
+//                } else {
+//                    Texts.BLB(stringResource(Res.string.selected_series))
+//                }
+//                viewState.itemIds.forEach { itemId ->
+//                    Texts.BLB(text = itemId)
+//                }
+
+                val title = if (onlyToSelectedUsers) {
+                    stringResource(Res.string.selected_customers)
                 } else {
-                    Texts.BLB(stringResource(Res.string.selected_series))
+                    stringResource(Res.string.selected_series)
                 }
-                viewState.itemIds.forEach { itemId ->
-                    Texts.BLB(text = itemId)
-                }
+
+                StaticSelectedItemsPanel(
+                    title = title,
+                    items = viewState.itemIds,
+                )
             }
+
+
 
             TextFields.Outlined(
                 value = viewState.title,
@@ -103,6 +135,75 @@ internal class NotificationEditScreen(
                 text = stringResource(resource = Res.string.send_notification),
                 onClick = { sendNotification() }
             )
+        }
+    }
+
+    @Composable
+    fun StaticSelectedItemsPanel(
+        title: String,
+        items: List<String>,
+        labelFor: (String) -> String = { it },
+        modifier: Modifier = Modifier,
+    ) {
+        if (items.isEmpty()) return
+
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                    modifier = Modifier.weight(1f)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                ) {
+                    Text(text = items.size.toString(), style = MaterialTheme.typography.labelMedium)
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items.forEach { id ->
+                    StaticChip(
+                        text = labelFor(id),
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun StaticChip(
+        text: String,
+        modifier: Modifier = Modifier
+    ) {
+        Surface(
+            shape = CircleShape,
+            tonalElevation = 1.dp,
+            modifier = modifier
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
+            ) {
+                Text(text, style = MaterialTheme.typography.labelLarge)
+            }
         }
     }
 }
