@@ -52,7 +52,8 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 NotificationEditScreen(
-                    itemIds = getSelectedProductSeries()
+                    topics = getSelectedProductSeries(),
+                    itemIds = getSelectedProductSeriesNames()
                 )
             )
         }
@@ -60,6 +61,10 @@ internal class ProductSeriesOverviewViewModel(
 
     private fun getSelectedProductSeries(): List<String> =
         currentState().checkedProductSeriesIds.map { serieId -> "productSerieId$serieId" }.toList()
+
+    private fun getSelectedProductSeriesNames(): List<String> =
+        currentState().productSeries.filter { "${it.id}" in currentState().checkedProductSeriesIds }
+            .map { productSeries -> productSeries.name }.toList()
 
     private fun showLoadingView() {
         updateState {

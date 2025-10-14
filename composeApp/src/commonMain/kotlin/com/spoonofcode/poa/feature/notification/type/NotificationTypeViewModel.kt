@@ -12,7 +12,7 @@ internal class NotificationTypeViewModel(
 
     fun navigateToAll() {
         viewModelScope.launch {
-            viewModelNavigator.push(NotificationEditScreen(itemIds = emptyList()))
+            viewModelNavigator.push(NotificationEditScreen())
         }
     }
 

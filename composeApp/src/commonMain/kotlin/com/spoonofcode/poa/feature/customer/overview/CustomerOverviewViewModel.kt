@@ -63,7 +63,8 @@ internal class CustomerOverviewViewModel(
         currentState().checkedUserIds.map { userId -> "userId$userId" }.toList()
 
     private fun getSelectedNames(): List<String> =
-        currentState().checkedUserIds.map { userId -> "userId$userId" }.toList()
+        currentState().partnerUsers.filter { it.id in currentState().checkedUserIds }
+            .map { user -> user.fullName }.toList()
 
     private fun showLoadingView() {
         updateState {

@@ -172,9 +172,6 @@ internal class ProfileScreen(
     }
 }
 
-
-// --- Building blocks ---------------------------------------------------------
-
 @Composable
 private fun SectionCard(
     modifier: Modifier = Modifier,

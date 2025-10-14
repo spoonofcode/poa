@@ -42,8 +42,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationEditScreen(
     val onlyToSelectedUsers: Boolean = false,
-    val topics: List<String>,
-    val itemIds: List<String>,
+    val topics: List<String> = emptyList(),
+    val itemIds: List<String> = emptyList(),
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
@@ -212,7 +212,7 @@ internal class NotificationEditScreen(
 @Preview
 @Composable
 private fun NotificationEditScreenContentPreview() {
-    NotificationEditScreen(itemIds = emptyList()).PreviewContent(
+    NotificationEditScreen().PreviewContent(
         NotificationEditViewState()
     )
 }
