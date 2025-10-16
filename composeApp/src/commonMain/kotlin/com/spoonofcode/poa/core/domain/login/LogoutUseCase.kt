@@ -5,9 +5,7 @@ import com.spoonofcode.poa.core.network.SessionManager
 class LogoutUseCase(
     private val sessionManager: SessionManager,
 ) {
-    suspend operator fun invoke() {
-        sessionManager.clearSessionUserId()
-        sessionManager.clearSessionAccessToken()
-        sessionManager.clearSessionRefreshToken()
+    operator fun invoke() {
+        sessionManager.clearSession()
     }
 }

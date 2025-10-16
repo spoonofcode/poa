@@ -19,5 +19,6 @@ class LoginGoogleUseCase(
         sessionManager.saveSessionUserId(userId = loginGoogleResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
+        sessionManager.enableAllNotifications()
     }
 }
