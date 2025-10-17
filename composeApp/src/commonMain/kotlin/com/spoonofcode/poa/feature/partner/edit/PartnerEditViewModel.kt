@@ -34,45 +34,38 @@ internal class PartnerEditViewModel(
     }
 
     fun changeName(name: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(name = name)) }
+        updateState { copy(partner = getCurrentPartner().copy(name = name)) }
     }
 
     fun changeDescription(description: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(description = description)) }
+        updateState { copy(partner = getCurrentPartner().copy(description = description)) }
     }
 
     fun changeWebsiteLink(link: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(websiteLink = link)) }
+        updateState { copy(partner = getCurrentPartner().copy(websiteLink = link)) }
     }
 
     fun changeInstagramLink(link: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(instagramLink = link)) }
+        updateState { copy(partner = getCurrentPartner().copy(instagramLink = link)) }
     }
 
     fun changeFacebookLink(link: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(facebookLink = link)) }
+        updateState { copy(partner = getCurrentPartner().copy(facebookLink = link)) }
     }
 
     fun changeYoutubeLink(link: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(youtubeLink = link)) }
+        updateState { copy(partner = getCurrentPartner().copy(youtubeLink = link)) }
     }
 
     fun changeXLink(link: String) {
-        val currentPartner = currentState().partner
-        updateState { copy(partner = currentPartner.copy(xLink = link)) }
+        updateState { copy(partner = getCurrentPartner().copy(xLink = link)) }
     }
 
     fun saveChanges() {
         viewModelScope.launch {
             showLoadingView()
             try {
-                updatePartnerUseCase(viewState.value.partner)
+                updatePartnerUseCase(getCurrentPartner())
                 viewModelNavigator.pop()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -80,6 +73,8 @@ internal class PartnerEditViewModel(
             }
         }
     }
+
+    private fun getCurrentPartner(): Partner = requireNotNull(currentState().partner)
 
     private fun showLoadingView() {
         updateState {

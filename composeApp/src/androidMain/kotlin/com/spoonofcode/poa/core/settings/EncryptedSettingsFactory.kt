@@ -2,23 +2,23 @@ package com.spoonofcode.poa.core.settings
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
+import androidx.security.crypto.MasterKey
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 
-// You might inject or retrieve 'context' differently in your actual project.
 lateinit var appContext: Context
 
 actual fun createEncryptedSettings(): Settings {
-    val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+    val masterKey = MasterKey.Builder(appContext)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
     val fileName = "poa-settings"
 
-    appContext.deleteSharedPreferences(fileName)
-
     val sharedPreferences = EncryptedSharedPreferences.create(
-        fileName,
-        masterKeyAlias,
         appContext,
+        fileName,
+        masterKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
