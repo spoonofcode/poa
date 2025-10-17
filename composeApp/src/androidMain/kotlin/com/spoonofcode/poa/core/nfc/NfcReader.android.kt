@@ -5,6 +5,7 @@ import android.nfc.NfcAdapter
 import android.nfc.tech.Ndef
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.shareIn
 
 internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
 
+    @OptIn(DelicateCoroutinesApi::class)
     private val _tags = callbackFlow {
         val adapter = NfcAdapter.getDefaultAdapter(activity) ?: run {
             // no NFC hardware
