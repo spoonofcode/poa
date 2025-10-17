@@ -16,6 +16,11 @@ internal class HomeViewModel(
         subscribeNotifications()
     }
 
+    fun getNumberOfNewNotifications(): Int {
+        // TODO: Implement logic to get the actual number of new notifications
+        return 5
+    }
+
     fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationOverviewScreen())

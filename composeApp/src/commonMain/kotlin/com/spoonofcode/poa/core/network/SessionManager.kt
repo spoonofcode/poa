@@ -24,17 +24,13 @@ class SessionManager(private val settings: Settings) {
         settings.putString(SESSION_ACCESS_TOKEN, token)
     }
 
-    fun getSessionAccessToken(): String? {
-        return settings.getStringOrNull(SESSION_ACCESS_TOKEN)
-    }
+    fun getSessionAccessToken(): String? = settings.getStringOrNull(SESSION_ACCESS_TOKEN)
 
     fun saveSessionRefreshToken(token: String) {
         settings.putString(SESSION_REFRESH_TOKEN, token)
     }
 
-    fun getSessionRefreshToken(): String? {
-        return settings.getStringOrNull(SESSION_REFRESH_TOKEN)
-    }
+    fun getSessionRefreshToken(): String? = settings.getStringOrNull(SESSION_REFRESH_TOKEN)
 
     fun saveSessionUserId(userId: Int) {
         settings.putInt(SESSION_USER_ID, userId)

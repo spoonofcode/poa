@@ -1,10 +1,12 @@
 package com.spoonofcode.poa.feature.profile
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.FAQScreen
+import com.spoonofcode.poa.feature.login.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
@@ -13,7 +15,8 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProfileViewModel(
-    private val getProfileUseCase: GetProfileUseCase
+    private val getProfileUseCase: GetProfileUseCase,
+    private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<ProfileViewState>(ProfileViewState()) {
 
     fun initView() {
@@ -65,8 +68,11 @@ internal class ProfileViewModel(
         }
     }
 
-    fun logout(){
-        //TODO Add logout action
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase.invoke()
+            viewModelNavigator.replaceAll(listOf(LoginScreen()))
+        }
     }
 
     private fun showLoadingView() {

@@ -29,7 +29,7 @@ internal class HomeScreen(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
-            badgeCount = 5,
+            badgeCount = viewModel?.getNumberOfNewNotifications(),
         ) { viewModel?.navigateToNotifications() },
     )
 
