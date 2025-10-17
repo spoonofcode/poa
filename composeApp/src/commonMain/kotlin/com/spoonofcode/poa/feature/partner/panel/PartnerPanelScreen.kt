@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.WebStories
@@ -63,7 +64,7 @@ internal class PartnerPanelScreen() :
                 )
 
                 IconTextButton(
-                    icon = Icons.Default.Send,
+                    icon = Icons.AutoMirrored.Filled.Send,
                     text = stringResource(resource = Res.string.send_notification),
                     onClick = navigateToNotificationType,
                     modifier = Modifier.weight(1f)
