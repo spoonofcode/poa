@@ -1,9 +1,12 @@
 package com.spoonofcode.poa.feature.notification.overview
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,7 +61,7 @@ internal class NotificationOverviewScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
             ) {
-                items(viewState.initNotifications) { partner ->
+                items(viewState.notifications) { partner ->
                     NotificationItem(
                         item = partner,
                         onClick = { selectNotification(partner.id) }
@@ -75,43 +78,63 @@ internal class NotificationOverviewScreen(
         modifier: Modifier = Modifier,
         showChevron: Boolean = true,
     ) {
-        ElevatedCard(
-            onClick = onClick,
-            modifier = modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.large
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+            ElevatedCard(
+                onClick = onClick,
+                modifier = modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.large
             ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = item.title,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        text = item.text,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                {
+                    if (item.alreadyRead.not()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .size(width = 4.dp, height = 100.dp)
+                                .background(MaterialTheme.colorScheme.primary)
+                        )
+                    }
 
-                if (showChevron) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-                        contentDescription = null,
+                    Row(
                         modifier = Modifier
-                            .size(20.dp)
-                    )
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(
+                                text = item.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Text(
+                                text = item.text,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+
+                        if (showChevron) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(20.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -77,7 +77,6 @@ abstract class BaseViewModel<VS : BaseViewState>(
                 .distinctUntilChangedBy { it.isConnected } // only online/offline changes
                 .debounce(500) // debounce to avoid rapid changes
                 .collect { status ->
-                    println("BARTEK - Network status: $status")
                     when (status) {
                         is Connectivity.Status.Connected -> {
                             if (hasInitialized) { // Avoid showing snackbar on initial value

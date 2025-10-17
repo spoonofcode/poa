@@ -8,7 +8,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 @Immutable
 internal data class NotificationOverviewViewState(
     override val screenState: ScreenState = ScreenState.LOADING,
-    val initNotifications: List<Notification> = emptyList(),
-//    val filteredNotifications: List<Notification> = emptyList(),
+    val notifications: List<Notification> = emptyList(),
 ) : BaseViewState(screenState)
 

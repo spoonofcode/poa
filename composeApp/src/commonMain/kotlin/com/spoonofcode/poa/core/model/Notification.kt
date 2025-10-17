@@ -11,6 +11,7 @@ data class NotificationRequest(
     val imageUrl: String? = null,
     val topics: List<String>,
     val expirationDateTime: LocalDateTime? = null,
+    val alreadyRead: Boolean = false,
 )
 
 @Serializable
@@ -20,4 +21,5 @@ data class Notification(
     val text: String,
     val link: String? = null,
     val expirationDateTime: LocalDateTime? = null,
+    val alreadyRead: Boolean = false,
 )
