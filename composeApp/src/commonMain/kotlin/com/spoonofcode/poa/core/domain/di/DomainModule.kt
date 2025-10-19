@@ -56,7 +56,6 @@ val domainModule = module {
     factoryOf(::GetNotificationsUseCase)
     factoryOf(::GetNotificationByIdUseCase)
     factoryOf(::SubscribeUserTopicsUseCase)
-    factoryOf(::SubscribeUserTopicsUseCase)
     factoryOf(::GetPartnersUseCase)
     factoryOf(::GetPartnerUsersUseCase)
     factoryOf(::GetNotificationSettingsUseCase)

@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.feature.login.di
 
+import com.spoonofcode.poa.core.ui.utils.FirebasePushService
 import com.spoonofcode.poa.core.ui.utils.GoogleAuthProvider
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind

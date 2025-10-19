@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings
-import com.spoonofcode.poa.core.ui.compose.IconWithBadge
 import com.spoonofcode.poa.core.ui.compose.ImageSlider
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel

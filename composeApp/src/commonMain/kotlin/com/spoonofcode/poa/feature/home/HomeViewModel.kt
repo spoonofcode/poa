@@ -31,7 +31,7 @@ internal class HomeViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                subscribeUserTopicsUseCase()
+//                subscribeUserTopicsUseCase()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
