@@ -134,21 +134,17 @@ internal fun DailyCheckInSection(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Poniżej potrzebny jest LazyRow, upewnij się, że masz odpowiednie importy
-        // import androidx.compose.foundation.lazy.LazyRow
-        // import androidx.compose.foundation.lazy.items
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = 8.dp)
         ) {
             items(rewards) { reward ->
-                RewardItem(reward = reward) // Upewnij się, że komponent RewardItem też jest w tym pliku
+                RewardItem(reward = reward)
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Użycie obliczonej wartości "streak"
         Text(
             text = "Your streak: $streak days in a row!",
             style = MaterialTheme.typography.bodyMedium
@@ -159,14 +155,14 @@ internal fun DailyCheckInSection(
         if (nextCheckInTimeMillis != null) {
             Text("NEXT CHECK-IN IN", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
             Spacer(modifier = Modifier.height(8.dp))
-            CountdownTimer(targetTimeMillis = nextCheckInTimeMillis) // Upewnij się, że CountdownTimer jest w pliku
+            CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = onCheckInClicked,
-            enabled = isActionAvailable, // Użycie obliczonej wartości
+            enabled = isActionAvailable,
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
             Text("Collect Today's Reward")
@@ -207,13 +203,6 @@ private fun RewardItem(reward: DailyReward) {
         RewardStatus.AVAILABLE_TO_CLAIM -> MaterialTheme.colorScheme.primary
         RewardStatus.LOCKED -> Color(0xFF2E2E2E)
     }
-    // Upewnij się, że masz też te importy:
-    // import androidx.compose.foundation.BorderStroke
-    // import androidx.compose.ui.draw.alpha
-    // import androidx.compose.material.icons.filled.CheckCircle
-    // import androidx.compose.material.icons.filled.CardGiftcard
-    // import androidx.compose.foundation.layout.size
-    // import androidx.compose.material3.Icon
     val border = if (isAvailable) BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimary) else null
     val contentAlpha = if (reward.status == RewardStatus.LOCKED) 0.5f else 1f
 

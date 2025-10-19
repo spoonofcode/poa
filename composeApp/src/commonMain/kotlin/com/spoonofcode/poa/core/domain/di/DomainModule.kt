@@ -2,6 +2,8 @@ package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
+import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
+import com.spoonofcode.poa.core.domain.home.GetDailyRewardsUseCase
 import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
@@ -57,4 +59,6 @@ val domainModule = module {
     factoryOf(::SubscribeUserTopicsUseCase)
     factoryOf(::GetPartnersUseCase)
     factoryOf(::GetPartnerUsersUseCase)
+    factoryOf(::GetDailyRewardsUseCase)
+    factoryOf(::ClaimTodayRewardUseCase)
 }
