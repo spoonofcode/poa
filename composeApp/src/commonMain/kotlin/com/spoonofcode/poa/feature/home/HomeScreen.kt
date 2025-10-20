@@ -93,7 +93,6 @@ internal class HomeScreen(
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
         onCheckInClicked = { viewModel?.onCheckInClicked() },
-        viewModel = viewModel
     )
 }
 
@@ -101,7 +100,6 @@ internal class HomeScreen(
 internal fun ContentView(
     viewState: HomeViewState,
     onCheckInClicked: () -> Unit,
-    viewModel: HomeViewModel?
 ): @Composable (ColumnScope.() -> Unit) {
     return {
         ImageSlider(
@@ -158,6 +156,8 @@ internal fun DailyCheckInSection(
         Spacer(modifier = Modifier.height(16.dp))
 
         if (nextCheckInTimeMillis != null) {
+            // >>> LOG 1: Sprawdzenie, czy i jaka wartość trafia do sekcji zegara
+            println(">>> LOG (UI): DailyCheckInSection otrzymał nextCheckInTimeMillis: $nextCheckInTimeMillis")
             Text("NEXT CHECK-IN IN", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
             Spacer(modifier = Modifier.height(8.dp))
             CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
@@ -176,18 +176,37 @@ internal fun DailyCheckInSection(
 }
 @Composable
 internal fun CountdownTimer(targetTimeMillis: Long) {
-    var remainingTime by remember { mutableStateOf<Long>(targetTimeMillis - Clock.System.now().toEpochMilliseconds()) }
+    var remainingTime by remember { mutableStateOf(0L) }
 
     LaunchedEffect(targetTimeMillis) {
-        while (remainingTime > 0) {
-            delay(1000L)
-            remainingTime = targetTimeMillis - Clock.System.now().toEpochMilliseconds()
+        // >>> LOG 2: Sprawdzenie, czy LaunchedEffect się uruchamia i z jakim czasem docelowym
+        println(">>> LOG (TIMER): LaunchedEffect uruchomiony z targetTimeMillis: $targetTimeMillis")
+
+        // Pętla while(true) jest bezpieczniejsza, bo warunek wyjścia jest wewnątrz
+        while (true) {
+            val currentTime = Clock.System.now().toEpochMilliseconds()
+            val newRemainingTime = (targetTimeMillis - currentTime).coerceAtLeast(0)
+
+            // Aktualizacja stanu
+            remainingTime = newRemainingTime
+
+            // >>> LOG 3: Śledzenie każdej aktualizacji (tyknięcia) zegara
+            println(">>> LOG (TIMER): Tyknięcie. Pozostały czas: $remainingTime ms")
+
+            if (newRemainingTime <= 0) {
+                // >>> LOG 4: Sprawdzenie, kiedy zegar osiąga zero
+                println(">>> LOG (TIMER): Czas upłynął. Zatrzymywanie pętli.")
+                break // Wyjście z pętli
+            }
+
+            delay(1000L) // Czekaj jedną sekundę
         }
     }
 
-    val hours = (remainingTime / (1000 * 60 * 60))
-    val minutes = (remainingTime / (1000 * 60)) % 60
-    val seconds = (remainingTime / 1000) % 60
+    val totalSeconds = remainingTime / 1000
+    val hours = totalSeconds / 3600
+    val minutes = (totalSeconds % 3600) / 60
+    val seconds = totalSeconds % 60
 
     if (remainingTime > 0) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -195,8 +214,15 @@ internal fun CountdownTimer(targetTimeMillis: Long) {
             CountdownUnit(value = minutes, label = "Minutes")
             CountdownUnit(value = seconds, label = "Seconds")
         }
+    } else {
+        Text(
+            text = "You can check in again!",
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
+
 
 @Composable
 private fun RewardItem(reward: DailyReward) {
