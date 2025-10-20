@@ -4,19 +4,16 @@ package com.spoonofcode.poa.feature.home
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
 import com.spoonofcode.poa.core.domain.home.GetDailyRewardsUseCase
+import com.spoonofcode.poa.core.domain.user.GetUserPointsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.model.RewardStatus
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Clock
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
-import kotlinx.coroutines.Job
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -28,10 +25,10 @@ internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val getDailyRewardsUseCase: GetDailyRewardsUseCase,
     private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
+    private val getUserPointsUseCase: GetUserPointsUseCase,
 ) : BaseViewModel<HomeViewState>(HomeViewState()) {
-    private var timerJob: Job? = null
     fun initView() {
-    //    subscribeNotifications()
+        subscribeNotifications()
         loadDailyRewardsStatus()
     }
 
@@ -40,6 +37,7 @@ internal class HomeViewModel(
             showLoadingView()
             try {
                 val rewards = getDailyRewardsUseCase()
+                val totalPoints = getUserPointsUseCase()
                 val isRewardAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
 
                 val nextCheckInMillis = if (!isRewardAvailable && rewards.any { it.status == RewardStatus.CLAIMED }) {
@@ -48,14 +46,8 @@ internal class HomeViewModel(
                     val today = now.toLocalDateTime(localTimeZone).date
                     val tomorrow = today.plus(1, DateTimeUnit.DAY)
                     val nextCheckInInstant = tomorrow.atStartOfDayIn(localTimeZone)
-
-                    // >>> LOG 5: Sprawdzenie obliczonego czasu w ViewModelu
-                    println(">>> LOG (VM): Nagroda odebrana. Następny check-in o: ${nextCheckInInstant.toEpochMilliseconds()} (${nextCheckInInstant})")
-
                     nextCheckInInstant.toEpochMilliseconds()
                 } else {
-                    // >>> LOG 6: Sprawdzenie, kiedy czas nie jest ustawiany
-                    println(">>> LOG (VM): Nagroda dostępna lub żadna nieodebrana. Zegar nie jest potrzebny (nextCheckInMillis = null).")
                     null
                 }
 
@@ -63,6 +55,7 @@ internal class HomeViewModel(
                     copy(
                         screenState = ScreenState.CONTENT,
                         rewards = rewards,
+                        totalPoints = totalPoints,
                         nextCheckInTimeMillis = nextCheckInMillis
                     )
                 }

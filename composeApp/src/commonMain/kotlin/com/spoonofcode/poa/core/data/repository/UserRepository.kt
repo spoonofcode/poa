@@ -60,6 +60,16 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
+    suspend fun getUserPoints(userId: Int): Int {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/points",
+                method = HttpMethod.Get
+            )
+            responseOrException(response).body<Int>()
+        }
+    }
+
     suspend fun readUserProductSeriesIds(userId: Int): List<String> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(

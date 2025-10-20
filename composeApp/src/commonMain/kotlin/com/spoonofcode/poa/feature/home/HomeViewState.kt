@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.home
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.poa.core.model.DailyReward
-import com.spoonofcode.poa.core.model.RewardStatus
 import com.spoonofcode.poa.core.ui.BaseViewState
 import com.spoonofcode.poa.core.ui.ScreenState
 
@@ -17,4 +16,5 @@ internal data class HomeViewState(
     val rewards: List<DailyReward> = emptyList(),
     val remainingTimeMillis: Long? = null,
     val nextCheckInTimeMillis: Long? = null,
+    val totalPoints: Int = 0,
 ) : BaseViewState(screenState)

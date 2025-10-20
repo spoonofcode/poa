@@ -56,6 +56,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.alpha
 import com.spoonofcode.poa.core.model.DailyReward
 import com.spoonofcode.poa.core.model.RewardStatus
+import com.spoonofcode.poa.resources.check_in_again
+import com.spoonofcode.poa.resources.collect_reward
+import com.spoonofcode.poa.resources.daily_check_in
+import com.spoonofcode.poa.resources.day_number
+import com.spoonofcode.poa.resources.hours
+import com.spoonofcode.poa.resources.minutes
+import com.spoonofcode.poa.resources.next_check_in
+import com.spoonofcode.poa.resources.points_short
+import com.spoonofcode.poa.resources.seconds
+import com.spoonofcode.poa.resources.streak_days_count
+import com.spoonofcode.poa.resources.total_points
+import com.spoonofcode.poa.resources.your_streak
 import kotlin.time.Duration.Companion.hours
 
 internal class HomeScreen(
@@ -69,7 +81,7 @@ internal class HomeScreen(
     ) = listOf(
         TopBarAction(
             Icons.Default.Notifications,
-            "Notification"
+            "Notifications"
         ) { viewModel?.navigateToNotifications() },
     )
 
@@ -109,6 +121,7 @@ internal fun ContentView(
         Spacer(modifier = Modifier.height(16.dp))
         DailyCheckInSection(
             rewards = viewState.rewards,
+            totalPoints = viewState.totalPoints,
             nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
             onCheckInClicked = onCheckInClicked
         )
@@ -117,6 +130,7 @@ internal fun ContentView(
 @Composable
 internal fun DailyCheckInSection(
     rewards: List<DailyReward>,
+    totalPoints: Int,
     nextCheckInTimeMillis: Long?,
     onCheckInClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -129,11 +143,43 @@ internal fun DailyCheckInSection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Daily Check-in",
+            text = stringResource(Res.string.daily_check_in),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    stringResource(Res.string.your_streak),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "$streak ${stringResource(Res.string.streak_days_count)}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    stringResource(Res.string.total_points),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "$totalPoints ${stringResource(Res.string.points_short)}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -148,17 +194,12 @@ internal fun DailyCheckInSection(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = "Your streak: $streak days in a row!",
-            style = MaterialTheme.typography.bodyMedium
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         if (nextCheckInTimeMillis != null) {
-            // >>> LOG 1: Sprawdzenie, czy i jaka wartość trafia do sekcji zegara
-            println(">>> LOG (UI): DailyCheckInSection otrzymał nextCheckInTimeMillis: $nextCheckInTimeMillis")
-            Text("NEXT CHECK-IN IN", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+            Text(
+                stringResource(Res.string.next_check_in),
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Gray
+            )
             Spacer(modifier = Modifier.height(8.dp))
             CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
         }
@@ -170,7 +211,7 @@ internal fun DailyCheckInSection(
             enabled = isActionAvailable,
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
-            Text("Collect Today's Reward")
+            Text(stringResource(Res.string.collect_reward))
         }
     }
 }
@@ -179,27 +220,17 @@ internal fun CountdownTimer(targetTimeMillis: Long) {
     var remainingTime by remember { mutableStateOf(0L) }
 
     LaunchedEffect(targetTimeMillis) {
-        // >>> LOG 2: Sprawdzenie, czy LaunchedEffect się uruchamia i z jakim czasem docelowym
-        println(">>> LOG (TIMER): LaunchedEffect uruchomiony z targetTimeMillis: $targetTimeMillis")
-
-        // Pętla while(true) jest bezpieczniejsza, bo warunek wyjścia jest wewnątrz
         while (true) {
             val currentTime = Clock.System.now().toEpochMilliseconds()
             val newRemainingTime = (targetTimeMillis - currentTime).coerceAtLeast(0)
 
-            // Aktualizacja stanu
             remainingTime = newRemainingTime
 
-            // >>> LOG 3: Śledzenie każdej aktualizacji (tyknięcia) zegara
-            println(">>> LOG (TIMER): Tyknięcie. Pozostały czas: $remainingTime ms")
-
             if (newRemainingTime <= 0) {
-                // >>> LOG 4: Sprawdzenie, kiedy zegar osiąga zero
-                println(">>> LOG (TIMER): Czas upłynął. Zatrzymywanie pętli.")
-                break // Wyjście z pętli
+                break
             }
 
-            delay(1000L) // Czekaj jedną sekundę
+            delay(1000L)
         }
     }
 
@@ -210,13 +241,13 @@ internal fun CountdownTimer(targetTimeMillis: Long) {
 
     if (remainingTime > 0) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            CountdownUnit(value = hours, label = "Hours")
-            CountdownUnit(value = minutes, label = "Minutes")
-            CountdownUnit(value = seconds, label = "Seconds")
+            CountdownUnit(value = hours, label = stringResource(Res.string.hours))
+            CountdownUnit(value = minutes, label = stringResource(Res.string.minutes))
+            CountdownUnit(value = seconds, label = stringResource(Res.string.seconds))
         }
     } else {
         Text(
-            text = "You can check in again!",
+            text = stringResource(Res.string.check_in_again),
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold
         )
@@ -248,12 +279,15 @@ private fun RewardItem(reward: DailyReward) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(text = "Day ${reward.day}", fontSize = 12.sp)
+            Text(
+                text = stringResource(Res.string.day_number, reward.day),
+                fontSize = 12.sp
+            )
 
             val icon = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard
             Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(28.dp))
             Text(
-                text = "${reward.points} Pts",
+                text = "${reward.points} ${stringResource(Res.string.points_short)}",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )

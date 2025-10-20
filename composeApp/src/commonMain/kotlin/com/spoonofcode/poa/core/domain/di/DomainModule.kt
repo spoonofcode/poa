@@ -26,6 +26,7 @@ import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
+import com.spoonofcode.poa.core.domain.user.GetUserPointsUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import org.koin.core.module.dsl.factoryOf
@@ -61,4 +62,6 @@ val domainModule = module {
     factoryOf(::GetPartnerUsersUseCase)
     factoryOf(::GetDailyRewardsUseCase)
     factoryOf(::ClaimTodayRewardUseCase)
+    factoryOf(::GetUserPointsUseCase)
+
 }

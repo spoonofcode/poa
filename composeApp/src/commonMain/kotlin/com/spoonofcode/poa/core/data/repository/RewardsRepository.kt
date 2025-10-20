@@ -18,11 +18,7 @@ class RewardsRepository : GenericCrudRepository<Unit, DailyReward>(
     responseSerializer = DailyReward.serializer(),
 ) {
 
-    /**
-     * Pobiera status nagród z backendu dla konkretnego użytkownika.
-     */
     suspend fun getRewardsStatus(userId: Int): List<DailyReward> {
-        println(">>> LOG: RewardsRepository - pobieram nagrody dla userId=$userId")
 
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
@@ -35,12 +31,7 @@ class RewardsRepository : GenericCrudRepository<Unit, DailyReward>(
         }
     }
 
-    /**
-     * Wysyła żądanie odebrania nagrody do backendu dla konkretnego użytkownika.
-     */
     suspend fun claimTodayReward(userId: Int): List<DailyReward> {
-        println(">>> LOG: RewardsRepository - odbieram dzisiejszą nagrodę dla userId=$userId")
-
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/rewards/claim",

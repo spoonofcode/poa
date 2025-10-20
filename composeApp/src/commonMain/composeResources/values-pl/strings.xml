@@ -98,4 +98,16 @@
     <string name="website_link">Website link</string>
     <string name="x">X</string>
     <string name="youtube">Youtube</string>
+    <string name="collect_reward">Odbierz dzisiejszą nagrodę</string>
+    <string name="daily_check_in">Codzienne logowanie</string>
+    <string name="day_number">Dzień %1$d</string>
+    <string name="hours">Godziny</string>
+    <string name="minutes">Minuty</string>
+    <string name="next_check_in">NASTĘPNE LOGOWANIE ZA</string>
+    <string name="points_short">pkt</string>
+    <string name="seconds">Sekundy</string>
+    <string name="streak_days_count">dni</string>
+    <string name="total_points">Suma punktów</string>
+    <string name="your_streak">Twoja seria</string>
+    <string name="check_in_again">Możesz się ponownie zalogować!</string>
 </resources>
