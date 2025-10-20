@@ -108,7 +108,7 @@
     <string name="points_short">Pts</string>
     <string name="seconds">Seconds</string>
     <string name="streak_days_count">days</string>
-    <string name="total_points">Total Points</string>
+    <string name="total_points">Your Points</string>
     <string name="your_streak">Your streak</string>
     <string name="check_in_again">You can check in again!</string>
 </resources>
