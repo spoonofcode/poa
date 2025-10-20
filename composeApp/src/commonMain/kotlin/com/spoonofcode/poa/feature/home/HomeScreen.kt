@@ -54,6 +54,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.alpha
+import com.spoonofcode.poa.core.model.DailyReward
+import com.spoonofcode.poa.core.model.RewardStatus
 import kotlin.time.Duration.Companion.hours
 
 internal class HomeScreen(
@@ -77,8 +79,9 @@ internal class HomeScreen(
         bottom = Paddings.screenPadding,
     )
 
-    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit = {
+        viewModel?.initView()
+    }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
@@ -89,26 +92,28 @@ internal class HomeScreen(
         viewState: HomeViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        onCheckInClicked = { viewModel?.onCheckInClicked() }
+        onCheckInClicked = { viewModel?.onCheckInClicked() },
+        viewModel = viewModel
     )
+}
 
-    @Composable
-    internal fun ContentView(
-        viewState: HomeViewState,
-        onCheckInClicked: () -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            ImageSlider(
-                label = stringResource(Res.string.new_partners),
-                imageLinks = viewState.partnerImageLinks,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            DailyCheckInSection(
-                rewards = viewState.rewards,
-                nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
-                onCheckInClicked = onCheckInClicked
-            )
-        }
+@Composable
+internal fun ContentView(
+    viewState: HomeViewState,
+    onCheckInClicked: () -> Unit,
+    viewModel: HomeViewModel?
+): @Composable (ColumnScope.() -> Unit) {
+    return {
+        ImageSlider(
+            label = stringResource(Res.string.new_partners),
+            imageLinks = viewState.partnerImageLinks,
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        DailyCheckInSection(
+            rewards = viewState.rewards,
+            nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
+            onCheckInClicked = onCheckInClicked
+        )
     }
 }
 @Composable

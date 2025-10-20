@@ -18,18 +18,12 @@ object HomeTab : Tab {
         get() {
             val title = stringResource(resource = Res.string.home)
             val icon = rememberVectorPainter(Icons.Default.Home)
-
-            return remember {
-                TabOptions(
-                    index = 0u,
-                    title = title,
-                    icon = icon
-                )
-            }
+            return remember { TabOptions(index = 0u, title = title, icon = icon) }
         }
 
     @Composable
     override fun Content() {
-        HomeScreen().Content()
+        val screen = remember { HomeScreen() }
+        screen.Content()
     }
 }
