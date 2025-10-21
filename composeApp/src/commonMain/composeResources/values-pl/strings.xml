@@ -84,6 +84,8 @@
     <string name="sign_in_with_google">Zaloguj się z Google</string>
     <string name="sign_up">Zarejestruj się</string>
     <string name="star_mandatory">* obowiązkowe</string>
+    <string name="tab_new">Nowe</string>
+    <string name="tab_already_read">Przeczytane</string>
     <string name="terms_and_conditions">Warunki i zasady</string>
     <string name="terms_and_conditions_description">Aby uzyskać dostęp do aplikacji, musisz zaakceptować nasz regulamin</string>
     <string name="text">Tekst</string>

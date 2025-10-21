@@ -84,6 +84,8 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_up">Sign up</string>
     <string name="star_mandatory">* mandatory</string>
+    <string name="tab_new">New</string>
+    <string name="tab_already_read">Already read</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="terms_and_conditions_description">In order to access the app, you have to accept our terms and conditions</string>
     <string name="text">Text</string>
