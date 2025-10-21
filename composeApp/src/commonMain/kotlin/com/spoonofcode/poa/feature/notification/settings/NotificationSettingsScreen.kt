@@ -6,11 +6,13 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextWithSwitchRow
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.from_all_partners
 import com.spoonofcode.poa.resources.from_my_partners
 import com.spoonofcode.poa.resources.notifications_settings
+import com.spoonofcode.poa.resources.notifications_settings_text
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -45,6 +47,8 @@ internal class NotificationSettingsScreen :
         saveChanges: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            Texts.TM(stringResource(Res.string.notifications_settings_text))
+
             TextWithSwitchRow(
                 text = stringResource(Res.string.from_all_partners),
                 checked = viewState.notificationSettings.notificationFromAllPartnersEnable,

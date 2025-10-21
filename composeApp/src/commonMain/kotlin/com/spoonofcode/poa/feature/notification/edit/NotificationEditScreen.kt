@@ -78,15 +78,6 @@ internal class NotificationEditScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             if (viewState.itemIds.isNotEmpty()) {
-//                if (onlyToSelectedUsers) {
-//                    Texts.BLB(stringResource(Res.string.selected_customers))
-//                } else {
-//                    Texts.BLB(stringResource(Res.string.selected_series))
-//                }
-//                viewState.itemIds.forEach { itemId ->
-//                    Texts.BLB(text = itemId)
-//                }
-
                 val title = if (onlyToSelectedUsers) {
                     stringResource(Res.string.selected_customers)
                 } else {
@@ -98,8 +89,6 @@ internal class NotificationEditScreen(
                     items = viewState.itemIds,
                 )
             }
-
-
 
             TextFields.Outlined(
                 value = viewState.title,

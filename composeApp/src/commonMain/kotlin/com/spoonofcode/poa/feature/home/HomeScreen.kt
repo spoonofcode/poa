@@ -32,12 +32,6 @@ internal class HomeScreen(
         ) { viewModel?.navigateToNotifications() },
     )
 
-    override fun provideContentPadding() = PaddingValues(
-        start = Paddings.screenPadding,
-        top = Paddings.screenPadding,
-        bottom = Paddings.screenPadding,
-    )
-
     override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
         { viewModel?.initView() }
 

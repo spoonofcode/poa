@@ -53,12 +53,6 @@ internal class ProductOverviewViewModel(
         }
     }
 
-    fun navigateToFilter() {
-//        viewModelScope.launch {
-//            viewModelNavigator.push(FilterScreen())
-//        }
-    }
-
     private fun showLoadingView() {
         updateState {
             copy(

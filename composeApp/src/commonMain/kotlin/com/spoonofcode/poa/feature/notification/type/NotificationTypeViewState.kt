@@ -7,4 +7,5 @@ import com.spoonofcode.poa.core.ui.ScreenState
 @Immutable
 internal data class NotificationTypeViewState(
     override val screenState: ScreenState = ScreenState.CONTENT,
+    val buttonToAllEnable: Boolean = false,
 ) : BaseViewState(screenState)

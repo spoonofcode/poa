@@ -50,17 +50,6 @@ internal class ProductOverviewScreen(
     override fun provideInitAction(viewModel: ProductOverviewViewModel?): () -> Unit =
         { viewModel?.initView() }
 
-
-    override fun provideTopBarActions(
-        viewModel: ProductOverviewViewModel?,
-    ) = listOf(
-        TopBarAction(
-            icon = Icons.Default.FilterList,
-            description = "filter",
-            onClick = { viewModel?.navigateToFilter() }
-        ),
-    )
-
     @Composable
     override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
 

@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Diversity3
 import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PersonSearch
 import androidx.compose.material.icons.filled.WebStories
-import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,6 +19,7 @@ import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification_type
 import com.spoonofcode.poa.resources.to_all
+import com.spoonofcode.poa.resources.to_all_my_customers
 import com.spoonofcode.poa.resources.to_selected_customers
 import com.spoonofcode.poa.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
@@ -39,16 +40,18 @@ internal class NotificationTypeScreen :
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
         navigateToAll = { viewModel?.navigateToAll() },
-        navigateToPartnerCustomers = { viewModel?.navigateToPartnerCustomers() },
-        navigateToPartnerProductSeries = { viewModel?.navigateToPartnerProductSeries() },
+        navigateToAllPartnerCustomers = { viewModel?.navigateToAllPartnerCustomers() },
+        navigateToSelectedPartnerCustomers = { viewModel?.navigateToPartnerCustomers() },
+        navigateToSelectedPartnerProductSeries = { viewModel?.navigateToPartnerProductSeries() },
     )
 
     @Composable
     private fun ContentView(
         viewState: NotificationTypeViewState,
         navigateToAll: () -> Unit,
-        navigateToPartnerCustomers: () -> Unit,
-        navigateToPartnerProductSeries: () -> Unit,
+        navigateToAllPartnerCustomers: () -> Unit,
+        navigateToSelectedPartnerCustomers: () -> Unit,
+        navigateToSelectedPartnerProductSeries: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -59,13 +62,14 @@ internal class NotificationTypeScreen :
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
                     onClick = navigateToAll,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = viewState.buttonToAllEnable,
                 )
 
                 IconTextButton(
-                    icon = Icons.Default.WebStories,
-                    text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = navigateToPartnerProductSeries,
+                    icon = Icons.Default.Diversity3,
+                    text = stringResource(resource = Res.string.to_all_my_customers),
+                    onClick = navigateToAllPartnerCustomers,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -77,10 +81,17 @@ internal class NotificationTypeScreen :
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 IconTextButton(
-                    icon = Icons.Default.Person,
+                    icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = navigateToPartnerCustomers,
-                    modifier = Modifier.fillMaxWidth(0.5f)
+                    onClick = navigateToSelectedPartnerCustomers,
+                    modifier = Modifier.weight(1f)
+                )
+
+                IconTextButton(
+                    icon = Icons.Default.WebStories,
+                    text = stringResource(resource = Res.string.to_selected_series),
+                    onClick = navigateToSelectedPartnerProductSeries,
+                    modifier = Modifier.weight(1f)
                 )
             }
         }

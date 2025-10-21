@@ -44,6 +44,7 @@
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_settings">Notification settings</string>
+    <string name="notifications_settings_text">Choose which notifications you want to receive</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="notification_type">Notification type</string>
@@ -92,6 +93,7 @@
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
     <string name="to_all">To all</string>
+    <string name="to_all_my_customers">To all my customers</string>
     <string name="to_all_partners">To selected customers</string>
     <string name="to_selected_customers">To selected customers</string>
     <string name="to_selected_series">To selected series</string>
