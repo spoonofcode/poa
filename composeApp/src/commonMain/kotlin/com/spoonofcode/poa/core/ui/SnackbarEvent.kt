@@ -28,6 +28,14 @@ sealed class SnackbarEvent(
         duration = SnackbarDuration.Indefinite,
         type = SnackbarType.ERROR
     )
+    class Success(
+        message: String
+    ) : SnackbarEvent(
+        message = message,
+        actionLabel = "OK",
+        duration = SnackbarDuration.Short,
+        type = SnackbarType.SUCCESS
+    )
 }
 
 enum class SnackbarType {
