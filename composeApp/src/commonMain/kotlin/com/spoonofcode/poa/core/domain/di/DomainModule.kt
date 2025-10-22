@@ -2,6 +2,8 @@ package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
+import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
+import com.spoonofcode.poa.core.domain.home.GetDailyRewardsUseCase
 import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
@@ -26,6 +28,7 @@ import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
+import com.spoonofcode.poa.core.domain.user.GetUserPointsUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import org.koin.core.module.dsl.factoryOf
@@ -60,4 +63,8 @@ val domainModule = module {
     factoryOf(::GetPartnerUsersUseCase)
     factoryOf(::GetNotificationSettingsUseCase)
     factoryOf(::UpdateNotificationSettingsUseCase)
+    factoryOf(::GetDailyRewardsUseCase)
+    factoryOf(::ClaimTodayRewardUseCase)
+    factoryOf(::GetUserPointsUseCase)
+
 }

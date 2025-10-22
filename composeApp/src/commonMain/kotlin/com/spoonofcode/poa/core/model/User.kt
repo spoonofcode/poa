@@ -13,6 +13,7 @@ data class User(
         nickName?.let { append(" ($it)") }
     },
     val email: String,
+    val points: Int = 0,
 )
 
 @Serializable
