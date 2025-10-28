@@ -35,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.ImageSlider
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
