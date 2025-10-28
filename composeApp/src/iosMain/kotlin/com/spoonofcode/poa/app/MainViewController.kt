@@ -6,4 +6,4 @@ fun MainViewController() = ComposeUIViewController(
     configure = {
         KoinInitializer().init()
     }
-) { App(notificationId) }
+) { App(notificationId = null) }

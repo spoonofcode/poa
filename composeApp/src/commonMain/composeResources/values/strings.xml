@@ -22,7 +22,7 @@
     <string name="filter">Filter</string>
     <string name="filter_products">Filter products</string>
     <string name="first_name">First Name</string>
-    <string name="forget_password">Forget password?</string>
+    <string name="forget_password">Forget password? </string>
     <string name="forgot_password">Forgot password</string>
     <string name="from_all_partners">From all partners</string>
     <string name="from_my_partners">From my partners</string>
@@ -44,6 +44,7 @@
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_settings">Notification settings</string>
+    <string name="notifications_settings_text">Choose which notifications you want to receive</string>
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="notification_type">Notification type</string>
@@ -63,6 +64,7 @@
     <string name="register">Register</string>
     <string name="read">Read</string>
     <string name="reload">Reload</string>
+    <string name="reset_password">Reset password</string>
     <string name="save_changes">Save changes</string>
     <string name="scan">Scan</string>
     <string name="scan_info">Place the NFC tag on the back of your device</string>
@@ -82,6 +84,8 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_up">Sign up</string>
     <string name="star_mandatory">* mandatory</string>
+    <string name="tab_new">New</string>
+    <string name="tab_already_read">Already read</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="terms_and_conditions_description">In order to access the app, you have to accept our terms and conditions</string>
     <string name="text">Text</string>
@@ -91,6 +95,7 @@
     <string name="title">Title</string>
     <string name="token_id">Token Id</string>
     <string name="to_all">To all</string>
+    <string name="to_all_my_customers">To all my customers</string>
     <string name="to_all_partners">To selected customers</string>
     <string name="to_selected_customers">To selected customers</string>
     <string name="to_selected_series">To selected series</string>

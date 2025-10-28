@@ -79,6 +79,11 @@ internal class HomeViewModel(
         }
     }
 
+    fun getNumberOfNewNotifications(): Int {
+        // TODO: Implement logic to get the actual number of new notifications
+        return 5
+    }
+
     fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationOverviewScreen())
@@ -89,7 +94,7 @@ internal class HomeViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                subscribeUserTopicsUseCase()
+//                subscribeUserTopicsUseCase()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,

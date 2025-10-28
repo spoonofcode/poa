@@ -3,7 +3,9 @@ package com.spoonofcode.poa.feature.notification.overview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,21 +14,33 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.model.Notification
 import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
-import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notifications
+import com.spoonofcode.poa.resources.tab_already_read
+import com.spoonofcode.poa.resources.tab_new
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationOverviewScreen(
@@ -40,6 +54,11 @@ internal class NotificationOverviewScreen(
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
+
+    override fun provideContentPadding() = PaddingValues(
+        start = Paddings.screenPadding,
+        end = Paddings.screenPadding,
+    )
 
     @Composable
     override fun provideContent(
@@ -56,15 +75,63 @@ internal class NotificationOverviewScreen(
         selectNotification: (Int) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+            NotificationTabs(
+                viewState.notifications,
+                selectNotification = selectNotification,
+            )
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun NotificationTabs(
+        notifications: List<Notification>,
+        selectNotification: (Int) -> Unit,
+    ) {
+        val tabs = listOf(
+            TabItem(title = stringResource(Res.string.tab_new)),
+            TabItem(title = stringResource(Res.string.tab_already_read)),
+        )
+
+        var selectedTabIndex by remember { mutableStateOf(0) }
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            SecondaryTabRow(
+                selectedTabIndex = selectedTabIndex,
             ) {
-                items(viewState.initNotifications) { partner ->
-                    NotificationItem(
-                        item = partner,
-                        onClick = { selectNotification(partner.id) }
+                tabs.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(tab.title) },
                     )
                 }
+            }
+            val notificationsAlreadyReaded = notifications.filter { it.alreadyRead }
+            val notificationsNotReaded = notifications.filter { it.alreadyRead.not() }
+
+            when (selectedTabIndex) {
+                0 -> NotificationTab(notificationsNotReaded, selectNotification)
+                1 -> NotificationTab(notificationsAlreadyReaded, selectNotification)
+            }
+        }
+    }
+
+    data class TabItem(val title: String)
+
+    @Composable
+    fun NotificationTab(notifications: List<Notification>, selectNotification: (Int) -> Unit) {
+        Spacers.VerticalBetweenFields()
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+        ) {
+            items(notifications) { partner ->
+                NotificationItem(
+                    item = partner,
+                    onClick = { selectNotification(partner.id) }
+                )
             }
         }
     }
@@ -76,44 +143,54 @@ internal class NotificationOverviewScreen(
         modifier: Modifier = Modifier,
         showChevron: Boolean = true,
     ) {
-        ElevatedCard(
-            onClick = onClick,
-            modifier = modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.large
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+            ElevatedCard(
+                onClick = onClick,
+                modifier = modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.large
             ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = item.title,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        text = item.text,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-
-                if (showChevron) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-                        contentDescription = null,
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                {
+                    Row(
                         modifier = Modifier
-                            .padding(start = 12.dp)
-                            .size(20.dp)
-                    )
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(
+                                text = item.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Text(
+                                text = item.text,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+
+                        if (showChevron) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(20.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

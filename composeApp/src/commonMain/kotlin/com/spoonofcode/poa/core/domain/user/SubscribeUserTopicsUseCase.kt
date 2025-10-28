@@ -17,7 +17,7 @@ class SubscribeUserTopicsUseCase(
 
     private suspend fun subscribeByUserId() {
         val userId = sessionManager.getSessionUserId()
-        firebasePushService.subscribeToTopic("user$userId")
+        firebasePushService.subscribeToTopic("${TOPIC_USER_ID}${userId}")
     }
 
     private suspend fun subscribeBySeriesId() {
@@ -25,15 +25,17 @@ class SubscribeUserTopicsUseCase(
             userId = sessionManager.getSessionUserId(),
         )
         userProductSeriesIds.forEach { seriesId ->
-            firebasePushService.subscribeToTopic("productSerieId$seriesId")
+            firebasePushService.subscribeToTopic("${TOPIC_PRODUCT_SERIE_ID}${seriesId}")
         }
     }
 
     private suspend fun subscribeToGlobalTopic() {
-        firebasePushService.subscribeToTopic(GLOBAL_TOPIC)
+        firebasePushService.subscribeToTopic(TOPIC_GLOBAL)
     }
 
     companion object {
-        private const val GLOBAL_TOPIC = "GLOBAL_TOPIC"
+        private const val TOPIC_GLOBAL = "topic_global"
+        private const val TOPIC_USER_ID = "topic_user_id_"
+        private const val TOPIC_PRODUCT_SERIE_ID = "topic_product_serie_id_"
     }
 }

@@ -42,12 +42,14 @@ object Buttons {
         modifier: Modifier = Modifier,
         text: String,
         leftIcon: DrawableResource? = null,
+        enabled: Boolean = true,
         onClick: () -> Unit,
     ): Unit = Button(
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,
+        enabled = enabled,
         onClick = onClick,
     ) {
         if (leftIcon != null) {
@@ -104,29 +106,13 @@ object Buttons {
     }
 
     @Composable
-    fun GoogleSignOutButton() {
-        val coroutineScope = rememberCoroutineScope()
-        val googleAuthProvider = koinInject<GoogleAuthProvider>()
-        val googleAuthUiProvider = googleAuthProvider.getUiProvider()
-
-        PrimaryButton(
-            text = "Sign out with Google",
-            leftIcon = Res.drawable.ic_google,
-            onClick = {
-                coroutineScope.launch {
-                    googleAuthUiProvider.signOut()
-                }
-            }
-        )
-    }
-
-    @Composable
     fun IconTextButton(
+        modifier: Modifier = Modifier,
         icon: ImageVector,
         text: String,
         onClick: () -> Unit,
-        modifier: Modifier = Modifier,
-        square: Boolean = true
+        square: Boolean = true,
+        enabled: Boolean = true,
     ) {
         Button(
             onClick = onClick,
@@ -135,7 +121,8 @@ object Buttons {
                     if (square) Modifier.aspectRatio(1f) else Modifier
                 ),
             shape = MaterialTheme.shapes.small,
-            contentPadding = PaddingValues(8.dp)
+            contentPadding = PaddingValues(8.dp),
+            enabled = enabled,
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

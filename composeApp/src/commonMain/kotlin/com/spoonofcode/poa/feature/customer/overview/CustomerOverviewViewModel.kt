@@ -52,7 +52,8 @@ internal class CustomerOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 NotificationEditScreen(
-                    itemIds = getSelectedUsers()
+                    topics = getSelectedUsers(),
+                    itemIds = getSelectedNames()
                 )
             )
         }
@@ -60,6 +61,10 @@ internal class CustomerOverviewViewModel(
 
     private fun getSelectedUsers(): List<String> =
         currentState().checkedUserIds.map { userId -> "userId$userId" }.toList()
+
+    private fun getSelectedNames(): List<String> =
+        currentState().partnerUsers.filter { it.id in currentState().checkedUserIds }
+            .map { user -> user.fullName }.toList()
 
     private fun showLoadingView() {
         updateState {

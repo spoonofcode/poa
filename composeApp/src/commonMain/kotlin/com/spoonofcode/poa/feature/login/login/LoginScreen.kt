@@ -33,10 +33,12 @@ import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.email
+import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.let_s_get_started
 import com.spoonofcode.poa.resources.or
 import com.spoonofcode.poa.resources.password
 import com.spoonofcode.poa.resources.poa
+import com.spoonofcode.poa.resources.reset_password
 import com.spoonofcode.poa.resources.sign_in
 import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
@@ -174,7 +176,7 @@ internal class LoginScreen(
         val linkTag = "RESET"
 
         val text = buildAnnotatedString {
-            append("Forgot your password? ")
+            append(stringResource(resource = Res.string.forget_password))
             pushStringAnnotation(tag = linkTag, annotation = "reset")
             withStyle(
                 SpanStyle(
@@ -183,7 +185,7 @@ internal class LoginScreen(
                     textDecoration = TextDecoration.Underline
                 )
             ) {
-                append("Reset your password")
+                append(stringResource(resource = Res.string.reset_password))
             }
             pop()
         }

@@ -5,12 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.network.NetworkManager
 import com.spoonofcode.poa.core.ui.navigation.ViewModelNavigator
 import dev.jordond.connectivity.Connectivity
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -68,20 +69,30 @@ abstract class BaseViewModel<VS : BaseViewState>(
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun observeNetworkState() {
         viewModelScope.launch {
-            networkManager.observeNetworkState().distinctUntilChanged().collect { status ->
-                when (status) {
-                    is Connectivity.Status.Connected -> {
-                        _isOnline.value = true
-                        showSnackbar(SnackbarEvent.Online)
-                    }
-                    is Connectivity.Status.Disconnected -> {
-                        _isOnline.value = false
-                        showSnackbar(SnackbarEvent.Offline)
+            var hasInitialized = false
+            networkManager.observeNetworkState()
+                .distinctUntilChangedBy { it.isConnected } // only online/offline changes
+                .debounce(500) // debounce to avoid rapid changes
+                .collect { status ->
+                    when (status) {
+                        is Connectivity.Status.Connected -> {
+                            if (hasInitialized) { // Avoid showing snackbar on initial value
+                                showSnackbar(SnackbarEvent.Online)
+                            }
+                            _isOnline.value = true
+                            hasInitialized = true
+                        }
+
+                        is Connectivity.Status.Disconnected -> {
+                            _isOnline.value = false
+                            showSnackbar(SnackbarEvent.Offline)
+                            hasInitialized = true
+                        }
                     }
                 }
-            }
         }
     }
 }

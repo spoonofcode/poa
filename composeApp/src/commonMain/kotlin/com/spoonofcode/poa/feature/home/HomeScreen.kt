@@ -35,7 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
 import com.spoonofcode.poa.core.ui.compose.ImageSlider
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -80,20 +79,14 @@ internal class HomeScreen(
         viewModel: HomeViewModel?,
     ) = listOf(
         TopBarAction(
-            Icons.Default.Notifications,
-            "Notifications"
+            icon = Icons.Default.Notifications,
+            description = "Notification",
+            badgeCount = viewModel?.getNumberOfNewNotifications(),
         ) { viewModel?.navigateToNotifications() },
     )
 
-    override fun provideContentPadding() = PaddingValues(
-        start = Paddings.screenPadding,
-        top = Paddings.screenPadding,
-        bottom = Paddings.screenPadding,
-    )
-
-    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit = {
-        viewModel?.initView()
-    }
+    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
+        { viewModel?.initView() }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()

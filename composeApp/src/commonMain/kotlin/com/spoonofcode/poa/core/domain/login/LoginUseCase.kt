@@ -21,5 +21,6 @@ class LoginUseCase(
         sessionManager.saveSessionUserId(userId = loginResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
+        sessionManager.enableAllNotifications()
     }
 }

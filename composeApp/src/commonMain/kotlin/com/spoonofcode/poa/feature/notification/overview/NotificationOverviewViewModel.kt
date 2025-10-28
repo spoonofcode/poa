@@ -19,7 +19,7 @@ internal class NotificationOverviewViewModel(
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
-                        initNotifications = allNotifications,
+                        notifications = allNotifications,
                     )
                 }
             } catch (ce: CancellationException) {

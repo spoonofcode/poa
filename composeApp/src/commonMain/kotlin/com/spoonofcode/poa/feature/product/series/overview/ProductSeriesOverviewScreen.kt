@@ -85,6 +85,7 @@ internal class ProductSeriesOverviewScreen(
                 }
 
                 Buttons.PrimaryButton(
+                    enabled = viewState.checkedProductSeriesIds.isNotEmpty(),
                     modifier = Modifier
                         .align(Alignment.BottomCenter),
                     text = stringResource(resource = Res.string.send_notification),
@@ -115,7 +116,7 @@ internal class ProductSeriesOverviewScreen(
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center
                         ),
-                        modifier = Modifier.size(64.dp)
+                        modifier = Modifier.size(80.dp)
                     )
 
                     Spacers.HorizontalBetweenFields()
