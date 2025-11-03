@@ -4,7 +4,7 @@ import com.spoonofcode.poa.core.model.Partner
 
 object PartnerMockData {
     val PARTNER_1 = Partner(
-        id = 1,
+        id = "550e8400-e29b-41d4-a716-446655440001",
         name = "Beauty Saute",
         email = "beauty.saute@gmail.com",
         description = "Beauty Sautè to więcej niż odzież – to filozofia.",
@@ -16,7 +16,7 @@ object PartnerMockData {
         xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
     )
     val PARTNER_2 = Partner(
-        id = 2,
+        id = "550e8400-e29b-41d4-a716-446655440002",
         name = "Proof of Wear",
         email = "proof.of.wear@gmail.com",
         description = "Proof of Wear – sprawdz to.",

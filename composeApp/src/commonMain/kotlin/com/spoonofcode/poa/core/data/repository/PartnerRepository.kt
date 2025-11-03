@@ -19,7 +19,7 @@ class PartnerRepository : GenericCrudRepository<PartnerRequest, Partner>(
     requestSerializer = PartnerRequest.serializer(),
     responseSerializer = Partner.serializer(),
 ) {
-    suspend fun readPartnerUsers(partnerId: Int): List<User> {
+    suspend fun readPartnerUsers(partnerId: String): List<User> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "partners/$partnerId/users",

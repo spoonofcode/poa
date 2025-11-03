@@ -11,7 +11,7 @@ internal data class PartnerOverviewViewState(
     override val screenState: ScreenState = ScreenState.LOADING,
     val searchText: String = "",
     val partnerCategories: List<PartnerCategory> = emptyList(),
-    val selectedPartnerCategories: Set<Int> = emptySet(),
+    val selectedPartnerCategories: Set<String> = emptySet(),
     val initPartners: List<Partner> = emptyList(),
     val filteredPartners: List<Partner> = emptyList(),
 ) : BaseViewState(screenState)

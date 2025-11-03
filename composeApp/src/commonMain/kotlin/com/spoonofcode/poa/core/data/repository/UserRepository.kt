@@ -21,12 +21,12 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     requestSerializer = UserRequest.serializer(),
     responseSerializer = User.serializer(),
 ) {
-    suspend fun readAllUsersByRole(roleId: Int): List<User> {
+    suspend fun readAllUsersByRole(roleId: String): List<User> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users",
                 method = HttpMethod.Get,
-                queryParams = mapOf("roleId" to roleId.toString())
+                queryParams = mapOf("roleId" to roleId)
             )
 
             val responseBody = responseOrException(response).body<String>()
@@ -34,7 +34,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun readUserProducts(userId: Int): List<Product> {
+    suspend fun readUserProducts(userId: String): List<Product> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/products",
@@ -46,7 +46,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun addProductToUser(productId: Int, userId: Int) {
+    suspend fun addProductToUser(productId: String, userId: String) {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/products",
@@ -60,7 +60,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun getUserPoints(userId: Int): Int {
+    suspend fun getUserPoints(userId: String): Int {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/points",
@@ -70,7 +70,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun readUserProductSeriesIds(userId: Int): List<String> {
+    suspend fun readUserProductSeriesIds(userId: String): List<String> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/product-series-ids",

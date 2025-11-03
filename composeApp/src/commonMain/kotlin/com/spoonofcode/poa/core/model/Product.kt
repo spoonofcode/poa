@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Product(
-    val id: Int,
+    val id: String,
     val name: String,
     val description: String,
     val seriesId: String,
@@ -29,6 +29,6 @@ data class ProductRequest(
     val tagId: String? = null,
     val websiteLink: String? = null,
     val customLink: String? = null,
-    val ownerUserId: Int? = null,
-    val partnerId: Int? = null,
+    val ownerUserId: String? = null,
+    val partnerId: String? = null,
 )

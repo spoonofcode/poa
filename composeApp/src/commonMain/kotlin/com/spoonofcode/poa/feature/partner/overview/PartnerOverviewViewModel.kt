@@ -42,7 +42,7 @@ internal class PartnerOverviewViewModel(
         }
     }
 
-    fun clickCategory(categoryId: Int) {
+    fun clickCategory(categoryId: String) {
         updateState {
             copy(
                 selectedPartnerCategories = if (selectedPartnerCategories.contains(categoryId)) {
@@ -67,7 +67,7 @@ internal class PartnerOverviewViewModel(
         }
     }
 
-    fun selectPartner(partnerId: Int) {
+    fun selectPartner(partnerId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(PartnerDetailsScreen(partnerId = partnerId))
         }

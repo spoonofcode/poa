@@ -16,7 +16,7 @@ data class NotificationRequest(
 
 @Serializable
 data class Notification(
-    val id: Int,
+    val id: String,
     val title: String,
     val text: String,
     val link: String? = null,

@@ -9,7 +9,7 @@ class AddProductToUserUseCase(
 ) {
 
     suspend operator fun invoke(
-        productId: Int,
+        productId: String,
     ) {
         userRepository.addProductToUser(
             productId = productId,

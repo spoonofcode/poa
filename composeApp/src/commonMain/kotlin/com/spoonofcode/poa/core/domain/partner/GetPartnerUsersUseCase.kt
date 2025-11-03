@@ -6,7 +6,7 @@ import com.spoonofcode.poa.core.model.User
 class GetPartnerUsersUseCase(
     private val partnerRepository: PartnerRepository,
 ) {
-    suspend operator fun invoke(partnerId: Int): List<User> =
+    suspend operator fun invoke(partnerId: String): List<User> =
         partnerRepository.readPartnerUsers(partnerId = partnerId)
 }
 

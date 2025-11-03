@@ -24,7 +24,7 @@ internal class NotificationTypeViewModel(
 
     fun navigateToPartnerCustomers() {
         viewModelScope.launch {
-            viewModelNavigator.push(CustomerOverviewScreen(partnerId = 1))
+            viewModelNavigator.push(CustomerOverviewScreen(partnerId = "1"))
         }
     }
 

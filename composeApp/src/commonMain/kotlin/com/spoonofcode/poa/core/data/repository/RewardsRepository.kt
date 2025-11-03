@@ -18,7 +18,7 @@ class RewardsRepository : GenericCrudRepository<Unit, DailyReward>(
     responseSerializer = DailyReward.serializer(),
 ) {
 
-    suspend fun getRewardsStatus(userId: Int): List<DailyReward> {
+    suspend fun getRewardsStatus(userId: String): List<DailyReward> {
 
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
@@ -31,7 +31,7 @@ class RewardsRepository : GenericCrudRepository<Unit, DailyReward>(
         }
     }
 
-    suspend fun claimTodayReward(userId: Int): List<DailyReward> {
+    suspend fun claimTodayReward(userId: String): List<DailyReward> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/rewards/claim",

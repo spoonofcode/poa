@@ -58,8 +58,8 @@ internal class PartnerOverviewScreen(
     private fun ContentView(
         viewState: PartnerOverviewViewState,
         changeSearchText: (String) -> Unit,
-        clickCategory: (Int) -> Unit,
-        selectPartner: (Int) -> Unit,
+        clickCategory: (String) -> Unit,
+        selectPartner: (String) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(

@@ -15,7 +15,7 @@ internal class ProductEditViewModel(
     private val editProductUseCase: EditProductUseCase,
 ) : BaseViewModel<ProductEditViewState>(ProductEditViewState()) {
 
-    fun initView(productId: Int) {
+    fun initView(productId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {

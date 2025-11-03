@@ -11,7 +11,7 @@ internal class PartnerDetailsViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
 ) : BaseViewModel<PartnerDetailsViewState>(PartnerDetailsViewState()) {
 
-    fun initView(partnerId: Int) {
+    fun initView(partnerId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {

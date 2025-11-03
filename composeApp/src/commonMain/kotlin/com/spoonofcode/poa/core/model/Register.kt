@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Register(
-    val userId: Int,
+    val userId: String,
     val jwtAccessToken: String,
     val jwtRefreshToken: String,
 )

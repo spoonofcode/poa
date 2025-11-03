@@ -66,8 +66,8 @@ object Chips {
     @Composable
     fun HorizontalScrollableFilterChipRow(
         categories: List<PartnerCategory>,
-        selectedCategories: Set<Int>,
-        onCategorySelected: (Int) -> Unit
+        selectedCategories: Set<String>,
+        onCategorySelected: (String) -> Unit
     ) {
         LazyRow(
             modifier = Modifier

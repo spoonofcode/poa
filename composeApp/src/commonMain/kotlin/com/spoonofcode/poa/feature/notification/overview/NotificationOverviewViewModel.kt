@@ -30,7 +30,7 @@ internal class NotificationOverviewViewModel(
         }
     }
 
-    fun selectNotification(notificationId: Int) {
+    fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationDetailsScreen(notificationId = notificationId))
         }

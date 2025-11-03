@@ -19,7 +19,7 @@ internal class ProductDetailsViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
 
-    fun initView(productId: Int) {
+    fun initView(productId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {

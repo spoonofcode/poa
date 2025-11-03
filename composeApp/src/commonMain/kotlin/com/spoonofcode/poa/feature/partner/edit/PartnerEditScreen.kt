@@ -35,7 +35,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerEditScreen(
-    private val partnerId: Int,
+    private val partnerId: String,
 ) : BaseScreen<PartnerEditViewModel, PartnerEditViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
@@ -143,7 +143,7 @@ internal class PartnerEditScreen(
     @Preview
     @Composable
     private fun InitializedPartnerEditScreenPreview() {
-        PartnerEditScreen(partnerId = 1).PreviewContent(
+        PartnerEditScreen(partnerId = "1").PreviewContent(
             PartnerEditViewState(partner = PartnerMockData.PARTNER_1)
         )
     }

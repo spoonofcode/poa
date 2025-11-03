@@ -11,7 +11,7 @@ internal class PartnerPanelViewModel() :
 
     fun navigateToPartnerEdit() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen(partnerId = 1))
+            viewModelNavigator.push(PartnerEditScreen(partnerId = "1"))
         }
     }
 

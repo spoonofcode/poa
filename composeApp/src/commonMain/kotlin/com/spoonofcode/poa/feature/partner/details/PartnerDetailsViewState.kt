@@ -9,7 +9,7 @@ import com.spoonofcode.poa.core.ui.ScreenState
 internal data class PartnerDetailsViewState(
     override val screenState: ScreenState = ScreenState.LOADING,
     val partner: Partner = Partner(
-        id = 1,
+        id = "550e8400-e29b-41d4-a716-446655440001",
         name = "Beauty Saute",
         description = "Beauty Sautè to więcej niż odzież – to filozofia.",
         imageLink = "https://beautysaute.pl/environment/cache/images/0_0_storefrontImages_11a16d30-d85a-422f-917d-195c30274147.png",

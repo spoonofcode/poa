@@ -13,12 +13,12 @@ data class PartnerRequest(
     val facebookLink: String? = null,
     val youtubeLink: String? = null,
     val xLink: String? = null,
-    val userId: Int,
+    val userId: String,
 )
 
 @Serializable
 data class Partner(
-    val id: Int,
+    val id: String,
     val name: String,
     val email: String,
     val description: String,

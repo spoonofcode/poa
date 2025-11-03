@@ -27,7 +27,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 internal class PartnerDetailsScreen(
-    private val partnerId: Int,
+    private val partnerId: String,
 ) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
@@ -88,7 +88,7 @@ internal class PartnerDetailsScreen(
 @Preview
 @Composable
 fun PartnerDetailsScreenContentPreview() {
-    PartnerDetailsScreen(partnerId = 1).PreviewContent(
+    PartnerDetailsScreen(partnerId = "1").PreviewContent(
         viewState = PartnerDetailsViewState(),
     )
 }

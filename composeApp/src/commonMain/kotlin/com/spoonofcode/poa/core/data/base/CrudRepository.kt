@@ -12,9 +12,9 @@ import kotlinx.serialization.json.Json
 
 interface CrudRepository<RQ, RS> : BaseRepository<RQ, RS> {
     suspend fun create(request: RQ): RS
-    suspend fun read(id: Int): RS
-    suspend fun update(id: Int, request: RQ): Boolean
-    suspend fun delete(id: Int): Boolean
+    suspend fun read(id: String): RS
+    suspend fun update(id: String, request: RQ): Boolean
+    suspend fun delete(id: String): Boolean
     suspend fun readAll(): List<RS>
 }
 
@@ -44,7 +44,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    override suspend fun read(id: Int): RS {
+    override suspend fun read(id: String): RS {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",
@@ -57,7 +57,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    override suspend fun update(id: Int, request: RQ): Boolean {
+    override suspend fun update(id: String, request: RQ): Boolean {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",
@@ -71,7 +71,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
         }
     }
 
-    override suspend fun delete(id: Int): Boolean {
+    override suspend fun delete(id: String): Boolean {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",

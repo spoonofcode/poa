@@ -40,7 +40,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal data class ProductDetailsScreen(
-    val productId: Int,
+    val productId: String,
     val hasOwnerUser: Boolean = true,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState>() {
 
@@ -168,7 +168,7 @@ internal data class ProductDetailsScreen(
 @Preview
 @Composable
 fun ProductDetailsScreenContentPreview() {
-    ProductDetailsScreen(productId = 1).PreviewContent(
+    ProductDetailsScreen(productId = "1").PreviewContent(
         viewState = ProductDetailsViewState(),
     )
 }

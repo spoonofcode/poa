@@ -47,7 +47,7 @@ internal class ProductOverviewViewModel(
         }
     }
 
-    fun selectProduct(productId: Int) {
+    fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(ProductDetailsScreen(productId = productId))
         }
