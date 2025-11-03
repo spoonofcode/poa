@@ -72,7 +72,7 @@ internal class NotificationOverviewScreen(
     @Composable
     private fun ContentView(
         viewState: NotificationOverviewViewState,
-        selectNotification: (Int) -> Unit,
+        selectNotification: (String) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             NotificationTabs(
@@ -86,7 +86,7 @@ internal class NotificationOverviewScreen(
     @Composable
     fun NotificationTabs(
         notifications: List<Notification>,
-        selectNotification: (Int) -> Unit,
+        selectNotification: (String) -> Unit,
     ) {
         val tabs = listOf(
             TabItem(title = stringResource(Res.string.tab_new)),
@@ -122,7 +122,7 @@ internal class NotificationOverviewScreen(
     data class TabItem(val title: String)
 
     @Composable
-    fun NotificationTab(notifications: List<Notification>, selectNotification: (Int) -> Unit) {
+    fun NotificationTab(notifications: List<Notification>, selectNotification: (String) -> Unit) {
         Spacers.VerticalBetweenFields()
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)

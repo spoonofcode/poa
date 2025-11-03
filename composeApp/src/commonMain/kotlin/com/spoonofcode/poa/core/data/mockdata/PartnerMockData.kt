@@ -4,7 +4,7 @@ import com.spoonofcode.poa.core.model.Partner
 
 object PartnerMockData {
     val PARTNER_1 = Partner(
-        id = 1,
+        id = "550e8400-e29b-41d4-a716-446655440001",
         name = "Beauty Saute",
         email = "beauty.saute@gmail.com",
         description = "Beauty Sautè to więcej niż odzież – to filozofia.",
@@ -14,9 +14,10 @@ object PartnerMockData {
         facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
         youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
         xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+        userId = "550e8400-e29b-41d4-a716-446655440001",
     )
     val PARTNER_2 = Partner(
-        id = 2,
+        id = "550e8400-e29b-41d4-a716-446655440002",
         name = "Proof of Wear",
         email = "proof.of.wear@gmail.com",
         description = "Proof of Wear – sprawdz to.",
@@ -26,5 +27,6 @@ object PartnerMockData {
         facebookLink = "https://www.instagram.com/proof_of_wear/?igsh=MXMwODNiZW1qNTRlMA%3D%3D#",
         youtubeLink = "https://www.instagram.com/proof_of_wear/?igsh=MXMwODNiZW1qNTRlMA%3D%3D#",
         xLink = "https://x.com/ProofOfWearPOW?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+        userId = "550e8400-e29b-41d4-a716-446655440001",
     )
 }

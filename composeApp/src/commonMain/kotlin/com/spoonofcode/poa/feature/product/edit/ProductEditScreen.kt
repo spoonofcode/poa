@@ -24,7 +24,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
-    val productId: Int,
+    val productId: String,
 ) : BaseScreen<ProductEditViewModel, ProductEditViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.edit_product
@@ -100,7 +100,7 @@ internal class ProductEditScreen(
 @Composable
 fun ProductEditScreenContentPreview() {
     ProductEditScreen(
-        productId = 1,
+        productId = "1",
     ).PreviewContent(
         viewState = ProductEditViewState(),
     )

@@ -41,7 +41,7 @@ private fun getStartScreens(sessionInitialized: Boolean, notificationId: String?
             listOf(
                 MainHostScreen(),
                 NotificationOverviewScreen(),
-                NotificationDetailsScreen(notificationId = notificationId.toInt())
+                NotificationDetailsScreen(notificationId = notificationId)
             )
         }
     } else {

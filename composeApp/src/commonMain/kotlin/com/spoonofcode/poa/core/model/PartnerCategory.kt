@@ -9,6 +9,6 @@ data class PartnerCategoryRequest(
 
 @Serializable
 data class PartnerCategory(
-    val id: Int,
+    val id: String,
     val name: String,
 )

@@ -7,7 +7,6 @@ class GetPartnerByIdUseCase(
     private val partnerRepository: PartnerRepository,
 ) {
     suspend operator fun invoke(
-        partnerId: Int
-    ): Partner =
-        partnerRepository.read(id = partnerId)
+        partnerId: String
+    ): Partner = partnerRepository.read(id = partnerId)
 }

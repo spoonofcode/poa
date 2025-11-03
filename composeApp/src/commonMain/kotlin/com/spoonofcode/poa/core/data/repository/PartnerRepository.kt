@@ -3,7 +3,6 @@ package com.spoonofcode.poa.core.data.repository
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.PartnerRequest
-import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
@@ -19,7 +18,7 @@ class PartnerRepository : GenericCrudRepository<PartnerRequest, Partner>(
     requestSerializer = PartnerRequest.serializer(),
     responseSerializer = Partner.serializer(),
 ) {
-    suspend fun readPartnerUsers(partnerId: Int): List<User> {
+    suspend fun readPartnerUsers(partnerId: String): List<User> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "partners/$partnerId/users",

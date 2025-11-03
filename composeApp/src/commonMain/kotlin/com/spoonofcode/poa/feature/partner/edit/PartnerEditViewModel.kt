@@ -14,7 +14,7 @@ internal class PartnerEditViewModel(
     private val updatePartnerUseCase: UpdatePartnerUseCase
 ) : BaseViewModel<PartnerEditViewState>(PartnerEditViewState()) {
 
-    fun initView(partnerId: Int) {
+    fun initView(partnerId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {

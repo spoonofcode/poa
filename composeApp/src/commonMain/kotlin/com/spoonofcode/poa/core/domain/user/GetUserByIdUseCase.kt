@@ -7,6 +7,6 @@ class GetUserByIdUseCase(
     private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(
-        userId: Int
+        userId: String
     ): User = userRepository.read(id = userId)
 }

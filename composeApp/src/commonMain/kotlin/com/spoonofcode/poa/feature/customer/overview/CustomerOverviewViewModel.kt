@@ -13,7 +13,7 @@ internal class CustomerOverviewViewModel(
     private val getPartnerUsersUseCase: GetPartnerUsersUseCase,
 ) : BaseViewModel<CustomerOverviewViewState>(CustomerOverviewViewState()) {
 
-    fun initView(partnerId: Int) {
+    fun initView(partnerId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -32,7 +32,7 @@ internal class CustomerOverviewViewModel(
         }
     }
 
-    fun checkedCustomer(userId: Int) {
+    fun checkedCustomer(userId: String) {
         val selected = currentState().checkedUserIds.toMutableSet()
         val wasAdded = selected.contains(userId)
 

@@ -32,12 +32,12 @@ class SessionManager(private val settings: Settings) {
 
     fun getSessionRefreshToken(): String? = settings.getStringOrNull(SESSION_REFRESH_TOKEN)
 
-    fun saveSessionUserId(userId: Int) {
-        settings.putInt(SESSION_USER_ID, userId)
+    fun saveSessionUserId(userId: String) {
+        settings.putString(SESSION_USER_ID, userId)
     }
 
-    fun getSessionUserId(): Int = requireNotNull(
-        settings.getIntOrNull(SESSION_USER_ID)
+    fun getSessionUserId(): String = requireNotNull(
+        settings.getStringOrNull(SESSION_USER_ID)
     ) { "User ID cannot be null" }
 
     fun getSettingsNotificationFromAllPartners(): Boolean = requireNotNull(

@@ -6,7 +6,7 @@ import com.spoonofcode.poa.core.model.ProductRequest
 class EditProductUseCase(
     private val productRepository: ProductRepository,
 ) {
-    suspend operator fun invoke(productId: Int, productRequest: ProductRequest): Boolean =
+    suspend operator fun invoke(productId: String, productRequest: ProductRequest): Boolean =
         productRepository.update(
             id = productId,
             request = productRequest,

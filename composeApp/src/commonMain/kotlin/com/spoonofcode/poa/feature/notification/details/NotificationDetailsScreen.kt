@@ -34,7 +34,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationDetailsScreen(
-    private val notificationId: Int,
+    private val notificationId: String,
 ) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
@@ -136,7 +136,7 @@ internal class NotificationDetailsScreen(
 @Preview
 @Composable
 private fun NotificationDetailsScreenContentPreview() {
-    NotificationDetailsScreen(notificationId = 1).PreviewContent(
+    NotificationDetailsScreen(notificationId = "1").PreviewContent(
         NotificationDetailsViewState()
     )
 }

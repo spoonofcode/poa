@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
+import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
@@ -21,20 +22,19 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     requestSerializer = UserRequest.serializer(),
     responseSerializer = User.serializer(),
 ) {
-    suspend fun readAllUsersByRole(roleId: Int): List<User> {
+    suspend fun readUserPartners(userId: String): List<Partner> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
-                urlPath = "users",
+                urlPath = "users/$userId/partners",
                 method = HttpMethod.Get,
-                queryParams = mapOf("roleId" to roleId.toString())
             )
 
             val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(User.serializer()), responseBody)
+            Json.decodeFromString(ListSerializer(Partner.serializer()), responseBody)
         }
     }
 
-    suspend fun readUserProducts(userId: Int): List<Product> {
+    suspend fun readUserProducts(userId: String): List<Product> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/products",
@@ -46,7 +46,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun addProductToUser(productId: Int, userId: Int) {
+    suspend fun addProductToUser(productId: String, userId: String) {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/products",
@@ -60,7 +60,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun getUserPoints(userId: Int): Int {
+    suspend fun getUserPoints(userId: String): Int {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/points",
@@ -70,7 +70,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun readUserProductSeriesIds(userId: Int): List<String> {
+    suspend fun readUserProductSeriesIds(userId: String): List<String> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/product-series-ids",

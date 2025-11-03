@@ -33,7 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class CustomerOverviewScreen(
-    val partnerId: Int,
+    val partnerId: String,
     override val verticalScrollEnable: Boolean = false,
 ) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState>() {
 
@@ -58,7 +58,7 @@ internal class CustomerOverviewScreen(
     @Composable
     internal fun ContentView(
         viewState: CustomerOverviewViewState,
-        checkedCustomer: (Int) -> Unit,
+        checkedCustomer: (String) -> Unit,
         navigateToNotification: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
@@ -127,7 +127,7 @@ internal class CustomerOverviewScreen(
 @Preview
 @Composable
 fun CustomerOverviewScreenContentPreview() {
-    CustomerOverviewScreen(partnerId = 1).PreviewContent(
+    CustomerOverviewScreen(partnerId = "1").PreviewContent(
         viewState = CustomerOverviewViewState(
         ),
     )

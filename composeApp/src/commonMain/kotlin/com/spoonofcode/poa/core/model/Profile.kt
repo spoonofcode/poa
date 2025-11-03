@@ -10,5 +10,5 @@ data class Profile(
 
 @Serializable
 data class ProfileRequest(
-    val userId: Int,
+    val userId: String,
 )

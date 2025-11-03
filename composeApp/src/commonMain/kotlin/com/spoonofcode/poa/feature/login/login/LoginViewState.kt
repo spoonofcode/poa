@@ -7,6 +7,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 @Immutable
 internal data class LoginViewState(
     override val screenState: ScreenState = ScreenState.CONTENT,
-    val email: String = "michal.staroszczyk@gmail.com",
-    val password: String = "michal123",
+    val email: String = "daria.waszkiewicz@gmail.com",
+    val password: String = "daria123",
 ) : BaseViewState(screenState)

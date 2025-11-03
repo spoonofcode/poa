@@ -9,5 +9,5 @@ import com.spoonofcode.poa.core.ui.ScreenState
 internal data class CustomerOverviewViewState(
     override val screenState: ScreenState = ScreenState.LOADING,
     val partnerUsers: List<User> = emptyList(),
-    val checkedUserIds: Set<Int> = emptySet(),
+    val checkedUserIds: Set<String> = emptySet(),
 ) : BaseViewState(screenState)
