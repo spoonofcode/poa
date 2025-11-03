@@ -19,5 +19,6 @@ internal data class PartnerDetailsViewState(
         facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
         youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
         xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+        userId = "550e8400-e29b-41d4-a716-446655440001",
     ),
 ) : BaseViewState(screenState)

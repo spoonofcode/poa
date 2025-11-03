@@ -3,7 +3,6 @@ package com.spoonofcode.poa.core.data.repository
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.PartnerRequest
-import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse

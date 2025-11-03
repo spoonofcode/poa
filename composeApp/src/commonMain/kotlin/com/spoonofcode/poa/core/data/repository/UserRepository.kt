@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
+import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
@@ -21,16 +22,15 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     requestSerializer = UserRequest.serializer(),
     responseSerializer = User.serializer(),
 ) {
-    suspend fun readAllUsersByRole(roleId: String): List<User> {
+    suspend fun readUserPartners(userId: String): List<Partner> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
-                urlPath = "users",
+                urlPath = "users/$userId/partners",
                 method = HttpMethod.Get,
-                queryParams = mapOf("roleId" to roleId)
             )
 
             val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(User.serializer()), responseBody)
+            Json.decodeFromString(ListSerializer(Partner.serializer()), responseBody)
         }
     }
 

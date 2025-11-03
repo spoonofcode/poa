@@ -28,4 +28,5 @@ data class Partner(
     val facebookLink: String? = null,
     val youtubeLink: String? = null,
     val xLink: String? = null,
+    val userId: String,
 )
