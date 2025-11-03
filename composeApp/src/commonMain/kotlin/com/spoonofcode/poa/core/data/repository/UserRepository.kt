@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
+import com.spoonofcode.poa.core.model.DailyReward
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.User
@@ -78,6 +79,30 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
             )
 
             responseOrException(response).body<List<String>>()
+        }
+    }
+
+    suspend fun getRewardsStatus(userId: String): List<DailyReward> {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/rewards",
+                method = HttpMethod.Get
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(ListSerializer(DailyReward.serializer()), responseBody)
+        }
+    }
+
+    suspend fun claimTodayReward(userId: String): List<DailyReward> {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/rewards/claim",
+                method = HttpMethod.Post
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(ListSerializer(DailyReward.serializer()), responseBody)
         }
     }
 }
