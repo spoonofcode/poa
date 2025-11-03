@@ -2,7 +2,6 @@
 
 package com.spoonofcode.poa.feature.home
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -20,15 +19,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -181,25 +179,17 @@ internal fun DailyCheckInSection(
 
 @Composable
 private fun RewardItem(reward: DailyReward) {
-    val isAvailable = reward.status == RewardStatus.AVAILABLE_TO_CLAIM
     val isClaimed = reward.status == RewardStatus.CLAIMED
+    val cointerColor = if (reward.status == RewardStatus.AVAILABLE_TO_CLAIM) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified
 
-    val backgroundColor = when (reward.status) {
-        RewardStatus.CLAIMED -> Color(0xFF3C3C3C)
-        RewardStatus.AVAILABLE_TO_CLAIM -> MaterialTheme.colorScheme.primary
-        RewardStatus.LOCKED -> Color(0xFF2E2E2E)
-    }
-    val border = if (isAvailable) BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimary) else null
-    val contentAlpha = if (reward.status == RewardStatus.LOCKED) 0.5f else 1f
-
-    Card(
+    ElevatedCard(
         modifier = Modifier.size(width = 80.dp, height = 100.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = backgroundColor),
-        border = border
+        colors = CardDefaults.cardColors(containerColor = cointerColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(8.dp).alpha(contentAlpha),
+            modifier = Modifier.fillMaxSize().padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {

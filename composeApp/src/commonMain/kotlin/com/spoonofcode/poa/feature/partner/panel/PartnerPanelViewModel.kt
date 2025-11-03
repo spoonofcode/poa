@@ -23,4 +23,9 @@ internal class PartnerPanelViewModel(
             viewModelNavigator.push(NotificationTypeScreen())
         }
     }
+
+    fun navigateToReports() {
+        // TODO Add reports screen
+    }
+
 }

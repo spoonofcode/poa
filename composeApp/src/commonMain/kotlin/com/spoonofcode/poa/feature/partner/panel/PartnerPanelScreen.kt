@@ -6,24 +6,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Buttons.IconTextButton
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.partner_info
 import com.spoonofcode.poa.resources.partner_panel
+import com.spoonofcode.poa.resources.reports
 import com.spoonofcode.poa.resources.send_notification
-import com.spoonofcode.poa.resources.to_selected_customers
-import com.spoonofcode.poa.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -43,6 +40,7 @@ internal class PartnerPanelScreen() :
         viewState = viewState,
         navigateToMyPartners = { viewModel?.navigateToPartnerEdit() },
         navigateToNotificationType = { viewModel?.navigateToNotificationType() },
+        navigateToReports = { viewModel?.navigateToReports() },
     )
 
     @Composable
@@ -50,6 +48,7 @@ internal class PartnerPanelScreen() :
         viewState: PartnerPanelViewState,
         navigateToMyPartners: () -> Unit,
         navigateToNotificationType: () -> Unit,
+        navigateToReports: () -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -68,6 +67,29 @@ internal class PartnerPanelScreen() :
                     text = stringResource(resource = Res.string.send_notification),
                     onClick = navigateToNotificationType,
                     modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacers.VerticalBetweenFields()
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                IconTextButton(
+                    enabled = false,
+                    icon = Icons.Default.BarChart,
+                    text = stringResource(resource = Res.string.reports),
+                    onClick = navigateToReports,
+                    modifier = Modifier.weight(0.5f)
+                )
+
+                IconTextButton(
+                    enabled = false,
+                    icon = Icons.Default.BarChart,
+                    text = stringResource(resource = Res.string.reports),
+                    onClick = { },
+                    modifier = Modifier.weight(0.5f).alpha(0f) // alpha=0f to hide
                 )
             }
         }
