@@ -13,37 +13,22 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class DemoScreen(
     override val backNavigationEnable: Boolean = false,
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<DemoViewModel, DemoViewState>() {
+) : BaseScreen<DemoViewModel, DemoViewState, DemoViewAction>() {
 
-    override fun provideInitAction(viewModel: DemoViewModel?): () -> Unit =
-        { viewModel?.onAction(DemoViewAction.InitView) }
+    override fun provideInitAction(onAction: (DemoViewAction) -> Unit): () -> Unit =
+        { onAction(DemoViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<DemoViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: DemoViewModel?,
         viewState: DemoViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-    )
-
-    @Composable
-    internal fun ContentView(
-        viewState: DemoViewState,
+        onAction: (DemoViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.BL(text = stringResource(resource = Res.string.demo))
         }
-    }
-
-    @Preview
-    @Composable
-    private fun DemoScreenPreview() {
-        ContentView(
-            viewState = DemoViewState(),
-        )
     }
 }
 
@@ -52,7 +37,7 @@ internal class DemoScreen(
 @Composable
 private fun DemoScreenContentPreview() {
     DemoScreen().PreviewContent(
-        DemoViewState()
+        viewState = DemoViewState(),
     )
 }
 // endregion

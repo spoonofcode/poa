@@ -12,9 +12,17 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class ProductOverviewViewModel(
     private val getUserProductsUseCase: GetUserProductsUseCase,
     private val getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase,
-) : BaseViewModel<ProductOverviewViewState>(ProductOverviewViewState()) {
+) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction>(ProductOverviewViewState()) {
 
-    fun initView() {
+    override fun onAction(action: ProductOverviewViewAction) {
+        when (action) {
+            is ProductOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
+            ProductOverviewViewAction.InitView -> initView()
+            is ProductOverviewViewAction.SelectProduct -> selectProduct(action.productId)
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -34,7 +42,7 @@ internal class ProductOverviewViewModel(
         }
     }
 
-    fun changeSearchText(searchText: String) {
+    private fun changeSearchText(searchText: String) {
         viewModelScope.launch {
             val products = currentState().initProducts
             val filteredProducts = getFilteredProductsByTextUseCase(
@@ -47,7 +55,7 @@ internal class ProductOverviewViewModel(
         }
     }
 
-    fun selectProduct(productId: String) {
+    private fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(ProductDetailsScreen(productId = productId))
         }

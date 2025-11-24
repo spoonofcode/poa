@@ -27,9 +27,9 @@ internal class HomeViewModel(
     private val getDailyRewardsUseCase: GetDailyRewardsUseCase,
     private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
     private val getUserPointsUseCase: GetUserPointsUseCase,
-) : BaseViewModel<HomeViewState>(HomeViewState()) {
+) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
-    fun onAction(action: HomeViewAction) {
+    override fun onAction(action: HomeViewAction) {
         when (action) {
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
             HomeViewAction.GetNumberOfNewNotifications -> getNumberOfNewNotifications()

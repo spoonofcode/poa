@@ -1,6 +1,8 @@
 package com.spoonofcode.poa.feature.partner.panel
 
-sealed interface PartnerPanelViewAction {
+import com.spoonofcode.poa.core.ui.BaseViewAction
+
+sealed interface PartnerPanelViewAction: BaseViewAction {
     data object NavigateToNotificationType : PartnerPanelViewAction
     data object NavigateToPartnerEdit : PartnerPanelViewAction
 }

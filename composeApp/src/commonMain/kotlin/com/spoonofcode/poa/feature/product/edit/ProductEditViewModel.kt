@@ -13,9 +13,18 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class ProductEditViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val editProductUseCase: EditProductUseCase,
-) : BaseViewModel<ProductEditViewState>(ProductEditViewState()) {
+) : BaseViewModel<ProductEditViewState, ProductEditViewAction>(ProductEditViewState()) {
 
-    fun initView(productId: String) {
+    override fun onAction(action: ProductEditViewAction) {
+        when (action) {
+            is ProductEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
+            ProductEditViewAction.EditProduct -> editProduct()
+            is ProductEditViewAction.InitView -> initView(action.productId)
+            ProductEditViewAction.SaveChanges -> saveChanges()
+        }
+    }
+
+    private fun initView(productId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -34,7 +43,7 @@ internal class ProductEditViewModel(
         }
     }
 
-    fun editProduct() {
+    private fun editProduct() {
         viewModelScope.launch {
             try {
                 val product = requireNotNull(currentState().product)
@@ -60,12 +69,12 @@ internal class ProductEditViewModel(
         }
     }
 
-    fun changeCustomLink(link: String) {
+    private fun changeCustomLink(link: String) {
         val currentProduct = currentState().product
         updateState { copy(product = currentProduct?.copy(customLink = link)) }
     }
 
-    fun saveChanges() {
+    private fun saveChanges() {
         viewModelScope.launch {
             try {
                 val product = requireNotNull(currentState().product)

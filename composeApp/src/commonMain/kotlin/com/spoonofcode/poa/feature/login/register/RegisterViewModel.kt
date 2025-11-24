@@ -11,9 +11,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
-) : BaseViewModel<RegisterViewState>(RegisterViewState()) {
+) : BaseViewModel<RegisterViewState, RegisterViewAction>(RegisterViewState()) {
 
-    fun onAction(action: RegisterViewAction) {
+    override fun onAction(action: RegisterViewAction) {
         when (action) {
             is RegisterViewAction.ChangeEmail -> changeEmail(action.email)
             is RegisterViewAction.ChangeFirstName -> changeFirstName(action.firstName)

@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 internal class ForgotPasswordViewModel(
     private val loginGoogleRepository: LoginGoogleRepository,
     private val sessionManager: SessionManager,
-) : BaseViewModel<ForgotPasswordViewState>(ForgotPasswordViewState()) {
+) : BaseViewModel<ForgotPasswordViewState, ForgotPasswordViewAction>(ForgotPasswordViewState()) {
 
-    fun onAction(action: ForgotPasswordViewAction) {
+    override fun onAction(action: ForgotPasswordViewAction) {
         when (action) {
             is ForgotPasswordViewAction.ChangeEmail -> changeEmail(email = action.email)
             ForgotPasswordViewAction.ResetPassword -> resetPassword()

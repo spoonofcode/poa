@@ -71,276 +71,268 @@ import kotlin.time.ExperimentalTime
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<HomeViewModel, HomeViewState>() {
+) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.home
 
     override fun provideTopBarActions(
-        viewModel: HomeViewModel?,
+        onAction: (HomeViewAction) -> Unit
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
             // TODO Fix badgeCount
             badgeCount = 5,
-        ) { viewModel?.onAction(HomeViewAction.NavigateToNotifications) },
+        ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 
-    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
-        { viewModel?.onAction(HomeViewAction.InitView) }
+    override fun provideInitAction(onAction: (HomeViewAction) -> Unit): () -> Unit =
+        { onAction(HomeViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: HomeViewModel?,
-        viewState: HomeViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-}
-
-@Composable
-internal fun ContentView(
-    viewState: HomeViewState,
-    onAction: (HomeViewAction) -> Unit,
-): @Composable (ColumnScope.() -> Unit) {
-    return {
-        ImageSlider(
-            label = stringResource(Res.string.new_partners),
-            imageLinks = viewState.partnerImageLinks,
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        DailyCheckInSection(
-            rewards = viewState.rewards,
-            totalPoints = viewState.totalPoints,
-            nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
-            onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
-        )
-    }
-}
-
-@Composable
-internal fun DailyCheckInSection(
-    rewards: List<DailyReward>,
-    totalPoints: Int,
-    nextCheckInTimeMillis: Long?,
-    onCheckInClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val streak = rewards.count { it.status == RewardStatus.CLAIMED }
-    val isActionAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
-
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(Res.string.daily_check_in),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    stringResource(Res.string.your_streak),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "$streak ${stringResource(Res.string.streak_days_count)}",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    stringResource(Res.string.total_points),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "$totalPoints ${stringResource(Res.string.points_short)}",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(horizontal = 8.dp)
-        ) {
-            items(rewards) { reward ->
-                RewardItem(reward = reward)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (nextCheckInTimeMillis != null) {
-            Text(
-                stringResource(Res.string.next_check_in),
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
+        viewState: HomeViewState,
+        onAction: (HomeViewAction) -> Unit,
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            ImageSlider(
+                label = stringResource(Res.string.new_partners),
+                imageLinks = viewState.partnerImageLinks,
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = onCheckInClicked,
-            enabled = isActionAvailable,
-            modifier = Modifier.fillMaxWidth(0.8f)
-        ) {
-            Text(stringResource(Res.string.collect_reward))
-        }
-    }
-}
-
-@Composable
-internal fun CountdownTimer(targetTimeMillis: Long) {
-    var remainingTime by remember { mutableStateOf(0L) }
-
-    LaunchedEffect(targetTimeMillis) {
-        while (true) {
-            val currentTime = Clock.System.now().toEpochMilliseconds()
-            val newRemainingTime = (targetTimeMillis - currentTime).coerceAtLeast(0)
-
-            remainingTime = newRemainingTime
-
-            if (newRemainingTime <= 0) {
-                break
-            }
-
-            delay(1000L)
+            Spacer(modifier = Modifier.height(16.dp))
+            DailyCheckInSection(
+                rewards = viewState.rewards,
+                totalPoints = viewState.totalPoints,
+                nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
+                onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
+            )
         }
     }
 
-    val totalSeconds = remainingTime / 1000
-    val hours = totalSeconds / 3600
-    val minutes = (totalSeconds % 3600) / 60
-    val seconds = totalSeconds % 60
-
-    if (remainingTime > 0) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            CountdownUnit(value = hours, label = stringResource(Res.string.hours))
-            CountdownUnit(value = minutes, label = stringResource(Res.string.minutes))
-            CountdownUnit(value = seconds, label = stringResource(Res.string.seconds))
-        }
-    } else {
-        Text(
-            text = stringResource(Res.string.check_in_again),
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-
-@Composable
-private fun RewardItem(reward: DailyReward) {
-    val isAvailable = reward.status == RewardStatus.AVAILABLE_TO_CLAIM
-    val isClaimed = reward.status == RewardStatus.CLAIMED
-
-    val backgroundColor = when (reward.status) {
-        RewardStatus.CLAIMED -> Color(0xFF3C3C3C)
-        RewardStatus.AVAILABLE_TO_CLAIM -> MaterialTheme.colorScheme.primary
-        RewardStatus.LOCKED -> Color(0xFF2E2E2E)
-    }
-    val border = if (isAvailable) BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimary) else null
-    val contentAlpha = if (reward.status == RewardStatus.LOCKED) 0.5f else 1f
-
-    Card(
-        modifier = Modifier.size(width = 80.dp, height = 100.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = backgroundColor),
-        border = border
+    @Composable
+    internal fun DailyCheckInSection(
+        rewards: List<DailyReward>,
+        totalPoints: Int,
+        nextCheckInTimeMillis: Long?,
+        onCheckInClicked: () -> Unit,
+        modifier: Modifier = Modifier,
     ) {
+        val streak = rewards.count { it.status == RewardStatus.CLAIMED }
+        val isActionAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
+
         Column(
-            modifier = Modifier.fillMaxSize().padding(8.dp).alpha(contentAlpha),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround
+            modifier = modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(Res.string.day_number, reward.day),
-                fontSize = 12.sp
+                text = stringResource(Res.string.daily_check_in),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
-            val icon = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard
-            Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(28.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        stringResource(Res.string.your_streak),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Color.Gray
+                    )
+                    Text(
+                        text = "$streak ${stringResource(Res.string.streak_days_count)}",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        stringResource(Res.string.total_points),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Color.Gray
+                    )
+                    Text(
+                        text = "$totalPoints ${stringResource(Res.string.points_short)}",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = 8.dp)
+            ) {
+                items(rewards) { reward ->
+                    RewardItem(reward = reward)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (nextCheckInTimeMillis != null) {
+                Text(
+                    stringResource(Res.string.next_check_in),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.Gray
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onCheckInClicked,
+                enabled = isActionAvailable,
+                modifier = Modifier.fillMaxWidth(0.8f)
+            ) {
+                Text(stringResource(Res.string.collect_reward))
+            }
+        }
+    }
+
+    @Composable
+    internal fun CountdownTimer(targetTimeMillis: Long) {
+        var remainingTime by remember { mutableStateOf(0L) }
+
+        LaunchedEffect(targetTimeMillis) {
+            while (true) {
+                val currentTime = Clock.System.now().toEpochMilliseconds()
+                val newRemainingTime = (targetTimeMillis - currentTime).coerceAtLeast(0)
+
+                remainingTime = newRemainingTime
+
+                if (newRemainingTime <= 0) {
+                    break
+                }
+
+                delay(1000L)
+            }
+        }
+
+        val totalSeconds = remainingTime / 1000
+        val hours = totalSeconds / 3600
+        val minutes = (totalSeconds % 3600) / 60
+        val seconds = totalSeconds % 60
+
+        if (remainingTime > 0) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                CountdownUnit(value = hours, label = stringResource(Res.string.hours))
+                CountdownUnit(value = minutes, label = stringResource(Res.string.minutes))
+                CountdownUnit(value = seconds, label = stringResource(Res.string.seconds))
+            }
+        } else {
             Text(
-                text = "${reward.points} ${stringResource(Res.string.points_short)}",
-                fontSize = 14.sp,
+                text = stringResource(Res.string.check_in_again),
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
         }
     }
-}
 
-@Composable
-private fun CountdownUnit(value: Long, label: String) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .background(Color(0xFF2E2E2E), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-    ) {
-        Text(
-            text = value.toString().padStart(2, '0'),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        Text(text = label, fontSize = 10.sp, color = Color.Gray)
-    }
-}
 
-// region previews
-@Preview
-@Composable
-private fun HomeScreenContentPreview() {
-    val rewards = (1..5).map { day ->
-        DailyReward(
-            day = day,
-            points = 10 + (day * 5),
-            status = if (day < 5) RewardStatus.CLAIMED else RewardStatus.AVAILABLE_TO_CLAIM
-        )
-    }
-    HomeScreen().PreviewContent(
-        HomeViewState(rewards = rewards)
-    )
-}
+    @Composable
+    private fun RewardItem(reward: DailyReward) {
+        val isAvailable = reward.status == RewardStatus.AVAILABLE_TO_CLAIM
+        val isClaimed = reward.status == RewardStatus.CLAIMED
 
-@Preview
-@Composable
-private fun HomeScreenContentCheckedInPreview() {
-    val rewards = (1..6).map { day ->
-        DailyReward(
-            day = day,
-            points = 10 + (day * 5),
-            status = RewardStatus.CLAIMED
+        val backgroundColor = when (reward.status) {
+            RewardStatus.CLAIMED -> Color(0xFF3C3C3C)
+            RewardStatus.AVAILABLE_TO_CLAIM -> MaterialTheme.colorScheme.primary
+            RewardStatus.LOCKED -> Color(0xFF2E2E2E)
+        }
+        val border =
+            if (isAvailable) BorderStroke(2.dp, MaterialTheme.colorScheme.onPrimary) else null
+        val contentAlpha = if (reward.status == RewardStatus.LOCKED) 0.5f else 1f
+
+        Card(
+            modifier = Modifier.size(width = 80.dp, height = 100.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = backgroundColor),
+            border = border
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(8.dp).alpha(contentAlpha),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceAround
+            ) {
+                Text(
+                    text = stringResource(Res.string.day_number, reward.day),
+                    fontSize = 12.sp
+                )
+
+                val icon = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard
+                Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(28.dp))
+                Text(
+                    text = "${reward.points} ${stringResource(Res.string.points_short)}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun CountdownUnit(value: Long, label: String) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .background(Color(0xFF2E2E2E), RoundedCornerShape(8.dp))
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+        ) {
+            Text(
+                text = value.toString().padStart(2, '0'),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Text(text = label, fontSize = 10.sp, color = Color.Gray)
+        }
+    }
+
+    // region previews
+    @Preview
+    @Composable
+    private fun HomeScreenContentPreview() {
+        val rewards = (1..5).map { day ->
+            DailyReward(
+                day = day,
+                points = 10 + (day * 5),
+                status = if (day < 5) RewardStatus.CLAIMED else RewardStatus.AVAILABLE_TO_CLAIM
+            )
+        }
+        HomeScreen().PreviewContent(
+            HomeViewState(rewards = rewards)
         )
     }
-    HomeScreen().PreviewContent(
-        HomeViewState(
-            rewards = rewards,
-            nextCheckInTimeMillis = Clock.System.now()
-                .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
+
+    @Preview
+    @Composable
+    private fun HomeScreenContentCheckedInPreview() {
+        val rewards = (1..6).map { day ->
+            DailyReward(
+                day = day,
+                points = 10 + (day * 5),
+                status = RewardStatus.CLAIMED
+            )
+        }
+        HomeScreen().PreviewContent(
+            HomeViewState(
+                rewards = rewards,
+                nextCheckInTimeMillis = Clock.System.now()
+                    .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
+            )
         )
-    )
+    }
 }
 // endregion

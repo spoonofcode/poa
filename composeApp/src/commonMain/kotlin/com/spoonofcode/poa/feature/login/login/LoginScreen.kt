@@ -46,22 +46,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<LoginViewModel, LoginViewState>() {
+) : BaseScreen<LoginViewModel, LoginViewState, LoginViewAction>() {
 
     @Composable
     override fun provideViewModel() = koinViewModel<LoginViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: LoginViewModel?,
-        viewState: LoginViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: LoginViewState,
         onAction: (LoginViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {

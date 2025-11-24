@@ -54,27 +54,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState>() {
+) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState, ProfileDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.profile
 
-    override fun provideInitAction(viewModel: ProfileDetailsViewModel?): () -> Unit =
-        { viewModel?.onAction(ProfileDetailsViewAction.InitView) }
+    override fun provideInitAction(onAction: (ProfileDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(ProfileDetailsViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProfileDetailsViewModel?,
-        viewState: ProfileDetailsViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: ProfileDetailsViewState,
         onAction: (ProfileDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {

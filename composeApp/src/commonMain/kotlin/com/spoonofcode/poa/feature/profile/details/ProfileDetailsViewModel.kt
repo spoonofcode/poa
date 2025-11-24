@@ -17,9 +17,9 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class ProfileDetailsViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<ProfileDetailsViewState>(ProfileDetailsViewState()) {
+) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction>(ProfileDetailsViewState()) {
 
-    fun onAction(action: ProfileDetailsViewAction) {
+    override fun onAction(action: ProfileDetailsViewAction) {
         when (action) {
             ProfileDetailsViewAction.InitView -> initView()
             ProfileDetailsViewAction.Logout -> logout()

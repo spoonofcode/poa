@@ -43,27 +43,18 @@ internal class NotificationEditScreen(
     val onlyToSelectedUsers: Boolean = false,
     val topics: List<String> = emptyList(),
     val itemIds: List<String> = emptyList(),
-) : BaseScreen<NotificationEditViewModel, NotificationEditViewState>() {
+) : BaseScreen<NotificationEditViewModel, NotificationEditViewState, NotificationEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
-    override fun provideInitAction(viewModel: NotificationEditViewModel?): () -> Unit =
-        { viewModel?.onAction(NotificationEditViewAction.InitView(itemIds = itemIds)) }
+    override fun provideInitAction(onAction: (NotificationEditViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationEditViewAction.InitView(itemIds = itemIds)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationEditViewModel?,
-        viewState: NotificationEditViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: NotificationEditViewState,
         onAction: (NotificationEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -83,14 +74,14 @@ internal class NotificationEditScreen(
 
             TextFields.Outlined(
                 value = viewState.title,
-                onValueChange = { onAction.invoke(NotificationEditViewAction.ChangeTitle(it)) },
+                onValueChange = { onAction(NotificationEditViewAction.ChangeTitle(it)) },
                 label = stringResource(resource = Res.string.title),
             )
             Spacers.VerticalBetweenFields()
 
             TextFields.Outlined(
                 value = viewState.text,
-                onValueChange = { onAction.invoke(NotificationEditViewAction.ChangeText(it)) },
+                onValueChange = { onAction(NotificationEditViewAction.ChangeText(it)) },
                 label = stringResource(resource = Res.string.text),
                 minLines = 8,
             )
@@ -99,7 +90,7 @@ internal class NotificationEditScreen(
                 label = stringResource(resource = Res.string.expiration_date),
                 value = viewState.expirationDateTime,
                 onValueChange = {
-                    onAction.invoke(
+                    onAction(
                         NotificationEditViewAction.ChangeExpirationDateTime(
                             it
                         )
@@ -109,7 +100,7 @@ internal class NotificationEditScreen(
 
             TextFields.Outlined(
                 value = viewState.link,
-                onValueChange = { onAction.invoke(NotificationEditViewAction.ChangeLink(it)) },
+                onValueChange = { onAction(NotificationEditViewAction.ChangeLink(it)) },
                 label = stringResource(resource = Res.string.link),
             )
 
@@ -117,7 +108,7 @@ internal class NotificationEditScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.send_notification),
-                onClick = { onAction.invoke(NotificationEditViewAction.SendNotification) }
+                onClick = { onAction(NotificationEditViewAction.SendNotification) }
             )
         }
     }

@@ -15,9 +15,9 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase,
-) : BaseViewModel<LoginViewState>(LoginViewState()) {
+) : BaseViewModel<LoginViewState, LoginViewAction>(LoginViewState()) {
 
-    fun onAction(action: LoginViewAction) {
+    override fun onAction(action: LoginViewAction) {
         when (action) {
             is LoginViewAction.ChangeEmail -> changeEmail(action.email)
             is LoginViewAction.ChangePassword -> changePassword(action.password)

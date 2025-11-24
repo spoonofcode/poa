@@ -1,8 +1,9 @@
 package com.spoonofcode.poa.feature.notification.edit
 
+import com.spoonofcode.poa.core.ui.BaseViewAction
 import kotlinx.datetime.LocalDateTime
 
-sealed interface NotificationEditViewAction {
+sealed interface NotificationEditViewAction: BaseViewAction {
     data class ChangeExpirationDateTime(val startDateTime: LocalDateTime) : NotificationEditViewAction
     data class ChangeLink(val link: String) : NotificationEditViewAction
     data class ChangeText(val text: String) : NotificationEditViewAction

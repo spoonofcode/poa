@@ -33,13 +33,17 @@ import com.spoonofcode.poa.core.ui.navigation.NavigationHandler
 import com.spoonofcode.poa.core.ui.theme.AppTheme
 import org.jetbrains.compose.resources.StringResource
 
-abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
+abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : BaseViewAction>(
     protected open val backNavigationEnable: Boolean = true,
     protected open val verticalScrollEnable: Boolean = true,
 ) : Screen {
 
-    protected open fun provideNavigationBackAction(viewModel: VM?): () -> Unit =
-        { viewModel?.navigateBack() }
+    protected open fun provideNavigationBackAction(
+        onAction: (VA) -> Unit,
+    ): () -> Unit =
+        {
+//            viewModel?.navigateBack()
+        }
 
     protected open fun provideTopAppBarTitle(): StringResource? = null
 
@@ -51,19 +55,23 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         )
 
     protected open fun provideTopBarActions(
-        viewModel: VM?, // Is nullable because we need this for previews
+        onAction: (VA) -> Unit,
     ): List<TopBarAction> = emptyList()
 
-    protected open fun provideInitAction(viewModel: VM?): () -> Unit = {}
+    protected open fun provideInitAction(
+        onAction: (VA) -> Unit,
+    ): () -> Unit = {}
 
     // By Default Reload Action is Init Action
-    protected open fun provideReloadAction(viewModel: VM?): () -> Unit =
-        provideInitAction(viewModel)
+    protected open fun provideReloadAction(
+        onAction: (VA) -> Unit,
+    ): () -> Unit =
+        provideInitAction(onAction)
 
     @Composable
     protected open fun provideDialogs(
-        viewModel: VM?, // Is nullable because we need this for previews
         viewState: VS,
+        onAction: (VA) -> Unit,
     ): @Composable () -> Unit = {}
 
     @Composable
@@ -71,8 +79,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
 
     @Composable
     protected abstract fun provideContent(
-        viewModel: VM?,  // Is nullable because we need this for previews
         viewState: VS,
+        onAction: (VA) -> Unit,
     ): @Composable ColumnScope.() -> Unit
 
     @Composable
@@ -88,13 +96,13 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
         LaunchedEffect(true) {
-            provideInitAction(viewModel).invoke()
+            provideInitAction(viewModel::onAction).invoke()
         }
 
         ContentView(
             snackbarHostState = snackbarHostState,
-            viewModel = viewModel,
             viewState = viewState,
+            onAction = viewModel::onAction
         )
     }
 
@@ -102,13 +110,12 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
     @Composable
     private fun ContentView(
         snackbarHostState: SnackbarHostState,
-        viewModel: VM?,  // Is nullable because we need this for previews
         viewState: VS,
+        onAction: (VA) -> Unit,
     ) {
-
         provideDialogs(
-            viewModel = viewModel,
             viewState = viewState,
+            onAction = onAction,
         )
 
         Scaffold(
@@ -124,8 +131,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                     TopBar(
                         backNavigationEnable = backNavigationEnable,
                         topAppBarTitle = topAppBarTitle,
-                        navigationBackAction = provideNavigationBackAction(viewModel),
-                        iconBarActions = provideTopBarActions(viewModel)
+                        navigationBackAction = provideNavigationBackAction(onAction),
+                        iconBarActions = provideTopBarActions(onAction)
                     )
                 }
             },
@@ -134,7 +141,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
         ) { innerPadding ->
             when (viewState.screenState) {
                 ScreenState.LOADING -> LoadingView()
-                ScreenState.ERROR -> ErrorView(reload = provideReloadAction(viewModel))
+                ScreenState.ERROR -> ErrorView(reload = provideReloadAction(onAction))
                 ScreenState.CONTENT -> Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -142,8 +149,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
                         .padding(innerPadding)
                         .padding(provideContentPadding()),
                     content = provideContent(
-                        viewModel = viewModel,
                         viewState = viewState,
+                        onAction = onAction,
                     )
                 )
             }
@@ -158,8 +165,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS>, VS : BaseViewState>(
             val snackbarHostState = remember { SnackbarHostState() }
             ContentView(
                 snackbarHostState = snackbarHostState,
-                viewModel = null,
                 viewState = viewState,
+                onAction = {}
             )
         }
     }

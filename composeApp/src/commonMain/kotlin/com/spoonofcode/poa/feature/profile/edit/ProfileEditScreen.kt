@@ -20,27 +20,19 @@ import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEditViewState>() {
+internal class ProfileEditScreen() :
+    BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.edit_profile
 
-    override fun provideInitAction(viewModel: ProfileEditViewModel?): () -> Unit =
-        { viewModel?.onAction(ProfileEditViewAction.InitView) }
+    override fun provideInitAction(onAction: (ProfileEditViewAction) -> Unit): () -> Unit =
+        { onAction(ProfileEditViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProfileEditViewModel?,
-        viewState: ProfileEditViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: ProfileEditViewState,
         onAction: (ProfileEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {

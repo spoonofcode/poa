@@ -35,27 +35,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class CustomerOverviewScreen(
     val partnerId: String,
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState>() {
+) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState, CustomerOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_customers
 
-    override fun provideInitAction(viewModel: CustomerOverviewViewModel?): () -> Unit =
-        { viewModel?.onAction(CustomerOverviewViewAction.InitView(partnerId = partnerId)) }
+    override fun provideInitAction(onAction: (CustomerOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(CustomerOverviewViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<CustomerOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: CustomerOverviewViewModel?,
-        viewState: CustomerOverviewViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: CustomerOverviewViewState,
         onAction: (CustomerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -69,7 +60,7 @@ internal class CustomerOverviewScreen(
 
                     CustomerItem(
                         item = user,
-                        onClick = { onAction.invoke(CustomerOverviewViewAction.CheckedCustomer(user.id)) },
+                        onClick = { onAction(CustomerOverviewViewAction.CheckedCustomer(user.id)) },
                         checkedCustomer = checkedCustomer,
                     )
                 }
@@ -80,7 +71,7 @@ internal class CustomerOverviewScreen(
             Buttons.PrimaryButton(
                 enabled = viewState.checkedUserIds.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
-                onClick = { onAction.invoke(CustomerOverviewViewAction.NavigateToNotification) }
+                onClick = { onAction(CustomerOverviewViewAction.NavigateToNotification) }
             )
         }
     }

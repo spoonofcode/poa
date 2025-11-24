@@ -12,9 +12,9 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class PartnerEditViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
     private val updatePartnerUseCase: UpdatePartnerUseCase
-) : BaseViewModel<PartnerEditViewState>(PartnerEditViewState()) {
+) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction>(PartnerEditViewState()) {
 
-    fun onAction(action: PartnerEditViewAction) {
+    override fun onAction(action: PartnerEditViewAction) {
         when (action) {
             is PartnerEditViewAction.ChangeDescription -> changeDescription(action.description)
             is PartnerEditViewAction.ChangeFacebookLink -> changeFacebookLink(action.link)

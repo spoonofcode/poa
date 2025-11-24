@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
     private val getProductByTagIdUseCase: GetProductByTagIdUseCase,
-) : BaseViewModel<ScanViewState>(ScanViewState()) {
+) : BaseViewModel<ScanViewState, ScanViewAction>(ScanViewState()) {
 
-    fun onAction(action: ScanViewAction) {
+    override fun onAction(action: ScanViewAction) {
         when (action) {
             is ScanViewAction.CheckProduct -> checkProduct(action.tagId)
             ScanViewAction.InitView -> initView()

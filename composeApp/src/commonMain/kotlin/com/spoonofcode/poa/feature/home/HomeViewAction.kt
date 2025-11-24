@@ -1,6 +1,8 @@
 package com.spoonofcode.poa.feature.home
 
-sealed interface HomeViewAction {
+import com.spoonofcode.poa.core.ui.BaseViewAction
+
+sealed interface HomeViewAction: BaseViewAction {
     data object DailyCheckIn : HomeViewAction
     data object GetNumberOfNewNotifications : HomeViewAction
     data object InitView : HomeViewAction

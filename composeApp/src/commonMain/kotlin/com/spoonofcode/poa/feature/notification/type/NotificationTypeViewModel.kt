@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 
 internal class NotificationTypeViewModel(
     private val getUserPartnersUseCase: GetUserPartnersUseCase,
-) : BaseViewModel<NotificationTypeViewState>(NotificationTypeViewState()) {
+) : BaseViewModel<NotificationTypeViewState, NotificationTypeViewAction>(NotificationTypeViewState()) {
 
-    fun onAction(action: NotificationTypeViewAction) {
+    override fun onAction(action: NotificationTypeViewAction) {
         when (action) {
             NotificationTypeViewAction.NavigateToAll -> navigateToAll()
             NotificationTypeViewAction.NavigateToPartnerCustomers -> navigateToPartnerCustomers()

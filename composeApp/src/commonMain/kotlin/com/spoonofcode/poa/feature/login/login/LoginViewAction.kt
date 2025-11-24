@@ -1,6 +1,8 @@
 package com.spoonofcode.poa.feature.login.login
 
-sealed interface LoginViewAction {
+import com.spoonofcode.poa.core.ui.BaseViewAction
+
+sealed interface LoginViewAction: BaseViewAction {
     data class ChangeEmail(val email: String) : LoginViewAction
     data class ChangePassword(val password: String) : LoginViewAction
     data object ForgotPassword : LoginViewAction

@@ -1,6 +1,8 @@
 package com.spoonofcode.poa.feature.profile.details
 
-sealed interface ProfileDetailsViewAction {
+import com.spoonofcode.poa.core.ui.BaseViewAction
+
+sealed interface ProfileDetailsViewAction: BaseViewAction {
     data object InitView : ProfileDetailsViewAction
     data object Logout : ProfileDetailsViewAction
     data object NavigateToEditProfile : ProfileDetailsViewAction

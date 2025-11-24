@@ -17,7 +17,7 @@ import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewState>() {
+internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewState, RegisterViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.register
 
@@ -26,22 +26,13 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
 
     @Composable
     override fun provideContent(
-        viewModel: RegisterViewModel?,
-        viewState: RegisterViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: RegisterViewState,
         onAction: (RegisterViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.email,
-                onValueChange = { onAction.invoke(RegisterViewAction.ChangeEmail(it)) },
+                onValueChange = { onAction(RegisterViewAction.ChangeEmail(it)) },
                 label = stringResource(resource = Res.string.email),
             )
 
@@ -49,7 +40,7 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
 
             TextFields.OutlinedPassword(
                 value = viewState.password,
-                onValueChange = { onAction.invoke(RegisterViewAction.ChangePassword(it)) },
+                onValueChange = { onAction(RegisterViewAction.ChangePassword(it)) },
                 label = stringResource(resource = Res.string.password),
             )
 
@@ -57,7 +48,7 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
 
             TextFields.Outlined(
                 value = viewState.firstName,
-                onValueChange = { onAction.invoke(RegisterViewAction.ChangeFirstName(it)) },
+                onValueChange = { onAction(RegisterViewAction.ChangeFirstName(it)) },
                 label = stringResource(resource = Res.string.first_name),
             )
 
@@ -65,7 +56,7 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
 
             TextFields.Outlined(
                 value = viewState.lastName,
-                onValueChange = { onAction.invoke(RegisterViewAction.ChangeLastName(it)) },
+                onValueChange = { onAction(RegisterViewAction.ChangeLastName(it)) },
                 label = stringResource(resource = Res.string.last_name),
             )
 
@@ -75,7 +66,7 @@ internal class RegisterScreen() : BaseScreen<RegisterViewModel, RegisterViewStat
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_up),
-                onClick = { onAction.invoke(RegisterViewAction.SignUp) }
+                onClick = { onAction(RegisterViewAction.SignUp) }
             )
         }
     }

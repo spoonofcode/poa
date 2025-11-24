@@ -22,27 +22,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class TACScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<TACViewModel, TACViewState>() {
+) : BaseScreen<TACViewModel, TACViewState, TACViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.terms_and_conditions
 
-    override fun provideInitAction(viewModel: TACViewModel?): () -> Unit =
-        { viewModel?.onAction(TACViewAction.InitView) }
+    override fun provideInitAction(onAction: (TACViewAction) -> Unit): () -> Unit =
+        { onAction(TACViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<TACViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: TACViewModel?,
-        viewState: TACViewState
-    ): @Composable (ColumnScope.() -> Unit) = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: TACViewState,
         onAction: (TACViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -74,7 +65,7 @@ internal class TACScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.save_changes),
-                onClick = { onAction.invoke(TACViewAction.SaveChanges) }
+                onClick = { onAction(TACViewAction.SaveChanges) }
             )
         }
     }

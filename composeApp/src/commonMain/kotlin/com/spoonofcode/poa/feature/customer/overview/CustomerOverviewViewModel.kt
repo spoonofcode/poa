@@ -11,9 +11,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class CustomerOverviewViewModel(
     private val getPartnerUsersUseCase: GetPartnerUsersUseCase,
-) : BaseViewModel<CustomerOverviewViewState>(CustomerOverviewViewState()) {
+) : BaseViewModel<CustomerOverviewViewState, CustomerOverviewViewAction>(CustomerOverviewViewState()) {
 
-    fun onAction(action: CustomerOverviewViewAction) {
+    override fun onAction(action: CustomerOverviewViewAction) {
         when (action) {
             is CustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(userId = action.userId)
             is CustomerOverviewViewAction.InitView -> initView(partnerId = action.partnerId)

@@ -28,27 +28,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerDetailsScreen(
     private val partnerId: String,
-) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState>() {
+) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState, PartnerDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideInitAction(viewModel: PartnerDetailsViewModel?): () -> Unit =
-        { viewModel?.onAction(PartnerDetailsViewAction.InitView(partnerId = partnerId)) }
+    override fun provideInitAction(onAction: (PartnerDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerDetailsViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: PartnerDetailsViewModel?,
         viewState: PartnerDetailsViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-    )
-
-    @Composable
-    private fun ContentView(
-        viewState: PartnerDetailsViewState,
+        onAction: (PartnerDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             CoilImage(

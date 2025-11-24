@@ -18,27 +18,18 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationSettingsScreen :
-    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState>() {
+    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications_settings
 
-    override fun provideInitAction(viewModel: NotificationSettingsViewModel?): () -> Unit =
-        { viewModel?.onAction(NotificationSettingsViewAction.InitView) }
+    override fun provideInitAction(onAction: (NotificationSettingsViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationSettingsViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationSettingsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationSettingsViewModel?,
-        viewState: NotificationSettingsViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: NotificationSettingsViewState,
         onAction: (NotificationSettingsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -49,7 +40,7 @@ internal class NotificationSettingsScreen :
                 text = stringResource(Res.string.from_all_partners),
                 checked = viewState.notificationSettings.notificationFromAllPartnersEnable,
                 onCheckedChange = {
-                    onAction.invoke(
+                    onAction(
                         NotificationSettingsViewAction.SwitchNotificationFromAllPartners(
                             it
                         )
@@ -61,7 +52,7 @@ internal class NotificationSettingsScreen :
                 text = stringResource(Res.string.from_my_partners),
                 checked = viewState.notificationSettings.notificationFromMyPartnersEnable,
                 onCheckedChange = {
-                    onAction.invoke(
+                    onAction(
                         NotificationSettingsViewAction.SwitchNotificationFromMyPartners(
                             it
                         )
@@ -73,7 +64,7 @@ internal class NotificationSettingsScreen :
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = { onAction.invoke(NotificationSettingsViewAction.SaveChanges) }
+                onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
             )
         }
     }

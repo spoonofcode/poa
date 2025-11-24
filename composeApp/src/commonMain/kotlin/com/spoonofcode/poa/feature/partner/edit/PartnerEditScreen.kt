@@ -36,93 +36,84 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerEditScreen(
     private val partnerId: String,
-) : BaseScreen<PartnerEditViewModel, PartnerEditViewState>() {
+) : BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideInitAction(viewModel: PartnerEditViewModel?): () -> Unit =
-        { viewModel?.onAction(PartnerEditViewAction.InitView(partnerId = partnerId)) }
+    override fun provideInitAction(onAction: (PartnerEditViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerEditViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: PartnerEditViewModel?,
-        viewState: PartnerEditViewState
-    ): @Composable ColumnScope.() -> Unit = {
-        ContentView(
-            viewState = viewState,
-            onAction = viewModel!!::onAction,
-        )
-    }
-
-    @Composable
-    private fun ContentView(
         viewState: PartnerEditViewState,
         onAction: (PartnerEditViewAction) -> Unit,
-    ) {
-        val partner = viewState.partner
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            val partner = viewState.partner
 
-        if (partner != null) {
-            CoilImage(
-                imageModel = { viewState.partner.imageLink },
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16 / 9f)
-                    .clip(RoundedCornerShape(16.dp))
-                    .shadow(4.dp, RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
-            )
+            if (partner != null) {
+                CoilImage(
+                    imageModel = { viewState.partner.imageLink },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16 / 9f)
+                        .clip(RoundedCornerShape(16.dp))
+                        .shadow(4.dp, RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                )
 
-            Spacers.VerticalBetweenFields()
+                Spacers.VerticalBetweenFields()
 
-            TextFields.Outlined(
-                value = partner.name,
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeName(it)) },
-                label = stringResource(resource = Res.string.partner_name),
-            )
-            TextFields.Outlined(
-                value = partner.description.orEmpty(), // Używamy orEmpty() dla bezpieczeństwa
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeDescription(it)) },
-                label = stringResource(resource = Res.string.description),
-            )
-            TextFields.Outlined(
-                value = partner.websiteLink.orEmpty(),
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeWebsiteLink(it)) },
-                label = stringResource(resource = Res.string.website),
-            )
-            TextFields.Outlined(
-                value = partner.instagramLink.orEmpty(),
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeInstagramLink(it)) },
-                label = stringResource(resource = Res.string.instagram),
-            )
-            TextFields.Outlined(
-                value = partner.facebookLink.orEmpty(),
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeFacebookLink(it)) },
-                label = stringResource(resource = Res.string.facebook),
-            )
-            TextFields.Outlined(
-                value = partner.youtubeLink.orEmpty(),
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeYoutubeLink(it)) },
-                label = stringResource(resource = Res.string.youtube),
-            )
-            TextFields.Outlined(
-                value = partner.xLink.orEmpty(),
-                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeXLink(it)) },
-                label = stringResource(resource = Res.string.x),
-            )
+                TextFields.Outlined(
+                    value = partner.name,
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },
+                    label = stringResource(resource = Res.string.partner_name),
+                )
+                TextFields.Outlined(
+                    value = partner.description.orEmpty(), // Używamy orEmpty() dla bezpieczeństwa
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
+                    label = stringResource(resource = Res.string.description),
+                )
+                TextFields.Outlined(
+                    value = partner.websiteLink.orEmpty(),
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeWebsiteLink(it)) },
+                    label = stringResource(resource = Res.string.website),
+                )
+                TextFields.Outlined(
+                    value = partner.instagramLink.orEmpty(),
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeInstagramLink(it)) },
+                    label = stringResource(resource = Res.string.instagram),
+                )
+                TextFields.Outlined(
+                    value = partner.facebookLink.orEmpty(),
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeFacebookLink(it)) },
+                    label = stringResource(resource = Res.string.facebook),
+                )
+                TextFields.Outlined(
+                    value = partner.youtubeLink.orEmpty(),
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeYoutubeLink(it)) },
+                    label = stringResource(resource = Res.string.youtube),
+                )
+                TextFields.Outlined(
+                    value = partner.xLink.orEmpty(),
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeXLink(it)) },
+                    label = stringResource(resource = Res.string.x),
+                )
 
-            Spacers.VerticalBetweenFields()
+                Spacers.VerticalBetweenFields()
 
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.save_changes),
-                onClick = { onAction.invoke(PartnerEditViewAction.SaveChanges) },
-            )
+                Buttons.PrimaryButton(
+                    text = stringResource(resource = Res.string.save_changes),
+                    onClick = { onAction(PartnerEditViewAction.SaveChanges) },
+                )
+            }
         }
     }
 

@@ -5,15 +5,16 @@ import com.spoonofcode.poa.core.domain.notification.GetNotificationSettingsUseCa
 import com.spoonofcode.poa.core.domain.notification.UpdateNotificationSettingsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewViewAction
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
-) : BaseViewModel<NotificationSettingsViewState>(NotificationSettingsViewState()) {
+) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(NotificationSettingsViewState()) {
 
-    fun onAction(action: NotificationSettingsViewAction) {
+    override fun onAction(action: NotificationSettingsViewAction) {
         when (action) {
             NotificationSettingsViewAction.InitView -> initView()
             NotificationSettingsViewAction.SaveChanges -> saveChanges()

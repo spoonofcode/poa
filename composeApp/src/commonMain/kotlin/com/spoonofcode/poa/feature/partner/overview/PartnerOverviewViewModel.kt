@@ -14,9 +14,9 @@ internal class PartnerOverviewViewModel(
     private val getPartnersUseCase: GetPartnersUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
     private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
-) : BaseViewModel<PartnerOverviewViewState>(PartnerOverviewViewState()) {
+) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction>(PartnerOverviewViewState()) {
 
-    fun onAction(action: PartnerOverviewViewAction) {
+    override fun onAction(action: PartnerOverviewViewAction) {
         when (action) {
             is PartnerOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
             is PartnerOverviewViewAction.ClickCategory -> clickCategory(action.categoryId)

@@ -13,9 +13,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
-) : BaseViewModel<NotificationEditViewState>(NotificationEditViewState()) {
+) : BaseViewModel<NotificationEditViewState, NotificationEditViewAction>(NotificationEditViewState()) {
 
-    fun onAction(action: NotificationEditViewAction) {
+    override fun onAction(action: NotificationEditViewAction) {
         when (action) {
             is NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
                 action.startDateTime

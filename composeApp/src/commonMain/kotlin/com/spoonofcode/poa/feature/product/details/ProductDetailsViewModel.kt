@@ -17,9 +17,9 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
-) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
+) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
 
-    fun onAction(action: ProductDetailsViewAction) {
+    override fun onAction(action: ProductDetailsViewAction) {
         when (action) {
             ProductDetailsViewAction.AddProduct -> addProduct()
             ProductDetailsViewAction.DeleteProduct -> deleteProduct()

@@ -5,9 +5,9 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 
-internal class TACViewModel() : BaseViewModel<TACViewState>(TACViewState()) {
+internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(TACViewState()) {
 
-    fun onAction(action: TACViewAction) {
+    override fun onAction(action: TACViewAction) {
         when (action) {
             TACViewAction.InitView -> initView()
             TACViewAction.SaveChanges -> saveChanges()

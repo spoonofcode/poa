@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.feature.demo
 
-sealed interface DemoViewAction {
+import com.spoonofcode.poa.core.ui.BaseViewAction
+
+sealed interface DemoViewAction: BaseViewAction {
     data object InitView : DemoViewAction
 }

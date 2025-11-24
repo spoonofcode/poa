@@ -32,41 +32,32 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState>() {
+) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState, PartnerOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partners
 
-    override fun provideInitAction(viewModel: PartnerOverviewViewModel?): () -> Unit =
-        { viewModel?.onAction(PartnerOverviewViewAction.InitView) }
+    override fun provideInitAction(onAction: (PartnerOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: PartnerOverviewViewModel?,
-        viewState: PartnerOverviewViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: PartnerOverviewViewState,
         onAction: (PartnerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.searchText,
-                onValueChange = { onAction.invoke(PartnerOverviewViewAction.ChangeSearchText(it)) },
+                onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
                 innerLabel = stringResource(resource = Res.string.search),
             )
 
             HorizontalScrollableFilterChipRow(
                 categories = viewState.partnerCategories,
                 selectedCategories = viewState.selectedPartnerCategories,
-                onCategorySelected = { onAction.invoke(PartnerOverviewViewAction.ClickCategory(it)) }
+                onCategorySelected = { onAction(PartnerOverviewViewAction.ClickCategory(it)) }
             )
 
             LazyColumn(
@@ -76,7 +67,7 @@ internal class PartnerOverviewScreen(
                 items(viewState.filteredPartners) { partner ->
                     PartnerItem(
                         item = partner,
-                        onClick = { onAction.invoke(PartnerOverviewViewAction.SelectPartner(partner.id)) }
+                        onClick = { onAction(PartnerOverviewViewAction.SelectPartner(partner.id)) }
                     )
                 }
             }

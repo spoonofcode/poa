@@ -1,6 +1,8 @@
 package com.spoonofcode.poa.feature.partner.overview
 
-sealed interface PartnerOverviewViewAction {
+import com.spoonofcode.poa.core.ui.BaseViewAction
+
+sealed interface PartnerOverviewViewAction: BaseViewAction {
     data class ChangeSearchText(val searchText: String) : PartnerOverviewViewAction
     data class ClickCategory(val categoryId: String) : PartnerOverviewViewAction
     data object InitView : PartnerOverviewViewAction

@@ -26,7 +26,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationTypeScreen :
-    BaseScreen<NotificationTypeViewModel, NotificationTypeViewState>() {
+    BaseScreen<NotificationTypeViewModel, NotificationTypeViewState, NotificationTypeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification_type
 
@@ -35,15 +35,6 @@ internal class NotificationTypeScreen :
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationTypeViewModel?,
-        viewState: NotificationTypeViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: NotificationTypeViewState,
         onAction: (NotificationTypeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -55,7 +46,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToAll) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAll) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )
@@ -63,7 +54,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
-                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -77,14 +68,14 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.Default.WebStories,
                     text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToPartnerProductSeries) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries) },
                     modifier = Modifier.weight(1f)
                 )
             }

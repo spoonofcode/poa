@@ -6,9 +6,9 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class FAQViewModel() : BaseViewModel<FAQViewState>(FAQViewState()) {
+internal class FAQViewModel() : BaseViewModel<FAQViewState, FAQViewAction>(FAQViewState()) {
 
-    fun onAction(action: FAQViewAction) {
+    override fun onAction(action: FAQViewAction) {
         when (action) {
             FAQViewAction.InitView -> initView()
         }

@@ -10,9 +10,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProfileEditViewModel(
     private val getProfileUseCase: GetProfileUseCase
-) : BaseViewModel<ProfileEditViewState>(ProfileEditViewState()) {
+) : BaseViewModel<ProfileEditViewState, ProfileEditViewAction>(ProfileEditViewState()) {
 
-    fun onAction(action: ProfileEditViewAction) {
+    override fun onAction(action: ProfileEditViewAction) {
         when (action) {
             is ProfileEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
             ProfileEditViewAction.InitView -> initView()

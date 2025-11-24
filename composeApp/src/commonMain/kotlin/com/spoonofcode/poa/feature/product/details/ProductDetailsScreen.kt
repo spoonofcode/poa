@@ -41,7 +41,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal data class ProductDetailsScreen(
     val productId: String,
     val hasOwnerUser: Boolean = true,
-) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState>() {
+) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.product
 
@@ -49,15 +49,16 @@ internal data class ProductDetailsScreen(
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
     override fun provideTopBarActions(
-        viewModel: ProductDetailsViewModel?,
+        onAction: (ProductDetailsViewAction) -> Unit,
     ) = if (hasOwnerUser) {
         listOf(
             TopBarAction(
-                Icons.Default.Edit,
-                "Edit"
-            ) { viewModel?.onAction(ProductDetailsViewAction.EditProduct) },
+                icon = Icons.Default.Edit,
+                description = "Edit",
+                onClick = { onAction(ProductDetailsViewAction.AddProduct) },
+            ),
             TopBarAction(Icons.Default.Delete, "Delete") {
-                viewModel?.onAction(
+                onAction(
                     ProductDetailsViewAction.DeleteProduct
                 )
             }
@@ -66,20 +67,11 @@ internal data class ProductDetailsScreen(
         emptyList()
     }
 
-    override fun provideInitAction(viewModel: ProductDetailsViewModel?): () -> Unit =
-        { viewModel?.onAction(ProductDetailsViewAction.InitView(productId = productId)) }
+    override fun provideInitAction(onAction: (ProductDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideContent(
-        viewModel: ProductDetailsViewModel?,
-        viewState: ProductDetailsViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: ProductDetailsViewState,
         onAction: (ProductDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
@@ -129,7 +121,7 @@ internal data class ProductDetailsScreen(
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
                     text = stringResource(Res.string.add_product),
-                    onClick = { onAction.invoke(ProductDetailsViewAction.AddProduct) }
+                    onClick = { onAction(ProductDetailsViewAction.AddProduct) }
                 )
             }
         }

@@ -9,9 +9,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerDetailsViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
-) : BaseViewModel<PartnerDetailsViewState>(PartnerDetailsViewState()) {
+) : BaseViewModel<PartnerDetailsViewState, PartnerDetailsViewAction>(PartnerDetailsViewState()) {
 
-    fun onAction(action: PartnerDetailsViewAction) {
+    override fun onAction(action: PartnerDetailsViewAction) {
         when (action) {
             is PartnerDetailsViewAction.InitView -> initView(action.partnerId)
         }

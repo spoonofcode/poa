@@ -44,12 +44,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState>() {
+) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications
 
-    override fun provideInitAction(viewModel: NotificationOverviewViewModel?): () -> Unit =
-        { viewModel?.onAction(NotificationOverviewViewAction.InitView) }
+    override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
@@ -61,15 +61,6 @@ internal class NotificationOverviewScreen(
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationOverviewViewModel?,
-        viewState: NotificationOverviewViewState
-    ): @Composable (ColumnScope.() -> Unit) = ContentView(
-        viewState = viewState,
-        onAction = viewModel!!::onAction,
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: NotificationOverviewViewState,
         onAction: (NotificationOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {

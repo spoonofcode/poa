@@ -38,31 +38,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductSeriesOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState>() {
+) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_product_series
 
-    override fun provideInitAction(viewModel: ProductSeriesOverviewViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (ProductSeriesOverViewViewAction) -> Unit): () -> Unit =
+        { onAction(ProductSeriesOverViewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductSeriesOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProductSeriesOverviewViewModel?,
-        viewState: ProductSeriesOverviewViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        checkedProductSeries = { viewModel?.checkedProductSeries(it) },
-        navigateToNotification = { viewModel?.navigateToNotification() },
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: ProductSeriesOverviewViewState,
-        checkedProductSeries: (String) -> Unit,
-        navigateToNotification: () -> Unit,
+        onAction: (ProductSeriesOverViewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Box(modifier = Modifier.fillMaxSize()) {
@@ -78,7 +67,13 @@ internal class ProductSeriesOverviewScreen(
 
                         ProductSeriesItem(
                             item = product,
-                            onClick = { checkedProductSeries(product.seriesId) },
+                            onClick = {
+                                onAction(
+                                    ProductSeriesOverViewViewAction.CheckedProductSeries(
+                                        product.seriesId
+                                    )
+                                )
+                            },
                             checkedProductSeries = checkedProductSeries,
                         )
                     }
@@ -89,7 +84,7 @@ internal class ProductSeriesOverviewScreen(
                     modifier = Modifier
                         .align(Alignment.BottomCenter),
                     text = stringResource(resource = Res.string.send_notification),
-                    onClick = { navigateToNotification() }
+                    onClick = { onAction(ProductSeriesOverViewViewAction.NavigateToNotification) }
                 )
             }
         }

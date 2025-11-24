@@ -10,9 +10,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationOverviewViewModel(
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<NotificationOverviewViewState>(NotificationOverviewViewState()) {
+) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction>(NotificationOverviewViewState()) {
 
-    fun onAction(action: NotificationOverviewViewAction) {
+    override fun onAction(action: NotificationOverviewViewAction) {
         when (action) {
             NotificationOverviewViewAction.InitView -> initView()
             is NotificationOverviewViewAction.SelectNotification -> selectNotification(

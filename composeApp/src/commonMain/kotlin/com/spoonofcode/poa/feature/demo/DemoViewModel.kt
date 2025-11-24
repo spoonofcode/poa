@@ -5,9 +5,9 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 
-internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
+internal class DemoViewModel() : BaseViewModel<DemoViewState, DemoViewAction>(DemoViewState()) {
 
-    fun onAction(action: DemoViewAction) {
+    override fun onAction(action: DemoViewAction) {
         when (action) {
             DemoViewAction.InitView -> initView()
         }
