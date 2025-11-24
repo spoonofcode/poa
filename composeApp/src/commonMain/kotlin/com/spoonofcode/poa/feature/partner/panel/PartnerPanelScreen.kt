@@ -34,21 +34,8 @@ internal class PartnerPanelScreen() :
 
     @Composable
     override fun provideContent(
-        viewModel: PartnerPanelViewModel?,
         viewState: PartnerPanelViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        navigateToMyPartners = { viewModel?.navigateToPartnerEdit() },
-        navigateToNotificationType = { viewModel?.navigateToNotificationType() },
-        navigateToReports = { viewModel?.navigateToReports() },
-    )
-
-    @Composable
-    private fun ContentView(
-        viewState: PartnerPanelViewState,
-        navigateToMyPartners: () -> Unit,
-        navigateToNotificationType: () -> Unit,
-        navigateToReports: () -> Unit,
+        onAction: (PartnerPanelViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -80,7 +67,7 @@ internal class PartnerPanelScreen() :
                     enabled = false,
                     icon = Icons.Default.BarChart,
                     text = stringResource(resource = Res.string.reports),
-                    onClick = navigateToReports,
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToReports) },
                     modifier = Modifier.weight(0.5f)
                 )
 

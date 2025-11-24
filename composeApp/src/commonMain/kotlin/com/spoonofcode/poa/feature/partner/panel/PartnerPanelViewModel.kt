@@ -16,6 +16,7 @@ internal class PartnerPanelViewModel(
         when (action) {
             PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
             PartnerPanelViewAction.NavigateToPartnerEdit -> navigateToPartnerEdit()
+            PartnerPanelViewAction.NavigateToReports-> navigateToReports()
         }
     }
 

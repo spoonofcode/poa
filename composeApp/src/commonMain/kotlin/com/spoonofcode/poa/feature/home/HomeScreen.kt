@@ -27,7 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -84,80 +83,70 @@ internal class HomeScreen(
 
     @Composable
     override fun provideContent(
-        viewModel: HomeViewModel?,
-        viewState: HomeViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        onCheckInClicked = { viewModel?.onCheckInClicked() },
-    )
-}
-
-@Composable
-internal fun ContentView(
-    viewState: HomeViewState,
-    onCheckInClicked: () -> Unit,
-): @Composable (ColumnScope.() -> Unit) {
-    return {
-        ImageSlider(
-            label = stringResource(Res.string.new_partners),
-            imageLinks = viewState.partnerImageLinks,
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        DailyCheckInSection(
-            rewards = viewState.rewards,
-            totalPoints = viewState.totalPoints,
-            nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
-            onCheckInClicked = onCheckInClicked
-        )
+        viewState: HomeViewState,
+        onAction: (HomeViewAction) -> Unit,
+    ): @Composable (ColumnScope.() -> Unit) {
+        return {
+            ImageSlider(
+                label = stringResource(Res.string.new_partners),
+                imageLinks = viewState.partnerImageLinks,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            DailyCheckInSection(
+                rewards = viewState.rewards,
+                totalPoints = viewState.totalPoints,
+                nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
+                onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
+            )
+        }
     }
-}
 
-@Composable
-internal fun DailyCheckInSection(
-    rewards: List<DailyReward>,
-    totalPoints: Int,
-    nextCheckInTimeMillis: Long?,
-    onCheckInClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val streak = rewards.count { it.status == RewardStatus.CLAIMED }
-    val isActionAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
-
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    @Composable
+    internal fun DailyCheckInSection(
+        rewards: List<DailyReward>,
+        totalPoints: Int,
+        nextCheckInTimeMillis: Long?,
+        onCheckInClicked: () -> Unit,
+        modifier: Modifier = Modifier,
     ) {
-        Texts.HMB(
-            text = stringResource(Res.string.daily_check_in),
-        )
+        val streak = rewards.count { it.status == RewardStatus.CLAIMED }
+        val isActionAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
 
-        Spacers.VerticalBetweenFields()
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+        Column(
+            modifier = modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Texts.LM(stringResource(Res.string.your_streak))
-                Texts.TMB("$streak ${stringResource(Res.string.streak_days_count)}")
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Texts.LM(stringResource(Res.string.total_points))
-                Texts.TMB("$totalPoints ${stringResource(Res.string.points_short)}")
-            }
-        }
+            Texts.HMB(
+                text = stringResource(Res.string.daily_check_in),
+            )
 
-        Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(rewards) { reward ->
-                RewardItem(reward = reward)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Texts.LM(stringResource(Res.string.your_streak))
+                    Texts.TMB("$streak ${stringResource(Res.string.streak_days_count)}")
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Texts.LM(stringResource(Res.string.total_points))
+                    Texts.TMB("$totalPoints ${stringResource(Res.string.points_short)}")
+                }
             }
-        }
 
-        Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(rewards) { reward ->
+                    RewardItem(reward = reward)
+                }
+            }
+
+            Spacers.VerticalBetweenFields()
 
             if (nextCheckInTimeMillis != null) {
                 Text(
@@ -169,33 +158,34 @@ internal fun DailyCheckInSection(
                 CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
             }
 
-        Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
 
-        Buttons.PrimaryButton(
-            text = stringResource(Res.string.daily_check_in),
-            onClick = onCheckInClicked,
-            enabled = isActionAvailable,
-        )
+            Buttons.PrimaryButton(
+                text = stringResource(Res.string.daily_check_in),
+                onClick = onCheckInClicked,
+                enabled = isActionAvailable,
+            )
+        }
     }
-}
 
-@Composable
-private fun RewardItem(reward: DailyReward) {
-    val isClaimed = reward.status == RewardStatus.CLAIMED
-    val cointerColor = if (reward.status == RewardStatus.AVAILABLE_TO_CLAIM) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified
+    @Composable
+    private fun RewardItem(reward: DailyReward) {
+        val isClaimed = reward.status == RewardStatus.CLAIMED
+        val cointerColor =
+            if (reward.status == RewardStatus.AVAILABLE_TO_CLAIM) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified
 
-    ElevatedCard(
-        modifier = Modifier.size(width = 80.dp, height = 100.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = cointerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround
+        ElevatedCard(
+            modifier = Modifier.size(width = 80.dp, height = 100.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = cointerColor),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Texts.LM(stringResource(Res.string.day_number, reward.day))
+            Column(
+                modifier = Modifier.fillMaxSize().padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceAround
+            ) {
+                Texts.LM(stringResource(Res.string.day_number, reward.day))
 
                 val icon = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard
                 Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(28.dp))
@@ -207,6 +197,7 @@ private fun RewardItem(reward: DailyReward) {
             }
         }
     }
+}
 
 // region previews
 @Preview
