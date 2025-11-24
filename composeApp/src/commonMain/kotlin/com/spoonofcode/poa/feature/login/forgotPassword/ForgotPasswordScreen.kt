@@ -14,7 +14,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ForgotPasswordScreen() :
-    BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState>() {
+    BaseScreen<ForgotPasswordViewModel, ForgotPasswordViewState, ForgotPasswordViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.reset_password
 
@@ -23,24 +23,13 @@ internal class ForgotPasswordScreen() :
 
     @Composable
     override fun provideContent(
-        viewModel: ForgotPasswordViewModel?,
         viewState: ForgotPasswordViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        changeEmail = { viewModel?.changeEmail(it) },
-        resetPassword = { viewModel?.resetPassword() },
-    )
-
-    @Composable
-    internal fun ContentView(
-        viewState: ForgotPasswordViewState,
-        changeEmail: (String) -> Unit,
-        resetPassword: () -> Unit,
+        onAction: (ForgotPasswordViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.email,
-                onValueChange = { changeEmail(it) },
+                onValueChange = { onAction(ForgotPasswordViewAction.ChangeEmail(email = it)) },
                 label = stringResource(resource = Res.string.email),
             )
 
@@ -48,7 +37,7 @@ internal class ForgotPasswordScreen() :
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.reset_password),
-                onClick = { resetPassword() }
+                onClick = { onAction(ForgotPasswordViewAction.ResetPassword) }
             )
         }
     }

@@ -20,31 +20,21 @@ import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEditViewState>() {
+internal class ProfileEditScreen() :
+    BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.edit_profile
 
-    override fun provideInitAction(viewModel: ProfileEditViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (ProfileEditViewAction) -> Unit): () -> Unit =
+        { onAction(ProfileEditViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProfileEditViewModel?,
-        viewState: ProfileEditViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        changeCustomLink = { viewModel?.changeCustomLink(it) },
-        saveChanges = { viewModel?.saveChanges() }
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: ProfileEditViewState,
-        changeCustomLink: (String) -> Unit,
-        saveChanges: () -> Unit,
+        onAction: (ProfileEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -58,7 +48,7 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
 
             TextFields.Outlined(
                 value = viewState.profile!!.name ?: "",
-                onValueChange = changeCustomLink,
+                onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
                 label = stringResource(resource = Res.string.name),
             )
 
@@ -68,7 +58,7 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = saveChanges
+                onClick = { onAction(ProfileEditViewAction.SaveChanges) }
             )
         }
     }

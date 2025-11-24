@@ -17,9 +17,18 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductUseCase: DeleteProductUseCase,
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
-) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
+) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
 
-    fun initView(productId: String) {
+    override fun onAction(action: ProductDetailsViewAction) {
+        when (action) {
+            ProductDetailsViewAction.AddProduct -> addProduct()
+            ProductDetailsViewAction.DeleteProduct -> deleteProduct()
+            ProductDetailsViewAction.EditProduct -> editProduct()
+            is ProductDetailsViewAction.InitView -> initView(productId = action.productId)
+        }
+    }
+
+    private fun initView(productId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -38,7 +47,7 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    fun addProduct() {
+    private fun addProduct() {
         viewModelScope.launch {
             try {
                 val currentState = currentState()
@@ -55,14 +64,14 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    fun navigateToEditProduct() {
+    private fun editProduct() {
         val productId = currentState().product!!.id
         viewModelScope.launch {
             viewModelNavigator.push(ProductEditScreen(productId = productId))
         }
     }
 
-    fun deleteProduct() {
+    private fun deleteProduct() {
         viewModelScope.launch {
             showLoadingView()
             try {

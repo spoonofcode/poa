@@ -27,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.model.Notification
@@ -45,12 +44,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState>() {
+) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications
 
-    override fun provideInitAction(viewModel: NotificationOverviewViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
@@ -62,22 +61,13 @@ internal class NotificationOverviewScreen(
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationOverviewViewModel?,
-        viewState: NotificationOverviewViewState
-    ): @Composable (ColumnScope.() -> Unit) = ContentView(
-        viewState = viewState,
-        selectNotification = { viewModel?.selectNotification(it) },
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: NotificationOverviewViewState,
-        selectNotification: (String) -> Unit,
+        onAction: (NotificationOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             NotificationTabs(
                 viewState.notifications,
-                selectNotification = selectNotification,
+                selectNotification = { onAction(NotificationOverviewViewAction.SelectNotification(it)) },
             )
         }
     }

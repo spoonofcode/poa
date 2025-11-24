@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalTime::class)
+
 package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
@@ -12,27 +13,59 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.plus
-
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val getDailyRewardsUseCase: GetDailyRewardsUseCase,
     private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
     private val getUserPointsUseCase: GetUserPointsUseCase,
-) : BaseViewModel<HomeViewState>(HomeViewState()) {
-    fun initView() {
+) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
+
+    override fun onAction(action: HomeViewAction) {
+        when (action) {
+            HomeViewAction.DailyCheckIn -> dailyCheckIn()
+            HomeViewAction.GetNumberOfNewNotifications -> getNumberOfNewNotifications()
+            HomeViewAction.InitView -> initView()
+            HomeViewAction.NavigateToNotifications -> navigateToNotifications()
+        }
+    }
+
+    private fun initView() {
         subscribeNotifications()
         loadDailyRewardsStatus()
     }
 
-    fun loadDailyRewardsStatus() {
+    private fun dailyCheckIn() {
+        viewModelScope.launch {
+            try {
+                claimTodayRewardUseCase()
+                showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
+                loadDailyRewardsStatus()
+            } catch (e: Exception) {
+                showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${e.message}"))
+            }
+        }
+    }
+
+    private fun getNumberOfNewNotifications(): Int {
+        // TODO: Implement logic to get the actual number of new notifications and move to viewState
+        return 5
+    }
+
+    private fun navigateToNotifications() {
+        viewModelScope.launch {
+            viewModelNavigator.push(NotificationOverviewScreen())
+        }
+    }
+
+    private fun loadDailyRewardsStatus() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -40,16 +73,17 @@ internal class HomeViewModel(
                 val totalPoints = getUserPointsUseCase()
                 val isRewardAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
 
-                val nextCheckInMillis = if (!isRewardAvailable && rewards.any { it.status == RewardStatus.CLAIMED }) {
-                    val now = Clock.System.now()
-                    val localTimeZone = TimeZone.currentSystemDefault()
-                    val today = now.toLocalDateTime(localTimeZone).date
-                    val tomorrow = today.plus(1, DateTimeUnit.DAY)
-                    val nextCheckInInstant = tomorrow.atStartOfDayIn(localTimeZone)
-                    nextCheckInInstant.toEpochMilliseconds()
-                } else {
-                    null
-                }
+                val nextCheckInMillis =
+                    if (!isRewardAvailable && rewards.any { it.status == RewardStatus.CLAIMED }) {
+                        val now = Clock.System.now()
+                        val localTimeZone = TimeZone.currentSystemDefault()
+                        val today = now.toLocalDateTime(localTimeZone).date
+                        val tomorrow = today.plus(1, DateTimeUnit.DAY)
+                        val nextCheckInInstant = tomorrow.atStartOfDayIn(localTimeZone)
+                        nextCheckInInstant.toEpochMilliseconds()
+                    } else {
+                        null
+                    }
 
                 updateState {
                     copy(
@@ -67,30 +101,7 @@ internal class HomeViewModel(
         }
     }
 
-    fun onCheckInClicked() {
-        viewModelScope.launch {
-            try {
-                claimTodayRewardUseCase()
-                showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
-                loadDailyRewardsStatus()
-            } catch (e: Exception) {
-                showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${e.message}"))
-            }
-        }
-    }
-
-    fun getNumberOfNewNotifications(): Int {
-        // TODO: Implement logic to get the actual number of new notifications
-        return 5
-    }
-
-    fun navigateToNotifications() {
-        viewModelScope.launch {
-            viewModelNavigator.push(NotificationOverviewScreen())
-        }
-    }
-
-    fun subscribeNotifications() {
+    private fun subscribeNotifications() {
         viewModelScope.launch {
             showLoadingView()
             try {

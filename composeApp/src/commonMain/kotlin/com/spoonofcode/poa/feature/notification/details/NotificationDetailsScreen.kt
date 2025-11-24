@@ -35,27 +35,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,
-) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState>() {
+) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
-    override fun provideInitAction(viewModel: NotificationDetailsViewModel?): () -> Unit =
-        { viewModel?.initView(notificationId = notificationId) }
+    override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationDetailsViewModel?,
         viewState: NotificationDetailsViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-    )
-
-    @Composable
-    private fun ContentView(
-        viewState: NotificationDetailsViewState,
+        onAction: (NotificationDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val notification = requireNotNull(viewState.notification)

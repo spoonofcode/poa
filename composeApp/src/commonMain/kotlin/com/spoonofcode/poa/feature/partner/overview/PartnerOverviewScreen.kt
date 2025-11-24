@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.partner.overview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,47 +32,32 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState>() {
+) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState, PartnerOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partners
 
-    override fun provideInitAction(viewModel: PartnerOverviewViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (PartnerOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: PartnerOverviewViewModel?,
-        viewState: PartnerOverviewViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        clickCategory = { viewModel?.clickCategory(it) },
-        changeSearchText = { viewModel?.changeSearchText(it) },
-        selectPartner = { viewModel?.selectPartner(it) },
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: PartnerOverviewViewState,
-        changeSearchText: (String) -> Unit,
-        clickCategory: (String) -> Unit,
-        selectPartner: (String) -> Unit,
+        onAction: (PartnerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.searchText,
-                onValueChange = { changeSearchText(it) },
+                onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
                 innerLabel = stringResource(resource = Res.string.search),
             )
 
             HorizontalScrollableFilterChipRow(
                 categories = viewState.partnerCategories,
                 selectedCategories = viewState.selectedPartnerCategories,
-                onCategorySelected = { categoryId ->
-                    clickCategory(categoryId)
-                }
+                onCategorySelected = { onAction(PartnerOverviewViewAction.ClickCategory(it)) }
             )
 
             LazyColumn(
@@ -83,7 +67,7 @@ internal class PartnerOverviewScreen(
                 items(viewState.filteredPartners) { partner ->
                     PartnerItem(
                         item = partner,
-                        onClick = { selectPartner(partner.id) }
+                        onClick = { onAction(PartnerOverviewViewAction.SelectPartner(partner.id)) }
                     )
                 }
             }
