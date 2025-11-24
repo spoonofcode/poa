@@ -299,40 +299,40 @@ internal class HomeScreen(
             Text(text = label, fontSize = 10.sp, color = Color.Gray)
         }
     }
+}
 
-    // region previews
-    @Preview
-    @Composable
-    private fun HomeScreenContentPreview() {
-        val rewards = (1..5).map { day ->
-            DailyReward(
-                day = day,
-                points = 10 + (day * 5),
-                status = if (day < 5) RewardStatus.CLAIMED else RewardStatus.AVAILABLE_TO_CLAIM
-            )
-        }
-        HomeScreen().PreviewContent(
-            HomeViewState(rewards = rewards)
+// region previews
+@Preview
+@Composable
+private fun HomeScreenContentPreview() {
+    val rewards = (1..5).map { day ->
+        DailyReward(
+            day = day,
+            points = 10 + (day * 5),
+            status = if (day < 5) RewardStatus.CLAIMED else RewardStatus.AVAILABLE_TO_CLAIM
         )
     }
+    HomeScreen().PreviewContent(
+        HomeViewState(rewards = rewards)
+    )
+}
 
-    @Preview
-    @Composable
-    private fun HomeScreenContentCheckedInPreview() {
-        val rewards = (1..6).map { day ->
-            DailyReward(
-                day = day,
-                points = 10 + (day * 5),
-                status = RewardStatus.CLAIMED
-            )
-        }
-        HomeScreen().PreviewContent(
-            HomeViewState(
-                rewards = rewards,
-                nextCheckInTimeMillis = Clock.System.now()
-                    .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
-            )
+@Preview
+@Composable
+private fun HomeScreenContentCheckedInPreview() {
+    val rewards = (1..6).map { day ->
+        DailyReward(
+            day = day,
+            points = 10 + (day * 5),
+            status = RewardStatus.CLAIMED
         )
     }
+    HomeScreen().PreviewContent(
+        HomeViewState(
+            rewards = rewards,
+            nextCheckInTimeMillis = Clock.System.now()
+                .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
+        )
+    )
 }
 // endregion

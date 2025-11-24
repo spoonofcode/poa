@@ -40,10 +40,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
 
     protected open fun provideNavigationBackAction(
         onAction: (VA) -> Unit,
-    ): () -> Unit =
-        {
-//            viewModel?.navigateBack()
-        }
+    ): (() -> Unit)? = null
 
     protected open fun provideTopAppBarTitle(): StringResource? = null
 
@@ -65,8 +62,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     // By Default Reload Action is Init Action
     protected open fun provideReloadAction(
         onAction: (VA) -> Unit,
-    ): () -> Unit =
-        provideInitAction(onAction)
+    ): () -> Unit = provideInitAction(onAction)
 
     @Composable
     protected open fun provideDialogs(
@@ -99,10 +95,15 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
             provideInitAction(viewModel::onAction).invoke()
         }
 
+        val navigationBackAction = provideNavigationBackAction(viewModel::onAction)
+            ?: { viewModel.navigateBack() }
+
         ContentView(
             snackbarHostState = snackbarHostState,
             viewState = viewState,
+            navigationBackAction = navigationBackAction,
             onAction = viewModel::onAction
+
         )
     }
 
@@ -111,6 +112,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     private fun ContentView(
         snackbarHostState: SnackbarHostState,
         viewState: VS,
+        navigationBackAction: () -> Unit,
         onAction: (VA) -> Unit,
     ) {
         provideDialogs(
@@ -131,7 +133,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
                     TopBar(
                         backNavigationEnable = backNavigationEnable,
                         topAppBarTitle = topAppBarTitle,
-                        navigationBackAction = provideNavigationBackAction(onAction),
+                        navigationBackAction = navigationBackAction,
                         iconBarActions = provideTopBarActions(onAction)
                     )
                 }
@@ -166,7 +168,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
             ContentView(
                 snackbarHostState = snackbarHostState,
                 viewState = viewState,
-                onAction = {}
+                navigationBackAction = {},
+                onAction = {},
             )
         }
     }
