@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -53,15 +52,22 @@ internal data class ProductDetailsScreen(
         viewModel: ProductDetailsViewModel?,
     ) = if (hasOwnerUser) {
         listOf(
-            TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.navigateToEditProduct() },
-            TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deleteProduct() }
+            TopBarAction(
+                Icons.Default.Edit,
+                "Edit"
+            ) { viewModel?.onAction(ProductDetailsViewAction.EditProduct) },
+            TopBarAction(Icons.Default.Delete, "Delete") {
+                viewModel?.onAction(
+                    ProductDetailsViewAction.DeleteProduct
+                )
+            }
         )
     } else {
         emptyList()
     }
 
     override fun provideInitAction(viewModel: ProductDetailsViewModel?): () -> Unit =
-        { viewModel?.initView(productId = productId) }
+        { viewModel?.onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideContent(
