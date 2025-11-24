@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.notification.settings
 
 import com.spoonofcode.poa.core.ui.BaseViewAction
 
-sealed interface NotificationSettingsViewAction: BaseViewAction {
+internal sealed interface NotificationSettingsViewAction: BaseViewAction {
     data object InitView : NotificationSettingsViewAction
     data object SaveChanges : NotificationSettingsViewAction
     data class SwitchNotificationFromAllPartners(val enable: Boolean) : NotificationSettingsViewAction

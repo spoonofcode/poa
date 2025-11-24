@@ -5,7 +5,6 @@ import com.spoonofcode.poa.core.domain.notification.GetNotificationSettingsUseCa
 import com.spoonofcode.poa.core.domain.notification.UpdateNotificationSettingsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewViewAction
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 

@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.product.details
 
 import com.spoonofcode.poa.core.ui.BaseViewAction
 
-sealed interface ProductDetailsViewAction: BaseViewAction {
+internal sealed interface ProductDetailsViewAction: BaseViewAction {
     data object AddProduct : ProductDetailsViewAction
     data object DeleteProduct : ProductDetailsViewAction
     data object EditProduct : ProductDetailsViewAction

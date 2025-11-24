@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.notification.type
 
 import com.spoonofcode.poa.core.ui.BaseViewAction
 
-sealed interface NotificationTypeViewAction: BaseViewAction {
+internal sealed interface NotificationTypeViewAction: BaseViewAction {
     data object NavigateToAll : NotificationTypeViewAction
     data object NavigateToPartnerCustomers : NotificationTypeViewAction
     data object NavigateToPartnerProductSeries : NotificationTypeViewAction
