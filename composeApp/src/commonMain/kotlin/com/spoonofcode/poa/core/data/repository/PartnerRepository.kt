@@ -4,6 +4,7 @@ import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.PartnerRequest
 import com.spoonofcode.poa.core.model.User
+import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
@@ -13,6 +14,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
+@OpenForMokkery
 class PartnerRepository : GenericCrudRepository<PartnerRequest, Partner>(
     resourceName = "partners",
     requestSerializer = PartnerRequest.serializer(),

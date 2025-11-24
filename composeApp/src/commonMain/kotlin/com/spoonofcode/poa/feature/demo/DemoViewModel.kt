@@ -5,9 +5,15 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 
-internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
+internal class DemoViewModel() : BaseViewModel<DemoViewState, DemoViewAction>(DemoViewState()) {
 
-    fun initView() {
+    override fun onAction(action: DemoViewAction) {
+        when (action) {
+            DemoViewAction.InitView -> initView()
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
         }
     }
@@ -19,7 +25,7 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
             )
         }
     }
-    
+
     private fun showErrorView() {
         updateState {
             copy(

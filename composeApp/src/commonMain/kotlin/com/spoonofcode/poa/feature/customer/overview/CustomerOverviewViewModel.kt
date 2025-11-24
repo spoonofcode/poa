@@ -11,9 +11,17 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class CustomerOverviewViewModel(
     private val getPartnerUsersUseCase: GetPartnerUsersUseCase,
-) : BaseViewModel<CustomerOverviewViewState>(CustomerOverviewViewState()) {
+) : BaseViewModel<CustomerOverviewViewState, CustomerOverviewViewAction>(CustomerOverviewViewState()) {
 
-    fun initView(partnerId: String) {
+    override fun onAction(action: CustomerOverviewViewAction) {
+        when (action) {
+            is CustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(userId = action.userId)
+            is CustomerOverviewViewAction.InitView -> initView(partnerId = action.partnerId)
+            CustomerOverviewViewAction.NavigateToNotification -> navigateToNotification()
+        }
+    }
+
+    private fun initView(partnerId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -32,7 +40,7 @@ internal class CustomerOverviewViewModel(
         }
     }
 
-    fun checkedCustomer(userId: String) {
+    private fun checkedCustomer(userId: String) {
         val selected = currentState().checkedUserIds.toMutableSet()
         val wasAdded = selected.contains(userId)
 
@@ -48,7 +56,7 @@ internal class CustomerOverviewViewModel(
         updateState { copy(checkedUserIds = selected) }
     }
 
-    fun navigateToNotification() {
+    private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
                 NotificationEditScreen(

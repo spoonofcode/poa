@@ -40,42 +40,31 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState>() {
+) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_products
 
-    override fun provideInitAction(viewModel: ProductOverviewViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (ProductOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(ProductOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProductOverviewViewModel?,
-        viewState: ProductOverviewViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        changeSearchText = { viewModel?.changeSearchText(it) },
-        selectProduct = { viewModel?.selectProduct(it) },
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: ProductOverviewViewState,
-        changeSearchText: (String) -> Unit,
-        selectProduct: (String) -> Unit,
+        onAction: (ProductOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.searchText,
-                onValueChange = { changeSearchText(it) },
+                onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
                 innerLabel = stringResource(resource = Res.string.search),
             )
 
             ProductGrid(
                 products = viewState.filteredProducts,
-                onProductClick = { selectProduct(it.id) }
+                onProductClick = { onAction(ProductOverviewViewAction.SelectProduct(it.id)) }
             )
         }
     }

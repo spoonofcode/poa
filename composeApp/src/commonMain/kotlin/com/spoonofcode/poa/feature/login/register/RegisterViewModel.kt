@@ -11,9 +11,19 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
-) : BaseViewModel<RegisterViewState>(RegisterViewState()) {
+) : BaseViewModel<RegisterViewState, RegisterViewAction>(RegisterViewState()) {
 
-    fun changeEmail(email: String) {
+    override fun onAction(action: RegisterViewAction) {
+        when (action) {
+            is RegisterViewAction.ChangeEmail -> changeEmail(action.email)
+            is RegisterViewAction.ChangeFirstName -> changeFirstName(action.firstName)
+            is RegisterViewAction.ChangeLastName -> changeLastName(action.lastName)
+            is RegisterViewAction.ChangePassword -> changePassword(action.password)
+            RegisterViewAction.SignUp -> signUp()
+        }
+    }
+
+    private fun changeEmail(email: String) {
         viewModelScope.launch {
             updateState {
                 copy(email = email)
@@ -21,7 +31,7 @@ internal class RegisterViewModel(
         }
     }
 
-    fun changePassword(password: String) {
+    private fun changePassword(password: String) {
         viewModelScope.launch {
             updateState {
                 copy(password = password)
@@ -29,7 +39,7 @@ internal class RegisterViewModel(
         }
     }
 
-    fun changeFirstName(firstName: String) {
+    private fun changeFirstName(firstName: String) {
         viewModelScope.launch {
             updateState {
                 copy(firstName = firstName)
@@ -37,7 +47,7 @@ internal class RegisterViewModel(
         }
     }
 
-    fun changeLastName(lastName: String) {
+    private fun changeLastName(lastName: String) {
         viewModelScope.launch {
             updateState {
                 copy(lastName = lastName)
@@ -45,7 +55,7 @@ internal class RegisterViewModel(
         }
     }
 
-    fun signUp() {
+    private fun signUp() {
         viewModelScope.launch {
             showLoadingView()
             try {

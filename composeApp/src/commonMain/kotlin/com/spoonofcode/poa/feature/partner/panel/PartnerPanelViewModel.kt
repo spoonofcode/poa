@@ -10,7 +10,14 @@ import kotlinx.coroutines.launch
 internal class PartnerPanelViewModel(
     private val getUserPartnersUseCase: GetUserPartnersUseCase,
 ) :
-    BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
+    BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction>(PartnerPanelViewState()) {
+
+    override fun onAction(action: PartnerPanelViewAction) {
+        when (action) {
+            PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
+            PartnerPanelViewAction.NavigateToPartnerEdit -> navigateToPartnerEdit()
+        }
+    }
 
     fun navigateToPartnerEdit() {
         viewModelScope.launch {

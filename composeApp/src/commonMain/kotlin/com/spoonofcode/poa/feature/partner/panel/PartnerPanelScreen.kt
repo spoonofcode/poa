@@ -25,7 +25,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerPanelScreen() :
-    BaseScreen<PartnerPanelViewModel, PartnerPanelViewState>() {
+    BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
@@ -58,14 +58,14 @@ internal class PartnerPanelScreen() :
                 IconTextButton(
                     icon = Icons.Default.Person,
                     text = stringResource(resource = Res.string.partner_info),
-                    onClick = navigateToMyPartners,
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToPartnerEdit) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.AutoMirrored.Filled.Send,
                     text = stringResource(resource = Res.string.send_notification),
-                    onClick = navigateToNotificationType,
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToNotificationType) },
                     modifier = Modifier.weight(1f)
                 )
             }

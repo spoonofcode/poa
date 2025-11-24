@@ -25,34 +25,22 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
     val productId: String,
-) : BaseScreen<ProductEditViewModel, ProductEditViewState>() {
+) : BaseScreen<ProductEditViewModel, ProductEditViewState, ProductEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.edit_product
 
-    override fun provideInitAction(viewModel: ProductEditViewModel?): () -> Unit =
-        { viewModel?.initView(productId = productId) }
+    override fun provideInitAction(onAction: (ProductEditViewAction) -> Unit): () -> Unit =
+        { onAction(ProductEditViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProductEditViewModel?,
-        viewState: ProductEditViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        changeCustomLink = { viewModel?.changeCustomLink(it) },
-        saveChanges = { viewModel?.saveChanges() }
-    )
-
-    @Composable
-    private fun ContentView(
         viewState: ProductEditViewState,
-        changeCustomLink: (String) -> Unit,
-        saveChanges: () -> Unit,
+        onAction: (ProductEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-
             val product = requireNotNull(viewState.product)
 
             if (product.videoLink != null) {
@@ -81,7 +69,7 @@ internal class ProductEditScreen(
 
             TextFields.Outlined(
                 value = product.customLink ?: "",
-                onValueChange = changeCustomLink,
+                onValueChange = { onAction(ProductEditViewAction.ChangeCustomLink(it)) },
                 label = stringResource(resource = Res.string.custom_link),
             )
 
@@ -89,7 +77,7 @@ internal class ProductEditScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = saveChanges
+                onClick = { onAction(ProductEditViewAction.SaveChanges) }
             )
         }
     }

@@ -18,33 +18,20 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationSettingsScreen :
-    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState>() {
+    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications_settings
 
-    override fun provideInitAction(viewModel: NotificationSettingsViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (NotificationSettingsViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationSettingsViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationSettingsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: NotificationSettingsViewModel?,
         viewState: NotificationSettingsViewState,
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        switchFromAllPartners = { viewModel?.switchNotificationFromAllPartners(it) },
-        switchFromMyPartners = { viewModel?.switchNotificationFromMyPartners(it) },
-        saveChanges = { viewModel?.saveChanges() },
-    )
-
-    @Composable
-    private fun ContentView(
-        viewState: NotificationSettingsViewState,
-        switchFromAllPartners: (Boolean) -> Unit,
-        switchFromMyPartners: (Boolean) -> Unit,
-        saveChanges: () -> Unit,
+        onAction: (NotificationSettingsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.TM(stringResource(Res.string.notifications_settings_text))
@@ -52,20 +39,32 @@ internal class NotificationSettingsScreen :
             TextWithSwitchRow(
                 text = stringResource(Res.string.from_all_partners),
                 checked = viewState.notificationSettings.notificationFromAllPartnersEnable,
-                onCheckedChange = { switchFromAllPartners(it) },
+                onCheckedChange = {
+                    onAction(
+                        NotificationSettingsViewAction.SwitchNotificationFromAllPartners(
+                            it
+                        )
+                    )
+                },
             )
 
             TextWithSwitchRow(
                 text = stringResource(Res.string.from_my_partners),
                 checked = viewState.notificationSettings.notificationFromMyPartnersEnable,
-                onCheckedChange = { switchFromMyPartners(it) },
+                onCheckedChange = {
+                    onAction(
+                        NotificationSettingsViewAction.SwitchNotificationFromMyPartners(
+                            it
+                        )
+                    )
+                },
             )
 
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = saveChanges
+                onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
             )
         }
     }

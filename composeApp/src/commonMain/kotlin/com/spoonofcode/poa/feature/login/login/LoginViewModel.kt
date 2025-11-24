@@ -15,9 +15,20 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase,
-) : BaseViewModel<LoginViewState>(LoginViewState()) {
+) : BaseViewModel<LoginViewState, LoginViewAction>(LoginViewState()) {
 
-    fun changeEmail(email: String) {
+    override fun onAction(action: LoginViewAction) {
+        when (action) {
+            is LoginViewAction.ChangeEmail -> changeEmail(action.email)
+            is LoginViewAction.ChangePassword -> changePassword(action.password)
+            LoginViewAction.ForgotPassword -> forgotPassword()
+            LoginViewAction.SignIn -> signIn()
+            is LoginViewAction.SignInWithGoogle -> signInWithGoogle(action.googleIdToken)
+            LoginViewAction.SignUp -> signUp()
+        }
+    }
+
+    private fun changeEmail(email: String) {
         viewModelScope.launch {
             updateState {
                 copy(email = email)
@@ -25,7 +36,7 @@ internal class LoginViewModel(
         }
     }
 
-    fun changePassword(password: String) {
+    private fun changePassword(password: String) {
         viewModelScope.launch {
             updateState {
                 copy(password = password)
@@ -33,13 +44,13 @@ internal class LoginViewModel(
         }
     }
 
-    fun forgotPassword() {
+    private fun forgotPassword() {
         viewModelScope.launch {
             viewModelNavigator.push(ForgotPasswordScreen())
         }
     }
 
-    fun signIn() {
+    private fun signIn() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -56,7 +67,7 @@ internal class LoginViewModel(
         }
     }
 
-    fun signInWithGoogle(googleIdToken: String) {
+    private fun signInWithGoogle(googleIdToken: String) {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -70,7 +81,7 @@ internal class LoginViewModel(
         }
     }
 
-    fun signUp() {
+    private fun signUp() {
         viewModelScope.launch {
             viewModelNavigator.push(RegisterScreen())
         }

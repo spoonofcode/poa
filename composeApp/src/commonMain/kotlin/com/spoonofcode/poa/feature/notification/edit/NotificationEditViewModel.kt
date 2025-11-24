@@ -13,9 +13,23 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
-) : BaseViewModel<NotificationEditViewState>(NotificationEditViewState()) {
+) : BaseViewModel<NotificationEditViewState, NotificationEditViewAction>(NotificationEditViewState()) {
 
-    fun initView(itemIds: List<String>) {
+    override fun onAction(action: NotificationEditViewAction) {
+        when (action) {
+            is NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
+                action.startDateTime
+            )
+
+            is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
+            is NotificationEditViewAction.ChangeText -> changeText(action.text)
+            is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
+            is NotificationEditViewAction.InitView -> initView(action.itemIds)
+            NotificationEditViewAction.SendNotification -> sendNotification()
+        }
+    }
+
+    private fun initView(itemIds: List<String>) {
         viewModelScope.launch {
             updateState {
                 copy(itemIds = itemIds)
@@ -23,7 +37,7 @@ internal class NotificationEditViewModel(
         }
     }
 
-    fun changeTitle(title: String) {
+    private fun changeTitle(title: String) {
         viewModelScope.launch {
             updateState {
                 copy(title = title)
@@ -31,7 +45,7 @@ internal class NotificationEditViewModel(
         }
     }
 
-    fun changeText(text: String) {
+    private fun changeText(text: String) {
         viewModelScope.launch {
             updateState {
                 copy(text = text)
@@ -39,7 +53,7 @@ internal class NotificationEditViewModel(
         }
     }
 
-    fun changeExpirationDateTime(startDateTime: LocalDateTime) {
+    private fun changeExpirationDateTime(startDateTime: LocalDateTime) {
         viewModelScope.launch {
             updateState {
                 copy(expirationDateTime = startDateTime)
@@ -47,7 +61,7 @@ internal class NotificationEditViewModel(
         }
     }
 
-    fun changeLink(link: String) {
+    private fun changeLink(link: String) {
         viewModelScope.launch {
             updateState {
                 copy(link = link)
@@ -55,7 +69,7 @@ internal class NotificationEditViewModel(
         }
     }
 
-    fun sendNotification() {
+    private fun sendNotification() {
         viewModelScope.launch {
             showLoadingView()
             try {

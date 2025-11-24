@@ -35,31 +35,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class CustomerOverviewScreen(
     val partnerId: String,
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState>() {
+) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState, CustomerOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_customers
 
-    override fun provideInitAction(viewModel: CustomerOverviewViewModel?): () -> Unit =
-        { viewModel?.initView(partnerId = partnerId) }
+    override fun provideInitAction(onAction: (CustomerOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(CustomerOverviewViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<CustomerOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: CustomerOverviewViewModel?,
-        viewState: CustomerOverviewViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        checkedCustomer = { viewModel?.checkedCustomer(it) },
-        navigateToNotification = { viewModel?.navigateToNotification() },
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: CustomerOverviewViewState,
-        checkedCustomer: (String) -> Unit,
-        navigateToNotification: () -> Unit,
+        onAction: (CustomerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             LazyColumn(
@@ -71,7 +60,7 @@ internal class CustomerOverviewScreen(
 
                     CustomerItem(
                         item = user,
-                        onClick = { checkedCustomer(user.id) },
+                        onClick = { onAction(CustomerOverviewViewAction.CheckedCustomer(user.id)) },
                         checkedCustomer = checkedCustomer,
                     )
                 }
@@ -82,7 +71,7 @@ internal class CustomerOverviewScreen(
             Buttons.PrimaryButton(
                 enabled = viewState.checkedUserIds.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
-                onClick = { navigateToNotification() }
+                onClick = { onAction(CustomerOverviewViewAction.NavigateToNotification) }
             )
         }
     }

@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -60,22 +61,23 @@ import kotlin.time.ExperimentalTime
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<HomeViewModel, HomeViewState>() {
+) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.home
 
     override fun provideTopBarActions(
-        viewModel: HomeViewModel?,
+        onAction: (HomeViewAction) -> Unit
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
-            badgeCount = viewModel?.getNumberOfNewNotifications(),
-        ) { viewModel?.navigateToNotifications() },
+            // TODO Fix badgeCount
+            badgeCount = 5,
+        ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 
-    override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(onAction: (HomeViewAction) -> Unit): () -> Unit =
+        { onAction(HomeViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
@@ -157,15 +159,15 @@ internal fun DailyCheckInSection(
 
         Spacers.VerticalBetweenFields()
 
-        if (nextCheckInTimeMillis != null) {
-            Text(
-                stringResource(Res.string.next_check_in),
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
-        }
+            if (nextCheckInTimeMillis != null) {
+                Text(
+                    stringResource(Res.string.next_check_in),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color.Gray
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
+            }
 
         Spacers.VerticalBetweenFields()
 
@@ -195,16 +197,16 @@ private fun RewardItem(reward: DailyReward) {
         ) {
             Texts.LM(stringResource(Res.string.day_number, reward.day))
 
-            val icon = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard
-            Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(28.dp))
-            Text(
-                text = "${reward.points} ${stringResource(Res.string.points_short)}",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
+                val icon = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard
+                Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(28.dp))
+                Text(
+                    text = "${reward.points} ${stringResource(Res.string.points_short)}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
-}
 
 // region previews
 @Preview

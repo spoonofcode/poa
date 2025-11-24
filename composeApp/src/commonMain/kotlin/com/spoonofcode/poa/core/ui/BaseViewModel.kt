@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
-abstract class BaseViewModel<VS : BaseViewState>(
+abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
     initialViewState: VS
 ) : ViewModel() {
 
@@ -44,6 +44,8 @@ abstract class BaseViewModel<VS : BaseViewState>(
     init {
         observeNetworkState()
     }
+
+    open fun onAction(action: VA) {}
 
     open fun onStartViewState() {}
 

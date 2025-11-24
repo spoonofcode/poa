@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile
+package com.spoonofcode.poa.feature.profile.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
@@ -14,12 +14,24 @@ import com.spoonofcode.poa.feature.tac.TACScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class ProfileViewModel(
+internal class ProfileDetailsViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<ProfileViewState>(ProfileViewState()) {
+) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction>(ProfileDetailsViewState()) {
 
-    fun initView() {
+    override fun onAction(action: ProfileDetailsViewAction) {
+        when (action) {
+            ProfileDetailsViewAction.InitView -> initView()
+            ProfileDetailsViewAction.Logout -> logout()
+            ProfileDetailsViewAction.NavigateToEditProfile -> navigateToEditProfile()
+            ProfileDetailsViewAction.NavigateToFAQ -> navigateToFAQ()
+            ProfileDetailsViewAction.NavigateToNotificationSettings -> navigateToNotificationSettings()
+            ProfileDetailsViewAction.NavigateToPartnerPanel -> navigateToPartnerPanel()
+            ProfileDetailsViewAction.NavigateToTAC -> navigateToTAC()
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -38,37 +50,37 @@ internal class ProfileViewModel(
         }
     }
 
-    fun navigateToEditProfile() {
+    private fun navigateToEditProfile() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = ProfileEditScreen())
         }
     }
 
-    fun navigateToPartnerPanel() {
+    private fun navigateToPartnerPanel() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = PartnerPanelScreen())
         }
     }
 
-    fun navigateToNotificationSettings() {
+    private fun navigateToNotificationSettings() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = NotificationSettingsScreen())
         }
     }
 
-    fun navigateToTAC() {
+    private fun navigateToTAC() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = TACScreen())
         }
     }
 
-    fun navigateToFAQ() {
+    private fun navigateToFAQ() {
         viewModelScope.launch {
             viewModelNavigator.push(screen = FAQScreen())
         }
     }
 
-    fun logout() {
+    private fun logout() {
         viewModelScope.launch {
             logoutUseCase.invoke()
             viewModelNavigator.replaceAll(listOf(LoginScreen()))

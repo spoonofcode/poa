@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -42,7 +41,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal data class ProductDetailsScreen(
     val productId: String,
     val hasOwnerUser: Boolean = true,
-) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState>() {
+) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.product
 
@@ -50,32 +49,31 @@ internal data class ProductDetailsScreen(
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
     override fun provideTopBarActions(
-        viewModel: ProductDetailsViewModel?,
+        onAction: (ProductDetailsViewAction) -> Unit,
     ) = if (hasOwnerUser) {
         listOf(
-            TopBarAction(Icons.Default.Edit, "Edit") { viewModel?.navigateToEditProduct() },
-            TopBarAction(Icons.Default.Delete, "Delete") { viewModel?.deleteProduct() }
+            TopBarAction(
+                icon = Icons.Default.Edit,
+                description = "Edit",
+                onClick = { onAction(ProductDetailsViewAction.AddProduct) },
+            ),
+            TopBarAction(Icons.Default.Delete, "Delete") {
+                onAction(
+                    ProductDetailsViewAction.DeleteProduct
+                )
+            }
         )
     } else {
         emptyList()
     }
 
-    override fun provideInitAction(viewModel: ProductDetailsViewModel?): () -> Unit =
-        { viewModel?.initView(productId = productId) }
+    override fun provideInitAction(onAction: (ProductDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideContent(
-        viewModel: ProductDetailsViewModel?,
-        viewState: ProductDetailsViewState
-    ): @Composable ColumnScope.() -> Unit = ContentView(
-        viewState = viewState,
-        addProduct = { viewModel?.addProduct() },
-    )
-
-    @Composable
-    internal fun ContentView(
         viewState: ProductDetailsViewState,
-        addProduct: () -> Unit,
+        onAction: (ProductDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val product = requireNotNull(viewState.product)
@@ -123,7 +121,7 @@ internal data class ProductDetailsScreen(
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
                     text = stringResource(Res.string.add_product),
-                    onClick = addProduct
+                    onClick = { onAction(ProductDetailsViewAction.AddProduct) }
                 )
             }
         }
