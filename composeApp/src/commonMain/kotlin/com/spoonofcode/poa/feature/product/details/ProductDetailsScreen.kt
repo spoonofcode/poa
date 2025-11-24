@@ -66,16 +66,16 @@ internal data class ProductDetailsScreen(
     @Composable
     override fun provideContent(
         viewModel: ProductDetailsViewModel?,
-        viewState: ProductDetailsViewState
+        viewState: ProductDetailsViewState,
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        addProduct = { viewModel?.addProduct() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     internal fun ContentView(
         viewState: ProductDetailsViewState,
-        addProduct: () -> Unit,
+        onAction: (ProductDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val product = requireNotNull(viewState.product)
@@ -123,7 +123,7 @@ internal data class ProductDetailsScreen(
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
                     text = stringResource(Res.string.add_product),
-                    onClick = addProduct
+                    onClick = { onAction.invoke(ProductDetailsViewAction.AddProduct) }
                 )
             }
         }

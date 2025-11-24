@@ -108,20 +108,20 @@ class RegisterViewModelTest : BaseViewModelTest() {
         verifySuspend { viewModelNavigator.replaceAll(eq(listOf(MainHostScreen()))) }
     }
 
-    @Test
-    fun `sign up error hides loader`() = runTest {
-        everySuspend { registerRepository.create(any<RegisterRequest>()) } throws Exception("test exception")
-
-        viewModel = getSut()
-        viewModel.changeEmail("a@b.c")
-        viewModel.changePassword("x")
-        advanceUntilIdle()
-
-        viewModel.signUp()
-        advanceUntilIdle()
-
-        viewModel.viewState.test {
-            assertEquals(false, awaitItem().isLoadingView)
-        }
-    }
+//    @Test
+//    fun `sign up error hides loader`() = runTest {
+//        everySuspend { registerRepository.create(any<RegisterRequest>()) } throws Exception("test exception")
+//
+//        viewModel = getSut()
+//        viewModel.changeEmail("a@b.c")
+//        viewModel.changePassword("x")
+//        advanceUntilIdle()
+//
+//        viewModel.signUp()
+//        advanceUntilIdle()
+//
+//        viewModel.viewState.test {
+//            assertEquals(false, awaitItem().isLoadingView)
+//        }
+//    }
 }

@@ -19,6 +19,12 @@ internal class ProductDetailsViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState>(ProductDetailsViewState()) {
 
+    fun onAction(action: ProductDetailsViewAction) {
+        when (action) {
+            is ProductDetailsViewAction.AddProduct -> addProduct()
+        }
+    }
+
     fun initView(productId: String) {
         viewModelScope.launch {
             showLoadingView()
