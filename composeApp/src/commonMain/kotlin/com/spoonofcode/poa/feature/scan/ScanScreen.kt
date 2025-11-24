@@ -32,7 +32,7 @@ internal class ScanScreen(
     override fun provideTopAppBarTitle() = Res.string.scan
 
     override fun provideInitAction(viewModel: ScanViewModel?): () -> Unit =
-        { viewModel?.initView() }
+        { viewModel?.onAction(ScanViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ScanViewModel>()
@@ -43,13 +43,13 @@ internal class ScanScreen(
         viewState: ScanViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        checkProduct = { viewModel?.checkProduct(it) }
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
         viewState: ScanViewState,
-        checkProduct: (String) -> Unit,
+        onAction: (ScanViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val reader: NfcReader = rememberNfcReader()
@@ -64,7 +64,7 @@ internal class ScanScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 tag?.let {
-                    checkProduct(it.id)
+                    onAction.invoke(ScanViewAction.CheckProduct(it.id))
                 } ?: LottieAnimation(
                     animationFilePath = viewState.animationFilePath,
                     contentDescription = viewState.contentDescription,

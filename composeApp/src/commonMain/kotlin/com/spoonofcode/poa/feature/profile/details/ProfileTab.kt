@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile
+package com.spoonofcode.poa.feature.profile.details
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -30,6 +30,6 @@ object ProfileTab : Tab {
 
     @Composable
     override fun Content() {
-        ProfileScreen().Content()
+        ProfileDetailsScreen().Content()
     }
 }

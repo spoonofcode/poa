@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.partner.overview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,7 +37,7 @@ internal class PartnerOverviewScreen(
     override fun provideTopAppBarTitle() = Res.string.partners
 
     override fun provideInitAction(viewModel: PartnerOverviewViewModel?): () -> Unit =
-        { viewModel?.initView() }
+        { viewModel?.onAction(PartnerOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
@@ -49,31 +48,25 @@ internal class PartnerOverviewScreen(
         viewState: PartnerOverviewViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        clickCategory = { viewModel?.clickCategory(it) },
-        changeSearchText = { viewModel?.changeSearchText(it) },
-        selectPartner = { viewModel?.selectPartner(it) },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
         viewState: PartnerOverviewViewState,
-        changeSearchText: (String) -> Unit,
-        clickCategory: (String) -> Unit,
-        selectPartner: (String) -> Unit,
+        onAction: (PartnerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.searchText,
-                onValueChange = { changeSearchText(it) },
+                onValueChange = { onAction.invoke(PartnerOverviewViewAction.ChangeSearchText(it)) },
                 innerLabel = stringResource(resource = Res.string.search),
             )
 
             HorizontalScrollableFilterChipRow(
                 categories = viewState.partnerCategories,
                 selectedCategories = viewState.selectedPartnerCategories,
-                onCategorySelected = { categoryId ->
-                    clickCategory(categoryId)
-                }
+                onCategorySelected = { onAction.invoke(PartnerOverviewViewAction.ClickCategory(it)) }
             )
 
             LazyColumn(
@@ -83,7 +76,7 @@ internal class PartnerOverviewScreen(
                 items(viewState.filteredPartners) { partner ->
                     PartnerItem(
                         item = partner,
-                        onClick = { selectPartner(partner.id) }
+                        onClick = { onAction.invoke(PartnerOverviewViewAction.SelectPartner(partner.id)) }
                     )
                 }
             }

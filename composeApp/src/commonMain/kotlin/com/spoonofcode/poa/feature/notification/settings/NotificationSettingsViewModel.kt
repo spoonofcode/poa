@@ -13,7 +13,21 @@ internal class NotificationSettingsViewModel(
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
 ) : BaseViewModel<NotificationSettingsViewState>(NotificationSettingsViewState()) {
 
-    fun initView() {
+    fun onAction(action: NotificationSettingsViewAction) {
+        when (action) {
+            NotificationSettingsViewAction.InitView -> initView()
+            NotificationSettingsViewAction.SaveChanges -> saveChanges()
+            is NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
+                action.enable
+            )
+
+            is NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
+                action.enable
+            )
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -31,7 +45,7 @@ internal class NotificationSettingsViewModel(
         }
     }
 
-    fun switchNotificationFromAllPartners(enable: Boolean) {
+    private fun switchNotificationFromAllPartners(enable: Boolean) {
         updateState {
             copy(
                 notificationSettings = notificationSettings.copy(
@@ -41,7 +55,7 @@ internal class NotificationSettingsViewModel(
         }
     }
 
-    fun switchNotificationFromMyPartners(enable: Boolean) {
+    private fun switchNotificationFromMyPartners(enable: Boolean) {
         updateState {
             copy(
                 notificationSettings = notificationSettings.copy(
@@ -51,7 +65,7 @@ internal class NotificationSettingsViewModel(
         }
     }
 
-    fun saveChanges() {
+    private fun saveChanges() {
         viewModelScope.launch {
             showLoadingView()
             try {

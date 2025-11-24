@@ -25,7 +25,7 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
     override fun provideTopAppBarTitle() = Res.string.edit_profile
 
     override fun provideInitAction(viewModel: ProfileEditViewModel?): () -> Unit =
-        { viewModel?.initView() }
+        { viewModel?.onAction(ProfileEditViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProfileEditViewModel>()
@@ -36,15 +36,13 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
         viewState: ProfileEditViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        changeCustomLink = { viewModel?.changeCustomLink(it) },
-        saveChanges = { viewModel?.saveChanges() }
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
         viewState: ProfileEditViewState,
-        changeCustomLink: (String) -> Unit,
-        saveChanges: () -> Unit,
+        onAction: (ProfileEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -58,7 +56,7 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
 
             TextFields.Outlined(
                 value = viewState.profile!!.name ?: "",
-                onValueChange = changeCustomLink,
+                onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
                 label = stringResource(resource = Res.string.name),
             )
 
@@ -68,7 +66,7 @@ internal class ProfileEditScreen() : BaseScreen<ProfileEditViewModel, ProfileEdi
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = saveChanges
+                onClick = { onAction(ProfileEditViewAction.SaveChanges) }
             )
         }
     }

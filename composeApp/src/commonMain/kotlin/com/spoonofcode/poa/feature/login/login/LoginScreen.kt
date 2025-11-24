@@ -57,23 +57,13 @@ internal class LoginScreen(
         viewState: LoginViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        changeEmail = { viewModel?.changeEmail(it) },
-        changePassword = { viewModel?.changePassword(it) },
-        forgotPassword = { viewModel?.forgotPassword() },
-        signIn = { viewModel?.signIn() },
-        signInWithGoogle = { viewModel?.signInWithGoogle(it) },
-        signUp = { viewModel?.signUp() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     internal fun ContentView(
         viewState: LoginViewState,
-        changeEmail: (String) -> Unit,
-        changePassword: (String) -> Unit,
-        forgotPassword: () -> Unit,
-        signIn: () -> Unit,
-        signInWithGoogle: (String) -> Unit,
-        signUp: () -> Unit,
+        onAction: (LoginViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Column(
@@ -92,7 +82,7 @@ internal class LoginScreen(
 
             TextFields.Outlined(
                 value = viewState.email,
-                onValueChange = { changeEmail(it) },
+                onValueChange = { onAction(LoginViewAction.ChangeEmail(email = it)) },
                 label = stringResource(resource = Res.string.email),
             )
 
@@ -100,17 +90,17 @@ internal class LoginScreen(
 
             TextFields.OutlinedPassword(
                 value = viewState.password,
-                onValueChange = { changePassword(it) },
+                onValueChange = { onAction(LoginViewAction.ChangePassword(password = it)) },
                 label = stringResource(resource = Res.string.password),
             )
 
-            ForgotPasswordInline(onResetClick = { forgotPassword() })
+            ForgotPasswordInline(onResetClick = { onAction(LoginViewAction.ForgotPassword) })
 
             Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in),
-                onClick = { signIn() }
+                onClick = { onAction(LoginViewAction.SignIn) }
             )
 
             Spacers.VerticalBetweenFields()
@@ -123,14 +113,14 @@ internal class LoginScreen(
                 // send Google id token to your server
                 val googleUserToken = requireNotNull(googleUser?.token)
                 println("BARTEK googleUserToken = $googleUserToken")
-                signInWithGoogle(googleUserToken)
+                onAction(LoginViewAction.SignInWithGoogle(googleUserToken))
             })
 
             Spacers.VerticalBetweenFields()
 
             Buttons.SecondaryButton(
                 text = stringResource(resource = Res.string.sign_up),
-                onClick = { signUp() }
+                onClick = { onAction(LoginViewAction.SignUp) }
             )
         }
     }

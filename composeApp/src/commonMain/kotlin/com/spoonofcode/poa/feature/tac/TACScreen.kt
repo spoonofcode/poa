@@ -27,7 +27,7 @@ internal class TACScreen(
     override fun provideTopAppBarTitle() = Res.string.terms_and_conditions
 
     override fun provideInitAction(viewModel: TACViewModel?): () -> Unit =
-        { viewModel?.initView() }
+        { viewModel?.onAction(TACViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<TACViewModel>()
@@ -38,13 +38,13 @@ internal class TACScreen(
         viewState: TACViewState
     ): @Composable (ColumnScope.() -> Unit) = ContentView(
         viewState = viewState,
-        saveChanges = { viewModel?.saveChanges() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
         viewState: TACViewState,
-        saveChanges: () -> Unit,
+        onAction: (TACViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.HS(stringResource(Res.string.terms_and_conditions_description))
@@ -74,7 +74,7 @@ internal class TACScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.save_changes),
-                onClick = { saveChanges() }
+                onClick = { onAction.invoke(TACViewAction.SaveChanges) }
             )
         }
     }

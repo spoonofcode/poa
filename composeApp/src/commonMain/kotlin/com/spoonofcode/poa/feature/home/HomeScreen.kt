@@ -2,7 +2,6 @@
 
 package com.spoonofcode.poa.feature.home
 
-import kotlin.time.ExperimentalTime
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,58 +15,59 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.spoonofcode.poa.core.model.DailyReward
+import com.spoonofcode.poa.core.model.RewardStatus
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.ImageSlider
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.home
-import com.spoonofcode.poa.resources.new_partners
-import kotlinx.coroutines.delay
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.time.Clock
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.filled.CardGiftcard
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material3.Icon
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.draw.alpha
-import com.spoonofcode.poa.core.model.DailyReward
-import com.spoonofcode.poa.core.model.RewardStatus
 import com.spoonofcode.poa.resources.check_in_again
 import com.spoonofcode.poa.resources.collect_reward
 import com.spoonofcode.poa.resources.daily_check_in
 import com.spoonofcode.poa.resources.day_number
+import com.spoonofcode.poa.resources.home
 import com.spoonofcode.poa.resources.hours
 import com.spoonofcode.poa.resources.minutes
+import com.spoonofcode.poa.resources.new_partners
 import com.spoonofcode.poa.resources.next_check_in
 import com.spoonofcode.poa.resources.points_short
 import com.spoonofcode.poa.resources.seconds
 import com.spoonofcode.poa.resources.streak_days_count
 import com.spoonofcode.poa.resources.total_points
 import com.spoonofcode.poa.resources.your_streak
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.ExperimentalTime
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
@@ -81,12 +81,13 @@ internal class HomeScreen(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
-            badgeCount = viewModel?.getNumberOfNewNotifications(),
-        ) { viewModel?.navigateToNotifications() },
+            // TODO Fix badgeCount
+            badgeCount = 5,
+        ) { viewModel?.onAction(HomeViewAction.NavigateToNotifications) },
     )
 
     override fun provideInitAction(viewModel: HomeViewModel?): () -> Unit =
-        { viewModel?.initView() }
+        { viewModel?.onAction(HomeViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
@@ -97,14 +98,14 @@ internal class HomeScreen(
         viewState: HomeViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        onCheckInClicked = { viewModel?.onCheckInClicked() },
+        onAction = viewModel!!::onAction,
     )
 }
 
 @Composable
 internal fun ContentView(
     viewState: HomeViewState,
-    onCheckInClicked: () -> Unit,
+    onAction: (HomeViewAction) -> Unit,
 ): @Composable (ColumnScope.() -> Unit) {
     return {
         ImageSlider(
@@ -116,10 +117,11 @@ internal fun ContentView(
             rewards = viewState.rewards,
             totalPoints = viewState.totalPoints,
             nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
-            onCheckInClicked = onCheckInClicked
+            onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
         )
     }
 }
+
 @Composable
 internal fun DailyCheckInSection(
     rewards: List<DailyReward>,
@@ -208,6 +210,7 @@ internal fun DailyCheckInSection(
         }
     }
 }
+
 @Composable
 internal fun CountdownTimer(targetTimeMillis: Long) {
     var remainingTime by remember { mutableStateOf(0L) }
@@ -305,6 +308,7 @@ private fun CountdownUnit(value: Long, label: String) {
         Text(text = label, fontSize = 10.sp, color = Color.Gray)
     }
 }
+
 // region previews
 @Preview
 @Composable
@@ -334,7 +338,8 @@ private fun HomeScreenContentCheckedInPreview() {
     HomeScreen().PreviewContent(
         HomeViewState(
             rewards = rewards,
-            nextCheckInTimeMillis = Clock.System.now().toEpochMilliseconds() + 5.hours.inWholeMilliseconds
+            nextCheckInTimeMillis = Clock.System.now()
+                .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
         )
     )
 }

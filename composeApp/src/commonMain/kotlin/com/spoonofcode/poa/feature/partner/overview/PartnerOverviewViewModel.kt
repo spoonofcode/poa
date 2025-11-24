@@ -16,11 +16,16 @@ internal class PartnerOverviewViewModel(
     private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
 ) : BaseViewModel<PartnerOverviewViewState>(PartnerOverviewViewState()) {
 
-    init {
-        initView()
+    fun onAction(action: PartnerOverviewViewAction) {
+        when (action) {
+            is PartnerOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
+            is PartnerOverviewViewAction.ClickCategory -> clickCategory(action.categoryId)
+            PartnerOverviewViewAction.InitView -> initView()
+            is PartnerOverviewViewAction.SelectPartner -> selectPartner(action.partnerId)
+        }
     }
 
-    fun initView() {
+    private fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -42,7 +47,7 @@ internal class PartnerOverviewViewModel(
         }
     }
 
-    fun clickCategory(categoryId: String) {
+    private fun clickCategory(categoryId: String) {
         updateState {
             copy(
                 selectedPartnerCategories = if (selectedPartnerCategories.contains(categoryId)) {
@@ -54,7 +59,7 @@ internal class PartnerOverviewViewModel(
         }
     }
 
-    fun changeSearchText(searchText: String) {
+    private fun changeSearchText(searchText: String) {
         viewModelScope.launch {
             val products = currentState().initPartners
             val filteredPartners = getPartnersFilteredByTextUseCase(
@@ -67,7 +72,7 @@ internal class PartnerOverviewViewModel(
         }
     }
 
-    fun selectPartner(partnerId: String) {
+    private fun selectPartner(partnerId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(PartnerDetailsScreen(partnerId = partnerId))
         }

@@ -1,26 +1,16 @@
 package com.spoonofcode.poa.feature.profile
 
-import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.repository.ProfileRepository
-import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
-import dev.mokkery.answering.throws
-import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
-import dev.mokkery.matcher.ofType
-import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProfileViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var viewModel: ProfileDetailsViewModel
     private lateinit var profileRepository: ProfileRepository
 
     @BeforeTest

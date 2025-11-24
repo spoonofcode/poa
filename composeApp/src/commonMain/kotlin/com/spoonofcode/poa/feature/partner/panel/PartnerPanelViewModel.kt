@@ -12,6 +12,13 @@ internal class PartnerPanelViewModel(
 ) :
     BaseViewModel<PartnerPanelViewState>(PartnerPanelViewState()) {
 
+    fun onAction(action: PartnerPanelViewAction) {
+        when (action) {
+            PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
+            PartnerPanelViewAction.NavigateToPartnerEdit -> navigateToPartnerEdit()
+        }
+    }
+
     fun navigateToPartnerEdit() {
         viewModelScope.launch {
             viewModelNavigator.push(PartnerEditScreen(partnerId = getUserPartnersUseCase().first().id))

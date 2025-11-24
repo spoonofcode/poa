@@ -21,10 +21,10 @@ internal class ProductDetailsViewModel(
 
     fun onAction(action: ProductDetailsViewAction) {
         when (action) {
-            is ProductDetailsViewAction.InitView -> initView(productId = action.productId)
             ProductDetailsViewAction.AddProduct -> addProduct()
             ProductDetailsViewAction.DeleteProduct -> deleteProduct()
             ProductDetailsViewAction.EditProduct -> editProduct()
+            is ProductDetailsViewAction.InitView -> initView(productId = action.productId)
         }
     }
 

@@ -7,23 +7,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Buttons.IconTextButton
-import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.partner_info
 import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.send_notification
-import com.spoonofcode.poa.resources.to_selected_customers
-import com.spoonofcode.poa.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -41,15 +34,13 @@ internal class PartnerPanelScreen() :
         viewState: PartnerPanelViewState,
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        navigateToMyPartners = { viewModel?.navigateToPartnerEdit() },
-        navigateToNotificationType = { viewModel?.navigateToNotificationType() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
         viewState: PartnerPanelViewState,
-        navigateToMyPartners: () -> Unit,
-        navigateToNotificationType: () -> Unit,
+        onAction: (PartnerPanelViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -59,14 +50,14 @@ internal class PartnerPanelScreen() :
                 IconTextButton(
                     icon = Icons.Default.Person,
                     text = stringResource(resource = Res.string.partner_info),
-                    onClick = navigateToMyPartners,
+                    onClick = { onAction.invoke(PartnerPanelViewAction.NavigateToPartnerEdit) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.AutoMirrored.Filled.Send,
                     text = stringResource(resource = Res.string.send_notification),
-                    onClick = navigateToNotificationType,
+                    onClick = { onAction.invoke(PartnerPanelViewAction.NavigateToNotificationType) },
                     modifier = Modifier.weight(1f)
                 )
             }

@@ -11,7 +11,14 @@ internal class ScanViewModel(
     private val getProductByTagIdUseCase: GetProductByTagIdUseCase,
 ) : BaseViewModel<ScanViewState>(ScanViewState()) {
 
-    fun initView() {
+    fun onAction(action: ScanViewAction) {
+        when (action) {
+            is ScanViewAction.CheckProduct -> checkProduct(action.tagId)
+            ScanViewAction.InitView -> initView()
+        }
+    }
+
+    private fun initView() {
         updateState {
             copy(
                 screenState = ScreenState.CONTENT,
@@ -19,7 +26,7 @@ internal class ScanViewModel(
         }
     }
 
-    fun checkProduct(tagId: String) {
+    private fun checkProduct(tagId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {

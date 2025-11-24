@@ -39,19 +39,13 @@ internal class NotificationTypeScreen :
         viewState: NotificationTypeViewState,
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        navigateToAll = { viewModel?.navigateToAll() },
-        navigateToAllPartnerCustomers = { viewModel?.navigateToAllPartnerCustomers() },
-        navigateToSelectedPartnerCustomers = { viewModel?.navigateToPartnerCustomers() },
-        navigateToSelectedPartnerProductSeries = { viewModel?.navigateToPartnerProductSeries() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
         viewState: NotificationTypeViewState,
-        navigateToAll: () -> Unit,
-        navigateToAllPartnerCustomers: () -> Unit,
-        navigateToSelectedPartnerCustomers: () -> Unit,
-        navigateToSelectedPartnerProductSeries: () -> Unit,
+        onAction: (NotificationTypeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -61,7 +55,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = navigateToAll,
+                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToAll) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )
@@ -69,7 +63,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
-                    onClick = navigateToAllPartnerCustomers,
+                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -83,14 +77,14 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = navigateToSelectedPartnerCustomers,
+                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.Default.WebStories,
                     text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = navigateToSelectedPartnerProductSeries,
+                    onClick = { onAction.invoke(NotificationTypeViewAction.NavigateToPartnerProductSeries) },
                     modifier = Modifier.weight(1f)
                 )
             }

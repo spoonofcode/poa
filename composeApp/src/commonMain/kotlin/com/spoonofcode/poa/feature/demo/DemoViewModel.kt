@@ -7,7 +7,13 @@ import kotlinx.coroutines.launch
 
 internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
 
-    fun initView() {
+    fun onAction(action: DemoViewAction) {
+        when (action) {
+            DemoViewAction.InitView -> initView()
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
         }
     }
@@ -19,7 +25,7 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState>(DemoViewState()) {
             )
         }
     }
-    
+
     private fun showErrorView() {
         updateState {
             copy(

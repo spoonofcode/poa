@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile
+package com.spoonofcode.poa.feature.profile.details
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +18,6 @@ import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Help
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.FilledTonalButton
@@ -54,41 +52,31 @@ import com.spoonofcode.poa.resources.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-internal class ProfileScreen(
+internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProfileViewModel, ProfileViewState>() {
+) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState>() {
 
     override fun provideTopAppBarTitle() = Res.string.profile
 
-    override fun provideInitAction(viewModel: ProfileViewModel?): () -> Unit =
-        { viewModel?.initView() }
+    override fun provideInitAction(viewModel: ProfileDetailsViewModel?): () -> Unit =
+        { viewModel?.onAction(ProfileDetailsViewAction.InitView) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<ProfileViewModel>()
+    override fun provideViewModel() = koinViewModel<ProfileDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewModel: ProfileViewModel?,
-        viewState: ProfileViewState
+        viewModel: ProfileDetailsViewModel?,
+        viewState: ProfileDetailsViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        navigateToEditProfile = { viewModel?.navigateToEditProfile() },
-        navigateToPartnerPanel = { viewModel?.navigateToPartnerPanel() },
-        navigateToNotificationSettings = { viewModel?.navigateToNotificationSettings() },
-        navigateToFAQ = { viewModel?.navigateToFAQ() },
-        navigateToTAC = { viewModel?.navigateToTAC() },
-        logout = { viewModel?.logout() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     private fun ContentView(
-        viewState: ProfileViewState,
-        navigateToEditProfile: () -> Unit,
-        navigateToPartnerPanel: () -> Unit,
-        navigateToNotificationSettings: () -> Unit,
-        navigateToFAQ: () -> Unit,
-        navigateToTAC: () -> Unit,
-        logout: () -> Unit,
+        viewState: ProfileDetailsViewState,
+        onAction: (ProfileDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -116,7 +104,7 @@ internal class ProfileScreen(
                 FilledTonalButton(
                     modifier = Modifier.heightIn(min = 48.dp),
                     shape = MaterialTheme.shapes.medium,
-                    onClick = navigateToEditProfile,
+                    onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
                 ) {
                     Text(stringResource(resource = Res.string.edit_profile))
                 }
@@ -129,7 +117,7 @@ internal class ProfileScreen(
                 ChevronItem(
                     icon = Icons.Default.Person,
                     title = stringResource(resource = Res.string.partner_panel),
-                    onClick = navigateToPartnerPanel
+                    onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) }
                 )
             }
 
@@ -140,19 +128,19 @@ internal class ProfileScreen(
                 ChevronItem(
                     icon = Icons.Default.Notifications,
                     title = stringResource(resource = Res.string.notifications),
-                    onClick = navigateToNotificationSettings
+                    onClick = { onAction(ProfileDetailsViewAction.NavigateToNotificationSettings) }
                 )
                 DividerItem()
                 ChevronItem(
                     icon = Icons.Default.Description,
                     title = stringResource(resource = Res.string.terms_and_conditions),
-                    onClick = navigateToTAC
+                    onClick = { onAction(ProfileDetailsViewAction.NavigateToTAC) }
                 )
                 DividerItem()
                 ChevronItem(
                     icon = Icons.AutoMirrored.Filled.Help,
                     title = stringResource(resource = Res.string.faq),
-                    onClick = navigateToFAQ
+                    onClick = { onAction(ProfileDetailsViewAction.NavigateToFAQ) }
                 )
             }
 
@@ -165,7 +153,7 @@ internal class ProfileScreen(
                     title = stringResource(resource = Res.string.logout),
                     titleColor = MaterialTheme.colorScheme.error,
                     iconTint = MaterialTheme.colorScheme.error,
-                    onClick = logout
+                    onClick = { onAction(ProfileDetailsViewAction.Logout) }
                 )
             }
 
@@ -260,8 +248,8 @@ private fun DividerItem() {
 @Preview
 @Composable
 private fun ProfileScreenContentPreview() {
-    ProfileScreen().PreviewContent(
-        ProfileViewState(
+    ProfileDetailsScreen().PreviewContent(
+        ProfileDetailsViewState(
             screenState = ScreenState.CONTENT,
             profile = Profile(
                 name = "Bartosz luczak (Lycha)",

@@ -40,7 +40,7 @@ internal class CustomerOverviewScreen(
     override fun provideTopAppBarTitle() = Res.string.my_customers
 
     override fun provideInitAction(viewModel: CustomerOverviewViewModel?): () -> Unit =
-        { viewModel?.initView(partnerId = partnerId) }
+        { viewModel?.onAction(CustomerOverviewViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<CustomerOverviewViewModel>()
@@ -51,15 +51,13 @@ internal class CustomerOverviewScreen(
         viewState: CustomerOverviewViewState
     ): @Composable ColumnScope.() -> Unit = ContentView(
         viewState = viewState,
-        checkedCustomer = { viewModel?.checkedCustomer(it) },
-        navigateToNotification = { viewModel?.navigateToNotification() },
+        onAction = viewModel!!::onAction,
     )
 
     @Composable
     internal fun ContentView(
         viewState: CustomerOverviewViewState,
-        checkedCustomer: (String) -> Unit,
-        navigateToNotification: () -> Unit,
+        onAction: (CustomerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             LazyColumn(
@@ -71,7 +69,7 @@ internal class CustomerOverviewScreen(
 
                     CustomerItem(
                         item = user,
-                        onClick = { checkedCustomer(user.id) },
+                        onClick = { onAction.invoke(CustomerOverviewViewAction.CheckedCustomer(user.id)) },
                         checkedCustomer = checkedCustomer,
                     )
                 }
@@ -82,7 +80,7 @@ internal class CustomerOverviewScreen(
             Buttons.PrimaryButton(
                 enabled = viewState.checkedUserIds.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
-                onClick = { navigateToNotification() }
+                onClick = { onAction.invoke(CustomerOverviewViewAction.NavigateToNotification) }
             )
         }
     }

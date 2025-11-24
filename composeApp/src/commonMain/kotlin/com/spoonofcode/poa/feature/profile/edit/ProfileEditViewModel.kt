@@ -12,7 +12,15 @@ internal class ProfileEditViewModel(
     private val getProfileUseCase: GetProfileUseCase
 ) : BaseViewModel<ProfileEditViewState>(ProfileEditViewState()) {
 
-    fun initView() {
+    fun onAction(action: ProfileEditViewAction) {
+        when (action) {
+            is ProfileEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
+            ProfileEditViewAction.InitView -> initView()
+            ProfileEditViewAction.SaveChanges -> saveChanges()
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -31,12 +39,12 @@ internal class ProfileEditViewModel(
         }
     }
 
-    fun changeCustomLink(name: String) {
+    private fun changeCustomLink(name: String) {
         val currentProfile = currentState().profile
         updateState { copy(profile = currentProfile?.copy(name = name)) }
     }
 
-    fun saveChanges() {
+    private fun saveChanges() {
         viewModelScope.launch {
             try {
                 val profile = requireNotNull(currentState().profile)

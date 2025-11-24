@@ -14,7 +14,21 @@ internal class PartnerEditViewModel(
     private val updatePartnerUseCase: UpdatePartnerUseCase
 ) : BaseViewModel<PartnerEditViewState>(PartnerEditViewState()) {
 
-    fun initView(partnerId: String) {
+    fun onAction(action: PartnerEditViewAction) {
+        when (action) {
+            is PartnerEditViewAction.ChangeDescription -> changeDescription(action.description)
+            is PartnerEditViewAction.ChangeFacebookLink -> changeFacebookLink(action.link)
+            is PartnerEditViewAction.ChangeInstagramLink -> changeInstagramLink(action.link)
+            is PartnerEditViewAction.ChangeName -> changeName(action.name)
+            is PartnerEditViewAction.ChangeWebsiteLink -> changeWebsiteLink(action.link)
+            is PartnerEditViewAction.ChangeXLink -> changeXLink(action.link)
+            is PartnerEditViewAction.ChangeYoutubeLink -> changeYoutubeLink(action.link)
+            is PartnerEditViewAction.InitView -> initView(action.partnerId)
+            PartnerEditViewAction.SaveChanges -> saveChanges()
+        }
+    }
+
+    private fun initView(partnerId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {
@@ -33,35 +47,35 @@ internal class PartnerEditViewModel(
         }
     }
 
-    fun changeName(name: String) {
+    private fun changeName(name: String) {
         updateState { copy(partner = getCurrentPartner().copy(name = name)) }
     }
 
-    fun changeDescription(description: String) {
+    private fun changeDescription(description: String) {
         updateState { copy(partner = getCurrentPartner().copy(description = description)) }
     }
 
-    fun changeWebsiteLink(link: String) {
+    private fun changeWebsiteLink(link: String) {
         updateState { copy(partner = getCurrentPartner().copy(websiteLink = link)) }
     }
 
-    fun changeInstagramLink(link: String) {
+    private fun changeInstagramLink(link: String) {
         updateState { copy(partner = getCurrentPartner().copy(instagramLink = link)) }
     }
 
-    fun changeFacebookLink(link: String) {
+    private fun changeFacebookLink(link: String) {
         updateState { copy(partner = getCurrentPartner().copy(facebookLink = link)) }
     }
 
-    fun changeYoutubeLink(link: String) {
+    private fun changeYoutubeLink(link: String) {
         updateState { copy(partner = getCurrentPartner().copy(youtubeLink = link)) }
     }
 
-    fun changeXLink(link: String) {
+    private fun changeXLink(link: String) {
         updateState { copy(partner = getCurrentPartner().copy(xLink = link)) }
     }
 
-    fun saveChanges() {
+    private fun saveChanges() {
         viewModelScope.launch {
             showLoadingView()
             try {

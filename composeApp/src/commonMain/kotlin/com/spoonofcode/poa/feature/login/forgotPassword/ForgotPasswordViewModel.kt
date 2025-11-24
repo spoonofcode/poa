@@ -11,7 +11,14 @@ internal class ForgotPasswordViewModel(
     private val sessionManager: SessionManager,
 ) : BaseViewModel<ForgotPasswordViewState>(ForgotPasswordViewState()) {
 
-    fun changeEmail(email: String) {
+    fun onAction(action: ForgotPasswordViewAction) {
+        when (action) {
+            is ForgotPasswordViewAction.ChangeEmail -> changeEmail(email = action.email)
+            ForgotPasswordViewAction.ResetPassword -> resetPassword()
+        }
+    }
+
+    private fun changeEmail(email: String) {
         viewModelScope.launch {
             updateState {
                 copy(
@@ -21,7 +28,7 @@ internal class ForgotPasswordViewModel(
         }
     }
 
-    fun resetPassword() {
+    private fun resetPassword() {
         viewModelScope.launch {
 
         }

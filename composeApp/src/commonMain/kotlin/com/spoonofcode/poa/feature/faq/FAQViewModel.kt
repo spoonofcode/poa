@@ -7,7 +7,14 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class FAQViewModel() : BaseViewModel<FAQViewState>(FAQViewState()) {
-    fun initView() {
+
+    fun onAction(action: FAQViewAction) {
+        when (action) {
+            FAQViewAction.InitView -> initView()
+        }
+    }
+
+    private fun initView() {
         viewModelScope.launch {
             showLoadingView()
             try {

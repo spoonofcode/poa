@@ -33,7 +33,7 @@ internal class PartnerDetailsScreen(
     override fun provideTopAppBarTitle() = Res.string.partner
 
     override fun provideInitAction(viewModel: PartnerDetailsViewModel?): () -> Unit =
-        { viewModel?.initView(partnerId = partnerId) }
+        { viewModel?.onAction(PartnerDetailsViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()

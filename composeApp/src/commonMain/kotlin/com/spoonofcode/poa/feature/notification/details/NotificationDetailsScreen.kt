@@ -40,7 +40,7 @@ internal class NotificationDetailsScreen(
     override fun provideTopAppBarTitle() = Res.string.notification
 
     override fun provideInitAction(viewModel: NotificationDetailsViewModel?): () -> Unit =
-        { viewModel?.initView(notificationId = notificationId) }
+        { viewModel?.onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()

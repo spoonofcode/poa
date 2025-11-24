@@ -11,7 +11,13 @@ internal class NotificationDetailsViewModel(
     private val getNotificationByIdUseCase: GetNotificationByIdUseCase,
 ) : BaseViewModel<NotificationDetailsViewState>(NotificationDetailsViewState()) {
 
-    fun initView(notificationId: String) {
+    fun onAction(action: NotificationDetailsViewAction) {
+        when (action) {
+            is NotificationDetailsViewAction.InitView -> initView(notificationId = action.notificationId)
+        }
+    }
+
+    private fun initView(notificationId: String) {
         viewModelScope.launch {
             showLoadingView()
             try {

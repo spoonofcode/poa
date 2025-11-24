@@ -16,7 +16,7 @@ internal class DemoScreen(
 ) : BaseScreen<DemoViewModel, DemoViewState>() {
 
     override fun provideInitAction(viewModel: DemoViewModel?): () -> Unit =
-        { viewModel?.initView() }
+        { viewModel?.onAction(DemoViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<DemoViewModel>()

@@ -41,7 +41,7 @@ internal class PartnerEditScreen(
     override fun provideTopAppBarTitle() = Res.string.partner
 
     override fun provideInitAction(viewModel: PartnerEditViewModel?): () -> Unit =
-        { viewModel?.initView(partnerId = partnerId) }
+        { viewModel?.onAction(PartnerEditViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
@@ -53,28 +53,14 @@ internal class PartnerEditScreen(
     ): @Composable ColumnScope.() -> Unit = {
         ContentView(
             viewState = viewState,
-            onNameChange = { viewModel?.changeName(it) },
-            onDescriptionChange = { viewModel?.changeDescription(it) },
-            onWebsiteLinkChange = { viewModel?.changeWebsiteLink(it) },
-            onInstagramLinkChange = { viewModel?.changeInstagramLink(it) },
-            onFacebookLinkChange = { viewModel?.changeFacebookLink(it) },
-            onYoutubeLinkChange = { viewModel?.changeYoutubeLink(it) },
-            onXLinkChange = { viewModel?.changeXLink(it) },
-            onSaveChanges = { viewModel?.saveChanges() }
+            onAction = viewModel!!::onAction,
         )
     }
 
     @Composable
     private fun ContentView(
         viewState: PartnerEditViewState,
-        onNameChange: (String) -> Unit,
-        onDescriptionChange: (String) -> Unit,
-        onWebsiteLinkChange: (String) -> Unit,
-        onInstagramLinkChange: (String) -> Unit,
-        onFacebookLinkChange: (String) -> Unit,
-        onYoutubeLinkChange: (String) -> Unit,
-        onXLinkChange: (String) -> Unit,
-        onSaveChanges: () -> Unit,
+        onAction: (PartnerEditViewAction) -> Unit,
     ) {
         val partner = viewState.partner
 
@@ -97,37 +83,37 @@ internal class PartnerEditScreen(
 
             TextFields.Outlined(
                 value = partner.name,
-                onValueChange = onNameChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeName(it)) },
                 label = stringResource(resource = Res.string.partner_name),
             )
             TextFields.Outlined(
                 value = partner.description.orEmpty(), // Używamy orEmpty() dla bezpieczeństwa
-                onValueChange = onDescriptionChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeDescription(it)) },
                 label = stringResource(resource = Res.string.description),
             )
             TextFields.Outlined(
                 value = partner.websiteLink.orEmpty(),
-                onValueChange = onWebsiteLinkChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeWebsiteLink(it)) },
                 label = stringResource(resource = Res.string.website),
             )
             TextFields.Outlined(
                 value = partner.instagramLink.orEmpty(),
-                onValueChange = onInstagramLinkChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeInstagramLink(it)) },
                 label = stringResource(resource = Res.string.instagram),
             )
             TextFields.Outlined(
                 value = partner.facebookLink.orEmpty(),
-                onValueChange = onFacebookLinkChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeFacebookLink(it)) },
                 label = stringResource(resource = Res.string.facebook),
             )
             TextFields.Outlined(
                 value = partner.youtubeLink.orEmpty(),
-                onValueChange = onYoutubeLinkChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeYoutubeLink(it)) },
                 label = stringResource(resource = Res.string.youtube),
             )
             TextFields.Outlined(
                 value = partner.xLink.orEmpty(),
-                onValueChange = onXLinkChange,
+                onValueChange = { onAction.invoke(PartnerEditViewAction.ChangeXLink(it)) },
                 label = stringResource(resource = Res.string.x),
             )
 
@@ -135,7 +121,7 @@ internal class PartnerEditScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.save_changes),
-                onClick = onSaveChanges, // onClick jest już lambdą
+                onClick = { onAction.invoke(PartnerEditViewAction.SaveChanges) },
             )
         }
     }
