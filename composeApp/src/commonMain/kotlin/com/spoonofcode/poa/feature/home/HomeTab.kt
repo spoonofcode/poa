@@ -23,7 +23,6 @@ object HomeTab : Tab {
 
     @Composable
     override fun Content() {
-        val screen = remember { HomeScreen() }
-        screen.Content()
+        HomeScreen().Content()
     }
 }

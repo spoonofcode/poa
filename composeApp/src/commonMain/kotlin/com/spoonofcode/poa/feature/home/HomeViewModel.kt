@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalTime::class)
-
 package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
@@ -11,14 +9,13 @@ import com.spoonofcode.poa.core.model.RewardStatus
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.plus
-import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 internal class HomeViewModel(
@@ -65,6 +62,7 @@ internal class HomeViewModel(
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun loadDailyRewardsStatus() {
         viewModelScope.launch {
             showLoadingView()
@@ -75,9 +73,8 @@ internal class HomeViewModel(
 
                 val nextCheckInMillis =
                     if (!isRewardAvailable && rewards.any { it.status == RewardStatus.CLAIMED }) {
-                        val now = Clock.System.now()
                         val localTimeZone = TimeZone.currentSystemDefault()
-                        val today = now.toLocalDateTime(localTimeZone).date
+                        val today = LocalDateTimeUtils.now().date
                         val tomorrow = today.plus(1, DateTimeUnit.DAY)
                         val nextCheckInInstant = tomorrow.atStartOfDayIn(localTimeZone)
                         nextCheckInInstant.toEpochMilliseconds()
