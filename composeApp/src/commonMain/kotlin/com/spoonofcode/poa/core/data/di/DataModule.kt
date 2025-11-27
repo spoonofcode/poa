@@ -21,6 +21,5 @@ val dataModule = module {
     singleOf(::ProductRepository)
     singleOf(::PartnerRepository)
     singleOf(::PartnerCategoryRepository)
-    singleOf(::ProfileRepository)
     singleOf(::NotificationRepository)
 }

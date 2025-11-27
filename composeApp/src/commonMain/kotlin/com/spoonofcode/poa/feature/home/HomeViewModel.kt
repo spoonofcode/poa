@@ -2,25 +2,20 @@ package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
-import com.spoonofcode.poa.core.domain.home.GetDailyRewardsUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
-import com.spoonofcode.poa.core.model.RewardStatus
+import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
+import com.spoonofcode.poa.core.model.DailyRewardStatus
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.core.ui.utils.LocalDateTimeUtils
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.plus
 import kotlin.time.ExperimentalTime
 
 internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
-    private val getDailyRewardsUseCase: GetDailyRewardsUseCase,
+    private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
@@ -67,27 +62,18 @@ internal class HomeViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                val rewards = getDailyRewardsUseCase()
+                val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
                 val totalPoints = getUserRewardsPointsUseCase()
-                val isRewardAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
-
-                val nextCheckInMillis =
-                    if (!isRewardAvailable && rewards.any { it.status == RewardStatus.CLAIMED }) {
-                        val localTimeZone = TimeZone.currentSystemDefault()
-                        val today = LocalDateTimeUtils.now().date
-                        val tomorrow = today.plus(1, DateTimeUnit.DAY)
-                        val nextCheckInInstant = tomorrow.atStartOfDayIn(localTimeZone)
-                        nextCheckInInstant.toEpochMilliseconds()
-                    } else {
-                        null
-                    }
+                val isRewardAvailable = dailyCheckInStatus.dailyRewards.any { it.status == DailyRewardStatus.AVAILABLE_TO_CLAIM }
 
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
-                        rewards = rewards,
+                        rewards = dailyCheckInStatus.dailyRewards,
+                        streak = dailyCheckInStatus.streak,
+                        isActionAvailable = isRewardAvailable,
                         totalPoints = totalPoints,
-                        nextCheckInTimeMillis = nextCheckInMillis
+                        nextCheckInTimeMillis = dailyCheckInStatus.nextCheckInTimeMillis
                     )
                 }
             } catch (e: Exception) {

@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.model.DailyReward
-import com.spoonofcode.poa.core.model.RewardStatus
+import com.spoonofcode.poa.core.model.DailyRewardStatus
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.Buttons
@@ -93,25 +93,26 @@ internal class HomeScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             DailyCheckInSection(
-                rewards = viewState.rewards,
+                streak = viewState.streak,
                 totalPoints = viewState.totalPoints,
+                isActionAvailable = viewState.isActionAvailable,
                 nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
-                onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
+                onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) },
+                rewards = viewState.rewards,
             )
         }
     }
 
     @Composable
     internal fun DailyCheckInSection(
+        modifier: Modifier = Modifier,
         rewards: List<DailyReward>,
+        streak: Int,
         totalPoints: Int,
+        isActionAvailable: Boolean,
         nextCheckInTimeMillis: Long?,
         onCheckInClicked: () -> Unit,
-        modifier: Modifier = Modifier,
     ) {
-        val streak = rewards.count { it.status == RewardStatus.CLAIMED }
-        val isActionAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
-
         Column(
             modifier = modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -170,9 +171,9 @@ internal class HomeScreen(
 
     @Composable
     private fun RewardItem(reward: DailyReward) {
-        val isClaimed = reward.status == RewardStatus.CLAIMED
+        val isClaimed = reward.status == DailyRewardStatus.CLAIMED
         val cointerColor =
-            if (reward.status == RewardStatus.AVAILABLE_TO_CLAIM) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified
+            if (reward.status == DailyRewardStatus.AVAILABLE_TO_CLAIM) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified
 
         ElevatedCard(
             modifier = Modifier.size(width = 80.dp, height = 100.dp),
@@ -207,7 +208,7 @@ private fun HomeScreenContentPreview() {
         DailyReward(
             day = day,
             points = 10 + (day * 5),
-            status = if (day < 5) RewardStatus.CLAIMED else RewardStatus.AVAILABLE_TO_CLAIM
+            status = if (day < 5) DailyRewardStatus.CLAIMED else DailyRewardStatus.AVAILABLE_TO_CLAIM
         )
     }
     HomeScreen().PreviewContent(
@@ -222,7 +223,7 @@ private fun HomeScreenContentCheckedInPreview() {
         DailyReward(
             day = day,
             points = 10 + (day * 5),
-            status = RewardStatus.CLAIMED
+            status = DailyRewardStatus.CLAIMED
         )
     }
     HomeScreen().PreviewContent(

@@ -32,6 +32,7 @@ import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
 import com.spoonofcode.poa.core.domain.user.product.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
+import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -68,4 +69,5 @@ val domainModule = module {
     factoryOf(::ClaimTodayRewardUseCase)
     factoryOf(::GetUserRewardsPointsUseCase)
     factoryOf(::GetUserPartnersUseCase)
+    factoryOf(::GetUserDailyCheckInStatusUseCase)
 }

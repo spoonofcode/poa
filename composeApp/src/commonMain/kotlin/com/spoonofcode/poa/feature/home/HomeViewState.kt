@@ -14,7 +14,8 @@ internal data class HomeViewState(
         "https://proof-of-wear.com/images/logo.jpg",
     ),
     val rewards: List<DailyReward> = emptyList(),
-    val remainingTimeMillis: Long? = null,
-    val nextCheckInTimeMillis: Long? = null,
+    val streak: Int = 0,
     val totalPoints: Int = 0,
+    val isActionAvailable: Boolean = true,
+    val nextCheckInTimeMillis: Long? = null,
 ) : BaseViewState(screenState)
