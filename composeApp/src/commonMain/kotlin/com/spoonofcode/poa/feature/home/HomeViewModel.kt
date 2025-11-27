@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.home
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
 import com.spoonofcode.poa.core.domain.home.GetDailyRewardsUseCase
-import com.spoonofcode.poa.core.domain.user.GetUserPointsUseCase
+import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.model.RewardStatus
 import com.spoonofcode.poa.core.ui.BaseViewModel
@@ -22,7 +22,7 @@ internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val getDailyRewardsUseCase: GetDailyRewardsUseCase,
     private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
-    private val getUserPointsUseCase: GetUserPointsUseCase,
+    private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
     override fun onAction(action: HomeViewAction) {
@@ -68,7 +68,7 @@ internal class HomeViewModel(
             showLoadingView()
             try {
                 val rewards = getDailyRewardsUseCase()
-                val totalPoints = getUserPointsUseCase()
+                val totalPoints = getUserRewardsPointsUseCase()
                 val isRewardAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
 
                 val nextCheckInMillis =

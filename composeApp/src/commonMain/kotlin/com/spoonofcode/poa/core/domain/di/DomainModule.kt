@@ -26,11 +26,11 @@ import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
-import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.product.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
-import com.spoonofcode.poa.core.domain.user.GetUserPartnersUseCase
-import com.spoonofcode.poa.core.domain.user.GetUserPointsUseCase
-import com.spoonofcode.poa.core.domain.user.GetUserProductsUseCase
+import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
+import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
+import com.spoonofcode.poa.core.domain.user.product.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -66,6 +66,6 @@ val domainModule = module {
     factoryOf(::UpdateNotificationSettingsUseCase)
     factoryOf(::GetDailyRewardsUseCase)
     factoryOf(::ClaimTodayRewardUseCase)
-    factoryOf(::GetUserPointsUseCase)
+    factoryOf(::GetUserRewardsPointsUseCase)
     factoryOf(::GetUserPartnersUseCase)
 }

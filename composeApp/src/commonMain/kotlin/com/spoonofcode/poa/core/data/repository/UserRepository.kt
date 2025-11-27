@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
+import com.spoonofcode.poa.core.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.model.DailyReward
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
@@ -73,16 +74,6 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun getUserPoints(userId: String): Int {
-        return withContext(Dispatchers.IO) {
-            val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/points",
-                method = HttpMethod.Get
-            )
-            responseOrException(response).body<Int>()
-        }
-    }
-
     suspend fun readUserProductSeriesIds(userId: String): List<String> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
@@ -117,4 +108,28 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
             Json.decodeFromString(ListSerializer(DailyReward.serializer()), responseBody)
         }
     }
+
+    suspend fun getUserRewardsPoints(userId: String): Int {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/rewards/points",
+                method = HttpMethod.Get
+            )
+
+            responseOrException(response).body<Int>()
+        }
+    }
+
+    suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/daily-check-in/status",
+                method = HttpMethod.Get
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(DailyCheckInStatus.serializer(), responseBody)
+        }
+    }
+
 }
