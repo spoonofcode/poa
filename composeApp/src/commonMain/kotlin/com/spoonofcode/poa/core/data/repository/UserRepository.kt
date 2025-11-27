@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.model.AddProductUserRequest
 import com.spoonofcode.poa.core.model.DailyReward
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
 import com.spoonofcode.poa.core.test.OpenForMokkery
@@ -58,6 +59,17 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
                 ),
             )
             responseOrException(response).body<String>()
+        }
+    }
+
+    suspend fun readUserProfile(userId: String): Profile {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/profile",
+                method = HttpMethod.Get,
+            )
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(Profile.serializer(), responseBody)
         }
     }
 
