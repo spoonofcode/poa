@@ -1,11 +1,12 @@
 package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
-import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
+import com.spoonofcode.poa.core.domain.user.reward.AddRewardToUserUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
+import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
 import com.spoonofcode.poa.core.model.DailyRewardStatus
+import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
@@ -15,8 +16,8 @@ import kotlin.time.ExperimentalTime
 
 internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
+    private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
-    private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
@@ -37,7 +38,7 @@ internal class HomeViewModel(
     private fun dailyCheckIn() {
         viewModelScope.launch {
             try {
-                claimTodayRewardUseCase()
+                addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
                 showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
                 loadDailyRewardsStatus()
             } catch (e: Exception) {
@@ -64,7 +65,8 @@ internal class HomeViewModel(
             try {
                 val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
                 val totalPoints = getUserRewardsPointsUseCase()
-                val isRewardAvailable = dailyCheckInStatus.dailyRewards.any { it.status == DailyRewardStatus.AVAILABLE_TO_CLAIM }
+                val isRewardAvailable =
+                    dailyCheckInStatus.dailyRewards.any { it.status == DailyRewardStatus.AVAILABLE_TO_CLAIM }
 
                 updateState {
                     copy(

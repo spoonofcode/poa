@@ -2,11 +2,13 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
+import com.spoonofcode.poa.core.model.AddRewardToUserRequest
 import com.spoonofcode.poa.core.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.model.DailyReward
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
 import com.spoonofcode.poa.core.test.OpenForMokkery
@@ -97,15 +99,17 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun claimTodayReward(userId: String): List<DailyReward> {
+    suspend fun addRewardToUser(rewardType: RewardType, userId: String) {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/rewards/claim",
-                method = HttpMethod.Post
+                urlPath = "users/$userId/rewards",
+                method = HttpMethod.Post,
+                customRequestBody = Json.encodeToString(
+                    AddRewardToUserRequest.serializer(),
+                    AddRewardToUserRequest(rewardType = rewardType)
+                ),
             )
-
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(DailyReward.serializer()), responseBody)
+            responseOrException(response).body<String>()
         }
     }
 
@@ -123,7 +127,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/daily-check-in/status",
+                urlPath = "users/$userId/rewards/daily-check-in/status",
                 method = HttpMethod.Get
             )
 
