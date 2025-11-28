@@ -79,14 +79,14 @@ fun setSnackbarHostState(
 
 @Composable
 private fun getContainerColor(type: SnackbarType): Color = when (type) {
-    SnackbarType.INFO -> MaterialTheme.colorScheme.onPrimaryContainer
+    SnackbarType.INFO -> MaterialTheme.colorScheme.surfaceVariant
     SnackbarType.ERROR -> MaterialTheme.colorScheme.onErrorContainer
-    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondaryContainer
+    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.secondaryContainer
 }
 
 @Composable
 private fun getContentColor(type: SnackbarType): Color = when (type) {
-    SnackbarType.INFO -> MaterialTheme.colorScheme.onPrimary
+    SnackbarType.INFO -> MaterialTheme.colorScheme.onSurfaceVariant
     SnackbarType.ERROR -> MaterialTheme.colorScheme.onError
-    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondary
+    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondaryContainer
 }

@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.partner.panel
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.user.GetUserPartnersUseCase
+import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.notification.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.edit.PartnerEditScreen
@@ -16,6 +16,7 @@ internal class PartnerPanelViewModel(
         when (action) {
             PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
             PartnerPanelViewAction.NavigateToPartnerEdit -> navigateToPartnerEdit()
+            PartnerPanelViewAction.NavigateToReports-> navigateToReports()
         }
     }
 
@@ -30,4 +31,9 @@ internal class PartnerPanelViewModel(
             viewModelNavigator.push(NotificationTypeScreen())
         }
     }
+
+    fun navigateToReports() {
+        // TODO Add reports screen
+    }
+
 }

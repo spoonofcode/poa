@@ -51,6 +51,8 @@ internal class ProductEditViewModel(
                     productId = product.id,
                     productRequest = ProductRequest(
                         name = product.name,
+                        ownerUserId = product.ownerUserId,
+                        partnerId = product.partnerId,
                         description = product.description,
                         imageLink = product.imageLink,
                         videoLink = product.videoLink,
@@ -82,6 +84,8 @@ internal class ProductEditViewModel(
                     productId = product.id,
                     productRequest = ProductRequest(
                         name = product.name,
+                        ownerUserId = product.ownerUserId,
+                        partnerId = product.partnerId,
                         description = product.description,
                         imageLink = product.imageLink,
                         videoLink = product.videoLink,

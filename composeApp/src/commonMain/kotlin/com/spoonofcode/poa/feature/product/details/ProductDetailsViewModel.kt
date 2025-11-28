@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.product.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
-import com.spoonofcode.poa.core.domain.user.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.product.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState

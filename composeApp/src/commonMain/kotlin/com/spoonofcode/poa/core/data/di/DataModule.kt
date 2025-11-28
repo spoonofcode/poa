@@ -6,7 +6,6 @@ import com.spoonofcode.poa.core.data.repository.NotificationRepository
 import com.spoonofcode.poa.core.data.repository.PartnerCategoryRepository
 import com.spoonofcode.poa.core.data.repository.PartnerRepository
 import com.spoonofcode.poa.core.data.repository.ProductRepository
-import com.spoonofcode.poa.core.data.repository.ProfileRepository
 import com.spoonofcode.poa.core.data.repository.RefreshRepository
 import com.spoonofcode.poa.core.data.repository.RegisterRepository
 import com.spoonofcode.poa.core.data.repository.UserRepository
@@ -22,6 +21,5 @@ val dataModule = module {
     singleOf(::ProductRepository)
     singleOf(::PartnerRepository)
     singleOf(::PartnerCategoryRepository)
-    singleOf(::ProfileRepository)
     singleOf(::NotificationRepository)
 }

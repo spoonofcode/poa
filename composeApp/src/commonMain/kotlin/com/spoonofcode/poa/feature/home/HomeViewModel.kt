@@ -1,31 +1,23 @@
-@file:OptIn(ExperimentalTime::class)
-
 package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.home.ClaimTodayRewardUseCase
-import com.spoonofcode.poa.core.domain.home.GetDailyRewardsUseCase
-import com.spoonofcode.poa.core.domain.user.GetUserPointsUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
-import com.spoonofcode.poa.core.model.RewardStatus
+import com.spoonofcode.poa.core.domain.user.reward.AddRewardToUserUseCase
+import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
+import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
+import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.plus
-import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
-    private val getDailyRewardsUseCase: GetDailyRewardsUseCase,
-    private val claimTodayRewardUseCase: ClaimTodayRewardUseCase,
-    private val getUserPointsUseCase: GetUserPointsUseCase,
+    private val addRewardToUserUseCase: AddRewardToUserUseCase,
+    private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
+    private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
     override fun onAction(action: HomeViewAction) {
@@ -45,7 +37,7 @@ internal class HomeViewModel(
     private fun dailyCheckIn() {
         viewModelScope.launch {
             try {
-                claimTodayRewardUseCase()
+                addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
                 showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
                 loadDailyRewardsStatus()
             } catch (e: Exception) {
@@ -65,32 +57,22 @@ internal class HomeViewModel(
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun loadDailyRewardsStatus() {
         viewModelScope.launch {
             showLoadingView()
             try {
-                val rewards = getDailyRewardsUseCase()
-                val totalPoints = getUserPointsUseCase()
-                val isRewardAvailable = rewards.any { it.status == RewardStatus.AVAILABLE_TO_CLAIM }
-
-                val nextCheckInMillis =
-                    if (!isRewardAvailable && rewards.any { it.status == RewardStatus.CLAIMED }) {
-                        val now = Clock.System.now()
-                        val localTimeZone = TimeZone.currentSystemDefault()
-                        val today = now.toLocalDateTime(localTimeZone).date
-                        val tomorrow = today.plus(1, DateTimeUnit.DAY)
-                        val nextCheckInInstant = tomorrow.atStartOfDayIn(localTimeZone)
-                        nextCheckInInstant.toEpochMilliseconds()
-                    } else {
-                        null
-                    }
+                val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
+                val totalPoints = getUserRewardsPointsUseCase()
 
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
-                        rewards = rewards,
+                        dailyRewards = dailyCheckInStatus.dailyRewards,
+                        streak = dailyCheckInStatus.streak,
+                        isActionAvailable = dailyCheckInStatus.isAvailableNow,
                         totalPoints = totalPoints,
-                        nextCheckInTimeMillis = nextCheckInMillis
+                        nextCheckInTimeMillis = dailyCheckInStatus.nextCheckInTimeMillis
                     )
                 }
             } catch (e: Exception) {

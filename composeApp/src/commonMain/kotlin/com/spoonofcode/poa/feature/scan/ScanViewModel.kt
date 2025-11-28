@@ -34,7 +34,7 @@ internal class ScanViewModel(
                 viewModelNavigator.push(
                     ProductDetailsScreen(
                         productId = product.id,
-                        hasOwnerUser = product.ownerUser != null,
+                        hasOwnerUser = product.ownerUserId != null,
                     )
                 )
             } catch (e: Exception) {

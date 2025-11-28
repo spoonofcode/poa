@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PartnerRequest(
+    val userId: String,
     val name: String,
     val email: String,
     val description: String,
@@ -13,12 +14,12 @@ data class PartnerRequest(
     val facebookLink: String? = null,
     val youtubeLink: String? = null,
     val xLink: String? = null,
-    val userId: String,
 )
 
 @Serializable
 data class Partner(
     val id: String,
+    val userId: String,
     val name: String,
     val email: String,
     val description: String,
@@ -28,5 +29,4 @@ data class Partner(
     val facebookLink: String? = null,
     val youtubeLink: String? = null,
     val xLink: String? = null,
-    val userId: String,
 )

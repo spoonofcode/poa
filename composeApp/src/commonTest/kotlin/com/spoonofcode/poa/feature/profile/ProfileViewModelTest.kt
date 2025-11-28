@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.feature.profile
 
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.ProfileRepository
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -2,8 +2,12 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.GenericCrudRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
+import com.spoonofcode.poa.core.model.AddRewardToUserRequest
+import com.spoonofcode.poa.core.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.model.UserRequest
 import com.spoonofcode.poa.core.test.OpenForMokkery
@@ -60,13 +64,14 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
-    suspend fun getUserPoints(userId: String): Int {
+    suspend fun readUserProfile(userId: String): Profile {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/points",
-                method = HttpMethod.Get
+                urlPath = "users/$userId/profile",
+                method = HttpMethod.Get,
             )
-            responseOrException(response).body<Int>()
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(Profile.serializer(), responseBody)
         }
     }
 
@@ -80,4 +85,42 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
             responseOrException(response).body<List<String>>()
         }
     }
+
+    suspend fun addRewardToUser(rewardType: RewardType, userId: String) {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/rewards",
+                method = HttpMethod.Post,
+                customRequestBody = Json.encodeToString(
+                    AddRewardToUserRequest.serializer(),
+                    AddRewardToUserRequest(rewardType = rewardType)
+                ),
+            )
+            responseOrException(response).body<String>()
+        }
+    }
+
+    suspend fun getUserRewardsPoints(userId: String): Int {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/rewards/points",
+                method = HttpMethod.Get
+            )
+
+            responseOrException(response).body<Int>()
+        }
+    }
+
+    suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus {
+        return withContext(Dispatchers.IO) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/rewards/daily-check-in/status",
+                method = HttpMethod.Get
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(DailyCheckInStatus.serializer(), responseBody)
+        }
+    }
+
 }
