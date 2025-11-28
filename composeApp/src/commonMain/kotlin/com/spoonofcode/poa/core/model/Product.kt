@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Product(
     val id: String,
+    val ownerUserId: String? = null,
+    val partnerId: String,
     val name: String,
     val description: String,
     val seriesId: String,
@@ -14,12 +16,12 @@ data class Product(
     val tagId: String? = null,
     val websiteLink: String? = null,
     val customLink: String? = null,
-    val ownerUser: User? = null,
-    val partner: Partner,
 )
 
 @Serializable
 data class ProductRequest(
+    val ownerUserId: String? = null,
+    val partnerId: String,
     val name: String,
     val description: String,
     val seriesId: String,
@@ -29,6 +31,4 @@ data class ProductRequest(
     val tagId: String? = null,
     val websiteLink: String? = null,
     val customLink: String? = null,
-    val ownerUserId: String? = null,
-    val partnerId: String? = null,
 )
