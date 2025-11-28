@@ -5,7 +5,6 @@ import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.domain.user.reward.AddRewardToUserUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
-import com.spoonofcode.poa.core.model.DailyRewardStatus
 import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
@@ -65,15 +64,13 @@ internal class HomeViewModel(
             try {
                 val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
                 val totalPoints = getUserRewardsPointsUseCase()
-                val isRewardAvailable =
-                    dailyCheckInStatus.dailyRewards.any { it.status == DailyRewardStatus.AVAILABLE_TO_CLAIM }
 
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
-                        rewards = dailyCheckInStatus.dailyRewards,
+                        dailyRewards = dailyCheckInStatus.dailyRewards,
                         streak = dailyCheckInStatus.streak,
-                        isActionAvailable = isRewardAvailable,
+                        isActionAvailable = dailyCheckInStatus.isAvailableNow,
                         totalPoints = totalPoints,
                         nextCheckInTimeMillis = dailyCheckInStatus.nextCheckInTimeMillis
                     )

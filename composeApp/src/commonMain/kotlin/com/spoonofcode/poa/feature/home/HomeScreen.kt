@@ -98,7 +98,7 @@ internal class HomeScreen(
                 isActionAvailable = viewState.isActionAvailable,
                 nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
                 onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) },
-                rewards = viewState.rewards,
+                rewards = viewState.dailyRewards,
             )
         }
     }
@@ -143,7 +143,7 @@ internal class HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(rewards) { reward ->
-                    RewardItem(reward = reward)
+                    DailyRewardItem(reward = reward)
                 }
             }
 
@@ -170,7 +170,7 @@ internal class HomeScreen(
     }
 
     @Composable
-    private fun RewardItem(reward: DailyReward) {
+    private fun DailyRewardItem(reward: DailyReward) {
         val isClaimed = reward.status == DailyRewardStatus.CLAIMED
         val cointerColor =
             if (reward.status == DailyRewardStatus.AVAILABLE_TO_CLAIM) MaterialTheme.colorScheme.primaryContainer else Color.Unspecified
@@ -212,7 +212,7 @@ private fun HomeScreenContentPreview() {
         )
     }
     HomeScreen().PreviewContent(
-        HomeViewState(rewards = rewards)
+        HomeViewState(dailyRewards = rewards)
     )
 }
 
@@ -229,7 +229,7 @@ private fun HomeScreenContentCheckedInPreview() {
     HomeScreen().PreviewContent(
         HomeViewState(
             screenState = ScreenState.CONTENT,
-            rewards = rewards,
+            dailyRewards = rewards,
             nextCheckInTimeMillis = Clock.System.now()
                 .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
         )

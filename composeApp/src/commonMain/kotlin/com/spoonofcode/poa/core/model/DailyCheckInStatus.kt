@@ -7,4 +7,5 @@ data class DailyCheckInStatus(
     val streak: Int,
     val nextCheckInTimeMillis: Long,
     val dailyRewards: List<DailyReward>,
+    val isAvailableNow: Boolean,
 )
