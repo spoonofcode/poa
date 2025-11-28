@@ -6,9 +6,6 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.repository.RegisterRepository
 import com.spoonofcode.poa.core.model.RegisterRequest
 import com.spoonofcode.poa.feature.login.di.loginTestModule
-import dev.mokkery.answering.throws
-import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
 import dev.mokkery.matcher.eq
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,7 +34,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
         viewModel = getSut()
         val email = "john@doe.com"
 
-        viewModel.changeEmail(email)
+        viewModel.onAction(RegisterViewAction.ChangeEmail(email))
         advanceUntilIdle()
 
         viewModel.viewState.test {
@@ -50,7 +47,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
         viewModel = getSut()
         val password = "Secret123"
 
-        viewModel.changePassword(password)
+        viewModel.onAction(RegisterViewAction.ChangePassword(password))
         advanceUntilIdle()
 
         viewModel.viewState.test {
@@ -61,52 +58,51 @@ class RegisterViewModelTest : BaseViewModelTest() {
     @Test
     fun `change first and last name update state`() = runTest {
         viewModel = getSut()
-        val first = "John"
-        val last = "Doe"
+        val firstName = "John"
+        val lastName = "Doe"
 
-        viewModel.changeFirstName(first)
-        viewModel.changeLastName(last)
+        viewModel.onAction(RegisterViewAction.ChangeFirstName(firstName))
+        viewModel.onAction(RegisterViewAction.ChangeLastName(lastName))
         advanceUntilIdle()
 
         viewModel.viewState.test {
-            val s = awaitItem()
-            assertEquals(first, s.firstName)
-            assertEquals(last, s.lastName)
+            assertEquals(firstName, awaitItem().firstName)
+            assertEquals(lastName, awaitItem().lastName)
         }
     }
 
-    // TODO #78 - Fix and add missing Unit tests
-    @Ignore
-    @Test
-    fun `sign up success calls usecase and navigates to main host`() = runTest {
-        val email = "john@doe.com"
-        val pass = "Secret123"
-        val first = "John"
-        val last = "Doe"
-
-        viewModel = getSut()
-
-        viewModel.changeEmail(email)
-        viewModel.changePassword(pass)
-        viewModel.changeFirstName(first)
-        viewModel.changeLastName(last)
-        advanceUntilIdle()
-
-        viewModel.signUp()
-        advanceUntilIdle()
-
-        verifySuspend {
-            registerRepository.create(
-                request = RegisterRequest(
-                    email = email,
-                    password = pass,
-                    firstName = first,
-                    lastName = last,
-                )
-            )
-        }
-        verifySuspend { viewModelNavigator.replaceAll(eq(listOf(MainHostScreen()))) }
-    }
+//    // TODO #78 - Fix and add missing Unit tests
+//    @Ignore
+//    @Test
+//    fun `sign up success calls usecase and navigates to main host`() = runTest {
+//        val email = "john@doe.com"
+//        val pass = "Secret123"
+//        val first = "John"
+//        val last = "Doe"
+//
+//        viewModel = getSut()
+//
+//        viewModel.changeEmail(email)
+//        viewModel.changePassword(pass)
+//        viewModel.changeFirstName(first)
+//        viewModel.changeLastName(last)
+//        advanceUntilIdle()
+//
+//        viewModel.signUp()
+//        advanceUntilIdle()
+//
+//        verifySuspend {
+//            registerRepository.create(
+//                request = RegisterRequest(
+//                    email = email,
+//                    password = pass,
+//                    firstName = first,
+//                    lastName = last,
+//                )
+//            )
+//        }
+//        verifySuspend { viewModelNavigator.replaceAll(eq(listOf(MainHostScreen()))) }
+//    }
 
 //    @Test
 //    fun `sign up error hides loader`() = runTest {

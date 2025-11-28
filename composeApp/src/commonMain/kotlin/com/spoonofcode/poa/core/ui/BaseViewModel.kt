@@ -31,7 +31,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
         onStartViewState()
     }.stateIn(
         scope = viewModelScope,
-        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000L),
         initialValue = initialViewState
     )
 

@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.profile
 
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -10,7 +11,7 @@ import kotlin.test.BeforeTest
 class ProfileViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: ProfileDetailsViewModel
-    private lateinit var profileRepository: ProfileRepository
+    private lateinit var userRepository: UserRepository
 
     @BeforeTest
     override fun setup() {
@@ -18,7 +19,7 @@ class ProfileViewModelTest : BaseViewModelTest() {
             profileTestModule,
         )
         super.setup()
-        profileRepository = getKoin().get()
+        userRepository = getKoin().get()
     }
 
 //    @Test

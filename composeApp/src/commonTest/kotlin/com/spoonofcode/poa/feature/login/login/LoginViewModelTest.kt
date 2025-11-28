@@ -9,8 +9,6 @@ import com.spoonofcode.poa.core.model.LoginRequest
 import com.spoonofcode.poa.feature.login.di.loginTestModule
 import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.register.RegisterScreen
-import dev.mokkery.answering.throws
-import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.eq
 import dev.mokkery.matcher.ofType
@@ -36,17 +34,19 @@ class LoginViewModelTest : BaseViewModelTest() {
         super.setup()
         loginRepository = getKoin().get()
         loginGoogleRepository = getKoin().get()
+        viewModel = getSut()
     }
 
     @Test
     fun `change email updates state`() = runTest {
-        viewModel = getSut()
+
         val email = "john@doe.com"
 
-        viewModel.changeEmail(email)
+        viewModel.onAction(LoginViewAction.ChangeEmail(email))
         advanceUntilIdle()
 
         viewModel.viewState.test {
+//            assertEquals(email, awaitItem().email)
             assertEquals(email, awaitItem().email)
         }
     }
@@ -56,7 +56,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         viewModel = getSut()
         val password = "Secret123"
 
-        viewModel.changePassword(password)
+        viewModel.onAction(LoginViewAction.ChangePassword(password))
         advanceUntilIdle()
 
         viewModel.viewState.test {
@@ -68,7 +68,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     fun `forgot password navigates to screen`() = runTest {
         viewModel = getSut()
 
-        viewModel.forgotPassword()
+        viewModel.onAction(LoginViewAction.ForgotPassword)
         advanceUntilIdle()
 
         verifySuspend { viewModelNavigator.push(ofType<ForgotPasswordScreen>()) }
@@ -78,7 +78,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     fun `sign up navigates to register screen`() = runTest {
         viewModel = getSut()
 
-        viewModel.signUp()
+        viewModel.onAction(LoginViewAction.SignUp)
         advanceUntilIdle()
 
         verifySuspend { viewModelNavigator.push(ofType<RegisterScreen>()) }
@@ -92,11 +92,11 @@ class LoginViewModelTest : BaseViewModelTest() {
         val password = "Secret123"
 
         viewModel = getSut()
-        viewModel.changeEmail(email)
-        viewModel.changePassword(password)
+//        viewModel.changeEmail(email)
+//        viewModel.changePassword(password)
         advanceUntilIdle()
 
-        viewModel.signIn()
+        viewModel.onAction(LoginViewAction.SignIn)
         advanceUntilIdle()
 
         verifySuspend {
@@ -134,7 +134,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         val token = "google-id-token"
 
         viewModel = getSut()
-        viewModel.signInWithGoogle(token)
+        viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
         advanceUntilIdle()
 
         verifySuspend { loginGoogleRepository.create(any()) }

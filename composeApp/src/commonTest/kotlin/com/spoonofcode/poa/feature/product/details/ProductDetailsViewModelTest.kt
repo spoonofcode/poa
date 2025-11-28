@@ -22,6 +22,16 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         super.setup()
     }
 
+    @Test
+    fun `product addition successful`() = runTest {
+        viewModel = getSut()
+
+        viewModel.onAction(ProductDetailsViewAction.AddProduct)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.pop() }
+    }
+
 //    @Test
 //    fun `init view`() = runTest {
 //        viewModel = getSut()
@@ -65,13 +75,5 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 //        }
 //    }
 
-    @Test
-    fun `product addition successful`() = runTest {
-        viewModel = getSut()
 
-        viewModel.onAction(ProductDetailsViewAction.AddProduct)
-        advanceUntilIdle()
-
-        verifySuspend { viewModelNavigator.pop() }
-    }
 }
