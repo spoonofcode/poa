@@ -7,14 +7,12 @@ import com.spoonofcode.poa.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.poa.core.data.repository.LoginRepository
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.home.HomeScreen
 import com.spoonofcode.poa.feature.login.di.loginTestModule
 import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.register.RegisterScreen
 import dev.mokkery.answering.throws
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
-import dev.mokkery.matcher.eq
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
@@ -22,7 +20,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -121,7 +118,7 @@ class LoginViewModelTest : BaseViewModelTest() {
             loginRepository.create(any())
         }
         verifySuspend {
-            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class, HomeScreen::class))
+            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
         }
     }
 
@@ -129,8 +126,13 @@ class LoginViewModelTest : BaseViewModelTest() {
     fun `sign in error`() = runTest {
         everySuspend { loginRepository.create(any()) } throws Exception("invalid creds")
 
-        viewModel.onAction(LoginViewAction.SignIn)
-        advanceUntilIdle()
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(LoginViewAction.SignIn)
+
+            println(awaitItem())
+        }
 
         verifySuspend {
             loginRepository.create(any())
@@ -141,47 +143,27 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
     }
 
-//    @Test
-//    fun `sign in error hides loader`() = runTest {
-//        everySuspend { loginRepository.create(any()) } throws Exception("invalid creds")
-//
-//        viewModel = getSut()
-//        viewModel.changeEmail("a@b.c")
-//        viewModel.changePassword("x")
-//        advanceUntilIdle()
-//
-//        viewModel.signIn()
-//        advanceUntilIdle()
-//
-//        viewModel.viewState.test {
-//            assertEquals(false, awaitItem().isLoadingView)
-//        }
-//    }
-
-    // TODO #78 - Fix and add missing Unit tests
-    @Ignore()
     @Test
     fun `sign in with Google success`() = runTest {
         val token = "google-id-token"
+        viewModel.viewState.test {
+            skipItems(1)
 
-        viewModel = getSut()
-        viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
-        advanceUntilIdle()
+            viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
 
-        verifySuspend { loginGoogleRepository.create(any()) }
-        verifySuspend { viewModelNavigator.replaceAll(eq(listOf(MainHostScreen()))) }
+            assertEquals(
+                expected = LoginViewState(
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            loginGoogleRepository.create(any())
+        }
+        verifySuspend {
+            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
+        }
     }
-
-//    @Test
-//    fun `sign in with Google error hides loader`() = runTest {
-//        everySuspend { loginGoogleRepository.create(any()) } throws Exception("oauth failed")
-//
-//        viewModel = getSut()
-//        viewModel.signInWithGoogle("broken")
-//        advanceUntilIdle()
-//
-//        viewModel.viewState.test {
-//            assertEquals(false, awaitItem().isLoadingView)
-//        }
-//    }
 }

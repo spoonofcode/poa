@@ -15,7 +15,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
-abstract class BaselTest : KoinTest {
+abstract class BaseTest : KoinTest {
 
     protected var modules: Array<Module> = emptyArray()
 
@@ -25,7 +25,7 @@ abstract class BaselTest : KoinTest {
             modules(
                 module {
                 },
-                *modules
+                *modules,
             )
         }
         Dispatchers.setMain(StandardTestDispatcher())
