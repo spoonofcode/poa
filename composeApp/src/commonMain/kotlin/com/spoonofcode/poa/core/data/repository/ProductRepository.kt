@@ -19,7 +19,7 @@ class ProductRepository : GenericCrudRepository<ProductRequest, Product>(
     responseSerializer = Product.serializer(),
 ) {
     suspend fun readProductByTagId(tagId: String): Product {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "products",
                 method = HttpMethod.Get,

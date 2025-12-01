@@ -31,7 +31,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
 ), CrudRepository<RQ, RS> {
 
     override suspend fun create(request: RQ): RS {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/",
                 method = HttpMethod.Post,
@@ -45,7 +45,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun read(id: String): RS {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",
                 method = HttpMethod.Get,
@@ -58,7 +58,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun update(id: String, request: RQ): Boolean {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",
                 method = HttpMethod.Put,
@@ -72,7 +72,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun delete(id: String): Boolean {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/$id",
                 method = HttpMethod.Delete,
@@ -85,7 +85,7 @@ abstract class GenericCrudRepository<RQ : Any, RS : Any>(
     }
 
     override suspend fun readAll(): List<RS> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "$resourceName/",
                 method = HttpMethod.Get,

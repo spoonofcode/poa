@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.app.di
 
+import com.spoonofcode.poa.core.data.base.di.coreBaseModule
 import com.spoonofcode.poa.core.data.di.dataModule
 import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkModule
@@ -24,6 +25,7 @@ import org.koin.dsl.module
 val appModule = module {
     includes(
         // core
+        coreBaseModule,
         dataModule,
         domainModule,
         uiModule,
