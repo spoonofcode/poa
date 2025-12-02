@@ -20,7 +20,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -139,21 +138,21 @@ class LoginViewModelTest : BaseViewModelTest() {
                 actual = awaitItem()
             )
 
-//            assertEquals(
-//                expected = LoginViewState(
-//                    screenState = ScreenState.CONTENT,
-//                ),
-//                actual = awaitItem()
-//            )
+            assertEquals(
+                expected = LoginViewState(
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
         }
-//
-//        verifySuspend {
-//            loginRepository.create(any())
-//        }
-//
-//        verifySuspend(mode = exactly(0)) {
-//            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
-//        }
+
+        verifySuspend {
+            loginRepository.create(any())
+        }
+
+        verifySuspend(mode = exactly(0)) {
+            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
+        }
     }
 
     @Test
