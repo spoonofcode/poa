@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 internal class DemoViewModel() : BaseViewModel<DemoViewState, DemoViewAction>(DemoViewState()) {
 
-    override fun onStartViewState()
+    override fun onInitViewState()
     {
         println("Loading data...")
         viewModelScope.launch {

@@ -36,12 +36,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
 
     init {
         observeNetworkState()
-        onStartViewState()
+        onInitViewState()
     }
 
     open fun onAction(action: VA) {}
 
-    open fun onStartViewState() {}
+    open fun onInitViewState() {}
 
     open fun navigateBack() {
         viewModelScope.launch {
