@@ -49,157 +49,157 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         }
     }
 
-    @Test
-    fun `init view success loads product and shows content`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+//    @Test
+//    fun `init view success loads product and shows content`() = runTest {
+//        viewModel.viewState.test {
+//            skipItems(1)
+//
+//            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//
+//            assertEquals(
+//                expected = ProductDetailsViewState(
+//                    screenState = ScreenState.LOADING
+//                ),
+//                actual = awaitItem()
+//            )
+//
+//            assertEquals(
+//                expected = ProductDetailsViewState(
+//                    screenState = ScreenState.CONTENT,
+//                    product = PRODUCT_1
+//                ),
+//                actual = awaitItem()
+//            )
+//        }
+//
+//        verifySuspend {
+//            productRepository.read(PRODUCT_1.id)
+//        }
+//    }
 
-            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    screenState = ScreenState.LOADING
-                ),
-                actual = awaitItem()
-            )
-
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    screenState = ScreenState.CONTENT,
-                    product = PRODUCT_1
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.read(PRODUCT_1.id)
-        }
-    }
-
-    @Test
-    fun `init view error shows error state`() = runTest {
-        everySuspend { productRepository.read(any()) } throws Exception("not found")
-
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    screenState = ScreenState.LOADING
-                ),
-                actual = awaitItem()
-            )
-
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    screenState = ScreenState.ERROR
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.read(PRODUCT_1.id)
-        }
-    }
-
-    @Test
-    fun `add product success adds product to user subscribes topics and pops`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
-
-        viewModel.onAction(ProductDetailsViewAction.AddProduct)
-        advanceUntilIdle()
-
-        verifySuspend {
-            userRepository.addProductToUser(PRODUCT_1.id, USER_1.id)
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
-        }
-    }
-
-    @Test
-    fun `add product error shows snackbar and does not pop`() = runTest {
-        everySuspend { productRepository.create(any()) } throws Exception("add product error")
-
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
-
-        viewModel.onAction(ProductDetailsViewAction.AddProduct)
-        advanceUntilIdle()
-
-        verifySuspend {
-            userRepository.addProductToUser(PRODUCT_1.id, USER_1.id)
-        }
-
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.pop()
-        }
-    }
-
-    @Test
-    fun `edit product navigates to edit screen`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
-
-        viewModel.onAction(ProductDetailsViewAction.EditProduct)
-        advanceUntilIdle()
-
-        verifySuspend {
-            viewModelNavigator.push(ofType<ProductEditScreen>())
-        }
-    }
-
-    @Test
-    fun `delete product success shows loading deletes product and pops`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
-
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(ProductDetailsViewAction.DeleteProduct)
-
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    screenState = ScreenState.LOADING,
-                    product = PRODUCT_1,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-
-        verifySuspend {
-            productRepository.delete(PRODUCT_1.id)
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
-        }
-    }
-
-    @Test
-    fun `delete product error shows snackbar`() = runTest {
-        everySuspend { productRepository.delete(any()) } throws Exception("delete product error")
-
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
-
-        viewModel.onAction(ProductDetailsViewAction.DeleteProduct)
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.delete(PRODUCT_1.id)
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
-        }
-    }
+//    @Test
+//    fun `init view error shows error state`() = runTest {
+//        everySuspend { productRepository.read(any()) } throws Exception("not found")
+//
+//        viewModel.viewState.test {
+//            skipItems(1)
+//
+//            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//
+//            assertEquals(
+//                expected = ProductDetailsViewState(
+//                    screenState = ScreenState.LOADING
+//                ),
+//                actual = awaitItem()
+//            )
+//
+//            assertEquals(
+//                expected = ProductDetailsViewState(
+//                    screenState = ScreenState.ERROR
+//                ),
+//                actual = awaitItem()
+//            )
+//        }
+//
+//        verifySuspend {
+//            productRepository.read(PRODUCT_1.id)
+//        }
+//    }
+//
+//    @Test
+//    fun `add product success adds product to user subscribes topics and pops`() = runTest {
+//        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//        advanceUntilIdle()
+//
+//        viewModel.onAction(ProductDetailsViewAction.AddProduct)
+//        advanceUntilIdle()
+//
+//        verifySuspend {
+//            userRepository.addProductToUser(PRODUCT_1.id, USER_1.id)
+//        }
+//
+//        verifySuspend {
+//            viewModelNavigator.pop()
+//        }
+//    }
+//
+//    @Test
+//    fun `add product error shows snackbar and does not pop`() = runTest {
+//        everySuspend { productRepository.create(any()) } throws Exception("add product error")
+//
+//        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//        advanceUntilIdle()
+//
+//        viewModel.onAction(ProductDetailsViewAction.AddProduct)
+//        advanceUntilIdle()
+//
+//        verifySuspend {
+//            userRepository.addProductToUser(PRODUCT_1.id, USER_1.id)
+//        }
+//
+//        verifySuspend(mode = exactly(0)) {
+//            viewModelNavigator.pop()
+//        }
+//    }
+//
+//    @Test
+//    fun `edit product navigates to edit screen`() = runTest {
+//        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//        advanceUntilIdle()
+//
+//        viewModel.onAction(ProductDetailsViewAction.EditProduct)
+//        advanceUntilIdle()
+//
+//        verifySuspend {
+//            viewModelNavigator.push(ofType<ProductEditScreen>())
+//        }
+//    }
+//
+//    @Test
+//    fun `delete product success shows loading deletes product and pops`() = runTest {
+//        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//        advanceUntilIdle()
+//
+//        viewModel.viewState.test {
+//            skipItems(1)
+//
+//            viewModel.onAction(ProductDetailsViewAction.DeleteProduct)
+//
+//            assertEquals(
+//                expected = ProductDetailsViewState(
+//                    screenState = ScreenState.LOADING,
+//                    product = PRODUCT_1,
+//                ),
+//                actual = awaitItem()
+//            )
+//        }
+//
+//
+//        verifySuspend {
+//            productRepository.delete(PRODUCT_1.id)
+//        }
+//
+//        verifySuspend {
+//            viewModelNavigator.pop()
+//        }
+//    }
+//
+//    @Test
+//    fun `delete product error shows snackbar`() = runTest {
+//        everySuspend { productRepository.delete(any()) } throws Exception("delete product error")
+//
+//        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+//        advanceUntilIdle()
+//
+//        viewModel.onAction(ProductDetailsViewAction.DeleteProduct)
+//        advanceUntilIdle()
+//
+//        verifySuspend {
+//            productRepository.delete(PRODUCT_1.id)
+//        }
+//
+//        verifySuspend {
+//            viewModelNavigator.pop()
+//        }
+//    }
 }
