@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.customer.overview
+package com.spoonofcode.poa.feature.partner.customer.overview
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,20 +35,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class CustomerOverviewScreen(
     val partnerId: String,
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<CustomerOverviewViewModel, CustomerOverviewViewState, CustomerOverviewViewAction>() {
+) : BaseScreen<PartnerCustomerOverviewViewModel, PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_customers
 
-    override fun provideInitAction(onAction: (CustomerOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(CustomerOverviewViewAction.InitView(partnerId = partnerId)) }
+    override fun provideInitAction(onAction: (PartnerCustomerOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerCustomerOverviewViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<CustomerOverviewViewModel>()
+    override fun provideViewModel() = koinViewModel<PartnerCustomerOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: CustomerOverviewViewState,
-        onAction: (CustomerOverviewViewAction) -> Unit,
+        viewState: PartnerCustomerOverviewViewState,
+        onAction: (PartnerCustomerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             LazyColumn(
@@ -60,7 +60,7 @@ internal class CustomerOverviewScreen(
 
                     CustomerItem(
                         item = user,
-                        onClick = { onAction(CustomerOverviewViewAction.CheckedCustomer(user.id)) },
+                        onClick = { onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(user.id)) },
                         checkedCustomer = checkedCustomer,
                     )
                 }
@@ -71,7 +71,7 @@ internal class CustomerOverviewScreen(
             Buttons.PrimaryButton(
                 enabled = viewState.checkedUserIds.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
-                onClick = { onAction(CustomerOverviewViewAction.NavigateToNotification) }
+                onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) }
             )
         }
     }
@@ -117,7 +117,7 @@ internal class CustomerOverviewScreen(
 @Composable
 fun CustomerOverviewScreenContentPreview() {
     CustomerOverviewScreen(partnerId = "1").PreviewContent(
-        viewState = CustomerOverviewViewState(
+        viewState = PartnerCustomerOverviewViewState(
         ),
     )
 }

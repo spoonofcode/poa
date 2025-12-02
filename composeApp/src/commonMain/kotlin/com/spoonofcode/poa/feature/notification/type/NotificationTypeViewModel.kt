@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.notification.type
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.feature.customer.overview.CustomerOverviewScreen
+import com.spoonofcode.poa.feature.partner.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewScreen
 import kotlinx.coroutines.launch

@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.notification.type
 
-
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.repository.ProductRepository

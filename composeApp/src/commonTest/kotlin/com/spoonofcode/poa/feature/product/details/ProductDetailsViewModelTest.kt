@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.product.details
 
-
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1

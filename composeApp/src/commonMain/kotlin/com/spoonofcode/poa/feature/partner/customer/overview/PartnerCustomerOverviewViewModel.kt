@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.customer.overview
+package com.spoonofcode.poa.feature.partner.customer.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
@@ -9,15 +9,15 @@ import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class CustomerOverviewViewModel(
+internal class PartnerCustomerOverviewViewModel(
     private val getPartnerUsersUseCase: GetPartnerUsersUseCase,
-) : BaseViewModel<CustomerOverviewViewState, CustomerOverviewViewAction>(CustomerOverviewViewState()) {
+) : BaseViewModel<PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction>(PartnerCustomerOverviewViewState()) {
 
-    override fun onAction(action: CustomerOverviewViewAction) {
+    override fun onAction(action: PartnerCustomerOverviewViewAction) {
         when (action) {
-            is CustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(userId = action.userId)
-            is CustomerOverviewViewAction.InitView -> initView(partnerId = action.partnerId)
-            CustomerOverviewViewAction.NavigateToNotification -> navigateToNotification()
+            is PartnerCustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(userId = action.userId)
+            is PartnerCustomerOverviewViewAction.InitView -> initView(partnerId = action.partnerId)
+            PartnerCustomerOverviewViewAction.NavigateToNotification -> navigateToNotification()
         }
     }
 
