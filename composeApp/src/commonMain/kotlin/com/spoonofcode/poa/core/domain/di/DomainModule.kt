@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
+import com.spoonofcode.poa.core.domain.faq.GetFAQUseCase
 import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
@@ -68,4 +69,4 @@ val domainModule = module {
     factoryOf(::GetUserPartnersUseCase)
     factoryOf(::GetUserDailyCheckInStatusUseCase)
     factoryOf(::AddRewardToUserUseCase)
-}
+    factoryOf(::GetFAQUseCase)}

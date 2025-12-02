@@ -1,12 +1,15 @@
 package com.spoonofcode.poa.feature.faq
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.domain.faq.GetFAQUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
-internal class FAQViewModel() : BaseViewModel<FAQViewState, FAQViewAction>(FAQViewState()) {
+internal class FAQViewModel(
+    private val getFAQUseCase: GetFAQUseCase,
+) : BaseViewModel<FAQViewState, FAQViewAction>(FAQViewState()) {
 
     override fun onAction(action: FAQViewAction) {
         when (action) {
@@ -18,6 +21,7 @@ internal class FAQViewModel() : BaseViewModel<FAQViewState, FAQViewAction>(FAQVi
         viewModelScope.launch {
             showLoadingView()
             try {
+                val faqs = getFAQUseCase.invoke()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,
