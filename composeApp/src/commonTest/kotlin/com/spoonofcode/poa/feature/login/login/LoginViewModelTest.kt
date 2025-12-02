@@ -50,7 +50,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `change email updates state`() = runTest {
+    fun `change email`() = runTest {
         val email = "john@doe.com"
         viewModel.viewState.test {
             skipItems(1)
@@ -67,7 +67,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `change password updates state`() = runTest {
+    fun `change password`() = runTest {
         val password = "Secret123"
         viewModel.viewState.test {
             skipItems(1)

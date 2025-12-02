@@ -19,13 +19,11 @@ internal class ForgotPasswordViewModel(
     }
 
     private fun changeEmail(email: String) {
-        viewModelScope.launch {
             updateState {
                 copy(
                     email = email,
                 )
             }
-        }
     }
 
     private fun resetPassword() {

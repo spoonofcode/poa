@@ -4,15 +4,17 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.repository.RegisterRepository
-import com.spoonofcode.poa.core.model.RegisterRequest
+import com.spoonofcode.poa.core.ext.containsTypes
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
-import dev.mokkery.matcher.eq
+import dev.mokkery.answering.throws
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -27,97 +29,124 @@ class RegisterViewModelTest : BaseViewModelTest() {
         modules = arrayOf(loginTestModule)
         super.setup()
         registerRepository = getKoin().get()
+        viewModel = getSut()
     }
 
     @Test
-    fun `change email updates state`() = runTest {
-        viewModel = getSut()
+    fun `initial state is default`() = runTest {
+        viewModel.viewState.test {
+            assertEquals(
+                expected = RegisterViewState(),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `change email`() = runTest {
         val email = "john@doe.com"
 
-        viewModel.onAction(RegisterViewAction.ChangeEmail(email))
-        advanceUntilIdle()
-
         viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(RegisterViewAction.ChangeEmail(email))
+
             assertEquals(email, awaitItem().email)
         }
     }
 
     @Test
-    fun `change password updates state`() = runTest {
-        viewModel = getSut()
-        val password = "Secret123"
-
-        viewModel.onAction(RegisterViewAction.ChangePassword(password))
-        advanceUntilIdle()
+    fun `change first name`() = runTest {
+        val firstName = "John"
 
         viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(RegisterViewAction.ChangeFirstName(firstName))
+
+            assertEquals(firstName, awaitItem().firstName)
+        }
+    }
+
+    @Test
+    fun `change last name`() = runTest {
+        val lastName = "Smith"
+
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(RegisterViewAction.ChangeLastName(lastName))
+
+            assertEquals(lastName, awaitItem().lastName)
+        }
+    }
+
+    @Test
+    fun `change password`() = runTest {
+        val password = "Secret123"
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(RegisterViewAction.ChangePassword(password))
+
             assertEquals(password, awaitItem().password)
         }
     }
 
-//    @Test
-//    fun `change first and last name update state`() = runTest {
-//        viewModel = getSut()
-//        val firstName = "John"
-//        val lastName = "Doe"
-//
-//        viewModel.onAction(RegisterViewAction.ChangeFirstName(firstName))
-//        viewModel.onAction(RegisterViewAction.ChangeLastName(lastName))
-//        advanceUntilIdle()
-//
-//        viewModel.viewState.test {
-//            assertEquals(firstName, awaitItem().firstName)
-//            assertEquals(lastName, awaitItem().lastName)
-//        }
-//    }
 
-//    // TODO #78 - Fix and add missing Unit tests
-//    @Ignore
-//    @Test
-//    fun `sign up success calls usecase and navigates to main host`() = runTest {
-//        val email = "john@doe.com"
-//        val pass = "Secret123"
-//        val first = "John"
-//        val last = "Doe"
-//
-//        viewModel = getSut()
-//
-//        viewModel.changeEmail(email)
-//        viewModel.changePassword(pass)
-//        viewModel.changeFirstName(first)
-//        viewModel.changeLastName(last)
-//        advanceUntilIdle()
-//
-//        viewModel.signUp()
-//        advanceUntilIdle()
-//
-//        verifySuspend {
-//            registerRepository.create(
-//                request = RegisterRequest(
-//                    email = email,
-//                    password = pass,
-//                    firstName = first,
-//                    lastName = last,
-//                )
-//            )
-//        }
-//        verifySuspend { viewModelNavigator.replaceAll(eq(listOf(MainHostScreen()))) }
-//    }
+    @Test
+    fun `sign up success`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
 
-//    @Test
-//    fun `sign up error hides loader`() = runTest {
-//        everySuspend { registerRepository.create(any<RegisterRequest>()) } throws Exception("test exception")
-//
-//        viewModel = getSut()
-//        viewModel.changeEmail("a@b.c")
-//        viewModel.changePassword("x")
-//        advanceUntilIdle()
-//
-//        viewModel.signUp()
-//        advanceUntilIdle()
-//
-//        viewModel.viewState.test {
-//            assertEquals(false, awaitItem().isLoadingView)
-//        }
-//    }
+            viewModel.onAction(RegisterViewAction.SignUp)
+
+            assertEquals(
+                expected = RegisterViewState(
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            registerRepository.create(any())
+        }
+        verifySuspend {
+            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
+        }
+    }
+
+    @Test
+    fun `sign up error`() = runTest {
+        everySuspend { registerRepository.create(any()) } throws Exception("Something wrong")
+
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(RegisterViewAction.SignUp)
+
+            assertEquals(
+                expected = RegisterViewState(
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+
+            assertEquals(
+                expected = RegisterViewState(
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            registerRepository.create(any())
+        }
+
+        verifySuspend(mode = exactly(0)) {
+            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
+        }
+    }
 }

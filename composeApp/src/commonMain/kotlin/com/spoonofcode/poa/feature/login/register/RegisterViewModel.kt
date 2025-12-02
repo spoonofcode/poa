@@ -24,34 +24,26 @@ internal class RegisterViewModel(
     }
 
     private fun changeEmail(email: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(email = email)
-            }
+        updateState {
+            copy(email = email)
         }
     }
 
     private fun changePassword(password: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(password = password)
-            }
+        updateState {
+            copy(password = password)
         }
     }
 
     private fun changeFirstName(firstName: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(firstName = firstName)
-            }
+        updateState {
+            copy(firstName = firstName)
         }
     }
 
     private fun changeLastName(lastName: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(lastName = lastName)
-            }
+        updateState {
+            copy(lastName = lastName)
         }
     }
 
@@ -59,11 +51,12 @@ internal class RegisterViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
+                val currentState = currentState()
                 registerUseCase(
-                    email = viewState.value.email,
-                    password = viewState.value.password,
-                    firstName = viewState.value.firstName,
-                    lastName = viewState.value.lastName,
+                    email = currentState.email,
+                    password = currentState.password,
+                    firstName = currentState.firstName,
+                    lastName = currentState.lastName,
                 )
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             } catch (ce: CancellationException) {
