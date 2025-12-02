@@ -8,16 +8,6 @@ import kotlinx.coroutines.launch
 
 internal class DemoViewModel() : BaseViewModel<DemoViewState, DemoViewAction>(DemoViewState()) {
 
-    override fun onInitViewState()
-    {
-        println("Loading data...")
-        viewModelScope.launch {
-            updateState { copy(isLoading = true) }
-            delay(3000L)
-            updateState { copy(isLoading = false) }
-        }
-    }
-
     override fun onAction(action: DemoViewAction) {
         when (action) {
             DemoViewAction.InitView -> initView()
@@ -25,7 +15,11 @@ internal class DemoViewModel() : BaseViewModel<DemoViewState, DemoViewAction>(De
     }
 
     private fun initView() {
+        println("Loading data...")
         viewModelScope.launch {
+            updateState { copy(isLoading = true) }
+            delay(3000L)
+            updateState { copy(isLoading = false) }
         }
     }
 

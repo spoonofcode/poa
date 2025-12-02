@@ -11,6 +11,7 @@ import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.data_has_been_loaded
 import com.spoonofcode.poa.resources.demo
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -20,8 +21,8 @@ internal class DemoScreen(
     override val verticalScrollEnable: Boolean = false,
 ) : BaseScreen<DemoViewModel, DemoViewState, DemoViewAction>() {
 
-//    override fun provideInitAction(onAction: (DemoViewAction) -> Unit): () -> Unit =
-//        { onAction(DemoViewAction.InitView) }
+    override fun provideInitAction(onAction: (DemoViewAction) -> Unit): () -> Unit =
+        { onAction(DemoViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<DemoViewModel>()
@@ -41,7 +42,7 @@ internal class DemoScreen(
                 if (viewState.isLoading) {
                     CircularProgressIndicator()
                 } else {
-                    Texts.BL(text = "Everything loaded.")
+                    Texts.BL(text = stringResource(resource = Res.string.data_has_been_loaded))
                 }
             }
 

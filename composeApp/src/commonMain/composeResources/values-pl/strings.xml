@@ -7,6 +7,7 @@
     <string name="chat">Czat</string>
     <string name="custom_link">Własny link</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
+    <string name="data_has_been_loaded">Dane zostały załądowane</string>
     <string name="date">Data</string>
     <string name="delete">Usuń</string>
     <string name="delete_account">Usuń konto</string>
@@ -34,6 +35,7 @@
     <string name="let_s_get_started">Zaczynajmy</string>
     <string name="link">Link</string>
     <string name="links">Linki</string>
+    <string name="loading">Ładowanie...</string>
     <string name="logout">Wyloguj</string>
     <string name="my_customers">Moi klienci</string>
     <string name="my_partners">Partnerzy</string>
