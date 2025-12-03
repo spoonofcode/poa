@@ -2,8 +2,8 @@ package com.spoonofcode.poa.feature.partner.details
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.ProductRepository
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -15,15 +15,11 @@ import kotlin.test.assertEquals
 class PartnerDetailsViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerDetailsViewModel
-    private lateinit var productRepository: ProductRepository
-    private lateinit var userRepository: UserRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(partnerTestModule)
         super.setup()
-        productRepository = getKoin().get()
-        userRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -32,6 +28,23 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             assertEquals(
                 expected = PartnerDetailsViewState(),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `init view`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(PartnerDetailsViewAction.InitView(partnerId = PARTNER_1.id))
+
+            assertEquals(
+                expected = PartnerDetailsViewState(
+                    partner = PARTNER_1,
+                    screenState = ScreenState.CONTENT,
+                ),
                 actual = awaitItem()
             )
         }
