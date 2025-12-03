@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.GenericCrudRepository
+import com.spoonofcode.poa.core.data.base.BaseRepository
 import com.spoonofcode.poa.core.model.AddProductUserRequest
 import com.spoonofcode.poa.core.model.AddRewardToUserRequest
 import com.spoonofcode.poa.core.model.DailyCheckInStatus
@@ -9,7 +9,6 @@ import com.spoonofcode.poa.core.model.Product
 import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.model.User
-import com.spoonofcode.poa.core.model.UserRequest
 import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
@@ -19,15 +18,27 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 @OpenForMokkery
-class UserRepository : GenericCrudRepository<UserRequest, User>(
-    resourceName = "users",
-    requestSerializer = UserRequest.serializer(),
-    responseSerializer = User.serializer(),
+class UserRepository : BaseRepository(
+    collectionName = "users"
 ) {
+    suspend fun read(
+        userId: String,
+    ): User {
+        return withContext(dispatcherProvider.io()) {
+            val response: HttpResponse = doRequest(
+                urlPostfixPath = userId,
+                method = HttpMethod.Get,
+            )
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.decodeFromString(User.serializer(), responseBody)
+        }
+    }
+
     suspend fun readUserPartners(userId: String): List<Partner> {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/partners",
+                urlPostfixPath = "$userId/partners",
                 method = HttpMethod.Get,
             )
 
@@ -39,7 +50,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun readUserProducts(userId: String): List<Product> {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/products",
+                urlPostfixPath = "$userId/products",
                 method = HttpMethod.Get,
             )
 
@@ -51,9 +62,9 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun addProductToUser(productId: String, userId: String) {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/products",
+                urlPostfixPath = "$userId/products",
                 method = HttpMethod.Post,
-                customRequestBody = Json.encodeToString(
+                requestBody = Json.encodeToString(
                     AddProductUserRequest.serializer(),
                     AddProductUserRequest(productId = productId)
                 ),
@@ -65,9 +76,9 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun deleteProductFromUser(productId: String, userId: String) {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/products",
+                urlPostfixPath = "$userId/products",
                 method = HttpMethod.Delete,
-                customRequestBody = Json.encodeToString(
+                requestBody = Json.encodeToString(
                     AddProductUserRequest.serializer(),
                     AddProductUserRequest(productId = productId)
                 ),
@@ -79,7 +90,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun readUserProfile(userId: String): Profile {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/profile",
+                urlPostfixPath = "$userId/profile",
                 method = HttpMethod.Get,
             )
             val responseBody = responseOrException(response).body<String>()
@@ -90,7 +101,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun readUserProductSeriesIds(userId: String): List<String> {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/product-series-ids",
+                urlPostfixPath = "$userId/product-series-ids",
                 method = HttpMethod.Get,
             )
 
@@ -101,9 +112,9 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun addRewardToUser(rewardType: RewardType, userId: String) {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/rewards",
+                urlPostfixPath = "$userId/rewards",
                 method = HttpMethod.Post,
-                customRequestBody = Json.encodeToString(
+                requestBody = Json.encodeToString(
                     AddRewardToUserRequest.serializer(),
                     AddRewardToUserRequest(rewardType = rewardType)
                 ),
@@ -115,7 +126,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun getUserRewardsPoints(userId: String): Int {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/rewards/points",
+                urlPostfixPath = "$userId/rewards/points",
                 method = HttpMethod.Get
             )
 
@@ -126,7 +137,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
-                urlPath = "users/$userId/rewards/daily-check-in/status",
+                urlPostfixPath = "$userId/rewards/daily-check-in/status",
                 method = HttpMethod.Get
             )
 

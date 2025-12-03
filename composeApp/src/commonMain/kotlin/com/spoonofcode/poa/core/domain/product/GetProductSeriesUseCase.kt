@@ -7,7 +7,9 @@ class GetProductSeriesUseCase(
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(): List<Product> {
-        return productRepository.readAll().distinctBy { product -> product.seriesId }
+        return emptyList()
+        // TOOD Fix this
+//        return productRepository.readAll().distinctBy { product -> product.seriesId }
     }
 }
 

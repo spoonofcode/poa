@@ -12,7 +12,6 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun partnerRepositoryMock() = mock<PartnerRepository> {
-    everySuspend { create(any()) } returns PARTNER_1
     everySuspend { read(any()) } returns PARTNER_1
     everySuspend { update(any(), any()) } returns true
     everySuspend { readAll() } returns PARTNERS

@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.core.domain.login
 
 import com.spoonofcode.poa.core.data.repository.RegisterRepository
-import com.spoonofcode.poa.core.model.RegisterRequest
 import com.spoonofcode.poa.core.network.SessionManager
 
 class RegisterUseCase(
@@ -15,12 +14,10 @@ class RegisterUseCase(
         lastName: String
     ) {
         val registerResponse = registerRepository.create(
-            RegisterRequest(
-                email = email,
-                password = password,
-                firstName = firstName,
-                lastName = lastName,
-            )
+            email = email,
+            password = password,
+            firstName = firstName,
+            lastName = lastName,
         )
         sessionManager.saveSessionUserId(userId = registerResponse.userId)
         sessionManager.saveSessionAccessToken(token = registerResponse.jwtAccessToken)

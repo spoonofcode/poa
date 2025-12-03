@@ -8,7 +8,7 @@ class UpdateProductUseCase(
 ) {
     suspend operator fun invoke(productId: String, productRequest: ProductRequest): Boolean =
         productRepository.update(
-            id = productId,
-            request = productRequest,
+            productId = productId,
+            productRequest = productRequest,
         )
 }

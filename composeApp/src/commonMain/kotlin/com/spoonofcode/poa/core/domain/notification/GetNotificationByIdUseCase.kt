@@ -8,5 +8,5 @@ class GetNotificationByIdUseCase(
 ) {
     suspend operator fun invoke(
         notificationId: String
-    ): Notification = notificationRepository.read(id = notificationId)
+    ): Notification = notificationRepository.read(notificationId = notificationId)
 }

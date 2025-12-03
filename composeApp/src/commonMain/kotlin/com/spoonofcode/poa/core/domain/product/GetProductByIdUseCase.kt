@@ -10,5 +10,5 @@ class GetProductByIdUseCase(
     @OptIn(ExperimentalTime::class)
     suspend operator fun invoke(
         productId: String
-    ): Product = productRepository.read(id = productId)
+    ): Product = productRepository.read(productId = productId)
 }

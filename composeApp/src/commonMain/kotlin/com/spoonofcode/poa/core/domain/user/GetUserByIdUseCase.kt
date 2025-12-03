@@ -8,5 +8,5 @@ class GetUserByIdUseCase(
 ) {
     suspend operator fun invoke(
         userId: String
-    ): User = userRepository.read(id = userId)
+    ): User = userRepository.read(userId = userId)
 }

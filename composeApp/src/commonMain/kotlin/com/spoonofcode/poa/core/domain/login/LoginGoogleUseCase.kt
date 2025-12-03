@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.core.domain.login
 
 import com.spoonofcode.poa.core.data.repository.LoginGoogleRepository
-import com.spoonofcode.poa.core.model.LoginGoogleRequest
 import com.spoonofcode.poa.core.network.SessionManager
 
 class LoginGoogleUseCase(
@@ -12,9 +11,7 @@ class LoginGoogleUseCase(
         googleIdToken: String,
     ) {
         val loginGoogleResponse = loginGoogleRepository.create(
-            request = LoginGoogleRequest(
-                googleUserToken = googleIdToken,
-            )
+            googleUserToken = googleIdToken,
         )
         sessionManager.saveSessionUserId(userId = loginGoogleResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
