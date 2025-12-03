@@ -1,7 +1,8 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
+import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USERS
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USER_1
@@ -22,5 +23,6 @@ internal fun userRepositoryMock() = mock<UserRepository> {
     everySuspend { addRewardToUser(any(), any()) } returns Unit
     everySuspend { getUserDailyCheckInStatus(any()) } returns DAILY_CHECK_IN_STATUS_1
     everySuspend { getUserRewardsPoints(any()) } returns TOTAL_POINTS
-    everySuspend { readUserPartners(any()) } returns listOf(PARTNER_1)
+    everySuspend { readUserPartners(any()) } returns PARTNERS
+    everySuspend { readUserProducts(any()) } returns PRODUCTS
 }

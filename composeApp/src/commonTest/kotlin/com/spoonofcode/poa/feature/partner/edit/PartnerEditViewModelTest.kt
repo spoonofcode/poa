@@ -1,11 +1,9 @@
 package com.spoonofcode.poa.feature.partner.edit
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.repository.PartnerRepository
-import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import dev.mokkery.matcher.any
@@ -277,14 +275,14 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
                 ),
                 actual = awaitItem()
             )
+        }
 
-            verifySuspend {
-                partnerRepository.update(any(), any())
-            }
+        verifySuspend {
+            partnerRepository.update(any(), any())
+        }
 
-            verifySuspend {
-                viewModelNavigator.pop()
-            }
+        verifySuspend {
+            viewModelNavigator.pop()
         }
     }
 }

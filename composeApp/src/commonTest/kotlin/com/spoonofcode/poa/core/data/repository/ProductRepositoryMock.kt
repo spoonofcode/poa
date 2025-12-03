@@ -12,8 +12,9 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun productRepositoryMock() = mock<ProductRepository> {
-    everySuspend { create(any<ProductRequest>()) } returns PRODUCT_1
+    everySuspend { create(any()) } returns PRODUCT_1
     everySuspend { read(any()) } returns PRODUCT_1
+    everySuspend { update(any(), any()) } returns true
     everySuspend { readAll() } returns PRODUCTS
     everySuspend { readProductByTagId(any()) } returns PRODUCT_1
 }

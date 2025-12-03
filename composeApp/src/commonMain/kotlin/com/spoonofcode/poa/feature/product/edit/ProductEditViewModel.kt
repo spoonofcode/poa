@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.product.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.product.EditProductUseCase
+import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.model.ProductRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
@@ -12,13 +12,12 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProductEditViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
-    private val editProductUseCase: EditProductUseCase,
+    private val updateProductUseCase: UpdateProductUseCase,
 ) : BaseViewModel<ProductEditViewState, ProductEditViewAction>(ProductEditViewState()) {
 
     override fun onAction(action: ProductEditViewAction) {
         when (action) {
             is ProductEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
-            ProductEditViewAction.EditProduct -> editProduct()
             is ProductEditViewAction.InitView -> initView(action.productId)
             ProductEditViewAction.SaveChanges -> saveChanges()
         }
@@ -43,44 +42,17 @@ internal class ProductEditViewModel(
         }
     }
 
-    private fun editProduct() {
-        viewModelScope.launch {
-            try {
-                val product = requireNotNull(currentState().product)
-                editProductUseCase(
-                    productId = product.id,
-                    productRequest = ProductRequest(
-                        name = product.name,
-                        ownerUserId = product.ownerUserId,
-                        partnerId = product.partnerId,
-                        description = product.description,
-                        imageLink = product.imageLink,
-                        videoLink = product.videoLink,
-                        collectionName = product.collectionName,
-                        websiteLink = product.websiteLink,
-                        customLink = product.customLink,
-                        seriesId = product.seriesId,
-                        tagId = product.tagId,
-                    )
-                )
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
-            }
-        }
-    }
-
     private fun changeCustomLink(link: String) {
         val currentProduct = currentState().product
         updateState { copy(product = currentProduct?.copy(customLink = link)) }
     }
 
     private fun saveChanges() {
+        showLoadingView()
         viewModelScope.launch {
             try {
                 val product = requireNotNull(currentState().product)
-                editProductUseCase(
+                updateProductUseCase(
                     productId = product.id,
                     productRequest = ProductRequest(
                         name = product.name,
@@ -96,6 +68,7 @@ internal class ProductEditViewModel(
                         tagId = product.tagId,
                     )
                 )
+                viewModelNavigator.pop()
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {
