@@ -2,8 +2,9 @@ package com.spoonofcode.poa.feature.faq
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.data.mockdata.FAQMockData.FAQS
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.di.faqTestModule
-import com.spoonofcode.poa.feature.home.di.homeTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -27,6 +28,30 @@ class FAQViewModelest : BaseViewModelTest() {
         viewModel.viewState.test {
             assertEquals(
                 expected = FAQViewState(),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `init view`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(FAQViewAction.InitView)
+
+            assertEquals(
+                expected = FAQViewState(
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+
+            assertEquals(
+                expected = FAQViewState(
+                    screenState = ScreenState.CONTENT,
+                    faqs = FAQS
+                ),
                 actual = awaitItem()
             )
         }

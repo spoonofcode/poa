@@ -21,7 +21,7 @@ internal class FAQViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                val faqs = getFAQUseCase.invoke()
+                val faqs = getFAQUseCase()
                 updateState {
                     copy(
                         screenState = ScreenState.CONTENT,

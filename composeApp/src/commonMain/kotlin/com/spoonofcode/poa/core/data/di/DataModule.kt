@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.core.data.di
 
+import com.spoonofcode.poa.core.data.repository.FAQRepository
 import com.spoonofcode.poa.core.data.repository.LoginGoogleRepository
 import com.spoonofcode.poa.core.data.repository.LoginRepository
 import com.spoonofcode.poa.core.data.repository.NotificationRepository
@@ -13,6 +14,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
+    singleOf(::FAQRepository)
     singleOf(::LoginGoogleRepository)
     singleOf(::LoginRepository)
     singleOf(::RefreshRepository)
