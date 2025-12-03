@@ -1,0 +1,114 @@
+package com.spoonofcode.poa.feature.profile
+
+import app.cash.turbine.test
+import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
+import com.spoonofcode.poa.core.ext.containsTypes
+import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.feature.faq.FAQScreen
+import com.spoonofcode.poa.feature.login.login.LoginScreen
+import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
+import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
+import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewAction
+import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
+import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewState
+import com.spoonofcode.poa.feature.profile.di.profileTestModule
+import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
+import com.spoonofcode.poa.feature.tac.TACScreen
+import dev.mokkery.matcher.ofType
+import dev.mokkery.verifySuspend
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class ProfileDetailsViewModelest : BaseViewModelTest() {
+
+    private lateinit var viewModel: ProfileDetailsViewModel
+
+    @BeforeTest
+    override fun setup() {
+        modules = arrayOf(profileTestModule)
+        super.setup()
+        viewModel = getSut()
+    }
+
+    @Test
+    fun `initial state is default`() = runTest {
+        viewModel.viewState.test {
+            assertEquals(
+                expected = ProfileDetailsViewState(),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `init view`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(ProfileDetailsViewAction.InitView)
+
+            assertEquals(
+                expected = ProfileDetailsViewState(
+                    profile = PROFILE_1,
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `logout success`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.Logout)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.replaceAll(containsTypes(LoginScreen::class)) }
+    }
+
+    @Test
+    fun `navigates to edit profile screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToEditProfile)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<ProfileEditScreen>()) }
+    }
+
+    @Test
+    fun `navigates to faq screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToFAQ)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<FAQScreen>()) }
+    }
+
+    @Test
+    fun `navigates to notification screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<NotificationSettingsScreen>()) }
+    }
+
+    @Test
+    fun `navigates to partner panel screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<PartnerPanelScreen>()) }
+    }
+
+    @Test
+    fun `navigates to tac screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToTAC)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<TACScreen>()) }
+    }
+
+}

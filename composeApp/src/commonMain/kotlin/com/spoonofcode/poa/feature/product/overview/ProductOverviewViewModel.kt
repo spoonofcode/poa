@@ -23,8 +23,8 @@ internal class ProductOverviewViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val products = getUserProductsUseCase()
                 updateState {

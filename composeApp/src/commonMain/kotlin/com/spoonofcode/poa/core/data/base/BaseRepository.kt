@@ -38,6 +38,8 @@ abstract class GenericBaseRepository<RQ : Any, RS : Any>(
     private val responseSerializer: KSerializer<RS>,
     private val sessionTokenRequired: Boolean = true,
 ) : BaseRepository<RQ, RS> {
+    protected val dispatcherProvider: DispatcherProvider by getKoin().inject()
+
     private val httpClient: HttpClient by getKoin().inject()
     private val networkConfig: NetworkConfig by getKoin().inject()
     private val sessionManager: SessionManager by getKoin().inject()

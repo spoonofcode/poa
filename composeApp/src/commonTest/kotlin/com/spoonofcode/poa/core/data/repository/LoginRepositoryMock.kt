@@ -8,6 +8,6 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun loginRepositoryMock() = mock<LoginRepository> {
-    everySuspend { create(any<LoginRequest>()) } returns LOGIN_1
+    everySuspend { create(any()) } returns LOGIN_1
     everySuspend { read(any()) } returns LOGIN_1
 }

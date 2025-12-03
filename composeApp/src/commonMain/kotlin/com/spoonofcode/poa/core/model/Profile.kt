@@ -6,9 +6,11 @@ import kotlinx.serialization.Serializable
 data class Profile(
     val name: String,
     val numberOfProductsOwnedByUser: Long,
+    val customLink: String,
 )
 
 @Serializable
 data class ProfileRequest(
     val userId: String,
+    val customLink: String,
 )

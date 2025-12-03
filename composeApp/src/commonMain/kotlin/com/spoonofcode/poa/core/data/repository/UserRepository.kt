@@ -14,8 +14,6 @@ import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -27,7 +25,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     responseSerializer = User.serializer(),
 ) {
     suspend fun readUserPartners(userId: String): List<Partner> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/partners",
                 method = HttpMethod.Get,
@@ -39,7 +37,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     }
 
     suspend fun readUserProducts(userId: String): List<Product> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/products",
                 method = HttpMethod.Get,
@@ -51,7 +49,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     }
 
     suspend fun addProductToUser(productId: String, userId: String) {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/products",
                 method = HttpMethod.Post,
@@ -64,8 +62,22 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
+    suspend fun deleteProductFromUser(productId: String, userId: String) {
+        return withContext(dispatcherProvider.io()) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/products",
+                method = HttpMethod.Delete,
+                customRequestBody = Json.encodeToString(
+                    AddProductUserRequest.serializer(),
+                    AddProductUserRequest(productId = productId)
+                ),
+            )
+            responseOrException(response).body<String>()
+        }
+    }
+
     suspend fun readUserProfile(userId: String): Profile {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/profile",
                 method = HttpMethod.Get,
@@ -76,7 +88,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     }
 
     suspend fun readUserProductSeriesIds(userId: String): List<String> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/product-series-ids",
                 method = HttpMethod.Get,
@@ -87,7 +99,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     }
 
     suspend fun addRewardToUser(rewardType: RewardType, userId: String) {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/rewards",
                 method = HttpMethod.Post,
@@ -101,7 +113,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     }
 
     suspend fun getUserRewardsPoints(userId: String): Int {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/rewards/points",
                 method = HttpMethod.Get
@@ -112,7 +124,7 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
     }
 
     suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "users/$userId/rewards/daily-check-in/status",
                 method = HttpMethod.Get

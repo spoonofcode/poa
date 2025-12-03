@@ -29,19 +29,15 @@ internal class LoginViewModel(
     }
 
     private fun changeEmail(email: String) {
-        viewModelScope.launch {
             updateState {
                 copy(email = email)
             }
-        }
     }
 
     private fun changePassword(password: String) {
-        viewModelScope.launch {
             updateState {
                 copy(password = password)
             }
-        }
     }
 
     private fun forgotPassword() {

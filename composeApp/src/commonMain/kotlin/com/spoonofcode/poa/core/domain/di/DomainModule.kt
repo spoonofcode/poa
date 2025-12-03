@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
+import com.spoonofcode.poa.core.domain.faq.GetFAQUseCase
 import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
 import com.spoonofcode.poa.core.domain.login.LoginUseCase
 import com.spoonofcode.poa.core.domain.login.LogoutUseCase
@@ -17,17 +18,18 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
-import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
-import com.spoonofcode.poa.core.domain.product.EditProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
+import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
+import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.domain.user.product.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.product.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.core.domain.user.product.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.reward.AddRewardToUserUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
@@ -43,6 +45,7 @@ val domainModule = module {
     factoryOf(::RegisterUseCase)
     factoryOf(::RefreshAccessTokenUseCase)
     factoryOf(::GetProfileUseCase)
+    factoryOf(::UpdateProfileUseCase)
     factoryOf(::GetUserByIdUseCase)
     factoryOf(::GetFilteredProductsByTextUseCase)
     factoryOf(::GetPartnerByIdUseCase)
@@ -52,8 +55,8 @@ val domainModule = module {
     factoryOf(::GetProductByTagIdUseCase)
     factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
-    factoryOf(::DeleteProductUseCase)
-    factoryOf(::EditProductUseCase)
+    factoryOf(::DeleteProductFromUserUseCase)
+    factoryOf(::UpdateProductUseCase)
     factoryOf(::UpdatePartnerUseCase)
     factoryOf(::GetProductSeriesUseCase)
     factoryOf(::SendNotificationUseCase)
@@ -68,4 +71,5 @@ val domainModule = module {
     factoryOf(::GetUserPartnersUseCase)
     factoryOf(::GetUserDailyCheckInStatusUseCase)
     factoryOf(::AddRewardToUserUseCase)
+    factoryOf(::GetFAQUseCase)
 }

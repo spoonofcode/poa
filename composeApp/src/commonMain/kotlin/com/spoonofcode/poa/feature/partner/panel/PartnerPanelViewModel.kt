@@ -35,5 +35,4 @@ internal class PartnerPanelViewModel(
     fun navigateToReports() {
         // TODO Add reports screen
     }
-
 }

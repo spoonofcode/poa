@@ -7,4 +7,5 @@ import com.spoonofcode.poa.core.ui.ScreenState
 @Immutable
 internal data class DemoViewState(
     override val screenState: ScreenState = ScreenState.CONTENT,
+    val isLoading: Boolean = false,
 ) : BaseViewState(screenState)

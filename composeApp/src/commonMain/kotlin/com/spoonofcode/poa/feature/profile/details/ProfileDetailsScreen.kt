@@ -244,7 +244,8 @@ private fun ProfileScreenContentPreview() {
             screenState = ScreenState.CONTENT,
             profile = Profile(
                 name = "Bartosz luczak (Lycha)",
-                numberOfProductsOwnedByUser = 2
+                numberOfProductsOwnedByUser = 2,
+                customLink = "https://example.com"
             ),
         )
     )

@@ -8,8 +8,6 @@ import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -21,7 +19,7 @@ class PartnerRepository : GenericCrudRepository<PartnerRequest, Partner>(
     responseSerializer = Partner.serializer(),
 ) {
     suspend fun readPartnerUsers(partnerId: String): List<User> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "partners/$partnerId/users",
                 method = HttpMethod.Get,

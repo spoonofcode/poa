@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
@@ -86,7 +87,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
 
         val snackbarHostState = remember { SnackbarHostState() }
         val viewModel = provideViewModel()
-        val viewState by viewModel.viewState.collectAsState()
+        val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
         NavigationHandler(viewModel.navigationFlow, navigator)
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)

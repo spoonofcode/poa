@@ -10,7 +10,9 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationOverviewViewModel(
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction>(NotificationOverviewViewState()) {
+) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction>(
+    NotificationOverviewViewState()
+) {
 
     override fun onAction(action: NotificationOverviewViewAction) {
         when (action) {
@@ -22,8 +24,8 @@ internal class NotificationOverviewViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val allNotifications = getNotificationsUseCase()
                 updateState {
@@ -45,7 +47,6 @@ internal class NotificationOverviewViewModel(
             viewModelNavigator.push(NotificationDetailsScreen(notificationId = notificationId))
         }
     }
-
     private fun showLoadingView() {
         updateState {
             copy(

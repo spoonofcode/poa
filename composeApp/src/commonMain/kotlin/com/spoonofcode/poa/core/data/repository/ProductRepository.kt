@@ -7,8 +7,6 @@ import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
@@ -19,7 +17,7 @@ class ProductRepository : GenericCrudRepository<ProductRequest, Product>(
     responseSerializer = Product.serializer(),
 ) {
     suspend fun readProductByTagId(tagId: String): Product {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
                 urlPath = "products",
                 method = HttpMethod.Get,

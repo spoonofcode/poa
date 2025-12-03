@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.model.DailyReward
 import com.spoonofcode.poa.core.model.DailyRewardStatus
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.CountdownTimer
 import com.spoonofcode.poa.core.ui.compose.ImageSlider
@@ -54,8 +53,6 @@ import com.spoonofcode.poa.resources.total_points
 import com.spoonofcode.poa.resources.your_streak
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.time.Clock
-import kotlin.time.Duration.Companion.hours
 import kotlin.time.ExperimentalTime
 
 internal class HomeScreen(
@@ -92,14 +89,18 @@ internal class HomeScreen(
                 imageLinks = viewState.partnerImageLinks,
             )
             Spacer(modifier = Modifier.height(16.dp))
-            DailyCheckInSection(
-                streak = viewState.streak,
-                totalPoints = viewState.totalPoints,
-                isActionAvailable = viewState.isActionAvailable,
-                nextCheckInTimeMillis = viewState.nextCheckInTimeMillis,
-                onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) },
-                rewards = viewState.dailyRewards,
-            )
+
+            if (viewState.dailyCheckInStatus != null) {
+                DailyCheckInSection(
+                    streak = viewState.dailyCheckInStatus.streak,
+                    totalPoints = viewState.totalPoints,
+                    isActionAvailable = viewState.dailyCheckInStatus.isAvailableNow,
+                    nextCheckInTimeMillis = viewState.dailyCheckInStatus.nextCheckInTimeMillis,
+                    onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) },
+                    rewards = viewState.dailyCheckInStatus.dailyRewards,
+                )
+            }
+
         }
     }
 
@@ -204,35 +205,8 @@ internal class HomeScreen(
 @Preview
 @Composable
 private fun HomeScreenContentPreview() {
-    val rewards = (1..5).map { day ->
-        DailyReward(
-            day = day,
-            points = 10 + (day * 5),
-            status = if (day < 5) DailyRewardStatus.CLAIMED else DailyRewardStatus.AVAILABLE_TO_CLAIM
-        )
-    }
     HomeScreen().PreviewContent(
-        HomeViewState(dailyRewards = rewards)
-    )
-}
-
-@Preview
-@Composable
-private fun HomeScreenContentCheckedInPreview() {
-    val rewards = (1..6).map { day ->
-        DailyReward(
-            day = day,
-            points = 10 + (day * 5),
-            status = DailyRewardStatus.CLAIMED
-        )
-    }
-    HomeScreen().PreviewContent(
-        HomeViewState(
-            screenState = ScreenState.CONTENT,
-            dailyRewards = rewards,
-            nextCheckInTimeMillis = Clock.System.now()
-                .toEpochMilliseconds() + 5.hours.inWholeMilliseconds
-        )
+        HomeViewState()
     )
 }
 // endregion

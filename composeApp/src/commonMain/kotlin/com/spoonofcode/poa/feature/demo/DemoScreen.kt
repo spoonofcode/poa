@@ -1,11 +1,17 @@
 package com.spoonofcode.poa.feature.demo
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.data_has_been_loaded
 import com.spoonofcode.poa.resources.demo
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -28,6 +34,18 @@ internal class DemoScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.BL(text = stringResource(resource = Res.string.demo))
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (viewState.isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    Texts.BL(text = stringResource(resource = Res.string.data_has_been_loaded))
+                }
+            }
+
         }
     }
 }

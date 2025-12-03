@@ -2,6 +2,8 @@ package com.spoonofcode.poa.feature.profile.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
+import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
+import com.spoonofcode.poa.core.model.ProfileRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
@@ -9,7 +11,8 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProfileEditViewModel(
-    private val getProfileUseCase: GetProfileUseCase
+    private val getProfileUseCase: GetProfileUseCase,
+    private val updateProfileUseCase: UpdateProfileUseCase,
 ) : BaseViewModel<ProfileEditViewState, ProfileEditViewAction>(ProfileEditViewState()) {
 
     override fun onAction(action: ProfileEditViewAction) {
@@ -21,8 +24,8 @@ internal class ProfileEditViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val profile = getProfileUseCase()
                 updateState {
@@ -39,29 +42,24 @@ internal class ProfileEditViewModel(
         }
     }
 
-    private fun changeCustomLink(name: String) {
+    private fun changeCustomLink(link: String) {
         val currentProfile = currentState().profile
-        updateState { copy(profile = currentProfile?.copy(name = name)) }
+        updateState { copy(profile = currentProfile?.copy(customLink = link)) }
     }
 
     private fun saveChanges() {
         viewModelScope.launch {
             try {
                 val profile = requireNotNull(currentState().profile)
-//                editProfileUseCase(
-//                    profileId = profile.id,
-//                    productRequest = ProductRequest(
-//                        name = product.name,
-//                        description = product.description,
-//                        imageLink = product.imageLink,
-//                        videoLink = product.videoLink,
-//                        collectionName = product.collectionName,
-//                        websiteLink = product.websiteLink,
-//                        customLink = product.customLink,
-//                        seriesId = product.seriesId,
-//                        tagId = product.tagId,
+                // TODO Fix this usecase
+//                updateProfileUseCase(
+//                    userId = profile.id,
+//                    profileRequest = ProfileRequest(
+//                        userId = profile.id,
+//                        customLink = profile.customLink,
 //                    )
 //                )
+                viewModelNavigator.pop()
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

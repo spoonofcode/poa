@@ -44,35 +44,37 @@ internal class PartnerDetailsScreen(
         onAction: (PartnerDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            CoilImage(
-                imageModel = { viewState.partner.imageLink },
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16 / 9f)
-                    .clip(RoundedCornerShape(16.dp))
-                    .shadow(4.dp, RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
-            )
-            Spacers.VerticalBetweenFields()
-            Texts.HSB(viewState.partner.description)
-            Spacers.VerticalBetweenFields()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                SocialIcons(
-                    websiteUrl = viewState.partner.websiteLink,
-                    instagramUrl = viewState.partner.instagramLink,
-                    facebookUrl = viewState.partner.facebookLink,
-                    youtubeUrl = viewState.partner.youtubeLink,
-                    xUrl = viewState.partner.xLink,
+            if (viewState.partner != null) {
+                CoilImage(
+                    imageModel = { viewState.partner.imageLink },
+                    imageOptions = ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16 / 9f)
+                        .clip(RoundedCornerShape(16.dp))
+                        .shadow(4.dp, RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                 )
+                Spacers.VerticalBetweenFields()
+                Texts.HSB(viewState.partner.description)
+                Spacers.VerticalBetweenFields()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    SocialIcons(
+                        websiteUrl = viewState.partner.websiteLink,
+                        instagramUrl = viewState.partner.instagramLink,
+                        facebookUrl = viewState.partner.facebookLink,
+                        youtubeUrl = viewState.partner.youtubeLink,
+                        xUrl = viewState.partner.xLink,
+                    )
+                }
+                Spacers.VerticalBetweenFields()
             }
-            Spacers.VerticalBetweenFields()
         }
     }
 }

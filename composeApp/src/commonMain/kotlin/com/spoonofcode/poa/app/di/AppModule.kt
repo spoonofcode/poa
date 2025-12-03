@@ -1,11 +1,11 @@
 package com.spoonofcode.poa.app.di
 
+import com.spoonofcode.poa.core.data.base.di.coreBaseModule
 import com.spoonofcode.poa.core.data.di.dataModule
 import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
-import com.spoonofcode.poa.feature.customer.di.customerModule
 import com.spoonofcode.poa.feature.demo.di.demoModule
 import com.spoonofcode.poa.feature.faq.di.faqModule
 import com.spoonofcode.poa.feature.home.di.homeModule
@@ -24,6 +24,7 @@ import org.koin.dsl.module
 val appModule = module {
     includes(
         // core
+        coreBaseModule,
         dataModule,
         domainModule,
         uiModule,
@@ -31,7 +32,6 @@ val appModule = module {
         settingsModule,
 
         // features
-        customerModule,
         demoModule,
         faqModule,
         homeModule,

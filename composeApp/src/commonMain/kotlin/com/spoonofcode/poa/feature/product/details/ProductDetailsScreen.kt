@@ -55,11 +55,11 @@ internal data class ProductDetailsScreen(
             TopBarAction(
                 icon = Icons.Default.Edit,
                 description = "Edit",
-                onClick = { onAction(ProductDetailsViewAction.AddProduct) },
+                onClick = { onAction(ProductDetailsViewAction.AddProductToUser) },
             ),
             TopBarAction(Icons.Default.Delete, "Delete") {
                 onAction(
-                    ProductDetailsViewAction.DeleteProduct
+                    ProductDetailsViewAction.DeleteProductFromUser
                 )
             }
         )
@@ -121,7 +121,7 @@ internal data class ProductDetailsScreen(
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
                     text = stringResource(Res.string.add_product),
-                    onClick = { onAction(ProductDetailsViewAction.AddProduct) }
+                    onClick = { onAction(ProductDetailsViewAction.AddProductToUser) }
                 )
             }
         }

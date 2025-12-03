@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.product.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.user.product.AddProductToUserUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
+import com.spoonofcode.poa.core.domain.user.product.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
@@ -15,22 +15,22 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class ProductDetailsViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val addProductToUserUseCase: AddProductToUserUseCase,
-    private val deleteProductUseCase: DeleteProductUseCase,
+    private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
 
     override fun onAction(action: ProductDetailsViewAction) {
         when (action) {
-            ProductDetailsViewAction.AddProduct -> addProduct()
-            ProductDetailsViewAction.DeleteProduct -> deleteProduct()
+            ProductDetailsViewAction.AddProductToUser -> addProductToUser()
+            ProductDetailsViewAction.DeleteProductFromUser -> deleteProductFromUser()
             ProductDetailsViewAction.EditProduct -> editProduct()
             is ProductDetailsViewAction.InitView -> initView(productId = action.productId)
         }
     }
 
     private fun initView(productId: String) {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val product = getProductByIdUseCase(productId = productId)
                 updateState {
@@ -47,14 +47,14 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    private fun addProduct() {
+    private fun addProductToUser() {
         viewModelScope.launch {
             try {
                 val currentState = currentState()
                 addProductToUserUseCase(
                     productId = currentState.product!!.id
                 )
-                subscribeUserTopicsUseCase()
+//                subscribeUserTopicsUseCase()
                 viewModelNavigator.pop()
             } catch (ce: CancellationException) {
                 throw ce
@@ -71,12 +71,12 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    private fun deleteProduct() {
+    private fun deleteProductFromUser() {
         viewModelScope.launch {
             showLoadingView()
             try {
                 val currentState = currentState()
-                deleteProductUseCase(
+                deleteProductFromUserUseCase(
                     productId = currentState.product!!.id
                 )
                 viewModelNavigator.pop()

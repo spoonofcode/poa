@@ -7,7 +7,7 @@ import org.koin.dsl.module
 import org.koin.test.get
 import kotlin.test.BeforeTest
 
-abstract class BaseViewModelTest : BaselTest() {
+abstract class BaseViewModelTest : BaseTest() {
     protected lateinit var viewModelNavigator: ViewModelNavigator
 
     @BeforeTest

@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
+import com.spoonofcode.poa.core.data.base.DispatcherProvider
 import com.spoonofcode.poa.core.model.Refresh
 import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
@@ -9,17 +10,16 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpHeaders
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class RefreshRepository(
     private val httpClient: HttpClient,
     private val networkConfig: NetworkConfig,
+    private val dispatcherProvider: DispatcherProvider,
 ) {
     suspend fun refreshToken(jwtRefreshToken: String): Refresh {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/refresh/") {
                 header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")
             }

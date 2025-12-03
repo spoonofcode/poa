@@ -30,42 +30,32 @@ internal class NotificationEditViewModel(
     }
 
     private fun initView(itemIds: List<String>) {
-        viewModelScope.launch {
-            updateState {
-                copy(itemIds = itemIds)
-            }
+        updateState {
+            copy(itemIds = itemIds)
         }
     }
 
     private fun changeTitle(title: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(title = title)
-            }
+        updateState {
+            copy(title = title)
         }
     }
 
     private fun changeText(text: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(text = text)
-            }
+        updateState {
+            copy(text = text)
         }
     }
 
     private fun changeExpirationDateTime(startDateTime: LocalDateTime) {
-        viewModelScope.launch {
-            updateState {
-                copy(expirationDateTime = startDateTime)
-            }
+        updateState {
+            copy(expirationDateTime = startDateTime)
         }
     }
 
     private fun changeLink(link: String) {
-        viewModelScope.launch {
-            updateState {
-                copy(link = link)
-            }
+        updateState {
+            copy(link = link)
         }
     }
 

@@ -32,8 +32,8 @@ internal class ProfileDetailsViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val profile = getProfileUseCase()
                 updateState {
@@ -82,7 +82,7 @@ internal class ProfileDetailsViewModel(
 
     private fun logout() {
         viewModelScope.launch {
-            logoutUseCase.invoke()
+            logoutUseCase()
             viewModelNavigator.replaceAll(listOf(LoginScreen()))
         }
     }

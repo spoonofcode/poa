@@ -30,11 +30,8 @@ fun App(notificationId: String?) {
 }
 
 @Composable
-private fun getStartScreens(sessionInitialized: Boolean, notificationId: String?): List<Screen> {
-//    return DemoScreen()
-//    return MainHostScreen()
-
-    return if (sessionInitialized) {
+private fun getStartScreens(sessionInitialized: Boolean, notificationId: String?): List<Screen> =
+    if (sessionInitialized) {
         if (notificationId.isNullOrEmpty()) {
             listOf(MainHostScreen())
         } else {
@@ -47,6 +44,3 @@ private fun getStartScreens(sessionInitialized: Boolean, notificationId: String?
     } else {
         listOf(LoginScreen())
     }
-
-//    return LoginScreen()
-}

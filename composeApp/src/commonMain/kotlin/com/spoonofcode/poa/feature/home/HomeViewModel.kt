@@ -11,7 +11,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
-import kotlin.time.ExperimentalTime
 
 internal class HomeViewModel(
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
@@ -30,16 +29,39 @@ internal class HomeViewModel(
     }
 
     private fun initView() {
-        subscribeNotifications()
-        loadDailyRewardsStatus()
+        showLoadingView()
+        viewModelScope.launch {
+            try {
+//                subscribeUserTopicsUseCase()
+                loadRewardsStatus()
+            } catch (e: Exception) {
+                showErrorView()
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+            }
+
+        }
+    }
+
+    private suspend fun loadRewardsStatus() {
+        val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
+        val totalPoints = getUserRewardsPointsUseCase()
+
+        updateState {
+            copy(
+                screenState = ScreenState.CONTENT,
+                dailyCheckInStatus = dailyCheckInStatus,
+                totalPoints = totalPoints,
+            )
+        }
     }
 
     private fun dailyCheckIn() {
         viewModelScope.launch {
+            showLoadingView()
             try {
                 addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
                 showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
-                loadDailyRewardsStatus()
+                loadRewardsStatus()
             } catch (e: Exception) {
                 showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${e.message}"))
             }
@@ -54,50 +76,6 @@ internal class HomeViewModel(
     private fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationOverviewScreen())
-        }
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private fun loadDailyRewardsStatus() {
-        viewModelScope.launch {
-            showLoadingView()
-            try {
-                val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
-                val totalPoints = getUserRewardsPointsUseCase()
-
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        dailyRewards = dailyCheckInStatus.dailyRewards,
-                        streak = dailyCheckInStatus.streak,
-                        isActionAvailable = dailyCheckInStatus.isAvailableNow,
-                        totalPoints = totalPoints,
-                        nextCheckInTimeMillis = dailyCheckInStatus.nextCheckInTimeMillis
-                    )
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                showErrorView()
-                showSnackbar(SnackbarEvent.Error(message = "Failed to load daily rewards."))
-            }
-        }
-    }
-
-    private fun subscribeNotifications() {
-        viewModelScope.launch {
-            showLoadingView()
-            try {
-//                subscribeUserTopicsUseCase()
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                    )
-                }
-            } catch (e: Exception) {
-                showErrorView()
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-            }
-
         }
     }
 
