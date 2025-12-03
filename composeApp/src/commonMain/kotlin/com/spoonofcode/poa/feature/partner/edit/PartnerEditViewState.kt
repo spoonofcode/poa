@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.ui.ScreenState
 
 @Immutable
 internal data class PartnerEditViewState(
-    override val screenState: ScreenState = ScreenState.CONTENT,
+    override val screenState: ScreenState = ScreenState.LOADING,
     val text: String = "",
     val partner: Partner? = null,
 ) : BaseViewState(screenState)

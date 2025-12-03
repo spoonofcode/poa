@@ -2,10 +2,16 @@ package com.spoonofcode.poa.feature.partner.overview
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.ProductRepository
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
+import dev.mokkery.matcher.ofType
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -15,15 +21,11 @@ import kotlin.test.assertEquals
 class PartnerOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerOverviewViewModel
-    private lateinit var productRepository: ProductRepository
-    private lateinit var userRepository: UserRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(partnerTestModule)
         super.setup()
-        productRepository = getKoin().get()
-        userRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -35,5 +37,66 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
                 actual = awaitItem()
             )
         }
+    }
+
+    @Test
+    fun `change search text`() = runTest {
+        val searchText = "New search text"
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(PartnerOverviewViewAction.ChangeSearchText(searchText = searchText))
+
+            assertEquals(
+                expected = PartnerOverviewViewState(
+                    searchText = searchText,
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `click category`() = runTest {
+        val categoryId = "New category id"
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(PartnerOverviewViewAction.ClickCategory(categoryId = categoryId))
+
+            assertEquals(
+                expected = PartnerOverviewViewState(
+                    selectedPartnerCategories = setOf(categoryId),
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `init view`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(PartnerOverviewViewAction.InitView)
+
+            assertEquals(
+                expected = PartnerOverviewViewState(
+                    screenState = ScreenState.CONTENT,
+                    initPartners = PARTNERS,
+                    filteredPartners = PARTNERS,
+                    partnerCategories = PARTNER_CATEGORIES,
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `select partner`() = runTest {
+        viewModel.onAction(PartnerOverviewViewAction.SelectPartner(partnerId = PARTNER_1.id))
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<PartnerDetailsScreen>()) }
     }
 }

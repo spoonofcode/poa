@@ -29,4 +29,5 @@ object PartnerMockData {
         xLink = "https://x.com/ProofOfWearPOW?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
         userId = "550e8400-e29b-41d4-a716-446655440001",
     )
+    val PARTNERS = listOf(PARTNER_1, PARTNER_2)
 }

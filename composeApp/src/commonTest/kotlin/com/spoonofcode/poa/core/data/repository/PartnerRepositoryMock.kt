@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USERS
@@ -13,5 +14,7 @@ import dev.mokkery.mock
 internal fun partnerRepositoryMock() = mock<PartnerRepository> {
     everySuspend { create(any()) } returns PARTNER_1
     everySuspend { read(any()) } returns PARTNER_1
+    everySuspend { update(any(), any()) } returns true
+    everySuspend { readAll() } returns PARTNERS
     everySuspend { readPartnerUsers(any()) } returns USERS
 }
