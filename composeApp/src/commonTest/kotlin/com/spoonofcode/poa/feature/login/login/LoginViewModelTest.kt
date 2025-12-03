@@ -84,7 +84,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `forgot password navigates to screen`() = runTest {
+    fun `navigates to forgot password screen`() = runTest {
         viewModel.onAction(LoginViewAction.ForgotPassword)
         advanceUntilIdle()
 
@@ -92,7 +92,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `sign up navigates to register screen`() = runTest {
+    fun `navigates to register screen`() = runTest {
         viewModel.onAction(LoginViewAction.SignUp)
         advanceUntilIdle()
 

@@ -30,4 +30,21 @@ class ForgotPasswordViewModelest : BaseViewModelTest() {
             )
         }
     }
+
+    @Test
+    fun `change email`() = runTest {
+        val email = "john@doe.com"
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(ForgotPasswordViewAction.ChangeEmail(email))
+
+            assertEquals(
+                expected = ForgotPasswordViewState(
+                    email = email,
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
 }

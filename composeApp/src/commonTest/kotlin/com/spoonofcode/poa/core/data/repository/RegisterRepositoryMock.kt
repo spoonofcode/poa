@@ -8,6 +8,6 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun registerRepositoryMock() = mock<RegisterRepository> {
-    everySuspend { create(any<RegisterRequest>()) } returns REGISTER_1
+    everySuspend { create(any()) } returns REGISTER_1
     everySuspend { read(any()) } returns REGISTER_1
 }

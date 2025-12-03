@@ -2,8 +2,15 @@ package com.spoonofcode.poa.feature.home
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
+import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.home.di.homeTestModule
+import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
+import dev.mokkery.matcher.ofType
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -29,5 +36,56 @@ class HomeViewModelest : BaseViewModelTest() {
                 actual = awaitItem()
             )
         }
+    }
+
+    @Test
+    fun `Daily check in success`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(HomeViewAction.DailyCheckIn)
+
+//            assertEquals(
+//                expected = HomeViewState(
+//                    screenState = ScreenState.LOADING,
+//                ),
+//                actual = awaitItem()
+//            )
+
+            assertEquals(
+                expected = HomeViewState(
+                    screenState = ScreenState.CONTENT,
+                    dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
+                    totalPoints = TOTAL_POINTS
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `initial view success`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(HomeViewAction.InitView)
+
+            assertEquals(
+                expected = HomeViewState(
+                    screenState = ScreenState.CONTENT,
+                    dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
+                    totalPoints = TOTAL_POINTS
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `navigates to notifications screen`() = runTest {
+        viewModel.onAction(HomeViewAction.NavigateToNotifications)
+        advanceUntilIdle()
+
+        verifySuspend { viewModelNavigator.push(ofType<NotificationOverviewScreen>()) }
     }
 }
