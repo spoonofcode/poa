@@ -18,12 +18,13 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
-import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
+import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
+import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
@@ -44,6 +45,7 @@ val domainModule = module {
     factoryOf(::RegisterUseCase)
     factoryOf(::RefreshAccessTokenUseCase)
     factoryOf(::GetProfileUseCase)
+    factoryOf(::UpdateProfileUseCase)
     factoryOf(::GetUserByIdUseCase)
     factoryOf(::GetFilteredProductsByTextUseCase)
     factoryOf(::GetPartnerByIdUseCase)

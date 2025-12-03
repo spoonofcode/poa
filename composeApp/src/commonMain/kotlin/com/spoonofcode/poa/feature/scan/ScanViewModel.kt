@@ -14,15 +14,6 @@ internal class ScanViewModel(
     override fun onAction(action: ScanViewAction) {
         when (action) {
             is ScanViewAction.CheckProduct -> checkProduct(action.tagId)
-            ScanViewAction.InitView -> initView()
-        }
-    }
-
-    private fun initView() {
-        updateState {
-            copy(
-                screenState = ScreenState.CONTENT,
-            )
         }
     }
 
