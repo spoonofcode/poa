@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USERS
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USER_1
+import com.spoonofcode.poa.core.data.repository.PartnerRepository
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
@@ -21,11 +22,13 @@ import kotlin.test.assertEquals
 class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerCustomerOverviewViewModel
+    private lateinit var partnerRepository: PartnerRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(partnerTestModule)
         super.setup()
+        partnerRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -58,6 +61,10 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
                 ),
                 actual = awaitItem()
             )
+        }
+
+        verifySuspend {
+            partnerRepository.readPartnerUsers(PARTNER_1.id)
         }
     }
 

@@ -77,7 +77,7 @@ internal class PartnerCustomerOverviewViewModel(
     private fun showLoadingView() {
         updateState {
             copy(
-                screenState = ScreenState.ERROR,
+                screenState = ScreenState.LOADING,
             )
         }
     }
