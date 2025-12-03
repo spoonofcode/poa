@@ -30,6 +30,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
             try {
                 val notificationSettings = getNotificationSettingsUseCase()

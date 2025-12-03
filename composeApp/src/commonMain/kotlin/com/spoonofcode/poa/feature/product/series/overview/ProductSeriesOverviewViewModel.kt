@@ -22,8 +22,8 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val productSeries = getProductSeriesUseCase()
                 updateState {

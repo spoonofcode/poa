@@ -24,6 +24,7 @@ internal class NotificationOverviewViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
             try {
                 val allNotifications = getNotificationsUseCase()
@@ -44,6 +45,13 @@ internal class NotificationOverviewViewModel(
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationDetailsScreen(notificationId = notificationId))
+        }
+    }
+    private fun showLoadingView() {
+        updateState {
+            copy(
+                screenState = ScreenState.LOADING,
+            )
         }
     }
 

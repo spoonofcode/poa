@@ -21,8 +21,8 @@ internal class ProfileEditViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val profile = getProfileUseCase()
                 updateState {

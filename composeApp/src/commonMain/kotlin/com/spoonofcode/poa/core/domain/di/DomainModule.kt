@@ -18,7 +18,6 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
-import com.spoonofcode.poa.core.domain.product.DeleteProductUseCase
 import com.spoonofcode.poa.core.domain.product.EditProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
@@ -29,6 +28,7 @@ import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.domain.user.product.AddProductToUserUseCase
+import com.spoonofcode.poa.core.domain.user.product.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.core.domain.user.product.GetUserProductsUseCase
 import com.spoonofcode.poa.core.domain.user.reward.AddRewardToUserUseCase
 import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
@@ -53,7 +53,7 @@ val domainModule = module {
     factoryOf(::GetProductByTagIdUseCase)
     factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
-    factoryOf(::DeleteProductUseCase)
+    factoryOf(::DeleteProductFromUserUseCase)
     factoryOf(::EditProductUseCase)
     factoryOf(::UpdatePartnerUseCase)
     factoryOf(::GetProductSeriesUseCase)
@@ -69,4 +69,5 @@ val domainModule = module {
     factoryOf(::GetUserPartnersUseCase)
     factoryOf(::GetUserDailyCheckInStatusUseCase)
     factoryOf(::AddRewardToUserUseCase)
-    factoryOf(::GetFAQUseCase)}
+    factoryOf(::GetFAQUseCase)
+}

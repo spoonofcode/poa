@@ -20,6 +20,7 @@ internal class NotificationDetailsViewModel(
     }
 
     private fun initView(notificationId: String) {
+        showLoadingView()
         viewModelScope.launch {
             try {
                 val notification = getNotificationByIdUseCase(notificationId = notificationId)
@@ -34,6 +35,14 @@ internal class NotificationDetailsViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
+        }
+    }
+
+    private fun showLoadingView() {
+        updateState {
+            copy(
+                screenState = ScreenState.LOADING,
+            )
         }
     }
 

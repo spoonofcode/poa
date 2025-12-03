@@ -18,8 +18,8 @@ internal class FAQViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val faqs = getFAQUseCase()
                 updateState {

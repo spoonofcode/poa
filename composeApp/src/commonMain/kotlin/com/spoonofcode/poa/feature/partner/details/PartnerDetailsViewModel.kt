@@ -18,6 +18,7 @@ internal class PartnerDetailsViewModel(
     }
 
     private fun initView(partnerId: String) {
+        showLoadingView()
         viewModelScope.launch {
             try {
                 val partner = getPartnerByIdUseCase(partnerId = partnerId)
@@ -32,6 +33,14 @@ internal class PartnerDetailsViewModel(
             } catch (e: Exception) {
                 showErrorView()
             }
+        }
+    }
+
+    private fun showLoadingView() {
+        updateState {
+            copy(
+                screenState = ScreenState.LOADING,
+            )
         }
     }
 

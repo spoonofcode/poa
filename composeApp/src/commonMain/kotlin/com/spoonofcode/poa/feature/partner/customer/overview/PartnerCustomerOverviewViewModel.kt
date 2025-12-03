@@ -22,6 +22,7 @@ internal class PartnerCustomerOverviewViewModel(
     }
 
     private fun initView(partnerId: String) {
+        showLoadingView()
         viewModelScope.launch {
             try {
                 val partnerUsers = getPartnerUsersUseCase(partnerId)
@@ -72,6 +73,14 @@ internal class PartnerCustomerOverviewViewModel(
     private fun getSelectedNames(): List<String> =
         currentState().partnerUsers.filter { it.id in currentState().checkedUserIds }
             .map { user -> user.fullName }.toList()
+
+    private fun showLoadingView() {
+        updateState {
+            copy(
+                screenState = ScreenState.ERROR,
+            )
+        }
+    }
 
     private fun showErrorView() {
         updateState {

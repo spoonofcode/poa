@@ -26,8 +26,8 @@ internal class PartnerOverviewViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             try {
                 val partners = getPartnersUseCase()
                 val partnerCategories = getPartnerCategoriesUseCase()

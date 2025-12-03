@@ -15,6 +15,7 @@ internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(TACVi
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
 //            showLoadingView()
 //            try {

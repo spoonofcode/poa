@@ -29,6 +29,7 @@ internal class HomeViewModel(
     }
 
     private fun initView() {
+        showLoadingView()
         viewModelScope.launch {
             try {
 //                subscribeUserTopicsUseCase()

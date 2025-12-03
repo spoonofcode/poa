@@ -62,6 +62,20 @@ class UserRepository : GenericCrudRepository<UserRequest, User>(
         }
     }
 
+    suspend fun deleteProductFromUser(productId: String, userId: String) {
+        return withContext(dispatcherProvider.io()) {
+            val response: HttpResponse = doRequest(
+                urlPath = "users/$userId/products",
+                method = HttpMethod.Delete,
+                customRequestBody = Json.encodeToString(
+                    AddProductUserRequest.serializer(),
+                    AddProductUserRequest(productId = productId)
+                ),
+            )
+            responseOrException(response).body<String>()
+        }
+    }
+
     suspend fun readUserProfile(userId: String): Profile {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = doRequest(
