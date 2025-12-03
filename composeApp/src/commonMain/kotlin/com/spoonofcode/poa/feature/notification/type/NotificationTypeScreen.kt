@@ -46,7 +46,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = { onAction(NotificationTypeViewAction.NavigateToAll) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllCustomers) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )

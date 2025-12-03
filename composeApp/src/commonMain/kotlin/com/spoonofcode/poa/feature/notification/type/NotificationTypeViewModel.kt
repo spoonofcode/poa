@@ -3,8 +3,8 @@ package com.spoonofcode.poa.feature.notification.type
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.feature.partner.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
+import com.spoonofcode.poa.feature.partner.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewScreen
 import kotlinx.coroutines.launch
 
@@ -14,20 +14,14 @@ internal class NotificationTypeViewModel(
 
     override fun onAction(action: NotificationTypeViewAction) {
         when (action) {
-            NotificationTypeViewAction.NavigateToAll -> navigateToAll()
+            NotificationTypeViewAction.NavigateToAllCustomers -> navigateToAllCustomers()
             NotificationTypeViewAction.NavigateToPartnerCustomers -> navigateToPartnerCustomers()
             NotificationTypeViewAction.NavigateToPartnerProductSeries -> navigateToPartnerProductSeries()
             NotificationTypeViewAction.NavigateToAllPartnerCustomers -> navigateToAllPartnerCustomers()
         }
     }
 
-    private fun navigateToAll() {
-        viewModelScope.launch {
-            viewModelNavigator.push(NotificationEditScreen())
-        }
-    }
-
-    private fun navigateToAllPartnerCustomers() {
+    private fun navigateToAllCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationEditScreen())
         }
@@ -35,13 +29,20 @@ internal class NotificationTypeViewModel(
 
     private fun navigateToPartnerCustomers() {
         viewModelScope.launch {
-            viewModelNavigator.push(CustomerOverviewScreen(partnerId = getUserPartnersUseCase().first().id))
+            val partnerId = getUserPartnersUseCase().first().id
+            viewModelNavigator.push(CustomerOverviewScreen(partnerId = partnerId))
         }
     }
 
     private fun navigateToPartnerProductSeries() {
         viewModelScope.launch {
             viewModelNavigator.push(ProductSeriesOverviewScreen())
+        }
+    }
+
+    private fun navigateToAllPartnerCustomers() {
+        viewModelScope.launch {
+            viewModelNavigator.push(NotificationEditScreen())
         }
     }
 }

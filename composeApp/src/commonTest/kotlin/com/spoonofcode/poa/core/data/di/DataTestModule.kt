@@ -3,6 +3,8 @@ package com.spoonofcode.poa.core.data.di
 import com.spoonofcode.poa.core.data.repository.faqRepositoryMock
 import com.spoonofcode.poa.core.data.repository.loginGoogleRepositoryMock
 import com.spoonofcode.poa.core.data.repository.loginRepositoryMock
+import com.spoonofcode.poa.core.data.repository.notificationRepositoryMock
+import com.spoonofcode.poa.core.data.repository.partnerRepositoryMock
 import com.spoonofcode.poa.core.data.repository.productRepositoryMock
 import com.spoonofcode.poa.core.data.repository.registerRepositoryMock
 import com.spoonofcode.poa.core.data.repository.userRepositoryMock
@@ -16,4 +18,6 @@ val dataTestModule = module {
     singleOf(::registerRepositoryMock)
     singleOf(::userRepositoryMock)
     singleOf(::faqRepositoryMock)
+    singleOf(::notificationRepositoryMock)
+    singleOf(::partnerRepositoryMock)
 }

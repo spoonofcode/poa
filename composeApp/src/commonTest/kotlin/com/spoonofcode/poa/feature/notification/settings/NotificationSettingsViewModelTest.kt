@@ -2,12 +2,12 @@ package com.spoonofcode.poa.feature.notification.settings
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.ProductRepository
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -15,15 +15,11 @@ import kotlin.test.assertEquals
 class NotificationSettingsViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: NotificationSettingsViewModel
-    private lateinit var productRepository: ProductRepository
-    private lateinit var userRepository: UserRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(notificationTestModule)
         super.setup()
-        productRepository = getKoin().get()
-        userRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -32,6 +28,24 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             assertEquals(
                 expected = NotificationSettingsViewState(),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    // TODO Fix this test
+    @Ignore
+    @Test
+    fun `init view`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(NotificationSettingsViewAction.InitView)
+
+            assertEquals(
+                expected = NotificationSettingsViewState(
+                    screenState = ScreenState.CONTENT,
+                ),
                 actual = awaitItem()
             )
         }

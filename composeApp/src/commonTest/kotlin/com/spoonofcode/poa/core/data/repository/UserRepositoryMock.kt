@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USERS
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USER_1
-import com.spoonofcode.poa.core.model.UserRequest
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -20,4 +20,5 @@ internal fun userRepositoryMock() = mock<UserRepository> {
     everySuspend { addRewardToUser(any(), any()) } returns Unit
     everySuspend { getUserDailyCheckInStatus(any()) } returns DAILY_CHECK_IN_STATUS_1
     everySuspend { getUserRewardsPoints(any()) } returns TOTAL_POINTS
+    everySuspend { readUserPartners(any()) } returns listOf(PARTNER_1)
 }

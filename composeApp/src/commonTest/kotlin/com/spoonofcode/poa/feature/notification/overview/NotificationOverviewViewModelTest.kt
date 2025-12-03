@@ -2,9 +2,11 @@ package com.spoonofcode.poa.feature.notification.overview
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.ProductRepository
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
+import com.spoonofcode.poa.core.data.repository.NotificationRepository
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -15,15 +17,13 @@ import kotlin.test.assertEquals
 class NotificationOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: NotificationOverviewViewModel
-    private lateinit var productRepository: ProductRepository
-    private lateinit var userRepository: UserRepository
+    private lateinit var notificationRepository: NotificationRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(notificationTestModule)
         super.setup()
-        productRepository = getKoin().get()
-        userRepository = getKoin().get()
+        notificationRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -34,6 +34,27 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
                 expected = NotificationOverviewViewState(),
                 actual = awaitItem()
             )
+        }
+    }
+
+    @Test
+    fun `init view`() = runTest {
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(NotificationOverviewViewAction.InitView)
+
+            assertEquals(
+                expected = NotificationOverviewViewState(
+                    screenState = ScreenState.CONTENT,
+                    notifications = NOTIFICATIONS,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            notificationRepository.readAll()
         }
     }
 }
