@@ -13,12 +13,16 @@ import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-class RefreshRepository(
+interface RefreshRepository {
+    suspend fun refreshToken(jwtRefreshToken: String): Refresh
+}
+
+class RefreshRepositoryImpl(
     private val httpClient: HttpClient,
     private val networkConfig: NetworkConfig,
     private val dispatcherProvider: DispatcherProvider,
-) {
-    suspend fun refreshToken(jwtRefreshToken: String): Refresh {
+) : RefreshRepository {
+    override suspend fun refreshToken(jwtRefreshToken: String): Refresh {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/refresh/") {
                 header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")

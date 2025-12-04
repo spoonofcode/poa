@@ -10,7 +10,7 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
 import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.register.RegisterScreen
-import dev.mokkery.answering.throws
+import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
@@ -124,7 +124,12 @@ class LoginViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `sign in error`() = runTest {
-        everySuspend { loginRepository.create(any(), any()) } throws Exception("invalid creds")
+        everySuspend {
+            loginRepository.create(
+                any(),
+                any()
+            )
+        } returns Result.failure(Exception("invalid creds"))
 
         viewModel.viewState.test {
             skipItems(1)

@@ -2,15 +2,17 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.BaseRepository
 import com.spoonofcode.poa.core.model.FAQ
-import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.http.HttpMethod
 import io.ktor.util.reflect.typeInfo
 
-@OpenForMokkery
-class FAQRepository : BaseRepository(
+interface FAQRepository {
+    suspend fun readAll(): Result<List<FAQ>>
+}
+
+class FAQRepositoryImpl : BaseRepository(
     collectionName = "faqs",
-) {
-    suspend fun readAll(): Result<List<FAQ>> = doRequest(
+), FAQRepository {
+    override suspend fun readAll(): Result<List<FAQ>> = doRequest(
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<FAQ>>(),
     )

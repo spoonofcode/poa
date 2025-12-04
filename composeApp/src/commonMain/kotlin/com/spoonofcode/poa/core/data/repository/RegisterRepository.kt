@@ -3,16 +3,23 @@ package com.spoonofcode.poa.core.data.repository
 import com.spoonofcode.poa.core.data.base.BaseRepository
 import com.spoonofcode.poa.core.data.model.RegisterRequest
 import com.spoonofcode.poa.core.model.Register
-import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.http.HttpMethod
 import io.ktor.util.reflect.typeInfo
 
-@OpenForMokkery
-class RegisterRepository : BaseRepository(
+interface RegisterRepository {
+    suspend fun create(
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+    ): Result<Register>
+}
+
+class RegisterRepositoryImpl : BaseRepository(
     collectionName = "register",
     sessionTokenRequired = false,
-) {
-    suspend fun create(
+), RegisterRepository {
+    override suspend fun create(
         email: String,
         password: String,
         firstName: String,
