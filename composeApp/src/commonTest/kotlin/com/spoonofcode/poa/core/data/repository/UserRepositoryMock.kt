@@ -13,13 +13,13 @@ import dev.mokkery.mock
 val TOTAL_POINTS = 1000
 
 internal fun userRepositoryMock() = mock<UserRepository> {
-    everySuspend { read(any()) } returns USER_1
-    everySuspend { readUserProfile(any()) } returns PROFILE_1
-    everySuspend { addProductToUser(any(), any()) } returns Unit
-    everySuspend { deleteProductFromUser(any(), any()) } returns Unit
-    everySuspend { addRewardToUser(any(), any()) } returns Unit
-    everySuspend { getUserDailyCheckInStatus(any()) } returns DAILY_CHECK_IN_STATUS_1
-    everySuspend { getUserRewardsPoints(any()) } returns TOTAL_POINTS
-    everySuspend { readUserPartners(any()) } returns PARTNERS
-    everySuspend { readUserProducts(any()) } returns PRODUCTS
+    everySuspend { read(any()) } returns Result.success(USER_1)
+    everySuspend { readUserProfile(any()) } returns Result.success(PROFILE_1)
+    everySuspend { addProductToUser(any(), any()) } returns Result.success(Unit)
+    everySuspend { deleteProductFromUser(any(), any()) } returns Result.success(Unit)
+    everySuspend { addRewardToUser(any(), any()) } returns Result.success(Unit)
+    everySuspend { getUserDailyCheckInStatus(any()) } returns Result.success(DAILY_CHECK_IN_STATUS_1)
+    everySuspend { getUserRewardsPoints(any()) } returns Result.success(TOTAL_POINTS)
+    everySuspend { readUserPartners(any()) } returns Result.success(PARTNERS)
+    everySuspend { readUserProducts(any()) } returns Result.success(PRODUCTS)
 }

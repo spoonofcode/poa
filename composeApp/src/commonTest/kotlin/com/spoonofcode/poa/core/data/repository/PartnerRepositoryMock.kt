@@ -9,8 +9,8 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun partnerRepositoryMock() = mock<PartnerRepository> {
-    everySuspend { read(any()) } returns PARTNER_1
-    everySuspend { update(any(), any()) } returns true
-    everySuspend { readAll() } returns PARTNERS
-    everySuspend { readPartnerUsers(any()) } returns USERS
+    everySuspend { read(any()) } returns Result.success(PARTNER_1)
+    everySuspend { update(any(), any()) } returns Result.success(true)
+    everySuspend { readAll() } returns Result.success(PARTNERS)
+    everySuspend { readPartnerUsers(any()) } returns Result.success(USERS)
 }

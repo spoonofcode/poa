@@ -7,5 +7,5 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun loginGoogleRepositoryMock() = mock<LoginGoogleRepository> {
-    everySuspend { create(any()) } returns LOGIN_GOOGLE_1
+    everySuspend { create(any()) } returns Result.success(LOGIN_GOOGLE_1)
 }

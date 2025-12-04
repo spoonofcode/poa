@@ -115,7 +115,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginRepository.create(any())
+            loginRepository.create(any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
@@ -124,7 +124,7 @@ class LoginViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `sign in error`() = runTest {
-        everySuspend { loginRepository.create(any()) } throws Exception("invalid creds")
+        everySuspend { loginRepository.create(any(), any()) } throws Exception("invalid creds")
 
         viewModel.viewState.test {
             skipItems(1)
@@ -147,7 +147,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginRepository.create(any())
+            loginRepository.create(any(), any())
         }
 
         verifySuspend(mode = exactly(0)) {

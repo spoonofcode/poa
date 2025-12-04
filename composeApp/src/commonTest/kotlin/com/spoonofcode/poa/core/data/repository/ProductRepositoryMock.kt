@@ -7,7 +7,18 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun productRepositoryMock() = mock<ProductRepository> {
-    everySuspend { read(any()) } returns PRODUCT_1
-    everySuspend { update(any(), any()) } returns true
-    everySuspend { readProductByTagId(any()) } returns PRODUCT_1
+    everySuspend { read(any()) } returns Result.success(PRODUCT_1)
+    everySuspend {
+        update(
+            any(),
+            any(),
+            any(),
+            any(),
+            any(),
+            any(),
+            any(),
+            any()
+        )
+    } returns Result.success(Unit)
+    everySuspend { readProductByTagId(any()) } returns Result.success(PRODUCT_1)
 }
