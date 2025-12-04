@@ -5,7 +5,6 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerDetailsViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
@@ -20,19 +19,18 @@ internal class PartnerDetailsViewModel(
     private fun initView(partnerId: String) {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val partner = getPartnerByIdUseCase(partnerId = partnerId)
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        partner = partner
-                    )
+            getPartnerByIdUseCase(partnerId = partnerId)
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            partner = it
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

@@ -8,5 +8,5 @@ class GetPartnerByIdUseCase(
 ) {
     suspend operator fun invoke(
         partnerId: String
-    ): Partner = partnerRepository.read(partnerId = partnerId)
+    ): Result<Partner> = partnerRepository.read(partnerId = partnerId)
 }

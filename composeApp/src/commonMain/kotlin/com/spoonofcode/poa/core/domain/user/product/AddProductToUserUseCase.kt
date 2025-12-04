@@ -10,8 +10,8 @@ class AddProductToUserUseCase(
 
     suspend operator fun invoke(
         productId: String,
-    ) {
-        userRepository.addProductToUser(
+    ): Result<Unit> {
+        return userRepository.addProductToUser(
             productId = productId,
             userId = sessionManager.getSessionUserId(),
         )

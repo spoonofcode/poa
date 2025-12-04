@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.partner.panel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.edit.PartnerEditScreen
 import kotlinx.coroutines.launch
@@ -22,7 +23,13 @@ internal class PartnerPanelViewModel(
 
     fun navigateToPartnerEdit() {
         viewModelScope.launch {
-            viewModelNavigator.push(PartnerEditScreen(partnerId = getUserPartnersUseCase().first().id))
+            getUserPartnersUseCase()
+                .onSuccess {
+                    viewModelNavigator.push(PartnerEditScreen(partnerId = it.first().id))
+                }
+                .onFailure {
+                    showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+                }
         }
     }
 

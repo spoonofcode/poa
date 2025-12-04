@@ -9,7 +9,7 @@ class UpdatePartnerUseCase(
     private val partnerRepository: PartnerRepository,
     private val sessionManager: SessionManager
 ) {
-    suspend operator fun invoke(partner: Partner) {
+    suspend operator fun invoke(partner: Partner): Result<Unit> {
         val currentUserId = sessionManager.getSessionUserId()
 
         val partnerRequest = PartnerRequest(
@@ -25,6 +25,6 @@ class UpdatePartnerUseCase(
             xLink = partner.xLink
         )
 
-        partnerRepository.update(partner.id, partnerRequest)
+        return partnerRepository.update(partner.id, partnerRequest).map {  }
     }
 }

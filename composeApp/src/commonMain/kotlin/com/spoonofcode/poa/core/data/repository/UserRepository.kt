@@ -19,68 +19,64 @@ class UserRepository : BaseRepository(
 ) {
     suspend fun read(
         userId: String,
-    ): User = doRequest(
+    ): Result<User> = doRequest(
         urlPostfixPath = userId,
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<User>()
     )
 
-    suspend fun readUserPartners(userId: String): List<Partner> = doRequest(
+    suspend fun readUserPartners(userId: String): Result<List<Partner>> = doRequest(
         urlPostfixPath = "$userId/partners",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<Partner>>(),
     )
 
-    suspend fun readUserProducts(userId: String): List<Product> = doRequest(
+    suspend fun readUserProducts(userId: String): Result<List<Product>> = doRequest(
         urlPostfixPath = "$userId/products",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<Product>>(),
     )
 
-    suspend fun addProductToUser(productId: String, userId: String) = doRequest<Unit>(
+    suspend fun addProductToUser(productId: String, userId: String): Result<Unit> = doRequest(
         urlPostfixPath = "$userId/products",
         method = HttpMethod.Post,
         requestBody = AddProductToUserRequest(productId = productId),
         responseTypeInfo = typeInfo<Unit>()
     )
 
-    suspend fun deleteProductFromUser(productId: String, userId: String) {
-        doRequest<Unit>(
-            urlPostfixPath = "$userId/products",
-            method = HttpMethod.Delete,
-            requestBody = AddProductToUserRequest(productId = productId),
-            responseTypeInfo = typeInfo<Unit>()
-        )
-    }
+    suspend fun deleteProductFromUser(productId: String, userId: String): Result<Unit> = doRequest(
+        urlPostfixPath = "$userId/products",
+        method = HttpMethod.Delete,
+        requestBody = AddProductToUserRequest(productId = productId),
+        responseTypeInfo = typeInfo<Unit>()
+    )
 
-    suspend fun readUserProfile(userId: String): Profile = doRequest(
+    suspend fun readUserProfile(userId: String): Result<Profile> = doRequest(
         urlPostfixPath = "$userId/profile",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Profile>()
     )
 
-    suspend fun readUserProductSeriesIds(userId: String): List<String> = doRequest(
+    suspend fun readUserProductSeriesIds(userId: String): Result<List<String>> = doRequest(
         urlPostfixPath = "$userId/product-series-ids",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<String>>(),
     )
 
-    suspend fun addRewardToUser(rewardType: RewardType, userId: String) {
-        doRequest<Unit>(
-            urlPostfixPath = "$userId/rewards",
-            method = HttpMethod.Post,
-            requestBody = AddRewardToUserRequest(rewardType = rewardType),
-            responseTypeInfo = typeInfo<Unit>()
-        )
-    }
+    suspend fun addRewardToUser(rewardType: RewardType, userId: String): Result<Unit> = doRequest(
+        urlPostfixPath = "$userId/rewards",
+        method = HttpMethod.Post,
+        requestBody = AddRewardToUserRequest(rewardType = rewardType),
+        responseTypeInfo = typeInfo<Unit>()
+    )
 
-    suspend fun getUserRewardsPoints(userId: String): Int = doRequest(
+    suspend fun getUserRewardsPoints(userId: String): Result<Int> = doRequest(
         urlPostfixPath = "$userId/rewards/points",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Int>(),
     )
 
-    suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus = doRequest(
+    suspend fun getUserDailyCheckInStatus(userId: String): Result<DailyCheckInStatus> = doRequest(
         urlPostfixPath = "$userId/rewards/daily-check-in/status",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<DailyCheckInStatus>(),

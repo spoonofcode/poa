@@ -7,7 +7,6 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProfileEditViewModel(
     private val getProfileUseCase: GetProfileUseCase,
@@ -25,19 +24,18 @@ internal class ProfileEditViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val profile = getProfileUseCase()
-                updateState {
-                    copy(
-                        profile = profile,
-                        screenState = ScreenState.CONTENT,
-                    )
+            getProfileUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            profile = it,
+                            screenState = ScreenState.CONTENT,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 
@@ -48,9 +46,8 @@ internal class ProfileEditViewModel(
 
     private fun saveChanges() {
         viewModelScope.launch {
-            try {
-                val profile = requireNotNull(currentState().profile)
-                // TODO Fix this usecase
+            val profile = requireNotNull(currentState().profile)
+            // TODO Fix this usecase
 //                updateProfileUseCase(
 //                    userId = profile.id,
 //                    profileRequest = ProfileRequest(
@@ -58,12 +55,7 @@ internal class ProfileEditViewModel(
 //                        customLink = profile.customLink,
 //                    )
 //                )
-                viewModelNavigator.pop()
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
-            }
+            viewModelNavigator.pop()
         }
     }
 

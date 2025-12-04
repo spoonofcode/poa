@@ -8,7 +8,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
@@ -61,21 +60,19 @@ internal class NotificationEditViewModel(
     private fun sendNotification() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                val currentState = currentState()
-                sendNotificationUseCase(
-                    title = currentState.title,
-                    text = currentState.text,
-                    link = currentState.link,
-                    topics = currentState.itemIds,
-                    expirationDateTime = currentState.expirationDateTime
-                )
+            val currentState = currentState()
+            sendNotificationUseCase(
+                title = currentState.title,
+                text = currentState.text,
+                link = currentState.link,
+                topics = currentState.itemIds,
+                expirationDateTime = currentState.expirationDateTime
+            ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
+            }.onFailure { error ->
+                showErrorSnackbar(error)
             }
+
         }
     }
 
@@ -87,7 +84,7 @@ internal class NotificationEditViewModel(
         }
     }
 
-    private fun showErrorSnackbar(e: Exception) {
+    private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(

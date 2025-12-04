@@ -13,7 +13,7 @@ class ProductRepository : BaseRepository(
 ) {
     suspend fun read(
         productId: String,
-    ): Product = doRequest(
+    ): Result<Product> = doRequest(
         urlPostfixPath = productId,
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Product>()
@@ -32,29 +32,26 @@ class ProductRepository : BaseRepository(
         tagId: String? = null,
         websiteLink: String? = null,
         customLink: String? = null,
-    ): Boolean {
-        doRequest<Unit>(
-            urlPostfixPath = productId,
-            method = HttpMethod.Put,
-            requestBody = ProductRequest(
-                ownerUserId = ownerUserId,
-                partnerId = partnerId,
-                name = name,
-                description = description,
-                seriesId = seriesId,
-                collectionName = collectionName,
-                imageLink = imageLink,
-                videoLink = videoLink,
-                tagId = tagId,
-                websiteLink = websiteLink,
-                customLink = customLink,
-            ),
-            responseTypeInfo = typeInfo<Unit>()
-        )
-        return true
-    }
+    ): Result<Unit> = doRequest(
+        urlPostfixPath = productId,
+        method = HttpMethod.Put,
+        requestBody = ProductRequest(
+            ownerUserId = ownerUserId,
+            partnerId = partnerId,
+            name = name,
+            description = description,
+            seriesId = seriesId,
+            collectionName = collectionName,
+            imageLink = imageLink,
+            videoLink = videoLink,
+            tagId = tagId,
+            websiteLink = websiteLink,
+            customLink = customLink,
+        ),
+        responseTypeInfo = typeInfo<Unit>()
+    )
 
-    suspend fun readProductByTagId(tagId: String): Product = doRequest(
+    suspend fun readProductByTagId(tagId: String): Result<Product> = doRequest(
         method = HttpMethod.Get,
         queryParams = mapOf("tagId" to tagId),
         responseTypeInfo = typeInfo<Product>()

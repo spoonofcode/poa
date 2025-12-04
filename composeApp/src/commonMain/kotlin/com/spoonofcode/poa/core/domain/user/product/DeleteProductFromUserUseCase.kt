@@ -10,8 +10,8 @@ class DeleteProductFromUserUseCase(
 
     suspend operator fun invoke(
         productId: String,
-    ) {
-        userRepository.deleteProductFromUser(
+    ): Result<Unit> {
+        return userRepository.deleteProductFromUser(
             productId = productId,
             userId = sessionManager.getSessionUserId(),
         )

@@ -8,7 +8,7 @@ internal class GetUserDailyCheckInStatusUseCase(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager
 ) {
-    suspend operator fun invoke(): DailyCheckInStatus {
+    suspend operator fun invoke(): Result<DailyCheckInStatus> {
         val userId = sessionManager.getSessionUserId()
         return userRepository.getUserDailyCheckInStatus(userId)
     }

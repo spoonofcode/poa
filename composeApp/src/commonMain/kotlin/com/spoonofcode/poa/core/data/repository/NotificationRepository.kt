@@ -20,36 +20,30 @@ class NotificationRepository : BaseRepository(
         topics: List<String>,
         expirationDateTime: LocalDateTime? = null,
         alreadyRead: Boolean = false,
-    ) {
-        doRequest<Unit>(
-            method = HttpMethod.Post,
-            requestBody = NotificationRequest(
-                title = title,
-                text = text,
-                link = link,
-                imageUrl = imageUrl,
-                topics = topics,
-                expirationDateTime = expirationDateTime,
-                alreadyRead = alreadyRead,
-            ),
-            responseTypeInfo = typeInfo<Unit>()
-        )
-    }
+    ): Result<Unit> = doRequest(
+        method = HttpMethod.Post,
+        requestBody = NotificationRequest(
+            title = title,
+            text = text,
+            link = link,
+            imageUrl = imageUrl,
+            topics = topics,
+            expirationDateTime = expirationDateTime,
+            alreadyRead = alreadyRead,
+        ),
+        responseTypeInfo = typeInfo<Unit>()
+    )
 
     suspend fun read(
         notificationId: String,
-    ): Notification {
-        return doRequest(
-            urlPostfixPath = notificationId,
-            method = HttpMethod.Get,
-            responseTypeInfo = typeInfo<Notification>()
-        )
-    }
+    ): Result<Notification> = doRequest(
+        urlPostfixPath = notificationId,
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<Notification>()
+    )
 
-    suspend fun readAll(): List<Notification> {
-        return doRequest(
-            method = HttpMethod.Get,
-            responseTypeInfo = typeInfo<List<Notification>>(),
-        )
-    }
+    suspend fun readAll(): Result<List<Notification>> = doRequest(
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<List<Notification>>(),
+    )
 }

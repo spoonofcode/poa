@@ -10,11 +10,10 @@ class LoginUseCase(
     suspend operator fun invoke(
         email: String,
         password: String,
-    ) {
-        val loginResponse = loginRepository.create(
-            email = email,
-            password = password,
-        )
+    ): Result<Unit> = loginRepository.create(
+        email = email,
+        password = password,
+    ).map { loginResponse ->
         sessionManager.saveSessionUserId(userId = loginResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)

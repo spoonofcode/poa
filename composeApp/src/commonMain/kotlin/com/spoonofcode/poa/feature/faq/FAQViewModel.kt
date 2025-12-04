@@ -5,7 +5,6 @@ import com.spoonofcode.poa.core.domain.faq.GetFAQUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class FAQViewModel(
     private val getFAQUseCase: GetFAQUseCase,
@@ -20,19 +19,18 @@ internal class FAQViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val faqs = getFAQUseCase()
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        faqs = faqs,
-                    )
+            getFAQUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            faqs = it,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

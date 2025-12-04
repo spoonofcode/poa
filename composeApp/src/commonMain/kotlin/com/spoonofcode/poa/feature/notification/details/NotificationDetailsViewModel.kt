@@ -5,7 +5,6 @@ import com.spoonofcode.poa.core.domain.notification.GetNotificationByIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationDetailsViewModel(
     private val getNotificationByIdUseCase: GetNotificationByIdUseCase,
@@ -22,19 +21,18 @@ internal class NotificationDetailsViewModel(
     private fun initView(notificationId: String) {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val notification = getNotificationByIdUseCase(notificationId = notificationId)
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        notification = notification
-                    )
+            getNotificationByIdUseCase(notificationId = notificationId)
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            notification = it
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

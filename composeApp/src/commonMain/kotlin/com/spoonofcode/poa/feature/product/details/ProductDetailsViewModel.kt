@@ -10,7 +10,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.product.edit.ProductEditScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProductDetailsViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
@@ -31,36 +30,34 @@ internal class ProductDetailsViewModel(
     private fun initView(productId: String) {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val product = getProductByIdUseCase(productId = productId)
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        product = product
-                    )
+            getProductByIdUseCase(productId = productId)
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            product = it
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 
     private fun addProductToUser() {
         viewModelScope.launch {
-            try {
-                val currentState = currentState()
-                addProductToUserUseCase(
-                    productId = currentState.product!!.id
-                )
-//                subscribeUserTopicsUseCase()
-                viewModelNavigator.pop()
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
-            }
+            val currentState = currentState()
+            addProductToUserUseCase(
+                productId = currentState.product!!.id
+            )
+                .onSuccess {
+                    //                subscribeUserTopicsUseCase()
+                    viewModelNavigator.pop()
+                }
+                .onFailure {
+                    showErrorSnackbar(it)
+                }
         }
     }
 
@@ -74,17 +71,16 @@ internal class ProductDetailsViewModel(
     private fun deleteProductFromUser() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                val currentState = currentState()
-                deleteProductFromUserUseCase(
-                    productId = currentState.product!!.id
-                )
-                viewModelNavigator.pop()
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
-            }
+            val currentState = currentState()
+            deleteProductFromUserUseCase(
+                productId = currentState.product!!.id
+            )
+                .onSuccess {
+                    viewModelNavigator.pop()
+                }
+                .onFailure {
+                    showErrorSnackbar(it)
+                }
         }
     }
 
@@ -104,7 +100,7 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    private fun showErrorSnackbar(e: Exception) {
+    private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(

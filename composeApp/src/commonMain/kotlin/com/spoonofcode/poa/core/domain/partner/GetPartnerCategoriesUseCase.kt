@@ -6,5 +6,5 @@ import com.spoonofcode.poa.core.model.PartnerCategory
 class GetPartnerCategoriesUseCase(
     private val partnerCategoryRepository: PartnerCategoryRepository,
 ) {
-    suspend operator fun invoke(): List<PartnerCategory> = partnerCategoryRepository.readAll()
+    suspend operator fun invoke(): Result<List<PartnerCategory>> = partnerCategoryRepository.readAll()
 }

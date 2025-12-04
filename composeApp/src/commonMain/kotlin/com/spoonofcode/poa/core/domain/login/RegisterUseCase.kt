@@ -12,15 +12,16 @@ class RegisterUseCase(
         password: String,
         firstName: String,
         lastName: String
-    ) {
-        val registerResponse = registerRepository.create(
+    ): Result<Unit> {
+        return registerRepository.create(
             email = email,
             password = password,
             firstName = firstName,
             lastName = lastName,
-        )
-        sessionManager.saveSessionUserId(userId = registerResponse.userId)
-        sessionManager.saveSessionAccessToken(token = registerResponse.jwtAccessToken)
-        sessionManager.saveSessionRefreshToken(token = registerResponse.jwtRefreshToken)
+        ).map { registerResponse ->
+            sessionManager.saveSessionUserId(userId = registerResponse.userId)
+            sessionManager.saveSessionAccessToken(token = registerResponse.jwtAccessToken)
+            sessionManager.saveSessionRefreshToken(token = registerResponse.jwtRefreshToken)
+        }
     }
 }

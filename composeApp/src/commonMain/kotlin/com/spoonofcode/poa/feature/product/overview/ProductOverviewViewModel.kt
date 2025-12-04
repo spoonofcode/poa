@@ -7,7 +7,6 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProductOverviewViewModel(
     private val getUserProductsUseCase: GetUserProductsUseCase,
@@ -25,20 +24,19 @@ internal class ProductOverviewViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val products = getUserProductsUseCase()
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        initProducts = products,
-                        filteredProducts = products,
-                    )
+            getUserProductsUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            initProducts = it,
+                            filteredProducts = it,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

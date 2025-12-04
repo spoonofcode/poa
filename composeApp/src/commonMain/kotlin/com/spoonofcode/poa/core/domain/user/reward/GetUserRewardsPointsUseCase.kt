@@ -7,7 +7,7 @@ internal class GetUserRewardsPointsUseCase(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager
 ) {
-    suspend operator fun invoke(): Int {
+    suspend operator fun invoke(): Result<Int> {
         val userId = sessionManager.getSessionUserId()
         return userRepository.getUserRewardsPoints(userId)
     }

@@ -7,7 +7,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProductSeriesOverviewViewModel(
     private val getProductSeriesUseCase: GetProductSeriesUseCase,
@@ -24,19 +23,18 @@ internal class ProductSeriesOverviewViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val productSeries = getProductSeriesUseCase()
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        productSeries = productSeries,
-                    )
+            getProductSeriesUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            productSeries = it,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

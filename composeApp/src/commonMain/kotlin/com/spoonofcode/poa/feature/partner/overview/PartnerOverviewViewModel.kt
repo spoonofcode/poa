@@ -8,7 +8,6 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerOverviewViewModel(
     private val getPartnersUseCase: GetPartnersUseCase,
@@ -28,22 +27,31 @@ internal class PartnerOverviewViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val partners = getPartnersUseCase()
-                val partnerCategories = getPartnerCategoriesUseCase()
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        initPartners = partners,
-                        filteredPartners = partners,
-                        partnerCategories = partnerCategories,
-                    )
+            getPartnersUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            initPartners = it,
+                            filteredPartners = it,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
+
+            getPartnerCategoriesUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            partnerCategories = it,
+                        )
+                    }
+                }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

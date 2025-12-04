@@ -39,29 +39,31 @@ abstract class BaseRepository(
         queryParams: Map<String, Any> = emptyMap(),
         requestBody: Any? = null,
         responseTypeInfo: TypeInfo,
-    ): T = withContext(dispatcherProvider.io()) {
-        // Common request-setup block
-        val requestBuilder: HttpRequestBuilder.() -> Unit = {
-            contentType(ContentType.Application.Json)
-            url("${networkConfig.baseUrl}/$collectionName/$urlPostfixPath")
+    ): Result<T> = withContext(dispatcherProvider.io()) {
+        try {
+            val requestBuilder: HttpRequestBuilder.() -> Unit = {
+                contentType(ContentType.Application.Json)
+                url("${networkConfig.baseUrl}/$collectionName/$urlPostfixPath")
 
-            queryParams.forEach { (key, value) -> parameter(key, value) }
+                queryParams.forEach { (key, value) -> parameter(key, value) }
 
-            this.method = method
+                this.method = method
 
-            requestBody?.let {
-                setBody(it)
+                requestBody?.let {
+                    setBody(it)
+                }
             }
-        }
 
-        // Use safeApiCall if token is required, otherwise call the client directly
-        val response = if (sessionTokenRequired) {
-            safeApiCall(httpClient, requestBuilder)
-        } else {
-            httpClient.request(requestBuilder)
-        }
+            val response = if (sessionTokenRequired) {
+                safeApiCall(httpClient, requestBuilder)
+            } else {
+                httpClient.request(requestBuilder)
+            }
 
-        responseOrException(response).body(responseTypeInfo)
+            Result.success(responseOrException(response).body(responseTypeInfo))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     private fun getJwtAccessToken(): String {

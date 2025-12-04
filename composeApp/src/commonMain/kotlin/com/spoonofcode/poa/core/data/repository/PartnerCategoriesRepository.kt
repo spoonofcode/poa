@@ -10,7 +10,7 @@ import io.ktor.util.reflect.typeInfo
 class PartnerCategoryRepository : BaseRepository(
     collectionName = "partnerCategories",
 ) {
-    suspend fun readAll(): List<PartnerCategory> = doRequest(
+    suspend fun readAll(): Result<List<PartnerCategory>> = doRequest(
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<PartnerCategory>>(),
     )

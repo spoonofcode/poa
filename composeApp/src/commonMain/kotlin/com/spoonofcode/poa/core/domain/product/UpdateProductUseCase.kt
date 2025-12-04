@@ -18,7 +18,7 @@ class UpdateProductUseCase(
         tagId: String? = null,
         websiteLink: String? = null,
         customLink: String? = null,
-    ): Boolean =
+    ): Result<Unit> =
         productRepository.update(
             productId = productId,
             ownerUserId = ownerUserId,

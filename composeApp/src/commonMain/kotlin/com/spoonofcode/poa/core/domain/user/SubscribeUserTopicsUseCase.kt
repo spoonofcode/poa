@@ -21,11 +21,15 @@ class SubscribeUserTopicsUseCase(
     }
 
     private suspend fun subscribeBySeriesId() {
-        val userProductSeriesIds = userRepository.readUserProductSeriesIds(
+        userRepository.readUserProductSeriesIds(
             userId = sessionManager.getSessionUserId(),
-        )
-        userProductSeriesIds.forEach { seriesId ->
-            firebasePushService.subscribeToTopic("${TOPIC_PRODUCT_SERIE_ID}${seriesId}")
+        ).onSuccess {
+            it.forEach { seriesId ->
+                firebasePushService.subscribeToTopic("${TOPIC_PRODUCT_SERIE_ID}${seriesId}")
+            }
+        }.onFailure {
+            // TODO: Add logger
+            println(it)
         }
     }
 

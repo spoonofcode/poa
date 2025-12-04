@@ -14,8 +14,8 @@ class SendNotificationUseCase(
         topics: List<String>,
         expirationDateTime: LocalDateTime? = null,
         alreadyRead: Boolean = false,
-    ) {
-        notificationRepository.create(
+    ): Result<Unit> {
+        return notificationRepository.create(
             title = title,
             text = text,
             link = link,

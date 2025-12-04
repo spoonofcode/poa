@@ -15,7 +15,7 @@ class LoginGoogleRepository : BaseRepository(
 ) {
     suspend fun create(
         googleUserToken: String,
-    ): LoginGoogle = doRequest(
+    ): Result<LoginGoogle> = doRequest(
         method = HttpMethod.Post,
         requestBody = LoginGoogleRequest(
             googleUserToken = googleUserToken,

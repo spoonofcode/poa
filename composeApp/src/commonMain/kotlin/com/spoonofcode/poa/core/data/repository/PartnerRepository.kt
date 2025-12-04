@@ -14,7 +14,7 @@ class PartnerRepository : BaseRepository(
 ) {
     suspend fun read(
         partnerId: String,
-    ): Partner = doRequest(
+    ): Result<Partner> = doRequest(
         urlPostfixPath = partnerId,
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Partner>()
@@ -23,22 +23,19 @@ class PartnerRepository : BaseRepository(
     suspend fun update(
         partnerId: String,
         partnerRequest: PartnerRequest
-    ): Boolean {
-        doRequest<Unit>(
-            urlPostfixPath = partnerId,
-            method = HttpMethod.Put,
-            requestBody = partnerRequest,
-            responseTypeInfo = typeInfo<Unit>()
-        )
-        return true
-    }
+    ): Result<Unit> = doRequest(
+        urlPostfixPath = partnerId,
+        method = HttpMethod.Put,
+        requestBody = partnerRequest,
+        responseTypeInfo = typeInfo<Unit>()
+    )
 
-    suspend fun readAll(): List<Partner> = doRequest(
+    suspend fun readAll(): Result<List<Partner>> = doRequest(
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<Partner>>(),
     )
 
-    suspend fun readPartnerUsers(partnerId: String): List<User> = doRequest(
+    suspend fun readPartnerUsers(partnerId: String): Result<List<User>> = doRequest(
         urlPostfixPath = "$partnerId/users",
         method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<User>>(),

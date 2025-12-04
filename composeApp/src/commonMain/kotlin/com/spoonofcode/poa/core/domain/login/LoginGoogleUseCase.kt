@@ -9,10 +9,9 @@ class LoginGoogleUseCase(
 ) {
     suspend operator fun invoke(
         googleIdToken: String,
-    ) {
-        val loginGoogleResponse = loginGoogleRepository.create(
-            googleUserToken = googleIdToken,
-        )
+    ): Result<Unit> = loginGoogleRepository.create(
+        googleUserToken = googleIdToken,
+    ).map { loginGoogleResponse ->
         sessionManager.saveSessionUserId(userId = loginGoogleResponse.userId)
         sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
