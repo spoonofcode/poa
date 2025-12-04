@@ -8,9 +8,3 @@ data class Profile(
     val numberOfProductsOwnedByUser: Long,
     val customLink: String,
 )
-
-@Serializable
-data class ProfileRequest(
-    val userId: String,
-    val customLink: String,
-)
