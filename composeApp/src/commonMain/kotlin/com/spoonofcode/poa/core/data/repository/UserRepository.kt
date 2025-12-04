@@ -10,12 +10,8 @@ import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.model.User
 import com.spoonofcode.poa.core.test.OpenForMokkery
-import io.ktor.client.call.body
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
+import io.ktor.util.reflect.typeInfo
 
 @OpenForMokkery
 class UserRepository : BaseRepository(
@@ -23,127 +19,71 @@ class UserRepository : BaseRepository(
 ) {
     suspend fun read(
         userId: String,
-    ): User {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = userId,
-                method = HttpMethod.Get,
-            )
+    ): User = doRequest(
+        urlPostfixPath = userId,
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<User>()
+    )
 
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(User.serializer(), responseBody)
-        }
-    }
+    suspend fun readUserPartners(userId: String): List<Partner> = doRequest(
+        urlPostfixPath = "$userId/partners",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<List<Partner>>(),
+    )
 
-    suspend fun readUserPartners(userId: String): List<Partner> {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/partners",
-                method = HttpMethod.Get,
-            )
+    suspend fun readUserProducts(userId: String): List<Product> = doRequest(
+        urlPostfixPath = "$userId/products",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<List<Product>>(),
+    )
 
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(Partner.serializer()), responseBody)
-        }
-    }
-
-    suspend fun readUserProducts(userId: String): List<Product> {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/products",
-                method = HttpMethod.Get,
-            )
-
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(Product.serializer()), responseBody)
-        }
-    }
-
-    suspend fun addProductToUser(productId: String, userId: String) {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/products",
-                method = HttpMethod.Post,
-                requestBody = Json.encodeToString(
-                    AddProductUserRequest.serializer(),
-                    AddProductUserRequest(productId = productId)
-                ),
-            )
-            responseOrException(response).body<String>()
-        }
-    }
+    suspend fun addProductToUser(productId: String, userId: String) = doRequest<Unit>(
+        urlPostfixPath = "$userId/products",
+        method = HttpMethod.Post,
+        requestBody = AddProductUserRequest(productId = productId),
+        responseTypeInfo = typeInfo<Unit>()
+    )
 
     suspend fun deleteProductFromUser(productId: String, userId: String) {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/products",
-                method = HttpMethod.Delete,
-                requestBody = Json.encodeToString(
-                    AddProductUserRequest.serializer(),
-                    AddProductUserRequest(productId = productId)
-                ),
-            )
-            responseOrException(response).body<String>()
-        }
+        doRequest<Unit>(
+            urlPostfixPath = "$userId/products",
+            method = HttpMethod.Delete,
+            requestBody = AddProductUserRequest(productId = productId),
+            responseTypeInfo = typeInfo<Unit>()
+        )
     }
 
-    suspend fun readUserProfile(userId: String): Profile {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/profile",
-                method = HttpMethod.Get,
-            )
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(Profile.serializer(), responseBody)
-        }
-    }
+    suspend fun readUserProfile(userId: String): Profile = doRequest(
+        urlPostfixPath = "$userId/profile",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<Profile>()
+    )
 
-    suspend fun readUserProductSeriesIds(userId: String): List<String> {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/product-series-ids",
-                method = HttpMethod.Get,
-            )
-
-            responseOrException(response).body<List<String>>()
-        }
-    }
+    suspend fun readUserProductSeriesIds(userId: String): List<String> = doRequest(
+        urlPostfixPath = "$userId/product-series-ids",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<List<String>>(),
+    )
 
     suspend fun addRewardToUser(rewardType: RewardType, userId: String) {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/rewards",
-                method = HttpMethod.Post,
-                requestBody = Json.encodeToString(
-                    AddRewardToUserRequest.serializer(),
-                    AddRewardToUserRequest(rewardType = rewardType)
-                ),
-            )
-            responseOrException(response).body<String>()
-        }
+        doRequest<Unit>(
+            urlPostfixPath = "$userId/rewards",
+            method = HttpMethod.Post,
+            requestBody = AddRewardToUserRequest(rewardType = rewardType),
+            responseTypeInfo = typeInfo<Unit>()
+        )
     }
 
-    suspend fun getUserRewardsPoints(userId: String): Int {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/rewards/points",
-                method = HttpMethod.Get
-            )
+    suspend fun getUserRewardsPoints(userId: String): Int = doRequest(
+        urlPostfixPath = "$userId/rewards/points",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<Int>(),
+    )
 
-            responseOrException(response).body<Int>()
-        }
-    }
-
-    suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPostfixPath = "$userId/rewards/daily-check-in/status",
-                method = HttpMethod.Get
-            )
-
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(DailyCheckInStatus.serializer(), responseBody)
-        }
-    }
+    suspend fun getUserDailyCheckInStatus(userId: String): DailyCheckInStatus = doRequest(
+        urlPostfixPath = "$userId/rewards/daily-check-in/status",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<DailyCheckInStatus>(),
+    )
 
 }

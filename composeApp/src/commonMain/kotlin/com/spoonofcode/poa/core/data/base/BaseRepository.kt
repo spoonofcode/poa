@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
 import com.spoonofcode.poa.core.network.SessionManager
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
@@ -17,6 +18,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 import io.ktor.http.contentType
+import io.ktor.util.reflect.TypeInfo
+import kotlinx.coroutines.withContext
 import org.koin.mp.KoinPlatform.getKoin
 
 abstract class BaseRepository(
@@ -25,30 +28,18 @@ abstract class BaseRepository(
 ) {
     private val httpClient: HttpClient by getKoin().inject()
     private val networkConfig: NetworkConfig by getKoin().inject()
+    private val dispatcherProvider: DispatcherProvider by getKoin().inject()
+
     private val sessionManager: SessionManager by getKoin().inject()
     private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase by getKoin().inject()
 
-    protected val dispatcherProvider: DispatcherProvider by getKoin().inject()
-
-    protected fun responseOrException(response: HttpResponse): HttpResponse {
-        return when (response.status) {
-            in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
-            in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES ->
-                throw Exception("Client Error ${response.status}")
-
-            in HttpStatusCodes.HTTP_SERVER_ERROR_CODES ->
-                throw Exception("Server Error ${response.status}")
-
-            else -> unhandledException(response)
-        }
-    }
-
-    protected suspend fun doRequest(
+    protected suspend fun <T> doRequest(
         urlPostfixPath: String = "",
         method: HttpMethod,
         queryParams: Map<String, Any> = emptyMap(),
-        requestBody: String? = null,
-    ): HttpResponse {
+        requestBody: Any? = null,
+        responseTypeInfo: TypeInfo,
+    ): T = withContext(dispatcherProvider.io()) {
         // Common request-setup block
         val requestBuilder: HttpRequestBuilder.() -> Unit = {
             contentType(ContentType.Application.Json)
@@ -59,16 +50,18 @@ abstract class BaseRepository(
             this.method = method
 
             requestBody?.let {
-                setBody(requestBody)
+                setBody(it)
             }
         }
 
         // Use safeApiCall if token is required, otherwise call the client directly
-        return if (sessionTokenRequired) {
+        val response = if (sessionTokenRequired) {
             safeApiCall(httpClient, requestBuilder)
         } else {
             httpClient.request(requestBuilder)
         }
+
+        responseOrException(response).body(responseTypeInfo)
     }
 
     private fun getJwtAccessToken(): String {
@@ -77,6 +70,19 @@ abstract class BaseRepository(
 
     private fun unhandledException(response: HttpResponse): HttpResponse {
         throw Exception("Unhandled Error $response")
+    }
+
+    private fun responseOrException(response: HttpResponse): HttpResponse {
+        return when (response.status) {
+            in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
+            in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES ->
+                throw Exception("Client Error ${response.status}")
+
+            in HttpStatusCodes.HTTP_SERVER_ERROR_CODES ->
+                throw Exception("Server Error ${response.status}")
+
+            else -> unhandledException(response)
+        }
     }
 
     /**
@@ -117,5 +123,4 @@ abstract class BaseRepository(
 
         return response
     }
-
 }
