@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.mockdata.RegisterMockData.REGISTER_1
-import com.spoonofcode.poa.core.model.RegisterRequest
+import com.spoonofcode.poa.core.data.model.RegisterRequest
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

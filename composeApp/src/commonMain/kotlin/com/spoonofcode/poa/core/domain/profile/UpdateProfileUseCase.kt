@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.domain.profile
 
 import com.spoonofcode.poa.core.data.repository.UserRepository
-import com.spoonofcode.poa.core.model.ProfileRequest
+import com.spoonofcode.poa.core.data.model.ProfileRequest
 
 class UpdateProfileUseCase(
     private val userRepository: UserRepository,

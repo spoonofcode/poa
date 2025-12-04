@@ -2,7 +2,7 @@ package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.BaseRepository
 import com.spoonofcode.poa.core.model.Login
-import com.spoonofcode.poa.core.model.LoginRequest
+import com.spoonofcode.poa.core.data.model.LoginRequest
 import com.spoonofcode.poa.core.test.OpenForMokkery
 import io.ktor.http.HttpMethod
 import io.ktor.util.reflect.typeInfo

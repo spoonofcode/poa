@@ -1,5 +1,6 @@
-package com.spoonofcode.poa.core.model
+package com.spoonofcode.poa.core.data.model
 
+import com.spoonofcode.poa.core.model.RewardType
 import kotlinx.serialization.Serializable
 
 @Serializable

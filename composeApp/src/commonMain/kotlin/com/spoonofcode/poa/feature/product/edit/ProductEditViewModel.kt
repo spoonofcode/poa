@@ -1,9 +1,8 @@
 package com.spoonofcode.poa.feature.product.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
-import com.spoonofcode.poa.core.model.ProductRequest
+import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
@@ -54,19 +53,17 @@ internal class ProductEditViewModel(
                 val product = requireNotNull(currentState().product)
                 updateProductUseCase(
                     productId = product.id,
-                    productRequest = ProductRequest(
-                        name = product.name,
-                        ownerUserId = product.ownerUserId,
-                        partnerId = product.partnerId,
-                        description = product.description,
-                        imageLink = product.imageLink,
-                        videoLink = product.videoLink,
-                        collectionName = product.collectionName,
-                        websiteLink = product.websiteLink,
-                        customLink = product.customLink,
-                        seriesId = product.seriesId,
-                        tagId = product.tagId,
-                    )
+                    name = product.name,
+                    ownerUserId = product.ownerUserId,
+                    partnerId = product.partnerId,
+                    description = product.description,
+                    imageLink = product.imageLink,
+                    videoLink = product.videoLink,
+                    collectionName = product.collectionName,
+                    websiteLink = product.websiteLink,
+                    customLink = product.customLink,
+                    seriesId = product.seriesId,
+                    tagId = product.tagId,
                 )
                 viewModelNavigator.pop()
             } catch (ce: CancellationException) {

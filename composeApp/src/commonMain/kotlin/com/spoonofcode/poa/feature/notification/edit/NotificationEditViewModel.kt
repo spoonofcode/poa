@@ -3,7 +3,6 @@ package com.spoonofcode.poa.feature.notification.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.domain.notification.SendNotificationUseCase
-import com.spoonofcode.poa.core.model.NotificationRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
@@ -65,13 +64,11 @@ internal class NotificationEditViewModel(
             try {
                 val currentState = currentState()
                 sendNotificationUseCase(
-                    notification = NotificationRequest(
-                        title = currentState.title,
-                        text = currentState.text,
-                        link = currentState.link,
-                        topics = currentState.itemIds,
-                        expirationDateTime = currentState.expirationDateTime
-                    )
+                    title = currentState.title,
+                    text = currentState.text,
+                    link = currentState.link,
+                    topics = currentState.itemIds,
+                    expirationDateTime = currentState.expirationDateTime
                 )
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             } catch (ce: CancellationException) {

@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.base.BaseRepository
-import com.spoonofcode.poa.core.model.AddProductUserRequest
-import com.spoonofcode.poa.core.model.AddRewardToUserRequest
+import com.spoonofcode.poa.core.data.model.AddProductToUserRequest
+import com.spoonofcode.poa.core.data.model.AddRewardToUserRequest
 import com.spoonofcode.poa.core.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.Product
@@ -40,7 +40,7 @@ class UserRepository : BaseRepository(
     suspend fun addProductToUser(productId: String, userId: String) = doRequest<Unit>(
         urlPostfixPath = "$userId/products",
         method = HttpMethod.Post,
-        requestBody = AddProductUserRequest(productId = productId),
+        requestBody = AddProductToUserRequest(productId = productId),
         responseTypeInfo = typeInfo<Unit>()
     )
 
@@ -48,7 +48,7 @@ class UserRepository : BaseRepository(
         doRequest<Unit>(
             urlPostfixPath = "$userId/products",
             method = HttpMethod.Delete,
-            requestBody = AddProductUserRequest(productId = productId),
+            requestBody = AddProductToUserRequest(productId = productId),
             responseTypeInfo = typeInfo<Unit>()
         )
     }

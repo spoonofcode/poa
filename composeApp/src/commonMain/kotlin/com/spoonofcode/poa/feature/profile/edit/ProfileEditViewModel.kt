@@ -3,7 +3,6 @@ package com.spoonofcode.poa.feature.profile.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
-import com.spoonofcode.poa.core.model.ProfileRequest
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent

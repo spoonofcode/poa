@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.model
+package com.spoonofcode.poa.core.data.model
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
