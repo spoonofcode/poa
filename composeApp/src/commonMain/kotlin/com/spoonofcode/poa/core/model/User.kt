@@ -15,10 +15,3 @@ data class User(
     val email: String,
     val points: Int = 0,
 )
-
-@Serializable
-data class UserRequest(
-    val firstName: String,
-    val lastName: String,
-    val email: String,
-)

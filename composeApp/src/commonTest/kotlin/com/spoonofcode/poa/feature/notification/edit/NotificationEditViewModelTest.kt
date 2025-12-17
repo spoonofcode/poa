@@ -3,7 +3,6 @@ package com.spoonofcode.poa.feature.notification.edit
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.LoginRepository
 import com.spoonofcode.poa.core.data.repository.NotificationRepository
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
@@ -145,7 +144,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            notificationRepository.create(any())
+            notificationRepository.create(any(), any(), any(), any(), any(), any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))

@@ -10,7 +10,6 @@ import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.register.RegisterScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
@@ -29,15 +28,15 @@ internal class LoginViewModel(
     }
 
     private fun changeEmail(email: String) {
-            updateState {
-                copy(email = email)
-            }
+        updateState {
+            copy(email = email)
+        }
     }
 
     private fun changePassword(password: String) {
-            updateState {
-                copy(password = password)
-            }
+        updateState {
+            copy(password = password)
+        }
     }
 
     private fun forgotPassword() {
@@ -49,16 +48,13 @@ internal class LoginViewModel(
     private fun signIn() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                loginUseCase(
-                    email = viewState.value.email,
-                    password = viewState.value.password,
-                )
+            loginUseCase(
+                email = viewState.value.email,
+                password = viewState.value.password,
+            ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
+            }.onFailure {
+                showErrorSnackbar(it)
             }
         }
     }
@@ -66,14 +62,12 @@ internal class LoginViewModel(
     private fun signInWithGoogle(googleIdToken: String) {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                loginGoogleUseCase(googleIdToken)
-                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
-            }
+            loginGoogleUseCase(googleIdToken)
+                .onSuccess {
+                    viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                }.onFailure {
+                    showErrorSnackbar(it)
+                }
         }
     }
 
@@ -91,7 +85,7 @@ internal class LoginViewModel(
         }
     }
 
-    private fun showErrorSnackbar(e: Exception) {
+    private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(

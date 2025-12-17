@@ -6,6 +6,6 @@ import com.spoonofcode.poa.core.model.Partner
 class GetPartnersUseCase(
     private val partnerRepository: PartnerRepository,
 ) {
-    suspend operator fun invoke(): List<Partner> = partnerRepository.readAll()
+    suspend operator fun invoke(): Result<List<Partner>> = partnerRepository.readAll()
 }
 

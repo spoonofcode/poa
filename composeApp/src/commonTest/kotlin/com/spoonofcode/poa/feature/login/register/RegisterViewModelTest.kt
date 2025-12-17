@@ -110,7 +110,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            registerRepository.create(any())
+            registerRepository.create(any(), any(), any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
@@ -119,7 +119,14 @@ class RegisterViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `sign up error`() = runTest {
-        everySuspend { registerRepository.create(any()) } throws Exception("Something wrong")
+        everySuspend {
+            registerRepository.create(
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } throws Exception("Something wrong")
 
         viewModel.viewState.test {
             skipItems(1)
@@ -142,7 +149,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            registerRepository.create(any())
+            registerRepository.create(any(), any(), any(), any())
         }
 
         verifySuspend(mode = exactly(0)) {

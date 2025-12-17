@@ -11,8 +11,8 @@ class AddRewardToUserUseCase(
 
     suspend operator fun invoke(
         rewardType: RewardType
-    ) {
-        userRepository.addRewardToUser(
+    ): Result<Unit> {
+        return userRepository.addRewardToUser(
             rewardType = rewardType,
             userId = sessionManager.getSessionUserId(),
         )

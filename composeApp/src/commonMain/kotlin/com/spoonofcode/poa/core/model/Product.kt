@@ -17,18 +17,3 @@ data class Product(
     val websiteLink: String? = null,
     val customLink: String? = null,
 )
-
-@Serializable
-data class ProductRequest(
-    val ownerUserId: String? = null,
-    val partnerId: String,
-    val name: String,
-    val description: String,
-    val seriesId: String,
-    val collectionName: String,
-    val imageLink: String,
-    val videoLink: String? =null,
-    val tagId: String? = null,
-    val websiteLink: String? = null,
-    val customLink: String? = null,
-)

@@ -8,7 +8,7 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun notificationRepositoryMock() = mock<NotificationRepository> {
-    everySuspend { create(any()) } returns NOTIFICATION_1
-    everySuspend { read(any()) } returns NOTIFICATION_1
-    everySuspend { readAll() } returns NOTIFICATIONS
+    everySuspend { create(any(), any(), any(), any(), any(), any(), any()) } returns Result.success(Unit)
+    everySuspend { read(any()) } returns Result.success(NOTIFICATION_1)
+    everySuspend { readAll() } returns Result.success(NOTIFICATIONS)
 }

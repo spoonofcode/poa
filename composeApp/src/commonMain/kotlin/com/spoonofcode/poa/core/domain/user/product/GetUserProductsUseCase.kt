@@ -8,7 +8,7 @@ class GetUserProductsUseCase(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager,
 ) {
-    suspend operator fun invoke(): List<Product> = userRepository.readUserProducts(
+    suspend operator fun invoke(): Result<List<Product>> = userRepository.readUserProducts(
         userId = sessionManager.getSessionUserId(),
     )
 }

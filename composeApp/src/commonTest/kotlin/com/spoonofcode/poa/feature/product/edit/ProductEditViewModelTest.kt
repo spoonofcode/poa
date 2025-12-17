@@ -121,7 +121,16 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            productRepository.update(any(), any())
+            productRepository.update(
+                productId = any(),
+                ownerUserId = any(),
+                partnerId = any(),
+                name = any(),
+                description = any(),
+                seriesId = any(),
+                collectionName = any(),
+                imageLink = any()
+            )
         }
 
         verifySuspend {

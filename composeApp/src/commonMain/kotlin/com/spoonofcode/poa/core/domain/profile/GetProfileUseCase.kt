@@ -8,7 +8,7 @@ class GetProfileUseCase(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager,
 ) {
-    suspend operator fun invoke(): Profile = userRepository.readUserProfile(
+    suspend operator fun invoke(): Result<Profile> = userRepository.readUserProfile(
         userId = sessionManager.getSessionUserId()
     )
 }

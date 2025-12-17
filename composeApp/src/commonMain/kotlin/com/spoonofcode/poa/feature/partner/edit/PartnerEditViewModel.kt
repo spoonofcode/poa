@@ -7,7 +7,6 @@ import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerEditViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
@@ -31,19 +30,18 @@ internal class PartnerEditViewModel(
     private fun initView(partnerId: String) {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val partner = getPartnerByIdUseCase(partnerId = partnerId)
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        partner = partner
-                    )
+            getPartnerByIdUseCase(partnerId = partnerId)
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            partner = it
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 
@@ -78,13 +76,13 @@ internal class PartnerEditViewModel(
     private fun saveChanges() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                updatePartnerUseCase(getCurrentPartner())
-                viewModelNavigator.pop()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                showErrorView()
-            }
+            updatePartnerUseCase(getCurrentPartner())
+                .onSuccess {
+                    viewModelNavigator.pop()
+                }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

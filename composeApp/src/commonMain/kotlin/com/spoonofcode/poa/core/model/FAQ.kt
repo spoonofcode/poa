@@ -7,9 +7,3 @@ data class FAQ(
     val question: String,
     val answer: String,
 )
-
-@Serializable
-data class FAQRequest(
-    val question: String,
-    val answer: String,
-)

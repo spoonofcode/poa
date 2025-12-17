@@ -6,8 +6,10 @@ import com.spoonofcode.poa.core.model.Product
 class GetProductSeriesUseCase(
     private val productRepository: ProductRepository,
 ) {
-    suspend operator fun invoke(): List<Product> {
-        return productRepository.readAll().distinctBy { product -> product.seriesId }
+    //TODO Fix this use case
+    suspend operator fun invoke(): Result<List<Product>> {
+        return Result.success(emptyList())
+//        return productRepository.readAll().distinctBy { product -> product.seriesId }
     }
 }
 

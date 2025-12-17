@@ -12,7 +12,6 @@ import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
 import com.spoonofcode.poa.feature.tac.TACScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class ProfileDetailsViewModel(
     private val getProfileUseCase: GetProfileUseCase,
@@ -34,19 +33,18 @@ internal class ProfileDetailsViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val profile = getProfileUseCase()
-                updateState {
-                    copy(
-                        profile = profile,
-                        screenState = ScreenState.CONTENT,
-                    )
+            getProfileUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            profile = it,
+                            screenState = ScreenState.CONTENT,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

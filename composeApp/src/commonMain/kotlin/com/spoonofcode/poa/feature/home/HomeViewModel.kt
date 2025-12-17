@@ -31,40 +31,51 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-//                subscribeUserTopicsUseCase()
-                loadRewardsStatus()
-            } catch (e: Exception) {
-                showErrorView()
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-            }
-
+            //                subscribeUserTopicsUseCase()
+            loadRewardsStatus()
         }
     }
 
     private suspend fun loadRewardsStatus() {
-        val dailyCheckInStatus = getUserDailyCheckInStatusUseCase()
-        val totalPoints = getUserRewardsPointsUseCase()
+        getUserDailyCheckInStatusUseCase()
+            .onSuccess {
+                updateState {
+                    copy(
+                        dailyCheckInStatus = it
+                    )
+                }
+            }
+            .onFailure {
+                showErrorView()
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            }
 
-        updateState {
-            copy(
-                screenState = ScreenState.CONTENT,
-                dailyCheckInStatus = dailyCheckInStatus,
-                totalPoints = totalPoints,
-            )
-        }
+        getUserRewardsPointsUseCase()
+            .onSuccess {
+                updateState {
+                    copy(
+                        totalPoints = it,
+                        screenState = ScreenState.CONTENT,
+                    )
+                }
+            }
+            .onFailure {
+                showErrorView()
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            }
     }
 
     private fun dailyCheckIn() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
-                showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
-                loadRewardsStatus()
-            } catch (e: Exception) {
-                showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${e.message}"))
-            }
+            addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
+                .onSuccess {
+                    showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
+                    loadRewardsStatus()
+                }
+                .onFailure {
+                    showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${it.message}"))
+                }
         }
     }
 

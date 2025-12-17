@@ -6,5 +6,5 @@ import com.spoonofcode.poa.core.model.FAQ
 class GetFAQUseCase(
     private val faqRepository: FAQRepository,
 ) {
-    suspend operator fun invoke(): List<FAQ> = faqRepository.readAll()
+    suspend operator fun invoke(): Result<List<FAQ>> = faqRepository.readAll()
 }

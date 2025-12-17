@@ -1,8 +1,8 @@
-package com.spoonofcode.poa.core.model
+package com.spoonofcode.poa.core.data.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AddProductUserRequest(
+data class AddProductToUserRequest(
     val productId: String,
 )

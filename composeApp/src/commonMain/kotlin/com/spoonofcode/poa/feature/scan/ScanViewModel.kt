@@ -20,17 +20,18 @@ internal class ScanViewModel(
     private fun checkProduct(tagId: String) {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                val product = getProductByTagIdUseCase(tagId = tagId)
-                viewModelNavigator.push(
-                    ProductDetailsScreen(
-                        productId = product.id,
-                        hasOwnerUser = product.ownerUserId != null,
+            getProductByTagIdUseCase(tagId = tagId)
+                .onSuccess {
+                    viewModelNavigator.push(
+                        ProductDetailsScreen(
+                            productId = it.id,
+                            hasOwnerUser = it.ownerUserId != null,
+                        )
                     )
-                )
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

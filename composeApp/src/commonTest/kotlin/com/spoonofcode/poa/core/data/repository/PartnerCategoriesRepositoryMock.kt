@@ -6,5 +6,5 @@ import dev.mokkery.everySuspend
 import dev.mokkery.mock
 
 internal fun partnerCategoriesRepositoryMock() = mock<PartnerCategoryRepository> {
-    everySuspend { readAll() } returns PARTNER_CATEGORIES
+    everySuspend { readAll() } returns Result.success(PARTNER_CATEGORIES)
 }

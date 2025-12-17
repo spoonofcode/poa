@@ -1,0 +1,18 @@
+package com.spoonofcode.poa.core.data.model
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ProductRequest(
+    val ownerUserId: String? = null,
+    val partnerId: String,
+    val name: String,
+    val description: String,
+    val seriesId: String,
+    val collectionName: String,
+    val imageLink: String,
+    val videoLink: String? =null,
+    val tagId: String? = null,
+    val websiteLink: String? = null,
+    val customLink: String? = null,
+)

@@ -6,9 +6,11 @@ import com.spoonofcode.poa.core.model.Notification
 class GetNotificationsUseCase(
     private val notificationRepository: NotificationRepository,
 ) {
-    suspend operator fun invoke(): List<Notification> = notificationRepository.readAll()
-        .sortedWith(
-            compareBy<Notification> { it.alreadyRead } // false first
-                .thenByDescending { it.expirationDateTime } // newest first
-        )
+    suspend operator fun invoke(): Result<List<Notification>> = notificationRepository.readAll()
+        .map {
+            it.sortedWith(
+                compareBy<Notification> { it.alreadyRead } // false first
+                    .thenByDescending { it.expirationDateTime } // newest first
+            )
+        }
 }

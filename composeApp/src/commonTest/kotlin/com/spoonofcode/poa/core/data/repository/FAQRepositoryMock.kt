@@ -6,5 +6,5 @@ import dev.mokkery.everySuspend
 import dev.mokkery.mock
 
 internal fun faqRepositoryMock() = mock<FAQRepository> {
-    everySuspend { readAll() } returns FAQS
+    everySuspend { readAll() } returns Result.success(FAQS)
 }

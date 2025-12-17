@@ -7,7 +7,6 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
@@ -50,19 +49,16 @@ internal class RegisterViewModel(
     private fun signUp() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                val currentState = currentState()
-                registerUseCase(
-                    email = currentState.email,
-                    password = currentState.password,
-                    firstName = currentState.firstName,
-                    lastName = currentState.lastName,
-                )
+            val currentState = currentState()
+            registerUseCase(
+                email = currentState.email,
+                password = currentState.password,
+                firstName = currentState.firstName,
+                lastName = currentState.lastName,
+            ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorSnackbar(e)
+            }.onFailure {
+                showErrorSnackbar(it)
             }
         }
     }
@@ -75,7 +71,7 @@ internal class RegisterViewModel(
         }
     }
 
-    private fun showErrorSnackbar(e: Exception) {
+    private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         updateState {
             copy(

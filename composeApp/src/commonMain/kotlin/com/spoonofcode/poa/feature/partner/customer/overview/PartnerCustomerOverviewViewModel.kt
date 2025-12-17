@@ -7,7 +7,6 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class PartnerCustomerOverviewViewModel(
     private val getPartnerUsersUseCase: GetPartnerUsersUseCase,
@@ -24,19 +23,18 @@ internal class PartnerCustomerOverviewViewModel(
     private fun initView(partnerId: String) {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val partnerUsers = getPartnerUsersUseCase(partnerId)
-                updateState {
-                    copy(
-                        screenState = ScreenState.CONTENT,
-                        partnerUsers = partnerUsers,
-                    )
+            getPartnerUsersUseCase(partnerId)
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            partnerUsers = it,
+                        )
+                    }
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
+                .onFailure {
+                    showErrorView()
+                }
         }
     }
 

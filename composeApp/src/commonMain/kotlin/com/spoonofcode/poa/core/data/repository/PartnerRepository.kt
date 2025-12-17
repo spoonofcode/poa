@@ -1,32 +1,43 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.GenericCrudRepository
+import com.spoonofcode.poa.core.data.base.BaseRepository
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.PartnerRequest
 import com.spoonofcode.poa.core.model.User
-import com.spoonofcode.poa.core.test.OpenForMokkery
-import io.ktor.client.call.body
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
+import io.ktor.util.reflect.typeInfo
 
-@OpenForMokkery
-class PartnerRepository : GenericCrudRepository<PartnerRequest, Partner>(
-    resourceName = "partners",
-    requestSerializer = PartnerRequest.serializer(),
-    responseSerializer = Partner.serializer(),
-) {
-    suspend fun readPartnerUsers(partnerId: String): List<User> {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = doRequest(
-                urlPath = "partners/$partnerId/users",
-                method = HttpMethod.Get,
-            )
+interface PartnerRepository {
+    suspend fun read(partnerId: String): Result<Partner>
+    suspend fun update(partnerId: String, partnerRequest: PartnerRequest): Result<Boolean>
+    suspend fun readAll(): Result<List<Partner>>
+    suspend fun readPartnerUsers(partnerId: String): Result<List<User>>
+}
 
-            val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(ListSerializer(User.serializer()), responseBody)
-        }
-    }
+class PartnerRepositoryImpl : BaseRepository(
+    collectionName = "partners",
+), PartnerRepository {
+    override suspend fun read(partnerId: String): Result<Partner> = doRequest(
+        urlPostfixPath = partnerId,
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<Partner>()
+    )
+
+    override suspend fun update(partnerId: String, partnerRequest: PartnerRequest): Result<Boolean> = doRequest<Boolean>(
+        urlPostfixPath = partnerId,
+        method = HttpMethod.Put,
+        requestBody = partnerRequest,
+        responseTypeInfo = typeInfo<Unit>()
+    ).map { true }
+
+    override suspend fun readAll(): Result<List<Partner>> = doRequest(
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<List<Partner>>(),
+    )
+
+    override suspend fun readPartnerUsers(partnerId: String): Result<List<User>> = doRequest(
+        urlPostfixPath = "$partnerId/users",
+        method = HttpMethod.Get,
+        responseTypeInfo = typeInfo<List<User>>(),
+    )
 }

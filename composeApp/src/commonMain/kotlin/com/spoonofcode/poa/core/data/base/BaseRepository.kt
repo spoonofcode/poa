@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
 import com.spoonofcode.poa.core.network.SessionManager
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
@@ -17,35 +18,63 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 import io.ktor.http.contentType
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
+import io.ktor.util.reflect.TypeInfo
+import kotlinx.coroutines.withContext
 import org.koin.mp.KoinPlatform.getKoin
 
-interface BaseRepository<RQ, RS> {
-    suspend fun doRequest(
-        urlPath: String,
-        method: HttpMethod,
-        sessionTokenRequired: Boolean = true,
-        requestBody: RQ? = null,
-        customRequestBody: String? = null,
-        queryParams: Map<String, String> = emptyMap()
-    ): HttpResponse
-}
-
-abstract class GenericBaseRepository<RQ : Any, RS : Any>(
-    private val resourceName: String,
-    private val requestSerializer: KSerializer<RQ>,
-    private val responseSerializer: KSerializer<RS>,
+abstract class BaseRepository(
+    private val collectionName: String,
     private val sessionTokenRequired: Boolean = true,
-) : BaseRepository<RQ, RS> {
-    protected val dispatcherProvider: DispatcherProvider by getKoin().inject()
-
+) {
     private val httpClient: HttpClient by getKoin().inject()
     private val networkConfig: NetworkConfig by getKoin().inject()
+    private val dispatcherProvider: DispatcherProvider by getKoin().inject()
+
     private val sessionManager: SessionManager by getKoin().inject()
     private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase by getKoin().inject()
 
-    open fun responseOrException(response: HttpResponse): HttpResponse {
+    protected suspend fun <T> doRequest(
+        urlPostfixPath: String = "",
+        method: HttpMethod,
+        queryParams: Map<String, Any> = emptyMap(),
+        requestBody: Any? = null,
+        responseTypeInfo: TypeInfo,
+    ): Result<T> = withContext(dispatcherProvider.io()) {
+        try {
+            val requestBuilder: HttpRequestBuilder.() -> Unit = {
+                contentType(ContentType.Application.Json)
+                url("${networkConfig.baseUrl}/$collectionName/$urlPostfixPath")
+
+                queryParams.forEach { (key, value) -> parameter(key, value) }
+
+                this.method = method
+
+                requestBody?.let {
+                    setBody(it)
+                }
+            }
+
+            val response = if (sessionTokenRequired) {
+                safeApiCall(httpClient, requestBuilder)
+            } else {
+                httpClient.request(requestBuilder)
+            }
+
+            Result.success(responseOrException(response).body(responseTypeInfo))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    private fun getJwtAccessToken(): String {
+        return sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
+    }
+
+    private fun unhandledException(response: HttpResponse): HttpResponse {
+        throw Exception("Unhandled Error $response")
+    }
+
+    private fun responseOrException(response: HttpResponse): HttpResponse {
         return when (response.status) {
             in HttpStatusCodes.HTTP_SUCCESS_CODES -> return response
             in HttpStatusCodes.HTTP_CLIENT_ERROR_CODES ->
@@ -56,48 +85,6 @@ abstract class GenericBaseRepository<RQ : Any, RS : Any>(
 
             else -> unhandledException(response)
         }
-    }
-
-    override suspend fun doRequest(
-        urlPath: String,
-        method: HttpMethod,
-        sessionTokenRequired: Boolean,
-        requestBody: RQ?,
-        customRequestBody: String?,
-        queryParams: Map<String, String>,
-    ): HttpResponse {
-        // Common request-setup block
-        val requestBuilder: HttpRequestBuilder.() -> Unit = {
-            contentType(ContentType.Application.Json)
-            url("${networkConfig.baseUrl}/$urlPath")
-
-            queryParams.forEach { (key, value) -> parameter(key, value) }
-
-            this.method = method
-
-            customRequestBody?.let {
-                setBody(customRequestBody)
-            }
-
-            requestBody?.let { body ->
-                setBody(Json.encodeToString(requestSerializer, body))
-            }
-        }
-
-        // Use safeApiCall if token is required, otherwise call the client directly
-        return if (sessionTokenRequired) {
-            safeApiCall(httpClient, requestBuilder)
-        } else {
-            httpClient.request(requestBuilder)
-        }
-    }
-
-    private fun unhandledException(response: HttpResponse): HttpResponse {
-        throw Exception("Unhandled Error $response")
-    }
-
-    private fun getJwtAccessToken(): String {
-        return sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
     }
 
     /**
