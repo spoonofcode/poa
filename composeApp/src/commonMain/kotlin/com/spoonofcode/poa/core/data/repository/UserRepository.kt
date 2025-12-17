@@ -5,7 +5,7 @@ import com.spoonofcode.poa.core.data.model.AddProductToUserRequest
 import com.spoonofcode.poa.core.data.model.AddRewardToUserRequest
 import com.spoonofcode.poa.core.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.model.Partner
-import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.core.model.Profile
 import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.model.User

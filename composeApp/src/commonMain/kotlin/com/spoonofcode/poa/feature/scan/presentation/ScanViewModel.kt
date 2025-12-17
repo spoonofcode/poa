@@ -1,10 +1,9 @@
 package com.spoonofcode.poa.feature.scan.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
@@ -23,7 +22,7 @@ internal class ScanViewModel(
             getProductByTagIdUseCase(tagId = tagId)
                 .onSuccess {
                     viewModelNavigator.push(
-                        ProductDetailsScreen(
+                        _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen(
                             productId = it.id,
                             hasOwnerUser = it.ownerUserId != null,
                         )

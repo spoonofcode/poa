@@ -13,11 +13,11 @@ import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
 import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
-import com.spoonofcode.poa.core.domain.product.GetFilteredProductsByTextUseCase
-import com.spoonofcode.poa.core.domain.product.GetProductByIdUseCase
-import com.spoonofcode.poa.core.domain.product.GetProductByTagIdUseCase
-import com.spoonofcode.poa.core.domain.product.GetProductSeriesUseCase
-import com.spoonofcode.poa.core.domain.product.UpdateProductUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
@@ -38,18 +38,18 @@ val domainModule = module {
     factoryOf(::GetProfileUseCase)
     factoryOf(::UpdateProfileUseCase)
     factoryOf(::GetUserByIdUseCase)
-    factoryOf(::GetFilteredProductsByTextUseCase)
+
     factoryOf(::GetPartnerByIdUseCase)
     factoryOf(::GetPartnerCategoriesUseCase)
     factoryOf(::GetPartnersFilteredByTextUseCase)
-    factoryOf(::GetProductByIdUseCase)
-    factoryOf(::GetProductByTagIdUseCase)
+
+
     factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
     factoryOf(::DeleteProductFromUserUseCase)
-    factoryOf(::UpdateProductUseCase)
+
     factoryOf(::UpdatePartnerUseCase)
-    factoryOf(::GetProductSeriesUseCase)
+
     factoryOf(::SendNotificationUseCase)
     factoryOf(::GetNotificationsUseCase)
     factoryOf(::GetNotificationByIdUseCase)

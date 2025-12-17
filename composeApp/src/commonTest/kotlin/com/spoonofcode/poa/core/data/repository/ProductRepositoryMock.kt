@@ -6,7 +6,7 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
-internal fun productRepositoryMock() = mock<ProductRepository> {
+internal fun productRepositoryMock() = mock<ProductDataSource> {
     everySuspend { read(any()) } returns Result.success(PRODUCT_1)
     everySuspend {
         update(

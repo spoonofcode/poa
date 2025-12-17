@@ -3,9 +3,8 @@ package com.spoonofcode.poa.feature.scan
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.core.data.repository.ProductRepository
+import com.spoonofcode.poa.core.data.repository.ProductDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import com.spoonofcode.poa.feature.scan.di.scanTestModule
 import com.spoonofcode.poa.feature.scan.presentation.ScanViewAction
 import com.spoonofcode.poa.feature.scan.presentation.ScanViewModel
@@ -22,13 +21,13 @@ import kotlin.test.assertEquals
 class ScanViewModelest : BaseViewModelTest() {
 
     private lateinit var viewModel: ScanViewModel
-    private lateinit var productRepository: ProductRepository
+    private lateinit var productDataSource: ProductDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(scanTestModule)
         super.setup()
-        productRepository = getKoin().get()
+        productDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -58,9 +57,9 @@ class ScanViewModelest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            productRepository.readProductByTagId(PRODUCT_1.tagId!!)
+            productDataSource.readProductByTagId(PRODUCT_1.tagId!!)
         }
 
-        verifySuspend { viewModelNavigator.push(ofType<ProductDetailsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen>()) }
     }
 }

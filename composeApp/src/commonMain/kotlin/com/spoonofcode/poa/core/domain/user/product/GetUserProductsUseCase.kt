@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.domain.user.product
 
 import com.spoonofcode.poa.core.data.repository.UserRepository
-import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.core.network.SessionManager
 
 class GetUserProductsUseCase(

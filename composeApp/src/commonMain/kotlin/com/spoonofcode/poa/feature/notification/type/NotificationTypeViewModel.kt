@@ -6,7 +6,7 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.partner.customer.overview.CustomerOverviewScreen
-import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewScreen
+import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
 import kotlinx.coroutines.launch
 
 internal class NotificationTypeViewModel(

@@ -1,13 +1,31 @@
 package com.spoonofcode.poa.feature.product.di
 
-import com.spoonofcode.poa.feature.product.details.ProductDetailsViewModel
-import com.spoonofcode.poa.feature.product.edit.ProductEditViewModel
-import com.spoonofcode.poa.feature.product.overview.ProductOverviewViewModel
-import com.spoonofcode.poa.feature.product.series.overview.ProductSeriesOverviewViewModel
+import com.spoonofcode.poa.feature.product.data.remote.RemoteProductDataSource
+import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.ProductDataSource
+import com.spoonofcode.poa.feature.product.domain.usecase.UpdateProductUseCase
+import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel
+import com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewModel
+import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel
+import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewViewModel
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val productModule = module {
+    singleOf(::RemoteProductDataSource).bind<ProductDataSource>()
+
+    factoryOf(::GetFilteredProductsByTextUseCase)
+    factoryOf(::GetProductByIdUseCase)
+    factoryOf(::GetProductByTagIdUseCase)
+    factoryOf(::GetProductSeriesUseCase)
+    factoryOf(::UpdateProductUseCase)
+
     viewModelOf(::ProductDetailsViewModel)
     viewModelOf(::ProductEditViewModel)
     viewModelOf(::ProductOverviewViewModel)

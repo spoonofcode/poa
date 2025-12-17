@@ -4,10 +4,13 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.core.data.repository.ProductRepository
+import com.spoonofcode.poa.core.data.repository.ProductDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.product.di.productTestModule
+import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverViewViewAction
+import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewViewModel
+import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,13 +25,13 @@ import kotlin.test.assertEquals
 class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: ProductSeriesOverviewViewModel
-    private lateinit var productRepository: ProductRepository
+    private lateinit var productDataSource: ProductDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(productTestModule)
         super.setup()
-        productRepository = getKoin().get()
+        productDataSource = getKoin().get()
         viewModel = getSut()
     }
 

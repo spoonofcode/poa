@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
-import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
+import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProductOverviewViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: ProductOverviewViewModel
+    private lateinit var viewModel: com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel
     private lateinit var userRepository: UserRepository
 
     @BeforeTest
@@ -37,7 +37,7 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ProductOverviewViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(),
                 actual = awaitItem()
             )
         }
@@ -48,10 +48,10 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(ProductOverviewViewAction.InitView)
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.InitView)
 
             assertEquals(
-                expected = ProductOverviewViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(
                     screenState = ScreenState.CONTENT,
                     initProducts = PRODUCTS,
                     filteredProducts = PRODUCTS,
@@ -71,10 +71,10 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
 
             assertEquals(
-                expected = ProductOverviewViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(
                     searchText = searchText,
                 ),
                 actual = awaitItem()
@@ -84,9 +84,9 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `select product`() = runTest {
-        viewModel.onAction(ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
+        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<ProductDetailsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen>()) }
     }
 }
