@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.scan
+package com.spoonofcode.poa.feature.scan.presentation
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.poa.core.ui.BaseViewState

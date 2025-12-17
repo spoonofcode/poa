@@ -7,6 +7,9 @@ import com.spoonofcode.poa.core.data.repository.ProductRepository
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.details.ProductDetailsScreen
 import com.spoonofcode.poa.feature.scan.di.scanTestModule
+import com.spoonofcode.poa.feature.scan.presentation.ScanViewAction
+import com.spoonofcode.poa.feature.scan.presentation.ScanViewModel
+import com.spoonofcode.poa.feature.scan.presentation.ScanViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi

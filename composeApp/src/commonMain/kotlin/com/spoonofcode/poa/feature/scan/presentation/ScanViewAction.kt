@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.scan
+package com.spoonofcode.poa.feature.scan.presentation
 
 import com.spoonofcode.poa.core.ui.BaseViewAction
 

@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.faq.data
+package com.spoonofcode.poa.feature.faq.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.faq.data.mappers.toFAQ

@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.faq.di
 
-import com.spoonofcode.poa.feature.faq.data.RemoteFAQDataSource
+import com.spoonofcode.poa.feature.faq.data.remote.RemoteFAQDataSource
 import com.spoonofcode.poa.feature.faq.domain.FAQDataSource
 import com.spoonofcode.poa.feature.faq.domain.usecase.GetFAQUseCase
 import com.spoonofcode.poa.feature.faq.presentation.FAQViewModel
