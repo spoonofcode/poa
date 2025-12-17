@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.model
+package com.spoonofcode.poa.feature.login.data.remote.model
 
 import kotlinx.serialization.Serializable
 

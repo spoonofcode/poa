@@ -1,13 +1,15 @@
 package com.spoonofcode.poa.feature.login.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.core.data.model.RegisterRequest
+import com.spoonofcode.poa.feature.login.data.remote.model.RegisterRequest
+import com.spoonofcode.poa.feature.login.data.mappers.toRegister
+import com.spoonofcode.poa.feature.login.data.remote.model.RegisterResponse
 import com.spoonofcode.poa.feature.login.domain.RegisterDataSource
 import com.spoonofcode.poa.feature.login.domain.model.Register
 import io.ktor.http.HttpMethod
 import io.ktor.util.reflect.typeInfo
 
-class RegisterRemoteDataSource : RemoteBaseDataSource(
+class RemoteRegisterDataSource : RemoteBaseDataSource(
     collectionName = "register",
     sessionTokenRequired = false,
 ), RegisterDataSource {
@@ -16,7 +18,7 @@ class RegisterRemoteDataSource : RemoteBaseDataSource(
         password: String,
         firstName: String,
         lastName: String,
-    ): Result<Register> = doRequest(
+    ): Result<Register> = doRequest<RegisterResponse>(
         method = HttpMethod.Post,
         requestBody = RegisterRequest(
             email = email,
@@ -24,6 +26,6 @@ class RegisterRemoteDataSource : RemoteBaseDataSource(
             firstName = firstName,
             lastName = lastName,
         ),
-        responseTypeInfo = typeInfo<Register>()
-    )
+        responseTypeInfo = typeInfo<RegisterResponse>()
+    ).map { response -> response.toRegister() }
 }

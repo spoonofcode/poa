@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.login.di
 
-import com.spoonofcode.poa.feature.login.data.remote.LoginGoogleRemoteDataSource
-import com.spoonofcode.poa.feature.login.data.remote.LoginRemoteDataSource
-import com.spoonofcode.poa.feature.login.data.remote.RegisterRemoteDataSource
+import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
+import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
+import com.spoonofcode.poa.feature.login.data.remote.RemoteRegisterDataSource
 import com.spoonofcode.poa.feature.login.domain.LoginDataSource
 import com.spoonofcode.poa.feature.login.domain.LoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.domain.RegisterDataSource
@@ -25,9 +25,9 @@ expect val platformLoginModule: Module
 val loginModule: Module = module {
     includes(platformLoginModule)
 
-    singleOf(::LoginGoogleRemoteDataSource).bind<LoginGoogleDataSource>()
-    singleOf(::LoginRemoteDataSource).bind<LoginDataSource>()
-    singleOf(::RegisterRemoteDataSource).bind<RegisterDataSource>()
+    singleOf(::RemoteLoginGoogleDataSource).bind<LoginGoogleDataSource>()
+    singleOf(::RemoteLoginDataSource).bind<LoginDataSource>()
+    singleOf(::RemoteRegisterDataSource).bind<RegisterDataSource>()
 
     factoryOf(::LoginUseCase)
     factoryOf(::LoginGoogleUseCase)
