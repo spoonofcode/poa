@@ -3,6 +3,9 @@ package com.spoonofcode.poa.feature.login.forgotPassword
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.feature.login.di.loginTestModule
+import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewAction
+import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewModel
+import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

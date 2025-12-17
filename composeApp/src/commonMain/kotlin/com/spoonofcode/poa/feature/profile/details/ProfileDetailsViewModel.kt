@@ -1,16 +1,16 @@
 package com.spoonofcode.poa.feature.profile.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.login.LogoutUseCase
+import com.spoonofcode.poa.feature.login.domain.usecase.LogoutUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
-import com.spoonofcode.poa.feature.login.login.LoginScreen
+import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
-import com.spoonofcode.poa.feature.tac.TACScreen
+import com.spoonofcode.poa.feature.tac.presentation.TACScreen
 import kotlinx.coroutines.launch
 
 internal class ProfileDetailsViewModel(

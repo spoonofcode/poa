@@ -2,10 +2,6 @@ package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
-import com.spoonofcode.poa.core.domain.login.LoginGoogleUseCase
-import com.spoonofcode.poa.core.domain.login.LoginUseCase
-import com.spoonofcode.poa.core.domain.login.LogoutUseCase
-import com.spoonofcode.poa.core.domain.login.RegisterUseCase
 import com.spoonofcode.poa.core.domain.notification.GetNotificationByIdUseCase
 import com.spoonofcode.poa.core.domain.notification.GetNotificationSettingsUseCase
 import com.spoonofcode.poa.core.domain.notification.GetNotificationsUseCase
@@ -38,10 +34,6 @@ import org.koin.dsl.module
 
 val domainModule = module {
     factoryOf(::DeleteAccountUseCase)
-    factoryOf(::LoginUseCase)
-    factoryOf(::LoginGoogleUseCase)
-    factoryOf(::LogoutUseCase)
-    factoryOf(::RegisterUseCase)
     factoryOf(::RefreshAccessTokenUseCase)
     factoryOf(::GetProfileUseCase)
     factoryOf(::UpdateProfileUseCase)

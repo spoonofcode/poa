@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.core.model.Register
+import com.spoonofcode.poa.feature.login.domain.model.Register
 
 object RegisterMockData {
     val REGISTER_1 = Register(

@@ -6,7 +6,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.theme.AppTheme
-import com.spoonofcode.poa.feature.login.login.LoginScreen
+import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.details.NotificationDetailsScreen
 import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
