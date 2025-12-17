@@ -1,7 +1,7 @@
-package com.spoonofcode.poa.feature.faq
+package com.spoonofcode.poa.feature.faq.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.faq.GetFAQUseCase
+import com.spoonofcode.poa.feature.faq.domain.usecase.GetFAQUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch

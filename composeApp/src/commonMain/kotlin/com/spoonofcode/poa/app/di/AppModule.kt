@@ -19,6 +19,7 @@ import com.spoonofcode.poa.feature.tac.di.tacModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 val appModule = module {
@@ -46,7 +47,11 @@ val appModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) {
-                json()
+                json(
+                    json = Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
 
             // TODO #34-Try use custom AuthPlugin instead of safeApiCall function

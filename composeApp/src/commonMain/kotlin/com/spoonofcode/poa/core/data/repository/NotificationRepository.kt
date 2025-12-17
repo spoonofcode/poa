@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.data.model.NotificationRequest
 import com.spoonofcode.poa.core.model.Notification
 import io.ktor.http.HttpMethod
@@ -22,7 +22,7 @@ interface NotificationRepository {
     suspend fun readAll(): Result<List<Notification>>
 }
 
-class NotificationRepositoryImpl : BaseRepository(
+class NotificationRemoteDataSource : RemoteBaseDataSource(
     collectionName = "notifications",
 ), NotificationRepository {
     override suspend fun create(

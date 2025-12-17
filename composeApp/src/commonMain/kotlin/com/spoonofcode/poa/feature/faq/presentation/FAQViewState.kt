@@ -1,7 +1,7 @@
-package com.spoonofcode.poa.feature.faq
+package com.spoonofcode.poa.feature.faq.presentation
 
 import androidx.compose.runtime.Immutable
-import com.spoonofcode.poa.core.model.FAQ
+import com.spoonofcode.poa.feature.faq.domain.model.FAQ
 import com.spoonofcode.poa.core.ui.BaseViewState
 import com.spoonofcode.poa.core.ui.ScreenState
 

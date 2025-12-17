@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.data.model.LoginRequest
 import com.spoonofcode.poa.core.model.Login
 import io.ktor.http.HttpMethod
@@ -10,7 +10,7 @@ interface LoginRepository {
     suspend fun create(email: String, password: String): Result<Login>
 }
 
-class LoginRepositoryImpl() : BaseRepository(
+class LoginRemoteDataSource() : RemoteBaseDataSource(
     collectionName = "login",
     sessionTokenRequired = false,
 ), LoginRepository {

@@ -22,7 +22,7 @@ import io.ktor.util.reflect.TypeInfo
 import kotlinx.coroutines.withContext
 import org.koin.mp.KoinPlatform.getKoin
 
-abstract class BaseRepository(
+abstract class RemoteBaseDataSource(
     private val collectionName: String,
     private val sessionTokenRequired: Boolean = true,
 ) {

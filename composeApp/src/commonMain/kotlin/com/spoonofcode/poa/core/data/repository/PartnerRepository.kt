@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.model.Partner
 import com.spoonofcode.poa.core.model.PartnerRequest
 import com.spoonofcode.poa.core.model.User
@@ -14,7 +14,7 @@ interface PartnerRepository {
     suspend fun readPartnerUsers(partnerId: String): Result<List<User>>
 }
 
-class PartnerRepositoryImpl : BaseRepository(
+class PartnerRemoteDataSource : RemoteBaseDataSource(
     collectionName = "partners",
 ), PartnerRepository {
     override suspend fun read(partnerId: String): Result<Partner> = doRequest(

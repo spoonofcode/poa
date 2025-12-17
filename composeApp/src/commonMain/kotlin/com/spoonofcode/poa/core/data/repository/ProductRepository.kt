@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.data.model.ProductRequest
 import com.spoonofcode.poa.core.model.Product
 import io.ktor.http.HttpMethod
@@ -29,7 +29,7 @@ interface ProductRepository {
     suspend fun readProductByTagId(tagId: String): Result<Product>
 }
 
-class ProductRepositoryImpl : BaseRepository(
+class ProductRemoteDataSource : RemoteBaseDataSource(
     collectionName = "products",
 ), ProductRepository {
     override suspend fun read(

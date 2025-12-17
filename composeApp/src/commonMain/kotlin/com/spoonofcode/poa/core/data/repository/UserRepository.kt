@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.data.model.AddProductToUserRequest
 import com.spoonofcode.poa.core.data.model.AddRewardToUserRequest
 import com.spoonofcode.poa.core.model.DailyCheckInStatus
@@ -25,7 +25,7 @@ interface UserRepository {
     suspend fun getUserDailyCheckInStatus(userId: String): Result<DailyCheckInStatus>
 }
 
-class UserRepositoryImpl : BaseRepository(
+class UserRemoteDataSource : RemoteBaseDataSource(
     collectionName = "users"
 ), UserRepository {
     override suspend fun read(userId: String): Result<User> = doRequest(

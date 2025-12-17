@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.data.model.RegisterRequest
 import com.spoonofcode.poa.core.model.Register
 import io.ktor.http.HttpMethod
@@ -15,7 +15,7 @@ interface RegisterRepository {
     ): Result<Register>
 }
 
-class RegisterRepositoryImpl : BaseRepository(
+class RegisterRemoteDataSource : RemoteBaseDataSource(
     collectionName = "register",
     sessionTokenRequired = false,
 ), RegisterRepository {

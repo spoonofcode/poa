@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.data.base.BaseRepository
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.core.model.LoginGoogle
 import com.spoonofcode.poa.core.model.LoginGoogleRequest
 import io.ktor.http.HttpMethod
@@ -10,7 +10,7 @@ interface LoginGoogleRepository {
     suspend fun create(googleUserToken: String): Result<LoginGoogle>
 }
 
-class LoginGoogleRepositoryImpl : BaseRepository(
+class LoginGoogleRemoteDataSource : RemoteBaseDataSource(
 //    collectionName = "api/login/google", //TODO #13 Switch to POA backend API
     collectionName = "login/google",
     sessionTokenRequired = false,

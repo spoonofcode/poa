@@ -5,6 +5,9 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.FAQMockData.FAQS
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.di.faqTestModule
+import com.spoonofcode.poa.feature.faq.presentation.FAQViewAction
+import com.spoonofcode.poa.feature.faq.presentation.FAQViewModel
+import com.spoonofcode.poa.feature.faq.presentation.FAQViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

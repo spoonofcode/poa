@@ -5,7 +5,7 @@ import com.spoonofcode.poa.core.domain.login.LogoutUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.faq.FAQScreen
+import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
