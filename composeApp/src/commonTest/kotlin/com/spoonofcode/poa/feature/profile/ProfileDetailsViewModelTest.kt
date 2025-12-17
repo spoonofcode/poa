@@ -8,7 +8,7 @@ import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
-import com.spoonofcode.poa.feature.partner.panel.PartnerPanelScreen
+import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewAction
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewState
@@ -100,7 +100,7 @@ class ProfileDetailsViewModelest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<PartnerPanelScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen>()) }
     }
 
     @Test

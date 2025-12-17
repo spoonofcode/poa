@@ -4,8 +4,6 @@ import com.spoonofcode.poa.core.data.repository.NotificationRemoteDataSource
 import com.spoonofcode.poa.core.data.repository.NotificationRepository
 import com.spoonofcode.poa.core.data.repository.PartnerCategoryRemoteDataSource
 import com.spoonofcode.poa.core.data.repository.PartnerCategoryRepository
-import com.spoonofcode.poa.core.data.repository.PartnerRemoteDataSource
-import com.spoonofcode.poa.core.data.repository.PartnerRepository
 import com.spoonofcode.poa.core.data.repository.RefreshRepository
 import com.spoonofcode.poa.core.data.repository.RefreshRepositoryImpl
 import com.spoonofcode.poa.core.data.repository.UserRemoteDataSource
@@ -17,7 +15,7 @@ import org.koin.dsl.module
 val dataModule = module {
     singleOf(::RefreshRepositoryImpl) { bind<RefreshRepository>() }
     singleOf(::UserRemoteDataSource) { bind<UserRepository>() }
-    singleOf(::PartnerRemoteDataSource) { bind<PartnerRepository>() }
+
     singleOf(::PartnerCategoryRemoteDataSource) { bind<PartnerCategoryRepository>() }
     singleOf(::NotificationRemoteDataSource) { bind<NotificationRepository>() }
 }

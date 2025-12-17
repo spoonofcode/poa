@@ -6,7 +6,7 @@ import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
+import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import dev.mokkery.matcher.any

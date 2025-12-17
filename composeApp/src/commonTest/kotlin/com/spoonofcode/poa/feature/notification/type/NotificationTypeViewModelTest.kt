@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
-import com.spoonofcode.poa.feature.partner.customer.overview.CustomerOverviewScreen
+import com.spoonofcode.poa.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend

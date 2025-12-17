@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class PartnerDetailsViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: PartnerDetailsViewModel
+    private lateinit var viewModel: com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewModel
 
     @BeforeTest
     override fun setup() {
@@ -27,7 +27,7 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = PartnerDetailsViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState(),
                 actual = awaitItem()
             )
         }
@@ -38,10 +38,10 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerDetailsViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerDetailsViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState(
                     partner = PARTNER_1,
                     screenState = ScreenState.CONTENT,
                 ),

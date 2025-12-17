@@ -7,17 +7,6 @@ import com.spoonofcode.poa.core.domain.notification.GetNotificationSettingsUseCa
 import com.spoonofcode.poa.core.domain.notification.GetNotificationsUseCase
 import com.spoonofcode.poa.core.domain.notification.SendNotificationUseCase
 import com.spoonofcode.poa.core.domain.notification.UpdateNotificationSettingsUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnerByIdUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnerCategoriesUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnerUsersUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnersFilteredByTextUseCase
-import com.spoonofcode.poa.core.domain.partner.GetPartnersUseCase
-import com.spoonofcode.poa.core.domain.partner.UpdatePartnerUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.UpdateProductUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
@@ -38,24 +27,13 @@ val domainModule = module {
     factoryOf(::GetProfileUseCase)
     factoryOf(::UpdateProfileUseCase)
     factoryOf(::GetUserByIdUseCase)
-
-    factoryOf(::GetPartnerByIdUseCase)
-    factoryOf(::GetPartnerCategoriesUseCase)
-    factoryOf(::GetPartnersFilteredByTextUseCase)
-
-
     factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
     factoryOf(::DeleteProductFromUserUseCase)
-
-    factoryOf(::UpdatePartnerUseCase)
-
     factoryOf(::SendNotificationUseCase)
     factoryOf(::GetNotificationsUseCase)
     factoryOf(::GetNotificationByIdUseCase)
     factoryOf(::SubscribeUserTopicsUseCase)
-    factoryOf(::GetPartnersUseCase)
-    factoryOf(::GetPartnerUsersUseCase)
     factoryOf(::GetNotificationSettingsUseCase)
     factoryOf(::UpdateNotificationSettingsUseCase)
     factoryOf(::GetUserRewardsPointsUseCase)

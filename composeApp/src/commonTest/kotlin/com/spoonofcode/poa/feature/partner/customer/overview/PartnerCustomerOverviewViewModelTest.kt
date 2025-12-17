@@ -5,10 +5,13 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USERS
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USER_1
-import com.spoonofcode.poa.core.data.repository.PartnerRepository
+import com.spoonofcode.poa.core.data.repository.PartnerDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
+import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewAction
+import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel
+import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,13 +25,13 @@ import kotlin.test.assertEquals
 class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerCustomerOverviewViewModel
-    private lateinit var partnerRepository: PartnerRepository
+    private lateinit var partnerDataSource: PartnerDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(partnerTestModule)
         super.setup()
-        partnerRepository = getKoin().get()
+        partnerDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -64,7 +67,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            partnerRepository.readPartnerUsers(PARTNER_1.id)
+            partnerDataSource.readPartnerUsers(PARTNER_1.id)
         }
     }
 

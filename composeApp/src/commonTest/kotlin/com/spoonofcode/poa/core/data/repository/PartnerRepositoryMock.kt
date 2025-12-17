@@ -8,7 +8,7 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
-internal fun partnerRepositoryMock() = mock<PartnerRepository> {
+internal fun partnerRepositoryMock() = mock<PartnerDataSource> {
     everySuspend { read(any()) } returns Result.success(PARTNER_1)
     everySuspend { update(any(), any()) } returns Result.success(true)
     everySuspend { readAll() } returns Result.success(PARTNERS)

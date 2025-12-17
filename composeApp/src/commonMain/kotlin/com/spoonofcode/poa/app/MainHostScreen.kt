@@ -19,7 +19,7 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.spoonofcode.poa.core.ui.Paddings.bottomScreenPadding
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.feature.home.HomeTab
-import com.spoonofcode.poa.feature.partner.overview.PartnerOverviewTab
+import com.spoonofcode.poa.feature.partner.presentation.PartnerOverviewTab
 import com.spoonofcode.poa.feature.product.presentation.ProductOverviewTab
 import com.spoonofcode.poa.feature.profile.details.ProfileTab
 import com.spoonofcode.poa.feature.scan.ScanTab
