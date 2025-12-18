@@ -6,9 +6,9 @@ import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
-import com.spoonofcode.poa.feature.profile.edit.ProfileEditViewAction
-import com.spoonofcode.poa.feature.profile.edit.ProfileEditViewModel
-import com.spoonofcode.poa.feature.profile.edit.ProfileEditViewState
+import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewAction
+import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewModel
+import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewState
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi

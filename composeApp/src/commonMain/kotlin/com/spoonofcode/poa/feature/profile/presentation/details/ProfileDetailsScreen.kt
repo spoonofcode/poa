@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile.details
+package com.spoonofcode.poa.feature.profile.presentation.details
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.feature.profile.domain.model.Profile
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.CircleImage

@@ -6,7 +6,7 @@ import com.spoonofcode.poa.core.data.model.AddRewardToUserRequest
 import com.spoonofcode.poa.core.model.DailyCheckInStatus
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.product.domain.model.Product
-import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.feature.profile.domain.model.Profile
 import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.model.User
 import io.ktor.http.HttpMethod

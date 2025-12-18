@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile.details
+package com.spoonofcode.poa.feature.profile.presentation.details
 
 import com.spoonofcode.poa.core.ui.BaseViewAction
 

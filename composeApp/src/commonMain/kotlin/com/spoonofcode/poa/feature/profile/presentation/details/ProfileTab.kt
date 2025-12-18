@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile.details
+package com.spoonofcode.poa.feature.profile.presentation.details
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person

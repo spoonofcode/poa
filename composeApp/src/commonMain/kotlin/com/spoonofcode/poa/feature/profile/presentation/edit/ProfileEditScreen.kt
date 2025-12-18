@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile.edit
+package com.spoonofcode.poa.feature.profile.presentation.edit
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope

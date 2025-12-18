@@ -1,8 +1,8 @@
-package com.spoonofcode.poa.feature.profile.edit
+package com.spoonofcode.poa.feature.profile.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
-import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
+import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
+import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent

@@ -1,7 +1,7 @@
-package com.spoonofcode.poa.core.domain.profile
+package com.spoonofcode.poa.feature.profile.domain.usecase
 
 import com.spoonofcode.poa.core.data.repository.UserRepository
-import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.feature.profile.domain.model.Profile
 import com.spoonofcode.poa.core.network.SessionManager
 
 class GetProfileUseCase(

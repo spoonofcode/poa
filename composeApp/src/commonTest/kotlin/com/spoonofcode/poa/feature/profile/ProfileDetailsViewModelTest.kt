@@ -7,13 +7,11 @@ import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
-import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen
-import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
-import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewAction
-import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
-import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewState
+import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewAction
+import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewModel
+import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewState
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
-import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
+import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditScreen
 import com.spoonofcode.poa.feature.tac.presentation.TACScreen
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
