@@ -1,9 +1,7 @@
 package com.spoonofcode.poa.core.data.di
 
-import com.spoonofcode.poa.core.data.repository.NotificationRemoteDataSource
-import com.spoonofcode.poa.core.data.repository.NotificationRepository
-import com.spoonofcode.poa.core.data.repository.PartnerCategoryRemoteDataSource
-import com.spoonofcode.poa.core.data.repository.PartnerCategoryRepository
+import com.spoonofcode.poa.feature.notification.domain.RemoteNotificationDataSource
+import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.core.data.repository.RefreshRepository
 import com.spoonofcode.poa.core.data.repository.RefreshRepositoryImpl
 import com.spoonofcode.poa.core.data.repository.UserRemoteDataSource
@@ -16,6 +14,5 @@ val dataModule = module {
     singleOf(::RefreshRepositoryImpl) { bind<RefreshRepository>() }
     singleOf(::UserRemoteDataSource) { bind<UserRepository>() }
 
-    singleOf(::PartnerCategoryRemoteDataSource) { bind<PartnerCategoryRepository>() }
-    singleOf(::NotificationRemoteDataSource) { bind<NotificationRepository>() }
+    singleOf(::RemoteNotificationDataSource) { bind<NotificationDataSource>() }
 }

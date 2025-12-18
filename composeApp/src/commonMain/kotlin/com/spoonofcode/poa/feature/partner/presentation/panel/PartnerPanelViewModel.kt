@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.user.partner.GetUserPartnersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.type.NotificationTypeScreen
+import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,7 @@ internal class PartnerPanelViewModel(
 
     fun navigateToNotificationType() {
         viewModelScope.launch {
-            viewModelNavigator.push(NotificationTypeScreen())
+            viewModelNavigator.push(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen())
         }
     }
 

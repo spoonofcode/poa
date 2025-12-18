@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationSettingsViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: NotificationSettingsViewModel
+    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel
 
     @BeforeTest
     override fun setup() {
@@ -27,7 +27,7 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = NotificationSettingsViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(),
                 actual = awaitItem()
             )
         }
@@ -40,10 +40,10 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationSettingsViewAction.InitView)
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.InitView)
 
             assertEquals(
-                expected = NotificationSettingsViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()

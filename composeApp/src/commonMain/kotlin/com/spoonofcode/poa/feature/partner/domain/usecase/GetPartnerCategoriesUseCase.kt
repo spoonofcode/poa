@@ -1,10 +1,11 @@
 package com.spoonofcode.poa.feature.partner.domain.usecase
 
-import com.spoonofcode.poa.core.data.repository.PartnerCategoryRepository
-import com.spoonofcode.poa.core.model.PartnerCategory
+import com.spoonofcode.poa.feature.partner.domain.PartnerCategoryDataSource
+import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
 
 class GetPartnerCategoriesUseCase(
-    private val partnerCategoryRepository: PartnerCategoryRepository,
+    private val partnerCategoryDataSource: PartnerCategoryDataSource,
 ) {
-    suspend operator fun invoke(): Result<List<PartnerCategory>> = partnerCategoryRepository.readAll()
+    suspend operator fun invoke(): Result<List<PartnerCategory>> =
+        partnerCategoryDataSource.readAll()
 }

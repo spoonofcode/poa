@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.core.model.Notification
+import com.spoonofcode.poa.feature.notification.domain.model.Notification
 
 object NotificationMockData {
     val NOTIFICATION_1 = Notification(

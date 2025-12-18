@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.partner.panel
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.feature.notification.type.NotificationTypeScreen
+import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen
 import dev.mokkery.matcher.ofType
@@ -49,6 +49,6 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction.NavigateToNotificationType)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationTypeScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen>()) }
     }
 }

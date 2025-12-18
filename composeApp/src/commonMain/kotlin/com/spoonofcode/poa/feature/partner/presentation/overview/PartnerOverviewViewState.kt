@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.partner.presentation.overview
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
-import com.spoonofcode.poa.core.model.PartnerCategory
+import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.poa.core.ui.BaseViewState
 import com.spoonofcode.poa.core.ui.ScreenState
 

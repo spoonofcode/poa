@@ -1,6 +1,8 @@
 package com.spoonofcode.poa.feature.partner.di
 
+import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerDataSource
+import com.spoonofcode.poa.feature.partner.domain.PartnerCategoryDataSource
 import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
@@ -21,6 +23,7 @@ import org.koin.dsl.module
 
 val partnerModule = module {
     singleOf(::RemotePartnerDataSource).bind<PartnerDataSource>()
+    singleOf(::RemotePartnerCategoryDataSource).bind<PartnerCategoryDataSource>()
 
     factoryOf(::GetPartnerByIdUseCase)
     factoryOf(::GetPartnerCategoriesUseCase)

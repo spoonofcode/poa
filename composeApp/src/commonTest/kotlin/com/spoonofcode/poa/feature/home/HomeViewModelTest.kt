@@ -6,7 +6,7 @@ import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_C
 import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.home.di.homeTestModule
-import com.spoonofcode.poa.feature.notification.overview.NotificationOverviewScreen
+import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -86,6 +86,6 @@ class HomeViewModelest : BaseViewModelTest() {
         viewModel.onAction(HomeViewAction.NavigateToNotifications)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationOverviewScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen>()) }
     }
 }

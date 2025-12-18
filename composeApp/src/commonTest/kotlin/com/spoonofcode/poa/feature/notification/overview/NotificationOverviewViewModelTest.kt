@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.notification.overview
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
-import com.spoonofcode.poa.core.data.repository.NotificationRepository
+import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import dev.mokkery.verifySuspend
@@ -16,14 +16,14 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationOverviewViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: NotificationOverviewViewModel
-    private lateinit var notificationRepository: NotificationRepository
+    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewModel
+    private lateinit var notificationDataSource: NotificationDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(notificationTestModule)
         super.setup()
-        notificationRepository = getKoin().get()
+        notificationDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -31,7 +31,7 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = NotificationOverviewViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState(),
                 actual = awaitItem()
             )
         }
@@ -42,10 +42,10 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationOverviewViewAction.InitView)
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction.InitView)
 
             assertEquals(
-                expected = NotificationOverviewViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState(
                     screenState = ScreenState.CONTENT,
                     notifications = NOTIFICATIONS,
                 ),
@@ -54,7 +54,7 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            notificationRepository.readAll()
+            notificationDataSource.readAll()
         }
     }
 }

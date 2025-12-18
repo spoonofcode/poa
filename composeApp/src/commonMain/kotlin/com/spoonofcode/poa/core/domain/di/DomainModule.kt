@@ -2,11 +2,6 @@ package com.spoonofcode.poa.core.domain.di
 
 import com.spoonofcode.poa.core.domain.DeleteAccountUseCase
 import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
-import com.spoonofcode.poa.core.domain.notification.GetNotificationByIdUseCase
-import com.spoonofcode.poa.core.domain.notification.GetNotificationSettingsUseCase
-import com.spoonofcode.poa.core.domain.notification.GetNotificationsUseCase
-import com.spoonofcode.poa.core.domain.notification.SendNotificationUseCase
-import com.spoonofcode.poa.core.domain.notification.UpdateNotificationSettingsUseCase
 import com.spoonofcode.poa.core.domain.profile.GetProfileUseCase
 import com.spoonofcode.poa.core.domain.profile.UpdateProfileUseCase
 import com.spoonofcode.poa.core.domain.user.GetUserByIdUseCase
@@ -30,12 +25,9 @@ val domainModule = module {
     factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
     factoryOf(::DeleteProductFromUserUseCase)
-    factoryOf(::SendNotificationUseCase)
-    factoryOf(::GetNotificationsUseCase)
-    factoryOf(::GetNotificationByIdUseCase)
+
     factoryOf(::SubscribeUserTopicsUseCase)
-    factoryOf(::GetNotificationSettingsUseCase)
-    factoryOf(::UpdateNotificationSettingsUseCase)
+
     factoryOf(::GetUserRewardsPointsUseCase)
     factoryOf(::GetUserPartnersUseCase)
     factoryOf(::GetUserDailyCheckInStatusUseCase)

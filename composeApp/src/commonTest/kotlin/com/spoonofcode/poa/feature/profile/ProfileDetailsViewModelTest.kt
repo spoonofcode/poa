@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
-import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
+import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewAction
 import com.spoonofcode.poa.feature.profile.details.ProfileDetailsViewModel
@@ -92,7 +92,7 @@ class ProfileDetailsViewModelest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationSettingsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen>()) }
     }
 
     @Test

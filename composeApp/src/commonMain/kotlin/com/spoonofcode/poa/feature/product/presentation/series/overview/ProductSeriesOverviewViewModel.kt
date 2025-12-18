@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
+import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
 import kotlinx.coroutines.launch
 
@@ -59,7 +59,7 @@ internal class ProductSeriesOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                NotificationEditScreen(
+                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen(
                     topics = getSelectedProductSeries(),
                     itemIds = getSelectedProductSeriesNames()
                 )

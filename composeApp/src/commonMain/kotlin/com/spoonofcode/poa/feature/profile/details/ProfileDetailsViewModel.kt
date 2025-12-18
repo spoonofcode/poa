@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
-import com.spoonofcode.poa.feature.notification.settings.NotificationSettingsScreen
+import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
 import com.spoonofcode.poa.feature.profile.edit.ProfileEditScreen
 import com.spoonofcode.poa.feature.tac.presentation.TACScreen
@@ -62,7 +62,7 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToNotificationSettings() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = NotificationSettingsScreen())
+            viewModelNavigator.push(screen = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen())
         }
     }
 

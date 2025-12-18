@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.data.mockdata.UserMockData.USERS
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USER_1
 import com.spoonofcode.poa.core.data.repository.PartnerDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
+import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewAction
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel
@@ -113,6 +113,6 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerCustomerOverviewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen>()) }
     }
 }

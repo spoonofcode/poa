@@ -5,7 +5,7 @@ import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.edit.NotificationEditScreen
+import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 
 internal class PartnerCustomerOverviewViewModel(
@@ -59,7 +59,7 @@ internal class PartnerCustomerOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                NotificationEditScreen(
+                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen(
                     topics = getSelectedUsers(),
                     itemIds = getSelectedNames()
                 )
