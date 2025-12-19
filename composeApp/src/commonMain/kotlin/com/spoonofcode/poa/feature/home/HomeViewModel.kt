@@ -5,7 +5,7 @@ import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserRewardsPointsUseCase
-import com.spoonofcode.poa.core.model.RewardType
+import com.spoonofcode.poa.feature.reward.data.model.RewardType
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent

@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.partner.presentation.customer.overview
 
 import androidx.compose.runtime.Immutable
-import com.spoonofcode.poa.core.model.User
+import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.core.ui.BaseViewState
 import com.spoonofcode.poa.core.ui.ScreenState
 

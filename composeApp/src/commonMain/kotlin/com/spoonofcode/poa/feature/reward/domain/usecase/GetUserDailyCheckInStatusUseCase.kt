@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.reward.domain.usecase
 
 import com.spoonofcode.poa.core.data.repository.UserDataSource
-import com.spoonofcode.poa.core.model.DailyCheckInStatus
+import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.network.SessionManager
 
 internal class GetUserDailyCheckInStatusUseCase(

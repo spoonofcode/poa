@@ -31,8 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.spoonofcode.poa.core.model.DailyReward
-import com.spoonofcode.poa.core.model.DailyRewardStatus
+import com.spoonofcode.poa.feature.reward.data.model.DailyReward
+import com.spoonofcode.poa.feature.reward.data.model.DailyRewardStatus
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.CountdownTimer

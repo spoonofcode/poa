@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.reward.domain.usecase
 
 import com.spoonofcode.poa.core.data.repository.UserDataSource
-import com.spoonofcode.poa.core.model.RewardType
+import com.spoonofcode.poa.feature.reward.data.model.RewardType
 import com.spoonofcode.poa.core.network.SessionManager
 
 class AddRewardToUserUseCase(

@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.reward.data.model
 
-import com.spoonofcode.poa.core.model.RewardType
+import com.spoonofcode.poa.feature.reward.data.model.RewardType
 import kotlinx.serialization.Serializable
 
 @Serializable

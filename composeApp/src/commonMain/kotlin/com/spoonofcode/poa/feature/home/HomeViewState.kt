@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.home
 
 import androidx.compose.runtime.Immutable
-import com.spoonofcode.poa.core.model.DailyCheckInStatus
+import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
 import com.spoonofcode.poa.core.ui.BaseViewState
 import com.spoonofcode.poa.core.ui.ScreenState
 

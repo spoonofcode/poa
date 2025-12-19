@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.core.data.repository
 
-import com.spoonofcode.poa.core.model.DailyCheckInStatus
-import com.spoonofcode.poa.core.model.RewardType
-import com.spoonofcode.poa.core.model.User
+import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
+import com.spoonofcode.poa.feature.reward.data.model.RewardType
+import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.feature.profile.domain.model.Profile

@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.partner.data.remote
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
-import com.spoonofcode.poa.core.model.User
+import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
 import io.ktor.http.HttpMethod
 import io.ktor.util.reflect.typeInfo

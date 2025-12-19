@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.partner.domain
 
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
-import com.spoonofcode.poa.core.model.User
+import com.spoonofcode.poa.feature.profile.data.model.User
 
 interface PartnerDataSource {
     suspend fun read(partnerId: String): Result<Partner>

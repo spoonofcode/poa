@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.partner.domain.usecase
 
-import com.spoonofcode.poa.core.model.User
+import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
 
 class GetPartnerUsersUseCase(
