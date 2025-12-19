@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.feature.profile.di
 
+import com.spoonofcode.poa.feature.profile.domain.usecase.DeleteAccountUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
 import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewModel
@@ -10,6 +11,7 @@ import org.koin.dsl.module
 
 val profileModule = module {
     factoryOf(::GetProfileUseCase)
+    factoryOf(::DeleteAccountUseCase)
     factoryOf(::UpdateProfileUseCase)
 
     viewModelOf(::ProfileDetailsViewModel)

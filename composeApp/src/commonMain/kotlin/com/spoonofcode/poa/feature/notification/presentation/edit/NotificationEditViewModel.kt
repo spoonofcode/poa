@@ -11,59 +11,59 @@ import kotlinx.datetime.LocalDateTime
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
-) : BaseViewModel<com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState, com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction>(
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState()
+) : BaseViewModel<NotificationEditViewState, NotificationEditViewAction>(
+    NotificationEditViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction) {
+    override fun onAction(action: NotificationEditViewAction) {
         when (action) {
-            is com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
+            is NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
                 action.startDateTime
             )
 
-            is com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeLink -> changeLink(action.link)
-            is com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeText -> changeText(action.text)
-            is com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
-            is com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.InitView -> initView(action.itemIds)
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.SendNotification -> sendNotification()
+            is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
+            is NotificationEditViewAction.ChangeText -> changeText(action.text)
+            is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
+            is NotificationEditViewAction.InitView -> initView(action.itemIds)
+            NotificationEditViewAction.SendNotification -> sendNotification()
         }
     }
 
     private fun initView(itemIds: List<String>) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 itemIds = itemIds
             )
         }
     }
 
     private fun changeTitle(title: String) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 title = title
             )
         }
     }
 
     private fun changeText(text: String) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 text = text
             )
         }
     }
 
     private fun changeExpirationDateTime(startDateTime: LocalDateTime) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 expirationDateTime = startDateTime
             )
         }
     }
 
     private fun changeLink(link: String) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 link = link
             )
         }
@@ -73,7 +73,7 @@ internal class NotificationEditViewModel(
         viewModelScope.launch {
             showLoadingView()
             val currentState =
-                _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.currentState()
+                currentState()
             sendNotificationUseCase(
                 title = currentState.title,
                 text = currentState.text,
@@ -81,7 +81,7 @@ internal class NotificationEditViewModel(
                 topics = currentState.itemIds,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
-                _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure { error ->
                 showErrorSnackbar(error)
             }
@@ -90,21 +90,21 @@ internal class NotificationEditViewModel(
     }
 
     private fun showLoadingView() {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 screenState = ScreenState.LOADING,
             )
         }
     }
 
     private fun showErrorSnackbar(e: Throwable) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.showSnackbar(
+        showSnackbar(
             SnackbarEvent.Error(
                 message = "ERROR: $e"
             )
         )
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
+        updateState {
+            NotificationEditViewState(
                 screenState = ScreenState.CONTENT
             )
         }

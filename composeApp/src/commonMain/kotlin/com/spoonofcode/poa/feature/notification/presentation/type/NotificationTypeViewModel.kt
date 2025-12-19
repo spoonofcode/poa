@@ -11,23 +11,23 @@ import kotlinx.coroutines.launch
 
 internal class NotificationTypeViewModel(
     private val getUserPartnersUseCase: GetUserPartnersUseCase,
-) : BaseViewModel<com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState, com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction>(
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState()
+) : BaseViewModel<NotificationTypeViewState, NotificationTypeViewAction>(
+    NotificationTypeViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction) {
+    override fun onAction(action: NotificationTypeViewAction) {
         when (action) {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllCustomers -> navigateToAllCustomers()
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerCustomers -> navigateToPartnerCustomers()
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerProductSeries -> navigateToPartnerProductSeries()
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllPartnerCustomers -> navigateToAllPartnerCustomers()
+            NotificationTypeViewAction.NavigateToAllCustomers -> navigateToAllCustomers()
+            NotificationTypeViewAction.NavigateToPartnerCustomers -> navigateToPartnerCustomers()
+            NotificationTypeViewAction.NavigateToPartnerProductSeries -> navigateToPartnerProductSeries()
+            NotificationTypeViewAction.NavigateToAllPartnerCustomers -> navigateToAllPartnerCustomers()
         }
     }
 
     private fun navigateToAllCustomers() {
         viewModelScope.launch {
-            _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.push(
-                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen()
+            viewModelNavigator.push(
+                NotificationEditScreen()
             )
         }
     }
@@ -37,14 +37,14 @@ internal class NotificationTypeViewModel(
             getUserPartnersUseCase()
                 .onSuccess {
                     val partnerId = it.first().id
-                    _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.push(
+                    viewModelNavigator.push(
                         CustomerOverviewScreen(
                             partnerId = partnerId
                         )
                     )
                 }
                 .onFailure {
-                    _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.showSnackbar(
+                    showSnackbar(
                         SnackbarEvent.Error(message = "ERROR: $it")
                     )
                 }
@@ -53,14 +53,14 @@ internal class NotificationTypeViewModel(
 
     private fun navigateToPartnerProductSeries() {
         viewModelScope.launch {
-            _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.push(ProductSeriesOverviewScreen())
+            viewModelNavigator.push(ProductSeriesOverviewScreen())
         }
     }
 
     private fun navigateToAllPartnerCustomers() {
         viewModelScope.launch {
-            _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.push(
-                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen()
+            viewModelNavigator.push(
+                NotificationEditScreen()
             )
         }
     }

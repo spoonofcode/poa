@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.domain
+package com.spoonofcode.poa.core.domain.usecase
 
 import com.spoonofcode.poa.core.data.repository.RefreshRepository
 import com.spoonofcode.poa.core.network.SessionManager

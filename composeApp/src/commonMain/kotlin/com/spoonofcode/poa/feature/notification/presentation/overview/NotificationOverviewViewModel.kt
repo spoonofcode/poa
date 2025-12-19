@@ -1,20 +1,21 @@
 package com.spoonofcode.poa.feature.notification.presentation.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationsUseCase
+import com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class NotificationOverviewViewModel(
     private val getNotificationsUseCase: GetNotificationsUseCase,
 ) : BaseViewModel<com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState, com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction>(
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState()
+    NotificationOverviewViewState()
 ) {
 
     override fun onAction(action: com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction) {
         when (action) {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction.InitView -> initView()
+            NotificationOverviewViewAction.InitView -> initView()
             is com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
@@ -26,8 +27,8 @@ internal class NotificationOverviewViewModel(
         viewModelScope.launch {
             getNotificationsUseCase()
                 .onSuccess {
-                    _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-                        _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState(
+                    updateState {
+                        NotificationOverviewViewState(
                             screenState = ScreenState.CONTENT,
                             notifications = it,
                         )
@@ -41,24 +42,25 @@ internal class NotificationOverviewViewModel(
 
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
-            _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.push(
-                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsScreen(
+            viewModelNavigator.push(
+                NotificationDetailsScreen(
                     notificationId = notificationId
                 )
             )
         }
     }
+
     private fun showLoadingView() {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState(
+        updateState {
+            NotificationOverviewViewState(
                 screenState = ScreenState.LOADING,
             )
         }
     }
 
     private fun showErrorView() {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState(
+        updateState {
+            NotificationOverviewViewState(
                 screenState = ScreenState.ERROR,
             )
         }

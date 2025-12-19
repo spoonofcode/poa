@@ -12,7 +12,7 @@ import dev.mokkery.mock
 
 val TOTAL_POINTS = 1000
 
-internal fun userRepositoryMock() = mock<UserRepository> {
+internal fun userRepositoryMock() = mock<UserDataSource> {
     everySuspend { read(any()) } returns Result.success(USER_1)
     everySuspend { readUserProfile(any()) } returns Result.success(PROFILE_1)
     everySuspend { addProductToUser(any(), any()) } returns Result.success(Unit)

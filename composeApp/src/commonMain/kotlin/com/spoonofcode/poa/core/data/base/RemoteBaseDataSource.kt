@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.base
 
-import com.spoonofcode.poa.core.domain.RefreshAccessTokenUseCase
+import com.spoonofcode.poa.core.domain.usecase.RefreshAccessTokenUseCase
 import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
 import com.spoonofcode.poa.core.network.SessionManager

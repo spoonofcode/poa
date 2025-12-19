@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.feature.notification.di
 
+import com.spoonofcode.poa.feature.notification.data.remote.RemoteNotificationDataSource
+import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationByIdUseCase
 import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationsUseCase
@@ -11,10 +13,14 @@ import com.spoonofcode.poa.feature.notification.presentation.overview.Notificati
 import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewModel
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val notificationModule = module {
+    singleOf(::RemoteNotificationDataSource).bind<NotificationDataSource>()
+
     factoryOf(::SendNotificationUseCase)
     factoryOf(::GetNotificationsUseCase)
     factoryOf(::GetNotificationByIdUseCase)

@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.profile.domain.usecase
 
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.data.repository.UserDataSource
 import com.spoonofcode.poa.feature.profile.data.model.ProfileRequest
 
 class UpdateProfileUseCase(
-    private val userRepository: UserRepository,
+    private val userDataSource: UserDataSource,
 ) {
     suspend operator fun invoke(userId: String, profileRequest: ProfileRequest): Boolean {
         // TODO FIX this

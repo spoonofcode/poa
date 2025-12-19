@@ -11,19 +11,19 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
-) : BaseViewModel<com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState, com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction>(
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState()
+) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(
+    NotificationSettingsViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction) {
+    override fun onAction(action: NotificationSettingsViewAction) {
         when (action) {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.InitView -> initView()
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.SaveChanges -> saveChanges()
-            is com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
+            NotificationSettingsViewAction.InitView -> initView()
+            NotificationSettingsViewAction.SaveChanges -> saveChanges()
+            is NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
                 action.enable
             )
 
-            is com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
+            is NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
                 action.enable
             )
         }
@@ -34,8 +34,8 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             try {
                 val notificationSettings = getNotificationSettingsUseCase()
-                _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-                    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
+                updateState {
+                    NotificationSettingsViewState(
                         notificationSettings = notificationSettings,
                         screenState = ScreenState.CONTENT,
                     )
@@ -49,8 +49,8 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun switchNotificationFromAllPartners(enable: Boolean) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
+        updateState {
+            NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     notificationFromAllPartnersEnable = enable,
                 )
@@ -59,8 +59,8 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun switchNotificationFromMyPartners(enable: Boolean) {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
+        updateState {
+            NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     notificationFromMyPartnersEnable = enable,
                 )
@@ -72,8 +72,8 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                updateNotificationSettingsUseCase.invoke(notificationSettings = _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.currentState().notificationSettings)
-                _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.viewModelNavigator.pop()
+                updateNotificationSettingsUseCase.invoke(notificationSettings = currentState().notificationSettings)
+                viewModelNavigator.pop()
             } catch (e: Exception) {
                 e.printStackTrace()
                 showErrorView()
@@ -82,16 +82,16 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun showLoadingView() {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
+        updateState {
+            NotificationSettingsViewState(
                 screenState = ScreenState.LOADING,
             )
         }
     }
 
     private fun showErrorView() {
-        _root_ide_package_.com.spoonofcode.poa.core.ui.BaseViewModel.updateState {
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
+        updateState {
+            NotificationSettingsViewState(
                 screenState = ScreenState.ERROR,
             )
         }

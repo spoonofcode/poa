@@ -4,10 +4,8 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.data.repository.UserDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
-import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
@@ -23,13 +21,13 @@ import kotlin.test.assertEquals
 class ProductOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel
-    private lateinit var userRepository: UserRepository
+    private lateinit var userDataSource: UserDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(productTestModule)
         super.setup()
-        userRepository = getKoin().get()
+        userDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -61,7 +59,7 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            userRepository.readUserProducts(any())
+            userDataSource.readUserProducts(any())
         }
     }
 

@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
+import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserRewardsPointsUseCase

@@ -5,7 +5,7 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.data.mockdata.UserMockData.USER_1
 import com.spoonofcode.poa.core.data.repository.ProductDataSource
-import com.spoonofcode.poa.core.data.repository.UserRepository
+import com.spoonofcode.poa.core.data.repository.UserDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import dev.mokkery.answering.throws
@@ -27,14 +27,14 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel
     private lateinit var productDataSource: ProductDataSource
-    private lateinit var userRepository: UserRepository
+    private lateinit var userDataSource: UserDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(productTestModule)
         super.setup()
         productDataSource = getKoin().get()
-        userRepository = getKoin().get()
+        userDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -100,7 +100,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         verifySuspend {
-            userRepository.addProductToUser(PRODUCT_1.id, USER_1.id)
+            userDataSource.addProductToUser(PRODUCT_1.id, USER_1.id)
         }
 
         verifySuspend {
@@ -111,7 +111,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     @Test
     fun `add product to user error`() = runTest {
         everySuspend {
-            userRepository.addProductToUser(
+            userDataSource.addProductToUser(
                 any(),
                 any()
             )
@@ -124,7 +124,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         verifySuspend {
-            userRepository.addProductToUser(PRODUCT_1.id, USER_1.id)
+            userDataSource.addProductToUser(PRODUCT_1.id, USER_1.id)
         }
 
         verifySuspend(mode = exactly(0)) {
@@ -166,7 +166,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
 
         verifySuspend {
-            userRepository.deleteProductFromUser(any(), any())
+            userDataSource.deleteProductFromUser(any(), any())
         }
 
         verifySuspend {
@@ -187,7 +187,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         verifySuspend {
-            userRepository.deleteProductFromUser(any(), any())
+            userDataSource.deleteProductFromUser(any(), any())
         }
 
         verifySuspend {
