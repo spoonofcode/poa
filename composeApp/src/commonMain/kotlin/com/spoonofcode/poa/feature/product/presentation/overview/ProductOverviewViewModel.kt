@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.user.product.GetUserProductsUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetUserProductsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase

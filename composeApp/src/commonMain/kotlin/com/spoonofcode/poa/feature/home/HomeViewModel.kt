@@ -2,14 +2,13 @@ package com.spoonofcode.poa.feature.home
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
-import com.spoonofcode.poa.core.domain.user.reward.AddRewardToUserUseCase
-import com.spoonofcode.poa.core.domain.user.reward.GetUserDailyCheckInStatusUseCase
-import com.spoonofcode.poa.core.domain.user.reward.GetUserRewardsPointsUseCase
+import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase
+import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
+import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserRewardsPointsUseCase
 import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(

@@ -1,19 +1,18 @@
-package com.spoonofcode.poa.core.domain.user.reward
+package com.spoonofcode.poa.feature.product.domain.usecase
 
 import com.spoonofcode.poa.core.data.repository.UserRepository
-import com.spoonofcode.poa.core.model.RewardType
 import com.spoonofcode.poa.core.network.SessionManager
 
-class AddRewardToUserUseCase(
+class AddProductToUserUseCase(
     private val userRepository: UserRepository,
     private val sessionManager: SessionManager,
 ) {
 
     suspend operator fun invoke(
-        rewardType: RewardType
+        productId: String,
     ): Result<Unit> {
-        return userRepository.addRewardToUser(
-            rewardType = rewardType,
+        return userRepository.addProductToUser(
+            productId = productId,
             userId = sessionManager.getSessionUserId(),
         )
     }

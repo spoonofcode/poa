@@ -2,8 +2,8 @@ package com.spoonofcode.poa.feature.product.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.user.SubscribeUserTopicsUseCase
-import com.spoonofcode.poa.core.domain.user.product.AddProductToUserUseCase
-import com.spoonofcode.poa.core.domain.user.product.DeleteProductFromUserUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.AddProductToUserUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent

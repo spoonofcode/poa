@@ -1,10 +1,13 @@
 package com.spoonofcode.poa.feature.product.di
 
 import com.spoonofcode.poa.feature.product.data.remote.RemoteProductDataSource
+import com.spoonofcode.poa.feature.product.domain.usecase.AddProductToUserUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetUserProductsUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.ProductDataSource
 import com.spoonofcode.poa.feature.product.domain.usecase.UpdateProductUseCase
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel
@@ -25,6 +28,9 @@ val productModule = module {
     factoryOf(::GetProductByTagIdUseCase)
     factoryOf(::GetProductSeriesUseCase)
     factoryOf(::UpdateProductUseCase)
+    factoryOf(::GetUserProductsUseCase)
+    factoryOf(::AddProductToUserUseCase)
+    factoryOf(::DeleteProductFromUserUseCase)
 
     viewModelOf(::ProductDetailsViewModel)
     viewModelOf(::ProductEditViewModel)

@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.domain.user.product
+package com.spoonofcode.poa.feature.product.domain.usecase
 
 import com.spoonofcode.poa.core.data.repository.UserRepository
 import com.spoonofcode.poa.core.network.SessionManager
