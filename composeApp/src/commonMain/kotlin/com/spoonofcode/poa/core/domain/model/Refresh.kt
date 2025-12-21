@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.login.domain.model
+package com.spoonofcode.poa.core.domain.model
 
 import kotlinx.serialization.Serializable
 

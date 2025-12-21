@@ -1,10 +1,10 @@
-package com.spoonofcode.poa.feature.login.data.remote
+package com.spoonofcode.poa.core.data.remote
 
 import com.spoonofcode.poa.core.data.base.DispatcherProvider
+import com.spoonofcode.poa.core.domain.RefreshDataSource
+import com.spoonofcode.poa.core.domain.model.Refresh
 import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
-import com.spoonofcode.poa.feature.login.domain.RefreshDataSource
-import com.spoonofcode.poa.feature.login.domain.model.Refresh
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.header

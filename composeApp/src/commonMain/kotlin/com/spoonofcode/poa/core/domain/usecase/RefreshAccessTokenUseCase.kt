@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.domain.usecase
 
-import com.spoonofcode.poa.feature.login.domain.RefreshDataSource
+import com.spoonofcode.poa.core.domain.RefreshDataSource
 import com.spoonofcode.poa.core.network.SessionManager
 
 class RefreshAccessTokenUseCase(
