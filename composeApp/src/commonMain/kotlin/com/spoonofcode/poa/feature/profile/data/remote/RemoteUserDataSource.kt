@@ -18,64 +18,64 @@ class RemoteUserDataSource : RemoteBaseDataSource(
 ), UserDataSource {
     override suspend fun read(userId: String): Result<User> = doRequest(
         urlPostfixPath = userId,
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<User>()
     )
 
     override suspend fun readUserPartners(userId: String): Result<List<Partner>> = doRequest(
         urlPostfixPath = "$userId/partners",
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<Partner>>(),
     )
 
     override suspend fun readUserProducts(userId: String): Result<List<Product>> = doRequest(
         urlPostfixPath = "$userId/products",
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<Product>>(),
     )
 
     override suspend fun addProductToUser(productId: String, userId: String): Result<Unit> = doRequest(
         urlPostfixPath = "$userId/products",
-        method = HttpMethod.Companion.Post,
+        method = HttpMethod.Post,
         requestBody = AddProductToUserRequest(productId = productId),
         responseTypeInfo = typeInfo<Unit>()
     )
 
     override suspend fun deleteProductFromUser(productId: String, userId: String): Result<Unit> = doRequest(
         urlPostfixPath = "$userId/products",
-        method = HttpMethod.Companion.Delete,
+        method = HttpMethod.Delete,
         requestBody = AddProductToUserRequest(productId = productId),
         responseTypeInfo = typeInfo<Unit>()
     )
 
     override suspend fun readUserProfile(userId: String): Result<Profile> = doRequest(
         urlPostfixPath = "$userId/profile",
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Profile>()
     )
 
     override suspend fun readUserProductSeriesIds(userId: String): Result<List<String>> = doRequest(
         urlPostfixPath = "$userId/product-series-ids",
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<String>>(),
     )
 
     override suspend fun addRewardToUser(rewardType: RewardType, userId: String): Result<Unit> = doRequest(
         urlPostfixPath = "$userId/rewards",
-        method = HttpMethod.Companion.Post,
+        method = HttpMethod.Post,
         requestBody = AddRewardToUserRequest(rewardType = rewardType),
         responseTypeInfo = typeInfo<Unit>()
     )
 
     override suspend fun getUserRewardsPoints(userId: String): Result<Int> = doRequest(
         urlPostfixPath = "$userId/rewards/points",
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Int>(),
     )
 
     override suspend fun getUserDailyCheckInStatus(userId: String): Result<DailyCheckInStatus> = doRequest(
         urlPostfixPath = "$userId/rewards/daily-check-in/status",
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<DailyCheckInStatus>(),
     )
 }

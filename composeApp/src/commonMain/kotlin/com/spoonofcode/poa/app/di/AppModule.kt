@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.poa.core.data.base.di.coreBaseModule
-import com.spoonofcode.poa.core.data.di.dataModule
 import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
@@ -14,6 +13,7 @@ import com.spoonofcode.poa.feature.notification.di.notificationModule
 import com.spoonofcode.poa.feature.partner.di.partnerModule
 import com.spoonofcode.poa.feature.product.di.productModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
+import com.spoonofcode.poa.feature.reward.di.rewardModule
 import com.spoonofcode.poa.feature.scan.di.scanModule
 import com.spoonofcode.poa.feature.tac.di.tacModule
 import io.ktor.client.HttpClient
@@ -26,7 +26,6 @@ val appModule = module {
     includes(
         // core
         coreBaseModule,
-        dataModule,
         domainModule,
         uiModule,
         networkModule,
@@ -40,6 +39,7 @@ val appModule = module {
         partnerModule,
         profileModule,
         productModule,
+        rewardModule,
         notificationModule,
         scanModule,
         tacModule,
