@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.home
+package com.spoonofcode.poa.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
@@ -9,6 +9,7 @@ import com.spoonofcode.poa.feature.reward.data.model.RewardType
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
@@ -85,7 +86,7 @@ internal class HomeViewModel(
 
     private fun navigateToNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen())
+            viewModelNavigator.push(NotificationOverviewScreen())
         }
     }
 

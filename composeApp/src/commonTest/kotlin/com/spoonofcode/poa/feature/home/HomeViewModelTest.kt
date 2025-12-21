@@ -6,7 +6,9 @@ import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_C
 import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.home.di.homeTestModule
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
+import com.spoonofcode.poa.feature.home.presentation.HomeViewAction
+import com.spoonofcode.poa.feature.home.presentation.HomeViewModel
+import com.spoonofcode.poa.feature.home.presentation.HomeViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi

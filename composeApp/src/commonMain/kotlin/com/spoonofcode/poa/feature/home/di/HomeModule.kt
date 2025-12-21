@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.home.di
 
-import com.spoonofcode.poa.feature.home.HomeViewModel
+import com.spoonofcode.poa.feature.home.presentation.HomeViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 

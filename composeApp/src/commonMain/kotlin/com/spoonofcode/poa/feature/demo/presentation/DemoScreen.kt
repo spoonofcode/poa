@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.demo
+package com.spoonofcode.poa.feature.demo.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope

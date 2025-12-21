@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.home
+package com.spoonofcode.poa.feature.home.presentation
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
