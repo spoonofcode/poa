@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.partner.edit
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.data.repository.PartnerDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule

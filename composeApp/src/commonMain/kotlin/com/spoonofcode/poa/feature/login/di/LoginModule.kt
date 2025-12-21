@@ -1,10 +1,12 @@
 package com.spoonofcode.poa.feature.login.di
 
-import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
+import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
+import com.spoonofcode.poa.feature.login.data.remote.RemoteRefreshDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteRegisterDataSource
 import com.spoonofcode.poa.feature.login.domain.LoginDataSource
 import com.spoonofcode.poa.feature.login.domain.LoginGoogleDataSource
+import com.spoonofcode.poa.feature.login.domain.RefreshDataSource
 import com.spoonofcode.poa.feature.login.domain.RegisterDataSource
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
@@ -28,6 +30,7 @@ val loginModule: Module = module {
     singleOf(::RemoteLoginGoogleDataSource).bind<LoginGoogleDataSource>()
     singleOf(::RemoteLoginDataSource).bind<LoginDataSource>()
     singleOf(::RemoteRegisterDataSource).bind<RegisterDataSource>()
+    singleOf(::RemoteRefreshDataSource).bind<RefreshDataSource>()
 
     factoryOf(::LoginUseCase)
     factoryOf(::LoginGoogleUseCase)

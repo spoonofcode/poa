@@ -1,9 +1,10 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.poa.feature.login.data.remote
 
 import com.spoonofcode.poa.core.data.base.DispatcherProvider
-import com.spoonofcode.poa.core.model.Refresh
 import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
+import com.spoonofcode.poa.feature.login.domain.RefreshDataSource
+import com.spoonofcode.poa.feature.login.domain.model.Refresh
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.header
@@ -13,15 +14,11 @@ import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-interface RefreshRepository {
-    suspend fun refreshToken(jwtRefreshToken: String): Refresh
-}
-
-class RefreshRepositoryImpl(
+class RemoteRefreshDataSource(
     private val httpClient: HttpClient,
     private val networkConfig: NetworkConfig,
     private val dispatcherProvider: DispatcherProvider,
-) : RefreshRepository {
+) : RefreshDataSource {
     override suspend fun refreshToken(jwtRefreshToken: String): Refresh {
         return withContext(dispatcherProvider.io()) {
             val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/refresh/") {
@@ -29,7 +26,7 @@ class RefreshRepositoryImpl(
             }
 
             val responseBody = responseOrException(response).body<String>()
-            Json.decodeFromString(Refresh.serializer(), responseBody)
+            Json.Default.decodeFromString(Refresh.serializer(), responseBody)
         }
     }
 

@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.reward.domain.usecase
 
-import com.spoonofcode.poa.core.data.repository.UserDataSource
+import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.core.network.SessionManager
 
 internal class GetUserRewardsPointsUseCase(

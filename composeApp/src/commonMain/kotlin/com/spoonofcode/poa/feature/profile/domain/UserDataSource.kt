@@ -1,11 +1,11 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.poa.feature.profile.domain
 
-import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
-import com.spoonofcode.poa.feature.reward.data.model.RewardType
-import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.product.domain.model.Product
+import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
+import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
+import com.spoonofcode.poa.feature.reward.data.model.RewardType
 
 interface UserDataSource {
     suspend fun read(userId: String): Result<User>

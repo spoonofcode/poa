@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.mockdata
+package com.spoonofcode.poa.feature.notification.data.mock
 
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
 

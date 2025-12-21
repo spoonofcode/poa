@@ -3,8 +3,8 @@ package com.spoonofcode.poa.feature.partner.overview
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNERS
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewAction

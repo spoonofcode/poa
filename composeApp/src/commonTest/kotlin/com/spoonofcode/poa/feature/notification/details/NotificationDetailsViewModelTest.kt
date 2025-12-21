@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.notification.details
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATION_1
+import com.spoonofcode.poa.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
