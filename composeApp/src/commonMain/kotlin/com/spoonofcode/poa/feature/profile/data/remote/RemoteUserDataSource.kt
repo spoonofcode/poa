@@ -21,54 +21,54 @@ class RemoteUserDataSource : RemoteBaseDataSource(
     )
 
     override suspend fun readUserPartners(userId: String): Result<List<Partner>> = doRequest(
-        urlPostfixPath = "$userId/partners",
+        urlPostfixPath = "/$userId/partners",
         method = HttpMethod.Get,
     )
 
     override suspend fun readUserProducts(userId: String): Result<List<Product>> = doRequest(
-        urlPostfixPath = "$userId/products",
+        urlPostfixPath = "/$userId/products",
         method = HttpMethod.Get,
     )
 
     override suspend fun addProductToUser(productId: String, userId: String): Result<Unit> =
         doRequest(
-            urlPostfixPath = "$userId/products",
+            urlPostfixPath = "/$userId/products",
             method = HttpMethod.Post,
             requestBody = AddProductToUserRequest(productId = productId),
         )
 
     override suspend fun deleteProductFromUser(productId: String, userId: String): Result<Unit> =
         doRequest(
-            urlPostfixPath = "$userId/products",
+            urlPostfixPath = "/$userId/products",
             method = HttpMethod.Delete,
             requestBody = AddProductToUserRequest(productId = productId),
         )
 
     override suspend fun readUserProfile(userId: String): Result<Profile> = doRequest(
-        urlPostfixPath = "$userId/profile",
+        urlPostfixPath = "/$userId/profile",
         method = HttpMethod.Get,
     )
 
     override suspend fun readUserProductSeriesIds(userId: String): Result<List<String>> = doRequest(
-        urlPostfixPath = "$userId/product-series-ids",
+        urlPostfixPath = "/$userId/product-series-ids",
         method = HttpMethod.Get,
     )
 
     override suspend fun addRewardToUser(rewardType: RewardType, userId: String): Result<Unit> =
         doRequest(
-            urlPostfixPath = "$userId/rewards",
+            urlPostfixPath = "/$userId/rewards",
             method = HttpMethod.Post,
             requestBody = AddRewardToUserRequest(rewardType = rewardType),
         )
 
     override suspend fun getUserRewardsPoints(userId: String): Result<Int> = doRequest(
-        urlPostfixPath = "$userId/rewards/points",
+        urlPostfixPath = "/$userId/rewards/points",
         method = HttpMethod.Get,
     )
 
     override suspend fun getUserDailyCheckInStatus(userId: String): Result<DailyCheckInStatus> =
         doRequest(
-            urlPostfixPath = "$userId/rewards/daily-check-in/status",
+            urlPostfixPath = "/$userId/rewards/daily-check-in/status",
             method = HttpMethod.Get,
         )
 }

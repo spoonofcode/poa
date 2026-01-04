@@ -33,7 +33,7 @@ class RemotePartnerDataSource : RemoteBaseDataSource(
     }
 
     override suspend fun readPartnerUsers(partnerId: String): Result<List<User>> = doRequest(
-        urlPostfixPath = "$partnerId/users",
+        urlPostfixPath = "/$partnerId/users",
         method = HttpMethod.Get,
     )
 }

@@ -34,15 +34,23 @@ abstract class RemoteBaseDataSource(
     private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase by getKoin().inject()
 
     internal suspend inline fun <reified T> doRequest(
+        ktorBackend: Boolean = true,
         urlPostfixPath: String = "",
         method: HttpMethod,
         queryParams: Map<String, Any> = emptyMap(),
         requestBody: Any? = null,
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
+
+            val urlString = if (ktorBackend) {
+                "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
+            } else {
+                "https://auth.proof-of-wear.com/$collectionName$urlPostfixPath"
+            }
+
             val requestBuilder: HttpRequestBuilder.() -> Unit = {
                 contentType(ContentType.Application.Json)
-                url("${networkConfig.baseUrl}/$collectionName/$urlPostfixPath")
+                url(urlString)
 
                 queryParams.forEach { (key, value) -> parameter(key, value) }
 
@@ -54,7 +62,7 @@ abstract class RemoteBaseDataSource(
             }
 
             val response = if (sessionTokenRequired) {
-                safeApiCall(httpClient, requestBuilder)
+                safeApiCall(httpClient, requestBuilder, ktorBackend)
             } else {
                 httpClient.request(requestBuilder)
             }
@@ -65,9 +73,9 @@ abstract class RemoteBaseDataSource(
         }
     }
 
-    private fun getJwtAccessToken(): String {
-        return sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
-    }
+    private fun getJwtAccessToken(): String = sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
+
+    private fun getKtorJwtAccessToken(): String = sessionManager.getKtorSessionAccessToken() ?: "TOKEN_NOT_FOUND"
 
     private fun unhandledException(response: HttpResponse): HttpResponse {
         throw Exception("Unhandled Error $response")
@@ -94,15 +102,23 @@ abstract class RemoteBaseDataSource(
      */
     private suspend fun safeApiCall(
         client: HttpClient,
-        block: HttpRequestBuilder.() -> Unit
+        block: HttpRequestBuilder.() -> Unit,
+        ktorBackend: Boolean
     ): HttpResponse {
+
+        val jwtAccessToken = if(ktorBackend) {
+            getKtorJwtAccessToken()
+        } else {
+            getJwtAccessToken()
+        }
+
         // Local helper to execute the same request with the current (possibly refreshed) token
         suspend fun executeRequest(): HttpResponse {
             return client.request {
                 block()
                 header(
                     HttpHeaders.Authorization,
-                    "Bearer ${getJwtAccessToken()}"
+                    "Bearer ${jwtAccessToken}"
                 )
             }
         }
@@ -112,7 +128,7 @@ abstract class RemoteBaseDataSource(
 
         // 2) If 401, try refresh once
         if (response.status == Unauthorized) {
-            val refreshed = refreshAccessTokenUseCase()
+            val refreshed = refreshAccessTokenUseCase(ktorBackend)
             if (!refreshed) {
                 // Refresh failed => no valid session
                 throw Exception("Client Error")

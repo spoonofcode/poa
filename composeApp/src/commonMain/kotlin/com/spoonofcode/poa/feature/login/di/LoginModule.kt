@@ -1,8 +1,10 @@
 package com.spoonofcode.poa.feature.login.di
 
+import com.spoonofcode.poa.feature.login.data.remote.ktor.KtorRemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteRegisterDataSource
+import com.spoonofcode.poa.feature.login.domain.ktor.KtorLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.domain.LoginDataSource
 import com.spoonofcode.poa.feature.login.domain.LoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.domain.RegisterDataSource
@@ -26,6 +28,8 @@ val loginModule: Module = module {
     includes(platformLoginModule)
 
     singleOf(::RemoteLoginGoogleDataSource).bind<LoginGoogleDataSource>()
+    singleOf(::KtorRemoteLoginGoogleDataSource).bind<KtorLoginGoogleDataSource>()
+
     singleOf(::RemoteLoginDataSource).bind<LoginDataSource>()
     singleOf(::RemoteRegisterDataSource).bind<RegisterDataSource>()
 
