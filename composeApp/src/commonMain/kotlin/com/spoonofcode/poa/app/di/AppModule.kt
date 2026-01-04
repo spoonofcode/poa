@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.poa.core.data.base.di.coreBaseModule
-import com.spoonofcode.poa.core.data.di.dataModule
 import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
@@ -14,18 +13,19 @@ import com.spoonofcode.poa.feature.notification.di.notificationModule
 import com.spoonofcode.poa.feature.partner.di.partnerModule
 import com.spoonofcode.poa.feature.product.di.productModule
 import com.spoonofcode.poa.feature.profile.di.profileModule
+import com.spoonofcode.poa.feature.reward.di.rewardModule
 import com.spoonofcode.poa.feature.scan.di.scanModule
 import com.spoonofcode.poa.feature.tac.di.tacModule
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 val appModule = module {
     includes(
         // core
         coreBaseModule,
-        dataModule,
         domainModule,
         uiModule,
         networkModule,
@@ -39,6 +39,7 @@ val appModule = module {
         partnerModule,
         profileModule,
         productModule,
+        rewardModule,
         notificationModule,
         scanModule,
         tacModule,
@@ -46,7 +47,11 @@ val appModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) {
-                json()
+                json(
+                    json = Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
 
             // TODO #34-Try use custom AuthPlugin instead of safeApiCall function

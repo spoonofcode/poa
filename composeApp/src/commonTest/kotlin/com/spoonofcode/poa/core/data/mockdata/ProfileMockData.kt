@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.core.model.Profile
+import com.spoonofcode.poa.feature.profile.domain.model.Profile
 
 object ProfileMockData {
     val PROFILE_1 = Profile(

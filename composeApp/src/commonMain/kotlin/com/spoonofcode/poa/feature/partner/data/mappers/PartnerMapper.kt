@@ -1,0 +1,20 @@
+package com.spoonofcode.poa.feature.partner.data.mappers
+
+import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.poa.feature.partner.data.model.PartnerResponse
+
+fun PartnerResponse.toPartner(): Partner {
+    return Partner(
+        id = id,
+        userId = userId,
+        name = name,
+        email = email,
+        description = description,
+        imageLink = imageLink,
+        websiteLink = websiteLink,
+        instagramLink = instagramLink,
+        facebookLink = facebookLink,
+        youtubeLink = youtubeLink,
+        xLink = xLink,
+    )
+}

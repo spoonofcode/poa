@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.tac.di
 
-import com.spoonofcode.poa.feature.tac.TACViewModel
+import com.spoonofcode.poa.feature.tac.presentation.TACViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 

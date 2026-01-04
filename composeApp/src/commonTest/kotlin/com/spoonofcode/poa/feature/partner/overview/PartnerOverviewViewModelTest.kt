@@ -3,11 +3,13 @@ package com.spoonofcode.poa.feature.partner.overview
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNERS
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.partner.details.PartnerDetailsScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
+import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewAction
+import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewModel
+import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -97,6 +99,6 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerOverviewViewAction.SelectPartner(partnerId = PARTNER_1.id))
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<PartnerDetailsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen>()) }
     }
 }

@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.core.model.Product
+import com.spoonofcode.poa.feature.product.domain.model.Product
 
 object ProductMockData {
     val PRODUCT_1 = Product(

@@ -1,0 +1,96 @@
+package com.spoonofcode.poa.feature.product.presentation.series.overview
+
+import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
+import kotlinx.coroutines.launch
+
+internal class ProductSeriesOverviewViewModel(
+    private val getProductSeriesUseCase: GetProductSeriesUseCase,
+) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction>(
+    ProductSeriesOverviewViewState()
+) {
+
+    override fun onAction(action: ProductSeriesOverViewViewAction) {
+        when (action) {
+            is ProductSeriesOverViewViewAction.CheckedProductSeries -> checkedProductSeries(action.productSeriesId)
+            ProductSeriesOverViewViewAction.InitView -> initView()
+            ProductSeriesOverViewViewAction.NavigateToNotification -> navigateToNotification()
+        }
+    }
+
+    private fun initView() {
+        showLoadingView()
+        viewModelScope.launch {
+            getProductSeriesUseCase()
+                .onSuccess {
+                    updateState {
+                        copy(
+                            screenState = ScreenState.CONTENT,
+                            productSeries = it,
+                        )
+                    }
+                }
+                .onFailure {
+                    showErrorView()
+                }
+        }
+    }
+
+    private fun checkedProductSeries(productSeriesId: String) {
+        val selected = currentState().checkedProductSeriesIds.toMutableSet()
+        val wasAdded = selected.contains(productSeriesId)
+
+        if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
+            showSnackbar(
+                SnackbarEvent.Error("You can select a maximum of $MAX_SELECTED_PRODUCT_SERIES items.")
+            )
+            return
+        }
+
+        if (wasAdded) selected.remove(productSeriesId) else selected.add(productSeriesId)
+
+        updateState { copy(checkedProductSeriesIds = selected) }
+    }
+
+    private fun navigateToNotification() {
+        viewModelScope.launch {
+            viewModelNavigator.push(
+                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen(
+                    topics = getSelectedProductSeries(),
+                    itemIds = getSelectedProductSeriesNames()
+                )
+            )
+        }
+    }
+
+    private fun getSelectedProductSeries(): List<String> =
+        currentState().checkedProductSeriesIds.map { serieId -> "productSerieId$serieId" }.toList()
+
+    private fun getSelectedProductSeriesNames(): List<String> =
+        currentState().productSeries.filter { "${it.id}" in currentState().checkedProductSeriesIds }
+            .map { productSeries -> productSeries.name }.toList()
+
+    private fun showLoadingView() {
+        updateState {
+            copy(
+                screenState = ScreenState.LOADING,
+            )
+        }
+    }
+
+    private fun showErrorView() {
+        updateState {
+            copy(
+                screenState = ScreenState.ERROR,
+            )
+        }
+    }
+
+    private companion object {
+        private const val MAX_SELECTED_PRODUCT_SERIES = 5
+    }
+}

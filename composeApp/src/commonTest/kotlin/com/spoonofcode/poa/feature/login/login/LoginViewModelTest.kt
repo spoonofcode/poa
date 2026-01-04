@@ -3,13 +3,16 @@ package com.spoonofcode.poa.feature.login.login
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.LoginGoogleRepository
-import com.spoonofcode.poa.core.data.repository.LoginRepository
+import com.spoonofcode.poa.feature.login.data.remote.LoginGoogleDataSource
+import com.spoonofcode.poa.feature.login.data.remote.LoginDataSource
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
-import com.spoonofcode.poa.feature.login.forgotPassword.ForgotPasswordScreen
-import com.spoonofcode.poa.feature.login.register.RegisterScreen
+import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordScreen
+import com.spoonofcode.poa.feature.login.presentation.login.LoginViewAction
+import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
+import com.spoonofcode.poa.feature.login.presentation.login.LoginViewState
+import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -27,15 +30,15 @@ import kotlin.test.assertEquals
 class LoginViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: LoginViewModel
-    private lateinit var loginRepository: LoginRepository
-    private lateinit var loginGoogleRepository: LoginGoogleRepository
+    private lateinit var loginDataSource: LoginDataSource
+    private lateinit var loginGoogleDataSource: LoginGoogleDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(loginTestModule)
         super.setup()
-        loginRepository = getKoin().get()
-        loginGoogleRepository = getKoin().get()
+        loginDataSource = getKoin().get()
+        loginGoogleDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -115,7 +118,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginRepository.create(any(), any())
+            loginDataSource.create(any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
@@ -125,7 +128,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     @Test
     fun `sign in error`() = runTest {
         everySuspend {
-            loginRepository.create(
+            loginDataSource.create(
                 any(),
                 any()
             )
@@ -152,7 +155,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginRepository.create(any(), any())
+            loginDataSource.create(any(), any())
         }
 
         verifySuspend(mode = exactly(0)) {
@@ -177,7 +180,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginGoogleRepository.create(any())
+            loginGoogleDataSource.create(any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))

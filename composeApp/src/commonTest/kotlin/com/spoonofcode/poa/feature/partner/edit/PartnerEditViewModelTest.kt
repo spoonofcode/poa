@@ -2,8 +2,8 @@ package com.spoonofcode.poa.feature.partner.edit
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNER_1
-import com.spoonofcode.poa.core.data.repository.PartnerRepository
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.core.data.repository.PartnerDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import dev.mokkery.matcher.any
@@ -17,14 +17,14 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class PartnerEditViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: PartnerEditViewModel
-    private lateinit var partnerRepository: PartnerRepository
+    private lateinit var viewModel: com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewModel
+    private lateinit var partnerDataSource: PartnerDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(partnerTestModule)
         super.setup()
-        partnerRepository = getKoin().get()
+        partnerDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -32,7 +32,7 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = PartnerEditViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(),
                 actual = awaitItem()
             )
         }
@@ -43,10 +43,10 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
@@ -61,20 +61,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeName(name))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeName(name))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(name = name),
                 ),
@@ -89,20 +89,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeDescription(description))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeDescription(description))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(description = description),
                 ),
@@ -117,20 +117,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeWebsiteLink(websiteLink))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeWebsiteLink(websiteLink))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(websiteLink = websiteLink),
                 ),
@@ -145,20 +145,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeInstagramLink(instagramLink))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeInstagramLink(instagramLink))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(instagramLink = instagramLink),
                 ),
@@ -173,20 +173,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeFacebookLink(facebookLink))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeFacebookLink(facebookLink))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(facebookLink = facebookLink),
                 ),
@@ -201,20 +201,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeYoutubeLink(youtubeLink))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeYoutubeLink(youtubeLink))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(youtubeLink = youtubeLink),
                 ),
@@ -229,20 +229,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.ChangeXLink(xLink))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeXLink(xLink))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1.copy(xLink = xLink),
                 ),
@@ -256,20 +256,20 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.CONTENT,
                     partner = PARTNER_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(PartnerEditViewAction.SaveChanges)
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.SaveChanges)
 
             assertEquals(
-                expected = PartnerEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
                     screenState = ScreenState.LOADING,
                     partner = PARTNER_1,
                 ),
@@ -278,7 +278,7 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            partnerRepository.update(any(), any())
+            partnerDataSource.update(any(), any())
         }
 
         verifySuspend {

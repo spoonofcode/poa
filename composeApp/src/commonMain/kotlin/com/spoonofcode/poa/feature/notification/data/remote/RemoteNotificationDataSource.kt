@@ -1,0 +1,47 @@
+package com.spoonofcode.poa.feature.notification.data.remote
+
+import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.poa.feature.notification.data.mappers.toNotification
+import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationRequest
+import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationResponse
+import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
+import com.spoonofcode.poa.feature.notification.domain.model.Notification
+import io.ktor.http.HttpMethod
+import kotlinx.datetime.LocalDateTime
+
+class RemoteNotificationDataSource : RemoteBaseDataSource(
+    collectionName = "notifications",
+), NotificationDataSource {
+    override suspend fun create(
+        title: String,
+        text: String,
+        link: String?,
+        imageUrl: String?,
+        topics: List<String>,
+        expirationDateTime: LocalDateTime?,
+        alreadyRead: Boolean
+    ): Result<Unit> = doRequest<Boolean>(
+        method = HttpMethod.Post,
+        requestBody = NotificationRequest(
+            title = title,
+            text = text,
+            link = link,
+            imageUrl = imageUrl,
+            topics = topics,
+            expirationDateTime = expirationDateTime,
+            alreadyRead = alreadyRead,
+        ),
+    ).map { true }
+
+    override suspend fun read(notificationId: String): Result<Notification> = doRequest(
+        urlPostfixPath = notificationId,
+        method = HttpMethod.Get,
+    )
+
+    override suspend fun readAll(): Result<List<Notification>> =
+        doRequest<List<NotificationResponse>>(
+            method = HttpMethod.Get,
+        ).map { response ->
+            response.map { it.toNotification() }
+        }
+}

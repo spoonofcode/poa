@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.notification.edit
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.NotificationRepository
+import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
@@ -19,14 +19,14 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationEditViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: NotificationEditViewModel
-    private lateinit var notificationRepository: NotificationRepository
+    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewModel
+    private lateinit var notificationDataSource: NotificationDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(notificationTestModule)
         super.setup()
-        notificationRepository = getKoin().get()
+        notificationDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -34,7 +34,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = NotificationEditViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(),
                 actual = awaitItem()
             )
         }
@@ -46,10 +46,10 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.InitView(itemIds = itemIds))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.InitView(itemIds = itemIds))
 
             assertEquals(
-                expected = NotificationEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
                     itemIds = itemIds,
                 ),
                 actual = awaitItem()
@@ -63,10 +63,10 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.ChangeLink(link))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeLink(link))
 
             assertEquals(
-                expected = NotificationEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
                     link = link,
                 ),
                 actual = awaitItem()
@@ -80,10 +80,10 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.ChangeText(text))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeText(text))
 
             assertEquals(
-                expected = NotificationEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
                     text = text,
                 ),
                 actual = awaitItem()
@@ -97,10 +97,10 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.ChangeTitle(title))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.ChangeTitle(title))
 
             assertEquals(
-                expected = NotificationEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
                     title = title,
                 ),
                 actual = awaitItem()
@@ -128,10 +128,10 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.SendNotification)
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction.SendNotification)
 
             assertEquals(
-                expected = NotificationEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewState(
                     screenState = ScreenState.LOADING,
                     itemIds = itemIds,
                     title = title,
@@ -144,7 +144,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            notificationRepository.create(any(), any(), any(), any(), any(), any(), any())
+            notificationDataSource.create(any(), any(), any(), any(), any(), any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))

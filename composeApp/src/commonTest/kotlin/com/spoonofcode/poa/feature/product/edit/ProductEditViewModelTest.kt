@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.product.edit
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.core.data.repository.ProductRepository
+import com.spoonofcode.poa.core.data.repository.ProductDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import dev.mokkery.matcher.any
@@ -18,14 +18,14 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProductEditViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: ProductEditViewModel
-    private lateinit var productRepository: ProductRepository
+    private lateinit var viewModel: com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewModel
+    private lateinit var productDataSource: ProductDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(productTestModule)
         super.setup()
-        productRepository = getKoin().get()
+        productDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -33,7 +33,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ProductEditViewState(),
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(),
                 actual = awaitItem()
             )
         }
@@ -44,10 +44,10 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(ProductEditViewAction.InitView(PRODUCT_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.InitView(PRODUCT_1.id))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(
                     screenState = ScreenState.CONTENT,
                     product = PRODUCT_1
                 ),
@@ -56,7 +56,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            productRepository.read(PRODUCT_1.id)
+            productDataSource.read(PRODUCT_1.id)
         }
     }
 
@@ -66,20 +66,20 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(ProductEditViewAction.InitView(productId = PRODUCT_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.InitView(productId = PRODUCT_1.id))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(
                     screenState = ScreenState.CONTENT,
                     product = PRODUCT_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(ProductEditViewAction.ChangeCustomLink(customLink))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.ChangeCustomLink(customLink))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(
                     screenState = ScreenState.CONTENT,
                     product = PRODUCT_1.copy(customLink = customLink),
                 ),
@@ -95,20 +95,20 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(ProductEditViewAction.InitView(productId = PRODUCT_1.id))
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.InitView(productId = PRODUCT_1.id))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(
                     screenState = ScreenState.CONTENT,
                     product = PRODUCT_1,
                 ),
                 actual = awaitItem()
             )
 
-            viewModel.onAction(ProductEditViewAction.SaveChanges)
+            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.SaveChanges)
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(
                     screenState = ScreenState.LOADING,
                     product = PRODUCT_1,
                 ),
@@ -117,11 +117,11 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            productRepository.read(PRODUCT_1.id)
+            productDataSource.read(PRODUCT_1.id)
         }
 
         verifySuspend {
-            productRepository.update(
+            productDataSource.update(
                 productId = any(),
                 ownerUserId = any(),
                 partnerId = any(),

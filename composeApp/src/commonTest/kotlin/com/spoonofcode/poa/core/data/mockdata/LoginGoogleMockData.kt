@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.core.model.LoginGoogle
+import com.spoonofcode.poa.feature.login.domain.model.LoginGoogle
 
 object LoginGoogleMockData {
     val LOGIN_GOOGLE_1 = LoginGoogle(

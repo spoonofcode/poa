@@ -3,10 +3,13 @@ package com.spoonofcode.poa.feature.login.register
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.data.repository.RegisterRepository
+import com.spoonofcode.poa.feature.login.data.remote.RegisterDataSource
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
+import com.spoonofcode.poa.feature.login.presentation.register.RegisterViewAction
+import com.spoonofcode.poa.feature.login.presentation.register.RegisterViewModel
+import com.spoonofcode.poa.feature.login.presentation.register.RegisterViewState
 import dev.mokkery.answering.throws
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -22,13 +25,13 @@ import kotlin.test.assertEquals
 class RegisterViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: RegisterViewModel
-    private lateinit var registerRepository: RegisterRepository
+    private lateinit var registerDataSource: RegisterDataSource
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(loginTestModule)
         super.setup()
-        registerRepository = getKoin().get()
+        registerDataSource = getKoin().get()
         viewModel = getSut()
     }
 
@@ -110,7 +113,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            registerRepository.create(any(), any(), any(), any())
+            registerDataSource.create(any(), any(), any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
@@ -120,7 +123,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
     @Test
     fun `sign up error`() = runTest {
         everySuspend {
-            registerRepository.create(
+            registerDataSource.create(
                 any(),
                 any(),
                 any(),
@@ -149,7 +152,7 @@ class RegisterViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            registerRepository.create(any(), any(), any(), any())
+            registerDataSource.create(any(), any(), any(), any())
         }
 
         verifySuspend(mode = exactly(0)) {

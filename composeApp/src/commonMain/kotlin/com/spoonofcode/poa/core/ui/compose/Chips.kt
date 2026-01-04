@@ -18,7 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.model.PartnerCategory
+import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
 
 object Chips {
     @Composable
