@@ -6,14 +6,12 @@ import com.spoonofcode.poa.feature.faq.data.remote.model.FAQResponse
 import com.spoonofcode.poa.feature.faq.domain.FAQDataSource
 import com.spoonofcode.poa.feature.faq.domain.model.FAQ
 import io.ktor.http.HttpMethod
-import io.ktor.util.reflect.typeInfo
 
 class RemoteFAQDataSource : RemoteBaseDataSource(
     collectionName = "faqs",
 ), FAQDataSource {
     override suspend fun readAll(): Result<List<FAQ>> = doRequest<List<FAQResponse>>(
         method = HttpMethod.Get,
-        responseTypeInfo = typeInfo<List<FAQResponse>>(),
     ).map { response ->
         response.map { it.toFAQ() }
     }

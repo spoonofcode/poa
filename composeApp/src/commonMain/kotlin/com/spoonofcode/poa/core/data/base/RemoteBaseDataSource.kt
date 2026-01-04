@@ -18,7 +18,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 import io.ktor.http.contentType
-import io.ktor.util.reflect.TypeInfo
+import io.ktor.util.reflect.typeInfo
 import kotlinx.coroutines.withContext
 import org.koin.mp.KoinPlatform.getKoin
 
@@ -33,12 +33,11 @@ abstract class RemoteBaseDataSource(
     private val sessionManager: SessionManager by getKoin().inject()
     private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase by getKoin().inject()
 
-    protected suspend fun <T> doRequest(
+    internal suspend inline fun <reified T> doRequest(
         urlPostfixPath: String = "",
         method: HttpMethod,
         queryParams: Map<String, Any> = emptyMap(),
         requestBody: Any? = null,
-        responseTypeInfo: TypeInfo,
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
             val requestBuilder: HttpRequestBuilder.() -> Unit = {
@@ -60,7 +59,7 @@ abstract class RemoteBaseDataSource(
                 httpClient.request(requestBuilder)
             }
 
-            Result.success(responseOrException(response).body(responseTypeInfo))
+            Result.success(responseOrException(response).body(typeInfo<T>()))
         } catch (e: Exception) {
             Result.failure(e)
         }

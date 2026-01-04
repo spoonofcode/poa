@@ -7,7 +7,6 @@ import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationRe
 import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
 import io.ktor.http.HttpMethod
-import io.ktor.util.reflect.typeInfo
 import kotlinx.datetime.LocalDateTime
 
 class RemoteNotificationDataSource : RemoteBaseDataSource(
@@ -32,19 +31,16 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
             expirationDateTime = expirationDateTime,
             alreadyRead = alreadyRead,
         ),
-        responseTypeInfo = typeInfo<Unit>()
     ).map { true }
 
     override suspend fun read(notificationId: String): Result<Notification> = doRequest(
         urlPostfixPath = notificationId,
         method = HttpMethod.Get,
-        responseTypeInfo = typeInfo<Notification>()
     )
 
     override suspend fun readAll(): Result<List<Notification>> =
         doRequest<List<NotificationResponse>>(
             method = HttpMethod.Get,
-            responseTypeInfo = typeInfo<List<Notification>>(),
         ).map { response ->
             response.map { it.toNotification() }
         }
