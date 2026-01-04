@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.notification.data.model
+package com.spoonofcode.poa.feature.notification.data.remote.model
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable

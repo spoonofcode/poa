@@ -1,9 +1,11 @@
 package com.spoonofcode.poa.feature.notification.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.feature.notification.domain.model.Notification
-import com.spoonofcode.poa.feature.notification.data.model.NotificationRequest
+import com.spoonofcode.poa.feature.notification.data.mappers.toNotification
+import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationRequest
+import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationResponse
 import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
+import com.spoonofcode.poa.feature.notification.domain.model.Notification
 import io.ktor.http.HttpMethod
 import io.ktor.util.reflect.typeInfo
 import kotlinx.datetime.LocalDateTime
@@ -20,7 +22,7 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         expirationDateTime: LocalDateTime?,
         alreadyRead: Boolean
     ): Result<Unit> = doRequest<Boolean>(
-        method = HttpMethod.Companion.Post,
+        method = HttpMethod.Post,
         requestBody = NotificationRequest(
             title = title,
             text = text,
@@ -35,12 +37,15 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
 
     override suspend fun read(notificationId: String): Result<Notification> = doRequest(
         urlPostfixPath = notificationId,
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<Notification>()
     )
 
-    override suspend fun readAll(): Result<List<Notification>> = doRequest(
-        method = HttpMethod.Companion.Get,
-        responseTypeInfo = typeInfo<List<Notification>>(),
-    )
+    override suspend fun readAll(): Result<List<Notification>> =
+        doRequest<List<NotificationResponse>>(
+            method = HttpMethod.Get,
+            responseTypeInfo = typeInfo<List<Notification>>(),
+        ).map { response ->
+            response.map { it.toNotification() }
+        }
 }

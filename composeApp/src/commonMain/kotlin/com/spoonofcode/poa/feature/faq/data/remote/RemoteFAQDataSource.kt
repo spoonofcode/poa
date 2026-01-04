@@ -12,7 +12,7 @@ class RemoteFAQDataSource : RemoteBaseDataSource(
     collectionName = "faqs",
 ), FAQDataSource {
     override suspend fun readAll(): Result<List<FAQ>> = doRequest<List<FAQResponse>>(
-        method = HttpMethod.Companion.Get,
+        method = HttpMethod.Get,
         responseTypeInfo = typeInfo<List<FAQResponse>>(),
     ).map { response ->
         response.map { it.toFAQ() }

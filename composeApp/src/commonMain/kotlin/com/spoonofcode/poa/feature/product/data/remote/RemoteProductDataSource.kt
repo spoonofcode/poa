@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.product.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.feature.product.data.model.ProductRequest
+import com.spoonofcode.poa.feature.product.data.remote.model.ProductRequest
 import com.spoonofcode.poa.feature.product.data.mappers.toProduct
-import com.spoonofcode.poa.feature.product.data.model.ProductResponse
+import com.spoonofcode.poa.feature.product.data.remote.model.ProductResponse
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.feature.product.domain.usecase.ProductDataSource
 import io.ktor.http.HttpMethod

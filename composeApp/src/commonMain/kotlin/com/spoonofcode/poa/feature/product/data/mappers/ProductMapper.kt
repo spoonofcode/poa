@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.product.data.mappers
 
-import com.spoonofcode.poa.feature.product.data.model.ProductResponse
+import com.spoonofcode.poa.feature.product.data.remote.model.ProductResponse
 import com.spoonofcode.poa.feature.product.domain.model.Product
 
 fun ProductResponse.toProduct(): Product {

@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.profile.data.remote
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
-import com.spoonofcode.poa.feature.product.data.model.AddProductToUserRequest
+import com.spoonofcode.poa.feature.product.data.remote.model.AddProductToUserRequest
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
