@@ -1,12 +1,12 @@
 package com.spoonofcode.poa.feature.partner.domain.usecase
 
-import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
 
 class GetPartnerByIdUseCase(
-    private val partnerDataSource: PartnerDataSource,
+    private val partnerRepository: PartnerRepository,
 ) {
     suspend operator fun invoke(
         partnerId: String
-    ): Result<Partner> = partnerDataSource.read(partnerId = partnerId)
+    ): Result<Partner> = partnerRepository.read(partnerId = partnerId)
 }

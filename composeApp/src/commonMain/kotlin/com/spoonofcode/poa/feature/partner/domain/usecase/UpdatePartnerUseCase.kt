@@ -2,11 +2,12 @@ package com.spoonofcode.poa.feature.partner.domain.usecase
 
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
-import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
 
 class UpdatePartnerUseCase(
-    private val partnerDataSource: PartnerDataSource,
+    private val partnerRepository: PartnerRepository,
+
     private val sessionManager: SessionManager
 ) {
     suspend operator fun invoke(partner: Partner): Result<Unit> {
@@ -25,6 +26,6 @@ class UpdatePartnerUseCase(
             xLink = partner.xLink
         )
 
-        return partnerDataSource.update(partner.id, partnerRequest).map { }
+        return partnerRepository.update(partner.id, partnerRequest).map { }
     }
 }

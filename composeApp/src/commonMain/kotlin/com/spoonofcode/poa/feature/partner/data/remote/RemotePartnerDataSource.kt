@@ -1,38 +1,33 @@
 package com.spoonofcode.poa.feature.partner.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.feature.partner.data.mappers.toPartner
 import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.poa.feature.partner.data.model.PartnerResponse
-import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.profile.data.model.User
 import io.ktor.http.HttpMethod
 
 class RemotePartnerDataSource : RemoteBaseDataSource(
     collectionName = "partners",
-), PartnerDataSource {
-    override suspend fun read(partnerId: String): Result<Partner> = doRequest<PartnerResponse>(
+) {
+    suspend fun read(partnerId: String): Result<PartnerResponse> = doRequest<PartnerResponse>(
         urlPostfixPath = partnerId,
         method = HttpMethod.Get,
-    ).map { response -> response.toPartner() }
+    )
 
-    override suspend fun update(
+    suspend fun update(
         partnerId: String,
         partnerRequest: PartnerRequest
     ): Result<Boolean> = doRequest<Boolean>(
         urlPostfixPath = partnerId,
         method = HttpMethod.Put,
         requestBody = partnerRequest,
-    ).map { true }
+    )
 
-    override suspend fun readAll(): Result<List<Partner>> = doRequest<List<PartnerResponse>>(
+    suspend fun readAll(): Result<List<PartnerResponse>> = doRequest<List<PartnerResponse>>(
         method = HttpMethod.Get,
-    ).map { response ->
-        response.map { it.toPartner() }
-    }
+    )
 
-    override suspend fun readPartnerUsers(partnerId: String): Result<List<User>> = doRequest(
+    suspend fun readPartnerUsers(partnerId: String): Result<List<User>> = doRequest(
         urlPostfixPath = "/$partnerId/users",
         method = HttpMethod.Get,
     )
