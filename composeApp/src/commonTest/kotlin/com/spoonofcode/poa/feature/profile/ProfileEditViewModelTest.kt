@@ -3,7 +3,6 @@ package com.spoonofcode.poa.feature.profile
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewAction

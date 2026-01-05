@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import dev.mokkery.matcher.any

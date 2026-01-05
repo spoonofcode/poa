@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.core.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.utils.FirebasePushService
 

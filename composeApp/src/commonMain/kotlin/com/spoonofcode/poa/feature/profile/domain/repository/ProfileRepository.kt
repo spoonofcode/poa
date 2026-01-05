@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.profile.domain
+package com.spoonofcode.poa.feature.profile.domain.repository
 
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.product.domain.model.Product
@@ -7,7 +7,7 @@ import com.spoonofcode.poa.feature.profile.domain.model.Profile
 import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
 import com.spoonofcode.poa.feature.reward.data.model.RewardType
 
-interface UserDataSource {
+interface ProfileRepository {
     suspend fun read(userId: String): Result<User>
     suspend fun readUserPartners(userId: String): Result<List<Partner>>
     suspend fun readUserProducts(userId: String): Result<List<Product>>
