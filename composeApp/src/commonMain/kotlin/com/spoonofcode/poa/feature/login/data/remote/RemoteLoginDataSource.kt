@@ -4,15 +4,14 @@ import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.login.data.mappers.toLogin
 import com.spoonofcode.poa.feature.login.data.remote.model.LoginRequest
 import com.spoonofcode.poa.feature.login.data.remote.model.LoginResponse
-import com.spoonofcode.poa.feature.login.domain.LoginDataSource
 import com.spoonofcode.poa.feature.login.domain.model.Login
 import io.ktor.http.HttpMethod
 
 class RemoteLoginDataSource() : RemoteBaseDataSource(
     collectionName = "login",
     sessionTokenRequired = false,
-), LoginDataSource {
-    override suspend fun create(
+) {
+    suspend fun create(
         email: String,
         password: String
     ): Result<Login> = doRequest<LoginResponse>(

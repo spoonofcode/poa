@@ -1,16 +1,16 @@
 package com.spoonofcode.poa.feature.login.domain.usecase
 
 import com.spoonofcode.poa.core.network.SessionManager
-import com.spoonofcode.poa.feature.login.domain.LoginDataSource
+import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class LoginUseCase(
-    private val loginDataSource: LoginDataSource,
+    private val loginRepository: LoginRepository,
     private val sessionManager: SessionManager,
 ) {
     suspend operator fun invoke(
         email: String,
         password: String,
-    ): Result<Unit> = loginDataSource.create(
+    ): Result<Unit> = loginRepository.login(
         email = email,
         password = password,
     ).map { loginResponse ->

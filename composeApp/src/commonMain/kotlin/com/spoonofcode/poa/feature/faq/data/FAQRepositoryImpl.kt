@@ -6,9 +6,9 @@ import com.spoonofcode.poa.feature.faq.domain.model.FAQ
 import com.spoonofcode.poa.feature.faq.domain.repository.FAQRepository
 
 class FAQRepositoryImpl(
-    private val remoteDataSource: RemoteFAQDataSource,
+    private val remoteFAQDataSource: RemoteFAQDataSource,
 ) : FAQRepository {
-    override suspend fun readAll(): Result<List<FAQ>> = remoteDataSource.readAll()
+    override suspend fun readAll(): Result<List<FAQ>> = remoteFAQDataSource.readAll()
         .map { list ->
             list.map { it.toFAQ() }
         }

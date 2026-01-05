@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.login.domain.usecase
 
 import com.spoonofcode.poa.core.network.SessionManager
-import com.spoonofcode.poa.feature.login.domain.RegisterDataSource
+import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class RegisterUseCase(
-    private val registerDataSource: RegisterDataSource,
+    private val loginRepository: LoginRepository,
     private val sessionManager: SessionManager,
 ) {
     suspend operator fun invoke(
@@ -13,7 +13,7 @@ class RegisterUseCase(
         firstName: String,
         lastName: String
     ): Result<Unit> {
-        return registerDataSource.create(
+        return loginRepository.register(
             email = email,
             password = password,
             firstName = firstName,

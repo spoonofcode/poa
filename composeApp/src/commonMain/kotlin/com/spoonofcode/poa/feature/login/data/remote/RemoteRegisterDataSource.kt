@@ -4,15 +4,14 @@ import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.login.data.mappers.toRegister
 import com.spoonofcode.poa.feature.login.data.remote.model.RegisterRequest
 import com.spoonofcode.poa.feature.login.data.remote.model.RegisterResponse
-import com.spoonofcode.poa.feature.login.domain.RegisterDataSource
 import com.spoonofcode.poa.feature.login.domain.model.Register
 import io.ktor.http.HttpMethod
 
 class RemoteRegisterDataSource : RemoteBaseDataSource(
     collectionName = "register",
     sessionTokenRequired = false,
-), RegisterDataSource {
-    override suspend fun create(
+) {
+    suspend fun create(
         email: String,
         password: String,
         firstName: String,
