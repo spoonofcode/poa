@@ -1,11 +1,12 @@
 package com.spoonofcode.poa.feature.product.domain.usecase
 
 import com.spoonofcode.poa.feature.product.domain.model.Product
+import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 
 class GetProductByTagIdUseCase(
-    private val productDataSource: ProductDataSource,
+    private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(
         tagId: String,
-    ): Result<Product> = productDataSource.readProductByTagId(tagId = tagId)
+    ): Result<Product> = productRepository.getProductByTagId(tagId = tagId)
 }

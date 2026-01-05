@@ -1,24 +1,21 @@
 package com.spoonofcode.poa.feature.product.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.feature.product.data.mappers.toProduct
 import com.spoonofcode.poa.feature.product.data.remote.model.ProductRequest
 import com.spoonofcode.poa.feature.product.data.remote.model.ProductResponse
-import com.spoonofcode.poa.feature.product.domain.model.Product
-import com.spoonofcode.poa.feature.product.domain.usecase.ProductDataSource
 import io.ktor.http.HttpMethod
 
 class RemoteProductDataSource : RemoteBaseDataSource(
     collectionName = "products",
-), ProductDataSource {
-    override suspend fun read(
+) {
+    suspend fun read(
         productId: String,
-    ): Result<Product> = doRequest<ProductResponse>(
+    ): Result<ProductResponse> = doRequest<ProductResponse>(
         urlPostfixPath = productId,
         method = HttpMethod.Get,
-    ).map { response -> response.toProduct() }
+    )
 
-    override suspend fun update(
+    suspend fun update(
         productId: String,
         ownerUserId: String?,
         partnerId: String,
@@ -49,9 +46,9 @@ class RemoteProductDataSource : RemoteBaseDataSource(
         ),
     )
 
-    override suspend fun readProductByTagId(tagId: String): Result<Product> =
+    suspend fun readProductByTagId(tagId: String): Result<ProductResponse> =
         doRequest<ProductResponse>(
             method = HttpMethod.Get,
             queryParams = mapOf("tagId" to tagId),
-        ).map { response -> response.toProduct() }
+        )
 }
