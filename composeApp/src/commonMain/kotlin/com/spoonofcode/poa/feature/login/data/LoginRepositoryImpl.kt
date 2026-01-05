@@ -1,5 +1,8 @@
 package com.spoonofcode.poa.feature.login.data
 
+import com.spoonofcode.poa.feature.login.data.mappers.toLogin
+import com.spoonofcode.poa.feature.login.data.mappers.toLoginGoogle
+import com.spoonofcode.poa.feature.login.data.mappers.toRegister
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
@@ -21,18 +24,18 @@ class LoginRepositoryImpl(
         remoteLoginDataSource.create(
             email = email,
             password = password,
-        )
+        ).map { response -> response.toLogin() }
 
     override suspend fun loginWithCode(email: String, loginCode: String): Result<Login> =
         remoteLoginCodeDataSource.create(
             email = email,
             loginCode = loginCode,
-        )
+        ).map { response -> response.toLogin() }
 
     override suspend fun loginWithGoogle(googleUserToken: String): Result<LoginGoogle> =
         remoteLoginGoogleDataSource.create(
             googleUserToken = googleUserToken,
-        )
+        ).map { response -> response.toLoginGoogle() }
 
     override suspend fun requestCode(email: String, recaptchaToken: String): Result<Unit> =
         remoteLoginRequestCodeDataSource.create(
@@ -51,7 +54,7 @@ class LoginRepositoryImpl(
             password = password,
             firstName = firstName,
             lastName = lastName,
-        )
+        ).map { response -> response.toRegister() }
     }
 
 }
