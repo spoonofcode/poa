@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.notification.domain.usecase
 
-import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
+import com.spoonofcode.poa.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
 
 class SendNotificationUseCase(
-    private val notificationDataSource: NotificationDataSource,
+    private val notificationRepository: NotificationRepository,
 ) {
     suspend operator fun invoke(
         title: String,
@@ -14,15 +14,13 @@ class SendNotificationUseCase(
         topics: List<String>,
         expirationDateTime: LocalDateTime? = null,
         alreadyRead: Boolean = false,
-    ): Result<Unit> {
-        return notificationDataSource.create(
-            title = title,
-            text = text,
-            link = link,
-            imageUrl = imageUrl,
-            topics = topics,
-            expirationDateTime = expirationDateTime,
-            alreadyRead = alreadyRead,
-        )
-    }
+    ): Result<Unit> = notificationRepository.send(
+        title = title,
+        text = text,
+        link = link,
+        imageUrl = imageUrl,
+        topics = topics,
+        expirationDateTime = expirationDateTime,
+        alreadyRead = alreadyRead,
+    )
 }

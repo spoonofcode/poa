@@ -6,13 +6,12 @@ import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class LoginGoogleUseCase(
     private val loginRepository: LoginRepository,
-    private val ktorLoginGoogleDataSource: KtorLoginGoogleDataSource,
     private val sessionManager: SessionManager,
 ) {
     suspend operator fun invoke(
         googleIdToken: String,
     ): Result<Unit> {
-        loginRepository.loginWithGoogle(
+        return loginRepository.loginWithGoogle(
             googleUserToken = googleIdToken,
         ).map { loginGoogleResponse ->
             sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
@@ -20,7 +19,7 @@ class LoginGoogleUseCase(
             sessionManager.enableAllNotifications()
         }
 
-        return ktorLoginGoogleDataSource.create(
+        return loginRepository.loginWithGoogleKtor(
             googleUserToken = googleIdToken,
         ).map { loginGoogleResponse ->
             sessionManager.saveSessionUserId(userId = loginGoogleResponse.userId)

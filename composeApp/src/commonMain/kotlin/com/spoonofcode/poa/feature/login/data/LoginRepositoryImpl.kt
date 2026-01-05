@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.feature.login.data
 
+import com.spoonofcode.poa.feature.login.data.mappers.ktor.toKtorLoginGoogle
 import com.spoonofcode.poa.feature.login.data.mappers.toLogin
 import com.spoonofcode.poa.feature.login.data.mappers.toLoginGoogle
 import com.spoonofcode.poa.feature.login.data.mappers.toRegister
@@ -8,12 +9,15 @@ import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginRequestCodeDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteRegisterDataSource
+import com.spoonofcode.poa.feature.login.data.remote.ktor.KtorRemoteLoginGoogleDataSource
+import com.spoonofcode.poa.feature.login.domain.ktor.model.KtorLoginGoogle
 import com.spoonofcode.poa.feature.login.domain.model.Login
 import com.spoonofcode.poa.feature.login.domain.model.LoginGoogle
 import com.spoonofcode.poa.feature.login.domain.model.Register
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class LoginRepositoryImpl(
+    private val ktorRemoteLoginGoogleDataSource: KtorRemoteLoginGoogleDataSource,
     private val remoteLoginCodeDataSource: RemoteLoginCodeDataSource,
     private val remoteLoginDataSource: RemoteLoginDataSource,
     private val remoteLoginGoogleDataSource: RemoteLoginGoogleDataSource,
@@ -36,6 +40,11 @@ class LoginRepositoryImpl(
         remoteLoginGoogleDataSource.create(
             googleUserToken = googleUserToken,
         ).map { response -> response.toLoginGoogle() }
+
+    override suspend fun loginWithGoogleKtor(googleUserToken: String): Result<KtorLoginGoogle> =
+        ktorRemoteLoginGoogleDataSource.create(
+            googleUserToken = googleUserToken,
+        ).map { response -> response.toKtorLoginGoogle() }
 
     override suspend fun requestCode(email: String, recaptchaToken: String): Result<Unit> =
         remoteLoginRequestCodeDataSource.create(
