@@ -8,6 +8,7 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordScreen
+import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
 import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,7 @@ internal class LoginViewModel(
             is LoginViewAction.ChangePassword -> changePassword(action.password)
             LoginViewAction.ForgotPassword -> forgotPassword()
             LoginViewAction.SignIn -> signIn()
+            LoginViewAction.SignInWithCode -> signInWithCode()
             is LoginViewAction.SignInWithGoogle -> signInWithGoogle(action.googleIdToken)
             LoginViewAction.SignUp -> signUp()
         }
@@ -53,6 +55,20 @@ internal class LoginViewModel(
                 password = viewState.value.password,
             ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+            }.onFailure {
+                showErrorSnackbar(it)
+            }
+        }
+    }
+
+    private fun signInWithCode() {
+        viewModelScope.launch {
+            showLoadingView()
+            loginUseCase(
+                email = viewState.value.email,
+                password = viewState.value.password,
+            ).onSuccess {
+                viewModelNavigator.push(LoginCodeScreen(email = viewState.value.email))
             }.onFailure {
                 showErrorSnackbar(it)
             }

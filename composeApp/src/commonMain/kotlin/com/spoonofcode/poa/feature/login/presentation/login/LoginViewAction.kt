@@ -7,6 +7,7 @@ internal sealed interface LoginViewAction: BaseViewAction {
     data class ChangePassword(val password: String) : LoginViewAction
     data object ForgotPassword : LoginViewAction
     data object SignIn : LoginViewAction
+    data object SignInWithCode : LoginViewAction
     data class SignInWithGoogle(val googleIdToken: String) : LoginViewAction
     data object SignUp : LoginViewAction
 }
