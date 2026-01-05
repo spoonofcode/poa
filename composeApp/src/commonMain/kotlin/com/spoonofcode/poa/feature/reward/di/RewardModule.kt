@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.reward.di
 
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetUserPartnersUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserRewardsPointsUseCase
