@@ -12,6 +12,7 @@ class RemoteLoginRequestCodeDataSource() : RemoteBaseDataSource(
         email: String,
         recaptchaToken: String,
     ): Result<Unit> = doRequest<Unit>(
+        ktorBackend = false,
         method = HttpMethod.Post,
         requestBody = LoginRequestCodeRequest(
             email = email,
