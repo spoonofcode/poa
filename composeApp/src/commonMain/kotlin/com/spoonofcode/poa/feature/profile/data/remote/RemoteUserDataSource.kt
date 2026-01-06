@@ -8,7 +8,7 @@ class RemoteUserDataSource : RemoteBaseDataSource(
     collectionName = "users"
 ) {
     suspend fun readUserProfile(): Result<ProfileResponse> = doRequest(
-        urlPostfixPath = "/profile",
+        urlPostfixPath = "profile",
         method = HttpMethod.Get,
     )
 }
