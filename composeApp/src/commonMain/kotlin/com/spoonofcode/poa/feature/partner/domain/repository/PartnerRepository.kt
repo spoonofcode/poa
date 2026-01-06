@@ -11,4 +11,5 @@ interface PartnerRepository {
     suspend fun readAll(): Result<List<Partner>>
     suspend fun readPartnerUsers(partnerId: String): Result<List<User>>
     suspend fun readAllCategories(): Result<List<PartnerCategory>>
+    suspend fun readUserPartners(userId: String): Result<List<Partner>>
 }

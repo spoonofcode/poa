@@ -5,6 +5,7 @@ import com.spoonofcode.poa.feature.partner.data.mappers.toPartnerCategory
 import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerDataSource
+import com.spoonofcode.poa.feature.partner.data.remote.RemoteUserPartnerDataSource
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
@@ -13,6 +14,7 @@ import com.spoonofcode.poa.feature.profile.data.model.User
 class PartnerRepositoryImpl(
     private val remotePartnerDataSource: RemotePartnerDataSource,
     private val remotePartnerCategoryDataSource: RemotePartnerCategoryDataSource,
+    private val remoteUserPartnerDataSource: RemoteUserPartnerDataSource,
 ) : PartnerRepository {
     override suspend fun read(partnerId: String): Result<Partner> =
         remotePartnerDataSource.read(partnerId).map { response -> response.toPartner() }
@@ -39,4 +41,12 @@ class PartnerRepositoryImpl(
                 it.toPartnerCategory()
             }
         }
+
+    override suspend fun readUserPartners(userId: String): Result<List<Partner>> {
+        return remoteUserPartnerDataSource.readUserPartners(userId).map { response ->
+            response.map {
+                it.toPartner()
+            }
+        }
+    }
 }

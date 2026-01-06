@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.profile.data
 
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.feature.profile.data.remote.RemoteUserDataSource
@@ -14,10 +13,6 @@ class ProfileRepositoryImpl(
 ) : ProfileRepository {
     override suspend fun read(userId: String): Result<User> {
         return remoteUserDataSource.read(userId)
-    }
-
-    override suspend fun readUserPartners(userId: String): Result<List<Partner>> {
-        TODO("Not yet implemented")
     }
 
     override suspend fun readUserProducts(userId: String): Result<List<Product>> {
