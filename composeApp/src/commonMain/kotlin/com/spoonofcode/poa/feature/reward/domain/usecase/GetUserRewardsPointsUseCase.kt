@@ -1,14 +1,15 @@
 package com.spoonofcode.poa.feature.reward.domain.usecase
 
 import com.spoonofcode.poa.core.network.SessionManager
-import com.spoonofcode.poa.feature.profile.domain.repository.ProfileRepository
+import com.spoonofcode.poa.feature.reward.domain.repository.RewardRepository
 
-internal class GetUserRewardsPointsUseCase(
-    private val profileRepository: ProfileRepository,
-    private val sessionManager: SessionManager
+class GetUserRewardsPointsUseCase(
+    private val rewardRepository: RewardRepository,
+    private val sessionManager: SessionManager,
 ) {
     suspend operator fun invoke(): Result<Int> {
-        val userId = sessionManager.getSessionUserId()
-        return profileRepository.getUserRewardsPoints(userId)
+        return rewardRepository.getUserRewardsPoints(
+            userId = sessionManager.getSessionUserId(),
+        )
     }
 }
