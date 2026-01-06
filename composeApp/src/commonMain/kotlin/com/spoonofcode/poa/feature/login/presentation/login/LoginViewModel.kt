@@ -7,6 +7,7 @@ import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
 import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase,
+    private val loginRequestCodeUseCase: LoginRequestCodeUseCase,
 ) : BaseViewModel<LoginViewState, LoginViewAction>(LoginViewState()) {
 
     override fun onAction(action: LoginViewAction) {
@@ -64,9 +66,8 @@ internal class LoginViewModel(
     private fun signInWithCode() {
         viewModelScope.launch {
             showLoadingView()
-            loginUseCase(
+            loginRequestCodeUseCase(
                 email = viewState.value.email,
-                password = viewState.value.password,
             ).onSuccess {
                 viewModelNavigator.push(LoginCodeScreen(email = viewState.value.email))
             }.onFailure {
