@@ -14,7 +14,6 @@ class LoginUseCase(
         email = email,
         password = password,
     ).map { loginResponse ->
-        sessionManager.saveSessionUserId(userId = loginResponse.userId)
         sessionManager.saveKtorSessionAccessToken(token = loginResponse.jwtAccessToken)
         sessionManager.saveKtorSessionRefreshToken(token = loginResponse.jwtRefreshToken)
         sessionManager.enableAllNotifications()

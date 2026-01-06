@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.feature.login.domain.usecase
 
 import com.spoonofcode.poa.core.network.SessionManager
-import com.spoonofcode.poa.feature.login.domain.ktor.KtorLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class LoginGoogleUseCase(
@@ -22,7 +21,6 @@ class LoginGoogleUseCase(
         return loginRepository.loginWithGoogleKtor(
             googleUserToken = googleIdToken,
         ).map { loginGoogleResponse ->
-            sessionManager.saveSessionUserId(userId = loginGoogleResponse.userId)
             sessionManager.saveKtorSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
             sessionManager.saveKtorSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
             sessionManager.enableAllNotifications()
