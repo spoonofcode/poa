@@ -6,7 +6,7 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-const val SITE_KEY = "6LejYTUsAAAAAA-suNhCr1DkfzbpcHmZpXWIG-E3 "
+const val SITE_KEY = "6LejYTUsAAAAAA-suNhCr1DkfzbpcHmZpXWIG-E3"
 
 actual val platformRecaptchaModule = module {
     single {
