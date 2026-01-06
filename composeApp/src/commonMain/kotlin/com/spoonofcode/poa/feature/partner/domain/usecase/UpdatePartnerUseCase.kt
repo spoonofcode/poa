@@ -26,6 +26,6 @@ class UpdatePartnerUseCase(
             xLink = partner.xLink
         )
 
-        return partnerRepository.update(partner.id, partnerRequest).map { }
+        return partnerRepository.updatePartner(partner.id, partnerRequest).map { }
     }
 }

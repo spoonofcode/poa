@@ -1,7 +1,9 @@
 package com.spoonofcode.poa.feature.partner.data.mappers
 
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.feature.partner.data.model.PartnerResponse
+import com.spoonofcode.poa.feature.partner.data.model.PartnerUserResponse
+import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.poa.feature.partner.domain.model.PartnerUser
 
 fun PartnerResponse.toPartner(): Partner {
     return Partner(
@@ -16,5 +18,14 @@ fun PartnerResponse.toPartner(): Partner {
         facebookLink = facebookLink,
         youtubeLink = youtubeLink,
         xLink = xLink,
+    )
+}
+
+fun PartnerUserResponse.toPartnerUser(): PartnerUser {
+    return PartnerUser(
+        id = id,
+        firstName = firstName,
+        lastName = lastName,
+        email = email,
     )
 }

@@ -1,17 +1,13 @@
-package com.spoonofcode.poa.feature.profile.data.model
+package com.spoonofcode.poa.feature.partner.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class User(
+data class PartnerUser(
     val id: String,
     val firstName: String,
     val lastName: String,
+    val email: String,
     val nickName: String? = null,
     val fullName: String = buildString {
         append("$firstName $lastName")
         nickName?.let { append(" ($it)") }
     },
-    val email: String,
-    val points: Int = 0,
 )

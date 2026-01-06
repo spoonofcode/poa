@@ -7,5 +7,5 @@ class GetPartnerCategoriesUseCase(
     private val partnerRepository: PartnerRepository,
 ) {
     suspend operator fun invoke(): Result<List<PartnerCategory>> =
-        partnerRepository.readAllCategories()
+        partnerRepository.getCategories()
 }

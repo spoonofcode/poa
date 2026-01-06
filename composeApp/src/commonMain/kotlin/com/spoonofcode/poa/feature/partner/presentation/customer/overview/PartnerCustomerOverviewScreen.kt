@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.feature.profile.data.model.User
 import com.spoonofcode.poa.core.ui.BaseScreen
 import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
@@ -25,6 +24,7 @@ import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.partner.domain.model.PartnerUser
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_customers
 import com.spoonofcode.poa.resources.poa
@@ -78,7 +78,7 @@ internal class CustomerOverviewScreen(
 
     @Composable
     fun CustomerItem(
-        item: User,
+        item: PartnerUser,
         onClick: () -> Unit,
         checkedCustomer: Boolean,
     ) {
