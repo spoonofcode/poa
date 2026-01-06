@@ -6,7 +6,6 @@ import com.spoonofcode.poa.feature.partner.domain.model.Partner
 fun PartnerResponse.toPartner(): Partner {
     return Partner(
         id = id,
-        userId = userId,
         name = name,
         email = email,
         description = description,
