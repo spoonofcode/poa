@@ -9,19 +9,19 @@ import io.ktor.http.HttpMethod
 class RemoteUserRewardDataSource : RemoteBaseDataSource(
     collectionName = "users",
 ) {
-    suspend fun addRewardToUser(userId: String, rewardType: RewardType): Result<Unit> = doRequest(
-        urlPostfixPath = "$userId/rewards",
+    suspend fun addRewardToUser(rewardType: RewardType): Result<Unit> = doRequest(
+        urlPostfixPath = "rewards",
         method = HttpMethod.Post,
         requestBody = AddRewardToUserRequest(rewardType = rewardType),
     )
 
-    suspend fun getUserRewardsPoints(userId: String): Result<Int> = doRequest(
-        urlPostfixPath = "$userId/rewards/points",
+    suspend fun getUserRewardsPoints(): Result<Int> = doRequest(
+        urlPostfixPath = "rewards/points",
         method = HttpMethod.Get,
     )
 
-    suspend fun getUserDailyCheckInStatus(userId: String): Result<DailyCheckInStatus> = doRequest(
-        urlPostfixPath = "$userId/rewards/daily-check-in/status",
+    suspend fun getUserDailyCheckInStatus(): Result<DailyCheckInStatus> = doRequest(
+        urlPostfixPath = "rewards/daily-check-in/status",
         method = HttpMethod.Get,
     )
 }

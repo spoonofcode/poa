@@ -21,9 +21,7 @@ class SubscribeUserTopicsUseCase(
     }
 
     private suspend fun subscribeBySeriesId() {
-        productRepository.getProductSeriesIds(
-            userId = sessionManager.getSessionUserId(),
-        ).onSuccess {
+        productRepository.getProductSeriesIds().onSuccess {
             it.forEach { seriesId ->
                 firebasePushService.subscribeToTopic("${TOPIC_PRODUCT_SERIE_ID}${seriesId}")
             }

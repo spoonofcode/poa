@@ -9,7 +9,7 @@ class ProfileRepositoryImpl(
     private val remoteUserDataSource: RemoteUserDataSource,
 ) : ProfileRepository {
 
-    override suspend fun readUserProfile(userId: String): Result<Profile> {
-        return remoteUserDataSource.readUserProfile(userId).map { it.toProfile() }
+    override suspend fun readUserProfile(): Result<Profile> {
+        return remoteUserDataSource.readUserProfile().map { it.toProfile() }
     }
 }

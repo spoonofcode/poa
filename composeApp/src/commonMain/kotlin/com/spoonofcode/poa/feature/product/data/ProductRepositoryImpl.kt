@@ -17,17 +17,17 @@ class ProductRepositoryImpl(
     override suspend fun getProductByTagId(tagId: String): Result<Product> =
         remoteProducts.readProductByTagId(tagId).map { it.toProduct() }
 
-    override suspend fun getUserProducts(userId: String): Result<List<Product>> =
-        remoteUserProducts.readUserProducts(userId).map { list -> list.map { it.toProduct() } }
+    override suspend fun getUserProducts(): Result<List<Product>> =
+        remoteUserProducts.readUserProducts().map { list -> list.map { it.toProduct() } }
 
-    override suspend fun getProductSeriesIds(userId: String): Result<List<String>> =
-        remoteUserProducts.readProductSeriesIds(userId)
+    override suspend fun getProductSeriesIds(): Result<List<String>> =
+        remoteUserProducts.readProductSeriesIds()
 
-    override suspend fun addProductToUser(userId: String, productId: String): Result<Unit> =
-        remoteUserProducts.addProductToUser(userId, productId)
+    override suspend fun addProductToUser(productId: String): Result<Unit> =
+        remoteUserProducts.addProductToUser(productId)
 
-    override suspend fun deleteProductFromUser(userId: String, productId: String): Result<Unit> =
-        remoteUserProducts.deleteProductFromUser(userId, productId)
+    override suspend fun deleteProductFromUser(productId: String): Result<Unit> =
+        remoteUserProducts.deleteProductFromUser(productId)
 
     override suspend fun update(
         productId: String,

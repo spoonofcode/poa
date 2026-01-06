@@ -46,8 +46,8 @@ class PartnerRepositoryImpl(
             }
         }
 
-    override suspend fun getUserPartners(userId: String): Result<List<Partner>> {
-        return remoteUserPartnerDataSource.readUserPartners(userId).map { response ->
+    override suspend fun getUserPartners(): Result<List<Partner>> {
+        return remoteUserPartnerDataSource.readUserPartners().map { response ->
             response.map {
                 it.toPartner()
             }

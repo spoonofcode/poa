@@ -11,5 +11,5 @@ interface PartnerRepository {
     suspend fun getPartners(): Result<List<Partner>>
     suspend fun getPartnerUsers(partnerId: String): Result<List<PartnerUser>>
     suspend fun getCategories(): Result<List<PartnerCategory>>
-    suspend fun getUserPartners(userId: String): Result<List<Partner>>
+    suspend fun getUserPartners(): Result<List<Partner>>
 }

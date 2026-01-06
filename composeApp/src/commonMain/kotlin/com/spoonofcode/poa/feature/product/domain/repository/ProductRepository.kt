@@ -5,10 +5,10 @@ import com.spoonofcode.poa.feature.product.domain.model.Product
 interface ProductRepository {
     suspend fun getProduct(productId: String): Result<Product>
     suspend fun getProductByTagId(tagId: String): Result<Product>
-    suspend fun getUserProducts(userId: String): Result<List<Product>>
-    suspend fun getProductSeriesIds(userId: String): Result<List<String>>
-    suspend fun addProductToUser(userId: String, productId: String): Result<Unit>
-    suspend fun deleteProductFromUser(userId: String, productId: String): Result<Unit>
+    suspend fun getUserProducts(): Result<List<Product>>
+    suspend fun getProductSeriesIds(): Result<List<String>>
+    suspend fun addProductToUser(productId: String): Result<Unit>
+    suspend fun deleteProductFromUser(productId: String): Result<Unit>
     suspend fun update(
         productId: String,
         ownerUserId: String? = null,

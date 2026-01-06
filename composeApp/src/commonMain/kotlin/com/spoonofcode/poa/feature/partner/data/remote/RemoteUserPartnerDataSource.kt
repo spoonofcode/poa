@@ -7,8 +7,8 @@ import io.ktor.http.HttpMethod
 class RemoteUserPartnerDataSource : RemoteBaseDataSource(
     collectionName = "users"
 ) {
-    suspend fun readUserPartners(userId: String): Result<List<PartnerResponse>> = doRequest(
-        urlPostfixPath = "$userId/partners",
+    suspend fun readUserPartners(): Result<List<PartnerResponse>> = doRequest(
+        urlPostfixPath = "partners",
         method = HttpMethod.Get,
     )
 }

@@ -8,24 +8,24 @@ import io.ktor.http.HttpMethod
 class RemoteUserProductDataSource : RemoteBaseDataSource(
     collectionName = "users",
 ) {
-    suspend fun readUserProducts(userId: String): Result<List<ProductResponse>> = doRequest(
-        urlPostfixPath = "$userId/products",
+    suspend fun readUserProducts(): Result<List<ProductResponse>> = doRequest(
+        urlPostfixPath = "products",
         method = HttpMethod.Get,
     )
 
-    suspend fun readProductSeriesIds(userId: String): Result<List<String>> = doRequest(
-        urlPostfixPath = "$userId/product-series-ids",
+    suspend fun readProductSeriesIds(): Result<List<String>> = doRequest(
+        urlPostfixPath = "product-series-ids",
         method = HttpMethod.Get,
     )
 
-    suspend fun addProductToUser(userId: String, productId: String): Result<Unit> = doRequest(
-        urlPostfixPath = "$userId/products",
+    suspend fun addProductToUser(productId: String): Result<Unit> = doRequest(
+        urlPostfixPath = "products",
         method = HttpMethod.Post,
         requestBody = AddProductToUserRequest(productId = productId),
     )
 
-    suspend fun deleteProductFromUser(userId: String, productId: String): Result<Unit> = doRequest(
-        urlPostfixPath = "$userId/products/$productId",
+    suspend fun deleteProductFromUser(productId: String): Result<Unit> = doRequest(
+        urlPostfixPath = "products/$productId",
         method = HttpMethod.Delete,
     )
 }
