@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.login.data.remote.ktor
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.login.data.remote.ktor.model.KtorLoginGoogleRequest
-import com.spoonofcode.poa.feature.login.data.remote.ktor.model.KtorLoginGoogleResponse
+import com.spoonofcode.poa.feature.login.data.remote.model.LoginResponse
 import io.ktor.http.HttpMethod
 
 class KtorRemoteLoginGoogleDataSource : RemoteBaseDataSource(
@@ -11,7 +11,7 @@ class KtorRemoteLoginGoogleDataSource : RemoteBaseDataSource(
 ) {
     suspend fun create(
         googleUserToken: String,
-    ): Result<KtorLoginGoogleResponse> = doRequest<KtorLoginGoogleResponse>(
+    ): Result<LoginResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = KtorLoginGoogleRequest(
             googleUserToken = googleUserToken,
