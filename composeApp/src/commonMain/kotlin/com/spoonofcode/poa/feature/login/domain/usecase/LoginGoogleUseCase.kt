@@ -10,7 +10,7 @@ class LoginGoogleUseCase(
     suspend operator fun invoke(
         googleIdToken: String,
     ): Result<Unit> {
-        return loginRepository.loginWithGoogle(
+        loginRepository.loginWithGoogle(
             googleUserToken = googleIdToken,
         ).map { loginGoogleResponse ->
             sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
