@@ -12,7 +12,6 @@ class AndroidRecaptchaPlatform(
     override suspend fun execute(action: String): String {
         val client = Recaptcha.fetchClient(application, siteKey)
         val result = client.execute(RecaptchaAction.custom(action)).getOrThrow()
-        println("BARTEK result: $result")
         return result
     }
 }
