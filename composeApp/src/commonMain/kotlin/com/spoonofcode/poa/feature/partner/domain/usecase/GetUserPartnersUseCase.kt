@@ -1,14 +1,10 @@
 package com.spoonofcode.poa.feature.partner.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
-import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
 
 class GetUserPartnersUseCase(
-    private val userDataSource: UserDataSource,
-    private val sessionManager: SessionManager,
+    private val partnerRepository: PartnerRepository,
 ) {
-    suspend operator fun invoke(): Result<List<Partner>> = userDataSource.readUserPartners(
-        userId = sessionManager.getSessionUserId(),
-    )
+    suspend operator fun invoke(): Result<List<Partner>> = partnerRepository.getUserPartners()
 }

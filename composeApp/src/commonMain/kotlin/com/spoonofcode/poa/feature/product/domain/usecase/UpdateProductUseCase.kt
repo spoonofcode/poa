@@ -1,7 +1,9 @@
 package com.spoonofcode.poa.feature.product.domain.usecase
 
+import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
+
 class UpdateProductUseCase(
-    private val productDataSource: ProductDataSource,
+    private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(
         productId: String,
@@ -17,7 +19,7 @@ class UpdateProductUseCase(
         websiteLink: String? = null,
         customLink: String? = null,
     ): Result<Unit> =
-        productDataSource.update(
+        productRepository.update(
             productId = productId,
             ownerUserId = ownerUserId,
             partnerId = partnerId,

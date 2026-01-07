@@ -1,18 +1,15 @@
 package com.spoonofcode.poa.feature.notification.data.remote
 
 import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.feature.notification.data.mappers.toNotification
 import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationResponse
-import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
-import com.spoonofcode.poa.feature.notification.domain.model.Notification
 import io.ktor.http.HttpMethod
 import kotlinx.datetime.LocalDateTime
 
 class RemoteNotificationDataSource : RemoteBaseDataSource(
     collectionName = "notifications",
-), NotificationDataSource {
-    override suspend fun create(
+) {
+    suspend fun create(
         title: String,
         text: String,
         link: String?,
@@ -33,15 +30,13 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         ),
     ).map { true }
 
-    override suspend fun read(notificationId: String): Result<Notification> = doRequest(
+     suspend fun read(notificationId: String): Result<NotificationResponse> = doRequest(
         urlPostfixPath = notificationId,
         method = HttpMethod.Get,
     )
 
-    override suspend fun readAll(): Result<List<Notification>> =
+     suspend fun readAll(): Result<List<NotificationResponse>> =
         doRequest<List<NotificationResponse>>(
             method = HttpMethod.Get,
-        ).map { response ->
-            response.map { it.toNotification() }
-        }
+        )
 }

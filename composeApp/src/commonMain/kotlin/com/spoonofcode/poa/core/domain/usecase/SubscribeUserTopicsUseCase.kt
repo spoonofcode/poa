@@ -1,11 +1,11 @@
 package com.spoonofcode.poa.core.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.core.network.SessionManager
 import com.spoonofcode.poa.core.ui.utils.FirebasePushService
+import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 
 class SubscribeUserTopicsUseCase(
-    private val userDataSource: UserDataSource,
+    private val productRepository: ProductRepository,
     private val sessionManager: SessionManager,
     private val firebasePushService: FirebasePushService,
 ) {
@@ -21,9 +21,7 @@ class SubscribeUserTopicsUseCase(
     }
 
     private suspend fun subscribeBySeriesId() {
-        userDataSource.readUserProductSeriesIds(
-            userId = sessionManager.getSessionUserId(),
-        ).onSuccess {
+        productRepository.getProductSeriesIds().onSuccess {
             it.forEach { seriesId ->
                 firebasePushService.subscribeToTopic("${TOPIC_PRODUCT_SERIE_ID}${seriesId}")
             }

@@ -7,11 +7,20 @@ class RefreshAccessTokenUseCase(
     private val refreshDataSource: RefreshDataSource,
     private val sessionManager: SessionManager,
 ) {
-    suspend operator fun invoke() : Boolean {
-        val jwtRefreshToken = sessionManager.getSessionRefreshToken() ?: return false
-        val refresh = refreshDataSource.refreshToken(jwtRefreshToken)
-        sessionManager.saveSessionAccessToken(refresh.jwtAccessToken)
-        sessionManager.saveSessionRefreshToken(refresh.jwtRefreshToken)
-        return true
+    suspend operator fun invoke(ktorBackend: Boolean): Boolean {
+        if(ktorBackend) {
+            val jwtRefreshToken = sessionManager.getKtorSessionRefreshToken() ?: return false
+            val refresh = refreshDataSource.refreshToken(jwtRefreshToken)
+            sessionManager.saveKtorSessionAccessToken(refresh.jwtAccessToken)
+            sessionManager.saveKtorSessionRefreshToken(refresh.jwtRefreshToken)
+            return true
+        } else {
+            val jwtRefreshToken = sessionManager.getSessionRefreshToken() ?: return false
+            val refresh = refreshDataSource.refreshToken(jwtRefreshToken)
+            sessionManager.saveSessionAccessToken(refresh.jwtAccessToken)
+            sessionManager.saveSessionRefreshToken(refresh.jwtRefreshToken)
+            return true
+        }
+
     }
 }

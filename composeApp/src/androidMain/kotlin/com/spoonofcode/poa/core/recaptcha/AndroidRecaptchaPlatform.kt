@@ -1,0 +1,18 @@
+package com.spoonofcode.poa.core.recaptcha
+
+import android.app.Application
+import com.google.android.recaptcha.Recaptcha
+import com.google.android.recaptcha.RecaptchaAction
+
+class AndroidRecaptchaPlatform(
+    private val application: Application,
+    private val siteKey: String,
+) : RecaptchaPlatform {
+
+    override suspend fun execute(action: String): String {
+        val client = Recaptcha.fetchClient(application, siteKey)
+        val result = client.execute(RecaptchaAction.custom(action)).getOrThrow()
+        println("BARTEK result: $result")
+        return result
+    }
+}

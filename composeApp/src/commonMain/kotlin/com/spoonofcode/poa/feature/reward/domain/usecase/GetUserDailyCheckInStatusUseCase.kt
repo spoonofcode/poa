@@ -1,15 +1,11 @@
 package com.spoonofcode.poa.feature.reward.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
-import com.spoonofcode.poa.core.network.SessionManager
+import com.spoonofcode.poa.feature.reward.domain.repository.RewardRepository
 
-internal class GetUserDailyCheckInStatusUseCase(
-    private val userDataSource: UserDataSource,
-    private val sessionManager: SessionManager
+class GetUserDailyCheckInStatusUseCase(
+    private val rewardRepository: RewardRepository,
 ) {
-    suspend operator fun invoke(): Result<DailyCheckInStatus> {
-        val userId = sessionManager.getSessionUserId()
-        return userDataSource.getUserDailyCheckInStatus(userId)
-    }
+    suspend operator fun invoke(): Result<DailyCheckInStatus> =
+        rewardRepository.getUserDailyCheckInStatus()
 }

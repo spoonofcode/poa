@@ -20,6 +20,19 @@ class SessionManager(private val settings: Settings) {
         saveSettingsNotificationFromMyPartners(true)
     }
 
+    // START KTOR SERVER SESSION
+    fun saveKtorSessionAccessToken(token: String) {
+        settings.putString(KTOR_SESSION_ACCESS_TOKEN, token)
+    }
+
+    fun getKtorSessionAccessToken(): String? = settings.getStringOrNull(KTOR_SESSION_ACCESS_TOKEN)
+
+    fun saveKtorSessionRefreshToken(token: String) {
+        settings.putString(KTOR_SESSION_REFRESH_TOKEN, token)
+    }
+    fun getKtorSessionRefreshToken(): String? = settings.getStringOrNull(KTOR_SESSION_REFRESH_TOKEN)
+    // END KTOR SERVER SESSION
+
     fun saveSessionAccessToken(token: String) {
         settings.putString(SESSION_ACCESS_TOKEN, token)
     }
@@ -77,6 +90,8 @@ class SessionManager(private val settings: Settings) {
     }
 
     companion object {
+        private const val KTOR_SESSION_ACCESS_TOKEN = "ktor_session_access_token"
+        private const val KTOR_SESSION_REFRESH_TOKEN = "ktor_session_refresh_token"
         private const val SESSION_ACCESS_TOKEN = "session_access_token"
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
         private const val SESSION_USER_ID = "session_user_id"

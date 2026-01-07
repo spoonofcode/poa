@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PartnerRequest(
-    val userId: String,
     val name: String,
     val email: String,
     val description: String,

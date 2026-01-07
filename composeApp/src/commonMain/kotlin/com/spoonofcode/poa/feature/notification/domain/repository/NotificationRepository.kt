@@ -1,10 +1,10 @@
-package com.spoonofcode.poa.feature.notification.domain
+package com.spoonofcode.poa.feature.notification.domain.repository
 
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
 import kotlinx.datetime.LocalDateTime
 
-interface NotificationDataSource {
-    suspend fun create(
+interface NotificationRepository {
+    suspend fun send(
         title: String,
         text: String,
         link: String? = null,

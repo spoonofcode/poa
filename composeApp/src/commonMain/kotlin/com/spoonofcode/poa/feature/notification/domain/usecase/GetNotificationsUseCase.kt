@@ -1,12 +1,12 @@
 package com.spoonofcode.poa.feature.notification.domain.usecase
 
-import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
+import com.spoonofcode.poa.feature.notification.domain.repository.NotificationRepository
 
 class GetNotificationsUseCase(
-    private val notificationDataSource: NotificationDataSource,
+    private val notificationRepository: NotificationRepository,
 ) {
-    suspend operator fun invoke(): Result<List<Notification>> = notificationDataSource.readAll()
+    suspend operator fun invoke(): Result<List<Notification>> = notificationRepository.readAll()
         .map {
             it.sortedWith(
                 compareBy<Notification> { it.alreadyRead } // false first

@@ -5,7 +5,6 @@ import com.spoonofcode.poa.feature.login.domain.model.Login
 
 fun LoginResponse.toLogin(): Login {
     return Login(
-        userId = userId,
         jwtAccessToken = jwtAccessToken,
         jwtRefreshToken = jwtRefreshToken
     )

@@ -41,25 +41,25 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal data class ProductDetailsScreen(
     val productId: String,
     val hasOwnerUser: Boolean = true,
-) : BaseScreen<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel, com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewState, com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction>() {
+) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.product
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel>()
+    override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
     override fun provideTopBarActions(
-        onAction: (com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction) -> Unit,
+        onAction: (ProductDetailsViewAction) -> Unit,
     ) = if (hasOwnerUser) {
         listOf(
             TopBarAction(
                 icon = Icons.Default.Edit,
                 description = "Edit",
-                onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction.AddProductToUser) },
+                onClick = { onAction(ProductDetailsViewAction.AddProductToUser) },
             ),
             TopBarAction(Icons.Default.Delete, "Delete") {
                 onAction(
-                    _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction.DeleteProductFromUser
+                    ProductDetailsViewAction.DeleteProductFromUser
                 )
             }
         )
@@ -67,13 +67,13 @@ internal data class ProductDetailsScreen(
         emptyList()
     }
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction.InitView(productId = productId)) }
+    override fun provideInitAction(onAction: (ProductDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewState,
-        onAction: (com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction) -> Unit,
+        viewState: ProductDetailsViewState,
+        onAction: (ProductDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val product = requireNotNull(viewState.product)
@@ -121,7 +121,7 @@ internal data class ProductDetailsScreen(
             if (hasOwnerUser.not()) {
                 Buttons.PrimaryButton(
                     text = stringResource(Res.string.add_product),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction.AddProductToUser) }
+                    onClick = { onAction(ProductDetailsViewAction.AddProductToUser) }
                 )
             }
         }
@@ -166,10 +166,10 @@ internal data class ProductDetailsScreen(
 @Preview
 @Composable
 fun ProductDetailsScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen(
+    ProductDetailsScreen(
         productId = "1"
     ).PreviewContent(
-        viewState = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewState(),
+        viewState = ProductDetailsViewState(),
     )
 }
 // endregion

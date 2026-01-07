@@ -1,7 +1,8 @@
 package com.spoonofcode.poa.feature.profile.di
 
+import com.spoonofcode.poa.feature.profile.data.ProfileRepositoryImpl
 import com.spoonofcode.poa.feature.profile.data.remote.RemoteUserDataSource
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
+import com.spoonofcode.poa.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.poa.feature.profile.domain.usecase.DeleteAccountUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
@@ -14,7 +15,9 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val profileModule = module {
-    singleOf(::RemoteUserDataSource).bind<UserDataSource>()
+    singleOf(::RemoteUserDataSource)
+
+    singleOf(::ProfileRepositoryImpl).bind<ProfileRepository>()
 
     factoryOf(::GetProfileUseCase)
     factoryOf(::DeleteAccountUseCase)

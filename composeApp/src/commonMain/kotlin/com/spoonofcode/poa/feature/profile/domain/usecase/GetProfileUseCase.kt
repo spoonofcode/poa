@@ -1,14 +1,10 @@
 package com.spoonofcode.poa.feature.profile.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
-import com.spoonofcode.poa.core.network.SessionManager
+import com.spoonofcode.poa.feature.profile.domain.repository.ProfileRepository
 
 class GetProfileUseCase(
-    private val userDataSource: UserDataSource,
-    private val sessionManager: SessionManager,
+    private val profileRepository: ProfileRepository,
 ) {
-    suspend operator fun invoke(): Result<Profile> = userDataSource.readUserProfile(
-        userId = sessionManager.getSessionUserId()
-    )
+    suspend operator fun invoke(): Result<Profile> = profileRepository.readUserProfile()
 }

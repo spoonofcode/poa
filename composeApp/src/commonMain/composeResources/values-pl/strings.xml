@@ -5,6 +5,7 @@
     <string name="apply_filter">Zastosuj filtr</string>
     <string name="cancel">Anuluj</string>
     <string name="chat">Czat</string>
+    <string name="code">Kod</string>
     <string name="custom_link">Własny link</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
     <string name="data_has_been_loaded">Dane zostały załądowane</string>
@@ -84,6 +85,7 @@
     <string name="settings">Ustawienia</string>
     <string name="shop">Sklep</string>
     <string name="sign_in">Zaloguj się</string>
+    <string name="sign_in_with_code">Zaloguj się z kodem</string>
     <string name="sign_in_with_google">Zaloguj się z Google</string>
     <string name="sign_up">Zarejestruj się</string>
     <string name="star_mandatory">* obowiązkowe</string>

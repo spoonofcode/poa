@@ -106,6 +106,7 @@ kotlin {
             implementation(libs.androidx.credentials)
             implementation(libs.androidx.credentials.play.service.auth)
             implementation(libs.googleid)
+            implementation(libs.recaptcha)
             implementation(libs.firebase.messaging)
             implementation(project.dependencies.platform(libs.firebase.bom))
         }
@@ -190,11 +191,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
 }
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 
 compose.resources {

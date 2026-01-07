@@ -4,9 +4,12 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.di.productTestModule
+import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction
+import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel
+import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
@@ -20,14 +23,14 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProductOverviewViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel
-    private lateinit var userDataSource: UserDataSource
+    private lateinit var viewModel: ProductOverviewViewModel
+    private lateinit var productRepository: ProductRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(productTestModule)
         super.setup()
-        userDataSource = getKoin().get()
+        productRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -35,7 +38,7 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(),
+                expected = ProductOverviewViewState(),
                 actual = awaitItem()
             )
         }
@@ -46,10 +49,10 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.InitView)
+            viewModel.onAction(ProductOverviewViewAction.InitView)
 
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(
+                expected = ProductOverviewViewState(
                     screenState = ScreenState.CONTENT,
                     initProducts = PRODUCTS,
                     filteredProducts = PRODUCTS,
@@ -59,7 +62,7 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            userDataSource.readUserProducts(any())
+            productRepository.getUserProducts(any())
         }
     }
 
@@ -69,10 +72,10 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
+            viewModel.onAction(ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
 
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(
+                expected = ProductOverviewViewState(
                     searchText = searchText,
                 ),
                 actual = awaitItem()
@@ -82,7 +85,7 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `select product`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
+        viewModel.onAction(ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
         advanceUntilIdle()
 
         verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen>()) }

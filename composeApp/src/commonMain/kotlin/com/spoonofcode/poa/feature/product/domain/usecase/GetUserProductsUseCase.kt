@@ -1,14 +1,10 @@
 package com.spoonofcode.poa.feature.product.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.domain.UserDataSource
 import com.spoonofcode.poa.feature.product.domain.model.Product
-import com.spoonofcode.poa.core.network.SessionManager
+import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 
 class GetUserProductsUseCase(
-    private val userDataSource: UserDataSource,
-    private val sessionManager: SessionManager,
+    private val productRepository: ProductRepository,
 ) {
-    suspend operator fun invoke(): Result<List<Product>> = userDataSource.readUserProducts(
-        userId = sessionManager.getSessionUserId(),
-    )
+    suspend operator fun invoke(): Result<List<Product>> = productRepository.getUserProducts()
 }

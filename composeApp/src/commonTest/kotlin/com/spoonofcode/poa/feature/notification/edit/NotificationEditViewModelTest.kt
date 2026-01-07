@@ -3,7 +3,6 @@ package com.spoonofcode.poa.feature.notification.edit
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.feature.notification.domain.NotificationDataSource
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule

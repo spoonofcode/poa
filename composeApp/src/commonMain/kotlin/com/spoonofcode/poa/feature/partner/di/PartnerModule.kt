@@ -1,9 +1,10 @@
 package com.spoonofcode.poa.feature.partner.di
 
+import com.spoonofcode.poa.feature.partner.data.PartnerRepositoryImpl
 import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerDataSource
-import com.spoonofcode.poa.feature.partner.domain.PartnerCategoryDataSource
-import com.spoonofcode.poa.feature.partner.domain.PartnerDataSource
+import com.spoonofcode.poa.feature.partner.data.remote.RemoteUserPartnerDataSource
+import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerUsersUseCase
@@ -23,8 +24,11 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val partnerModule = module {
-    singleOf(::RemotePartnerDataSource).bind<PartnerDataSource>()
-    singleOf(::RemotePartnerCategoryDataSource).bind<PartnerCategoryDataSource>()
+    singleOf(::RemotePartnerDataSource)
+    singleOf(::RemotePartnerCategoryDataSource)
+    singleOf(::RemoteUserPartnerDataSource)
+
+    singleOf(::PartnerRepositoryImpl).bind<PartnerRepository>()
 
     factoryOf(::GetPartnerByIdUseCase)
     factoryOf(::GetPartnerCategoriesUseCase)
