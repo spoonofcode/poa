@@ -244,7 +244,7 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(facebookLink = youtubeLink),
+                        partner = PARTNER_1.copy(youtubeLink = youtubeLink),
                     ),
                     screenState = ScreenState.CONTENT
                 ),

@@ -6,6 +6,7 @@ import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction
+import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewModel
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
@@ -21,7 +22,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationTypeViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewModel
+    private lateinit var viewModel: NotificationTypeViewModel
 
     @BeforeTest
     override fun setup() {

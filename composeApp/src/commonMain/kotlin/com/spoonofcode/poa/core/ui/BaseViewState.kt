@@ -2,7 +2,7 @@ package com.spoonofcode.poa.core.ui
 
 data class ViewState<VS : BaseViewState>(
     val data: VS,
-    val screenState: ScreenState = ScreenState.CONTENT
+    val screenState: ScreenState = ScreenState.LOADING
 )
 
 abstract class BaseViewState

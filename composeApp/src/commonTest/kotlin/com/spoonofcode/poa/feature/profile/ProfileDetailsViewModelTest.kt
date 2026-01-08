@@ -58,20 +58,12 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
 
             viewModel.onAction(ProfileDetailsViewAction.InitView)
 
-            val loadingState = awaitItem()
-            assertEquals(
-                expected = ScreenState.LOADING,
-                actual = loadingState.screenState
-            )
-
-            val resultState = awaitItem()
-
             assertEquals(
                 expected = ViewState(
                     data = ProfileDetailsViewState(profile = PROFILE_1),
                     screenState = ScreenState.CONTENT
                 ),
-                actual = resultState
+                actual = awaitItem()
             )
         }
     }

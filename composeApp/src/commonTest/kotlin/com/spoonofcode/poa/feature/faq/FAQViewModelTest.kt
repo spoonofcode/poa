@@ -49,14 +49,6 @@ class FAQViewModelest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = FAQViewState(
-                    )
-                ),
-                actual = awaitItem()
-            )
-
-            assertEquals(
-                expected = ViewState(
-                    data = FAQViewState(
                         faqs = FAQS
                     ),
                     screenState = ScreenState.CONTENT,

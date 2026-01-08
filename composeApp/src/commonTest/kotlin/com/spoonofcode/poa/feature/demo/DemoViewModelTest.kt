@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.demo
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.demo.di.demoTestModule
 import com.spoonofcode.poa.feature.demo.presentation.DemoViewModel
@@ -30,6 +31,7 @@ class DemoViewModelest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = DemoViewState(),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

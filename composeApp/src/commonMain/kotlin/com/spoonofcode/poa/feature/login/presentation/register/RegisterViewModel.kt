@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.domain.usecase.RegisterUseCase
 import kotlinx.coroutines.launch
 

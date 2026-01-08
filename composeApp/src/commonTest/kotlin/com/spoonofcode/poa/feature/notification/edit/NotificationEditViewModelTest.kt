@@ -39,6 +39,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = NotificationEditViewState(),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -58,6 +59,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
                     data = NotificationEditViewState(
                         itemIds = itemIds,
                     ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -77,6 +79,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
                     data = NotificationEditViewState(
                         link = link,
                     ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -96,6 +99,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
                     data = NotificationEditViewState(
                         text = text,
                     ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -115,6 +119,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
                     data = NotificationEditViewState(
                         title = title,
                     ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

@@ -51,7 +51,9 @@ class NotificationDetailsViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = NotificationDetailsViewState(),
+                    data = NotificationDetailsViewState(
+                        notification = NOTIFICATION_1,
+                    ),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()

@@ -1,11 +1,10 @@
 package com.spoonofcode.poa.feature.partner.presentation.overview
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersUseCase
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
 import kotlinx.coroutines.launch
 
@@ -29,7 +28,7 @@ internal class PartnerOverviewViewModel(
         viewModelScope.launch {
             getPartnersUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             initPartners = it,
                             filteredPartners = it,
