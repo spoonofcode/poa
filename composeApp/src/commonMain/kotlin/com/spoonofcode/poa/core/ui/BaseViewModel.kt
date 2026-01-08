@@ -72,6 +72,11 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
         _viewState.update { it.copy(screenState = ScreenState.CONTENT) }
     }
 
+    protected fun showErrorSnackbar(e: Throwable) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        showContentView()
+    }
+
     @OptIn(FlowPreview::class)
     private fun observeNetworkState() {
         viewModelScope.launch {

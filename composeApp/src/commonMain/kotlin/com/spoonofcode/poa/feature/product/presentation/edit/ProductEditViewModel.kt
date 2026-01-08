@@ -70,9 +70,4 @@ internal class ProductEditViewModel(
                 }
         }
     }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        showContentView()
-    }
 }

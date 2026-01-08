@@ -58,9 +58,4 @@ internal class ProfileEditViewModel(
             viewModelNavigator.pop()
         }
     }
-
-    private fun showErrorSnackbar(e: Exception) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        showContentView()
-    }
 }

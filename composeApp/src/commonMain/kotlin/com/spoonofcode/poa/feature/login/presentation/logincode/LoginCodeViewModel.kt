@@ -2,8 +2,6 @@ package com.spoonofcode.poa.feature.login.presentation.logincode
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 
@@ -47,11 +45,6 @@ internal class LoginCodeViewModel(
                 email = email,
             )
         }
-        showContentView()
-    }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
         showContentView()
     }
 }

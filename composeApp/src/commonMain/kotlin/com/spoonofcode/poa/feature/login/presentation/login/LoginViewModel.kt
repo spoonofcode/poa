@@ -96,9 +96,4 @@ internal class LoginViewModel(
             viewModelNavigator.push(RegisterScreen())
         }
     }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        showContentView()
-    }
 }

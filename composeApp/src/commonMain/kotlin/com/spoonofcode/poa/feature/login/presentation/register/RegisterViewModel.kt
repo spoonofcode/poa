@@ -65,9 +65,4 @@ internal class RegisterViewModel(
             }
         }
     }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        showContentView()
-    }
 }

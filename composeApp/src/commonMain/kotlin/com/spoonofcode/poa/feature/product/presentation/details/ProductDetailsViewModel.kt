@@ -83,9 +83,4 @@ internal class ProductDetailsViewModel(
                 }
         }
     }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        showContentView()
-    }
 }

@@ -89,13 +89,4 @@ internal class NotificationEditViewModel(
 
         }
     }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(
-            SnackbarEvent.Error(
-                message = "ERROR: $e"
-            )
-        )
-        showContentView()
-    }
 }
