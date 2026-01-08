@@ -47,6 +47,7 @@ class LoginViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = LoginViewState(),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -66,6 +67,7 @@ class LoginViewModelTest : BaseViewModelTest() {
                     data = LoginViewState(
                         email = email,
                     ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -85,6 +87,7 @@ class LoginViewModelTest : BaseViewModelTest() {
                     data = LoginViewState(
                         password = password,
                     ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

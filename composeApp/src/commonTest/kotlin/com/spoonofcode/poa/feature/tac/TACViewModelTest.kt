@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.tac
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.tac.di.tacTestModule
 import com.spoonofcode.poa.feature.tac.presentation.TACViewModel
@@ -30,6 +31,7 @@ class TACViewModelest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = TACViewState(),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

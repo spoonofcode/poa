@@ -77,12 +77,26 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
+            viewModel.onAction(ProductOverviewViewAction.InitView)
+
+            assertEquals(
+                expected = ViewState(
+                    data = ProductOverviewViewState(
+                        initProducts = PRODUCTS,
+                        filteredProducts = PRODUCTS,
+                    ),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+
             viewModel.onAction(ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
 
             assertEquals(
                 expected = ViewState(
                     data = ProductOverviewViewState(
                         searchText = searchText,
+                        initProducts = PRODUCTS,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

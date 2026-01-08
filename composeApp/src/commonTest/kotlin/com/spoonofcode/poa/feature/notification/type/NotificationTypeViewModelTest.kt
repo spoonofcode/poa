@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.notification.type
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
@@ -37,6 +38,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = NotificationTypeViewState(),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

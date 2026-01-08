@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.scan
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
+import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.scan.di.scanTestModule
@@ -37,6 +38,7 @@ class ScanViewModelest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = ScanViewState(),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

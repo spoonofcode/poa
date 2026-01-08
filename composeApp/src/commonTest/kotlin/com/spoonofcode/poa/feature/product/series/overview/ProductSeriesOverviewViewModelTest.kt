@@ -6,6 +6,7 @@ import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverViewViewAction
@@ -115,6 +116,6 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProductSeriesOverViewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
     }
 }
