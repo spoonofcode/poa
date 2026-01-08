@@ -52,12 +52,11 @@ internal class HomeViewModel(
 
         getUserRewardsPointsUseCase()
             .onSuccess {
-                updateState {
+                showContentView {
                     copy(
                         totalPoints = it,
                     )
                 }
-                showContentView()
             }
             .onFailure {
                 showErrorView()

@@ -26,13 +26,12 @@ internal class ProductOverviewViewModel(
         viewModelScope.launch {
             getUserProductsUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             initProducts = it,
                             filteredProducts = it,
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

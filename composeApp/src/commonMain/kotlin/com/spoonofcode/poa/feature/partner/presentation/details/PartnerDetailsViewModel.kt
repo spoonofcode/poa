@@ -21,12 +21,11 @@ internal class PartnerDetailsViewModel(
         viewModelScope.launch {
             getPartnerByIdUseCase(partnerId = partnerId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             partner = it
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

@@ -27,12 +27,11 @@ internal class NotificationOverviewViewModel(
         viewModelScope.launch {
             getNotificationsUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         NotificationOverviewViewState(
                             notifications = it,
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

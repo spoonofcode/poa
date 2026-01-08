@@ -20,12 +20,11 @@ internal class FAQViewModel(
         viewModelScope.launch {
             getFAQUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             faqs = it,
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

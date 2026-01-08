@@ -42,12 +42,11 @@ internal class PartnerOverviewViewModel(
 
             getPartnerCategoriesUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             partnerCategories = it,
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

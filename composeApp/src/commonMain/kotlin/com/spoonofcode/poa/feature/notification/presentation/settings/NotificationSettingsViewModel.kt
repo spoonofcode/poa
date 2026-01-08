@@ -34,12 +34,11 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             try {
                 val notificationSettings = getNotificationSettingsUseCase()
-                updateState {
+                showContentView {
                     NotificationSettingsViewState(
                         notificationSettings = notificationSettings,
                     )
                 }
-                showContentView()
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {

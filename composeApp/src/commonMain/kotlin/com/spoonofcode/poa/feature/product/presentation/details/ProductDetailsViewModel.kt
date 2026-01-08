@@ -32,12 +32,11 @@ internal class ProductDetailsViewModel(
         viewModelScope.launch {
             getProductByIdUseCase(productId = productId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             product = it
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

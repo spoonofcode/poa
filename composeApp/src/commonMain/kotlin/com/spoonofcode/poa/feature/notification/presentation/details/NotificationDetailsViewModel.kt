@@ -23,12 +23,11 @@ internal class NotificationDetailsViewModel(
         viewModelScope.launch {
             getNotificationByIdUseCase(notificationId = notificationId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         NotificationDetailsViewState(
                             notification = it
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

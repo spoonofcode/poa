@@ -27,12 +27,11 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             getProductSeriesUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             productSeries = it,
                         )
                     }
-                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

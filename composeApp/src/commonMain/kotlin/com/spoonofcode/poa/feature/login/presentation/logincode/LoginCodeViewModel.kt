@@ -40,11 +40,10 @@ internal class LoginCodeViewModel(
     }
 
     private fun initView() {
-        updateState {
+        showContentView {
             copy(
                 email = email,
             )
         }
-        showContentView()
     }
 }

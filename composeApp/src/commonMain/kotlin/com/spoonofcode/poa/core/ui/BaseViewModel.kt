@@ -68,13 +68,22 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
         _viewState.update { it.copy(screenState = ScreenState.ERROR) }
     }
 
-    protected fun showContentView() {
-        _viewState.update { it.copy(screenState = ScreenState.CONTENT) }
+    protected fun showContentView(
+        transformation: VS.() -> VS,
+    ) {
+        _viewState.update {
+            it.copy(
+                screenState = ScreenState.CONTENT,
+                data = it.data.transformation(),
+            )
+        }
     }
 
     protected fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        showContentView()
+        _viewState.update {
+            it.copy(screenState = ScreenState.CONTENT)
+        }
     }
 
     @OptIn(FlowPreview::class)
