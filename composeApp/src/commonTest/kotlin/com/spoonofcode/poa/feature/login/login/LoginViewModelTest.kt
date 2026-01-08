@@ -155,7 +155,7 @@ class LoginViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = LoginViewState(),
-                    screenState = ScreenState.LOADING,
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
