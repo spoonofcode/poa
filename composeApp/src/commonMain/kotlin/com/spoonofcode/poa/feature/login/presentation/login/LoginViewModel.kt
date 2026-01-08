@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
@@ -84,6 +83,7 @@ internal class LoginViewModel(
             showLoadingView()
             loginGoogleUseCase(googleIdToken)
                 .onSuccess {
+                    println("BARTEK")
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))
                 }.onFailure {
                     showErrorSnackbar(it)

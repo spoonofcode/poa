@@ -12,6 +12,7 @@ import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPassw
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewAction
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewState
+import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
 import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -192,6 +193,111 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
+        }
+    }
+
+    @Test
+    fun `sign in with Google error`() = runTest {
+        val token = "google-id-token"
+        everySuspend {
+            loginRepository.loginWithGoogle(any())
+        } returns Result.failure(Exception("error"))
+
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
+
+            assertEquals(
+                expected = ViewState(
+                    data = LoginViewState(),
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+
+            assertEquals(
+                expected = ViewState(
+                    data = LoginViewState(),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            loginRepository.loginWithGoogle(any())
+        }
+
+        verifySuspend(mode = exactly(0)) {
+            viewModelNavigator.replaceAll(any())
+        }
+    }
+
+    @Test
+    fun `sign in with code success`() = runTest {
+        val email = "john@doe.com"
+        viewModel.onAction(LoginViewAction.ChangeEmail(email))
+
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(LoginViewAction.SignInWithCode)
+
+            assertEquals(
+                expected = ViewState(
+                    data = LoginViewState(email = email),
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            loginRepository.requestCode(email = email, recaptchaToken = any())
+        }
+        verifySuspend {
+            viewModelNavigator.push(ofType<LoginCodeScreen>())
+        }
+    }
+
+    @Test
+    fun `sign in with code error`() = runTest {
+        val email = "john@doe.com"
+        viewModel.onAction(LoginViewAction.ChangeEmail(email))
+
+        everySuspend {
+            loginRepository.requestCode(any(), any())
+        } returns Result.failure(Exception("error"))
+
+        viewModel.viewState.test {
+            skipItems(1)
+
+            viewModel.onAction(LoginViewAction.SignInWithCode)
+
+            assertEquals(
+                expected = ViewState(
+                    data = LoginViewState(email = email),
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+
+            assertEquals(
+                expected = ViewState(
+                    data = LoginViewState(email = email),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        verifySuspend {
+            loginRepository.requestCode(any(), any())
+        }
+
+        verifySuspend(mode = exactly(0)) {
+            viewModelNavigator.push(ofType<LoginCodeScreen>())
         }
     }
 }
