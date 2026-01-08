@@ -10,7 +10,7 @@ import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewState
-import dev.mokkery.answering.throws
+import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
@@ -59,7 +59,9 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = ProductDetailsViewState(),
+                    data = ProductDetailsViewState(
+                        product = PRODUCT_1,
+                    ),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
@@ -73,7 +75,8 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `init view error`() = runTest {
-        everySuspend { productRepository.getProduct(any()) } throws Exception("not found")
+        everySuspend { productRepository.getProduct(any()) } returns
+                Result.failure(Exception("not found"))
 
         viewModel.viewState.test {
             skipItems(1)
@@ -117,13 +120,11 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
             productRepository.addProductToUser(
                 any(),
             )
-        } throws Exception("add product to user error")
+        } returns Result.failure(Exception("add product to user error"))
 
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
 
         viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
-        advanceUntilIdle()
 
         verifySuspend {
             productRepository.addProductToUser(PRODUCT_1.id)
