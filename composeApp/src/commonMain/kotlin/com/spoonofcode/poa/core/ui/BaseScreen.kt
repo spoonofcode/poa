@@ -13,7 +13,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -87,7 +86,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
 
         val snackbarHostState = remember { SnackbarHostState() }
         val viewModel = provideViewModel()
-        val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+        val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
         NavigationHandler(viewModel.navigationFlow, navigator)
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
@@ -101,7 +100,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
 
         ContentView(
             snackbarHostState = snackbarHostState,
-            viewState = viewState,
+            viewState = uiState.data,
+            screenState = uiState.screenState,
             navigationBackAction = navigationBackAction,
             onAction = viewModel::onAction
 
@@ -113,6 +113,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     private fun ContentView(
         snackbarHostState: SnackbarHostState,
         viewState: VS,
+        screenState: ScreenState,
         navigationBackAction: () -> Unit,
         onAction: (VA) -> Unit,
     ) {
@@ -139,10 +140,10 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
                     )
                 }
             },
-            modifier = Modifier.viewEnable(viewState.screenState != ScreenState.LOADING)
+            modifier = Modifier.viewEnable(screenState != ScreenState.LOADING)
                 .fillMaxSize()
         ) { innerPadding ->
-            when (viewState.screenState) {
+            when (screenState) {
                 ScreenState.LOADING -> LoadingView()
                 ScreenState.ERROR -> ErrorView(reload = provideReloadAction(onAction))
                 ScreenState.CONTENT -> Column(
@@ -163,12 +164,14 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     @Composable
     fun PreviewContent(
         viewState: VS,
+        screenState: ScreenState = ScreenState.CONTENT,
     ) {
         AppTheme {
             val snackbarHostState = remember { SnackbarHostState() }
             ContentView(
                 snackbarHostState = snackbarHostState,
                 viewState = viewState,
+                screenState = screenState,
                 navigationBackAction = {},
                 onAction = {},
             )

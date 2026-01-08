@@ -35,7 +35,7 @@ internal class PartnerPanelViewModel(
 
     fun navigateToNotificationType() {
         viewModelScope.launch {
-            viewModelNavigator.push(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen())
+            viewModelNavigator.push(NotificationTypeScreen())
         }
     }
 

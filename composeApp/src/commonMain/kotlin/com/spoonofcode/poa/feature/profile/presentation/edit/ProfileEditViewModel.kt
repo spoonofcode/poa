@@ -29,9 +29,9 @@ internal class ProfileEditViewModel(
                     updateState {
                         copy(
                             profile = it,
-                            screenState = ScreenState.CONTENT,
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -59,28 +59,8 @@ internal class ProfileEditViewModel(
         }
     }
 
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
-
     private fun showErrorSnackbar(e: Exception) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING
-            )
-        }
+        showContentView()
     }
 }

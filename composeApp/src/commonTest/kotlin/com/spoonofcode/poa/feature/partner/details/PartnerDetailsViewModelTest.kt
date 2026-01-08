@@ -2,9 +2,12 @@ package com.spoonofcode.poa.feature.partner.details
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
+import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction
+import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -27,7 +30,10 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState(),
+                expected = ViewState(
+                    data = PartnerDetailsViewState(),
+
+                    ),
                 actual = awaitItem()
             )
         }
@@ -38,11 +44,11 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction.InitView(partnerId = PARTNER_1.id))
+            viewModel.onAction(PartnerDetailsViewAction.InitView(partnerId = PARTNER_1.id))
 
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState(
-                    partner = PARTNER_1,
+                expected = ViewState(
+                    data = PartnerDetailsViewState(partner = PARTNER_1),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()

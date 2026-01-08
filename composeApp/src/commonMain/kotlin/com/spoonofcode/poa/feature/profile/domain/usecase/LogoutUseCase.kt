@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.login.domain.usecase
+package com.spoonofcode.poa.feature.profile.domain.usecase
 
 import com.spoonofcode.poa.core.network.SessionManager
 

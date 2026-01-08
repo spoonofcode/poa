@@ -25,20 +25,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
     val productId: String,
-) : BaseScreen<com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewModel, com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState, com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction>() {
+) : BaseScreen<ProductEditViewModel, ProductEditViewState, ProductEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.edit_product
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.InitView(productId = productId)) }
+    override fun provideInitAction(onAction: (ProductEditViewAction) -> Unit): () -> Unit =
+        { onAction(ProductEditViewAction.InitView(productId = productId)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewModel>()
+    override fun provideViewModel() = koinViewModel<ProductEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState,
-        onAction: (com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction) -> Unit,
+        viewState: ProductEditViewState,
+        onAction: (ProductEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val product = requireNotNull(viewState.product)
@@ -69,7 +69,7 @@ internal class ProductEditScreen(
 
             TextFields.Outlined(
                 value = product.customLink ?: "",
-                onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.ChangeCustomLink(it)) },
+                onValueChange = { onAction(ProductEditViewAction.ChangeCustomLink(it)) },
                 label = stringResource(resource = Res.string.custom_link),
             )
 
@@ -77,7 +77,7 @@ internal class ProductEditScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction.SaveChanges) }
+                onClick = { onAction(ProductEditViewAction.SaveChanges) }
             )
         }
     }
@@ -87,10 +87,10 @@ internal class ProductEditScreen(
 @Preview
 @Composable
 fun ProductEditScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditScreen(
+    ProductEditScreen(
         productId = "1",
     ).PreviewContent(
-        viewState = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState(),
+        viewState = ProductEditViewState(),
     )
 }
 // endregion

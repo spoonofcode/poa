@@ -3,7 +3,6 @@ package com.spoonofcode.poa.feature.faq.presentation
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.faq.domain.usecase.GetFAQUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 
 internal class FAQViewModel(
@@ -23,30 +22,14 @@ internal class FAQViewModel(
                 .onSuccess {
                     updateState {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             faqs = it,
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
                 }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

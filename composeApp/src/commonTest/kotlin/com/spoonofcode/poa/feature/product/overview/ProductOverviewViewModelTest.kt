@@ -5,12 +5,13 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction
 import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel
 import com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState
-import dev.mokkery.matcher.any
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,7 +39,9 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ProductOverviewViewState(),
+                expected = ViewState(
+                    data = ProductOverviewViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -52,17 +55,19 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductOverviewViewAction.InitView)
 
             assertEquals(
-                expected = ProductOverviewViewState(
+                expected = ViewState(
+                    data = ProductOverviewViewState(
+                        initProducts = PRODUCTS,
+                        filteredProducts = PRODUCTS,
+                    ),
                     screenState = ScreenState.CONTENT,
-                    initProducts = PRODUCTS,
-                    filteredProducts = PRODUCTS,
                 ),
                 actual = awaitItem()
             )
         }
 
         verifySuspend {
-            productRepository.getUserProducts(any())
+            productRepository.getUserProducts()
         }
     }
 
@@ -75,8 +80,11 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
 
             assertEquals(
-                expected = ProductOverviewViewState(
-                    searchText = searchText,
+                expected = ViewState(
+                    data = ProductOverviewViewState(
+                        searchText = searchText,
+                    ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -88,6 +96,6 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<ProductDetailsScreen>()) }
     }
 }

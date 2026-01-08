@@ -31,10 +31,10 @@ internal class LoginCodeViewModel(
         viewModelScope.launch {
             showLoadingView()
             loginCodeUseCase(
-                email = viewState.value.email,
-                code = viewState.value.code,
+                email = currentState().email,
+                code = currentState().code,
             ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = viewState.value.email))
+                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
             }.onFailure {
                 showErrorSnackbar(it)
             }
@@ -47,22 +47,11 @@ internal class LoginCodeViewModel(
                 email = email,
             )
         }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
+        showContentView()
     }
 
     private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.CONTENT
-            )
-        }
+        showContentView()
     }
 }

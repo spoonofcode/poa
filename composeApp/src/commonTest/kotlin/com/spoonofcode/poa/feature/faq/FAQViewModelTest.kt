@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.FAQMockData.FAQS
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.faq.di.faqTestModule
 import com.spoonofcode.poa.feature.faq.presentation.FAQViewAction
 import com.spoonofcode.poa.feature.faq.presentation.FAQViewModel
@@ -30,7 +31,9 @@ class FAQViewModelest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = FAQViewState(),
+                expected = ViewState(
+                    data = FAQViewState()
+                ),
                 actual = awaitItem()
             )
         }
@@ -44,16 +47,19 @@ class FAQViewModelest : BaseViewModelTest() {
             viewModel.onAction(FAQViewAction.InitView)
 
             assertEquals(
-                expected = FAQViewState(
-                    screenState = ScreenState.LOADING,
+                expected = ViewState(
+                    data = FAQViewState(
+                    )
                 ),
                 actual = awaitItem()
             )
 
             assertEquals(
-                expected = FAQViewState(
+                expected = ViewState(
+                    data = FAQViewState(
+                        faqs = FAQS
+                    ),
                     screenState = ScreenState.CONTENT,
-                    faqs = FAQS
                 ),
                 actual = awaitItem()
             )

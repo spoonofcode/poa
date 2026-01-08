@@ -241,7 +241,6 @@ private fun DividerItem() {
 private fun ProfileScreenContentPreview() {
     ProfileDetailsScreen().PreviewContent(
         ProfileDetailsViewState(
-            screenState = ScreenState.CONTENT,
             profile = Profile(
                 name = "Bartosz luczak (Lycha)",
                 numberOfProductsOwnedByUser = 2,

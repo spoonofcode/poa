@@ -28,10 +28,10 @@ internal class ProductEditViewModel(
                 .onSuccess {
                     updateState {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             product = it
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -73,26 +73,6 @@ internal class ProductEditViewModel(
 
     private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING
-            )
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
+        showContentView()
     }
 }

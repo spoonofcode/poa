@@ -1,14 +1,18 @@
 package com.spoonofcode.poa.feature.scan.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
+import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
     private val getProductByTagIdUseCase: GetProductByTagIdUseCase,
-) : BaseViewModel<ScanViewState, ScanViewAction>(ScanViewState()) {
+) : BaseViewModel<ScanViewState, ScanViewAction>(
+    initialViewState = ScanViewState(),
+    initialScreenState = ScreenState.CONTENT,
+) {
 
     override fun onAction(action: ScanViewAction) {
         when (action) {
@@ -22,7 +26,7 @@ internal class ScanViewModel(
             getProductByTagIdUseCase(tagId = tagId)
                 .onSuccess {
                     viewModelNavigator.push(
-                        _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen(
+                        ProductDetailsScreen(
                             productId = it.id,
                             hasOwnerUser = it.ownerUserId != null,
                         )
@@ -31,22 +35,6 @@ internal class ScanViewModel(
                 .onFailure {
                     showErrorView()
                 }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

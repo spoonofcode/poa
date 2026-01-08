@@ -23,30 +23,14 @@ internal class PartnerDetailsViewModel(
                 .onSuccess {
                     updateState {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             partner = it
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
                 }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

@@ -6,5 +6,5 @@ import dev.mokkery.every
 import dev.mokkery.mock
 
 fun sessionManagerMock() = mock<SessionManager>(mode = MockMode.autoUnit) {
-    every { getSessionUserId() } returns USER_1.id
+    every { clearSession() } returns Unit
 }

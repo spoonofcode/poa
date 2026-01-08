@@ -36,20 +36,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerEditScreen(
     private val partnerId: String,
-) : BaseScreen<com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewModel, com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState, com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction>() {
+) : BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.InitView(partnerId = partnerId)) }
+    override fun provideInitAction(onAction: (PartnerEditViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerEditViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewModel>()
+    override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState,
-        onAction: (com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction) -> Unit,
+        viewState: PartnerEditViewState,
+        onAction: (PartnerEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val partner = viewState.partner
@@ -73,37 +73,37 @@ internal class PartnerEditScreen(
 
                 TextFields.Outlined(
                     value = partner.name,
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeName(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },
                     label = stringResource(resource = Res.string.partner_name),
                 )
                 TextFields.Outlined(
                     value = partner.description.orEmpty(), // Używamy orEmpty() dla bezpieczeństwa
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeDescription(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
                     label = stringResource(resource = Res.string.description),
                 )
                 TextFields.Outlined(
                     value = partner.websiteLink.orEmpty(),
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeWebsiteLink(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeWebsiteLink(it)) },
                     label = stringResource(resource = Res.string.website),
                 )
                 TextFields.Outlined(
                     value = partner.instagramLink.orEmpty(),
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeInstagramLink(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeInstagramLink(it)) },
                     label = stringResource(resource = Res.string.instagram),
                 )
                 TextFields.Outlined(
                     value = partner.facebookLink.orEmpty(),
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeFacebookLink(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeFacebookLink(it)) },
                     label = stringResource(resource = Res.string.facebook),
                 )
                 TextFields.Outlined(
                     value = partner.youtubeLink.orEmpty(),
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeYoutubeLink(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeYoutubeLink(it)) },
                     label = stringResource(resource = Res.string.youtube),
                 )
                 TextFields.Outlined(
                     value = partner.xLink.orEmpty(),
-                    onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.ChangeXLink(it)) },
+                    onValueChange = { onAction(PartnerEditViewAction.ChangeXLink(it)) },
                     label = stringResource(resource = Res.string.x),
                 )
 
@@ -111,7 +111,7 @@ internal class PartnerEditScreen(
 
                 Buttons.PrimaryButton(
                     text = stringResource(resource = Res.string.save_changes),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewAction.SaveChanges) },
+                    onClick = { onAction(PartnerEditViewAction.SaveChanges) },
                 )
             }
         }
@@ -120,10 +120,10 @@ internal class PartnerEditScreen(
     @Preview
     @Composable
     private fun InitializedPartnerEditScreenPreview() {
-        _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen(
+        PartnerEditScreen(
             partnerId = "1"
         ).PreviewContent(
-            _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditViewState(
+            PartnerEditViewState(
                 partner = PartnerMockData.PARTNER_1
             )
         )

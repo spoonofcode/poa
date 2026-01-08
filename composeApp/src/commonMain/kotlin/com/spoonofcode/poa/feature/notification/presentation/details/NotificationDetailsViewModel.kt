@@ -25,30 +25,14 @@ internal class NotificationDetailsViewModel(
                 .onSuccess {
                     updateState {
                         NotificationDetailsViewState(
-                            screenState = ScreenState.CONTENT,
                             notification = it
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
                 }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            NotificationDetailsViewState(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            NotificationDetailsViewState(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

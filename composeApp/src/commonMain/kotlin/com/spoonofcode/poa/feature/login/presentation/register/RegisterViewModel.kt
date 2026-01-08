@@ -2,15 +2,18 @@ package com.spoonofcode.poa.feature.login.presentation.register
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.feature.login.domain.usecase.RegisterUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.login.domain.usecase.RegisterUseCase
 import kotlinx.coroutines.launch
 
 internal class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
-) : BaseViewModel<RegisterViewState, RegisterViewAction>(RegisterViewState()) {
+) : BaseViewModel<RegisterViewState, RegisterViewAction>(
+    RegisterViewState(),
+    initialScreenState = ScreenState.CONTENT,
+) {
 
     override fun onAction(action: RegisterViewAction) {
         when (action) {
@@ -63,20 +66,8 @@ internal class RegisterViewModel(
         }
     }
 
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
     private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.CONTENT,
-            )
-        }
+        showContentView()
     }
 }

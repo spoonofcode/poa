@@ -2,8 +2,11 @@ package com.spoonofcode.poa.feature.notification.type
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
+import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction
+import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
 import dev.mokkery.matcher.ofType
@@ -31,7 +34,9 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState(),
+                expected = ViewState(
+                    data = NotificationTypeViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -39,15 +44,15 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to notification screen for all customers`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllCustomers)
+        viewModel.onAction(NotificationTypeViewAction.NavigateToAllCustomers)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
     }
 
     @Test
     fun `navigates to partner customers overview screen`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerCustomers)
+        viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerCustomers)
         advanceUntilIdle()
 
         verifySuspend { viewModelNavigator.push(ofType<CustomerOverviewScreen>()) }
@@ -55,7 +60,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to partner product series overview screen`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerProductSeries)
+        viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries)
         advanceUntilIdle()
 
         verifySuspend { viewModelNavigator.push(ofType<ProductSeriesOverviewScreen>()) }
@@ -63,9 +68,9 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to notification screen for all partner customers`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllPartnerCustomers)
+        viewModel.onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
     }
 }

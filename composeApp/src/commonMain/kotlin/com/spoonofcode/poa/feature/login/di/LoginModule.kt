@@ -12,7 +12,6 @@ import com.spoonofcode.poa.feature.login.domain.usecase.LoginCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
-import com.spoonofcode.poa.feature.login.domain.usecase.LogoutUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.RegisterUseCase
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewModel
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
@@ -43,7 +42,6 @@ val loginModule: Module = module {
     factoryOf(::LoginGoogleUseCase)
     factoryOf(::LoginCodeUseCase)
     factoryOf(::LoginRequestCodeUseCase)
-    factoryOf(::LogoutUseCase)
     factoryOf(::RegisterUseCase)
 
     viewModelOf(::LoginViewModel)

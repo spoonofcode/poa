@@ -5,6 +5,7 @@ import com.spoonofcode.poa.feature.profile.data.remote.RemoteUserDataSource
 import com.spoonofcode.poa.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.poa.feature.profile.domain.usecase.DeleteAccountUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
+import com.spoonofcode.poa.feature.profile.domain.usecase.LogoutUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
 import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewModel
@@ -22,6 +23,7 @@ val profileModule = module {
     factoryOf(::GetProfileUseCase)
     factoryOf(::DeleteAccountUseCase)
     factoryOf(::UpdateProfileUseCase)
+    factoryOf(::LogoutUseCase)
 
     viewModelOf(::ProfileDetailsViewModel)
     viewModelOf(::ProfileEditViewModel)

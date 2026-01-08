@@ -44,10 +44,10 @@ internal class PartnerOverviewViewModel(
                 .onSuccess {
                     updateState {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             partnerCategories = it,
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -86,22 +86,6 @@ internal class PartnerOverviewViewModel(
                 PartnerDetailsScreen(
                     partnerId = partnerId
                 )
-            )
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
             )
         }
     }

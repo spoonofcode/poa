@@ -29,10 +29,10 @@ internal class NotificationOverviewViewModel(
                 .onSuccess {
                     updateState {
                         NotificationOverviewViewState(
-                            screenState = ScreenState.CONTENT,
                             notifications = it,
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -46,22 +46,6 @@ internal class NotificationOverviewViewModel(
                 NotificationDetailsScreen(
                     notificationId = notificationId
                 )
-            )
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            NotificationOverviewViewState(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            NotificationOverviewViewState(
-                screenState = ScreenState.ERROR,
             )
         }
     }

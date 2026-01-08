@@ -3,11 +3,11 @@ package com.spoonofcode.poa.feature.login.login
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.feature.login.data.remote.LoginGoogleDataSource
-import com.spoonofcode.poa.feature.login.data.remote.LoginDataSource
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
+import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewAction
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
@@ -30,15 +30,13 @@ import kotlin.test.assertEquals
 class LoginViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: LoginViewModel
-    private lateinit var loginDataSource: LoginDataSource
-    private lateinit var loginGoogleDataSource: LoginGoogleDataSource
+    private lateinit var loginRepository: LoginRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(loginTestModule)
         super.setup()
-        loginDataSource = getKoin().get()
-        loginGoogleDataSource = getKoin().get()
+        loginRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -46,7 +44,9 @@ class LoginViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = LoginViewState(),
+                expected = ViewState(
+                    data = LoginViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -61,8 +61,10 @@ class LoginViewModelTest : BaseViewModelTest() {
             viewModel.onAction(LoginViewAction.ChangeEmail(email))
 
             assertEquals(
-                expected = LoginViewState(
-                    email = email,
+                expected = ViewState(
+                    data = LoginViewState(
+                        email = email,
+                    ),
                 ),
                 actual = awaitItem()
             )
@@ -78,8 +80,10 @@ class LoginViewModelTest : BaseViewModelTest() {
             viewModel.onAction(LoginViewAction.ChangePassword(password))
 
             assertEquals(
-                expected = LoginViewState(
-                    password = password,
+                expected = ViewState(
+                    data = LoginViewState(
+                        password = password,
+                    ),
                 ),
                 actual = awaitItem()
             )
@@ -110,7 +114,8 @@ class LoginViewModelTest : BaseViewModelTest() {
             viewModel.onAction(LoginViewAction.SignIn)
 
             assertEquals(
-                expected = LoginViewState(
+                expected = ViewState(
+                    data = LoginViewState(),
                     screenState = ScreenState.LOADING,
                 ),
                 actual = awaitItem()
@@ -118,7 +123,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginDataSource.create(any(), any())
+            loginRepository.login(any(), any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
@@ -128,7 +133,7 @@ class LoginViewModelTest : BaseViewModelTest() {
     @Test
     fun `sign in error`() = runTest {
         everySuspend {
-            loginDataSource.create(
+            loginRepository.login(
                 any(),
                 any()
             )
@@ -140,22 +145,24 @@ class LoginViewModelTest : BaseViewModelTest() {
             viewModel.onAction(LoginViewAction.SignIn)
 
             assertEquals(
-                expected = LoginViewState(
+                expected = ViewState(
+                    data = LoginViewState(),
                     screenState = ScreenState.LOADING,
                 ),
                 actual = awaitItem()
             )
 
             assertEquals(
-                expected = LoginViewState(
-                    screenState = ScreenState.CONTENT,
+                expected = ViewState(
+                    data = LoginViewState(),
+                    screenState = ScreenState.LOADING,
                 ),
                 actual = awaitItem()
             )
         }
 
         verifySuspend {
-            loginDataSource.create(any(), any())
+            loginRepository.login(any(), any())
         }
 
         verifySuspend(mode = exactly(0)) {
@@ -172,7 +179,8 @@ class LoginViewModelTest : BaseViewModelTest() {
             viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
 
             assertEquals(
-                expected = LoginViewState(
+                expected = ViewState(
+                    data = LoginViewState(),
                     screenState = ScreenState.LOADING,
                 ),
                 actual = awaitItem()
@@ -180,7 +188,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            loginGoogleDataSource.create(any())
+            loginRepository.loginWithGoogle(any())
         }
         verifySuspend {
             viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))

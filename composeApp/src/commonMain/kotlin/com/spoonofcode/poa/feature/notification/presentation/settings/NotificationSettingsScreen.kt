@@ -18,20 +18,20 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationSettingsScreen :
-    BaseScreen<com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel, com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState, com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction>() {
+    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications_settings
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.InitView) }
+    override fun provideInitAction(onAction: (NotificationSettingsViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationSettingsViewAction.InitView) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationSettingsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState,
-        onAction: (com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction) -> Unit,
+        viewState: NotificationSettingsViewState,
+        onAction: (NotificationSettingsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.TM(stringResource(Res.string.notifications_settings_text))
@@ -41,7 +41,7 @@ internal class NotificationSettingsScreen :
                 checked = viewState.notificationSettings.notificationFromAllPartnersEnable,
                 onCheckedChange = {
                     onAction(
-                        _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.SwitchNotificationFromAllPartners(
+                        NotificationSettingsViewAction.SwitchNotificationFromAllPartners(
                             it
                         )
                     )
@@ -53,7 +53,7 @@ internal class NotificationSettingsScreen :
                 checked = viewState.notificationSettings.notificationFromMyPartnersEnable,
                 onCheckedChange = {
                     onAction(
-                        _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.SwitchNotificationFromMyPartners(
+                        NotificationSettingsViewAction.SwitchNotificationFromMyPartners(
                             it
                         )
                     )
@@ -64,7 +64,7 @@ internal class NotificationSettingsScreen :
 
             Buttons.PrimaryButton(
                 text = stringResource(Res.string.save_changes),
-                onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.SaveChanges) }
+                onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
             )
         }
     }
@@ -74,9 +74,9 @@ internal class NotificationSettingsScreen :
 @Preview
 @Composable
 private fun NotificationSettingsScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen()
+    NotificationSettingsScreen()
         .PreviewContent(
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState()
+            NotificationSettingsViewState()
     )
 }
 // endregion

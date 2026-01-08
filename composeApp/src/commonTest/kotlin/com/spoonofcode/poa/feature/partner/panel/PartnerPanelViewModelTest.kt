@@ -2,9 +2,13 @@ package com.spoonofcode.poa.feature.partner.panel
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen
+import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction
+import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewModel
+import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +21,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class PartnerPanelViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewModel
+    private lateinit var viewModel: PartnerPanelViewModel
 
     @BeforeTest
     override fun setup() {
@@ -30,7 +34,9 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewState(),
+                expected = ViewState(
+                    data = PartnerPanelViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -38,17 +44,17 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigate to partner edit screen`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction.NavigateToPartnerEdit)
+        viewModel.onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<PartnerEditScreen>()) }
     }
 
     @Test
     fun `navigate to notification type screen`() = runTest {
-        viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction.NavigateToNotificationType)
+        viewModel.onAction(PartnerPanelViewAction.NavigateToNotificationType)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<NotificationTypeScreen>()) }
     }
 }

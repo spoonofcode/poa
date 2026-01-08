@@ -28,20 +28,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerDetailsScreen(
     private val partnerId: String,
-) : BaseScreen<com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewModel, com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState, com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction>() {
+) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState, PartnerDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction.InitView(partnerId = partnerId)) }
+    override fun provideInitAction(onAction: (PartnerDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerDetailsViewAction.InitView(partnerId = partnerId)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewModel>()
+    override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState,
-        onAction: (com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction) -> Unit,
+        viewState: PartnerDetailsViewState,
+        onAction: (PartnerDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             if (viewState.partner != null) {
@@ -83,10 +83,10 @@ internal class PartnerDetailsScreen(
 @Preview
 @Composable
 fun PartnerDetailsScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen(
+    PartnerDetailsScreen(
         partnerId = "1"
     ).PreviewContent(
-        viewState = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState(),
+        viewState = PartnerDetailsViewState(),
     )
 }
 // endregion

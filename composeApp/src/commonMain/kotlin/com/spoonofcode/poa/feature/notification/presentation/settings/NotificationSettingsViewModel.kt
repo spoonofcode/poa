@@ -37,9 +37,9 @@ internal class NotificationSettingsViewModel(
                 updateState {
                     NotificationSettingsViewState(
                         notificationSettings = notificationSettings,
-                        screenState = ScreenState.CONTENT,
                     )
                 }
+                showContentView()
             } catch (ce: CancellationException) {
                 throw ce
             } catch (e: Exception) {
@@ -78,22 +78,6 @@ internal class NotificationSettingsViewModel(
                 e.printStackTrace()
                 showErrorView()
             }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            NotificationSettingsViewState(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            NotificationSettingsViewState(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

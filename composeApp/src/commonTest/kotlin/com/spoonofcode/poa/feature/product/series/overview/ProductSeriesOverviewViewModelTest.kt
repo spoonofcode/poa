@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverViewViewAction
@@ -38,7 +39,9 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ProductSeriesOverviewViewState(),
+                expected = ViewState(
+                    data = ProductSeriesOverviewViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -54,9 +57,11 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductSeriesOverViewViewAction.InitView)
 
             assertEquals(
-                expected = ProductSeriesOverviewViewState(
+                expected = ViewState(
+                    data = ProductSeriesOverviewViewState(
+                        productSeries = PRODUCTS,
+                    ),
                     screenState = ScreenState.CONTENT,
-                    productSeries = PRODUCTS,
                 ),
                 actual = awaitItem()
             )
@@ -77,9 +82,11 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
             )
 
             assertEquals(
-                expected = ProductSeriesOverviewViewState(
+                expected = ViewState(
+                    data = ProductSeriesOverviewViewState(
+                        productSeries = PRODUCTS,
+                    ),
                     screenState = ScreenState.CONTENT,
-                    productSeries = PRODUCTS,
                 ),
                 actual = awaitItem()
             )
@@ -91,10 +98,12 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
             )
 
             assertEquals(
-                expected = ProductSeriesOverviewViewState(
+                expected = ViewState(
+                    data = ProductSeriesOverviewViewState(
+                        productSeries = PRODUCTS,
+                        checkedProductSeriesIds = setOf(PRODUCT_1.seriesId),
+                    ),
                     screenState = ScreenState.CONTENT,
-                    productSeries = PRODUCTS,
-                    checkedProductSeriesIds = setOf(PRODUCT_1.seriesId),
                 ),
                 actual = awaitItem()
             )

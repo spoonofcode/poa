@@ -28,11 +28,11 @@ internal class ProductOverviewViewModel(
                 .onSuccess {
                     updateState {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             initProducts = it,
                             filteredProducts = it,
                         )
                     }
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -56,22 +56,6 @@ internal class ProductOverviewViewModel(
     private fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(ProductDetailsScreen(productId = productId))
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

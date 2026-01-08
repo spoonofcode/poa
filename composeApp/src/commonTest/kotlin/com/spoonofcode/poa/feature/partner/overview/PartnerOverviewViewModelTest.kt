@@ -3,10 +3,12 @@ package com.spoonofcode.poa.feature.partner.overview
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNERS
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
+import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
+import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewAction
 import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewModel
 import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewViewState
@@ -35,7 +37,9 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = PartnerOverviewViewState(),
+                expected = ViewState(
+                    data = PartnerOverviewViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -50,8 +54,10 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
             viewModel.onAction(PartnerOverviewViewAction.ChangeSearchText(searchText = searchText))
 
             assertEquals(
-                expected = PartnerOverviewViewState(
-                    searchText = searchText,
+                expected = ViewState(
+                    data = PartnerOverviewViewState(
+                        searchText = searchText,
+                    ),
                 ),
                 actual = awaitItem()
             )
@@ -67,8 +73,10 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
             viewModel.onAction(PartnerOverviewViewAction.ClickCategory(categoryId = categoryId))
 
             assertEquals(
-                expected = PartnerOverviewViewState(
-                    selectedPartnerCategories = setOf(categoryId),
+                expected = ViewState(
+                    data = PartnerOverviewViewState(
+                        selectedPartnerCategories = setOf(categoryId),
+                    ),
                 ),
                 actual = awaitItem()
             )
@@ -83,11 +91,13 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
             viewModel.onAction(PartnerOverviewViewAction.InitView)
 
             assertEquals(
-                expected = PartnerOverviewViewState(
+                expected = ViewState(
+                    data = PartnerOverviewViewState(
+                        initPartners = PARTNERS,
+                        filteredPartners = PARTNERS,
+                        partnerCategories = PARTNER_CATEGORIES,
+                    ),
                     screenState = ScreenState.CONTENT,
-                    initPartners = PARTNERS,
-                    filteredPartners = PARTNERS,
-                    partnerCategories = PARTNER_CATEGORIES,
                 ),
                 actual = awaitItem()
             )
@@ -99,6 +109,6 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerOverviewViewAction.SelectPartner(partnerId = PARTNER_1.id))
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<PartnerDetailsScreen>()) }
     }
 }

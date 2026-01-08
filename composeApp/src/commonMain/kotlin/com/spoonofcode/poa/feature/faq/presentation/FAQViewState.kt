@@ -3,13 +3,11 @@ package com.spoonofcode.poa.feature.faq.presentation
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.poa.feature.faq.domain.model.FAQ
 import com.spoonofcode.poa.core.ui.BaseViewState
-import com.spoonofcode.poa.core.ui.ScreenState
 
 @Immutable
 internal data class FAQViewState(
-    override val screenState: ScreenState = ScreenState.CONTENT,
     val faqs: List<FAQ> = exampleFAQS,
-) : BaseViewState(screenState)
+) : BaseViewState()
 
 private val exampleFAQS = listOf(
     FAQ(

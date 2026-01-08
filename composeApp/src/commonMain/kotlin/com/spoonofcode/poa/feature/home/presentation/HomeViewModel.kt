@@ -55,9 +55,9 @@ internal class HomeViewModel(
                 updateState {
                     copy(
                         totalPoints = it,
-                        screenState = ScreenState.CONTENT,
                     )
                 }
+                showContentView()
             }
             .onFailure {
                 showErrorView()
@@ -87,22 +87,6 @@ internal class HomeViewModel(
     private fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationOverviewScreen())
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

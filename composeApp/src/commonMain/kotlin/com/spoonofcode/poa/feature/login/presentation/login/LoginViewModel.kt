@@ -2,12 +2,12 @@ package com.spoonofcode.poa.feature.login.presentation.login
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
-import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
+import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
 import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
@@ -17,7 +17,10 @@ internal class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginGoogleUseCase: LoginGoogleUseCase,
     private val loginRequestCodeUseCase: LoginRequestCodeUseCase,
-) : BaseViewModel<LoginViewState, LoginViewAction>(LoginViewState()) {
+) : BaseViewModel<LoginViewState, LoginViewAction>(
+    initialViewState = LoginViewState(),
+    initialScreenState = ScreenState.CONTENT,
+) {
 
     override fun onAction(action: LoginViewAction) {
         when (action) {
@@ -53,8 +56,8 @@ internal class LoginViewModel(
         viewModelScope.launch {
             showLoadingView()
             loginUseCase(
-                email = viewState.value.email,
-                password = viewState.value.password,
+                email = currentState().email,
+                password = currentState().password,
             ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {
@@ -67,9 +70,9 @@ internal class LoginViewModel(
         viewModelScope.launch {
             showLoadingView()
             loginRequestCodeUseCase(
-                email = viewState.value.email,
+                email = currentState().email,
             ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = viewState.value.email))
+                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
             }.onFailure {
                 showErrorSnackbar(it)
             }
@@ -94,20 +97,8 @@ internal class LoginViewModel(
         }
     }
 
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
     private fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.CONTENT
-            )
-        }
+        showContentView()
     }
 }

@@ -26,17 +26,17 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationTypeScreen :
-    BaseScreen<com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewModel, com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState, com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction>() {
+    BaseScreen<NotificationTypeViewModel, NotificationTypeViewState, NotificationTypeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification_type
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationTypeViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState,
-        onAction: (com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction) -> Unit,
+        viewState: NotificationTypeViewState,
+        onAction: (NotificationTypeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -46,7 +46,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllCustomers) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )
@@ -54,7 +54,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -68,14 +68,14 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.Default.WebStories,
                     text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerProductSeries) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -87,9 +87,9 @@ internal class NotificationTypeScreen :
 @Preview
 @Composable
 private fun NotificationTypeScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen()
+    NotificationTypeScreen()
         .PreviewContent(
-            _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeViewState()
+            NotificationTypeViewState()
     )
 }
 // endregion
