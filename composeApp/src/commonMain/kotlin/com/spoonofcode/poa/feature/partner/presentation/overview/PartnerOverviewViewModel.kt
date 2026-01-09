@@ -6,6 +6,7 @@ import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUs
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersUseCase
 import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 internal class PartnerOverviewViewModel(
@@ -26,30 +27,24 @@ internal class PartnerOverviewViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            getPartnersUseCase()
-                .onSuccess {
-                    showContentView {
-                        copy(
-                            initPartners = it,
-                            filteredPartners = it,
-                        )
-                    }
-                }
-                .onFailure {
-                    showErrorView()
-                }
+            val partnersDeferred = async { getPartnersUseCase() }
+            val categoriesDeferred = async { getPartnerCategoriesUseCase() }
 
-            getPartnerCategoriesUseCase()
-                .onSuccess {
-                    showContentView {
-                        copy(
-                            partnerCategories = it,
-                        )
-                    }
+            runCatching {
+                val partners = partnersDeferred.await().getOrThrow()
+                val categories = categoriesDeferred.await().getOrThrow()
+                partners to categories
+            }.onSuccess { (partners, categories) ->
+                showContentView {
+                    copy(
+                        initPartners = partners,
+                        filteredPartners = partners,
+                        partnerCategories = categories,
+                    )
                 }
-                .onFailure {
-                    showErrorView()
-                }
+            }.onFailure {
+                showErrorView()
+            }
         }
     }
 
