@@ -1,12 +1,12 @@
 package com.spoonofcode.poa.feature.partner.presentation.overview
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersUseCase
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 internal class PartnerOverviewViewModel(
@@ -27,31 +27,24 @@ internal class PartnerOverviewViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            getPartnersUseCase()
-                .onSuccess {
-                    updateState {
-                        copy(
-                            initPartners = it,
-                            filteredPartners = it,
-                        )
-                    }
-                }
-                .onFailure {
-                    showErrorView()
-                }
+            val partnersDeferred = async { getPartnersUseCase() }
+            val categoriesDeferred = async { getPartnerCategoriesUseCase() }
 
-            getPartnerCategoriesUseCase()
-                .onSuccess {
-                    updateState {
-                        copy(
-                            screenState = ScreenState.CONTENT,
-                            partnerCategories = it,
-                        )
-                    }
+            runCatching {
+                val partners = partnersDeferred.await().getOrThrow()
+                val categories = categoriesDeferred.await().getOrThrow()
+                partners to categories
+            }.onSuccess { (partners, categories) ->
+                showContentView {
+                    copy(
+                        initPartners = partners,
+                        filteredPartners = partners,
+                        partnerCategories = categories,
+                    )
                 }
-                .onFailure {
-                    showErrorView()
-                }
+            }.onFailure {
+                showErrorView()
+            }
         }
     }
 
@@ -86,22 +79,6 @@ internal class PartnerOverviewViewModel(
                 PartnerDetailsScreen(
                     partnerId = partnerId
                 )
-            )
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
             )
         }
     }

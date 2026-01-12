@@ -3,8 +3,6 @@ package com.spoonofcode.poa.feature.product.presentation.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
@@ -32,9 +30,8 @@ internal class ProductDetailsViewModel(
         viewModelScope.launch {
             getProductByIdUseCase(productId = productId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             product = it
                         )
                     }
@@ -46,6 +43,7 @@ internal class ProductDetailsViewModel(
     }
 
     private fun addProductToUser() {
+        showLoadingView()
         viewModelScope.launch {
             val currentState = currentState()
             addProductToUserUseCase(
@@ -69,8 +67,8 @@ internal class ProductDetailsViewModel(
     }
 
     private fun deleteProductFromUser() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             val currentState = currentState()
             deleteProductFromUserUseCase(
                 productId = currentState.product!!.id
@@ -81,31 +79,6 @@ internal class ProductDetailsViewModel(
                 .onFailure {
                     showErrorSnackbar(it)
                 }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING
-            )
         }
     }
 }

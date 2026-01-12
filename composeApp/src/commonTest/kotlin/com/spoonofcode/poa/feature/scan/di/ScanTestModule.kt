@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkTestModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
+import com.spoonofcode.poa.feature.product.di.productModule
 import org.koin.dsl.module
 
 val scanTestModule = module {
@@ -15,5 +16,6 @@ val scanTestModule = module {
         domainModule,
         scanModule,
         uiModule,
+        productModule,
     )
 }

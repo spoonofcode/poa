@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction
@@ -36,7 +37,9 @@ class ProductEditViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ProductEditViewState(),
+                expected = ViewState(
+                    data = ProductEditViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -50,9 +53,9 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductEditViewAction.InitView(PRODUCT_1.id))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = ViewState(
+                    data = ProductEditViewState(product = PRODUCT_1),
                     screenState = ScreenState.CONTENT,
-                    product = PRODUCT_1
                 ),
                 actual = awaitItem()
             )
@@ -72,9 +75,9 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductEditViewAction.InitView(productId = PRODUCT_1.id))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = ViewState(
+                    data = ProductEditViewState(product = PRODUCT_1),
                     screenState = ScreenState.CONTENT,
-                    product = PRODUCT_1,
                 ),
                 actual = awaitItem()
             )
@@ -82,9 +85,9 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductEditViewAction.ChangeCustomLink(customLink))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = ViewState(
+                    data = ProductEditViewState(product = PRODUCT_1.copy(customLink = customLink)),
                     screenState = ScreenState.CONTENT,
-                    product = PRODUCT_1.copy(customLink = customLink),
                 ),
                 actual = awaitItem()
             )
@@ -101,9 +104,9 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductEditViewAction.InitView(productId = PRODUCT_1.id))
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = ViewState(
+                    data = ProductEditViewState(product = PRODUCT_1),
                     screenState = ScreenState.CONTENT,
-                    product = PRODUCT_1,
                 ),
                 actual = awaitItem()
             )
@@ -111,9 +114,9 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             viewModel.onAction(ProductEditViewAction.SaveChanges)
 
             assertEquals(
-                expected = ProductEditViewState(
+                expected = ViewState(
+                    data = ProductEditViewState(product = PRODUCT_1),
                     screenState = ScreenState.LOADING,
-                    product = PRODUCT_1,
                 ),
                 actual = awaitItem()
             )

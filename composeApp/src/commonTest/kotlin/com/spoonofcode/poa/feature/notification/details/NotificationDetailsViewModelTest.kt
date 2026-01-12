@@ -2,9 +2,12 @@ package com.spoonofcode.poa.feature.notification.details
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
+import com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction
+import com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -27,7 +30,9 @@ class NotificationDetailsViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState(),
+                expected = ViewState(
+                    data = NotificationDetailsViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -39,15 +44,17 @@ class NotificationDetailsViewModelTest : BaseViewModelTest() {
             skipItems(1)
 
             viewModel.onAction(
-                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction.InitView(
+                NotificationDetailsViewAction.InitView(
                     notificationId = NOTIFICATION_1.id,
                 )
             )
 
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState(
+                expected = ViewState(
+                    data = NotificationDetailsViewState(
+                        notification = NOTIFICATION_1,
+                    ),
                     screenState = ScreenState.CONTENT,
-                    notification = NOTIFICATION_1,
                 ),
                 actual = awaitItem()
             )

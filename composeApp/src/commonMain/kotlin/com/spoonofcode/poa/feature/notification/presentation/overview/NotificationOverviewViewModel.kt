@@ -27,9 +27,8 @@ internal class NotificationOverviewViewModel(
         viewModelScope.launch {
             getNotificationsUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         NotificationOverviewViewState(
-                            screenState = ScreenState.CONTENT,
                             notifications = it,
                         )
                     }
@@ -46,22 +45,6 @@ internal class NotificationOverviewViewModel(
                 NotificationDetailsScreen(
                     notificationId = notificationId
                 )
-            )
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            NotificationOverviewViewState(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            NotificationOverviewViewState(
-                screenState = ScreenState.ERROR,
             )
         }
     }

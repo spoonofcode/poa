@@ -26,11 +26,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
-import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
 import com.spoonofcode.poa.resources.search
@@ -40,31 +39,31 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel, com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState, com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction>() {
+) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_products
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.InitView) }
+    override fun provideInitAction(onAction: (ProductOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(ProductOverviewViewAction.InitView) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewModel>()
+    override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState,
-        onAction: (com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction) -> Unit,
+        viewState: ProductOverviewViewState,
+        onAction: (ProductOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             TextFields.Outlined(
                 value = viewState.searchText,
-                onValueChange = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.ChangeSearchText(it)) },
+                onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
                 innerLabel = stringResource(resource = Res.string.search),
             )
 
             ProductGrid(
                 products = viewState.filteredProducts,
-                onProductClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction.SelectProduct(it.id)) }
+                onProductClick = { onAction(ProductOverviewViewAction.SelectProduct(it.id)) }
             )
         }
     }
@@ -143,11 +142,9 @@ internal class ProductOverviewScreen(
 @Preview
 @Composable
 fun ProductOverviewScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewScreen()
+    ProductOverviewScreen()
         .PreviewContent(
-        viewState = _root_ide_package_.com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewState(
-            screenState = ScreenState.CONTENT,
-        ),
+        viewState = ProductOverviewViewState(),
     )
 }
 // endregion

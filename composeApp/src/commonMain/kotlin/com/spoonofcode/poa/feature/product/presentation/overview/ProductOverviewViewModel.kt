@@ -1,10 +1,9 @@
 package com.spoonofcode.poa.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.product.domain.usecase.GetUserProductsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
+import com.spoonofcode.poa.feature.product.domain.usecase.GetUserProductsUseCase
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 
@@ -13,7 +12,7 @@ internal class ProductOverviewViewModel(
     private val getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase,
 ) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction>(ProductOverviewViewState()) {
 
-    override fun onAction(action: com.spoonofcode.poa.feature.product.presentation.overview.ProductOverviewViewAction) {
+    override fun onAction(action: ProductOverviewViewAction) {
         when (action) {
             is ProductOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
             ProductOverviewViewAction.InitView -> initView()
@@ -26,9 +25,8 @@ internal class ProductOverviewViewModel(
         viewModelScope.launch {
             getUserProductsUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             initProducts = it,
                             filteredProducts = it,
                         )
@@ -56,22 +54,6 @@ internal class ProductOverviewViewModel(
     private fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(ProductDetailsScreen(productId = productId))
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

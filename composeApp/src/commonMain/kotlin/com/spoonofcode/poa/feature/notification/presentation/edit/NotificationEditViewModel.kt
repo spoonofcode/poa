@@ -2,17 +2,18 @@ package com.spoonofcode.poa.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.feature.notification.domain.usecase.SendNotificationUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.notification.domain.usecase.SendNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
 ) : BaseViewModel<NotificationEditViewState, NotificationEditViewAction>(
-    NotificationEditViewState()
+    NotificationEditViewState(),
+    initialScreenState = ScreenState.CONTENT,
 ) {
 
     override fun onAction(action: NotificationEditViewAction) {
@@ -86,27 +87,6 @@ internal class NotificationEditViewModel(
                 showErrorSnackbar(error)
             }
 
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            NotificationEditViewState(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(
-            SnackbarEvent.Error(
-                message = "ERROR: $e"
-            )
-        )
-        updateState {
-            NotificationEditViewState(
-                screenState = ScreenState.CONTENT
-            )
         }
     }
 }

@@ -5,6 +5,7 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.home.di.homeTestModule
 import com.spoonofcode.poa.feature.home.presentation.HomeViewAction
 import com.spoonofcode.poa.feature.home.presentation.HomeViewModel
@@ -34,7 +35,9 @@ class HomeViewModelest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = HomeViewState(),
+                expected = ViewState(
+                    data = HomeViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -55,10 +58,12 @@ class HomeViewModelest : BaseViewModelTest() {
 //            )
 
             assertEquals(
-                expected = HomeViewState(
+                expected = ViewState(
+                    data = HomeViewState(
+                        dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
+                        totalPoints = TOTAL_POINTS
+                    ),
                     screenState = ScreenState.CONTENT,
-                    dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
-                    totalPoints = TOTAL_POINTS
                 ),
                 actual = awaitItem()
             )
@@ -73,10 +78,12 @@ class HomeViewModelest : BaseViewModelTest() {
             viewModel.onAction(HomeViewAction.InitView)
 
             assertEquals(
-                expected = HomeViewState(
+                expected = ViewState(
+                    data = HomeViewState(
+                        dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
+                        totalPoints = TOTAL_POINTS
+                    ),
                     screenState = ScreenState.CONTENT,
-                    dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
-                    totalPoints = TOTAL_POINTS
                 ),
                 actual = awaitItem()
             )

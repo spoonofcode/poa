@@ -11,7 +11,7 @@ class RemoteLoginRequestCodeDataSource() : RemoteBaseDataSource(
     suspend fun create(
         email: String,
         recaptchaToken: String,
-    ): Result<Unit> = doRequest<Unit>(
+    ): Result<Unit> = doRequest(
         ktorBackend = false,
         method = HttpMethod.Post,
         requestBody = LoginRequestCodeRequest(

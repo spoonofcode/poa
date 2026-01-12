@@ -26,9 +26,8 @@ internal class ProductEditViewModel(
         viewModelScope.launch {
             getProductByIdUseCase(productId = productId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             product = it
                         )
                     }
@@ -68,31 +67,6 @@ internal class ProductEditViewModel(
                 .onFailure {
                     showErrorSnackbar(it)
                 }
-        }
-    }
-
-    private fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING
-            )
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

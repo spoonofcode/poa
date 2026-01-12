@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.login.forgotPassword
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewAction
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewModel
@@ -28,7 +29,9 @@ class ForgotPasswordViewModelest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ForgotPasswordViewState(),
+                expected = ViewState(
+                    data = ForgotPasswordViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -43,8 +46,10 @@ class ForgotPasswordViewModelest : BaseViewModelTest() {
             viewModel.onAction(ForgotPasswordViewAction.ChangeEmail(email))
 
             assertEquals(
-                expected = ForgotPasswordViewState(
-                    email = email,
+                expected = ViewState(
+                    ForgotPasswordViewState(
+                        email = email,
+                    )
                 ),
                 actual = awaitItem()
             )

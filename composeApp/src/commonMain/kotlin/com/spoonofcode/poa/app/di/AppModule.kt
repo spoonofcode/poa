@@ -51,6 +51,7 @@ val appModule = module {
             install(ContentNegotiation) {
                 json(
                     json = Json {
+                        encodeDefaults = true
                         ignoreUnknownKeys = true
                     }
                 )

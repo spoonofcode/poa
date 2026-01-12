@@ -25,17 +25,17 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class PartnerPanelScreen() :
-    BaseScreen<com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewModel, com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewState, com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction>() {
+    BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewModel>()
+    override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewState,
-        onAction: (com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction) -> Unit,
+        viewState: PartnerPanelViewState,
+        onAction: (PartnerPanelViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -45,14 +45,14 @@ internal class PartnerPanelScreen() :
                 IconTextButton(
                     icon = Icons.Default.Person,
                     text = stringResource(resource = Res.string.partner_info),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction.NavigateToPartnerEdit) },
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToPartnerEdit) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.AutoMirrored.Filled.Send,
                     text = stringResource(resource = Res.string.send_notification),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction.NavigateToNotificationType) },
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToNotificationType) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -67,7 +67,7 @@ internal class PartnerPanelScreen() :
                     enabled = false,
                     icon = Icons.Default.BarChart,
                     text = stringResource(resource = Res.string.reports),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewAction.NavigateToReports) },
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToReports) },
                     modifier = Modifier.weight(0.5f)
                 )
 
@@ -86,9 +86,9 @@ internal class PartnerPanelScreen() :
     @Preview
     @Composable
     fun InitializedPartnerPanelScreenPreview() {
-        _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen()
+        PartnerPanelScreen()
             .PreviewContent(
-            viewState = _root_ide_package_.com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelViewState()
+            viewState = PartnerPanelViewState()
         )
     }
     // endregion

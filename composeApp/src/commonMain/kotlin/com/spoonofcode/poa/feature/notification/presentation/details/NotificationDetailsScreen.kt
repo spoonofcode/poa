@@ -35,20 +35,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,
-) : BaseScreen<com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewModel, com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState, com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction>() {
+) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
-    override fun provideInitAction(onAction: (com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
+    override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState,
-        onAction: (com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction) -> Unit,
+        viewState: NotificationDetailsViewState,
+        onAction: (NotificationDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val notification = requireNotNull(viewState.notification)
@@ -129,10 +129,10 @@ internal class NotificationDetailsScreen(
 @Preview
 @Composable
 private fun NotificationDetailsScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsScreen(
+    NotificationDetailsScreen(
         notificationId = "1"
     ).PreviewContent(
-        _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState()
+        NotificationDetailsViewState()
     )
 }
 // endregion

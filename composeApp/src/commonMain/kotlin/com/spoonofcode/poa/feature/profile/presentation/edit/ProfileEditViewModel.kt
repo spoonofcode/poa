@@ -4,8 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
 import kotlinx.coroutines.launch
 
 internal class ProfileEditViewModel(
@@ -26,10 +24,9 @@ internal class ProfileEditViewModel(
         viewModelScope.launch {
             getProfileUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             profile = it,
-                            screenState = ScreenState.CONTENT,
                         )
                     }
                 }
@@ -45,42 +42,17 @@ internal class ProfileEditViewModel(
     }
 
     private fun saveChanges() {
+        showLoadingView()
         viewModelScope.launch {
             val profile = requireNotNull(currentState().profile)
             // TODO Fix this usecase
 //                updateProfileUseCase(
-//                    userId = profile.id,
 //                    profileRequest = ProfileRequest(
 //                        userId = profile.id,
 //                        customLink = profile.customLink,
 //                    )
 //                )
             viewModelNavigator.pop()
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
-
-    private fun showErrorSnackbar(e: Exception) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING
-            )
         }
     }
 }

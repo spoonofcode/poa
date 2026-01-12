@@ -27,9 +27,8 @@ internal class PartnerCustomerOverviewViewModel(
         viewModelScope.launch {
             getPartnerUsersUseCase(partnerId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             partnerUsers = it,
                         )
                     }
@@ -59,7 +58,7 @@ internal class PartnerCustomerOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen(
+                NotificationEditScreen(
                     topics = getSelectedUsers(),
                     itemIds = getSelectedNames()
                 )
@@ -73,22 +72,6 @@ internal class PartnerCustomerOverviewViewModel(
     private fun getSelectedNames(): List<String> =
         currentState().partnerUsers.filter { it.id in currentState().checkedUserIds }
             .map { user -> user.fullName }.toList()
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
 
     private companion object {
         private const val MAX_SELECTED_USERS = 5

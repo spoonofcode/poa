@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.scan.di.scanTestModule
 import com.spoonofcode.poa.feature.scan.presentation.ScanViewAction
@@ -35,7 +36,10 @@ class ScanViewModelest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ScanViewState(),
+                expected = ViewState(
+                    data = ScanViewState(),
+                    screenState = ScreenState.CONTENT,
+                ),
                 actual = awaitItem()
             )
         }
@@ -49,9 +53,7 @@ class ScanViewModelest : BaseViewModelTest() {
             viewModel.onAction(ScanViewAction.CheckProduct(tagId = PRODUCT_1.tagId!!))
 
             assertEquals(
-                expected = ScanViewState(
-                    screenState = ScreenState.LOADING,
-                ),
+                expected = ViewState(data = ScanViewState()),
                 actual = awaitItem()
             )
         }

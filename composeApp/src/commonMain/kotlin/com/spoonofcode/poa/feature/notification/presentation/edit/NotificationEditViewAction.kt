@@ -3,17 +3,13 @@ package com.spoonofcode.poa.feature.notification.presentation.edit
 import com.spoonofcode.poa.core.ui.BaseViewAction
 import kotlinx.datetime.LocalDateTime
 
-internal sealed interface NotificationEditViewAction: BaseViewAction {
+internal sealed interface NotificationEditViewAction : BaseViewAction {
     data class ChangeExpirationDateTime(val startDateTime: LocalDateTime) :
-        com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction
-    data class ChangeLink(val link: String) :
-        com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction
-    data class ChangeText(val text: String) :
-        com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction
-    data class ChangeTitle(val title: String) :
-        com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction
-    data class InitView(val itemIds: List<String>) :
-        com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction
-    data object SendNotification :
-        com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewAction
+        NotificationEditViewAction
+
+    data class ChangeLink(val link: String) : NotificationEditViewAction
+    data class ChangeText(val text: String) : NotificationEditViewAction
+    data class ChangeTitle(val title: String) : NotificationEditViewAction
+    data class InitView(val itemIds: List<String>) : NotificationEditViewAction
+    data object SendNotification : NotificationEditViewAction
 }

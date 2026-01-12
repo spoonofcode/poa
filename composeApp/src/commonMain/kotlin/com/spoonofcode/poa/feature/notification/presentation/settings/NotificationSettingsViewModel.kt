@@ -34,10 +34,9 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             try {
                 val notificationSettings = getNotificationSettingsUseCase()
-                updateState {
+                showContentView {
                     NotificationSettingsViewState(
                         notificationSettings = notificationSettings,
-                        screenState = ScreenState.CONTENT,
                     )
                 }
             } catch (ce: CancellationException) {
@@ -78,22 +77,6 @@ internal class NotificationSettingsViewModel(
                 e.printStackTrace()
                 showErrorView()
             }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            NotificationSettingsViewState(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            NotificationSettingsViewState(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

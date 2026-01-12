@@ -5,12 +5,15 @@ import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
+import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen
+import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
+import com.spoonofcode.poa.feature.profile.di.profileTestModule
 import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewAction
 import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.poa.feature.profile.presentation.details.ProfileDetailsViewState
-import com.spoonofcode.poa.feature.profile.di.profileTestModule
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditScreen
 import com.spoonofcode.poa.feature.tac.presentation.TACScreen
 import dev.mokkery.matcher.ofType
@@ -23,7 +26,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ProfileDetailsViewModelest : BaseViewModelTest() {
+class ProfileDetailsViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: ProfileDetailsViewModel
 
@@ -37,9 +40,13 @@ class ProfileDetailsViewModelest : BaseViewModelTest() {
     @Test
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
+            val initialState = awaitItem()
             assertEquals(
-                expected = ProfileDetailsViewState(),
-                actual = awaitItem()
+                expected = ViewState(
+                    data = ProfileDetailsViewState(),
+                    screenState = ScreenState.LOADING
+                ),
+                actual = initialState
             )
         }
     }
@@ -52,9 +59,9 @@ class ProfileDetailsViewModelest : BaseViewModelTest() {
             viewModel.onAction(ProfileDetailsViewAction.InitView)
 
             assertEquals(
-                expected = ProfileDetailsViewState(
-                    profile = PROFILE_1,
-                    screenState = ScreenState.CONTENT,
+                expected = ViewState(
+                    data = ProfileDetailsViewState(profile = PROFILE_1),
+                    screenState = ScreenState.CONTENT
                 ),
                 actual = awaitItem()
             )
@@ -90,7 +97,7 @@ class ProfileDetailsViewModelest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<NotificationSettingsScreen>()) }
     }
 
     @Test
@@ -98,7 +105,7 @@ class ProfileDetailsViewModelest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen>()) }
+        verifySuspend { viewModelNavigator.push(ofType<PartnerPanelScreen>()) }
     }
 
     @Test

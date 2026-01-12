@@ -2,11 +2,13 @@ package com.spoonofcode.poa.feature.partner.customer.overview
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
-import com.spoonofcode.poa.core.data.repository.PartnerDataSource
+import com.spoonofcode.poa.core.data.mockdata.PartnerUserMockData.PARTNER_USERS
+import com.spoonofcode.poa.core.data.mockdata.PartnerUserMockData.PARTNER_USER_1
 import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
+import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
+import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewAction
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewState
@@ -23,13 +25,13 @@ import kotlin.test.assertEquals
 class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerCustomerOverviewViewModel
-    private lateinit var partnerDataSource: PartnerDataSource
+    private lateinit var partnerRepository: PartnerRepository
 
     @BeforeTest
     override fun setup() {
         modules = arrayOf(partnerTestModule)
         super.setup()
-        partnerDataSource = getKoin().get()
+        partnerRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -37,7 +39,9 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = PartnerCustomerOverviewViewState(),
+                expected = ViewState(
+                    data = PartnerCustomerOverviewViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -55,17 +59,19 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
             )
 
             assertEquals(
-                expected = PartnerCustomerOverviewViewState(
+                expected = ViewState(
+                    data = PartnerCustomerOverviewViewState(
+                        partnerUsers = PARTNER_USERS,
+                        checkedUserIds = emptySet(),
+                    ),
                     screenState = ScreenState.CONTENT,
-                    partnerUsers = USERS,
-                    checkedUserIds = emptySet(),
                 ),
                 actual = awaitItem()
             )
         }
 
         verifySuspend {
-            partnerDataSource.readPartnerUsers(PARTNER_1.id)
+            partnerRepository.getPartnerUsers(PARTNER_1.id)
         }
     }
 
@@ -81,25 +87,29 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
             )
 
             assertEquals(
-                expected = PartnerCustomerOverviewViewState(
+                expected = ViewState(
+                    data = PartnerCustomerOverviewViewState(
+                        partnerUsers = PARTNER_USERS,
+                        checkedUserIds = emptySet(),
+                    ),
                     screenState = ScreenState.CONTENT,
-                    partnerUsers = USERS,
-                    checkedUserIds = emptySet(),
                 ),
                 actual = awaitItem()
             )
 
             viewModel.onAction(
                 PartnerCustomerOverviewViewAction.CheckedCustomer(
-                    userId = USER_1.id,
+                    userId = PARTNER_USER_1.id,
                 )
             )
 
             assertEquals(
-                expected = PartnerCustomerOverviewViewState(
+                expected = ViewState(
+                    data = PartnerCustomerOverviewViewState(
+                        partnerUsers = PARTNER_USERS,
+                        checkedUserIds = setOf(PARTNER_USER_1.id),
+                    ),
                     screenState = ScreenState.CONTENT,
-                    partnerUsers = USERS,
-                    checkedUserIds = setOf(USER_1.id),
                 ),
                 actual = awaitItem()
             )

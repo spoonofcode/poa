@@ -3,7 +3,11 @@ package com.spoonofcode.poa.feature.notification.settings
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
+import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction
+import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel
+import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -14,7 +18,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationSettingsViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel
+    private lateinit var viewModel: NotificationSettingsViewModel
 
     @BeforeTest
     override fun setup() {
@@ -27,7 +31,9 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(),
+                expected = ViewState(
+                    data = NotificationSettingsViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -40,10 +46,11 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(_root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction.InitView)
+            viewModel.onAction(NotificationSettingsViewAction.InitView)
 
             assertEquals(
-                expected = _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewState(
+                expected = ViewState(
+                    data = NotificationSettingsViewState(),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()

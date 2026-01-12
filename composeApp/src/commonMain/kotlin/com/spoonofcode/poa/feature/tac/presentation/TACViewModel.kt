@@ -5,7 +5,10 @@ import com.spoonofcode.poa.core.ui.BaseViewModel
 import com.spoonofcode.poa.core.ui.ScreenState
 import kotlinx.coroutines.launch
 
-internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(TACViewState()) {
+internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(
+    initialViewState = TACViewState(),
+    initialScreenState = ScreenState.CONTENT,
+) {
 
     override fun onAction(action: TACViewAction) {
         when (action) {
@@ -36,22 +39,6 @@ internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(TACVi
     private fun saveChanges() {
         viewModelScope.launch {
             viewModelNavigator.pop()
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

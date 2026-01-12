@@ -32,9 +32,8 @@ internal class PartnerEditViewModel(
         viewModelScope.launch {
             getPartnerByIdUseCase(partnerId = partnerId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             partner = it
                         )
                     }
@@ -87,20 +86,4 @@ internal class PartnerEditViewModel(
     }
 
     private fun getCurrentPartner(): Partner = requireNotNull(currentState().partner)
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
 }

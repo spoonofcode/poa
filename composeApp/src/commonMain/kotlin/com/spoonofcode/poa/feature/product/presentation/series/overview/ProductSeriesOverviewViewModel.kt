@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.product.presentation.series.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
@@ -27,9 +26,8 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             getProductSeriesUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             productSeries = it,
                         )
                     }
@@ -59,7 +57,7 @@ internal class ProductSeriesOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                _root_ide_package_.com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen(
+                NotificationEditScreen(
                     topics = getSelectedProductSeries(),
                     itemIds = getSelectedProductSeriesNames()
                 )
@@ -73,22 +71,6 @@ internal class ProductSeriesOverviewViewModel(
     private fun getSelectedProductSeriesNames(): List<String> =
         currentState().productSeries.filter { "${it.id}" in currentState().checkedProductSeriesIds }
             .map { productSeries -> productSeries.name }.toList()
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
-        }
-    }
 
     private companion object {
         private const val MAX_SELECTED_PRODUCT_SERIES = 5

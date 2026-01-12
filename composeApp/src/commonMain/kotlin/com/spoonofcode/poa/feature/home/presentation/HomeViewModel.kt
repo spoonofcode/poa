@@ -2,14 +2,15 @@ package com.spoonofcode.poa.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
+import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
+import com.spoonofcode.poa.feature.reward.data.model.RewardType
 import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserRewardsPointsUseCase
-import com.spoonofcode.poa.feature.reward.data.model.RewardType
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
@@ -31,38 +32,30 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            //                subscribeUserTopicsUseCase()
+//            subscribeUserTopicsUseCase()
             loadRewardsStatus()
         }
     }
 
-    private suspend fun loadRewardsStatus() {
-        getUserDailyCheckInStatusUseCase()
-            .onSuccess {
-                updateState {
-                    copy(
-                        dailyCheckInStatus = it
-                    )
-                }
-            }
-            .onFailure {
-                showErrorView()
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
-            }
+    private suspend fun loadRewardsStatus() = coroutineScope {
+        val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
+        val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
 
-        getUserRewardsPointsUseCase()
-            .onSuccess {
-                updateState {
-                    copy(
-                        totalPoints = it,
-                        screenState = ScreenState.CONTENT,
-                    )
-                }
+        runCatching {
+            val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
+            val totalPoints = totalPointsDeferred.await().getOrThrow()
+            dailyCheckInStatus to totalPoints
+        }.onSuccess { (dailyCheckInStatus, totalPoints) ->
+            showContentView {
+                copy(
+                    dailyCheckInStatus = dailyCheckInStatus,
+                    totalPoints = totalPoints,
+                )
             }
-            .onFailure {
-                showErrorView()
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
-            }
+        }.onFailure {
+            showErrorView()
+            showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+        }
     }
 
     private fun dailyCheckIn() {
@@ -87,22 +80,6 @@ internal class HomeViewModel(
     private fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(NotificationOverviewScreen())
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

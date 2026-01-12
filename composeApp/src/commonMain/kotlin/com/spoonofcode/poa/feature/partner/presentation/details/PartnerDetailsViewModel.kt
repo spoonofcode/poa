@@ -21,9 +21,8 @@ internal class PartnerDetailsViewModel(
         viewModelScope.launch {
             getPartnerByIdUseCase(partnerId = partnerId)
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
-                            screenState = ScreenState.CONTENT,
                             partner = it
                         )
                     }
@@ -31,22 +30,6 @@ internal class PartnerDetailsViewModel(
                 .onFailure {
                     showErrorView()
                 }
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

@@ -8,16 +8,17 @@ import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
 abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
-    initialViewState: VS
+    initialViewState: VS,
+    initialScreenState: ScreenState = ScreenState.LOADING // Start Screen with LoadingView
 ) : ViewModel() {
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
@@ -25,11 +26,10 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
-    private val _viewState = MutableStateFlow(initialViewState)
+    private val _viewState = MutableStateFlow(ViewState(initialViewState, initialScreenState))
     val viewState = _viewState.asStateFlow()
 
     private val _isOnline = MutableStateFlow(false)
-    private val isOnline: StateFlow<Boolean> = _isOnline
 
     private val _snackbarEvent = MutableSharedFlow<SnackbarEvent>()
     val snackbarEvent = _snackbarEvent.asSharedFlow()
@@ -46,19 +46,43 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
         }
     }
 
-    fun currentState(): VS = viewState.value
+    fun currentState(): VS = viewState.value.data
 
     fun updateState(
         transformation: VS.() -> VS,
     ) {
-        val currentState = currentState()
-        val newState = currentState.transformation()
-        _viewState.value = newState
+        _viewState.update { it.copy(data = it.data.transformation()) }
     }
 
     fun showSnackbar(snackbarEvent: SnackbarEvent) {
         viewModelScope.launch {
             _snackbarEvent.emit(snackbarEvent)
+        }
+    }
+
+    protected fun showLoadingView() {
+        _viewState.update { it.copy(screenState = ScreenState.LOADING) }
+    }
+
+    protected fun showErrorView() {
+        _viewState.update { it.copy(screenState = ScreenState.ERROR) }
+    }
+
+    protected fun showContentView(
+        transformation: VS.() -> VS,
+    ) {
+        _viewState.update {
+            it.copy(
+                screenState = ScreenState.CONTENT,
+                data = it.data.transformation(),
+            )
+        }
+    }
+
+    protected fun showErrorSnackbar(e: Throwable) {
+        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+        _viewState.update {
+            it.copy(screenState = ScreenState.CONTENT)
         }
     }
 

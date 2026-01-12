@@ -2,6 +2,8 @@ package com.spoonofcode.poa.feature.tac
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.tac.di.tacTestModule
 import com.spoonofcode.poa.feature.tac.presentation.TACViewModel
 import com.spoonofcode.poa.feature.tac.presentation.TACViewState
@@ -27,7 +29,10 @@ class TACViewModelest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = TACViewState(),
+                expected = ViewState(
+                    data = TACViewState(),
+                    screenState = ScreenState.CONTENT,
+                ),
                 actual = awaitItem()
             )
         }

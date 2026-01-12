@@ -7,6 +7,5 @@ import com.spoonofcode.poa.core.ui.ScreenState
 
 @Immutable
 internal data class ProductEditViewState(
-    override val screenState: ScreenState = ScreenState.LOADING,
     val product: Product? = null
-) : BaseViewState(screenState)
+) : BaseViewState()

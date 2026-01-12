@@ -1,14 +1,13 @@
 package com.spoonofcode.poa.feature.profile.presentation.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.login.domain.usecase.LogoutUseCase
-import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen
 import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
+import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
+import com.spoonofcode.poa.feature.profile.domain.usecase.LogoutUseCase
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditScreen
 import com.spoonofcode.poa.feature.tac.presentation.TACScreen
 import kotlinx.coroutines.launch
@@ -35,10 +34,9 @@ internal class ProfileDetailsViewModel(
         viewModelScope.launch {
             getProfileUseCase()
                 .onSuccess {
-                    updateState {
+                    showContentView {
                         copy(
                             profile = it,
-                            screenState = ScreenState.CONTENT,
                         )
                     }
                 }
@@ -82,22 +80,6 @@ internal class ProfileDetailsViewModel(
         viewModelScope.launch {
             logoutUseCase()
             viewModelNavigator.replaceAll(listOf(LoginScreen()))
-        }
-    }
-
-    private fun showLoadingView() {
-        updateState {
-            copy(
-                screenState = ScreenState.LOADING,
-            )
-        }
-    }
-
-    private fun showErrorView() {
-        updateState {
-            copy(
-                screenState = ScreenState.ERROR,
-            )
         }
     }
 }

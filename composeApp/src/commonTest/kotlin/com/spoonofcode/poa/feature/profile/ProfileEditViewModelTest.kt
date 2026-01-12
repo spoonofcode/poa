@@ -4,17 +4,17 @@ import app.cash.turbine.test
 import com.spoonofcode.poa.core.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.ViewState
 import com.spoonofcode.poa.feature.profile.di.profileTestModule
 import com.spoonofcode.poa.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewAction
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewModel
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewState
-import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -36,7 +36,9 @@ class ProfileEditViewModelest : BaseViewModelTest() {
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
             assertEquals(
-                expected = ProfileEditViewState(),
+                expected = ViewState(
+                    data = ProfileEditViewState(),
+                ),
                 actual = awaitItem()
             )
         }
@@ -50,16 +52,18 @@ class ProfileEditViewModelest : BaseViewModelTest() {
             viewModel.onAction(ProfileEditViewAction.InitView)
 
             assertEquals(
-                expected = ProfileEditViewState(
+                expected = ViewState(
+                    data = ProfileEditViewState(
+                        profile = PROFILE_1
+                    ),
                     screenState = ScreenState.CONTENT,
-                    profile = PROFILE_1
                 ),
                 actual = awaitItem()
             )
         }
 
         verifySuspend {
-            profileRepository.readUserProfile(any())
+            profileRepository.readUserProfile()
         }
     }
 
@@ -72,9 +76,11 @@ class ProfileEditViewModelest : BaseViewModelTest() {
             viewModel.onAction(ProfileEditViewAction.InitView)
 
             assertEquals(
-                expected = ProfileEditViewState(
+                expected = ViewState(
+                    data = ProfileEditViewState(
+                        profile = PROFILE_1
+                    ),
                     screenState = ScreenState.CONTENT,
-                    profile = PROFILE_1
                 ),
                 actual = awaitItem()
             )
@@ -82,17 +88,17 @@ class ProfileEditViewModelest : BaseViewModelTest() {
             viewModel.onAction(ProfileEditViewAction.ChangeCustomLink(customLink))
 
             assertEquals(
-                expected = ProfileEditViewState(
+                expected = ViewState(
+                    data = ProfileEditViewState(
+                        profile = PROFILE_1.copy(customLink = customLink)
+                    ),
                     screenState = ScreenState.CONTENT,
-                    profile = PROFILE_1.copy(customLink = customLink)
                 ),
                 actual = awaitItem()
             )
         }
     }
 
-    // TODO Fix this test
-    @Ignore
     @Test
     fun `save changes`() = runTest {
         viewModel.viewState.test {
@@ -101,9 +107,11 @@ class ProfileEditViewModelest : BaseViewModelTest() {
             viewModel.onAction(ProfileEditViewAction.InitView)
 
             assertEquals(
-                expected = ProfileEditViewState(
+                expected = ViewState(
+                    data = ProfileEditViewState(
+                        profile = PROFILE_1
+                    ),
                     screenState = ScreenState.CONTENT,
-                    profile = PROFILE_1
                 ),
                 actual = awaitItem()
             )
@@ -111,21 +119,17 @@ class ProfileEditViewModelest : BaseViewModelTest() {
             viewModel.onAction(ProfileEditViewAction.SaveChanges)
 
             assertEquals(
-                expected = ProfileEditViewState(
+                expected = ViewState(
+                    data = ProfileEditViewState(
+                        profile = PROFILE_1
+                    ),
                     screenState = ScreenState.LOADING,
-                    profile = PROFILE_1
                 ),
                 actual = awaitItem()
             )
         }
 
-//        verifySuspend {
-//            productRepository.read(PRODUCT_1.id)
-//        }
-//
-//        verifySuspend {
-//            productRepository.update(any(), any())
-//        }
+        advanceUntilIdle()
 
         verifySuspend {
             viewModelNavigator.pop()
