@@ -10,12 +10,11 @@ import com.spoonofcode.poa.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewAction
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewModel
 import com.spoonofcode.poa.feature.profile.presentation.edit.ProfileEditViewState
-import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -100,8 +99,6 @@ class ProfileEditViewModelest : BaseViewModelTest() {
         }
     }
 
-    // TODO Fix this test
-    @Ignore
     @Test
     fun `save changes`() = runTest {
         viewModel.viewState.test {
@@ -132,13 +129,7 @@ class ProfileEditViewModelest : BaseViewModelTest() {
             )
         }
 
-//        verifySuspend {
-//            productRepository.read(PRODUCT_1.id)
-//        }
-//
-//        verifySuspend {
-//            productRepository.update(any(), any())
-//        }
+        advanceUntilIdle()
 
         verifySuspend {
             viewModelNavigator.pop()

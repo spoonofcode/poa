@@ -42,11 +42,11 @@ internal class ProfileEditViewModel(
     }
 
     private fun saveChanges() {
+        showLoadingView()
         viewModelScope.launch {
             val profile = requireNotNull(currentState().profile)
             // TODO Fix this usecase
 //                updateProfileUseCase(
-//                    userId = profile.id,
 //                    profileRequest = ProfileRequest(
 //                        userId = profile.id,
 //                        customLink = profile.customLink,
