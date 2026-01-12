@@ -3,8 +3,6 @@ package com.spoonofcode.poa.feature.product.presentation.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
 import com.spoonofcode.poa.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
@@ -45,6 +43,7 @@ internal class ProductDetailsViewModel(
     }
 
     private fun addProductToUser() {
+        showLoadingView()
         viewModelScope.launch {
             val currentState = currentState()
             addProductToUserUseCase(
@@ -68,8 +67,8 @@ internal class ProductDetailsViewModel(
     }
 
     private fun deleteProductFromUser() {
+        showLoadingView()
         viewModelScope.launch {
-            showLoadingView()
             val currentState = currentState()
             deleteProductFromUserUseCase(
                 productId = currentState.product!!.id

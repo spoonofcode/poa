@@ -10,6 +10,7 @@ import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewAction
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewModel
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsViewState
+import com.spoonofcode.poa.feature.product.presentation.edit.ProductEditScreen
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -20,7 +21,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -100,9 +100,23 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     @Test
     fun `add product to user success`() = runTest {
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
 
-        viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+        viewModel.viewState.test {
+            skipItems(2)
+
+            viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+
+            assertEquals(
+                expected = ViewState(
+                    data = ProductDetailsViewState(
+                        product = PRODUCT_1,
+                    ),
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+        }
+
         advanceUntilIdle()
 
         verifySuspend {
@@ -116,15 +130,40 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `add product to user error`() = runTest {
-        everySuspend {
-            productRepository.addProductToUser(
-                any(),
-            )
-        } returns Result.failure(Exception("add product to user error"))
+        everySuspend { productRepository.addProductToUser(any()) } returns
+                Result.failure(Exception("add product to user error"))
 
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
 
         viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+
+        viewModel.viewState.test {
+            skipItems(2)
+
+            viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+
+            assertEquals(
+                expected = ViewState(
+                    data = ProductDetailsViewState(
+                        product = PRODUCT_1,
+                    ),
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+
+            assertEquals(
+                expected = ViewState(
+                    data = ProductDetailsViewState(
+                        product = PRODUCT_1,
+                    ),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+        }
+
+        advanceUntilIdle()
 
         verifySuspend {
             productRepository.addProductToUser(PRODUCT_1.id)
@@ -138,23 +177,24 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     @Test
     fun `edit product success`() = runTest {
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+
         advanceUntilIdle()
 
         viewModel.onAction(ProductDetailsViewAction.EditProduct)
+
         advanceUntilIdle()
 
         verifySuspend {
-            viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.product.presentation.edit.ProductEditScreen>())
+            viewModelNavigator.push(ofType<ProductEditScreen>())
         }
     }
 
     @Test
     fun `delete product from user success`() = runTest {
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
 
         viewModel.viewState.test {
-            skipItems(1)
+            skipItems(2)
 
             viewModel.onAction(ProductDetailsViewAction.DeleteProductFromUser)
 
@@ -168,7 +208,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
                 actual = awaitItem()
             )
         }
-
+        advanceUntilIdle()
 
         verifySuspend {
             productRepository.deleteProductFromUser(any())
@@ -179,23 +219,44 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         }
     }
 
-    // TODO Fix this test
-    @Ignore
     @Test
     fun `delete product from user error`() = runTest {
-//        everySuspend { productRepository.delete(any()) } throws Exception("delete product error")
+        everySuspend { productRepository.deleteProductFromUser(any()) } returns
+                Result.failure(Exception("delete product error"))
 
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-        advanceUntilIdle()
 
-        viewModel.onAction(ProductDetailsViewAction.DeleteProductFromUser)
+        viewModel.viewState.test {
+            skipItems(2)
+
+            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromUser)
+
+            assertEquals(
+                expected = ViewState(
+                    data = ProductDetailsViewState(
+                        product = PRODUCT_1,
+                    ),
+                    screenState = ScreenState.LOADING,
+                ),
+                actual = awaitItem()
+            )
+            assertEquals(
+                expected = ViewState(
+                    data = ProductDetailsViewState(
+                        product = PRODUCT_1,
+                    ),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+        }
         advanceUntilIdle()
 
         verifySuspend {
             productRepository.deleteProductFromUser(any())
         }
 
-        verifySuspend {
+        verifySuspend(mode = exactly(0)) {
             viewModelNavigator.pop()
         }
     }
