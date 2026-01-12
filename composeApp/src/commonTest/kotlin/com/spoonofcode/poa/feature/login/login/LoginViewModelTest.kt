@@ -13,7 +13,6 @@ import com.spoonofcode.poa.feature.login.presentation.login.LoginViewAction
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewState
 import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
-import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -101,14 +100,6 @@ class LoginViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         verifySuspend { viewModelNavigator.push(ofType<ForgotPasswordScreen>()) }
-    }
-
-    @Test
-    fun `navigates to register screen`() = runTest {
-        viewModel.onAction(LoginViewAction.SignUp)
-        advanceUntilIdle()
-
-        verifySuspend { viewModelNavigator.push(ofType<RegisterScreen>()) }
     }
 
     @Test

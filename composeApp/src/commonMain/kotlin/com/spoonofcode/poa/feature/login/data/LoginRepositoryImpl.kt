@@ -1,15 +1,12 @@
 package com.spoonofcode.poa.feature.login.data
 
 import com.spoonofcode.poa.feature.login.data.mappers.toLogin
-import com.spoonofcode.poa.feature.login.data.mappers.toRegister
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginRequestCodeDataSource
-import com.spoonofcode.poa.feature.login.data.remote.RemoteRegisterDataSource
 import com.spoonofcode.poa.feature.login.data.remote.ktor.KtorRemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.domain.model.Login
-import com.spoonofcode.poa.feature.login.domain.model.Register
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class LoginRepositoryImpl(
@@ -18,7 +15,6 @@ class LoginRepositoryImpl(
     private val remoteLoginDataSource: RemoteLoginDataSource,
     private val remoteLoginGoogleDataSource: RemoteLoginGoogleDataSource,
     private val remoteLoginRequestCodeDataSource: RemoteLoginRequestCodeDataSource,
-    private val remoteRegisterDataSource: RemoteRegisterDataSource
 ) : LoginRepository {
     override suspend fun login(email: String, password: String): Result<Login> =
         remoteLoginDataSource.create(
@@ -47,19 +43,4 @@ class LoginRepositoryImpl(
             email = email,
             recaptchaToken = recaptchaToken,
         )
-
-    override suspend fun register(
-        email: String,
-        password: String,
-        firstName: String,
-        lastName: String
-    ): Result<Register> {
-        return remoteRegisterDataSource.create(
-            email = email,
-            password = password,
-            firstName = firstName,
-            lastName = lastName,
-        ).map { response -> response.toRegister() }
-    }
-
 }

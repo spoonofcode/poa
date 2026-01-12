@@ -9,7 +9,6 @@ import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordScreen
 import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
-import com.spoonofcode.poa.feature.login.presentation.register.RegisterScreen
 import kotlinx.coroutines.launch
 
 internal class LoginViewModel(
@@ -29,7 +28,6 @@ internal class LoginViewModel(
             LoginViewAction.SignIn -> signIn()
             LoginViewAction.SignInWithCode -> signInWithCode()
             is LoginViewAction.SignInWithGoogle -> signInWithGoogle(action.googleIdToken)
-            LoginViewAction.SignUp -> signUp()
         }
     }
 
@@ -88,12 +86,6 @@ internal class LoginViewModel(
                 }.onFailure {
                     showErrorSnackbar(it)
                 }
-        }
-    }
-
-    private fun signUp() {
-        viewModelScope.launch {
-            viewModelNavigator.push(RegisterScreen())
         }
     }
 }

@@ -5,17 +5,14 @@ import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginRequestCodeDataSource
-import com.spoonofcode.poa.feature.login.data.remote.RemoteRegisterDataSource
 import com.spoonofcode.poa.feature.login.data.remote.ktor.KtorRemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginUseCase
-import com.spoonofcode.poa.feature.login.domain.usecase.RegisterUseCase
 import com.spoonofcode.poa.feature.login.presentation.forgotPassword.ForgotPasswordViewModel
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
-import com.spoonofcode.poa.feature.login.presentation.register.RegisterViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -34,7 +31,6 @@ val loginModule: Module = module {
     singleOf(::KtorRemoteLoginGoogleDataSource)
 
     singleOf(::RemoteLoginDataSource)
-    singleOf(::RemoteRegisterDataSource)
     singleOf(::RemoteLoginCodeDataSource)
     singleOf(::RemoteLoginRequestCodeDataSource)
 
@@ -42,9 +38,7 @@ val loginModule: Module = module {
     factoryOf(::LoginGoogleUseCase)
     factoryOf(::LoginCodeUseCase)
     factoryOf(::LoginRequestCodeUseCase)
-    factoryOf(::RegisterUseCase)
 
     viewModelOf(::LoginViewModel)
-    viewModelOf(::RegisterViewModel)
     viewModelOf(::ForgotPasswordViewModel)
 }

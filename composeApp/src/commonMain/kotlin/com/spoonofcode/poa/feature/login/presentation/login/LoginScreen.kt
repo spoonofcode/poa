@@ -41,7 +41,6 @@ import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.reset_password
 import com.spoonofcode.poa.resources.sign_in
 import com.spoonofcode.poa.resources.sign_in_with_code
-import com.spoonofcode.poa.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -115,11 +114,6 @@ internal class LoginScreen(
             })
 
             Spacers.VerticalBetweenFields()
-
-            Buttons.SecondaryButton(
-                text = stringResource(resource = Res.string.sign_up),
-                onClick = { onAction(LoginViewAction.SignUp) }
-            )
         }
     }
 
