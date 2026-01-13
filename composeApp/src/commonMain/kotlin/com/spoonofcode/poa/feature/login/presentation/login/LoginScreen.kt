@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,11 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.BaseScreen
@@ -33,14 +27,10 @@ import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.email
-import com.spoonofcode.poa.resources.forget_password
 import com.spoonofcode.poa.resources.let_s_get_started
 import com.spoonofcode.poa.resources.or
-import com.spoonofcode.poa.resources.password
 import com.spoonofcode.poa.resources.poa
-import com.spoonofcode.poa.resources.reset_password
 import com.spoonofcode.poa.resources.sign_in
-import com.spoonofcode.poa.resources.sign_in_with_code
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -79,25 +69,8 @@ internal class LoginScreen(
 
             Spacers.VerticalBetweenFields()
 
-            TextFields.OutlinedPassword(
-                value = viewState.password,
-                onValueChange = { onAction(LoginViewAction.ChangePassword(password = it)) },
-                label = stringResource(resource = Res.string.password),
-            )
-
-            ForgotPasswordInline(onResetClick = { onAction(LoginViewAction.ForgotPassword) })
-
-            Spacers.VerticalBetweenFields()
-
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in),
-                onClick = { onAction(LoginViewAction.SignIn) }
-            )
-
-            Spacers.VerticalBetweenFields()
-
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.sign_in_with_code),
                 onClick = { onAction(LoginViewAction.SignInWithCode) }
             )
 
@@ -148,41 +121,6 @@ internal class LoginScreen(
                 color = lineColor
             )
         }
-    }
-
-    @Composable
-    fun ForgotPasswordInline(
-        onResetClick: () -> Unit,
-        modifier: Modifier = Modifier
-    ) {
-        val linkTag = "RESET"
-
-        val text = buildAnnotatedString {
-            append(stringResource(resource = Res.string.forget_password))
-            pushStringAnnotation(tag = linkTag, annotation = "reset")
-            withStyle(
-                SpanStyle(
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold,
-                    textDecoration = TextDecoration.Underline
-                )
-            ) {
-                append(stringResource(resource = Res.string.reset_password))
-            }
-            pop()
-        }
-
-        ClickableText(
-            modifier = modifier,
-            text = text,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onSurface
-            ),
-            onClick = { offset ->
-                text.getStringAnnotations(linkTag, start = offset, end = offset)
-                    .firstOrNull()?.let { onResetClick() }
-            }
-        )
     }
 }
 

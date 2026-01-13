@@ -24,8 +24,6 @@
     <string name="filter">Filtruj</string>
     <string name="filter_products">Filtruj produkty</string>
     <string name="first_name">Imię</string>
-    <string name="forget_password">Zapomniałeś hasła? </string>
-    <string name="forgot_password">Zapomniane hasło</string>
     <string name="from_all_partners">Od wszystkich partnerów</string>
     <string name="from_my_partners">Od moich partnerów</string>
     <string name="gen_1_series">Gen 1 Series</string>
@@ -59,16 +57,13 @@
     <string name="partner_info">Informacje o partnerze</string>
     <string name="partner_panel">Panel partnerski</string>
     <string name="partners">Partnerzy</string>
-    <string name="password">Hasło</string>
     <string name="privacy_policy">Polityka prywatności</string>
     <string name="product">Produkt</string>
     <string name="products">Produkty</string>
     <string name="profile">Profil</string>
     <string name="reports">Raporty</string>
-    <string name="register">Rejestracja</string>
     <string name="read">Czytaj</string>
     <string name="reload">Odśwież</string>
-    <string name="reset_password">Zresetuj hasło</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="scan">Skanuj</string>
     <string name="scan_info">Umieść tag NFC z tyłu urządzenia</string>
