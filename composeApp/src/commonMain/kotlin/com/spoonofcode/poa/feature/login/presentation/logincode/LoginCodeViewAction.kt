@@ -5,5 +5,5 @@ import com.spoonofcode.poa.core.ui.BaseViewAction
 internal sealed interface LoginCodeViewAction: BaseViewAction {
     data class InitView(val email: String) : LoginCodeViewAction
     data class ChangeCode(val code: String) : LoginCodeViewAction
-    data object LoginWithCode : LoginCodeViewAction
+    data object SignInWithCode : LoginCodeViewAction
 }

@@ -47,7 +47,7 @@ internal class LoginCodeScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in_with_code),
-                onClick = { onAction(LoginCodeViewAction.LoginWithCode) }
+                onClick = { onAction(LoginCodeViewAction.SignInWithCode) }
             )
         }
     }

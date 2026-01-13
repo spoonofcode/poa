@@ -10,6 +10,7 @@ import com.spoonofcode.poa.feature.login.domain.usecase.LoginCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewModel
+import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -35,4 +36,5 @@ val loginModule: Module = module {
     factoryOf(::LoginRequestCodeUseCase)
 
     viewModelOf(::LoginViewModel)
+    viewModelOf(::LoginCodeViewModel)
 }
