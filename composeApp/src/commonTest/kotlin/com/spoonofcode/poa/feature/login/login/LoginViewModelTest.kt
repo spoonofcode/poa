@@ -98,8 +98,6 @@ class LoginViewModelTest : BaseViewModelTest() {
     }
 
 
-    // TODO Fix this test
-    @Ignore
     @Test
     fun `sign in with Google error`() = runTest {
         val token = "google-id-token"

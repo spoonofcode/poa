@@ -10,6 +10,5 @@ import dev.mokkery.mock
 internal fun loginRepositoryMock() = mock<LoginRepository> {
     everySuspend { loginWithCode(any(), any()) } returns Result.success(LOGIN_1)
     everySuspend { loginWithGoogle(any()) } returns Result.success(LOGIN_1)
-    everySuspend { loginWithGoogleKtor(any()) } returns Result.success(LOGIN_1)
     everySuspend { requestCode(any(), any()) } returns Result.success(Unit)
 }

@@ -21,15 +21,17 @@ class LoginRepositoryImpl(
             loginCode = loginCode,
         ).map { response -> response.toLogin() }
 
-    override suspend fun loginWithGoogle(googleUserToken: String): Result<Login> =
-        remoteLoginGoogleDataSource.create(
-            googleUserToken = googleUserToken,
-        ).map { response -> response.toLogin() }
-
-    override suspend fun loginWithGoogleKtor(googleUserToken: String): Result<Login> =
-        ktorRemoteLoginGoogleDataSource.create(
-            googleUserToken = googleUserToken,
-        ).map { response -> response.toLogin() }
+    override suspend fun loginWithGoogle(googleUserToken: String, useKtor: Boolean): Result<Login> {
+        return if (useKtor) {
+            ktorRemoteLoginGoogleDataSource.create(
+                googleUserToken = googleUserToken,
+            ).map { response -> response.toLogin() }
+        } else {
+            remoteLoginGoogleDataSource.create(
+                googleUserToken = googleUserToken,
+            ).map { response -> response.toLogin() }
+        }
+    }
 
     override suspend fun requestCode(email: String, recaptchaToken: String): Result<Unit> =
         remoteLoginRequestCodeDataSource.create(

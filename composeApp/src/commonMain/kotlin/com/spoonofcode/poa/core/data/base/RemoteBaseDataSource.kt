@@ -42,7 +42,6 @@ abstract class RemoteBaseDataSource(
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
 
-            val baseUrlPOA_OLD = "https://auth.proof-of-wear.com/"
             val baseUrlPOA = "https://pow-test1-960238188791.europe-west1.run.app/"
 
             val urlString = if (ktorBackend) {
