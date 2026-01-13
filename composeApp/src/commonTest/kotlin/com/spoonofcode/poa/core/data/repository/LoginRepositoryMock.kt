@@ -8,7 +8,6 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun loginRepositoryMock() = mock<LoginRepository> {
-    everySuspend { login(any(), any()) } returns Result.success(LOGIN_1)
     everySuspend { loginWithCode(any(), any()) } returns Result.success(LOGIN_1)
     everySuspend { loginWithGoogle(any()) } returns Result.success(LOGIN_1)
     everySuspend { loginWithGoogleKtor(any()) } returns Result.success(LOGIN_1)
