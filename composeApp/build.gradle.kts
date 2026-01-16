@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.mokkery)
-    alias(libs.plugins.allopen)
     alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
 }
@@ -148,10 +147,6 @@ kotlin {
             implementation(libs.turbine)
         }
     }
-}
-
-allOpen {
-    annotation("com.spoonofcode.poa.core.test.OpenForMokkery")
 }
 
 android {

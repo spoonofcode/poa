@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.base
+package com.spoonofcode.poa.core.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

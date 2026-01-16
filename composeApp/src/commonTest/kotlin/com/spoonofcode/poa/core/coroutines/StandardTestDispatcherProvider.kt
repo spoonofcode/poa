@@ -1,6 +1,5 @@
-package com.spoonofcode.poa.core
+package com.spoonofcode.poa.core.coroutines
 
-import com.spoonofcode.poa.core.data.base.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 

@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.remote
 
-import com.spoonofcode.poa.core.data.base.DispatcherProvider
+import com.spoonofcode.poa.core.coroutines.DispatcherProvider
 import com.spoonofcode.poa.core.domain.RefreshDataSource
 import com.spoonofcode.poa.core.domain.model.Refresh
 import com.spoonofcode.poa.core.network.HttpStatusCodes

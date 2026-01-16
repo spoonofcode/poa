@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.ui
 
-import com.spoonofcode.poa.core.StandardTestDispatcherProvider
-import com.spoonofcode.poa.core.data.base.DispatcherProvider
+import com.spoonofcode.poa.core.coroutines.StandardTestDispatcherProvider
+import com.spoonofcode.poa.core.coroutines.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui.utils
+package com.spoonofcode.poa.core.utils
 
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock

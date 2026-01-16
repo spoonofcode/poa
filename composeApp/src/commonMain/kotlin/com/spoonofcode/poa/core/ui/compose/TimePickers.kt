@@ -16,7 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.ext.formatedTime
-import com.spoonofcode.poa.core.ui.utils.LocalDateTimeUtils
+import com.spoonofcode.poa.core.utils.LocalDateTimeUtils
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 
