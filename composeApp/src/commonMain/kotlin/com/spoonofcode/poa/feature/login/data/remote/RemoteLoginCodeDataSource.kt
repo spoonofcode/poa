@@ -13,6 +13,7 @@ class RemoteLoginCodeDataSource() : RemoteBaseDataSource(
         email: String,
         loginCode: String,
     ): Result<LoginResponse> = doRequest<LoginResponse>(
+        ktorBackend = false,
         method = HttpMethod.Post,
         requestBody = LoginCodeRequest(
             email = email,
