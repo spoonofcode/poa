@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.demo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.poa.core.ui.base.ScreenState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

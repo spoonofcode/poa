@@ -75,9 +75,11 @@ abstract class RemoteBaseDataSource(
         }
     }
 
-    private fun getJwtAccessToken(): String = sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
+    private fun getJwtAccessToken(): String =
+        sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
 
-    private fun getKtorJwtAccessToken(): String = sessionManager.getKtorSessionAccessToken() ?: "TOKEN_NOT_FOUND"
+    private fun getKtorJwtAccessToken(): String =
+        sessionManager.getKtorSessionAccessToken() ?: "TOKEN_NOT_FOUND"
 
     private fun unhandledException(response: HttpResponse): HttpResponse {
         throw Exception("Unhandled Error $response")
@@ -108,7 +110,7 @@ abstract class RemoteBaseDataSource(
         ktorBackend: Boolean
     ): HttpResponse {
 
-        val jwtAccessToken = if(ktorBackend) {
+        val jwtAccessToken = if (ktorBackend) {
             getKtorJwtAccessToken()
         } else {
             getJwtAccessToken()

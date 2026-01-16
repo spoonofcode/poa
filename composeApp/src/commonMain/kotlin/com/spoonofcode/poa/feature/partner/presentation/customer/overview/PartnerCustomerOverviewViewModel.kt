@@ -2,9 +2,8 @@ package com.spoonofcode.poa.feature.partner.presentation.customer.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerUsersUseCase
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.poa.core.ui.snackbar.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 

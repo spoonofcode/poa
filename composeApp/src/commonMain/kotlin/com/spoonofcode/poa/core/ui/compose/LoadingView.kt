@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.spoonofcode.poa.core.ui.Paddings
+import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.poa
 import org.jetbrains.compose.resources.DrawableResource

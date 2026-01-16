@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui
+package com.spoonofcode.poa.core.ui.compose
 
 import androidx.compose.ui.unit.dp
 

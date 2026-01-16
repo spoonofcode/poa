@@ -1,11 +1,11 @@
 package com.spoonofcode.poa.feature.product.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.poa.core.ui.base.ViewState
 import com.spoonofcode.poa.feature.product.di.productTestModule
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen

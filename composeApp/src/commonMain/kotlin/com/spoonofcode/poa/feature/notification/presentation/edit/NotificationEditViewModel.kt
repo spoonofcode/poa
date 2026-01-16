@@ -2,9 +2,8 @@ package com.spoonofcode.poa.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.SnackbarEvent
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.poa.core.ui.base.ScreenState
 import com.spoonofcode.poa.feature.notification.domain.usecase.SendNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime

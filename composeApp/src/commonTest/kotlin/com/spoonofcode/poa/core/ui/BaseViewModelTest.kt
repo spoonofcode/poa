@@ -1,6 +1,6 @@
-package com.spoonofcode.poa.core
+package com.spoonofcode.poa.core.ui
 
-import com.spoonofcode.poa.core.ui.navigation.ViewModelNavigator
+import com.spoonofcode.poa.core.ui.navigation.ViewModelNavigatorImpl
 import dev.mokkery.MockMode
 import dev.mokkery.mock
 import org.koin.dsl.module
@@ -8,7 +8,7 @@ import org.koin.test.get
 import kotlin.test.BeforeTest
 
 abstract class BaseViewModelTest : BaseTest() {
-    protected lateinit var viewModelNavigator: ViewModelNavigator
+    protected lateinit var viewModelNavigator: ViewModelNavigatorImpl
 
     @BeforeTest
     override fun setup() {
@@ -20,7 +20,7 @@ abstract class BaseViewModelTest : BaseTest() {
     }
 
     private fun testModule() = module {
-        single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
+        single { mock<ViewModelNavigatorImpl>(mode = MockMode.autofill) }
     }
 
 }

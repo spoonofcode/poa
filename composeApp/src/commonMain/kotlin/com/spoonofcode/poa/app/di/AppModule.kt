@@ -17,10 +17,6 @@ import com.spoonofcode.poa.feature.profile.di.profileModule
 import com.spoonofcode.poa.feature.reward.di.rewardModule
 import com.spoonofcode.poa.feature.scan.di.scanModule
 import com.spoonofcode.poa.feature.tac.di.tacModule
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 val appModule = module {
@@ -46,24 +42,4 @@ val appModule = module {
         scanModule,
         tacModule,
     )
-    single {
-        HttpClient {
-            install(ContentNegotiation) {
-                json(
-                    json = Json {
-                        encodeDefaults = true
-                        ignoreUnknownKeys = true
-                    }
-                )
-            }
-
-            // TODO #34-Try use custom AuthPlugin instead of safeApiCall function
-//            install(AuthPlugin) {
-//                // Provide a suspend function that does your refresh call
-//                refreshTokenFunc = {
-//                    getKoin().get<TokenUseCase>().refreshAccessToken()
-//                }
-//            }
-        }
-    }
 }

@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.profile.presentation.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen

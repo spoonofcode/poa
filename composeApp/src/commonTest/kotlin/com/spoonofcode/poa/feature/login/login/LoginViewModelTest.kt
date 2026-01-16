@@ -2,10 +2,10 @@ package com.spoonofcode.poa.feature.login.login
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.BaseViewModelTest
 import com.spoonofcode.poa.core.ext.containsTypes
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.poa.core.ui.base.ViewState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewAction
@@ -19,6 +19,7 @@ import dev.mokkery.matcher.ofType
 import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -153,6 +154,7 @@ class LoginViewModelTest : BaseViewModelTest() {
                 actual = awaitItem()
             )
         }
+        advanceUntilIdle()
 
         verifySuspend {
             loginRepository.requestCode(email = email, recaptchaToken = any())

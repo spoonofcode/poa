@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.scan.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.poa.core.ui.base.ScreenState
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
 import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
 import kotlinx.coroutines.launch

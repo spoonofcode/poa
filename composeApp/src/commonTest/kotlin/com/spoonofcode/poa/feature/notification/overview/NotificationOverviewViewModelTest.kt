@@ -1,10 +1,10 @@
 package com.spoonofcode.poa.feature.notification.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.poa.core.ui.base.ViewState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import com.spoonofcode.poa.feature.notification.domain.repository.NotificationRepository
 import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction

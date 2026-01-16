@@ -34,8 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
-import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts

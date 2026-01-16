@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.partner.panel
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.core.ui.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.base.ViewState
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen

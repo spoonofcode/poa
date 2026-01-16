@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.ui.Paddings
+import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.data_could_not_be_loaded
 import com.spoonofcode.poa.resources.poa

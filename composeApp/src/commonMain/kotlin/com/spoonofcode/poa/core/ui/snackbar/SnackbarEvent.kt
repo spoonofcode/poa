@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui
+package com.spoonofcode.poa.core.ui.snackbar
 
 import androidx.compose.material3.SnackbarDuration
 

@@ -2,8 +2,7 @@ package com.spoonofcode.poa.feature.notification.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationByIdUseCase
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 internal class NotificationDetailsViewModel(
