@@ -7,7 +7,7 @@ import com.spoonofcode.poa.feature.partner.data.model.PartnerUserResponse
 import io.ktor.http.HttpMethod
 
 class RemotePartnerDataSource : RemoteBaseDataSource(
-    collectionName = "partners",
+    collectionName = "api/partners",
 ) {
     suspend fun read(partnerId: String): Result<PartnerResponse> = doRequest(
         urlPostfixPath = partnerId,

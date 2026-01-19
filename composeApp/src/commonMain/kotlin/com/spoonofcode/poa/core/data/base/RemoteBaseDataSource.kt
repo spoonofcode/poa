@@ -137,14 +137,14 @@ abstract class RemoteBaseDataSource(
         return true
     }
 
-    private suspend fun refreshToken(jwtRefreshToken: String): Refresh {
-        return withContext(dispatcherProvider.io()) {
-            val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/refresh/") {
+    private suspend fun refreshToken(jwtRefreshToken: String): Refresh =
+        withContext(dispatcherProvider.io()) {
+            val refreshUrlString = "${networkConfig.baseUrl}/api/refresh/"
+            val response: HttpResponse = httpClient.post(refreshUrlString) {
                 header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")
             }
 
             val responseBody = responseOrException(response).body<String>()
             Json.decodeFromString(Refresh.serializer(), responseBody)
         }
-    }
 }
