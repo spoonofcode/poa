@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui.compose
+package com.spoonofcode.poa.core.ui.compose.snackbar
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -13,9 +13,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.spoonofcode.poa.core.ui.snackbar.SnackbarEvent
-import com.spoonofcode.poa.core.ui.snackbar.SnackbarType
-import com.spoonofcode.poa.core.ui.ext.showSnackbar
+import com.spoonofcode.poa.core.ui.compose.Paddings
+import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.snackbar.ext.showSnackbar
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,7 @@ fun Snackbar(
     if (visuals is CustomSnackbarVisuals) {
         // Our custom visuals
         Snackbar(
-            modifier = Modifier.padding(Paddings.screenPadding),
+            modifier = Modifier.Companion.padding(Paddings.screenPadding),
             containerColor = getContainerColor(visuals.type),
             contentColor = getContentColor(visuals.type),
             action = {

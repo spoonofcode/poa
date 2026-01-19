@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.network.NetworkManager
 import com.spoonofcode.poa.core.ui.navigation.ViewModelNavigator
-import com.spoonofcode.poa.core.ui.snackbar.SnackbarEvent
+import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -1,8 +1,8 @@
-package com.spoonofcode.poa.core.ui.ext
+package com.spoonofcode.poa.core.ui.compose.snackbar.ext
 
 import androidx.compose.material3.SnackbarHostState
-import com.spoonofcode.poa.core.ui.snackbar.SnackbarEvent
-import com.spoonofcode.poa.core.ui.compose.CustomSnackbarVisuals
+import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
+import com.spoonofcode.poa.core.ui.compose.snackbar.CustomSnackbarVisuals
 
 suspend fun SnackbarHostState.showSnackbar(
     snackbarEvent: SnackbarEvent,

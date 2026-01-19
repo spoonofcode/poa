@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.product.presentation.series.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.base.BaseViewModel
-import com.spoonofcode.poa.core.ui.snackbar.SnackbarEvent
+import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
 import kotlinx.coroutines.launch
