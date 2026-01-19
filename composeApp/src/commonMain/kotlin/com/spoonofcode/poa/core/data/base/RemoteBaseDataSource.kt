@@ -35,20 +35,13 @@ abstract class RemoteBaseDataSource(
     private val sessionManager: SessionManager by getKoin().inject()
 
     internal suspend inline fun <reified T> doRequest(
-        ktorBackend: Boolean = true,
         urlPostfixPath: String = "",
         method: HttpMethod,
         queryParams: Map<String, Any> = emptyMap(),
         requestBody: Any? = null,
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
-            val baseUrlPOA = "https://pow-test1-960238188791.europe-west1.run.app/"
-
-            val urlString = if (ktorBackend) {
-                "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
-            } else {
-                "$baseUrlPOA$collectionName$urlPostfixPath"
-            }
+            val urlString = "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
 
             val requestBuilder: HttpRequestBuilder.() -> Unit = {
                 contentType(ContentType.Application.Json)
@@ -64,7 +57,7 @@ abstract class RemoteBaseDataSource(
             }
 
             val response = if (sessionTokenRequired) {
-                safeApiCall(httpClient, requestBuilder, ktorBackend)
+                safeApiCall(httpClient, requestBuilder)
             } else {
                 httpClient.request(requestBuilder)
             }
@@ -77,9 +70,6 @@ abstract class RemoteBaseDataSource(
 
     private fun getJwtAccessToken(): String =
         sessionManager.getSessionAccessToken() ?: "TOKEN_NOT_FOUND"
-
-    private fun getKtorJwtAccessToken(): String =
-        sessionManager.getKtorSessionAccessToken() ?: "TOKEN_NOT_FOUND"
 
     private fun unhandledException(response: HttpResponse): HttpResponse {
         throw Exception("Unhandled Error $response")
@@ -107,14 +97,8 @@ abstract class RemoteBaseDataSource(
     private suspend fun safeApiCall(
         client: HttpClient,
         block: HttpRequestBuilder.() -> Unit,
-        ktorBackend: Boolean
     ): HttpResponse {
-
-        val jwtAccessToken = if (ktorBackend) {
-            getKtorJwtAccessToken()
-        } else {
-            getJwtAccessToken()
-        }
+        val jwtAccessToken = getJwtAccessToken()
 
         // Local helper to execute the same request with the current (possibly refreshed) token
         suspend fun executeRequest(): HttpResponse {
@@ -122,7 +106,7 @@ abstract class RemoteBaseDataSource(
                 block()
                 header(
                     HttpHeaders.Authorization,
-                    "Bearer ${jwtAccessToken}"
+                    "Bearer $jwtAccessToken"
                 )
             }
         }
@@ -146,10 +130,10 @@ abstract class RemoteBaseDataSource(
     }
 
     private suspend fun refreshAccessToken(): Boolean {
-        val jwtRefreshToken = sessionManager.getKtorSessionRefreshToken() ?: return false
+        val jwtRefreshToken = sessionManager.getSessionRefreshToken() ?: return false
         val refresh = refreshToken(jwtRefreshToken)
-        sessionManager.saveKtorSessionAccessToken(refresh.jwtAccessToken)
-        sessionManager.saveKtorSessionRefreshToken(refresh.jwtRefreshToken)
+        sessionManager.saveSessionAccessToken(refresh.jwtAccessToken)
+        sessionManager.saveSessionRefreshToken(refresh.jwtRefreshToken)
         return true
     }
 
@@ -160,7 +144,7 @@ abstract class RemoteBaseDataSource(
             }
 
             val responseBody = responseOrException(response).body<String>()
-            Json.Default.decodeFromString(Refresh.serializer(), responseBody)
+            Json.decodeFromString(Refresh.serializer(), responseBody)
         }
     }
 }

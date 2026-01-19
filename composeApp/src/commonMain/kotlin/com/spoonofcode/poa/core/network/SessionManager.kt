@@ -8,14 +8,6 @@ interface SessionManager {
 
     fun enableAllNotifications()
 
-    fun saveKtorSessionAccessToken(token: String)
-
-    fun getKtorSessionAccessToken(): String?
-
-    fun saveKtorSessionRefreshToken(token: String)
-
-    fun getKtorSessionRefreshToken(): String?
-
     fun saveSessionAccessToken(token: String)
 
     fun getSessionAccessToken(): String?

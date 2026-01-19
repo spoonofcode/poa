@@ -79,11 +79,7 @@ internal class HomeViewModel(
 
     private fun navigateToNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(
-                voyagerRouteResolver.resolve(
-
-                )
-            )
+            viewModelNavigator.push(NotificationOverviewScreen())
         }
     }
 }

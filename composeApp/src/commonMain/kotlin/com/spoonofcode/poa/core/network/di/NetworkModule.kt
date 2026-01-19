@@ -14,10 +14,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-expect val platformNetworkModule: Module
-
 val networkModule: Module = module {
-    includes(platformNetworkModule)
     single {
         Connectivity {
             autoStart = true
