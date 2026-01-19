@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.core.network.di
 
+import com.spoonofcode.poa.core.network.NetworkConfig
+import com.spoonofcode.poa.core.network.NetworkConfigImpl
 import com.spoonofcode.poa.core.network.NetworkManager
 import com.spoonofcode.poa.core.network.NetworkManagerImpl
 import com.spoonofcode.poa.core.network.SessionManager
@@ -20,6 +22,7 @@ val networkModule: Module = module {
             autoStart = true
         }
     }
+    single { NetworkConfigImpl() } bind NetworkConfig::class
     singleOf(::SessionManagerImpl).bind(SessionManager::class)
     singleOf(::NetworkManagerImpl).bind(NetworkManager::class)
 
