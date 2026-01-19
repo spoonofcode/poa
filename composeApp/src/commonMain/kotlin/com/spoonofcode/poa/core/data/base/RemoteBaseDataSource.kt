@@ -41,7 +41,11 @@ abstract class RemoteBaseDataSource(
         requestBody: Any? = null,
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
-            val urlString = "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
+            val urlString =
+                if (urlPostfixPath.isNotEmpty())
+                    "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
+                else
+                    "${networkConfig.baseUrl}/$collectionName"
 
             val requestBuilder: HttpRequestBuilder.() -> Unit = {
                 contentType(ContentType.Application.Json)
