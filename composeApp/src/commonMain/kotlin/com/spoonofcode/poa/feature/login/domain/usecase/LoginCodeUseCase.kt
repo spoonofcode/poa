@@ -14,9 +14,8 @@ class LoginCodeUseCase(
         email = email,
         loginCode = code,
     ).map { loginResponse ->
-//        sessionManager.saveSessionUserId(userId = loginResponse.userId)
-//        sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
-//        sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
-//        sessionManager.enableAllNotifications()
+        sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
+        sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
+        sessionManager.enableAllNotifications()
     }
 }
