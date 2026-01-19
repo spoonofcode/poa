@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.navigation
+package com.spoonofcode.poa.navigation
 
 sealed class LoginModule : Screen() {
     data class ExchangeRateDetailsScreen(

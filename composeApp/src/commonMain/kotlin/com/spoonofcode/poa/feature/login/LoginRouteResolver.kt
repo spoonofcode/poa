@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.login
 
 import com.spoonofcode.poa.core.ui.navigation.route.ModuleRouteResolver
-import com.spoonofcode.poa.feature.navigation.LoginModule
-import com.spoonofcode.poa.feature.navigation.Screen
+import com.spoonofcode.poa.navigation.LoginModule
+import com.spoonofcode.poa.navigation.Screen
 
 internal class LoginRouteResolver : ModuleRouteResolver<LoginModule> {
 
