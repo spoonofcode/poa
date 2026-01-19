@@ -12,7 +12,6 @@ class RemoteLoginGoogleDataSource : RemoteBaseDataSource(
     suspend fun create(
         googleUserToken: String,
     ): Result<LoginGoogleResponse> = doRequest(
-        ktorBackend = false,
         method = HttpMethod.Post,
         requestBody = LoginGoogleRequest(
             googleUserToken = googleUserToken,

@@ -18,22 +18,6 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         saveSettingsNotificationFromMyPartners(true)
     }
 
-    // START KTOR SERVER SESSION
-    override fun saveKtorSessionAccessToken(token: String) {
-        settings.putString(KTOR_SESSION_ACCESS_TOKEN, token)
-    }
-
-    override fun getKtorSessionAccessToken(): String? =
-        settings.getStringOrNull(KTOR_SESSION_ACCESS_TOKEN)
-
-    override fun saveKtorSessionRefreshToken(token: String) {
-        settings.putString(KTOR_SESSION_REFRESH_TOKEN, token)
-    }
-
-    override fun getKtorSessionRefreshToken(): String? =
-        settings.getStringOrNull(KTOR_SESSION_REFRESH_TOKEN)
-    // END KTOR SERVER SESSION
-
     override fun saveSessionAccessToken(token: String) {
         settings.putString(SESSION_ACCESS_TOKEN, token)
     }

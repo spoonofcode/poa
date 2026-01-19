@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.data.base
 
 import com.spoonofcode.poa.core.coroutines.DispatcherProvider
-import com.spoonofcode.poa.core.domain.model.Refresh
+import com.spoonofcode.poa.core.data.base.model.Refresh
 import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
 import com.spoonofcode.poa.core.network.SessionManager
