@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.data.base
 
 import com.spoonofcode.poa.core.coroutines.DispatcherProvider
-import com.spoonofcode.poa.core.domain.usecase.RefreshAccessTokenUseCase
+import com.spoonofcode.poa.core.domain.model.Refresh
 import com.spoonofcode.poa.core.network.HttpStatusCodes
 import com.spoonofcode.poa.core.network.NetworkConfig
 import com.spoonofcode.poa.core.network.SessionManager
@@ -10,6 +10,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
+import io.ktor.client.request.post
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
@@ -21,6 +22,7 @@ import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 import io.ktor.http.contentType
 import io.ktor.util.reflect.typeInfo
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import org.koin.mp.KoinPlatform.getKoin
 
 abstract class RemoteBaseDataSource(
@@ -30,9 +32,7 @@ abstract class RemoteBaseDataSource(
     private val httpClient: HttpClient by getKoin().inject()
     private val networkConfig: NetworkConfig by getKoin().inject()
     private val dispatcherProvider: DispatcherProvider by getKoin().inject()
-
     private val sessionManager: SessionManager by getKoin().inject()
-    private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase by getKoin().inject()
 
     internal suspend inline fun <reified T> doRequest(
         ktorBackend: Boolean = true,
@@ -42,7 +42,6 @@ abstract class RemoteBaseDataSource(
         requestBody: Any? = null,
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
-
             val baseUrlPOA = "https://pow-test1-960238188791.europe-west1.run.app/"
 
             val urlString = if (ktorBackend) {
@@ -133,7 +132,7 @@ abstract class RemoteBaseDataSource(
 
         // 2) If 401, try refresh once
         if (response.status == Unauthorized) {
-            val refreshed = refreshAccessTokenUseCase(ktorBackend)
+            val refreshed = refreshAccessToken()
             if (!refreshed) {
                 // Refresh failed => no valid session
                 throw Exception("Client Error")
@@ -144,5 +143,24 @@ abstract class RemoteBaseDataSource(
         }
 
         return response
+    }
+
+    private suspend fun refreshAccessToken(): Boolean {
+        val jwtRefreshToken = sessionManager.getKtorSessionRefreshToken() ?: return false
+        val refresh = refreshToken(jwtRefreshToken)
+        sessionManager.saveKtorSessionAccessToken(refresh.jwtAccessToken)
+        sessionManager.saveKtorSessionRefreshToken(refresh.jwtRefreshToken)
+        return true
+    }
+
+    private suspend fun refreshToken(jwtRefreshToken: String): Refresh {
+        return withContext(dispatcherProvider.io()) {
+            val response: HttpResponse = httpClient.post("${networkConfig.baseUrl}/refresh/") {
+                header(HttpHeaders.Authorization, "Bearer $jwtRefreshToken")
+            }
+
+            val responseBody = responseOrException(response).body<String>()
+            Json.Default.decodeFromString(Refresh.serializer(), responseBody)
+        }
     }
 }

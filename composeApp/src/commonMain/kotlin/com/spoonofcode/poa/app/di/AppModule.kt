@@ -6,7 +6,6 @@ import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.recaptcha.di.recaptchaModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
 import com.spoonofcode.poa.core.ui.di.uiModule
-import com.spoonofcode.poa.feature.demo.di.demoModule
 import com.spoonofcode.poa.feature.faq.di.faqModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule
@@ -30,7 +29,6 @@ val appModule = module {
         settingsModule,
 
         // features
-        demoModule,
         faqModule,
         homeModule,
         loginModule,
