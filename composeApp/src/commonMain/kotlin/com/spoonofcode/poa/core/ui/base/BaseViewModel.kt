@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.network.NetworkManager
 import com.spoonofcode.poa.core.ui.navigation.ViewModelNavigator
 import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
+import com.spoonofcode.poa.core.ui.navigation.route.VoyagerRouteResolver
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,6 +25,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     protected val networkManager: NetworkManager by getKoin().inject()
+    protected val voyagerRouteResolver: VoyagerRouteResolver by getKoin().inject()
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
