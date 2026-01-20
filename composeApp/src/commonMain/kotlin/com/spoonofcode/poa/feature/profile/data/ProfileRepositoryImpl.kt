@@ -9,8 +9,15 @@ class ProfileRepositoryImpl(
     private val remoteUserDataSource: RemoteUserDataSource,
 ) : ProfileRepository {
 
+    // TODO #99 Adopt poa backend
     override suspend fun readUserProfile(): Result<Profile> =
-        remoteUserDataSource.readUserProfile().map { it.toProfile() }
+        Result.success(Profile(
+            name = "Bartosz",
+            numberOfProductsOwnedByUser = 4,
+            customLink = "https://example.com",
+
+        ))
+//        remoteUserDataSource.readUserProfile().map { it.toProfile() }
 
     override suspend fun updateUserProfile(): Result<Unit> {
         TODO("Not yet implemented")

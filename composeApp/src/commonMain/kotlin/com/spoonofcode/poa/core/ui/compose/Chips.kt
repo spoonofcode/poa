@@ -3,6 +3,7 @@ package com.spoonofcode.poa.core.ui.compose
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -70,21 +72,26 @@ object Chips {
         onCategorySelected: (String) -> Unit
     ) {
         LazyRow(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         ) {
             items(categories.size) { index ->
                 val category = categories[index]
                 val isSelected = category.name in selectedCategories
+                
                 FilterChip(
                     selected = isSelected,
                     onClick = { onCategorySelected(category.name) },
                     label = {
-                        Texts.LMB(text = category.name)
+                        Texts.LLB(text = category.name)
                     },
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    colors = FilterChipDefaults.filterChipColors(),
+                    shape = MaterialTheme.shapes.medium,
+                    border = if (isSelected) null else FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = false,
+                        borderColor = MaterialTheme.colorScheme.outlineVariant
+                    ),
                     leadingIcon = if (isSelected) {
                         {
                             Icon(
@@ -99,4 +106,3 @@ object Chips {
         }
     }
 }
-

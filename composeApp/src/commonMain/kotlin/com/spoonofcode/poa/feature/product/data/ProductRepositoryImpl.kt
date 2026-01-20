@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.product.data
 import com.spoonofcode.poa.feature.product.data.mappers.toProduct
 import com.spoonofcode.poa.feature.product.data.remote.RemoteProductDataSource
 import com.spoonofcode.poa.feature.product.data.remote.RemoteUserProductDataSource
+import com.spoonofcode.poa.feature.product.data.testdata.PRODUCTS
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
 
@@ -17,8 +18,9 @@ class ProductRepositoryImpl(
     override suspend fun getProductByTagId(tagId: String): Result<Product> =
         remoteProducts.readProductByTagId(tagId).map { it.toProduct() }
 
-    override suspend fun getUserProducts(): Result<List<Product>> =
-        remoteUserProducts.readUserProducts().map { list -> list.map { it.toProduct() } }
+    // TODO #99 Adopt poa backend
+    override suspend fun getUserProducts(): Result<List<Product>> = Result.success(PRODUCTS)
+//        remoteUserProducts.readUserProducts().map { list -> list.map { it.toProduct() } }
 
     override suspend fun getProductSeriesIds(): Result<List<String>> =
         remoteUserProducts.readProductSeriesIds()

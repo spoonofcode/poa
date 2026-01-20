@@ -6,7 +6,9 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ object TextFields {
         readOnly: Boolean = false,
         label: String? = null,
         innerLabel: String? = null,
+        leadingIcon: @Composable (() -> Unit)? = null,
         trailingIcon: @Composable (() -> Unit)? = null,
         isError: Boolean = false,
         minLines: Int = 1,
@@ -42,10 +45,14 @@ object TextFields {
             enabled = enabled,
             readOnly = readOnly,
             label = { innerLabel?.let { Text(text = it) } },
+            leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             isError = isError,
             minLines = minLines,
             visualTransformation = visualTransformation,
+            shape = MaterialTheme.shapes.large,
+            singleLine = minLines == 1,
+            textStyle = MaterialTheme.typography.bodyLarge,
         )
         Spacers.VerticalBetweenFields()
     }
@@ -76,6 +83,7 @@ object TextFields {
             trailingIcon = trailingIcon,
             isError = isError,
             visualTransformation = visualTransformation,
+            shape = MaterialTheme.shapes.large,
             singleLine = false,
             minLines = 4,
             maxLines = 4,
