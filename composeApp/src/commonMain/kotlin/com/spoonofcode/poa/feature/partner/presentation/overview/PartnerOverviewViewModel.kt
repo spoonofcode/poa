@@ -18,7 +18,7 @@ internal class PartnerOverviewViewModel(
     override fun onAction(action: PartnerOverviewViewAction) {
         when (action) {
             is PartnerOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
-            is PartnerOverviewViewAction.ClickCategory -> clickCategory(action.categoryId)
+            is PartnerOverviewViewAction.ClickCategory -> clickCategory(action.categoryName)
             PartnerOverviewViewAction.InitView -> initView()
             is PartnerOverviewViewAction.SelectPartner -> selectPartner(action.partnerId)
         }
@@ -48,13 +48,13 @@ internal class PartnerOverviewViewModel(
         }
     }
 
-    private fun clickCategory(categoryId: String) {
+    private fun clickCategory(categoryName: String) {
         updateState {
             copy(
-                selectedPartnerCategories = if (selectedPartnerCategories.contains(categoryId)) {
-                    selectedPartnerCategories - categoryId
+                selectedPartnerCategories = if (selectedPartnerCategories.contains(categoryName)) {
+                    selectedPartnerCategories - categoryName
                 } else {
-                    selectedPartnerCategories + categoryId
+                    selectedPartnerCategories + categoryName
                 }
             )
         }

@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.feature.partner.data
 
 import com.spoonofcode.poa.feature.partner.data.mappers.toPartner
-import com.spoonofcode.poa.feature.partner.data.mappers.toPartnerCategory
 import com.spoonofcode.poa.feature.partner.data.mappers.toPartnerUser
 import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.poa.feature.partner.data.remote.RemotePartnerCategoryDataSource
@@ -42,7 +41,7 @@ class PartnerRepositoryImpl(
     override suspend fun getCategories(): Result<List<PartnerCategory>> =
         remotePartnerCategoryDataSource.readAll().map { response ->
             response.map {
-                it.toPartnerCategory()
+                PartnerCategory(name =it)
             }
         }
 

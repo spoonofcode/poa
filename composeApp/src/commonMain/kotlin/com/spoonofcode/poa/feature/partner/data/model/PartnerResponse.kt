@@ -1,14 +1,16 @@
 package com.spoonofcode.poa.feature.partner.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class PartnerResponse(
     val id: String,
     val name: String,
-    val email: String,
-    val description: String,
-    val imageLink: String,
+    @SerialName("public_email")
+    val email: String? = null,
+    val description: String? = null,
+    val imageLink: String? = null,
     val websiteLink: String? = null,
     val instagramLink: String? = null,
     val facebookLink: String? = null,

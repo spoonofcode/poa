@@ -59,7 +59,7 @@ internal class PartnerDetailsScreen(
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                 )
                 Spacers.VerticalBetweenFields()
-                Texts.HSB(viewState.partner.description)
+                viewState.partner.description?.let { Texts.HSB(it) }
                 Spacers.VerticalBetweenFields()
                 Row(
                     modifier = Modifier.fillMaxWidth(),

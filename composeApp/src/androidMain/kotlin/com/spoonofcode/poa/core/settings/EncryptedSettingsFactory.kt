@@ -9,6 +9,9 @@ import com.russhwolf.settings.SharedPreferencesSettings
 lateinit var appContext: Context
 
 actual fun createEncryptedSettings(): Settings {
+
+//    appContext.deleteSharedPreferences("poa-settings")
+
     val masterKey = MasterKey.Builder(appContext)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()

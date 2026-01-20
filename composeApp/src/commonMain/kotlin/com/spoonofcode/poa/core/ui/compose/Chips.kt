@@ -76,10 +76,10 @@ object Chips {
         ) {
             items(categories.size) { index ->
                 val category = categories[index]
-                val isSelected = category.id in selectedCategories
+                val isSelected = category.name in selectedCategories
                 FilterChip(
                     selected = isSelected,
-                    onClick = { onCategorySelected(category.id) },
+                    onClick = { onCategorySelected(category.name) },
                     label = {
                         Texts.LMB(text = category.name)
                     },

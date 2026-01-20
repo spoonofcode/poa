@@ -4,7 +4,7 @@ import com.spoonofcode.poa.core.ui.base.BaseViewAction
 
 internal sealed interface PartnerOverviewViewAction: BaseViewAction {
     data class ChangeSearchText(val searchText: String) : PartnerOverviewViewAction
-    data class ClickCategory(val categoryId: String) : PartnerOverviewViewAction
+    data class ClickCategory(val categoryName: String) : PartnerOverviewViewAction
     data object InitView : PartnerOverviewViewAction
     data class SelectPartner(val partnerId: String) : PartnerOverviewViewAction
 }
