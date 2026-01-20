@@ -3,15 +3,11 @@ package com.spoonofcode.poa.feature.partner.presentation.panel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetUserPartnersUseCase
 import com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen
 import kotlinx.coroutines.launch
 
-internal class PartnerPanelViewModel(
-    private val getUserPartnersUseCase: GetUserPartnersUseCase,
-) :
+internal class PartnerPanelViewModel() :
     BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction>(
         initialViewState = PartnerPanelViewState(),
         initialScreenState = ScreenState.CONTENT,
@@ -26,14 +22,10 @@ internal class PartnerPanelViewModel(
     }
 
     fun navigateToPartnerEdit() {
+        // TODO #99 Adopt poa backend - read partner id from profile backend
+        val partnerId = "4KJzqfBSQ1WbwysYa0j9"
         viewModelScope.launch {
-            getUserPartnersUseCase()
-                .onSuccess {
-                    viewModelNavigator.push(PartnerEditScreen(partnerId = it.first().id))
-                }
-                .onFailure {
-                    showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
-                }
+            viewModelNavigator.push(PartnerEditScreen(partnerId = partnerId))
         }
     }
 
