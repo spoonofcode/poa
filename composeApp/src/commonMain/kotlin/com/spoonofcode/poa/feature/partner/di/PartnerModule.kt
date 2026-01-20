@@ -8,6 +8,7 @@ import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerUsersUseCase
+import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetUserPartnersUseCase
@@ -32,6 +33,7 @@ val partnerModule = module {
 
     factoryOf(::GetPartnerByIdUseCase)
     factoryOf(::GetPartnerCategoriesUseCase)
+    factoryOf(::GetPartnersFilteredByPartnerCategoryUseCase)
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetPartnersUseCase)
     factoryOf(::GetPartnerUsersUseCase)

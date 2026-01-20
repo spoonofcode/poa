@@ -3,6 +3,7 @@ package com.spoonofcode.poa.feature.partner.presentation.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
+import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersUseCase
 import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 
 internal class PartnerOverviewViewModel(
     private val getPartnersUseCase: GetPartnersUseCase,
+    private val getPartnersFilteredByPartnerCategoryUseCase: GetPartnersFilteredByPartnerCategoryUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
     private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
 ) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction>(PartnerOverviewViewState()) {
@@ -50,26 +52,38 @@ internal class PartnerOverviewViewModel(
 
     private fun clickCategory(categoryName: String) {
         updateState {
-            copy(
-                selectedPartnerCategories = if (selectedPartnerCategories.contains(categoryName)) {
-                    selectedPartnerCategories - categoryName
-                } else {
-                    selectedPartnerCategories + categoryName
-                }
-            )
+            val newSelectedCategories = if (selectedPartnerCategories.contains(categoryName)) {
+                selectedPartnerCategories - categoryName
+            } else {
+                selectedPartnerCategories + categoryName
+            }
+            copy(selectedPartnerCategories = newSelectedCategories)
         }
+        applyFilters()
     }
 
     private fun changeSearchText(searchText: String) {
-        viewModelScope.launch {
-            val products = currentState().initPartners
-            val filteredPartners = getPartnersFilteredByTextUseCase(
-                searchText = searchText,
-                products = products,
-            )
-            updateState {
-                copy(searchText = searchText, filteredPartners = filteredPartners)
-            }
+        updateState { copy(searchText = searchText) }
+        applyFilters()
+    }
+
+    private fun applyFilters() {
+        val currentState = currentState()
+
+        var filtered = currentState.initPartners
+
+        filtered = getPartnersFilteredByTextUseCase(
+            searchText = currentState.searchText,
+            partners = filtered
+        )
+
+        filtered = getPartnersFilteredByPartnerCategoryUseCase(
+            partnerCategories = currentState.selectedPartnerCategories,
+            partners = filtered
+        )
+
+        updateState {
+            copy(filteredPartners = filtered)
         }
     }
 

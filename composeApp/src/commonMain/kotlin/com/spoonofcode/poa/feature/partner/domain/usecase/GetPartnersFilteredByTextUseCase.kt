@@ -5,8 +5,8 @@ import com.spoonofcode.poa.feature.partner.domain.model.Partner
 class GetPartnersFilteredByTextUseCase {
     operator fun invoke(
         searchText: String,
-        products: List<Partner>,
-    ): List<Partner> = products.filter { partner ->
+        partners: List<Partner>,
+    ): List<Partner> = partners.filter { partner ->
         partner.name.contains(searchText, ignoreCase = true)
     }
 }

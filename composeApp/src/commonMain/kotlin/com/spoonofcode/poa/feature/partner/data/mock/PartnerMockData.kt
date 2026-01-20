@@ -6,6 +6,7 @@ object PartnerMockData {
     val PARTNER_1 = Partner(
         id = "550e8400-e29b-41d4-a716-446655440001",
         name = "Beauty Saute",
+        partnerCategory = "Regular",
         email = "beauty.saute@gmail.com",
         description = "Beauty Sautè to więcej niż odzież – to filozofia.",
         imageLink = "https://beautysaute.pl/environment/cache/images/0_0_storefrontImages_11a16d30-d85a-422f-917d-195c30274147.png",
@@ -18,6 +19,7 @@ object PartnerMockData {
     val PARTNER_2 = Partner(
         id = "550e8400-e29b-41d4-a716-446655440002",
         name = "Proof of Wear",
+        partnerCategory = "Premium",
         email = "proof.of.wear@gmail.com",
         description = "Proof of Wear – sprawdz to.",
         imageLink = "https://proof-of-wear.com/images/logo.jpg",
