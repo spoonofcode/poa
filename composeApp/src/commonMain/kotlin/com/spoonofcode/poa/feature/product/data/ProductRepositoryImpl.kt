@@ -12,14 +12,19 @@ class ProductRepositoryImpl(
     private val remoteUserProducts: RemoteUserProductDataSource,
 ) : ProductRepository {
 
+    // TODO #99 Adopt poa backend
     override suspend fun getProduct(productId: String): Result<Product> =
-        remoteProducts.read(productId).map { it.toProduct() }
-
-    override suspend fun getProductByTagId(tagId: String): Result<Product> =
-        remoteProducts.readProductByTagId(tagId).map { it.toProduct() }
+        Result.success(PRODUCTS.first())
+//        remoteProducts.read(productId).map { it.toProduct() }
 
     // TODO #99 Adopt poa backend
-    override suspend fun getUserProducts(): Result<List<Product>> = Result.success(PRODUCTS)
+    override suspend fun getProductByTagId(tagId: String): Result<Product> =
+        Result.success(PRODUCTS.last())
+//        remoteProducts.readProductByTagId(tagId).map { it.toProduct() }
+
+    // TODO #99 Adopt poa backend
+    override suspend fun getUserProducts(): Result<List<Product>> =
+        Result.success(PRODUCTS)
 //        remoteUserProducts.readUserProducts().map { list -> list.map { it.toProduct() } }
 
     override suspend fun getProductSeriesIds(): Result<List<String>> =
