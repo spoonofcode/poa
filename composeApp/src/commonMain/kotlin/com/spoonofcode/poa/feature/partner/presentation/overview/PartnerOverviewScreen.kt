@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
@@ -65,6 +66,7 @@ internal class PartnerOverviewScreen(
                 verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
             ) {
                 items(viewState.filteredPartners) { partner ->
+                    println("BARTEK ${viewState.filteredPartners}")
                     PartnerItem(
                         item = partner,
                         onClick = { onAction(PartnerOverviewViewAction.SelectPartner(partner.id)) }
@@ -82,18 +84,18 @@ internal class PartnerOverviewScreen(
     ) {
         ElevatedCard(
             onClick = onClick,
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth().height(140.dp),
             shape = MaterialTheme.shapes.large,
             elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
         ) {
             CoilImage(
                 imageModel = { item.imageLink },
                 imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Fit,
                     alignment = Alignment.Center
                 ),
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .clip(MaterialTheme.shapes.large)
             )
         }
