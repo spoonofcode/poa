@@ -7,6 +7,7 @@ fun PartnerResponse.toPartner(): Partner {
     return Partner(
         id = id,
         name = name,
+        partnerCategory = partnerCategory,
         email = email,
         description = description,
         imageLink = imageLink,

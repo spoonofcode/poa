@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.network.getUrlOpener
-import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
 import com.spoonofcode.poa.core.ui.compose.Spacers

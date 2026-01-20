@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.partner.presentation.edit
 
-import com.spoonofcode.poa.core.ui.BaseViewAction
+import com.spoonofcode.poa.core.ui.base.BaseViewAction
 
 internal sealed interface PartnerEditViewAction: BaseViewAction {
     data class ChangeName(val name: String) :

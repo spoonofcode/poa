@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PartnerRequest(
     val name: String,
-    val email: String,
-    val description: String,
-    val imageLink: String,
+    val email: String? = null,
+    val description: String? = null,
+    val imageLink: String? = null,
     val websiteLink: String? = null,
     val instagramLink: String? = null,
     val facebookLink: String? = null,

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
-import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Countdown
 import com.spoonofcode.poa.core.ui.compose.Spacers

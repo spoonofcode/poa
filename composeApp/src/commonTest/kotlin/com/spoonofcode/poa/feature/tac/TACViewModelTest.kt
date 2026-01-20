@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.tac
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.BaseViewModelTest
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.core.ui.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.poa.core.ui.base.ViewState
 import com.spoonofcode.poa.feature.tac.di.tacTestModule
 import com.spoonofcode.poa.feature.tac.presentation.TACViewModel
 import com.spoonofcode.poa.feature.tac.presentation.TACViewState

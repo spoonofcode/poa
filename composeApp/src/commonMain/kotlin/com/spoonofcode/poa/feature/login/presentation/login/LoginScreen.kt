@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
+import com.spoonofcode.poa.core.ui.base.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Buttons.GoogleSignInButton
 import com.spoonofcode.poa.core.ui.compose.CircleImage

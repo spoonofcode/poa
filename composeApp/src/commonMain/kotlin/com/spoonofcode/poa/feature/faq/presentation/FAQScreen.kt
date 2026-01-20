@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.faq.presentation
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.ExpandableList
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res

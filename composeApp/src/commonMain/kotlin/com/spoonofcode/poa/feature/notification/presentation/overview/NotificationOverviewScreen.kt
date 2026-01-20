@@ -30,9 +30,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
-import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings
-import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
+import com.spoonofcode.poa.core.ui.base.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Paddings
+import com.spoonofcode.poa.core.ui.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res

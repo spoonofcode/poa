@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.ext
 
-import com.spoonofcode.poa.core.ui.utils.TimeZoneUtils
+import com.spoonofcode.poa.core.utils.TimeZoneUtils
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime

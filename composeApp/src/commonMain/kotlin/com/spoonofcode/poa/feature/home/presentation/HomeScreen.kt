@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.feature.reward.data.model.DailyReward
 import com.spoonofcode.poa.feature.reward.data.model.DailyRewardStatus
-import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.CountdownTimer
 import com.spoonofcode.poa.core.ui.compose.ImageSlider

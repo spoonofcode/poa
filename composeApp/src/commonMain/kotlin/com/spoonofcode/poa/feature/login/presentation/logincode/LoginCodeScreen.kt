@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.login.presentation.logincode
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import com.spoonofcode.poa.core.ui.BaseScreen
+import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
@@ -47,7 +47,7 @@ internal class LoginCodeScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in_with_code),
-                onClick = { onAction(LoginCodeViewAction.LoginWithCode) }
+                onClick = { onAction(LoginCodeViewAction.SignInWithCode) }
             )
         }
     }

@@ -22,7 +22,7 @@ kotlin = "2.2.21"
 kotlinx-datetime = "0.7.1"
 kotlinx-serialization-json = "1.9.0"
 kover = "0.9.3"
-landscapistCoil = "2.6.1"
+landscapistCoil = "2.8.2"
 lifecycle-viewmodel-compose = "2.9.6"
 materialIconsCore = "1.7.3"
 media3Exoplayer = "1.8.0"
@@ -77,7 +77,6 @@ voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", 
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 [plugins]
-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }

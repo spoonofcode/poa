@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.faq.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.faq.domain.usecase.GetFAQUseCase
-import com.spoonofcode.poa.core.ui.BaseViewModel
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 internal class FAQViewModel(

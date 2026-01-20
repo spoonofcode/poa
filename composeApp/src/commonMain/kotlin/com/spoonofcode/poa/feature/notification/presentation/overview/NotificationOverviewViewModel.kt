@@ -1,15 +1,14 @@
 package com.spoonofcode.poa.feature.notification.presentation.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.BaseViewModel
-import com.spoonofcode.poa.core.ui.ScreenState
+import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationsUseCase
 import com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class NotificationOverviewViewModel(
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState, com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction>(
+) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction>(
     NotificationOverviewViewState()
 ) {
 

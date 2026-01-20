@@ -1,11 +1,11 @@
 package com.spoonofcode.poa.feature.home
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.BaseViewModelTest
+import com.spoonofcode.poa.core.ui.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
-import com.spoonofcode.poa.core.ui.ScreenState
-import com.spoonofcode.poa.core.ui.ViewState
+import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.poa.core.ui.base.ViewState
 import com.spoonofcode.poa.feature.home.di.homeTestModule
 import com.spoonofcode.poa.feature.home.presentation.HomeViewAction
 import com.spoonofcode.poa.feature.home.presentation.HomeViewModel

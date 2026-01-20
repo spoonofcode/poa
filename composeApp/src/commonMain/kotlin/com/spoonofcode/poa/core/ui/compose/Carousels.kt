@@ -15,14 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.poa
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 data class CarouselSportEventItem(
-    // TODO Now set static image, later change to loaded image from backend
-    val imageResId: DrawableResource = Res.drawable.poa,
+    val imageResId: DrawableResource,
     val sportEventId: Int,
     val title: String,
     val rangeDateTime: String,
@@ -85,31 +82,3 @@ object Carousels {
         }
     }
 }
-
-//@Composable
-//private fun SportEventImage(type: Type) {
-//    val imageTrainingType = when (type.id) {
-//        Types.DOJO_BOXING_TRAINING.id -> Res.drawable.dojo_boxing_training
-//        Types.DOJO_GRAPPLING_TRAINING.id -> Res.drawable.dojo_grappling_training
-//        Types.DOJO_YOUTH_TRAINING.id -> Res.drawable.dojo_youth_training
-//        Types.DOJO_BEGINNERS_GROUP_TRAINING.id -> Res.drawable.dojo_beginners_group_training
-//        Types.DOJO_BEGINNERS_TRAINING.id -> Res.drawable.dojo_beginners_training
-//        Types.DOJO_INDIVIDUAL_TRAINING.id -> Res.drawable.dojo_individual_training
-//        Types.DOJO_MOTOR_TRAINING.id -> Res.drawable.dojo_motor_training
-//        Types.DOJO_OPEN_TRAINING.id -> Res.drawable.dojo_open_training
-//        Types.DOJO_MAT_TRAINING.id -> Res.drawable.dojo_mat_training
-//        Types.DOJO_ADVANCED_GROUP_TRAINING.id -> Res.drawable.dojo_advanced_group_training
-//        else -> Res.drawable.dojo_training
-//    }
-//
-//    Image(
-//        painter = painterResource(resource = imageTrainingType),
-//        contentDescription = null,
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .clip(RoundedCornerShape(16.dp)),
-//        contentScale = ContentScale.Crop
-//    )
-//    Spacers.VerticalBetweenFields()
-//}
-

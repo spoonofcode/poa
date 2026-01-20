@@ -7,7 +7,7 @@ import io.ktor.http.HttpMethod
 import kotlinx.datetime.LocalDateTime
 
 class RemoteNotificationDataSource : RemoteBaseDataSource(
-    collectionName = "notifications",
+    collectionName = "api/notifications",
 ) {
     suspend fun create(
         title: String,

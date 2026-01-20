@@ -16,9 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.ui.BaseScreen
-import com.spoonofcode.poa.core.ui.Paddings.innerElevatedCardPadding
-import com.spoonofcode.poa.core.ui.Paddings.spaceBetweenListElements
+import com.spoonofcode.poa.core.ui.base.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Paddings.innerElevatedCardPadding
+import com.spoonofcode.poa.core.ui.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
