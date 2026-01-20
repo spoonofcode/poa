@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.product.presentation.details
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -66,9 +65,7 @@ internal data class ProductDetailsScreen(
                 onClick = { onAction(ProductDetailsViewAction.EditProduct) },
             ),
             TopBarAction(Icons.Default.Delete, "Delete") {
-                onAction(
-                    ProductDetailsViewAction.DeleteProductFromUser
-                )
+                onAction(ProductDetailsViewAction.DeleteProductFromUser)
             }
         )
     } else {
@@ -86,7 +83,7 @@ internal data class ProductDetailsScreen(
         return {
             val product = requireNotNull(viewState.product)
 
-            // 1. Hero Section (Media)
+            // 1. Hero Section
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink)
             } else {
@@ -97,7 +94,7 @@ internal data class ProductDetailsScreen(
                 modifier = Modifier.padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 2. Title & Collection Section
+                // 2. Header
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
                         text = product.collectionName.uppercase(),
@@ -109,10 +106,10 @@ internal data class ProductDetailsScreen(
                     Text(
                         text = product.name,
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     
-                    // Tag ID Badge (if exists)
                     product.tagId?.let { tag ->
                         Surface(
                             shape = RoundedCornerShape(8.dp),
@@ -160,16 +157,20 @@ internal data class ProductDetailsScreen(
                         Text(
                             text = product.description,
                             style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
                             lineHeight = 22.sp
                         )
                     }
                 }
 
-                // 4. External Links Section
+                // 4. Links Section
                 if (!product.websiteLink.isNullOrBlank() || !product.customLink.isNullOrBlank()) {
                     ElevatedCard(
                         modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.large
+                        shape = MaterialTheme.shapes.large,
+                        colors = CardDefaults.elevatedCardColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        )
                     ) {
                         Column {
                             ClickableInfoRow(
@@ -192,7 +193,7 @@ internal data class ProductDetailsScreen(
                     }
                 }
 
-                if (hasOwnerUser.not()) {
+                if (!hasOwnerUser) {
                     Buttons.PrimaryButton(
                         text = stringResource(Res.string.add_product),
                         onClick = { onAction(ProductDetailsViewAction.AddProductToUser) },
@@ -210,13 +211,12 @@ internal data class ProductDetailsScreen(
         icon: ImageVector
     ) {
         if (url.isNullOrBlank()) return
-
         val urlOpener = remember { getUrlOpener() }
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = { urlOpener.openUrl(url) })
+                .clickable { urlOpener.openUrl(url) }
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -232,7 +232,8 @@ internal data class ProductDetailsScreen(
                 Text(
                     text = text,
                     style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = url,
@@ -244,7 +245,7 @@ internal data class ProductDetailsScreen(
 
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.OpenInNew,
-                contentDescription = "Otwórz link",
+                contentDescription = null,
                 tint = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.size(18.dp)
             )

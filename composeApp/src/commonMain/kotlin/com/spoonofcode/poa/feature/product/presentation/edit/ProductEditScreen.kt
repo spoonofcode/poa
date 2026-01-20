@@ -79,7 +79,8 @@ internal class ProductEditScreen(
                     Text(
                         text = product.name,
                         style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
 
                     // Tag ID Badge (if exists)
@@ -130,6 +131,7 @@ internal class ProductEditScreen(
                         Text(
                             text = product.description,
                             style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
                             lineHeight = 22.sp
                         )
                     }
