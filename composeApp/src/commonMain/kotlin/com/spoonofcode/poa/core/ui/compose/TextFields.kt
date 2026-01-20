@@ -2,13 +2,13 @@ package com.spoonofcode.poa.core.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,6 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.search
+import org.jetbrains.compose.resources.stringResource
 
 object TextFields {
     @Composable
@@ -128,4 +131,22 @@ object TextFields {
         )
     }
 
+    @Composable
+    fun OutlinedSearch(
+        value: String,
+        onValueChange: (String) -> Unit,
+    ) {
+        Outlined(
+            value = value,
+            onValueChange = onValueChange,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            },
+            innerLabel = stringResource(resource = Res.string.search),
+        )
+    }
 }

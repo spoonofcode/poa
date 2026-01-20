@@ -32,8 +32,6 @@ import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
-import com.spoonofcode.poa.resources.search
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class ProductOverviewScreen(
@@ -55,10 +53,9 @@ internal class ProductOverviewScreen(
         onAction: (ProductOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            TextFields.Outlined(
+            TextFields.OutlinedSearch(
                 value = viewState.searchText,
                 onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
-                innerLabel = stringResource(resource = Res.string.search),
             )
 
             ProductGrid(
@@ -144,7 +141,7 @@ internal class ProductOverviewScreen(
 fun ProductOverviewScreenContentPreview() {
     ProductOverviewScreen()
         .PreviewContent(
-        viewState = ProductOverviewViewState(),
-    )
+            viewState = ProductOverviewViewState(),
+        )
 }
 // endregion

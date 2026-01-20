@@ -52,17 +52,9 @@ internal class PartnerOverviewScreen(
         onAction: (PartnerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            TextFields.Outlined(
+            TextFields.OutlinedSearch(
                 value = viewState.searchText,
                 onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                },
-                innerLabel = stringResource(resource = Res.string.search),
             )
 
             HorizontalScrollableFilterChipRow(
