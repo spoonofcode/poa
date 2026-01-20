@@ -39,7 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -202,7 +201,7 @@ private fun SectionCard(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Card( // Zmienione z ElevatedCard na Card, aby wspierać border
+    Card(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
@@ -221,7 +220,6 @@ private fun SectionCard(
 private fun ChevronItem(
     icon: ImageVector,
     title: String,
-    subtitle: String? = null,
     titleColor: Color = MaterialTheme.colorScheme.onSurface,
     iconTint: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
@@ -260,13 +258,6 @@ private fun ChevronItem(
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold // Zmienione na Bold dla lepszej czytelności
             )
-            if (subtitle != null) {
-                Text(
-                    text = subtitle,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.labelSmall
-                )
-            }
         }
 
         Icon(
