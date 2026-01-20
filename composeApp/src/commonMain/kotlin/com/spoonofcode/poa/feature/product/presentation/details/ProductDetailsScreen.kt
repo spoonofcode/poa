@@ -40,8 +40,11 @@ import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.about_product
 import com.spoonofcode.poa.resources.add_product
+import com.spoonofcode.poa.resources.learn_more
 import com.spoonofcode.poa.resources.product
+import com.spoonofcode.poa.resources.visit_product_page
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -109,7 +112,7 @@ internal data class ProductDetailsScreen(
                         fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    
+
                     product.tagId?.let { tag ->
                         Surface(
                             shape = RoundedCornerShape(8.dp),
@@ -148,7 +151,7 @@ internal data class ProductDetailsScreen(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "O produkcie",
+                            text = stringResource(Res.string.about_product),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -174,7 +177,7 @@ internal data class ProductDetailsScreen(
                     ) {
                         Column {
                             ClickableInfoRow(
-                                text = "Odwiedź stronę produktu",
+                                text = stringResource(Res.string.visit_product_page),
                                 url = product.websiteLink,
                                 icon = Icons.Default.Language
                             )
@@ -185,7 +188,7 @@ internal data class ProductDetailsScreen(
                                 )
                             }
                             ClickableInfoRow(
-                                text = "Dowiedz się więcej",
+                                text = stringResource(Res.string.learn_more),
                                 url = product.customLink,
                                 icon = Icons.Default.Link
                             )
@@ -227,7 +230,7 @@ internal data class ProductDetailsScreen(
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = text,

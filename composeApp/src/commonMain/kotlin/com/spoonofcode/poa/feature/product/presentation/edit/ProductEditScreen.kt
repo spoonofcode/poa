@@ -30,7 +30,9 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.about_product
 import com.spoonofcode.poa.resources.custom_link
+import com.spoonofcode.poa.resources.details
 import com.spoonofcode.poa.resources.edit_product
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
@@ -122,7 +124,7 @@ internal class ProductEditScreen(
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Szczegóły",
+                            text = stringResource(Res.string.about_product),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant

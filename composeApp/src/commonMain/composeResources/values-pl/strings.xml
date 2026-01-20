@@ -1,6 +1,7 @@
 <resources>
     <string name="accept">Zaakceptuj</string>
-    <string name="add_product">Dodaj product</string>
+    <string name="about_product">O produkcie</string>
+    <string name="add_product">Dodaj produkt</string>
     <string name="app_name">POA</string>
     <string name="apply_filter">Zastosuj filtr</string>
     <string name="cancel">Anuluj</string>
@@ -8,15 +9,16 @@
     <string name="code">Kod</string>
     <string name="custom_link">Własny link</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
-    <string name="data_has_been_loaded">Dane zostały załądowane</string>
+    <string name="data_has_been_loaded">Dane zostały załadowane</string>
     <string name="date">Data</string>
     <string name="delete">Usuń</string>
     <string name="delete_account">Usuń konto</string>
     <string name="demo">Demo</string>
     <string name="description">Opis</string>
+    <string name="details">Szczegóły</string>
     <string name="edit">Edytuj</string>
-    <string name="edit_product">Edytuj Product</string>
-    <string name="edit_profile">Edytuj Profil</string>
+    <string name="edit_product">Edytuj produkt</string>
+    <string name="edit_profile">Edytuj profil</string>
     <string name="email">E-mail</string>
     <string name="expiration_date">Data ważności</string>
     <string name="facebook">Facebook</string>
@@ -31,6 +33,7 @@
     <string name="id">ID</string>
     <string name="instagram">Instagram</string>
     <string name="last_name">Nazwisko</string>
+    <string name="learn_more">Dowiedz się więcej</string>
     <string name="let_s_get_started">Zaczynajmy</string>
     <string name="link">Link</string>
     <string name="links">Linki</string>
@@ -40,7 +43,7 @@
     <string name="my_partners">Partnerzy</string>
     <string name="my_products">Moje produkty</string>
     <string name="my_product_series">Moje serie produktów</string>
-    <string name="name">Name</string>
+    <string name="name">Nazwa</string>
     <string name="no_partners_found">Nie znaleziono partnerów</string>
     <string name="notification">Powiadomienie</string>
     <string name="notifications">Powiadomienia</string>
@@ -99,8 +102,9 @@
     <string name="to_selected_customers">Do wybranych klientów</string>
     <string name="to_selected_series">Do wybranych serii</string>
     <string name="type">Typ</string>
+    <string name="visit_product_page">Odwiedź stronę produktu</string>
     <string name="website">Strona</string>
-    <string name="website_link">Website link</string>
+    <string name="website_link">Link do strony</string>
     <string name="x">X</string>
     <string name="youtube">Youtube</string>
     <string name="collect_reward">Odbierz dzisiejszą nagrodę</string>
