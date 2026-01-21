@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -19,6 +18,7 @@ import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Images
 
 internal class ProfileEditScreen() :
     BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction>() {
@@ -41,7 +41,7 @@ internal class ProfileEditScreen() :
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
             ) {
-                CircleImage(imageRes = Res.drawable.poa)
+                Images.CircleImage(imageRes = Res.drawable.poa)
             }
 
             Spacers.VerticalBetweenFields()

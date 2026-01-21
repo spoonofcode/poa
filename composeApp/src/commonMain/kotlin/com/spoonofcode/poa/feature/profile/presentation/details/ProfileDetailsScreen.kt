@@ -40,7 +40,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
@@ -56,6 +55,7 @@ import com.spoonofcode.poa.resources.profile
 import com.spoonofcode.poa.resources.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Images
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
@@ -90,7 +90,7 @@ internal class ProfileDetailsScreen(
                         .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircleImage(
+                    Images.CircleImage(
                         imageRes = Res.drawable.poa,
                         modifier = Modifier.size(92.dp)
                     )
