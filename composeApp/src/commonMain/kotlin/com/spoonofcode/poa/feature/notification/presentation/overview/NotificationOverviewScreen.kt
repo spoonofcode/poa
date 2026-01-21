@@ -146,7 +146,7 @@ internal class NotificationOverviewScreen(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 3.dp), // Zwiększony cień
+                elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)) // Wyraźne obramowanie
             ) {
                 Row(
