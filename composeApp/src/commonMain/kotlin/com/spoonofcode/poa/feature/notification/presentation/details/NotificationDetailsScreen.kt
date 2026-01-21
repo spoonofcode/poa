@@ -39,6 +39,7 @@ import com.spoonofcode.poa.resources.notification
 import com.spoonofcode.poa.resources.open_link
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.Texts
 
 internal class NotificationDetailsScreen(
@@ -77,21 +78,9 @@ internal class NotificationDetailsScreen(
     @Composable
     fun NotificationCard(
         notification: Notification,
-        modifier: Modifier = Modifier,
         onOpenLink: (String) -> Unit = {}
     ) {
-        Card(
-            modifier = modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            border = BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-            )
-        ) {
+        Cards.ElevatedCard {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

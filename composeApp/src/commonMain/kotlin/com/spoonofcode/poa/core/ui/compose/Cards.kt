@@ -18,10 +18,12 @@ import androidx.compose.ui.unit.sp
 object Cards {
     @Composable
     fun ElevatedCard(
+        onClick: () -> Unit = {},
         modifier: Modifier = Modifier,
         content: @Composable ColumnScope.() -> Unit
     ) {
         Card(
+            onClick = onClick,
             modifier = modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
