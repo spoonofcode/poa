@@ -136,6 +136,7 @@ kotlin {
             implementation(libs.material.icons.core)
             implementation(libs.material.icons.extended)
             implementation(libs.multiplatform.settings)
+            implementation(libs.touchlab.kermit)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
