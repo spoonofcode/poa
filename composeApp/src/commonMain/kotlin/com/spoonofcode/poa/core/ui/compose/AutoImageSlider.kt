@@ -48,7 +48,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun ImageSlider(
+fun AutoImageSlider(
     label: String? = null,
     imageLinks: List<String>,
     modifier: Modifier = Modifier,
