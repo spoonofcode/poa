@@ -30,6 +30,7 @@ import com.spoonofcode.poa.core.ui.compose.SocialIcons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
+import com.spoonofcode.poa.resources.about_partner
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.partner
 import org.jetbrains.compose.resources.stringResource
@@ -127,7 +128,7 @@ internal class PartnerDetailsScreen(
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(
-                                text = stringResource(Res.string.description),
+                                text = stringResource(Res.string.about_partner),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant

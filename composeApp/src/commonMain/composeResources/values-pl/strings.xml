@@ -1,6 +1,7 @@
 <resources>
     <string name="accept">Zaakceptuj</string>
     <string name="about_product">O produkcie</string>
+    <string name="about_partner">O partnerze</string>
     <string name="add_product">Dodaj produkt</string>
     <string name="app_name">POA</string>
     <string name="apply_filter">Zastosuj filtr</string>

@@ -1,6 +1,7 @@
 <resources>
     <string name="accept">Accept</string>
     <string name="about_product">About product</string>
+    <string name="about_partner">About partner</string>
     <string name="add_product">Add product</string>
     <string name="app_name">POA</string>
     <string name="apply_filter">Apply filter</string>
