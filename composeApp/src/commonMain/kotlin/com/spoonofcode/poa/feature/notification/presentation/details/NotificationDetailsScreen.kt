@@ -39,6 +39,7 @@ import com.spoonofcode.poa.resources.notification
 import com.spoonofcode.poa.resources.open_link
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Texts
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,
@@ -118,21 +119,17 @@ internal class NotificationDetailsScreen(
                             )
                         }
                     }
-                    Text(
+                    Texts.TLB(
                         text = notification.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
                 Spacers.VerticalBetweenFields()
 
-                Text(
+                Texts.BL(
                     text = notification.text,
-                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    lineHeight = 24.sp
                 )
 
                 notification.expirationDateTime?.let { expiresAt ->
@@ -155,7 +152,7 @@ internal class NotificationDetailsScreen(
                                 modifier = Modifier.size(18.dp),
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer
                             )
-                            Spacer(Modifier.width(8.dp))
+                            Spacers.VerticalBetweenFields()
                             Countdown(expiresAt)
                         }
                     }

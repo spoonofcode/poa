@@ -149,10 +149,12 @@ object Texts {
     fun TLB(
         text: String,
         modifier: Modifier = Modifier,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
             modifier = modifier,
+            color = color,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
         )
@@ -274,9 +276,11 @@ object Texts {
     @Composable
     fun BL(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.bodyLarge,
         )
     }
