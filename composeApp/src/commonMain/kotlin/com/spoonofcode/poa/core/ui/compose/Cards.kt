@@ -2,6 +2,7 @@ package com.spoonofcode.poa.core.ui.compose
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -16,19 +17,31 @@ import androidx.compose.ui.unit.sp
 
 object Cards {
     @Composable
-    fun DescriptionCard(title: String, description: String) {
+    fun ElevatedCard(
+        modifier: Modifier = Modifier,
+        content: @Composable ColumnScope.() -> Unit
+    ) {
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface
             ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
             border = BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                1.dp,
+                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
             )
         ) {
+            Column {
+                content()
+            }
+        }
+    }
+
+    @Composable
+    fun DescriptionCard(title: String, description: String) {
+        ElevatedCard {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = title,
@@ -46,5 +59,4 @@ object Cards {
             }
         }
     }
-
 }

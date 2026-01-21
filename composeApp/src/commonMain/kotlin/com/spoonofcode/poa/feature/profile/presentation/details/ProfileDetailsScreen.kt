@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.profile.presentation.details
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +22,6 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -124,7 +122,7 @@ internal class ProfileDetailsScreen(
             }
 
             // 3. Main Actions
-            SectionCard {
+            Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.Default.Person,
                     title = stringResource(Res.string.partner_panel),
@@ -135,7 +133,7 @@ internal class ProfileDetailsScreen(
             Spacers.VerticalBetweenFields()
 
             // 4. Settings Actions
-            SectionCard {
+            Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.Default.Notifications,
                     title = stringResource(Res.string.notifications),
@@ -158,7 +156,7 @@ internal class ProfileDetailsScreen(
             Spacers.VerticalBetweenFields()
 
             // 5. Logout
-            SectionCard {
+            Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.AutoMirrored.Filled.Logout,
                     title = stringResource(Res.string.logout),
@@ -186,29 +184,6 @@ internal class ProfileDetailsScreen(
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-        }
-    }
-}
-
-@Composable
-private fun SectionCard(
-    modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp), // Zwiększony cień
-        border = BorderStroke(
-            1.dp,
-            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-        ) // Wyraźne obramowanie
-    ) {
-        Column {
-            content()
         }
     }
 }
