@@ -21,20 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.ui.base.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
-import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.about_partner
-import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.partner
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 
 internal class PartnerDetailsScreen(
@@ -114,34 +112,10 @@ internal class PartnerDetailsScreen(
 
                 // 3. Description Card
                 partner.description?.let { desc ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.large,
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                        border = BorderStroke(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-                        )
-                    ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = stringResource(Res.string.about_partner),
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacers.VerticalBetweenFields()
-                            Text(
-                                text = desc,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                lineHeight = 22.sp
-                            )
-                        }
-                    }
+                    Cards.DescriptionCard(
+                        title = stringResource(Res.string.about_partner),
+                        description = desc
+                    )
                 }
 
                 // 4. Social Icons Section

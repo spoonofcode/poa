@@ -30,13 +30,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
-import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -47,7 +48,6 @@ import com.spoonofcode.poa.resources.learn_more
 import com.spoonofcode.poa.resources.product
 import com.spoonofcode.poa.resources.visit_product_page
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal data class ProductDetailsScreen(
     val productId: String,
@@ -143,31 +143,10 @@ internal data class ProductDetailsScreen(
                 }
 
                 // 3. Description Card
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.large,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(Res.string.about_product),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacers.VerticalBetweenFields()
-                        Text(
-                            text = product.description,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            lineHeight = 22.sp
-                        )
-                    }
-                }
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.about_product),
+                    description = product.description
+                )
 
                 // 4. Links Section
                 if (!product.websiteLink.isNullOrBlank() || !product.customLink.isNullOrBlank()) {
@@ -178,7 +157,10 @@ internal data class ProductDetailsScreen(
                             containerColor = MaterialTheme.colorScheme.surface
                         ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                        border = BorderStroke(
+                            1.dp,
+                            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                        )
                     ) {
                         Column {
                             ClickableInfoRow(

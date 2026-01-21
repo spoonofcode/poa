@@ -265,9 +265,11 @@ object Texts {
     @Composable
     fun BMB(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
         )
@@ -322,9 +324,11 @@ object Texts {
     @Composable
     fun LM(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.labelMedium,
         )
     }
@@ -345,9 +349,11 @@ object Texts {
     @Composable
     fun LL(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.labelLarge,
         )
     }
@@ -355,9 +361,11 @@ object Texts {
     @Composable
     fun LLB(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Bold,
         )
