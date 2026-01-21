@@ -1,21 +1,18 @@
 package com.spoonofcode.poa.core.ui.compose
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -40,7 +37,6 @@ import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Facebook
 import compose.icons.fontawesomeicons.brands.Instagram
 import compose.icons.fontawesomeicons.brands.Twitter
-import compose.icons.fontawesomeicons.brands.Weebly
 import compose.icons.fontawesomeicons.brands.Wordpress
 import compose.icons.fontawesomeicons.brands.Youtube
 
@@ -52,12 +48,10 @@ fun SocialIcons(
     youtubeUrl: String? = null,
     xUrl: String? = null,
     modifier: Modifier = Modifier,
-    // layout controls
     iconSize: Dp = 30.dp,
     containerSize: Dp = 54.dp,
-    horizontalPadding: Dp = 16.dp,
-    spacing: Dp = 12.dp,
-    shape: Shape = CircleShape,
+    spacing: Dp = 16.dp,
+    shape: Shape = MaterialTheme.shapes.medium, // More modern than perfect circle
 ) {
     val items = buildList {
         if (!websiteUrl.isNullOrBlank()) add(SocialItem.Web(websiteUrl))
@@ -69,9 +63,7 @@ fun SocialIcons(
     if (items.isEmpty()) return
 
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = horizontalPadding),
+        modifier = modifier.padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(spacing),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -81,7 +73,8 @@ fun SocialIcons(
                 url = item.url,
                 size = containerSize,
                 iconSize = iconSize,
-                colors = item.brandColors(),
+                brandColor = item.brandColor(),
+                label = item.label,
                 shape = shape,
             )
         }
@@ -105,47 +98,37 @@ private fun SocialItem.icon(): ImageVector = when (this) {
     is SocialItem.X -> FontAwesomeIcons.Brands.Twitter
 }
 
-@Composable
-private fun SocialItem.brandColors(): SocialColors {
-    val themeBg = MaterialTheme.colorScheme.surfaceVariant
-    val themeFg = MaterialTheme.colorScheme.onSurfaceVariant
-    // gentle brand-leaning tints (kept subtle to work with light/dark)
-    return when (this) {
-        is SocialItem.Web -> SocialColors(themeBg, themeFg)
-        is SocialItem.Instagram -> SocialColors(themeBg.copy(alpha = 0.9f), Color(0xFFE1306C))
-        is SocialItem.Facebook -> SocialColors(themeBg.copy(alpha = 0.9f), Color(0xFF1877F2))
-        is SocialItem.YouTube -> SocialColors(themeBg.copy(alpha = 0.9f), Color(0xFFFF0000))
-        is SocialItem.X -> SocialColors(themeBg.copy(alpha = 0.9f), Color(0xFF000000))
-    }
+private fun SocialItem.brandColor(): Color = when (this) {
+    is SocialItem.Web -> Color(0xFF21759B)
+    is SocialItem.Instagram -> Color(0xFFE1306C)
+    is SocialItem.Facebook -> Color(0xFF1877F2)
+    is SocialItem.YouTube -> Color(0xFFFF0000)
+    is SocialItem.X -> Color(0xFF000000)
 }
 
-private data class SocialColors(val container: Color, val content: Color)
-
-/**
- * Polished icon button with:
- * - min touch target (48dp default)
- * - ripple + pressed scale
- * - keyboard focusable, role=Button
- */
 @Composable
 private fun SocialIcon(
     icon: ImageVector,
     url: String,
+    brandColor: Color,
+    label: String,
     modifier: Modifier = Modifier,
-    size: Dp = 48.dp,            // container size (touch target)
-    iconSize: Dp = 24.dp,        // actual icon size
-    colors: SocialColors = SocialColors(
-        MaterialTheme.colorScheme.surfaceVariant,
-        MaterialTheme.colorScheme.onSurfaceVariant
-    ),
+    size: Dp = 48.dp,
+    iconSize: Dp = 24.dp,
     shape: Shape = CircleShape,
 ) {
     val urlOpener = remember { getUrlOpener() }
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
+    
     val scale by animateFloatAsState(
-        targetValue = if (pressed) 0.94f else 1f,
+        targetValue = if (pressed) 0.92f else 1f,
         label = "pressScale"
+    )
+
+    val containerColor by animateColorAsState(
+        targetValue = if (pressed) brandColor.copy(alpha = 0.25f) else brandColor.copy(alpha = 0.12f),
+        label = "containerColor"
     )
 
     Surface(
@@ -156,17 +139,18 @@ private fun SocialIcon(
                 scaleY = scale
             }
             .clip(shape)
-            .indication(interaction, LocalIndication.current)
             .clickable(
                 interactionSource = interaction,
-                indication = LocalIndication.current,
+                indication = null, // Custom scale animation used instead
                 role = Role.Button
             ) { urlOpener.openUrl(url) }
-            .semantics { contentDescription = url }, // screen readers will announce link target
+            .semantics { contentDescription = label },
         shape = shape,
-        color = colors.container,
-        tonalElevation = 2.dp,
-        shadowElevation = 2.dp,
+        color = containerColor,
+        border = BorderStroke(
+            width = 1.dp,
+            color = brandColor.copy(alpha = 0.2f)
+        )
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -175,7 +159,7 @@ private fun SocialIcon(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = colors.content,
+                tint = brandColor,
                 modifier = Modifier.size(iconSize)
             )
         }

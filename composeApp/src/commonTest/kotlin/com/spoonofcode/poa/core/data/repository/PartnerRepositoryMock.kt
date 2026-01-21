@@ -16,5 +16,4 @@ internal fun partnerRepositoryMock() = mock<PartnerRepository> {
     everySuspend { getPartners() } returns Result.success(PARTNERS)
     everySuspend { getPartnerUsers(any()) } returns Result.success(PARTNER_USERS)
     everySuspend { getCategories() } returns Result.success(PARTNER_CATEGORIES)
-    everySuspend { getUserPartners() } returns Result.success(PARTNERS)
 }

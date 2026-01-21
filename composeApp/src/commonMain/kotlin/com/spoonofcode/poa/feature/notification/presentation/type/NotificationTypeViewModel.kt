@@ -3,16 +3,12 @@ package com.spoonofcode.poa.feature.notification.presentation.type
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetUserPartnersUseCase
 import com.spoonofcode.poa.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
 import kotlinx.coroutines.launch
 
-internal class NotificationTypeViewModel(
-    private val getUserPartnersUseCase: GetUserPartnersUseCase,
-) : BaseViewModel<NotificationTypeViewState, NotificationTypeViewAction>(
+internal class NotificationTypeViewModel() : BaseViewModel<NotificationTypeViewState, NotificationTypeViewAction>(
     NotificationTypeViewState(),
     initialScreenState = ScreenState.CONTENT,
 ) {
@@ -35,21 +31,14 @@ internal class NotificationTypeViewModel(
     }
 
     private fun navigateToPartnerCustomers() {
+        // TODO #99 Adopt poa backend - read partner id from profile backend
+        val partnerId = "4KJzqfBSQ1WbwysYa0j9"
         viewModelScope.launch {
-            getUserPartnersUseCase()
-                .onSuccess {
-                    val partnerId = it.first().id
-                    viewModelNavigator.push(
-                        CustomerOverviewScreen(
-                            partnerId = partnerId
-                        )
-                    )
-                }
-                .onFailure {
-                    showSnackbar(
-                        SnackbarEvent.Error(message = "ERROR: $it")
-                    )
-                }
+            viewModelNavigator.push(
+                CustomerOverviewScreen(
+                    partnerId = partnerId
+                )
+            )
         }
     }
 

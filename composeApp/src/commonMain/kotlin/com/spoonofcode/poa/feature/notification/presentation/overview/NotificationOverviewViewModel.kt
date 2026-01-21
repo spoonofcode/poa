@@ -12,10 +12,10 @@ internal class NotificationOverviewViewModel(
     NotificationOverviewViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction) {
+    override fun onAction(action: NotificationOverviewViewAction) {
         when (action) {
             NotificationOverviewViewAction.InitView -> initView()
-            is com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction.SelectNotification -> selectNotification(
+            is NotificationOverviewViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
         }

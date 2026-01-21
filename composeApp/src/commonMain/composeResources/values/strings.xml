@@ -1,5 +1,7 @@
 <resources>
     <string name="accept">Accept</string>
+    <string name="about_product">About product</string>
+    <string name="about_partner">About partner</string>
     <string name="add_product">Add product</string>
     <string name="app_name">POA</string>
     <string name="apply_filter">Apply filter</string>
@@ -14,6 +16,7 @@
     <string name="delete_account">Delete account</string>
     <string name="demo">Demo</string>
     <string name="description">Description</string>
+    <string name="details">Details</string>
     <string name="edit">Edit</string>
     <string name="edit_product">Edit Product</string>
     <string name="edit_profile">Edit Profile</string>
@@ -31,6 +34,7 @@
     <string name="id">ID</string>
     <string name="instagram">Instagram</string>
     <string name="last_name">Last Name</string>
+    <string name="learn_more">Learn more</string>
     <string name="let_s_get_started">Let’s get started</string>
     <string name="link">Link</string>
     <string name="links">Links</string>
@@ -100,6 +104,7 @@
     <string name="to_selected_customers">To selected customers</string>
     <string name="to_selected_series">To selected series</string>
     <string name="type">Type</string>
+    <string name="visit_product_page">Visit product page</string>
     <string name="website">Website</string>
     <string name="website_link">Website link</string>
     <string name="x">X</string>

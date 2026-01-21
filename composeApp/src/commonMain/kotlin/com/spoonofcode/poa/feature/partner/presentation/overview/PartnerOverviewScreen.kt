@@ -1,15 +1,19 @@
 package com.spoonofcode.poa.feature.partner.presentation.overview
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,10 +53,9 @@ internal class PartnerOverviewScreen(
         onAction: (PartnerOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            TextFields.Outlined(
+            TextFields.OutlinedSearch(
                 value = viewState.searchText,
                 onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
-                innerLabel = stringResource(resource = Res.string.search),
             )
 
             HorizontalScrollableFilterChipRow(
@@ -66,7 +69,6 @@ internal class PartnerOverviewScreen(
                 verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
             ) {
                 items(viewState.filteredPartners) { partner ->
-                    println("BARTEK ${viewState.filteredPartners}")
                     PartnerItem(
                         item = partner,
                         onClick = { onAction(PartnerOverviewViewAction.SelectPartner(partner.id)) }
@@ -82,21 +84,35 @@ internal class PartnerOverviewScreen(
         onClick: () -> Unit,
         modifier: Modifier = Modifier,
     ) {
-        ElevatedCard(
+        Card(
             onClick = onClick,
             modifier = modifier.fillMaxWidth().height(140.dp),
             shape = MaterialTheme.shapes.large,
-            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
         ) {
             CoilImage(
-                imageModel = { item.imageLink },
+                imageModel = { item.imageLink ?: "https://images.seeklogo.com/logo-png/9/1/nike-logo-png_seeklogo-99478.png" },
                 imageOptions = ImageOptions(
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Crop,
                     alignment = Alignment.Center
                 ),
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(MaterialTheme.shapes.large)
+                    .clip(MaterialTheme.shapes.large),
+                loading = {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                },
+                failure = {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "Błąd ładowania")
+                    }
+                }
             )
         }
     }
