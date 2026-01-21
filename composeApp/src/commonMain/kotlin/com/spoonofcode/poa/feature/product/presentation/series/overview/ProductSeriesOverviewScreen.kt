@@ -34,7 +34,7 @@ import com.spoonofcode.poa.resources.my_product_series
 import com.spoonofcode.poa.resources.send_notification
 import com.spoonofcode.poa.resources.series_number
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProductSeriesOverviewScreen(
     override val verticalScrollEnable: Boolean = false,

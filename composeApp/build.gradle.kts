@@ -92,7 +92,7 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(compose.preview)
+            implementation(libs.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.media3.ui.compose)
@@ -110,12 +110,12 @@ kotlin {
             implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(compose.foundation)
-            implementation(compose.runtime)
-            implementation(compose.material3)
-            implementation(compose.ui)
+            implementation(libs.components.resources)
+            implementation(libs.ui.tooling.preview)
+            implementation(libs.foundation)
+            implementation(libs.runtime)
+            implementation(libs.material3)
+            implementation(libs.ui)
 
             implementation(libs.compose.icons.fontawesome)
             implementation(libs.compottie)
@@ -191,7 +191,7 @@ android {
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
+    debugImplementation(libs.ui.tooling)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
 

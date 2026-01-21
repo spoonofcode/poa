@@ -36,7 +36,7 @@ import com.spoonofcode.poa.resources.custom_link
 import com.spoonofcode.poa.resources.edit_product
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
     val productId: String,

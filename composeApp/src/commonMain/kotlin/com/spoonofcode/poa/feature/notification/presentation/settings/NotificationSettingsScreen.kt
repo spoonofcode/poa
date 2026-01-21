@@ -15,7 +15,7 @@ import com.spoonofcode.poa.resources.notifications_settings
 import com.spoonofcode.poa.resources.notifications_settings_text
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class NotificationSettingsScreen :
     BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {

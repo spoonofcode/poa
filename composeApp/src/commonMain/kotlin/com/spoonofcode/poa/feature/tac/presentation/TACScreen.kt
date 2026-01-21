@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.CheckboxTextLinkRow
@@ -18,7 +19,6 @@ import com.spoonofcode.poa.resources.star_mandatory
 import com.spoonofcode.poa.resources.terms_and_conditions
 import com.spoonofcode.poa.resources.terms_and_conditions_description
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal class TACScreen(
     override val verticalScrollEnable: Boolean = false,

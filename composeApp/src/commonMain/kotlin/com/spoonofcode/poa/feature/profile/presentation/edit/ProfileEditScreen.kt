@@ -18,7 +18,7 @@ import com.spoonofcode.poa.resources.name
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProfileEditScreen() :
     BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction>() {

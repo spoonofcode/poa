@@ -37,7 +37,7 @@ import com.spoonofcode.poa.resources.send_notification
 import com.spoonofcode.poa.resources.text
 import com.spoonofcode.poa.resources.title
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class NotificationEditScreen(
     val onlyToSelectedUsers: Boolean = false,

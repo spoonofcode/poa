@@ -47,7 +47,7 @@ import com.spoonofcode.poa.resources.learn_more
 import com.spoonofcode.poa.resources.product
 import com.spoonofcode.poa.resources.visit_product_page
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal data class ProductDetailsScreen(
     val productId: String,

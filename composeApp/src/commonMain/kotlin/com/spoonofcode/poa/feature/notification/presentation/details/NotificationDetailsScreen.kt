@@ -38,7 +38,7 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification
 import com.spoonofcode.poa.resources.open_link
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,

@@ -42,7 +42,7 @@ import com.spoonofcode.poa.resources.notifications
 import com.spoonofcode.poa.resources.tab_already_read
 import com.spoonofcode.poa.resources.tab_new
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class NotificationOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
