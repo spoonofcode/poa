@@ -23,7 +23,6 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -38,8 +37,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
+import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
@@ -54,8 +56,6 @@ import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
 import com.spoonofcode.poa.resources.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.poa.core.ui.compose.Images
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
@@ -103,18 +103,12 @@ internal class ProfileDetailsScreen(
                         fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    
-                    Button(
-                        modifier = Modifier.padding(top = 8.dp).height(44.dp), // Zwiększona wysokość
-                        shape = MaterialTheme.shapes.large,
+
+                    Buttons.PrimaryButton(
+                        text = stringResource(Res.string.edit_profile),
+                        fillMaxWidth = false,
                         onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.edit_profile),
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                    )
                 }
             }
 
@@ -208,7 +202,10 @@ private fun SectionCard(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp), // Zwiększony cień
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)) // Wyraźne obramowanie
+        border = BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+        ) // Wyraźne obramowanie
     ) {
         Column {
             content()
