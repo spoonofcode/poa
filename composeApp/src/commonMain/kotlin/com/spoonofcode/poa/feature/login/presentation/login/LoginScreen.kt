@@ -32,7 +32,7 @@ import com.spoonofcode.poa.resources.or
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.sign_in
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,

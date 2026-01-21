@@ -34,7 +34,7 @@ import com.spoonofcode.poa.resources.about_partner
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.partner
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 
 internal class PartnerDetailsScreen(

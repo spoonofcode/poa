@@ -12,7 +12,7 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.code
 import com.spoonofcode.poa.resources.sign_in_with_code
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class LoginCodeScreen(
     val email: String,

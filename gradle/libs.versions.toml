@@ -1,5 +1,5 @@
 [versions]
-agp = "8.13.1"
+agp = "8.13.2"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
@@ -24,6 +24,7 @@ kotlinx-serialization-json = "1.9.0"
 kover = "0.9.4"
 landscapistCoil = "2.8.2"
 lifecycle-viewmodel-compose = "2.9.6"
+material3 = "1.9.0"
 materialIconsCore = "1.7.3"
 media3Exoplayer = "1.9.0"
 mokkery = "3.1.1"
@@ -40,6 +41,7 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 androidx-media3-ui-compose = { module = "androidx.media3:media3-ui-compose", version.ref = "media3Exoplayer" }
 androidx-security = { module = "androidx.security:security-crypto", version.ref = "androidx-security" }
 androidx-splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splash" }
+components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
 compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
@@ -49,6 +51,7 @@ desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 compose-icons-fontawesome = { group = "br.com.devsrsouza.compose.icons", name = "font-awesome", version.ref = "compose-icons" }
+foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -69,9 +72,14 @@ landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.r
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
+material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "recaptcha" }
+runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
+ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-multiplatform" }
+ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-multiplatform" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }

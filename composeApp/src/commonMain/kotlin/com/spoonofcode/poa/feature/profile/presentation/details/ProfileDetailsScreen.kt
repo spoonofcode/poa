@@ -55,7 +55,7 @@ import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
 import com.spoonofcode.poa.resources.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,

@@ -22,7 +22,7 @@ import com.spoonofcode.poa.resources.scan
 import com.spoonofcode.poa.resources.scan_info
 import com.spoonofcode.poa.resources.scanning_in_progress
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class ScanScreen(
     override val backNavigationEnable: Boolean = false,

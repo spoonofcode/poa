@@ -23,7 +23,7 @@ import com.spoonofcode.poa.resources.to_all_my_customers
 import com.spoonofcode.poa.resources.to_selected_customers
 import com.spoonofcode.poa.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class NotificationTypeScreen :
     BaseScreen<NotificationTypeViewModel, NotificationTypeViewState, NotificationTypeViewAction>() {

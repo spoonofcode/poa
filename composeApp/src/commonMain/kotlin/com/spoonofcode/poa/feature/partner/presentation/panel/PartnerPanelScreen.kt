@@ -22,7 +22,7 @@ import com.spoonofcode.poa.resources.partner_panel
 import com.spoonofcode.poa.resources.reports
 import com.spoonofcode.poa.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class PartnerPanelScreen() :
     BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction>() {

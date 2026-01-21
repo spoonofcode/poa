@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.ui.compose.ExpandableList
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.faq
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class FAQScreen(
     override val verticalScrollEnable: Boolean = false,

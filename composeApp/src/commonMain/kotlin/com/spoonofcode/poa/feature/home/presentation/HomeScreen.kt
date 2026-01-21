@@ -49,7 +49,7 @@ import com.spoonofcode.poa.resources.streak_days_count
 import com.spoonofcode.poa.resources.total_points
 import com.spoonofcode.poa.resources.your_streak
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
