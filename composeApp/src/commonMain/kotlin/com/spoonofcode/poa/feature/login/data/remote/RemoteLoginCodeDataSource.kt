@@ -7,12 +7,11 @@ import io.ktor.http.HttpMethod
 
 class RemoteLoginCodeDataSource() : RemoteBaseDataSource(
     collectionName = "api/login/code",
-    sessionTokenRequired = false,
 ) {
     suspend fun create(
         email: String,
         loginCode: String,
-    ): Result<LoginResponse> = doRequest<LoginResponse>(
+    ): Result<LoginResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = LoginCodeRequest(
             email = email,

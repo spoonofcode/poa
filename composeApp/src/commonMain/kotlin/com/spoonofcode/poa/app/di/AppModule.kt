@@ -2,8 +2,6 @@ package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.poa.core.coroutines.di.coroutinesModule
 import com.spoonofcode.poa.core.domain.di.domainModule
-import com.spoonofcode.poa.core.logging.KermitLogger
-import com.spoonofcode.poa.core.logging.POALogger
 import com.spoonofcode.poa.core.network.di.networkModule
 import com.spoonofcode.poa.core.recaptcha.di.recaptchaModule
 import com.spoonofcode.poa.core.settings.di.settingsModule
@@ -42,5 +40,4 @@ val appModule = module {
         scanModule,
         tacModule,
     )
-    single<POALogger> { KermitLogger }
 }
