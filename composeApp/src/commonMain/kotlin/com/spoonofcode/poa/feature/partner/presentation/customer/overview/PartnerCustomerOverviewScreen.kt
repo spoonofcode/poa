@@ -20,7 +20,6 @@ import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Paddings.innerElevatedCardPadding
 import com.spoonofcode.poa.core.ui.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.CircleImage
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -31,6 +30,7 @@ import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Images
 
 internal class CustomerOverviewScreen(
     val partnerId: String,
@@ -91,7 +91,7 @@ internal class CustomerOverviewScreen(
                 modifier = Modifier.fillMaxSize().padding(innerElevatedCardPadding)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    CircleImage(imageRes = Res.drawable.poa, imageSize = 64.dp)
+                    Images.CircleImage(imageRes = Res.drawable.poa, imageSize = 64.dp)
 
                     Spacers.HorizontalBetweenFields()
 

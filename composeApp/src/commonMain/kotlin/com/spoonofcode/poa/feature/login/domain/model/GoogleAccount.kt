@@ -1,7 +1,7 @@
-package com.spoonofcode.poa.core.model
+package com.spoonofcode.poa.feature.login.domain.model
 
 data class GoogleAccount(
-    val token: String,
+    val idToken: String,
     val displayName: String = "",
     val profileImageUrl: String? = null
 )

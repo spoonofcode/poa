@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui.compose
+package com.spoonofcode.poa.core.ui.compose.video
 
 import android.content.Context
 import androidx.compose.runtime.*

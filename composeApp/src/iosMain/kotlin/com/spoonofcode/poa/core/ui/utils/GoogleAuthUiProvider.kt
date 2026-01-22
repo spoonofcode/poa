@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.ui.utils
 
 import cocoapods.GoogleSignIn.GIDSignIn
-import com.spoonofcode.poa.core.model.GoogleAccount
+import com.spoonofcode.poa.feature.login.domain.model.GoogleAccount
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.UIKit.UIApplication
 import kotlin.coroutines.resume
@@ -28,7 +28,7 @@ actual class GoogleAuthUiProvider {
                         if (idToken != null) {
                             val googleUser =
                                 GoogleAccount(
-                                    token = idToken,
+                                    idToken = idToken,
                                     displayName = profile?.name ?: "",
                                     profileImageUrl = profile?.imageURLWithDimension(320u)?.absoluteString,
                                 )

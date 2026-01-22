@@ -1,34 +1,29 @@
 package com.spoonofcode.poa.feature.product.presentation.edit
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.RoundedImage
-import com.spoonofcode.poa.core.ui.compose.Spacers
+import com.spoonofcode.poa.core.ui.compose.Cards
+import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.TextFields
-import com.spoonofcode.poa.core.ui.compose.VideoAnimation
+import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.poa.core.ui.compose.video.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.about_product
@@ -36,7 +31,6 @@ import com.spoonofcode.poa.resources.custom_link
 import com.spoonofcode.poa.resources.edit_product
 import com.spoonofcode.poa.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProductEditScreen(
     val productId: String,
@@ -62,7 +56,7 @@ internal class ProductEditScreen(
             if (product.videoLink != null) {
                 VideoAnimation(videoLink = product.videoLink)
             } else {
-                RoundedImage(imageLink = product.imageLink)
+                Images.RoundedImage(imageLink = product.imageLink)
             }
 
             Column(
@@ -71,17 +65,12 @@ internal class ProductEditScreen(
             ) {
                 // 2. Title & Collection Section
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
+                    Texts.LLB(
                         text = product.collectionName.uppercase(),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
                     )
-                    Text(
+
+                    Texts.HSB(
                         text = product.name,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
@@ -103,10 +92,8 @@ internal class ProductEditScreen(
                                     modifier = Modifier.size(14.dp),
                                     tint = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
-                                Text(
+                                Texts.LS(
                                     text = "TAG: $tag",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             }
@@ -114,34 +101,11 @@ internal class ProductEditScreen(
                     }
                 }
 
-                // 3. Static Info Card (Name & Description)
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.large,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(Res.string.about_product),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacers.VerticalBetweenFields()
-                        Text(
-                            text = product.description,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            lineHeight = 22.sp
-                        )
-                    }
-                }
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.about_product),
+                    description = product.description
+                )
 
-                // 4. Editable Link Section
                 TextFields.Outlined(
                     value = product.customLink ?: "",
                     onValueChange = { onAction(ProductEditViewAction.ChangeCustomLink(it)) },

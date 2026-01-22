@@ -24,7 +24,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.spoonofcode.poa.core.model.GoogleAccount
+import com.spoonofcode.poa.feature.login.domain.model.GoogleAccount
+import com.spoonofcode.poa.core.ui.ext.addIf
 import com.spoonofcode.poa.core.ui.utils.GoogleAuthProvider
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.ic_google
@@ -43,10 +44,11 @@ object Buttons {
         text: String,
         leftIcon: DrawableResource? = null,
         enabled: Boolean = true,
+        fillMaxWidth: Boolean = true,
         onClick: () -> Unit,
     ): Unit = Button(
         modifier = modifier
-            .fillMaxWidth()
+            .addIf(condition = fillMaxWidth) { fillMaxWidth() }
             .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,
         enabled = enabled,
@@ -98,8 +100,8 @@ object Buttons {
             leftIcon = Res.drawable.ic_google,
             onClick = {
                 coroutineScope.launch {
-                    val googleUser = googleAuthUiProvider.signIn()
-                    onGoogleSignInResult(googleUser)
+                    val googleAccount = googleAuthUiProvider.signIn()
+                    onGoogleSignInResult(googleAccount)
                 }
             }
         )

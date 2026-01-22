@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.CountdownTimer
-import com.spoonofcode.poa.core.ui.compose.ImageSlider
+import com.spoonofcode.poa.core.ui.compose.AutoImageSlider
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -50,6 +50,8 @@ import com.spoonofcode.poa.resources.total_points
 import com.spoonofcode.poa.resources.your_streak
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Cards
+import com.spoonofcode.poa.core.ui.compose.Texts
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
@@ -79,7 +81,7 @@ internal class HomeScreen(
         onAction: (HomeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            ImageSlider(
+            AutoImageSlider(
                 label = stringResource(Res.string.new_partners),
                 imageLinks = viewState.partnerImageLinks,
             )
@@ -107,24 +109,13 @@ internal class HomeScreen(
         isActionAvailable: Boolean,
         nextCheckInTimeMillis: Long?,
         onCheckInClicked: () -> Unit,
-        modifier: Modifier = Modifier,
     ) {
-        Card(
-            modifier = modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-        ) {
+        Cards.ElevatedCard {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = stringResource(Res.string.daily_check_in),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.ExtraBold
-                )
+                Texts.TMB(text = stringResource(Res.string.daily_check_in))
 
                 Spacers.VerticalBetweenFields()
 
@@ -165,13 +156,10 @@ internal class HomeScreen(
                             modifier = Modifier.padding(8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Text(
+                            Texts.LSB(
                                 text = stringResource(Res.string.next_check_in),
-                                style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                fontWeight = FontWeight.Bold
                             )
-                            Spacer(Modifier.height(4.dp))
                             CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
                         }
                     }
@@ -191,17 +179,8 @@ internal class HomeScreen(
     @Composable
     private fun HomeStatItem(label: String, value: String) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = value,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Texts.TMB(text = value)
+            Texts.LS(text = label)
         }
     }
 
@@ -216,26 +195,16 @@ internal class HomeScreen(
             MaterialTheme.colorScheme.surface
         }
 
-        Card(
+        Cards.ElevatedCard(
             modifier = Modifier.size(width = 85.dp, height = 110.dp),
-            shape = MaterialTheme.shapes.medium,
             colors = CardDefaults.cardColors(containerColor = containerColor),
-            elevation = CardDefaults.cardElevation(defaultElevation = if (isAvailable) 4.dp else 1.dp),
-            border = BorderStroke(
-                width = if (isAvailable) 2.dp else 1.dp,
-                color = if (isAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-            )
         ) {
             Column(
                 modifier = Modifier.fillMaxSize().padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceAround
             ) {
-                Text(
-                    text = stringResource(Res.string.day_number, reward.day),
-                    style = MaterialTheme.typography.labelSmall,
-                    fontWeight = FontWeight.Bold
-                )
+                Texts.LSB(text = stringResource(Res.string.day_number, reward.day))
 
                 Icon(
                     imageVector = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard,
@@ -244,10 +213,8 @@ internal class HomeScreen(
                     modifier = Modifier.size(28.dp)
                 )
 
-                Text(
+                Texts.LMB(
                     text = "${reward.points} ${stringResource(Res.string.points_short)}",
-                    style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.ExtraBold,
                     color = if (isAvailable) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
                 )
             }

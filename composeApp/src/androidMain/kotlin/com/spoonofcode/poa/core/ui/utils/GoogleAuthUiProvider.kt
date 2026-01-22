@@ -9,7 +9,7 @@ import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.spoonofcode.poa.core.model.GoogleAccount
+import com.spoonofcode.poa.feature.login.domain.model.GoogleAccount
 
 actual class GoogleAuthUiProvider(
     private val activityContext: Context,
@@ -34,7 +34,7 @@ actual class GoogleAuthUiProvider(
             try {
                 val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                 GoogleAccount(
-                    token = googleIdTokenCredential.idToken,
+                    idToken = googleIdTokenCredential.idToken,
                     displayName = googleIdTokenCredential.displayName ?: "",
                     profileImageUrl = googleIdTokenCredential.profilePictureUri?.toString()
                 )

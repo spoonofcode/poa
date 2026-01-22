@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.profile.presentation.details
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,25 +22,24 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.CircleImage
+import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Cards
+import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.Spacers
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
 import com.spoonofcode.poa.resources.Res
@@ -55,7 +53,6 @@ import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.profile
 import com.spoonofcode.poa.resources.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
@@ -90,33 +87,27 @@ internal class ProfileDetailsScreen(
                         .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircleImage(
+                    Images.CircleImage(
                         imageRes = Res.drawable.poa,
                         modifier = Modifier.size(92.dp)
                     )
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
+                    Texts.HSB(
                         text = profile.name,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    
-                    Button(
-                        modifier = Modifier.padding(top = 8.dp).height(44.dp), // Zwiększona wysokość
-                        shape = MaterialTheme.shapes.large,
+                    Spacers.VerticalBetweenFields()
+
+                    Buttons.PrimaryButton(
+                        text = stringResource(Res.string.edit_profile),
+                        fillMaxWidth = false,
                         onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.edit_profile),
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                    )
                 }
             }
+
 
             // 2. Stats Row
             Row(
@@ -130,7 +121,7 @@ internal class ProfileDetailsScreen(
             }
 
             // 3. Main Actions
-            SectionCard {
+            Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.Default.Person,
                     title = stringResource(Res.string.partner_panel),
@@ -141,7 +132,7 @@ internal class ProfileDetailsScreen(
             Spacers.VerticalBetweenFields()
 
             // 4. Settings Actions
-            SectionCard {
+            Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.Default.Notifications,
                     title = stringResource(Res.string.notifications),
@@ -164,7 +155,7 @@ internal class ProfileDetailsScreen(
             Spacers.VerticalBetweenFields()
 
             // 5. Logout
-            SectionCard {
+            Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.AutoMirrored.Filled.Logout,
                     title = stringResource(Res.string.logout),
@@ -181,37 +172,11 @@ internal class ProfileDetailsScreen(
     @Composable
     private fun ProfileStatItem(label: String, value: String) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = value,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Text(
+            Texts.TLB(text = value)
+            Texts.LM(
                 text = label,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-        }
-    }
-}
-
-@Composable
-private fun SectionCard(
-    modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp), // Zwiększony cień
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)) // Wyraźne obramowanie
-    ) {
-        Column {
-            content()
         }
     }
 }
@@ -235,7 +200,7 @@ private fun ChevronItem(
         Surface(
             modifier = Modifier.size(36.dp),
             shape = RoundedCornerShape(10.dp),
-            color = iconTint.copy(alpha = 0.15f) // Lekko mocniejszy kolor tła ikony
+            color = iconTint.copy(alpha = 0.15f)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
@@ -252,11 +217,9 @@ private fun ChevronItem(
                 .weight(1f)
                 .padding(start = 16.dp, end = 8.dp)
         ) {
-            Text(
+            Texts.BLB(
                 text = title,
                 color = titleColor,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold // Zmienione na Bold dla lepszej czytelności
             )
         }
 

@@ -1,6 +1,5 @@
 package com.spoonofcode.poa.feature.product.presentation.details
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,28 +16,25 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.RoundedImage
-import com.spoonofcode.poa.core.ui.compose.Spacers
+import com.spoonofcode.poa.core.ui.compose.Cards
+import com.spoonofcode.poa.core.ui.compose.Images
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
-import com.spoonofcode.poa.core.ui.compose.VideoAnimation
+import com.spoonofcode.poa.core.ui.compose.video.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.about_product
@@ -47,7 +43,6 @@ import com.spoonofcode.poa.resources.learn_more
 import com.spoonofcode.poa.resources.product
 import com.spoonofcode.poa.resources.visit_product_page
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal data class ProductDetailsScreen(
     val productId: String,
@@ -87,30 +82,23 @@ internal data class ProductDetailsScreen(
         return {
             val product = requireNotNull(viewState.product)
 
-            // 1. Hero Section
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink)
             } else {
-                RoundedImage(imageLink = product.imageLink)
+                Images.RoundedImage(imageLink = product.imageLink)
             }
 
             Column(
                 modifier = Modifier.padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 2. Header
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
+                    Texts.LLB(
                         text = product.collectionName.uppercase(),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
                     )
-                    Text(
+
+                    Texts.HSB(
                         text = product.name,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
@@ -131,10 +119,8 @@ internal data class ProductDetailsScreen(
                                     modifier = Modifier.size(14.dp),
                                     tint = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
-                                Text(
+                                Texts.LSB(
                                     text = "TAG: $tag",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             }
@@ -142,44 +128,13 @@ internal data class ProductDetailsScreen(
                     }
                 }
 
-                // 3. Description Card
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.large,
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = stringResource(Res.string.about_product),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacers.VerticalBetweenFields()
-                        Text(
-                            text = product.description,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            lineHeight = 22.sp
-                        )
-                    }
-                }
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.about_product),
+                    description = product.description
+                )
 
-                // 4. Links Section
                 if (!product.websiteLink.isNullOrBlank() || !product.customLink.isNullOrBlank()) {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.large,
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-                    ) {
+                    Cards.ElevatedCard {
                         Column {
                             ClickableInfoRow(
                                 text = stringResource(Res.string.visit_product_page),
@@ -237,17 +192,14 @@ internal data class ProductDetailsScreen(
             )
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(
+                Texts.BMB(
                     text = text,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                Text(
+
+                Texts.LS(
                     text = url,
-                    style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1
                 )
             }
 

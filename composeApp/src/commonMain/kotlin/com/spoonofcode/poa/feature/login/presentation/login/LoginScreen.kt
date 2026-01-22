@@ -3,24 +3,17 @@ package com.spoonofcode.poa.feature.login.presentation.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.Buttons.GoogleSignInButton
-import com.spoonofcode.poa.core.ui.compose.CircleImage
+import com.spoonofcode.poa.core.ui.compose.Dividers
+import com.spoonofcode.poa.core.ui.compose.Images
+import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
@@ -32,7 +25,6 @@ import com.spoonofcode.poa.resources.or
 import com.spoonofcode.poa.resources.poa
 import com.spoonofcode.poa.resources.sign_in
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
@@ -54,7 +46,7 @@ internal class LoginScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CircleImage(imageRes = Res.drawable.poa)
+                Images.CircleImage(imageRes = Res.drawable.poa)
                 Spacers.VerticalBetweenFields()
                 Texts.HL(stringResource(resource = Res.string.let_s_get_started))
             }
@@ -76,50 +68,17 @@ internal class LoginScreen(
 
             Spacers.VerticalBetweenFields()
 
-            LabeledDivider()
+            Dividers.LabeledDivider(
+                text = stringResource(resource = Res.string.or)
+            )
 
             Spacers.VerticalBetweenFields()
 
-            GoogleSignInButton(onGoogleSignInResult = { googleUser ->
-                // send Google id token to your server
-                val googleUserToken = requireNotNull(googleUser?.token)
-                onAction(LoginViewAction.SignInWithGoogle(googleUserToken))
+            Buttons.GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
+                onAction(LoginViewAction.SignInWithGoogle(googleAccount =googleAccount))
             })
 
             Spacers.VerticalBetweenFields()
-        }
-    }
-
-    @Composable
-    fun LabeledDivider(
-        text: String = stringResource(resource = Res.string.or),
-        modifier: Modifier = Modifier,
-        lineColor: Color = MaterialTheme.colorScheme.outlineVariant,
-        textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-        thickness: Dp = 1.dp,
-    ) {
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            HorizontalDivider(
-                modifier = Modifier.weight(1f),
-                thickness = thickness,
-                color = lineColor
-            )
-
-            Text(
-                text = text,
-                modifier = Modifier.padding(vertical = 2.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = textColor
-            )
-
-            HorizontalDivider(
-                modifier = Modifier.weight(1f),
-                thickness = thickness,
-                color = lineColor
-            )
         }
     }
 }

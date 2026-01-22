@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui.compose
+package com.spoonofcode.poa.core.ui.compose.video
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,9 +11,7 @@ import platform.AVFoundation.actionAtItemEnd
 import platform.AVFoundation.currentItem
 import platform.AVFoundation.muted
 import platform.AVFoundation.play
-import platform.AVFoundation.seekToTime
 import platform.AVKit.AVPlayerViewController
-import platform.CoreMedia.kCMTimeZero
 import platform.Foundation.NSNotificationCenter
 import platform.Foundation.NSURL
 

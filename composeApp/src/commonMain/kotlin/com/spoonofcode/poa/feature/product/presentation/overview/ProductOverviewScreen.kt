@@ -25,17 +25,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.TextFields
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.product.domain.model.Product
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.my_products
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
@@ -137,27 +138,18 @@ internal class ProductOverviewScreen(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = product.collectionName.uppercase(),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 0.5.sp
-                )
-
-                Text(
+                Texts.LSB(text = product.collectionName.uppercase())
+                Texts.TMB(
                     text = product.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.ExtraBold,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    lineHeight = 18.sp
                 )
             }
         }
     }
 }
+
 // region previews
 @Preview
 @Composable
