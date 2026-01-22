@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Cards
-import com.spoonofcode.poa.core.ui.compose.RoundedImage
+import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.VideoAnimation
@@ -56,7 +56,7 @@ internal class ProductEditScreen(
             if (product.videoLink != null) {
                 VideoAnimation(videoLink = product.videoLink)
             } else {
-                RoundedImage(imageLink = product.imageLink)
+                Images.RoundedImage(imageLink = product.imageLink)
             }
 
             Column(

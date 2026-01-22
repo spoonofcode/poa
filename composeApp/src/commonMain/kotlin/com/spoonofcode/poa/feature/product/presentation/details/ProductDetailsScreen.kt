@@ -31,7 +31,7 @@ import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Cards
-import com.spoonofcode.poa.core.ui.compose.RoundedImage
+import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.compose.VideoAnimation
@@ -85,7 +85,7 @@ internal data class ProductDetailsScreen(
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink)
             } else {
-                RoundedImage(imageLink = product.imageLink)
+                Images.RoundedImage(imageLink = product.imageLink)
             }
 
             Column(

@@ -5,5 +5,6 @@ import com.spoonofcode.poa.core.ui.base.BaseViewState
 
 @Immutable
 internal data class TACViewState(
-    val test: String = ""
+    val isPrivacyPolicyAccepted: Boolean = false,
+    val isTermsAndConditionsAccepted: Boolean = false,
 ) : BaseViewState()

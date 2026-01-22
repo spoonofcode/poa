@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.CheckboxTextLinkRow
+import com.spoonofcode.poa.core.ui.compose.Checkboxes
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -21,7 +21,7 @@ import com.spoonofcode.poa.resources.terms_and_conditions_description
 import org.jetbrains.compose.resources.stringResource
 
 internal class TACScreen(
-    override val verticalScrollEnable: Boolean = false,
+    override val verticalScrollEnable: Boolean = true,
 ) : BaseScreen<TACViewModel, TACViewState, TACViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.terms_and_conditions
@@ -38,33 +38,40 @@ internal class TACScreen(
         onAction: (TACViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Texts.HS(stringResource(Res.string.terms_and_conditions_description))
-
+            Texts.HSB(stringResource(Res.string.terms_and_conditions_description))
+            
             Text(
                 text = stringResource(Res.string.star_mandatory),
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.labelSmall,
             )
 
-            CheckboxTextLinkRow(
-                checked = true,
-                onCheckedChange = { /* update state */ },
+            Spacers.VerticalBetweenFields()
+            Spacers.VerticalBetweenFields()
+
+            Checkboxes.CheckboxTextLinkRow(
+                checked = viewState.isPrivacyPolicyAccepted,
+                onCheckedChange = { onAction(TACViewAction.ChangePrivacyPolicyAccepted(it)) },
                 text = stringResource(Res.string.privacy_policy),
                 linkText = stringResource(Res.string.read),
-                linkUrl = "https://example.com/terms"
+                linkUrl = "https://example.com/privacy-policy"
             )
-            CheckboxTextLinkRow(
-                checked = true,
-                onCheckedChange = { /* update state */ },
+
+            Spacers.VerticalBetweenFields()
+
+            Checkboxes.CheckboxTextLinkRow(
+                checked = viewState.isTermsAndConditionsAccepted,
+                onCheckedChange = { onAction(TACViewAction.ChangeTermsAndConditionsAccepted(it)) },
                 text = stringResource(Res.string.terms_and_conditions),
                 linkText = stringResource(Res.string.read),
-                linkUrl = "https://example.com/terms"
+                linkUrl = "https://example.com/terms-and-conditions"
             )
 
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.save_changes),
+                enabled = viewState.isPrivacyPolicyAccepted && viewState.isTermsAndConditionsAccepted,
                 onClick = { onAction(TACViewAction.SaveChanges) }
             )
         }

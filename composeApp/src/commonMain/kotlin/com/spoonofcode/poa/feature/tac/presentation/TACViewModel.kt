@@ -14,26 +14,16 @@ internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(
         when (action) {
             TACViewAction.InitView -> initView()
             TACViewAction.SaveChanges -> saveChanges()
+            is TACViewAction.ChangePrivacyPolicyAccepted -> {
+                updateState { copy(isPrivacyPolicyAccepted = action.accepted) }
+            }
+            is TACViewAction.ChangeTermsAndConditionsAccepted -> {
+                updateState { copy(isTermsAndConditionsAccepted = action.accepted) }
+            }
         }
     }
 
     private fun initView() {
-        showLoadingView()
-        viewModelScope.launch {
-//            showLoadingView()
-//            try {
-//                updateState {
-//                    copy(
-//                        screenState = ScreenState.CONTENT,
-//                        faqItems = faqItems,
-//                    )
-//                }
-//            } catch (ce: CancellationException) {
-//                throw ce
-//            } catch (e: Exception) {
-//                showErrorView()
-//            }
-        }
     }
 
     private fun saveChanges() {
