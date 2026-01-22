@@ -74,10 +74,8 @@ internal class LoginScreen(
 
             Spacers.VerticalBetweenFields()
 
-            Buttons.GoogleSignInButton(onGoogleSignInResult = { googleUser ->
-                // send Google id token to your server
-                val googleUserToken = requireNotNull(googleUser?.token)
-                onAction(LoginViewAction.SignInWithGoogle(googleUserToken))
+            Buttons.GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
+                onAction(LoginViewAction.SignInWithGoogle(googleAccount =googleAccount))
             })
 
             Spacers.VerticalBetweenFields()

@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.spoonofcode.poa.core.model.GoogleAccount
+import com.spoonofcode.poa.feature.login.domain.model.GoogleAccount
 import com.spoonofcode.poa.core.ui.ext.addIf
 import com.spoonofcode.poa.core.ui.utils.GoogleAuthProvider
 import com.spoonofcode.poa.resources.Res
@@ -100,8 +100,8 @@ object Buttons {
             leftIcon = Res.drawable.ic_google,
             onClick = {
                 coroutineScope.launch {
-                    val googleUser = googleAuthUiProvider.signIn()
-                    onGoogleSignInResult(googleUser)
+                    val googleAccount = googleAuthUiProvider.signIn()
+                    onGoogleSignInResult(googleAccount)
                 }
             }
         )

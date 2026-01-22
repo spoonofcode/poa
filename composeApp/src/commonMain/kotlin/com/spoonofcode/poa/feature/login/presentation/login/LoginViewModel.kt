@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.poa.feature.login.domain.model.GoogleAccount
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeScreen
@@ -21,7 +22,7 @@ internal class LoginViewModel(
         when (action) {
             is LoginViewAction.ChangeEmail -> changeEmail(action.email)
             LoginViewAction.SignInWithCode -> signInWithCode()
-            is LoginViewAction.SignInWithGoogle -> signInWithGoogle(action.googleIdToken)
+            is LoginViewAction.SignInWithGoogle -> signInWithGoogle(action.googleAccount)
         }
     }
 
@@ -44,9 +45,10 @@ internal class LoginViewModel(
         }
     }
 
-    private fun signInWithGoogle(googleIdToken: String) {
+    private fun signInWithGoogle(googleAccount: GoogleAccount?) {
         viewModelScope.launch {
             showLoadingView()
+            val googleIdToken = requireNotNull(googleAccount?.idToken)
             loginGoogleUseCase(googleIdToken)
                 .onSuccess {
                     viewModelNavigator.replaceAll(listOf(MainHostScreen()))
