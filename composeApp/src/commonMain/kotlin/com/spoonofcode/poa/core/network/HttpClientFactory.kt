@@ -68,7 +68,8 @@ class HttpClientFactory(
                         }
                     }
                     refreshTokens {
-                        if (response.request.url.encodedPath.contains("api/login/")) {
+                        if (response.request.url.encodedPath.contains("api/login") ||
+                            response.request.url.encodedPath.contains("api/refresh")) {
                             return@refreshTokens null
                         }
 
@@ -82,7 +83,7 @@ class HttpClientFactory(
                         remoteRefreshTokenDataSource.create(refreshToken)
                             .onSuccess { refreshResponse ->
                                 sessionManager.saveSessionAccessToken(refreshResponse.jwtAccessToken)
-                                sessionManager.saveSessionAccessToken(refreshResponse.jwtRefreshToken)
+                                sessionManager.saveSessionRefreshToken(refreshResponse.jwtRefreshToken)
                                 bearerTokens = BearerTokens(
                                     accessToken = refreshResponse.jwtAccessToken,
                                     refreshToken = refreshResponse.jwtRefreshToken,
