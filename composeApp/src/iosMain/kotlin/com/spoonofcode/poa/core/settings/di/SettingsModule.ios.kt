@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.core.settings.di
 
-import com.spoonofcode.poa.core.settings.createEncryptedSettings
-import org.koin.core.module.dsl.singleOf
+import com.russhwolf.settings.Settings
+import com.spoonofcode.poa.core.settings.IosSettingsFactory
 import org.koin.dsl.module
 
 actual val platformSettingsModule = module {
-    singleOf(::createEncryptedSettings)
+    single<Settings.Factory> { IosSettingsFactory() }
 }
