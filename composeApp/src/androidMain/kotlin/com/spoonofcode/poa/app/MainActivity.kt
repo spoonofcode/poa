@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.spoonofcode.poa.core.network.initUrlOpener
-import com.spoonofcode.poa.core.settings.appContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +15,6 @@ class MainActivity : ComponentActivity() {
         // Check or we navigate from Notification
         val notificationId = intent.getStringExtra(NOTIFICATION_ID_KEY)
 
-        appContext = this
         installSplashScreen()
         setContent {
             App(notificationId)
