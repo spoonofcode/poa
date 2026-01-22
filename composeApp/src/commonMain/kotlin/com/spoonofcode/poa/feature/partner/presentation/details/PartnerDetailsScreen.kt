@@ -28,6 +28,7 @@ import com.skydoves.landscapist.coil3.CoilImage
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.SocialIcons
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.about_partner
@@ -101,11 +102,8 @@ internal class PartnerDetailsScreen(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     partner.email?.let {
-                        Text(
+                        Texts.BM(
                             text = it,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Medium
                         )
                     }
                 }

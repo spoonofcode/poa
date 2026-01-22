@@ -34,6 +34,7 @@ import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.core.ui.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.poa.core.ui.compose.Spacers
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
 import com.spoonofcode.poa.resources.Res
@@ -148,15 +149,14 @@ internal class NotificationOverviewScreen(
                         modifier = Modifier.weight(1f),
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Text(
+
+                        Texts.TM(
                             text = item.title,
-                            style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
-                        Text(
+                        Texts.BM(
                             text = item.text,
-                            style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,

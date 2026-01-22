@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 
 object Texts {
     @Composable
@@ -111,11 +112,17 @@ object Texts {
     @Composable
     fun TM(
         text: String,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip,
+        color: Color = Color.Unspecified,
         modifier: Modifier = Modifier,
     ) {
         Text(
             text = text,
             modifier = modifier,
+            maxLines = maxLines,
+            overflow = overflow,
+            color = color,
             style = MaterialTheme.typography.titleMedium,
         )
     }
@@ -123,11 +130,17 @@ object Texts {
     @Composable
     fun TMB(
         text: String,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip,
+        color: Color = Color.Unspecified,
         modifier: Modifier = Modifier,
     ) {
         Text(
             text = text,
             modifier = modifier,
+            maxLines = maxLines,
+            overflow = overflow,
+            color = color,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )
@@ -259,9 +272,15 @@ object Texts {
     @Composable
     fun BM(
         text: String,
+        maxLines: Int = Int.MAX_VALUE,
+        overflow: TextOverflow = TextOverflow.Clip,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            maxLines= maxLines,
+            overflow = overflow,
+            color = color,
             style = MaterialTheme.typography.bodyMedium
         )
     }
@@ -294,9 +313,11 @@ object Texts {
     @Composable
     fun BLB(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,
         )

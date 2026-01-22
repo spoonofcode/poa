@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.tac.presentation
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.core.ui.base.BaseScreen
@@ -39,11 +38,10 @@ internal class TACScreen(
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Texts.HSB(stringResource(Res.string.terms_and_conditions_description))
-            
-            Text(
+
+            Texts.LS(
                 text = stringResource(Res.string.star_mandatory),
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.labelSmall,
             )
 
             Spacers.VerticalBetweenFields()
