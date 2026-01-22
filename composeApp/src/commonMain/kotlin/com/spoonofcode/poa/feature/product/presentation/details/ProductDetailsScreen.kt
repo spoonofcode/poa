@@ -34,7 +34,7 @@ import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
-import com.spoonofcode.poa.core.ui.compose.VideoAnimation
+import com.spoonofcode.poa.core.ui.compose.video.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.about_product

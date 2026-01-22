@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.ui.compose
+package com.spoonofcode.poa.core.ui.compose.video
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
