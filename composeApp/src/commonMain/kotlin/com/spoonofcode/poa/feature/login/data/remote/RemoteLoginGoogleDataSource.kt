@@ -7,7 +7,6 @@ import io.ktor.http.HttpMethod
 
 class RemoteLoginGoogleDataSource : RemoteBaseDataSource(
     collectionName = "api/login/google",
-    sessionTokenRequired = false,
 ) {
     suspend fun create(
         googleUserToken: String,

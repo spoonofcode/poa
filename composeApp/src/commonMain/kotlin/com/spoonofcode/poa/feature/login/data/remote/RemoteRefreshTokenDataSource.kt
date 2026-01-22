@@ -7,7 +7,6 @@ import io.ktor.http.HttpMethod
 
 class RemoteRefreshTokenDataSource() : RemoteBaseDataSource(
     collectionName = "api/refresh",
-    sessionTokenRequired = false,
 ) {
     suspend fun create(
         refreshToken: String,
