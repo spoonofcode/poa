@@ -66,11 +66,8 @@ abstract class RemoteBaseDataSource(
                 httpClient.request(requestBuilder)
             }
 
-            println("BARTEK response = ${response.body<T>()}")
-
             Result.success(responseOrException(response).body(typeInfo<T>()))
         } catch (e: Exception) {
-            println("BARTEK Exception e = $e")
             Result.failure(e)
         }
     }
