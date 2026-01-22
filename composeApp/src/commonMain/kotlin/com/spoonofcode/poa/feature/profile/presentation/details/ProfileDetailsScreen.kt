@@ -98,6 +98,7 @@ internal class ProfileDetailsScreen(
                         text = profile.name,
                         color = MaterialTheme.colorScheme.onSurface
                     )
+                    Spacers.VerticalBetweenFields()
 
                     Buttons.PrimaryButton(
                         text = stringResource(Res.string.edit_profile),
@@ -106,6 +107,7 @@ internal class ProfileDetailsScreen(
                     )
                 }
             }
+
 
             // 2. Stats Row
             Row(
@@ -198,7 +200,7 @@ private fun ChevronItem(
         Surface(
             modifier = Modifier.size(36.dp),
             shape = RoundedCornerShape(10.dp),
-            color = iconTint.copy(alpha = 0.15f) // Lekko mocniejszy kolor tła ikony
+            color = iconTint.copy(alpha = 0.15f)
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
