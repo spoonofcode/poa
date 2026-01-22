@@ -12,7 +12,7 @@ class RemoteLoginCodeDataSource() : RemoteBaseDataSource(
     suspend fun create(
         email: String,
         loginCode: String,
-    ): Result<LoginResponse> = doRequest<LoginResponse>(
+    ): Result<LoginResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = LoginCodeRequest(
             email = email,

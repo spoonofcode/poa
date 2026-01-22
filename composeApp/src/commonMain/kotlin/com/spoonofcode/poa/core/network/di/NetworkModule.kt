@@ -27,6 +27,6 @@ val networkModule: Module = module {
 
     single<POALogger> { KermitLogger }
     single {
-        HttpClientFactory(get()).create()
+        HttpClientFactory(get(), get(), get()).create()
     }
 }

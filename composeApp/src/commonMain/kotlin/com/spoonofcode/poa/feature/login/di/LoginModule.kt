@@ -4,6 +4,7 @@ import com.spoonofcode.poa.feature.login.data.LoginRepositoryImpl
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.poa.feature.login.data.remote.RemoteLoginRequestCodeDataSource
+import com.spoonofcode.poa.feature.login.data.remote.RemoteRefreshTokenDataSource
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginCodeUseCase
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginGoogleUseCase
@@ -25,6 +26,7 @@ val loginModule: Module = module {
     singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
 
     singleOf(::RemoteLoginGoogleDataSource)
+    singleOf(::RemoteRefreshTokenDataSource)
 
     singleOf(::RemoteLoginCodeDataSource)
     singleOf(::RemoteLoginRequestCodeDataSource)

@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.network.NetworkConfig
 import com.spoonofcode.poa.core.network.SessionManager
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.auth.AuthCircuitBreaker
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
@@ -39,6 +40,7 @@ abstract class RemoteBaseDataSource(
         method: HttpMethod,
         queryParams: Map<String, Any> = emptyMap(),
         requestBody: Any? = null,
+        markAsRefreshTokenRequest: Boolean = false,
     ): Result<T> = withContext(dispatcherProvider.io()) {
         try {
             val urlString =
@@ -58,13 +60,18 @@ abstract class RemoteBaseDataSource(
                 requestBody?.let {
                     setBody(it)
                 }
+                if (markAsRefreshTokenRequest) {
+                    attributes.put(AuthCircuitBreaker, Unit)
+                }
             }
 
-            val response = if (sessionTokenRequired) {
-                safeApiCall(httpClient, requestBuilder)
-            } else {
-                httpClient.request(requestBuilder)
-            }
+//            val response = if (sessionTokenRequired) {
+//                safeApiCall(httpClient, requestBuilder)
+//            } else {
+//                httpClient.request(requestBuilder)
+//            }
+
+            val response = httpClient.request(requestBuilder)
 
             Result.success(responseOrException(response).body(typeInfo<T>()))
         } catch (e: Exception) {
