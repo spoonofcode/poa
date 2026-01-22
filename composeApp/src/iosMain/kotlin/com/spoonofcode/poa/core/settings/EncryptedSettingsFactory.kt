@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.core.settings
 
+import com.russhwolf.settings.ExperimentalSettingsImplementation
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.KeychainSettings
 
-actual fun createEncryptedSettings(): Settings {
-    return KeychainSettings(service = "dojo_pro_keychain_service")
-}
+@OptIn(ExperimentalSettingsImplementation::class)
+actual fun createEncryptedSettings(): Settings = KeychainSettings(service = "poa_keychain_service")

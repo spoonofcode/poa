@@ -9,22 +9,26 @@ import com.russhwolf.settings.SharedPreferencesSettings
 lateinit var appContext: Context
 
 actual fun createEncryptedSettings(): Settings {
-
-//    appContext.deleteSharedPreferences("poa-settings")
-
+    val fileName = "poa-settings"
     val masterKey = MasterKey.Builder(appContext)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
-    val fileName = "poa-settings"
+    val sharedPreferences = try {
+        createSharedPrefs(appContext, fileName, masterKey)
+    } catch (e: Exception) {
+        appContext.deleteSharedPreferences(fileName)
+        createSharedPrefs(appContext, fileName, masterKey)
+    }
 
-    val sharedPreferences = EncryptedSharedPreferences.create(
-        appContext,
+    return SharedPreferencesSettings(sharedPreferences)
+}
+
+private fun createSharedPrefs(context: Context, fileName: String, masterKey: MasterKey) =
+    EncryptedSharedPreferences.create(
+        context,
         fileName,
         masterKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
-
-    return SharedPreferencesSettings(sharedPreferences)
-}
