@@ -50,6 +50,7 @@ import com.spoonofcode.poa.resources.total_points
 import com.spoonofcode.poa.resources.your_streak
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.Texts
 
 internal class HomeScreen(
@@ -108,15 +109,8 @@ internal class HomeScreen(
         isActionAvailable: Boolean,
         nextCheckInTimeMillis: Long?,
         onCheckInClicked: () -> Unit,
-        modifier: Modifier = Modifier,
     ) {
-        Card(
-            modifier = modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-        ) {
+        Cards.ElevatedCard {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -201,15 +195,9 @@ internal class HomeScreen(
             MaterialTheme.colorScheme.surface
         }
 
-        Card(
+        Cards.ElevatedCard(
             modifier = Modifier.size(width = 85.dp, height = 110.dp),
-            shape = MaterialTheme.shapes.medium,
             colors = CardDefaults.cardColors(containerColor = containerColor),
-            elevation = CardDefaults.cardElevation(defaultElevation = if (isAvailable) 4.dp else 1.dp),
-            border = BorderStroke(
-                width = if (isAvailable) 2.dp else 1.dp,
-                color = if (isAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-            )
         ) {
             Column(
                 modifier = Modifier.fillMaxSize().padding(8.dp),

@@ -20,21 +20,19 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.spoonofcode.poa.core.network.getUrlOpener
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.RoundedImage
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.compose.VideoAnimation
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -84,7 +82,6 @@ internal data class ProductDetailsScreen(
         return {
             val product = requireNotNull(viewState.product)
 
-            // 1. Hero Section
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink)
             } else {
@@ -95,19 +92,13 @@ internal data class ProductDetailsScreen(
                 modifier = Modifier.padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 2. Header
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(
+                    Texts.LLB(
                         text = product.collectionName.uppercase(),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
                     )
-                    Text(
+
+                    Texts.HSB(
                         text = product.name,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
@@ -128,10 +119,8 @@ internal data class ProductDetailsScreen(
                                     modifier = Modifier.size(14.dp),
                                     tint = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
-                                Text(
+                                Texts.LSB(
                                     text = "TAG: $tag",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
                             }
@@ -139,13 +128,11 @@ internal data class ProductDetailsScreen(
                     }
                 }
 
-                // 3. Description Card
                 Cards.DescriptionCard(
                     title = stringResource(Res.string.about_product),
                     description = product.description
                 )
 
-                // 4. Links Section
                 if (!product.websiteLink.isNullOrBlank() || !product.customLink.isNullOrBlank()) {
                     Cards.ElevatedCard {
                         Column {
@@ -205,17 +192,14 @@ internal data class ProductDetailsScreen(
             )
 
             Column(modifier = Modifier.weight(1f)) {
-                Text(
+                Texts.BMB(
                     text = text,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                Text(
+
+                Texts.LS(
                     text = url,
-                    style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1
                 )
             }
 

@@ -164,10 +164,12 @@ object Texts {
     fun HS(
         text: String,
         modifier: Modifier = Modifier,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
             modifier = modifier,
+            color = color,
             style = MaterialTheme.typography.headlineSmall,
         )
     }
@@ -176,10 +178,12 @@ object Texts {
     fun HSB(
         text: String,
         modifier: Modifier = Modifier,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
             modifier = modifier,
+            color = color,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
@@ -301,9 +305,11 @@ object Texts {
     @Composable
     fun LS(
         text: String,
+        color: Color = Color.Unspecified,
     ) {
         Text(
             text = text,
+            color = color,
             style = MaterialTheme.typography.labelSmall
         )
     }
