@@ -2,6 +2,7 @@ package com.spoonofcode.poa.feature.login.presentation.logincode
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
@@ -12,12 +13,10 @@ import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.code
 import com.spoonofcode.poa.resources.sign_in_with_code
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class LoginCodeScreen(
     val email: String,
-) :
-    BaseScreen<LoginCodeViewModel, LoginCodeViewState, LoginCodeViewAction>() {
+) : BaseScreen<LoginCodeViewModel, LoginCodeViewState, LoginCodeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.sign_in_with_code
 
@@ -37,7 +36,7 @@ internal class LoginCodeScreen(
 
             Spacers.VerticalBetweenFields()
 
-            TextFields.Outlined(
+            TextFields.OutlinedPassword(
                 value = viewState.code,
                 onValueChange = { onAction(LoginCodeViewAction.ChangeCode(code = it)) },
                 label = stringResource(resource = Res.string.code),
