@@ -34,14 +34,15 @@ internal class LoginViewModel(
 
     private fun signInWithCode() {
         viewModelScope.launch {
-            showLoadingView()
-            loginRequestCodeUseCase(
-                email = currentState().email,
-            ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
-            }.onFailure {
-                showErrorSnackbar(it)
-            }
+            viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
+//            showLoadingView()
+//            loginRequestCodeUseCase(
+//                email = currentState().email,
+//            ).onSuccess {
+//                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
+//            }.onFailure {
+//                showErrorSnackbar(it)
+//            }
         }
     }
 

@@ -55,6 +55,8 @@
     <string name="notification_type">Notification type</string>
     <string name="open_link">Open Link</string>
     <string name="or"> Or </string>
+    <string name="one_time_code_info_prefix">We've sent a one-time code to </string>
+    <string name="one_time_code_info_postfix">. Please enter it below.</string>
     <string name="new_partners">New Partners</string>
     <string name="partner">Partner</string>
     <string name="partner_name">Partner name</string>

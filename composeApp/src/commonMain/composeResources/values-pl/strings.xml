@@ -55,6 +55,9 @@
     <string name="notification_type">Typ powiadomienia</string>
     <string name="open_link">Otwórz link</string>
     <string name="or"> Lub </string>
+    <string name="one_time_code_info">Na adres %1$s wysłaliśmy jednorazowy kod. Wpisz go poniżej.</string>
+    <string name="one_time_code_info_prefix">Na adres </string>
+    <string name="one_time_code_info_postfix"> wysłaliśmy jednorazowy kod. Wpisz go poniżej.</string>
     <string name="new_partners">Nowi partnerzy</string>
     <string name="partner">Partner</string>
     <string name="partner_name">Partner</string>
