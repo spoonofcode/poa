@@ -1,8 +1,11 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 
 plugins {
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.buildkonfig)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinCocoapods)
@@ -11,6 +14,27 @@ plugins {
     alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
+}
+
+buildkonfig {
+    packageName = "com.spoonofcode.poa"
+    defaultConfigs {
+        val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
+            .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
+            ?: throw IllegalStateException(
+                "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
+            )
+
+        val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
+            .getProperty("RECAPTCHA_SITE_KEY_IOS")
+            ?: throw IllegalStateException(
+                "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
+            )
+
+
+        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
+        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
+    }
 }
 
 kover {
@@ -70,7 +94,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
