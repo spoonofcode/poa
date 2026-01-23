@@ -52,14 +52,14 @@ object Images {
     }
 
     @Composable
-    fun ImageLink(imageLink: String) {
+    fun ImageLink(imageLink: String ,modifier: Modifier = Modifier) {
         CoilImage(
             imageModel = { imageLink },
             imageOptions = ImageOptions(
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center
             ),
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .clip(MaterialTheme.shapes.large),
             loading = {
