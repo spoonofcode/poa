@@ -28,20 +28,24 @@ internal class LoginViewModel(
 
     private fun changeEmail(email: String) {
         updateState {
-            copy(email = email)
+            copy(
+                email = email,
+                isSignInButtonEnable = isValidEmail(email),
+            )
         }
     }
 
     private fun signInWithCode() {
         viewModelScope.launch {
-            showLoadingView()
-            loginRequestCodeUseCase(
-                email = currentState().email,
-            ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
-            }.onFailure {
-                showErrorSnackbar(it)
-            }
+            viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
+//            showLoadingView()
+//            loginRequestCodeUseCase(
+//                email = currentState().email,
+//            ).onSuccess {
+//                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
+//            }.onFailure {
+//                showErrorSnackbar(it)
+//            }
         }
     }
 
@@ -56,5 +60,16 @@ internal class LoginViewModel(
                     showErrorSnackbar(it)
                 }
         }
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        val email = email.trim()
+        return email.isNotEmpty() && email.length <= 254 && EMAIL_REGEX.matches(email)
+    }
+
+    companion object {
+        private val EMAIL_REGEX = Regex(
+            pattern = "^[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$"
+        )
     }
 }

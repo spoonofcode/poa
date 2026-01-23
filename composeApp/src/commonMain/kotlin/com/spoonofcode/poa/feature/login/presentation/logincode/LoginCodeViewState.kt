@@ -7,4 +7,5 @@ import com.spoonofcode.poa.core.ui.base.BaseViewState
 internal data class LoginCodeViewState(
     val email: String = "",
     val code: String = "",
-): BaseViewState()
+    val isSignInWithCodeButtonEnable: Boolean = false,
+) : BaseViewState()
