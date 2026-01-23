@@ -15,12 +15,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -51,22 +49,6 @@ object Images {
                 contentScale = ContentScale.Crop
             )
         }
-    }
-
-    @Composable
-    fun RoundedImage(imageLink: String) {
-        CoilImage(
-            imageModel = { imageLink },
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Fit,
-                alignment = Alignment.Center
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
-                .shadow(4.dp, RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant),
-        )
     }
 
     @Composable

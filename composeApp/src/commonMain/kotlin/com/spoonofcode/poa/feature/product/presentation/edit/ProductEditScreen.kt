@@ -56,7 +56,7 @@ internal class ProductEditScreen(
             if (product.videoLink != null) {
                 VideoAnimation(videoLink = product.videoLink)
             } else {
-                Images.RoundedImage(imageLink = product.imageLink)
+                Images.ImageLink(imageLink = product.imageLink)
             }
 
             Column(

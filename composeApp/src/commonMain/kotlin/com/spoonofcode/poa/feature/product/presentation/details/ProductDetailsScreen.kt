@@ -85,7 +85,7 @@ internal data class ProductDetailsScreen(
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink)
             } else {
-                Images.RoundedImage(imageLink = product.imageLink)
+                Images.ImageLink(imageLink = product.imageLink)
             }
 
             Column(

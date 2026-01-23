@@ -53,7 +53,7 @@ internal class PartnerEditScreen(
                     label = stringResource(resource = Res.string.partner_name),
                 )
                 TextFields.Outlined(
-                    value = partner.description.orEmpty(), // Używamy orEmpty() dla bezpieczeństwa
+                    value = partner.description.orEmpty(),
                     onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
                     label = stringResource(resource = Res.string.description),
                 )
