@@ -2,13 +2,20 @@ package com.spoonofcode.poa.core.ui.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,27 +69,40 @@ object Images {
         )
     }
 
-//    @Composable
-//    fun ImageLink(imageLink: String) {
-//        CoilImage(
-//            imageModel = { imageLink },
-//            imageOptions = ImageOptions(
-//                contentScale = ContentScale.Crop,
-//                alignment = Alignment.Center
-//            ),
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .clip(MaterialTheme.shapes.large),
-//            loading = {
-//                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//                    CircularProgressIndicator()
-//                }
-//            },
-//            failure = {
+    @Composable
+    fun ImageLink(imageLink: String) {
+        CoilImage(
+            imageModel = { imageLink },
+            imageOptions = ImageOptions(
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center
+            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(MaterialTheme.shapes.large),
+            loading = {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            },
+            failure = {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.BrokenImage,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
 //                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 //                    Text(text = "Błąd ładowania")
 //                }
-//            }
-//        )
-//    }
+            }
+        )
+    }
 }
