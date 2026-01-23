@@ -61,4 +61,28 @@ object Images {
                 .background(MaterialTheme.colorScheme.surfaceVariant),
         )
     }
+
+//    @Composable
+//    fun ImageLink(imageLink: String) {
+//        CoilImage(
+//            imageModel = { imageLink },
+//            imageOptions = ImageOptions(
+//                contentScale = ContentScale.Crop,
+//                alignment = Alignment.Center
+//            ),
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .clip(MaterialTheme.shapes.large),
+//            loading = {
+//                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                    CircularProgressIndicator()
+//                }
+//            },
+//            failure = {
+//                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                    Text(text = "Błąd ładowania")
+//                }
+//            }
+//        )
+//    }
 }

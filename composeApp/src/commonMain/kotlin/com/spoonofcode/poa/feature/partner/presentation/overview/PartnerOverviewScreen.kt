@@ -30,9 +30,8 @@ import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partners
-import com.spoonofcode.poa.resources.search
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.core.ui.compose.Cards
 
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
@@ -84,16 +83,11 @@ internal class PartnerOverviewScreen(
         onClick: () -> Unit,
         modifier: Modifier = Modifier,
     ) {
-        Card(
+        Cards.ElevatedCard(
             onClick = onClick,
             modifier = modifier.fillMaxWidth().height(140.dp),
-            shape = MaterialTheme.shapes.large,
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
         ) {
+            // TODO tutaj zoptymalizuj
             CoilImage(
                 imageModel = { item.imageLink ?: "https://images.seeklogo.com/logo-png/9/1/nike-logo-png_seeklogo-99478.png" },
                 imageOptions = ImageOptions(
