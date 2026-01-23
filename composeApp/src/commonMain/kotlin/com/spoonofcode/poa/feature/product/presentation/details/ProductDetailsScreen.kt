@@ -85,45 +85,41 @@ internal data class ProductDetailsScreen(
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink)
             } else {
-                Images.RoundedImage(imageLink = product.imageLink)
+                Images.ImageLink(imageLink = product.imageLink)
             }
 
             Column(
                 modifier = Modifier.padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Texts.LLB(
-                        text = product.collectionName.uppercase(),
-                    )
+                Texts.LLB(text = product.collectionName.uppercase())
 
-                    Texts.HSB(
-                        text = product.name,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                Texts.HSB(
+                    text = product.name,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
 
-                    product.tagId?.let { tag ->
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = MaterialTheme.colorScheme.secondaryContainer,
-                            modifier = Modifier.padding(top = 4.dp)
+                product.tagId?.let { tag ->
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        modifier = Modifier.padding(top = 4.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            Row(
-                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                Icon(
-                                    Icons.Default.QrCode,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(14.dp),
-                                    tint = MaterialTheme.colorScheme.onSecondaryContainer
-                                )
-                                Texts.LSB(
-                                    text = "TAG: $tag",
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                                )
-                            }
+                            Icon(
+                                Icons.Default.QrCode,
+                                contentDescription = null,
+                                modifier = Modifier.size(14.dp),
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
+                            Texts.LSB(
+                                text = "TAG: $tag",
+                                color = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
                         }
                     }
                 }

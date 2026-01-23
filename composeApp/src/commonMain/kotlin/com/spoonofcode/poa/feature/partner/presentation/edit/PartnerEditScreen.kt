@@ -1,26 +1,15 @@
 package com.spoonofcode.poa.feature.partner.presentation.edit
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import com.skydoves.landscapist.ImageOptions
-import com.skydoves.landscapist.coil3.CoilImage
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Images
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.description
 import com.spoonofcode.poa.resources.facebook
@@ -32,7 +21,6 @@ import com.spoonofcode.poa.resources.website
 import com.spoonofcode.poa.resources.x
 import com.spoonofcode.poa.resources.youtube
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class PartnerEditScreen(
     private val partnerId: String,
@@ -55,19 +43,7 @@ internal class PartnerEditScreen(
             val partner = viewState.partner
 
             if (partner != null) {
-                CoilImage(
-                    imageModel = { viewState.partner.imageLink },
-                    imageOptions = ImageOptions(
-                        contentScale = ContentScale.Crop,
-                        alignment = Alignment.Center
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16 / 9f)
-                        .clip(RoundedCornerShape(16.dp))
-                        .shadow(4.dp, RoundedCornerShape(16.dp))
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
-                )
+                Images.ImageLink(imageLink = viewState.partner.imageLink!!)
 
                 Spacers.VerticalBetweenFields()
 
@@ -77,7 +53,7 @@ internal class PartnerEditScreen(
                     label = stringResource(resource = Res.string.partner_name),
                 )
                 TextFields.Outlined(
-                    value = partner.description.orEmpty(), // Używamy orEmpty() dla bezpieczeństwa
+                    value = partner.description.orEmpty(),
                     onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
                     label = stringResource(resource = Res.string.description),
                 )

@@ -29,4 +29,5 @@ object PartnerMockData {
         youtubeLink = "https://www.instagram.com/proof_of_wear/?igsh=MXMwODNiZW1qNTRlMA%3D%3D#",
         xLink = "https://x.com/ProofOfWearPOW?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
     )
+    val PARTNERS = listOf(PARTNER_1, PARTNER_2)
 }
