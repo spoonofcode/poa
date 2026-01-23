@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.login.presentation.logincode
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.SpanStyle
@@ -12,7 +13,6 @@ import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Buttons
 import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
-import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.code
@@ -46,7 +46,8 @@ internal class LoginCodeScreen(
                         append(viewState.email)
                     }
                     append(stringResource(resource = Res.string.one_time_code_info_postfix))
-                }
+                },
+                style = MaterialTheme.typography.bodyLarge,
             )
 
             Spacers.VerticalBetweenFields()
