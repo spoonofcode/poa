@@ -63,6 +63,7 @@ internal class LoginScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in),
+                enabled = viewState.isSignInButtonEnable,
                 onClick = { onAction(LoginViewAction.SignInWithCode) }
             )
 

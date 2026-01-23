@@ -54,7 +54,13 @@ internal class LoginCodeScreen(
 
             TextFields.OutlinedPassword(
                 value = viewState.code,
-                onValueChange = { onAction(LoginCodeViewAction.ChangeCode(code = it)) },
+                onValueChange = { newValue ->
+                    if (newValue.length <= VERIFICATION_CODE_LENGTH) {
+                        onAction(LoginCodeViewAction.ChangeCode(code = newValue))
+                    } else {
+                        // ignore
+                    }
+                },
                 label = stringResource(resource = Res.string.code),
             )
 
@@ -62,9 +68,14 @@ internal class LoginCodeScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in_with_code),
+                enabled = viewState.isSignInWithCodeButtonEnable,
                 onClick = { onAction(LoginCodeViewAction.SignInWithCode) }
             )
         }
+    }
+
+    companion object {
+        private const val VERIFICATION_CODE_LENGTH = 6
     }
 }
 
