@@ -73,6 +73,8 @@
     <string name="save_changes">Zapisz zmiany</string>
     <string name="scan">Skanuj</string>
     <string name="scan_info">Umieść tag NFC z tyłu urządzenia</string>
+    <string name="scan_info_android">Umieść tag NFC z tyłu urządzenia.\nZbliż górną część telefonu (okolice aparatu) do taga.</string>
+    <string name="scan_info_ios">Umieść tag NFC z tyłu urządzenia.\nZbliż górną krawędź iPhone’a (przy „słuchawce”/notchu) do taga.</string>
     <string name="scanning_in_progress">Trwa skanowanie</string>
     <string name="search">Szukaj</string>
     <string name="search_nft">Szukaj NFT</string>

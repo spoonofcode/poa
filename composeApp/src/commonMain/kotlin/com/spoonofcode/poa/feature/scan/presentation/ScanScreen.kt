@@ -11,6 +11,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.poa.app.PlatformType
 import com.spoonofcode.poa.core.nfc.NfcReader
 import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.poa.core.ui.base.BaseScreen
@@ -19,10 +22,10 @@ import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.scan
-import com.spoonofcode.poa.resources.scan_info
+import com.spoonofcode.poa.resources.scan_info_android
+import com.spoonofcode.poa.resources.scan_info_ios
 import com.spoonofcode.poa.resources.scanning_in_progress
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 internal class ScanScreen(
     override val backNavigationEnable: Boolean = false,
@@ -51,6 +54,15 @@ internal class ScanScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                val scanInfoText = when (viewState.platformType) {
+                    PlatformType.Android -> stringResource(Res.string.scan_info_ios)
+                    PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
+                }
+                Texts.BL(
+                    text = scanInfoText,
+                    textAlign = TextAlign.Center,
+                )
+
                 tag?.let {
                     onAction(ScanViewAction.CheckProduct(it.id))
                 } ?: LottieAnimation(
@@ -58,7 +70,6 @@ internal class ScanScreen(
                     contentDescription = viewState.contentDescription,
                 )
 
-                Texts.BL(stringResource(Res.string.scan_info))
                 Texts.BM(stringResource(Res.string.scanning_in_progress))
             }
         }
