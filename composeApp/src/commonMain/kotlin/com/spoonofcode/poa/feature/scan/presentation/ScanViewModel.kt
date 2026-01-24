@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.scan.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.poa.app.Platform
 import com.spoonofcode.poa.core.ui.base.BaseViewModel
 import com.spoonofcode.poa.core.ui.base.ScreenState
 import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByTagIdUseCase
@@ -9,10 +10,17 @@ import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
     private val getProductByTagIdUseCase: GetProductByTagIdUseCase,
+    private val platform: Platform,
 ) : BaseViewModel<ScanViewState, ScanViewAction>(
     initialViewState = ScanViewState(),
     initialScreenState = ScreenState.CONTENT,
 ) {
+
+    init {
+        updateState {
+            copy(platformType = platform.platformType)
+        }
+    }
 
     override fun onAction(action: ScanViewAction) {
         when (action) {

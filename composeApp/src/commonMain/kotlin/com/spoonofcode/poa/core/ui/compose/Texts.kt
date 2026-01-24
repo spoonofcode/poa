@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 
 object Texts {
@@ -278,7 +279,7 @@ object Texts {
     ) {
         Text(
             text = text,
-            maxLines= maxLines,
+            maxLines = maxLines,
             overflow = overflow,
             color = color,
             style = MaterialTheme.typography.bodyMedium
@@ -302,10 +303,12 @@ object Texts {
     fun BL(
         text: String,
         color: Color = Color.Unspecified,
+        textAlign: TextAlign? = null,
     ) {
         Text(
             text = text,
             color = color,
+            textAlign = textAlign,
             style = MaterialTheme.typography.bodyLarge,
         )
     }

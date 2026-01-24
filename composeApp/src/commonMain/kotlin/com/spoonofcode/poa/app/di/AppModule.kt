@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.app.di
 
+import com.spoonofcode.poa.app.getPlatform
 import com.spoonofcode.poa.core.coroutines.di.coroutinesModule
 import com.spoonofcode.poa.core.domain.di.domainModule
 import com.spoonofcode.poa.core.network.di.networkModule
@@ -40,4 +41,6 @@ val appModule = module {
         scanModule,
         tacModule,
     )
+
+    single { getPlatform() }
 }
