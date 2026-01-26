@@ -78,7 +78,6 @@ internal class ProfileDetailsScreen(
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Box(
                     modifier = Modifier
@@ -109,7 +108,6 @@ internal class ProfileDetailsScreen(
             }
 
 
-            // 2. Stats Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -120,7 +118,8 @@ internal class ProfileDetailsScreen(
                 )
             }
 
-            // 3. Main Actions
+            Spacers.VerticalBetweenFields()
+
             Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.Default.Person,
@@ -129,7 +128,6 @@ internal class ProfileDetailsScreen(
                 )
             }
 
-            // 4. Settings Actions
             Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.Default.Notifications,
@@ -150,7 +148,6 @@ internal class ProfileDetailsScreen(
                 )
             }
 
-            // 5. Logout
             Cards.ElevatedCard {
                 ChevronItem(
                     icon = Icons.AutoMirrored.Filled.Logout,
