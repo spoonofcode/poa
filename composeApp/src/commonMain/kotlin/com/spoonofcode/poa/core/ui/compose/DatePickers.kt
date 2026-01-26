@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.core.ui.compose
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,20 +50,29 @@ object DatePickers {
         val date = remember { mutableStateOf(value) }
         val isOpen = remember { mutableStateOf(false) }
 
-        TextFields.Outlined(
-            value = date.value.formatedLocalDate(),
-            onValueChange = {},
-            modifier = modifier,
-            readOnly = true,
-            label = label,
-            trailingIcon = {
-                IconButton(
-                    onClick = { isOpen.value = true } // show de dialog
-                ) {
-                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+        Box {
+            TextFields.Outlined(
+                value = date.value.formatedLocalDate(),
+                onValueChange = {},
+                modifier = modifier,
+                readOnly = true,
+                label = label,
+                trailingIcon = {
+                    IconButton(
+                        onClick = {}
+                    ) {
+                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+                    }
                 }
-            }
-        )
+            )
+
+            // Transparent overlay to capture clicks
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clickable(onClick = { isOpen.value = true })
+            )
+        }
 
         if (isOpen.value) {
             DatePickerDialog(

@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.core.ui.compose
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -40,20 +42,29 @@ object TimePickers {
         )
         val isOpen = remember { mutableStateOf(false) }
 
-        TextFields.Outlined(
-            value = value.formatedTime(),
-            modifier = modifier,
-            readOnly = true,
-            label = label,
-            onValueChange = {},
-            trailingIcon = {
-                IconButton(
-                    onClick = { isOpen.value = true } // show de dialog
-                ) {
-                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+        Box {
+            TextFields.Outlined(
+                value = value.formatedTime(),
+                modifier = modifier,
+                readOnly = true,
+                label = label,
+                onValueChange = {},
+                trailingIcon = {
+                    IconButton(
+                        onClick = { }
+                    ) {
+                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+                    }
                 }
-            }
-        )
+            )
+
+            // Transparent overlay to capture clicks
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clickable(onClick = { isOpen.value = true })
+            )
+        }
 
         if (isOpen.value) {
             TimePickerDialog(
