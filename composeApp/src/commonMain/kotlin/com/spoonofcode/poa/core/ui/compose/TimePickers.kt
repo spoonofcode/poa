@@ -42,10 +42,11 @@ object TimePickers {
         )
         val isOpen = remember { mutableStateOf(false) }
 
-        Box {
+        Box(
+            modifier = modifier
+        ) {
             TextFields.Outlined(
                 value = value.formatedTime(),
-                modifier = modifier,
                 readOnly = true,
                 label = label,
                 onValueChange = {},

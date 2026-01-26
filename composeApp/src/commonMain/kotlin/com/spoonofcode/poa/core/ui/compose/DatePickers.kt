@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
@@ -21,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ext.formatedLocalDate
 import com.spoonofcode.poa.core.utils.LocalDateTimeUtils
 import com.spoonofcode.poa.core.utils.TimeZoneUtils
@@ -50,11 +47,12 @@ object DatePickers {
         val date = remember { mutableStateOf(value) }
         val isOpen = remember { mutableStateOf(false) }
 
-        Box {
+        Box(
+            modifier = modifier
+        ) {
             TextFields.Outlined(
                 value = date.value.formatedLocalDate(),
                 onValueChange = {},
-                modifier = modifier,
                 readOnly = true,
                 label = label,
                 trailingIcon = {
@@ -119,7 +117,7 @@ object DatePickers {
                             )
                         )
                     },
-                    modifier = Modifier.width(200.dp)
+                    modifier = Modifier.weight(1f)
                 )
                 Spacers.HorizontalBetweenFields()
                 TimePickers.TimePicker(
@@ -129,7 +127,7 @@ object DatePickers {
                     },
                     onConfirm = {},
                     onDismiss = {},
-                    modifier = Modifier.wrapContentWidth()
+                    modifier = Modifier.weight(.5f)
                 )
             }
         }
