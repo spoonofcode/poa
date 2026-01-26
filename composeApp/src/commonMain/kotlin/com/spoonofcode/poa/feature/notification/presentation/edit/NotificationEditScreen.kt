@@ -94,6 +94,7 @@ internal class NotificationEditScreen(
                         )
                     )
                 },
+                modifier = Modifier,
             )
 
             TextFields.Outlined(

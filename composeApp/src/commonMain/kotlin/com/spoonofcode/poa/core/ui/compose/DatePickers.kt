@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.core.ui.compose
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ext.formatedLocalDate
 import com.spoonofcode.poa.core.utils.LocalDateTimeUtils
 import com.spoonofcode.poa.core.utils.TimeZoneUtils
@@ -88,15 +89,15 @@ object DatePickers {
         value: LocalDateTime,
         label: String? = null,
         onValueChange: (LocalDateTime) -> Unit,
+        modifier: Modifier = Modifier
     ) {
-        Column {
+        Column(
+            modifier = modifier,
+        ) {
             label?.let {
                 Texts.BLB(text = it)
             }
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            Row {
                 DatePicker(
                     value = value.date,
                     onValueChange = {
@@ -107,7 +108,7 @@ object DatePickers {
                             )
                         )
                     },
-                    modifier = Modifier.wrapContentWidth(),
+                    modifier = Modifier.width(200.dp)
                 )
                 Spacers.HorizontalBetweenFields()
                 TimePickers.TimePicker(
@@ -117,6 +118,7 @@ object DatePickers {
                     },
                     onConfirm = {},
                     onDismiss = {},
+                    modifier = Modifier.wrapContentWidth()
                 )
             }
         }
