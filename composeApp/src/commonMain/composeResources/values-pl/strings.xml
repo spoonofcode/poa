@@ -72,7 +72,6 @@
     <string name="reload">Odśwież</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="scan">Skanuj</string>
-    <string name="scan_info">Umieść tag NFC z tyłu urządzenia</string>
     <string name="scan_info_android">Umieść tag NFC z tyłu urządzenia.\nZbliż górną część telefonu (okolice aparatu) do taga.</string>
     <string name="scan_info_ios">Umieść tag NFC z tyłu urządzenia.\nZbliż górną krawędź iPhone’a (przy „słuchawce”/notchu) do taga.</string>
     <string name="scanning_in_progress">Trwa skanowanie</string>
@@ -124,4 +123,30 @@
     <string name="total_points">Twoje punkty</string>
     <string name="your_streak">Twoja seria</string>
     <string name="check_in_again">Możesz się ponownie zalogować!</string>
+
+    <string name="faq_setion_1">I. Technology and Differentiation (Our Core Advantage)</string>
+    <string name="faq_setion_2">II. For Manufacturers/Brands (Business Value)</string>
+    <string name="faq_setion_3">III. For Users and Products (Consumer Experience)</string>
+
+    <string name ="faq_question_1">What is a Phygital product, and how is it different from a regular "smart product"?</string>"
+    <string name ="faq_question_2">How does the blockchain ensure my product cannot be counterfeited?</string>"
+    <string name ="faq_question_3">What is the main difference between our App service and other NFC anti-counterfeiting solutions on the market?</string>"
+    <string name ="faq_question_4">Can my customers use the service if they have no knowledge of cryptocurrency?</string>"
+    <string name ="faq_question_5">What are the concrete business benefits of adopting this technology for my brand?</string>"
+    <string name ="faq_question_6">Can this technology be integrated into my existing CRM or supply chain system?</string>"
+    <string name ="faq_question_7">How long does the entire technology implementation process take?</string>"
+    <string name ="faq_question_8">How will my customers know if a product is a Phygital item?</string>"
+    <string name ="faq_question_9">Do I need to download a specific App to scan the NFC tag?</string>"
+    <string name ="faq_question_10">If I sell my product, does my NFT ownership transfer automatically?</string>"
+
+    <string name ="faq_answer_1">A Phygital (Physical + Digital) item is a physical product linked to a unique NFT on the blockchain. The main difference is that while traditional smart product data is stored on centralized servers, our Phygital item's ownership and authenticity data are secured on an immutable, decentralized blockchain, giving the product true digital asset value and transferability.</string>"
+    <string name ="faq_answer_2">We record the product's unique digital fingerprint (NFT) on the blockchain the moment it's manufactured. This record includes its production history and original ownership. No third party can forge this NFT or tamper with its history without authorization, as blockchain data is irreversible.</string>"
+    <string name ="faq_answer_3">Many solutions offer only one-way anti-counterfeiting verification. Our App provides a complete Phygital ecosystem: 1. Unforgeable NFT ownership proof; 2. Exclusive in-app community and reward mechanisms for consumers; 3. One-click function to resell or transfer ownership (emphasizing interactivity and asset transferability).</string>"
+    <string name ="faq_answer_4">Absolutely. Our App is designed to abstract the complexity of the blockchain. Customers simply scan the NFC tag, similar to making a contactless payment, to view information. They do not need a crypto wallet or to purchase any cryptocurrency to verify or view their product.</string>"
+    <string name ="faq_answer_5">There are three main benefits: 1. Build extremely high consumer trust (eliminating counterfeiting doubts); 2. Gain deep customer insights (analyzing user behavior and geographical location via scanning data); 3. Create secondary revenue streams (setting royalties on the NFT for sustained income from the secondary market).</string>"
+    <string name ="faq_answer_6">Yes. Our service is highly flexible and provides comprehensive API interfaces to seamlessly integrate blockchain data with your existing Enterprise Resource Planning (ERP) and Customer Relationship Management (CRM) systems, ensuring no disruption to your data workflow.</string>"
+    <string name ="faq_answer_7">This depends on your product complexity and customization needs. From Proof of Concept (PoC) to actual product launch, our standard all-in-one package can typically be deployed in 4–8 weeks.</string>"
+    <string name ="faq_answer_8">Every Phygital product linked to our platform will have a clear "NFC Scannable Logo" and a unique digital product certificate. There will also be clear instructions on your website and product tags guiding customers on how to use the App for verification.</string>"
+    <string name ="faq_answer_9">Depends. The authentication process does not require an application so it is available to everyone with a smartphone. But access to the view the product history, and retrieve the unique NFT ownership certificate, we recommend customers download our dedicated App. Some phones may link to basic web information without the App.</string>"
+    <string name ="faq_answer_10">Yes. Within the App, we provide a secure and simple "Transfer Ownership" function. When you sell the item to a new buyer, the App guides you through the NFT transfer process, ensuring the product's digital history and ownership proof correctly move to the new owner simultaneously.</string>"
 </resources>

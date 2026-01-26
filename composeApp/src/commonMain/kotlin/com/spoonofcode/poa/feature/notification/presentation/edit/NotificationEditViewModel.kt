@@ -11,7 +11,7 @@ import kotlinx.datetime.LocalDateTime
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
 ) : BaseViewModel<NotificationEditViewState, NotificationEditViewAction>(
-    NotificationEditViewState(),
+    initialViewState = NotificationEditViewState(),
     initialScreenState = ScreenState.CONTENT,
 ) {
 
