@@ -87,6 +87,6 @@ private fun CountdownUnit(value: Long, label: String) {
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onPrimary
         )
-        Text(text = label, fontSize = 10.sp, color = Color.Gray)
+        Text(text = label, fontSize = 10.sp, color = MaterialTheme.colorScheme.onPrimary)
     }
 }

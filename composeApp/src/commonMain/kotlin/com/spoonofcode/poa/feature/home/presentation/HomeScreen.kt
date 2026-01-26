@@ -124,6 +124,8 @@ internal class HomeScreen(
                     )
                 }
 
+                Spacers.VerticalBetweenFields()
+
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(horizontal = 4.dp)

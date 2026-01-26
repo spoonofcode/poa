@@ -81,16 +81,17 @@ internal class NotificationDetailsScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
-                notification.expirationDateTime?.let { expiresAt ->
+//                notification.expirationDateTime?.let { expiresAt ->
                     Spacers.VerticalBetweenFields()
                     Column(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         CountdownTimer(
-                            targetTimeMillis = expiresAt.time.toMillisecondOfDay().toLong()
+                            targetTimeMillis = 1769727600000L
                         )
                     }
-                }
+//                }
 
                 notification.link
                     ?.takeIf { it.isNotBlank() }
