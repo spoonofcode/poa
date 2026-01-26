@@ -55,7 +55,7 @@ internal class ScanScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 val scanInfoText = when (viewState.platformType) {
-                    PlatformType.Android -> stringResource(Res.string.scan_info_ios)
+                    PlatformType.Android -> stringResource(Res.string.scan_info_android)
                     PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
                 }
                 Texts.BL(
