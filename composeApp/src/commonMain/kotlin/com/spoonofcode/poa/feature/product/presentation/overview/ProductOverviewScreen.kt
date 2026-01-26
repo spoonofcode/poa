@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
 import com.spoonofcode.poa.core.ui.compose.Cards
 import com.spoonofcode.poa.core.ui.compose.Images
+import com.spoonofcode.poa.core.ui.compose.Spacers
 import com.spoonofcode.poa.core.ui.compose.TextFields
 import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
@@ -52,6 +53,8 @@ internal class ProductOverviewScreen(
                 value = viewState.searchText,
                 onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
             )
+
+            Spacers.VerticalBetweenFields()
 
             ProductGrid(
                 products = viewState.filteredProducts,

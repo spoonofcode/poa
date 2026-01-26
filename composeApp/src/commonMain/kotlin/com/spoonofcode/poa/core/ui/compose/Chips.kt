@@ -74,7 +74,6 @@ object Chips {
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         ) {
             items(categories.size) { index ->
                 val category = categories[index]

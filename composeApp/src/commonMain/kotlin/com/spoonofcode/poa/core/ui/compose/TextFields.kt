@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.core.ui.compose
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -38,26 +39,27 @@ object TextFields {
         minLines: Int = 1,
         visualTransformation: VisualTransformation = VisualTransformation.None,
     ) {
-        label?.let {
-            Texts.BLB(text = it)
+        Column {
+            label?.let {
+                Texts.BLB(text = it)
+            }
+            OutlinedTextField(
+                value = value,
+                onValueChange = onValueChange,
+                modifier = modifier,
+                enabled = enabled,
+                readOnly = readOnly,
+                label = { innerLabel?.let { Text(text = it) } },
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                isError = isError,
+                minLines = minLines,
+                visualTransformation = visualTransformation,
+                shape = MaterialTheme.shapes.large,
+                singleLine = minLines == 1,
+                textStyle = MaterialTheme.typography.bodyLarge,
+            )
         }
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = modifier,
-            enabled = enabled,
-            readOnly = readOnly,
-            label = { innerLabel?.let { Text(text = it) } },
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            isError = isError,
-            minLines = minLines,
-            visualTransformation = visualTransformation,
-            shape = MaterialTheme.shapes.large,
-            singleLine = minLines == 1,
-            textStyle = MaterialTheme.typography.bodyLarge,
-        )
-        Spacers.VerticalBetweenFields()
     }
 
     @Composable

@@ -44,9 +44,6 @@ internal class TACScreen(
                 color = MaterialTheme.colorScheme.error,
             )
 
-            Spacers.VerticalBetweenFields()
-            Spacers.VerticalBetweenFields()
-
             Checkboxes.CheckboxTextLinkRow(
                 checked = viewState.isPrivacyPolicyAccepted,
                 onCheckedChange = { onAction(TACViewAction.ChangePrivacyPolicyAccepted(it)) },
@@ -54,8 +51,6 @@ internal class TACScreen(
                 linkText = stringResource(Res.string.read),
                 linkUrl = "https://example.com/privacy-policy"
             )
-
-            Spacers.VerticalBetweenFields()
 
             Checkboxes.CheckboxTextLinkRow(
                 checked = viewState.isTermsAndConditionsAccepted,

@@ -117,8 +117,6 @@ internal class HomeScreen(
             ) {
                 Texts.TMB(text = stringResource(Res.string.daily_check_in))
 
-                Spacers.VerticalBetweenFields()
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -132,8 +130,6 @@ internal class HomeScreen(
                         value = "$totalPoints ${stringResource(Res.string.points_short)}"
                     )
                 }
-
-                Spacers.VerticalBetweenFields()
 
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
