@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.core.ui.compose
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -88,38 +89,37 @@ object DatePickers {
         label: String? = null,
         onValueChange: (LocalDateTime) -> Unit,
     ) {
-        label?.let {
-            Texts.BLB(text = it)
-        }
-
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            DatePicker(
-                value = value.date,
-                onValueChange = {
-                    onValueChange(
-                        LocalDateTime(
-                            date = it,
-                            time = value.time
+        Column {
+            label?.let {
+                Texts.BLB(text = it)
+            }
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                DatePicker(
+                    value = value.date,
+                    onValueChange = {
+                        onValueChange(
+                            LocalDateTime(
+                                date = it,
+                                time = value.time
+                            )
                         )
-                    )
-                },
-                modifier = Modifier.weight(1f),
-            )
-            Spacers.HorizontalBetweenFields()
-            TimePickers.TimePicker(
-                value = value,
-                onValueChange = {
-                    onValueChange(it)
-                },
-                modifier = Modifier.wrapContentWidth().weight(0.6f),
-                onConfirm = {},
-                onDismiss = {},
-            )
+                    },
+                    modifier = Modifier.wrapContentWidth(),
+                )
+                Spacers.HorizontalBetweenFields()
+                TimePickers.TimePicker(
+                    value = value,
+                    onValueChange = {
+                        onValueChange(it)
+                    },
+                    onConfirm = {},
+                    onDismiss = {},
+                )
+            }
         }
-        Spacers.VerticalBetweenFields()
     }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
