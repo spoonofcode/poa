@@ -58,10 +58,12 @@ fun ExpandableListItem(title: String, description: String) {
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Texts.TM(title)
+                Texts.TM(
+                    text = title,
+                    modifier = Modifier.weight(1f)
+                )
                 Icon(
                     imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
                     contentDescription = if (expanded) "Collapse" else "Expand"
