@@ -59,8 +59,6 @@ internal class NotificationTypeScreen :
                 )
             }
 
-            Spacers.VerticalBetweenFields()
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
