@@ -124,9 +124,9 @@
     <string name="your_streak">Twoja seria</string>
     <string name="check_in_again">Możesz się ponownie zalogować!</string>
 
-    <string name="faq_setion_1">Technology and Differentiation (Our Core Advantage)</string>
-    <string name="faq_setion_2">For Manufacturers/Brands (Business Value)</string>
-    <string name="faq_setion_3">For Users and Products (Consumer Experience)</string>
+    <string name="faq_setion_1">I. Technology and Differentiation (Our Core Advantage)</string>
+    <string name="faq_setion_2">II. For Manufacturers/Brands (Business Value)</string>
+    <string name="faq_setion_3">III. For Users and Products (Consumer Experience)</string>
 
     <string name ="faq_question_1">What is a Phygital product, and how is it different from a regular "smart product"?</string>"
     <string name ="faq_question_2">How does the blockchain ensure my product cannot be counterfeited?</string>"

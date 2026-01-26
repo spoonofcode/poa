@@ -21,12 +21,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.core.ui.compose.ErrorView
 import com.spoonofcode.poa.core.ui.compose.LoadingView
-import com.spoonofcode.poa.core.ui.compose.snackbar.Snackbar
+import com.spoonofcode.poa.core.ui.compose.Paddings
 import com.spoonofcode.poa.core.ui.compose.TopBar
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
+import com.spoonofcode.poa.core.ui.compose.snackbar.Snackbar
 import com.spoonofcode.poa.core.ui.compose.snackbar.setSnackbarHostState
 import com.spoonofcode.poa.core.ui.ext.addIf
 import com.spoonofcode.poa.core.ui.ext.viewEnable
