@@ -50,8 +50,6 @@ internal class LoginCodeScreen(
                 style = MaterialTheme.typography.bodyLarge,
             )
 
-            Spacers.VerticalBetweenFields()
-
             TextFields.OutlinedPassword(
                 value = viewState.code,
                 onValueChange = { newValue ->
@@ -63,8 +61,6 @@ internal class LoginCodeScreen(
                 },
                 label = stringResource(resource = Res.string.code),
             )
-
-            Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in_with_code),

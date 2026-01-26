@@ -45,8 +45,6 @@ internal class PartnerEditScreen(
             if (partner != null) {
                 Images.ImageLink(imageLink = viewState.partner.imageLink!!)
 
-                Spacers.VerticalBetweenFields()
-
                 TextFields.Outlined(
                     value = partner.name,
                     onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },

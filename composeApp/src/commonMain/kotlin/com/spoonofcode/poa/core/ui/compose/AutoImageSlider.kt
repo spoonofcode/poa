@@ -71,7 +71,6 @@ fun AutoImageSlider(
 
     if (!label.isNullOrBlank()) {
         Texts.HS(label)
-        Spacer(Modifier.height(8.dp))
     }
 
     Column(

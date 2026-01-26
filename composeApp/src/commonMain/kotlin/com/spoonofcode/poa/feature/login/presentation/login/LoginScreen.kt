@@ -51,15 +51,11 @@ internal class LoginScreen(
                 Texts.HL(stringResource(resource = Res.string.let_s_get_started))
             }
 
-            Spacers.VerticalBetweenFields()
-
             TextFields.Outlined(
                 value = viewState.email,
                 onValueChange = { onAction(LoginViewAction.ChangeEmail(email = it)) },
                 label = stringResource(resource = Res.string.email),
             )
-
-            Spacers.VerticalBetweenFields()
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.sign_in),
@@ -67,19 +63,13 @@ internal class LoginScreen(
                 onClick = { onAction(LoginViewAction.SignInWithCode) }
             )
 
-            Spacers.VerticalBetweenFields()
-
             Dividers.LabeledDivider(
                 text = stringResource(resource = Res.string.or)
             )
 
-            Spacers.VerticalBetweenFields()
-
             Buttons.GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
                 onAction(LoginViewAction.SignInWithGoogle(googleAccount =googleAccount))
             })
-
-            Spacers.VerticalBetweenFields()
         }
     }
 }

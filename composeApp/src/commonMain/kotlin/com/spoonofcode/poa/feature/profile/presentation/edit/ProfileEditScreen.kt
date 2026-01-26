@@ -44,15 +44,11 @@ internal class ProfileEditScreen() :
                 Images.CircleImage(imageRes = Res.drawable.poa)
             }
 
-            Spacers.VerticalBetweenFields()
-
             TextFields.Outlined(
                 value = viewState.profile!!.name ?: "",
                 onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
                 label = stringResource(resource = Res.string.name),
             )
-
-            Spacers.VerticalBetweenFields()
 
             Spacers.Weight1(this)
 

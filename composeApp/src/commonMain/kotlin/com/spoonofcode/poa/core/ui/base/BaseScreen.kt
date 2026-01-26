@@ -1,5 +1,6 @@
 package com.spoonofcode.poa.core.ui.base
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -153,6 +154,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
                         .addIf(verticalScrollEnable) { verticalScroll(rememberScrollState()) }
                         .padding(innerPadding)
                         .padding(provideContentPadding()),
+                    verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding),
                     content = provideContent(
                         viewState = viewState,
                         onAction = onAction,
