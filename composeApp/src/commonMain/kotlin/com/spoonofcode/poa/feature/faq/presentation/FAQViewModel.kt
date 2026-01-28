@@ -2,7 +2,6 @@ package com.spoonofcode.poa.feature.faq.presentation
 
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ScreenState
 
 internal class FAQViewModel() : BaseViewModel<FAQViewState, FAQViewAction>(
     initialViewState = FAQViewState(),

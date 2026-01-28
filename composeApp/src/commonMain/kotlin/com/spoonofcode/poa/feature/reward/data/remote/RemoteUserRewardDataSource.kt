@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.reward.data.remote
 
-import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.reward.data.model.AddRewardToUserRequest
 import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
 import com.spoonofcode.poa.feature.reward.data.model.RewardType

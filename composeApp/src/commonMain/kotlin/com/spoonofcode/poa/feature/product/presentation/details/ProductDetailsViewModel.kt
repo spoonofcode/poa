@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.product.presentation.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
+import com.spoonofcode.core.data.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.poa.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.poa.feature.product.domain.usecase.DeleteProductFromUserUseCase

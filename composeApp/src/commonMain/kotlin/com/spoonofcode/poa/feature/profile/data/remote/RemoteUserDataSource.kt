@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.profile.data.remote
 
-import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.profile.data.model.ProfileResponse
 import io.ktor.http.HttpMethod
 

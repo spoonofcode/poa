@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.login.data.remote
 
-import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.login.data.remote.model.LoginGoogleRequest
 import com.spoonofcode.poa.feature.login.data.remote.model.LoginGoogleResponse
 import io.ktor.http.HttpMethod

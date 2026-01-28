@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.login.domain.usecase
 
-import com.spoonofcode.poa.core.recaptcha.RecaptchaClient
+import com.spoonofcode.core.data.recaptcha.RecaptchaClient
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 private const val RECAPTCHA_LOGIN_ACTION = "login"

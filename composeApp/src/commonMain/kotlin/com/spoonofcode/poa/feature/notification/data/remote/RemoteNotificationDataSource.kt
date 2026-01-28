@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.notification.data.remote
 
-import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.poa.feature.notification.data.remote.model.NotificationResponse
 import io.ktor.http.HttpMethod

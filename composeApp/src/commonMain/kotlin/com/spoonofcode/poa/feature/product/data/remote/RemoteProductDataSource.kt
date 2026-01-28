@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.product.data.remote
 
-import com.spoonofcode.poa.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.poa.feature.product.data.remote.model.ProductRequest
 import com.spoonofcode.poa.feature.product.data.remote.model.ProductResponse
 import io.ktor.http.HttpMethod

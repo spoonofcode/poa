@@ -13,9 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.core.data.nfc.NfcReader
 import com.spoonofcode.poa.app.PlatformType
-import com.spoonofcode.poa.core.nfc.NfcReader
-import com.spoonofcode.poa.core.nfc.rememberNfcReader
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Texts
@@ -43,11 +42,12 @@ internal class ScanScreen(
         onAction: (ScanViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            val reader: NfcReader = rememberNfcReader()
-            val tag by reader.tags.collectAsState(initial = null)
-
-            LaunchedEffect(Unit) { reader.start() }
-            DisposableEffect(Unit) { onDispose { reader.stop() } }
+            // TODO #109 Fix after migration to feature modules
+//            val reader: NfcReader = rememberNfcReader()
+//            val tag by reader.tags.collectAsState(initial = null)
+//
+//            LaunchedEffect(Unit) { reader.start() }
+//            DisposableEffect(Unit) { onDispose { reader.stop() } }
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -63,12 +63,13 @@ internal class ScanScreen(
                     textAlign = TextAlign.Center,
                 )
 
-                tag?.let {
-                    onAction(ScanViewAction.CheckProduct(it.id))
-                } ?: LottieAnimation(
-                    animationFilePath = viewState.animationFilePath,
-                    contentDescription = viewState.contentDescription,
-                )
+                // TODO #109 Fix after migration to feature modules
+//                tag?.let {
+//                    onAction(ScanViewAction.CheckProduct(it.id))
+//                } ?: LottieAnimation(
+//                    animationFilePath = viewState.animationFilePath,
+//                    contentDescription = viewState.contentDescription,
+//                )
 
                 Texts.BM(stringResource(Res.string.scanning_in_progress))
             }

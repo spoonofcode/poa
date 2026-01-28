@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
+import com.spoonofcode.core.data.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
