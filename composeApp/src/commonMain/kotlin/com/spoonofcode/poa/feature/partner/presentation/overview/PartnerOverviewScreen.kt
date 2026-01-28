@@ -19,8 +19,8 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.partners
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.partners
 
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,

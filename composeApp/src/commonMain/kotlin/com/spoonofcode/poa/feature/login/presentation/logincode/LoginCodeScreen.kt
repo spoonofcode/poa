@@ -14,11 +14,11 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.code
-import com.spoonofcode.poa.resources.one_time_code_info_postfix
-import com.spoonofcode.poa.resources.one_time_code_info_prefix
-import com.spoonofcode.poa.resources.sign_in_with_code
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.code
+import poa.core.presentation.generated.resources.one_time_code_info_postfix
+import poa.core.presentation.generated.resources.one_time_code_info_prefix
+import poa.core.presentation.generated.resources.sign_in_with_code
 import org.jetbrains.compose.resources.stringResource
 
 internal class LoginCodeScreen(

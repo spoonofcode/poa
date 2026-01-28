@@ -37,10 +37,10 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.notifications
-import com.spoonofcode.poa.resources.tab_already_read
-import com.spoonofcode.poa.resources.tab_new
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.notifications
+import poa.core.presentation.generated.resources.tab_already_read
+import poa.core.presentation.generated.resources.tab_new
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationOverviewScreen(

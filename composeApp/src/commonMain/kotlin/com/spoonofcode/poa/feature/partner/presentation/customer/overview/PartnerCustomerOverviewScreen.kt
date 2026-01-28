@@ -20,10 +20,10 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.partner.domain.model.PartnerUser
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.my_customers
-import com.spoonofcode.poa.resources.poa
-import com.spoonofcode.poa.resources.send_notification
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.my_customers
+import poa.core.presentation.generated.resources.poa
+import poa.core.presentation.generated.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
 
 internal class CustomerOverviewScreen(

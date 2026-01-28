@@ -16,11 +16,11 @@ import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.partner_info
-import com.spoonofcode.poa.resources.partner_panel
-import com.spoonofcode.poa.resources.reports
-import com.spoonofcode.poa.resources.send_notification
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.partner_info
+import poa.core.presentation.generated.resources.partner_panel
+import poa.core.presentation.generated.resources.reports
+import poa.core.presentation.generated.resources.send_notification
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 

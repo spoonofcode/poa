@@ -10,16 +10,16 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.description
-import com.spoonofcode.poa.resources.facebook
-import com.spoonofcode.poa.resources.instagram
-import com.spoonofcode.poa.resources.partner
-import com.spoonofcode.poa.resources.partner_name
-import com.spoonofcode.poa.resources.save_changes
-import com.spoonofcode.poa.resources.website
-import com.spoonofcode.poa.resources.x
-import com.spoonofcode.poa.resources.youtube
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.description
+import poa.core.presentation.generated.resources.facebook
+import poa.core.presentation.generated.resources.instagram
+import poa.core.presentation.generated.resources.partner
+import poa.core.presentation.generated.resources.partner_name
+import poa.core.presentation.generated.resources.save_changes
+import poa.core.presentation.generated.resources.website
+import poa.core.presentation.generated.resources.x
+import poa.core.presentation.generated.resources.youtube
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerEditScreen(

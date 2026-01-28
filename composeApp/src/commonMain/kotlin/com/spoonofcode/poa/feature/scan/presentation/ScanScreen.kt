@@ -19,11 +19,11 @@ import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.scan
-import com.spoonofcode.poa.resources.scan_info_android
-import com.spoonofcode.poa.resources.scan_info_ios
-import com.spoonofcode.poa.resources.scanning_in_progress
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.scan
+import poa.core.presentation.generated.resources.scan_info_android
+import poa.core.presentation.generated.resources.scan_info_ios
+import poa.core.presentation.generated.resources.scanning_in_progress
 import org.jetbrains.compose.resources.stringResource
 
 internal class ScanScreen(

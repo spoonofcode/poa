@@ -25,11 +25,11 @@ import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.about_product
-import com.spoonofcode.poa.resources.custom_link
-import com.spoonofcode.poa.resources.edit_product
-import com.spoonofcode.poa.resources.save_changes
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.about_product
+import poa.core.presentation.generated.resources.custom_link
+import poa.core.presentation.generated.resources.edit_product
+import poa.core.presentation.generated.resources.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProductEditScreen(

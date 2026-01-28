@@ -16,12 +16,12 @@ import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.notification_type
-import com.spoonofcode.poa.resources.to_all
-import com.spoonofcode.poa.resources.to_all_my_customers
-import com.spoonofcode.poa.resources.to_selected_customers
-import com.spoonofcode.poa.resources.to_selected_series
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.notification_type
+import poa.core.presentation.generated.resources.to_all
+import poa.core.presentation.generated.resources.to_all_my_customers
+import poa.core.presentation.generated.resources.to_selected_customers
+import poa.core.presentation.generated.resources.to_selected_series
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 

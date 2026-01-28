@@ -7,8 +7,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.profile
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.profile
 import org.jetbrains.compose.resources.stringResource
 
 object ProfileTab : Tab {

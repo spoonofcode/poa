@@ -18,12 +18,12 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.resources.Res
-import com.spoonofcode.poa.resources.email
-import com.spoonofcode.poa.resources.let_s_get_started
-import com.spoonofcode.poa.resources.or
-import com.spoonofcode.poa.resources.poa
-import com.spoonofcode.poa.resources.sign_in
+import poa.core.presentation.generated.resources.Res
+import poa.core.presentation.generated.resources.email
+import poa.core.presentation.generated.resources.let_s_get_started
+import poa.core.presentation.generated.resources.or
+import poa.core.presentation.generated.resources.poa
+import poa.core.presentation.generated.resources.sign_in
 import org.jetbrains.compose.resources.stringResource
 
 internal class LoginScreen(
