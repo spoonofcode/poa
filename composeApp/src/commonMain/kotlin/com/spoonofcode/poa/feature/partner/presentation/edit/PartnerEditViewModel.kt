@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.UpdatePartnerUseCase
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 internal class PartnerEditViewModel(

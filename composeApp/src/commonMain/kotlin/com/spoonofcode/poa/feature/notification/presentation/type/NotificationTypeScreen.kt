@@ -12,10 +12,10 @@ import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Buttons.IconTextButton
-import com.spoonofcode.poa.core.ui.compose.Spacers
-import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
+import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.notification_type
 import com.spoonofcode.poa.resources.to_all

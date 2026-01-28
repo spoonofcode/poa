@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.tac.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
-import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ScreenState
 import kotlinx.coroutines.launch
 
 internal class TACViewModel() : BaseViewModel<TACViewState, TACViewAction>(

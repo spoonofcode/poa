@@ -3,10 +3,10 @@ package com.spoonofcode.poa.feature.faq.presentation
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.ExpandableListItem
-import com.spoonofcode.poa.core.ui.compose.Texts
-import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.compose.ExpandableListItem
+import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.faq
 import com.spoonofcode.poa.resources.faq_answer_1

@@ -1,12 +1,12 @@
 package com.spoonofcode.poa.app.di
 
+import com.spoonofcode.core.data.coroutines.di.coroutinesModule
+import com.spoonofcode.core.data.domain.di.domainModule
+import com.spoonofcode.core.data.network.di.networkModule
+import com.spoonofcode.core.data.recaptcha.di.recaptchaModule
+import com.spoonofcode.core.data.settings.di.settingsModule
+import com.spoonofcode.core.presentation.di.uiModule
 import com.spoonofcode.poa.app.getPlatform
-import com.spoonofcode.poa.core.coroutines.di.coroutinesModule
-import com.spoonofcode.poa.core.domain.di.domainModule
-import com.spoonofcode.poa.core.network.di.networkModule
-import com.spoonofcode.poa.core.recaptcha.di.recaptchaModule
-import com.spoonofcode.poa.core.settings.di.settingsModule
-import com.spoonofcode.poa.core.ui.di.uiModule
 import com.spoonofcode.poa.feature.faq.di.faqModule
 import com.spoonofcode.poa.feature.home.di.homeModule
 import com.spoonofcode.poa.feature.login.di.loginModule

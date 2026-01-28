@@ -166,6 +166,9 @@ kotlin {
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
+
+            implementation(projects.core.data)
+            implementation(projects.core.presentation)
         }
         commonTest.dependencies {
             implementation(libs.koin.test)

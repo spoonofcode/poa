@@ -2,7 +2,7 @@ package com.spoonofcode.poa.feature.partner.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerByIdUseCase
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 internal class PartnerDetailsViewModel(

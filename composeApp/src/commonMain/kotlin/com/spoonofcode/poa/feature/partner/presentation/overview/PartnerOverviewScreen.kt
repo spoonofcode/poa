@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Cards
-import com.spoonofcode.poa.core.ui.compose.Chips.HorizontalScrollableFilterChipRow
-import com.spoonofcode.poa.core.ui.compose.Images
-import com.spoonofcode.poa.core.ui.compose.Paddings.spaceBetweenListElements
-import com.spoonofcode.poa.core.ui.compose.TextFields
-import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.compose.Cards
+//import com.spoonofcode.core.presentation.compose.Chips.HorizontalScrollableFilterChipRow
+import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
+import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.partner.domain.model.Partner
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partners
@@ -46,11 +46,11 @@ internal class PartnerOverviewScreen(
                 onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
             )
 
-            HorizontalScrollableFilterChipRow(
-                categories = viewState.partnerCategories,
-                selectedCategories = viewState.selectedPartnerCategories,
-                onCategorySelected = { onAction(PartnerOverviewViewAction.ClickCategory(it)) }
-            )
+//            HorizontalScrollableFilterChipRow(
+//                categories = viewState.partnerCategories,
+//                selectedCategories = viewState.selectedPartnerCategories,
+//                onCategorySelected = { onAction(PartnerOverviewViewAction.ClickCategory(it)) }
+//            )
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

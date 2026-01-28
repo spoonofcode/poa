@@ -12,10 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Buttons.IconTextButton
-import com.spoonofcode.poa.core.ui.compose.Spacers
-import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
+import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.partner_info
 import com.spoonofcode.poa.resources.partner_panel

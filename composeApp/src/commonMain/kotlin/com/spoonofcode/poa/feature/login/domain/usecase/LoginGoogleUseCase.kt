@@ -1,6 +1,7 @@
 package com.spoonofcode.poa.feature.login.domain.usecase
 
-import com.spoonofcode.poa.core.network.SessionManager
+import com.spoonofcode.core.data.network.SessionManager
+
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 
 class LoginGoogleUseCase(

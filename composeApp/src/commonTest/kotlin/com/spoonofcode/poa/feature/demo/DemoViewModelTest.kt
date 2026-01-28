@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.demo
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.ui.BaseViewModelTest
-import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.base.ViewState
+import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.poa.feature.demo.di.demoTestModule
 import com.spoonofcode.poa.feature.demo.presentation.DemoViewModel
 import com.spoonofcode.poa.feature.demo.presentation.DemoViewState

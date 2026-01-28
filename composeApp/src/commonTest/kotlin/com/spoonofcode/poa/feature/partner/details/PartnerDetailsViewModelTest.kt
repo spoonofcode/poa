@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.partner.details
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.ui.BaseViewModelTest
-import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.base.ViewState
+import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
 import com.spoonofcode.poa.feature.partner.di.partnerTestModule
 import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction

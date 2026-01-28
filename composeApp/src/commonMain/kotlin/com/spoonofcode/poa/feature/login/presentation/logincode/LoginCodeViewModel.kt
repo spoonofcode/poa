@@ -2,8 +2,8 @@ package com.spoonofcode.poa.feature.login.presentation.logincode
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
-import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.poa.feature.login.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 

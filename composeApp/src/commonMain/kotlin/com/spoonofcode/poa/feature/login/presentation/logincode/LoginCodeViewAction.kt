@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.login.presentation.logincode
 
-import com.spoonofcode.poa.core.ui.base.BaseViewAction
+import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface LoginCodeViewAction: BaseViewAction {
     data class InitView(val email: String) : LoginCodeViewAction

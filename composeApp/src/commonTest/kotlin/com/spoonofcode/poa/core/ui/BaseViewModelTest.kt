@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.ui
 
-import com.spoonofcode.poa.core.ui.navigation.ViewModelNavigator
+import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import dev.mokkery.MockMode
 import dev.mokkery.mock
 import org.koin.dsl.module

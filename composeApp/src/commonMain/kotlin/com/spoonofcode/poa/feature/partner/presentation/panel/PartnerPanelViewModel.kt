@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.partner.presentation.panel
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
-import com.spoonofcode.poa.core.ui.base.ScreenState
+import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.poa.feature.notification.presentation.type.NotificationTypeScreen
 import com.spoonofcode.poa.feature.partner.presentation.edit.PartnerEditScreen
 import kotlinx.coroutines.launch

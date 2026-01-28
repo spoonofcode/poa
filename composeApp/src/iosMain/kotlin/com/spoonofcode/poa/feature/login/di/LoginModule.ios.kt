@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.login.di
 
-import com.spoonofcode.poa.core.ui.utils.GoogleAuthProvider
+import com.spoonofcode.core.presentation.utils.GoogleAuthProvider
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

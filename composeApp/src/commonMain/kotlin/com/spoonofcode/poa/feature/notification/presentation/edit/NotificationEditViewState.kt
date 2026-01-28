@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.notification.presentation.edit
 
 import androidx.compose.runtime.Immutable
-import com.spoonofcode.poa.core.ext.plus
+import com.spoonofcode.core.data.utils.LocalDateTimeUtils
 import com.spoonofcode.poa.core.ext.roundToNextHour
-import com.spoonofcode.poa.core.ui.base.BaseViewState
+import com.spoonofcode.core.presentation.base.BaseViewState
 import com.spoonofcode.poa.core.utils.LocalDateTimeUtils
 import kotlinx.datetime.LocalDateTime
 

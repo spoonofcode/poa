@@ -2,8 +2,8 @@ package com.spoonofcode.poa.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.core.domain.usecase.SubscribeUserTopicsUseCase
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
-import com.spoonofcode.poa.core.ui.compose.snackbar.SnackbarEvent
+import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
 import com.spoonofcode.poa.feature.reward.data.model.RewardType
 import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase

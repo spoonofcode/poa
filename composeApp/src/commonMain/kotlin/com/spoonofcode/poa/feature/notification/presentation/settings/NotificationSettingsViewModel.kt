@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.notification.presentation.settings
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.poa.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 

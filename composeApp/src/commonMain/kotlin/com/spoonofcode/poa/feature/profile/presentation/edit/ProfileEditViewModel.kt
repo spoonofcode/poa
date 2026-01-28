@@ -3,7 +3,7 @@ package com.spoonofcode.poa.feature.profile.presentation.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 internal class ProfileEditViewModel(

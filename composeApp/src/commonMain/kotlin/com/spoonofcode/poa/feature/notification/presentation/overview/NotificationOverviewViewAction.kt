@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.notification.presentation.overview
 
-import com.spoonofcode.poa.core.ui.base.BaseViewAction
+import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface NotificationOverviewViewAction: BaseViewAction {
     data object InitView :

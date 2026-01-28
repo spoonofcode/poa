@@ -16,10 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.poa.app.PlatformType
 import com.spoonofcode.poa.core.nfc.NfcReader
 import com.spoonofcode.poa.core.nfc.rememberNfcReader
-import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.LottieAnimation
-import com.spoonofcode.poa.core.ui.compose.Texts
-import com.spoonofcode.poa.core.ui.ext.koinViewModel
+import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.compose.LottieAnimation
+import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.resources.Res
 import com.spoonofcode.poa.resources.scan
 import com.spoonofcode.poa.resources.scan_info_android

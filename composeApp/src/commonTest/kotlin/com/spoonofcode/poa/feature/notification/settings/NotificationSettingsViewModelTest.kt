@@ -1,9 +1,9 @@
 package com.spoonofcode.poa.feature.notification.settings
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.ui.BaseViewModelTest
-import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.base.ViewState
+import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.poa.feature.notification.di.notificationTestModule
 import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewAction
 import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsViewModel

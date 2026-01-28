@@ -16,8 +16,8 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import com.spoonofcode.poa.core.ui.compose.Paddings.bottomScreenPadding
-import com.spoonofcode.poa.core.ui.compose.Texts
+import com.spoonofcode.core.presentation.compose.Paddings.bottomScreenPadding
+import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.poa.feature.home.HomeTab
 import com.spoonofcode.poa.feature.partner.presentation.PartnerOverviewTab
 import com.spoonofcode.poa.feature.product.presentation.ProductOverviewTab

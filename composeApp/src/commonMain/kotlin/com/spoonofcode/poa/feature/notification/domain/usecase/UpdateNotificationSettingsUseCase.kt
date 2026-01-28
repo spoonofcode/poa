@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.feature.notification.domain.usecase
 
 import com.spoonofcode.poa.feature.notification.domain.model.NotificationSettings
-import com.spoonofcode.poa.core.network.SessionManager
-import com.spoonofcode.poa.core.ui.utils.FirebasePushService
+import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.presentation.utils.FirebasePushService
 
 class UpdateNotificationSettingsUseCase(
     private val sessionManager: SessionManager,

@@ -1,11 +1,11 @@
 package com.spoonofcode.poa.feature.profile
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.core.ui.BaseViewModelTest
+import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.poa.core.ext.containsTypes
-import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.base.ViewState
+import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
 import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
 import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen

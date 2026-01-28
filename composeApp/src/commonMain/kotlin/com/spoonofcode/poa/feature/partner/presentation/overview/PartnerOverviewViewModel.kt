@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.feature.partner.presentation.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.core.ui.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase

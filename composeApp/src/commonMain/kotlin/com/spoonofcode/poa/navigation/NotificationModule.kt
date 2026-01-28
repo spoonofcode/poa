@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.navigation
 
+import com.spoonofcode.core.presentation.navigation.Screen
+
 sealed class NotificationModule : Screen() {
     data class NotificationDetailsScreen(
         val notificationId: String,

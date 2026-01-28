@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.profile.domain.usecase
 
-import com.spoonofcode.poa.core.network.SessionManager
+import com.spoonofcode.core.data.network.SessionManager
 
 class DeleteAccountUseCase(
     private val sessionManager: SessionManager,

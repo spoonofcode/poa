@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.feature.product.presentation.edit
 
-import com.spoonofcode.poa.core.ui.base.BaseViewAction
+import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface ProductEditViewAction : BaseViewAction {
     data class ChangeCustomLink(val link: String) :

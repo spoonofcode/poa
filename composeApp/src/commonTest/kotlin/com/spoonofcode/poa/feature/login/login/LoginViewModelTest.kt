@@ -2,10 +2,10 @@ package com.spoonofcode.poa.feature.login.login
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.poa.core.ui.BaseViewModelTest
+import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.ext.containsTypes
-import com.spoonofcode.poa.core.ui.base.ScreenState
-import com.spoonofcode.poa.core.ui.base.ViewState
+import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.poa.feature.login.di.loginTestModule
 import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
 import com.spoonofcode.poa.feature.login.presentation.login.LoginViewAction
