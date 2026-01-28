@@ -2,7 +2,7 @@ package com.spoonofcode.core.data.recaptcha.di
 
 import com.spoonofcode.poa.BuildKonfig
 import com.spoonofcode.core.data.recaptcha.IosRecaptchaPlatform
-import com.spoonofcode.poa.core.recaptcha.RecaptchaPlatform
+import com.spoonofcode.core.data.recaptcha.RecaptchaPlatform
 import org.koin.dsl.bind
 import org.koin.dsl.module
 

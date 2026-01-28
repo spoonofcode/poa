@@ -7,29 +7,29 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
-//    alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.buildkonfig)
 }
 
-//buildkonfig {
-//    packageName = "com.spoonofcode.poa"
-//    defaultConfigs {
-//        val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
-//            .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
-//            ?: throw IllegalStateException(
-//                "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
-//            )
-//
-//        val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
-//            .getProperty("RECAPTCHA_SITE_KEY_IOS")
-//            ?: throw IllegalStateException(
-//                "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
-//            )
-//
-//
-//        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
-//        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
-//    }
-//}
+buildkonfig {
+    packageName = "com.spoonofcode.poa"
+    defaultConfigs {
+        val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
+            .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
+            ?: throw IllegalStateException(
+                "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
+            )
+
+        val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
+            .getProperty("RECAPTCHA_SITE_KEY_IOS")
+            ?: throw IllegalStateException(
+                "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
+            )
+
+
+        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
+        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
+    }
+}
 
 kotlin {
 
