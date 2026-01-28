@@ -39,7 +39,9 @@ object TextFields {
         minLines: Int = 1,
         visualTransformation: VisualTransformation = VisualTransformation.None,
     ) {
-        Column {
+        Column(
+            modifier = modifier
+        ) {
             label?.let {
                 Texts.BLB(text = it)
             }

@@ -1,5 +1,8 @@
 package com.spoonofcode.poa.core.ui.compose
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
@@ -27,7 +30,7 @@ object TimePickers {
     fun TimePicker(
         value: LocalDateTime = LocalDateTimeUtils.now(),
         onValueChange: (LocalDateTime) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier.fillMaxWidth(),
         label: String? = null,
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,
@@ -39,20 +42,30 @@ object TimePickers {
         )
         val isOpen = remember { mutableStateOf(false) }
 
-        TextFields.Outlined(
-            value = value.formatedTime(),
-            modifier = modifier,
-            readOnly = true,
-            label = label,
-            onValueChange = {},
-            trailingIcon = {
-                IconButton(
-                    onClick = { isOpen.value = true } // show de dialog
-                ) {
-                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+        Box(
+            modifier = modifier
+        ) {
+            TextFields.Outlined(
+                value = value.formatedTime(),
+                readOnly = true,
+                label = label,
+                onValueChange = {},
+                trailingIcon = {
+                    IconButton(
+                        onClick = { }
+                    ) {
+                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+                    }
                 }
-            }
-        )
+            )
+
+            // Transparent overlay to capture clicks
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clickable(onClick = { isOpen.value = true })
+            )
+        }
 
         if (isOpen.value) {
             TimePickerDialog(

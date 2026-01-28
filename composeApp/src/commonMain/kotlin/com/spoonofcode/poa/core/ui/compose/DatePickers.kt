@@ -1,9 +1,10 @@
 package com.spoonofcode.poa.core.ui.compose
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
@@ -46,20 +47,30 @@ object DatePickers {
         val date = remember { mutableStateOf(value) }
         val isOpen = remember { mutableStateOf(false) }
 
-        TextFields.Outlined(
-            value = date.value.formatedLocalDate(),
-            onValueChange = {},
-            modifier = modifier,
-            readOnly = true,
-            label = label,
-            trailingIcon = {
-                IconButton(
-                    onClick = { isOpen.value = true } // show de dialog
-                ) {
-                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+        Box(
+            modifier = modifier
+        ) {
+            TextFields.Outlined(
+                value = date.value.formatedLocalDate(),
+                onValueChange = {},
+                readOnly = true,
+                label = label,
+                trailingIcon = {
+                    IconButton(
+                        onClick = {}
+                    ) {
+                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
+                    }
                 }
-            }
-        )
+            )
+
+            // Transparent overlay to capture clicks
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clickable(onClick = { isOpen.value = true })
+            )
+        }
 
         if (isOpen.value) {
             DatePickerDialog(
@@ -87,39 +98,39 @@ object DatePickers {
         value: LocalDateTime,
         label: String? = null,
         onValueChange: (LocalDateTime) -> Unit,
+        modifier: Modifier = Modifier
     ) {
-        label?.let {
-            Texts.BLB(text = it)
-        }
-
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = modifier,
         ) {
-            DatePicker(
-                value = value.date,
-                onValueChange = {
-                    onValueChange(
-                        LocalDateTime(
-                            date = it,
-                            time = value.time
+            label?.let {
+                Texts.BLB(text = it)
+            }
+            Row {
+                DatePicker(
+                    value = value.date,
+                    onValueChange = {
+                        onValueChange(
+                            LocalDateTime(
+                                date = it,
+                                time = value.time
+                            )
                         )
-                    )
-                },
-                modifier = Modifier.weight(1f),
-            )
-            Spacers.HorizontalBetweenFields()
-            TimePickers.TimePicker(
-                value = value,
-                onValueChange = {
-                    onValueChange(it)
-                },
-                modifier = Modifier.wrapContentWidth().weight(0.6f),
-                onConfirm = {},
-                onDismiss = {},
-            )
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+                Spacers.HorizontalBetweenFields()
+                TimePickers.TimePicker(
+                    value = value,
+                    onValueChange = {
+                        onValueChange(it)
+                    },
+                    onConfirm = {},
+                    onDismiss = {},
+                    modifier = Modifier.weight(.5f)
+                )
+            }
         }
-        Spacers.VerticalBetweenFields()
     }
 
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)

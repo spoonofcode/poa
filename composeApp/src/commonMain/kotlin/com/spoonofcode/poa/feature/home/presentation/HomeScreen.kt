@@ -1,15 +1,12 @@
 package com.spoonofcode.poa.feature.home.presentation
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,22 +15,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.poa.core.ui.base.BaseScreen
-import com.spoonofcode.poa.core.ui.compose.Buttons
-import com.spoonofcode.poa.core.ui.compose.CountdownTimer
 import com.spoonofcode.poa.core.ui.compose.AutoImageSlider
+import com.spoonofcode.poa.core.ui.compose.Buttons
+import com.spoonofcode.poa.core.ui.compose.Cards
+import com.spoonofcode.poa.core.ui.compose.CountdownTimer
 import com.spoonofcode.poa.core.ui.compose.Spacers
+import com.spoonofcode.poa.core.ui.compose.Texts
 import com.spoonofcode.poa.core.ui.compose.TopBarAction
 import com.spoonofcode.poa.core.ui.ext.koinViewModel
 import com.spoonofcode.poa.feature.reward.data.model.DailyReward
@@ -49,9 +45,6 @@ import com.spoonofcode.poa.resources.streak_days_count
 import com.spoonofcode.poa.resources.total_points
 import com.spoonofcode.poa.resources.your_streak
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.poa.core.ui.compose.Cards
-import com.spoonofcode.poa.core.ui.compose.Texts
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
@@ -131,6 +124,8 @@ internal class HomeScreen(
                     )
                 }
 
+                Spacers.VerticalBetweenFields()
+
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(horizontal = 4.dp)
@@ -143,21 +138,14 @@ internal class HomeScreen(
                 Spacers.VerticalBetweenFields()
 
                 if (nextCheckInTimeMillis != null && !isActionAvailable) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                        shape = MaterialTheme.shapes.medium,
-                        modifier = Modifier.fillMaxWidth()
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Texts.LSB(
-                                text = stringResource(Res.string.next_check_in),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
-                        }
+                        Texts.LSB(
+                            text = stringResource(Res.string.next_check_in),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
                     }
                     Spacers.VerticalBetweenFields()
                 }
