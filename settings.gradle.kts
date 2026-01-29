@@ -52,4 +52,7 @@ include(":feature:profile:presentation")
 include(":feature:scan:data")
 include(":feature:scan:domain")
 include(":feature:scan:presentation")
+include(":feature:tac:data")
+include(":feature:tac:domain")
+include(":feature:tac:presentation")
 
