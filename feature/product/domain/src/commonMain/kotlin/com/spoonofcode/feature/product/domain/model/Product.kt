@@ -1,8 +1,5 @@
 package com.spoonofcode.feature.product.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Product(
     val id: String,
     val ownerUserId: String? = null,

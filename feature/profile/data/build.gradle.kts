@@ -63,6 +63,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
 
                 implementation(projects.feature.profile.domain)
+                implementation(projects.core.data)
             }
         }
 

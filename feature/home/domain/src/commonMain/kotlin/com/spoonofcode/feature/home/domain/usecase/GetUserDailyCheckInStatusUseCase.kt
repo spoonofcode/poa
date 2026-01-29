@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.home.domain.usecase
 
-import com.spoonofcode.feature.reward.data.model.DailyCheckInStatus
+import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.repository.RewardRepository
 
 class GetUserDailyCheckInStatusUseCase(

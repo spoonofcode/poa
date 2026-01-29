@@ -10,7 +10,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.spoonofcode.feature.profile.presentation"
+        namespace = "com.spoonofcode.feature.tac.presentation"
         compileSdk = 36
         minSdk = 24
 

@@ -23,7 +23,7 @@ import com.spoonofcode.feature.profile.data.di.profileDataModule
 import com.spoonofcode.feature.profile.domain.di.profileDomainModule
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
-import com.spoonofcode.feature.tac.presentation.di.tacModule
+import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.app.getPlatform
 import org.koin.dsl.module
 
@@ -62,7 +62,7 @@ val appModule = module {
         notificationPresentationModule,
 
         scanPresentationModule,
-        tacModule,
+        tacPresentationModule,
     )
 
     single { getPlatform() }

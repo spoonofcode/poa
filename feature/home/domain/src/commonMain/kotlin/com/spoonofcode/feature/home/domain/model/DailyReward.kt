@@ -1,17 +1,12 @@
-package com.spoonofcode.feature.home.data.model
+package com.spoonofcode.feature.home.domain.model
 
-import androidx.compose.runtime.Immutable
-import kotlinx.serialization.Serializable
 
-@Serializable
 enum class DailyRewardStatus {
     CLAIMED,
     AVAILABLE_TO_CLAIM,
     LOCKED
 }
 
-@Serializable
-@Immutable
 data class DailyReward(
     val day: Int,
     val points: Int,

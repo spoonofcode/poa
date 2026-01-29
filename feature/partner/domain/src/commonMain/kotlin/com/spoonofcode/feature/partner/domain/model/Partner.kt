@@ -1,8 +1,5 @@
 package com.spoonofcode.feature.partner.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Partner(
     val id: String,
     val name: String,

@@ -3,8 +3,6 @@ package com.spoonofcode.feature.notification.domain.model
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
-
-
 @Serializable
 data class Notification(
     val id: String,

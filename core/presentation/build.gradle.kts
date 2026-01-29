@@ -73,35 +73,34 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.components.resources)
+                api(libs.kotlin.stdlib)
+                api(libs.components.resources)
 
-                implementation(libs.compose.icons.fontawesome)
+                api(libs.compose.icons.fontawesome)
                 implementation(libs.compottie)
                 implementation(libs.compottie.dot)
                 implementation(libs.compottie.network)
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.device)
 
+                api(libs.foundation)
+                api(libs.landscapist.coil)
+                api(libs.lifecycle.viewmodel.compose)
+                api(libs.runtime)
+                api(libs.material.icons.core)
+                api(libs.material.icons.extended)
+                api(libs.material3)
+                api(libs.ui)
+                api(libs.ui.tooling.preview)
+                api(libs.voyager.navigator)
+                api(libs.voyager.tab.navigator)
+                api(libs.voyager.transitions)
 
-                implementation(libs.foundation)
-                implementation(libs.landscapist.coil)
-                implementation(libs.lifecycle.viewmodel.compose)
-                implementation(libs.runtime)
-                implementation(libs.material.icons.core)
-                implementation(libs.material.icons.extended)
-                implementation(libs.material3)
-                implementation(libs.ui)
-                implementation(libs.ui.tooling.preview)
-                implementation(libs.voyager.navigator)
-                implementation(libs.voyager.tab.navigator)
-                implementation(libs.voyager.transitions)
-
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose)
+                api(libs.koin.core)
+                api(libs.koin.compose)
 
                 // TODO #109 Fix after migration to feature modules
-                implementation(projects.core.data)
+                api(projects.core.data)
             }
         }
 

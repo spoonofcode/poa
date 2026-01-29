@@ -1,5 +1,11 @@
 package com.spoonofcode.feature.product.data
 
+import com.spoonofcode.feature.product.data.remote.RemoteProductDataSource
+import com.spoonofcode.feature.product.data.remote.RemoteUserProductDataSource
+import com.spoonofcode.feature.product.data.testdata.PRODUCTS
+import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.repository.ProductRepository
+
 class ProductRepositoryImpl(
     private val remoteProducts: RemoteProductDataSource,
     private val remoteUserProducts: RemoteUserProductDataSource,
