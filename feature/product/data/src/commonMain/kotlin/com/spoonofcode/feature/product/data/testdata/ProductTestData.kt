@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.profile.data.testdata
+package com.spoonofcode.feature.product.data.testdata
 
 import com.spoonofcode.poa.feature.product.domain.model.Product
 

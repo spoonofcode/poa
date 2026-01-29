@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.profile.data
+package com.spoonofcode.feature.product.data
 
 class ProductRepositoryImpl(
     private val remoteProducts: RemoteProductDataSource,

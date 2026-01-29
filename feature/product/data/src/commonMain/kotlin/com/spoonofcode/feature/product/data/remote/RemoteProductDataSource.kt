@@ -1,8 +1,8 @@
-package com.spoonofcode.feature.profile.data.remote
+package com.spoonofcode.feature.product.data.remote
 
 import com.spoonofcode.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.feature.profile.data.remote.model.ProductRequest
-import com.spoonofcode.feature.profile.data.remote.model.ProductResponse
+import com.spoonofcode.feature.product.data.remote.model.ProductRequest
+import com.spoonofcode.feature.product.data.remote.model.ProductResponse
 import io.ktor.http.HttpMethod
 
 class RemoteProductDataSource : RemoteBaseDataSource(
