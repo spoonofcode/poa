@@ -7,9 +7,12 @@ import com.spoonofcode.core.data.recaptcha.di.recaptchaModule
 import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.uiModule
 import com.spoonofcode.feature.auth.presentation.di.loginModule
-import com.spoonofcode.feature.home.presentation.di.homeModule
-import com.spoonofcode.feature.home.presentation.di.rewardModule
-import com.spoonofcode.feature.notification.presentation.di.notificationModule
+import com.spoonofcode.feature.home.data.di.homeDataModule
+import com.spoonofcode.feature.home.domain.di.homeDomainModule
+import com.spoonofcode.feature.home.presentation.di.homePresentationModule
+import com.spoonofcode.feature.notification.data.di.notificationDataModule
+import com.spoonofcode.feature.notification.domain.di.notificationDomainModule
+import com.spoonofcode.feature.notification.presentation.di.notificationPresentationModule
 import com.spoonofcode.feature.partner.data.di.partnerDataModule
 import com.spoonofcode.feature.partner.domain.di.partnerDomainModule
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationModule
@@ -35,7 +38,11 @@ val appModule = module {
         settingsModule,
 
         // features
-        homeModule,
+        homeDataModule,
+        homeDomainModule,
+        homePresentationModule,
+
+
         loginModule,
 
         partnerDataModule,
@@ -49,8 +56,11 @@ val appModule = module {
         productDataModule,
         productDomainModule,
         productPresentationModule,
-        rewardModule,
-        notificationModule,
+
+        notificationDataModule,
+        notificationDomainModule,
+        notificationPresentationModule,
+
         scanPresentationModule,
         tacModule,
     )

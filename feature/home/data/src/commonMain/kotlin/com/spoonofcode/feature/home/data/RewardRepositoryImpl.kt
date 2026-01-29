@@ -4,7 +4,7 @@ import com.spoonofcode.feature.home.data.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.data.model.RewardType
 import com.spoonofcode.feature.home.data.remote.RemoteUserRewardDataSource
 import com.spoonofcode.feature.home.data.testdata.DAILY_CHECK_IN_STATUS
-import com.spoonofcode.feature.reward.domain.repository.RewardRepository
+import com.spoonofcode.feature.home.domain.repository.RewardRepository
 
 class RewardRepositoryImpl(
     private val remoteUserRewardDataSource: RemoteUserRewardDataSource,
