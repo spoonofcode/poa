@@ -1,11 +1,4 @@
-package com.spoonofcode.poa.feature.product.data
-
-import com.spoonofcode.poa.feature.product.data.mappers.toProduct
-import com.spoonofcode.poa.feature.product.data.remote.RemoteProductDataSource
-import com.spoonofcode.poa.feature.product.data.remote.RemoteUserProductDataSource
-import com.spoonofcode.poa.feature.product.data.testdata.PRODUCTS
-import com.spoonofcode.poa.feature.product.domain.model.Product
-import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
+package com.spoonofcode.feature.profile.data
 
 class ProductRepositoryImpl(
     private val remoteProducts: RemoteProductDataSource,
