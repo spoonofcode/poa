@@ -22,21 +22,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val productModule = module {
-    singleOf(::RemoteProductDataSource)
-    singleOf(::RemoteUserProductDataSource)
-
-    singleOf(::ProductRepositoryImpl).bind<ProductRepository>()
-
-    factoryOf(::GetFilteredProductsByTextUseCase)
-    factoryOf(::GetProductByIdUseCase)
-    factoryOf(::GetProductByTagIdUseCase)
-    factoryOf(::GetProductSeriesUseCase)
-    factoryOf(::UpdateProductUseCase)
-    factoryOf(::GetUserProductsUseCase)
-    factoryOf(::AddProductToUserUseCase)
-    factoryOf(::DeleteProductFromUserUseCase)
-
+val productPresentationModule = module {
     viewModelOf(::ProductDetailsViewModel)
     viewModelOf(::ProductEditViewModel)
     viewModelOf(::ProductOverviewViewModel)

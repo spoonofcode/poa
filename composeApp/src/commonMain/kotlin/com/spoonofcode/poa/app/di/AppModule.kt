@@ -10,10 +10,15 @@ import com.spoonofcode.feature.auth.presentation.di.loginModule
 import com.spoonofcode.feature.home.presentation.di.homeModule
 import com.spoonofcode.feature.home.presentation.di.rewardModule
 import com.spoonofcode.feature.notification.presentation.di.notificationModule
-import com.spoonofcode.feature.partner.presentation.di.partnerModule
-import com.spoonofcode.feature.product.presentation.di.productModule
-import com.spoonofcode.feature.profile.presentation.di.faqModule
-import com.spoonofcode.feature.profile.presentation.di.profileModule
+import com.spoonofcode.feature.partner.data.di.partnerDataModule
+import com.spoonofcode.feature.partner.domain.di.partnerDomainModule
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationModule
+import com.spoonofcode.feature.product.data.di.productDataModule
+import com.spoonofcode.feature.product.domain.di.productDomainModule
+import com.spoonofcode.feature.product.presentation.di.productPresentationModule
+import com.spoonofcode.feature.profile.data.di.profileDataModule
+import com.spoonofcode.feature.profile.domain.di.profileDomainModule
+import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.presentation.di.tacModule
 import com.spoonofcode.poa.app.getPlatform
@@ -30,12 +35,20 @@ val appModule = module {
         settingsModule,
 
         // features
-        faqModule,
         homeModule,
         loginModule,
-        partnerModule,
-        profileModule,
-        productModule,
+
+        partnerDataModule,
+        partnerDomainModule,
+        partnerPresentationModule,
+
+        profileDataModule,
+        profileDomainModule,
+        profilePresentationModule,
+
+        productDataModule,
+        productDomainModule,
+        productPresentationModule,
         rewardModule,
         notificationModule,
         scanPresentationModule,

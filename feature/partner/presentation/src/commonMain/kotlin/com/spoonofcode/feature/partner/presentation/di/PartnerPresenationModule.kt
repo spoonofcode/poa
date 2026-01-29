@@ -22,19 +22,10 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val partnerModule = module {
-    singleOf(::RemotePartnerDataSource)
-    singleOf(::RemotePartnerCategoryDataSource)
+val partnerPresentationModule = module {
 
-    singleOf(::PartnerRepositoryImpl).bind<PartnerRepository>()
 
-    factoryOf(::GetPartnerByIdUseCase)
-    factoryOf(::GetPartnerCategoriesUseCase)
-    factoryOf(::GetPartnersFilteredByPartnerCategoryUseCase)
-    factoryOf(::GetPartnersFilteredByTextUseCase)
-    factoryOf(::GetPartnersUseCase)
-    factoryOf(::GetPartnerUsersUseCase)
-    factoryOf(::UpdatePartnerUseCase)
+
 
     viewModelOf(::PartnerCustomerOverviewViewModel)
     viewModelOf(::PartnerDetailsViewModel)
