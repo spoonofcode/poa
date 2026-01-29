@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.mockdata.LoginMockData.LOGIN_1
-import com.spoonofcode.feature.login.domain.repository.LoginRepository
+import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

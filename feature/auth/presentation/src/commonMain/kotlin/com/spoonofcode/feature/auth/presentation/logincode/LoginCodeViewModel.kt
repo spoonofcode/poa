@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.login.domain.usecase.LoginCodeUseCase
+import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 
 internal class LoginCodeViewModel(

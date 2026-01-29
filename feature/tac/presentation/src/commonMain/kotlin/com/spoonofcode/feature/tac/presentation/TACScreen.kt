@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Checkboxes
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.privacy_policy
 import com.spoonofcode.core.presentation.read
 import com.spoonofcode.core.presentation.save_changes

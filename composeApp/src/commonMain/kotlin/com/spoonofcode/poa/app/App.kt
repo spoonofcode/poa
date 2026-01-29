@@ -7,7 +7,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.core.data.network.SessionManager
 import com.spoonofcode.core.presentation.theme.AppTheme
-import com.spoonofcode.feature.login.presentation.login.LoginScreen
+import com.spoonofcode.feature.auth.presentation.login.LoginScreen
 import org.koin.compose.getKoin
 
 @Composable

@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.feature.login.domain.model.Login
+import com.spoonofcode.feature.auth.domain.model.Login
 
 object LoginMockData {
     val LOGIN_1 = Login(

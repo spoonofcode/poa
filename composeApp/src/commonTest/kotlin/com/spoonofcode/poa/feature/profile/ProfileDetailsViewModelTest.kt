@@ -7,7 +7,7 @@ import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.faq.presentation.FAQScreen
-import com.spoonofcode.feature.login.presentation.login.LoginScreen
+import com.spoonofcode.feature.auth.presentation.login.LoginScreen
 import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsScreen
 import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
 import com.spoonofcode.feature.profile.di.profileTestModule

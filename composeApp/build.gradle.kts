@@ -169,6 +169,38 @@ kotlin {
 
             implementation(projects.core.data)
             implementation(projects.core.presentation)
+
+            implementation(projects.feature.auth.data)
+            implementation(projects.feature.auth.domain)
+            implementation(projects.feature.auth.presentation)
+
+            implementation(projects.feature.home.data)
+            implementation(projects.feature.home.domain)
+            implementation(projects.feature.home.presentation)
+
+            implementation(projects.feature.notification.data)
+            implementation(projects.feature.notification.domain)
+            implementation(projects.feature.notification.presentation)
+
+            implementation(projects.feature.partner.data)
+            implementation(projects.feature.partner.domain)
+            implementation(projects.feature.partner.presentation)
+
+            implementation(projects.feature.product.data)
+            implementation(projects.feature.product.domain)
+            implementation(projects.feature.product.presentation)
+
+            implementation(projects.feature.profile.data)
+            implementation(projects.feature.profile.domain)
+            implementation(projects.feature.profile.presentation)
+
+            implementation(projects.feature.scan.data)
+            implementation(projects.feature.scan.domain)
+            implementation(projects.feature.scan.presentation)
+
+            implementation(projects.feature.tac.data)
+            implementation(projects.feature.tac.domain)
+            implementation(projects.feature.tac.presentation)
         }
         commonTest.dependencies {
             implementation(libs.koin.test)

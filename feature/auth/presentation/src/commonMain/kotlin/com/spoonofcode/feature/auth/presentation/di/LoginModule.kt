@@ -1,16 +1,16 @@
 package com.spoonofcode.feature.auth.presentation.di
 
-import com.spoonofcode.feature.login.data.LoginRepositoryImpl
-import com.spoonofcode.feature.login.data.remote.RemoteLoginCodeDataSource
-import com.spoonofcode.feature.login.data.remote.RemoteLoginGoogleDataSource
-import com.spoonofcode.feature.login.data.remote.RemoteLoginRequestCodeDataSource
+import com.spoonofcode.feature.auth.data.LoginRepositoryImpl
+import com.spoonofcode.feature.auth.data.remote.RemoteLoginCodeDataSource
+import com.spoonofcode.feature.auth.data.remote.RemoteLoginGoogleDataSource
+import com.spoonofcode.feature.auth.data.remote.RemoteLoginRequestCodeDataSource
 import com.spoonofcode.core.data.domain.usecase.RemoteRefreshTokenDataSource
-import com.spoonofcode.feature.login.domain.repository.LoginRepository
-import com.spoonofcode.feature.login.domain.usecase.LoginCodeUseCase
-import com.spoonofcode.feature.login.domain.usecase.LoginGoogleUseCase
-import com.spoonofcode.feature.login.domain.usecase.LoginRequestCodeUseCase
-import com.spoonofcode.feature.login.presentation.login.LoginViewModel
-import com.spoonofcode.feature.login.presentation.logincode.LoginCodeViewModel
+import com.spoonofcode.feature.auth.domain.repository.LoginRepository
+import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
+import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
+import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase
+import com.spoonofcode.feature.auth.presentation.login.LoginViewModel
+import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf

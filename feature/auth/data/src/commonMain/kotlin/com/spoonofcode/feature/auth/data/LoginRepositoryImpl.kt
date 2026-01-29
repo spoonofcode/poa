@@ -4,8 +4,8 @@ import com.spoonofcode.feature.auth.data.mappers.toLogin
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginRequestCodeDataSource
-import com.spoonofcode.feature.login.domain.model.Login
-import com.spoonofcode.feature.login.domain.repository.LoginRepository
+import com.spoonofcode.feature.auth.domain.model.Login
+import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
 class LoginRepositoryImpl(
     private val remoteLoginCodeDataSource: RemoteLoginCodeDataSource,

@@ -5,8 +5,8 @@ import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.domain.model.GoogleAccount
-import com.spoonofcode.feature.login.domain.usecase.LoginGoogleUseCase
-import com.spoonofcode.feature.login.domain.usecase.LoginRequestCodeUseCase
+import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
+import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
 import kotlinx.coroutines.launch
 

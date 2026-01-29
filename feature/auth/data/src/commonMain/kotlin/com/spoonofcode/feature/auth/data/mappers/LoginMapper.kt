@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.auth.data.mappers
 
 import com.spoonofcode.feature.auth.data.remote.model.LoginResponse
-import com.spoonofcode.feature.login.domain.model.Login
+import com.spoonofcode.feature.auth.domain.model.Login
 
 fun LoginResponse.toLogin(): Login {
     return Login(
