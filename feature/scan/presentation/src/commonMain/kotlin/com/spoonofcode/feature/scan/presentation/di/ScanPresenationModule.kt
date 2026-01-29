@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.scan.presentation.di
 
-import com.spoonofcode.poa.feature.scan.presentation.ScanViewModel
+import com.spoonofcode.feature.scan.presentation.ScanViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 

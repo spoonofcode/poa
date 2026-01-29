@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.partner.domain.usecase
 
-import com.spoonofcode.poa.feature.partner.data.model.PartnerRequest
+import com.spoonofcode.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 

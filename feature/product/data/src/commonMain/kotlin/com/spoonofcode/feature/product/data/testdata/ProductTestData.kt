@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.product.data.testdata
 
-import com.spoonofcode.poa.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.Product
 
 
 val USER_1 = "11111111-1111-1111-1111-111111111111"

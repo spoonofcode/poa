@@ -2,8 +2,8 @@ package com.spoonofcode.feature.notification.data
 
 import com.spoonofcode.feature.notification.data.mappers.toNotification
 import com.spoonofcode.feature.notification.data.remote.RemoteNotificationDataSource
-import com.spoonofcode.poa.feature.notification.domain.model.Notification
-import com.spoonofcode.poa.feature.notification.domain.repository.NotificationRepository
+import com.spoonofcode.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
 
 class NotificationRepositoryImpl(

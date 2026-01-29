@@ -1,10 +1,10 @@
 package com.spoonofcode.feature.partner.presentation.customer.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerUsersUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
+import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 
 internal class PartnerCustomerOverviewViewModel(

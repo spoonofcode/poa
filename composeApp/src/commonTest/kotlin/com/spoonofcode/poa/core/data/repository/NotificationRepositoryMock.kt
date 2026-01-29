@@ -1,8 +1,8 @@
 package com.spoonofcode.poa.core.data.repository
 
 import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
-import com.spoonofcode.poa.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
-import com.spoonofcode.poa.feature.notification.domain.repository.NotificationRepository
+import com.spoonofcode.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
+import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

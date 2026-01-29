@@ -4,9 +4,9 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.tac.di.tacTestModule
-import com.spoonofcode.poa.feature.tac.presentation.TACViewModel
-import com.spoonofcode.poa.feature.tac.presentation.TACViewState
+import com.spoonofcode.feature.tac.di.tacTestModule
+import com.spoonofcode.feature.tac.presentation.TACViewModel
+import com.spoonofcode.feature.tac.presentation.TACViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

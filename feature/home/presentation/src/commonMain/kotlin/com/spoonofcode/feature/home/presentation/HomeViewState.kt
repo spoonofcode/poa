@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.compose.runtime.Immutable
-import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
+import com.spoonofcode.feature.reward.data.model.DailyCheckInStatus
 import com.spoonofcode.core.presentation.base.BaseViewState
 
 @Immutable

@@ -9,7 +9,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData
+import com.spoonofcode.feature.partner.data.mock.PartnerMockData
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.description
 import com.spoonofcode.core.presentation.facebook

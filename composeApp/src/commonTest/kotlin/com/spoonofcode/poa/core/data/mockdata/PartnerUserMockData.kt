@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.feature.partner.domain.model.PartnerUser
+import com.spoonofcode.feature.partner.domain.model.PartnerUser
 
 object PartnerUserMockData {
     val PARTNER_USER_1 = PartnerUser(

@@ -7,16 +7,16 @@ import com.spoonofcode.core.data.recaptcha.di.recaptchaModule
 import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.uiModule
 import com.spoonofcode.poa.app.getPlatform
-import com.spoonofcode.poa.feature.faq.di.faqModule
-import com.spoonofcode.poa.feature.home.di.homeModule
-import com.spoonofcode.poa.feature.login.di.loginModule
-import com.spoonofcode.poa.feature.notification.di.notificationModule
-import com.spoonofcode.poa.feature.partner.di.partnerModule
-import com.spoonofcode.poa.feature.product.di.productModule
-import com.spoonofcode.poa.feature.profile.di.profileModule
-import com.spoonofcode.poa.feature.reward.di.rewardModule
-import com.spoonofcode.poa.feature.scan.di.scanModule
-import com.spoonofcode.poa.feature.tac.di.tacModule
+import com.spoonofcode.feature.faq.di.faqModule
+import com.spoonofcode.feature.home.di.homeModule
+import com.spoonofcode.feature.login.di.loginModule
+import com.spoonofcode.feature.notification.di.notificationModule
+import com.spoonofcode.feature.partner.di.partnerModule
+import com.spoonofcode.feature.product.di.productModule
+import com.spoonofcode.feature.profile.di.profileModule
+import com.spoonofcode.feature.reward.di.rewardModule
+import com.spoonofcode.feature.scan.di.scanModule
+import com.spoonofcode.feature.tac.di.tacModule
 import org.koin.dsl.module
 
 val appModule = module {

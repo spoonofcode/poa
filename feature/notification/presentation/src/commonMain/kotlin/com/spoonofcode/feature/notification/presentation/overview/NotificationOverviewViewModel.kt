@@ -2,7 +2,7 @@ package com.spoonofcode.feature.notification.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationsUseCase
+import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen
 import kotlinx.coroutines.launch
 

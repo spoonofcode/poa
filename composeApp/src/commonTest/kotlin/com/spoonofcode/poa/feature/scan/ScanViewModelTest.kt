@@ -5,11 +5,11 @@ import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.poa.feature.scan.di.scanTestModule
-import com.spoonofcode.poa.feature.scan.presentation.ScanViewAction
-import com.spoonofcode.poa.feature.scan.presentation.ScanViewModel
-import com.spoonofcode.poa.feature.scan.presentation.ScanViewState
+import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.scan.di.scanTestModule
+import com.spoonofcode.feature.scan.presentation.ScanViewAction
+import com.spoonofcode.feature.scan.presentation.ScanViewModel
+import com.spoonofcode.feature.scan.presentation.ScanViewState
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi

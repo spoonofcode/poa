@@ -1,7 +1,7 @@
 package com.spoonofcode.core.presentation.utils
 
 import cocoapods.GoogleSignIn.GIDSignIn
-import com.spoonofcode.poa.feature.login.domain.model.GoogleAccount
+import com.spoonofcode.feature.login.domain.model.GoogleAccount
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.UIKit.UIApplication
 import kotlin.coroutines.resume

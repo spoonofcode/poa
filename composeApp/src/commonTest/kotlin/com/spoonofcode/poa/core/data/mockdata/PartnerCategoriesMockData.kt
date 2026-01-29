@@ -1,6 +1,6 @@
 package com.spoonofcode.poa.core.data.mockdata
 
-import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
+import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 
 object PartnerCategoriesMockData {
     val PARTNER_CATEGORY_1 = PartnerCategory(

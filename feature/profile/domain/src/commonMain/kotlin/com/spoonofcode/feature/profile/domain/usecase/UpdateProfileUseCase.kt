@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.profile.domain.usecase
 
-import com.spoonofcode.poa.feature.profile.data.model.ProfileRequest
+import com.spoonofcode.feature.profile.data.model.ProfileRequest
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 
 class UpdateProfileUseCase(

@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.product.presentation.series.overview
 
 import androidx.compose.runtime.Immutable
-import com.spoonofcode.poa.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.core.presentation.base.BaseViewState
 
 @Immutable

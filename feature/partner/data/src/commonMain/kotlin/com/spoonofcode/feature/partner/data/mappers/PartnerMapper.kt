@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.partner.data.mappers
 
 import com.spoonofcode.feature.partner.data.model.PartnerResponse
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.model.Partner
 
 fun PartnerResponse.toPartner(): Partner {
     return Partner(

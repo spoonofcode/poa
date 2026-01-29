@@ -2,14 +2,14 @@ package com.spoonofcode.feature.profile.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.poa.feature.faq.presentation.FAQScreen
-import com.spoonofcode.poa.feature.login.presentation.login.LoginScreen
-import com.spoonofcode.poa.feature.notification.presentation.settings.NotificationSettingsScreen
-import com.spoonofcode.poa.feature.partner.presentation.panel.PartnerPanelScreen
-import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
-import com.spoonofcode.poa.feature.profile.domain.usecase.LogoutUseCase
+import com.spoonofcode.feature.faq.presentation.FAQScreen
+import com.spoonofcode.feature.login.presentation.login.LoginScreen
+import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsScreen
+import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
+import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
+import com.spoonofcode.feature.profile.domain.usecase.LogoutUseCase
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditScreen
-import com.spoonofcode.poa.feature.tac.presentation.TACScreen
+import com.spoonofcode.feature.tac.presentation.TACScreen
 import kotlinx.coroutines.launch
 
 internal class ProfileDetailsViewModel(

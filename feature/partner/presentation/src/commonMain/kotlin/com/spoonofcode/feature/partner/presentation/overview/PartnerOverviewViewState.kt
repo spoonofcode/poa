@@ -3,8 +3,8 @@ package com.spoonofcode.feature.partner.presentation.overview
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState
 
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
-import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
+import com.spoonofcode.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 
 @Immutable
 internal data class PartnerOverviewViewState(

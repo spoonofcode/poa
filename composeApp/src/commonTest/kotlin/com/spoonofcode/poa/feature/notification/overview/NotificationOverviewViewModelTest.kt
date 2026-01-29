@@ -5,11 +5,11 @@ import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.notification.di.notificationTestModule
-import com.spoonofcode.poa.feature.notification.domain.repository.NotificationRepository
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewAction
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewModel
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewViewState
+import com.spoonofcode.feature.notification.di.notificationTestModule
+import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
+import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction
+import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewModel
+import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

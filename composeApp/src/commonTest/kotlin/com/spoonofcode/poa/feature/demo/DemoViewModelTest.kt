@@ -4,9 +4,9 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.demo.di.demoTestModule
-import com.spoonofcode.poa.feature.demo.presentation.DemoViewModel
-import com.spoonofcode.poa.feature.demo.presentation.DemoViewState
+import com.spoonofcode.feature.demo.di.demoTestModule
+import com.spoonofcode.feature.demo.presentation.DemoViewModel
+import com.spoonofcode.feature.demo.presentation.DemoViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

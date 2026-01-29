@@ -36,7 +36,7 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.notifications
 import com.spoonofcode.core.presentation.tab_already_read

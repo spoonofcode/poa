@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.profile.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.profile.domain.usecase.GetProfileUseCase
-import com.spoonofcode.poa.feature.profile.domain.usecase.UpdateProfileUseCase
+import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
+import com.spoonofcode.feature.profile.domain.usecase.UpdateProfileUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 

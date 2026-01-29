@@ -5,11 +5,11 @@ import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.product.di.productTestModule
-import com.spoonofcode.poa.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewAction
-import com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewModel
-import com.spoonofcode.poa.feature.product.presentation.edit.ProductEditViewState
+import com.spoonofcode.feature.product.di.productTestModule
+import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.edit.ProductEditViewAction
+import com.spoonofcode.feature.product.presentation.edit.ProductEditViewModel
+import com.spoonofcode.feature.product.presentation.edit.ProductEditViewState
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi

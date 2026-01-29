@@ -5,10 +5,10 @@ import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.FAQMockData.FAQS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.faq.di.faqTestModule
-import com.spoonofcode.poa.feature.faq.presentation.FAQViewAction
-import com.spoonofcode.poa.feature.faq.presentation.FAQViewModel
-import com.spoonofcode.poa.feature.faq.presentation.FAQViewState
+import com.spoonofcode.feature.faq.di.faqTestModule
+import com.spoonofcode.feature.faq.presentation.FAQViewAction
+import com.spoonofcode.feature.faq.presentation.FAQViewModel
+import com.spoonofcode.feature.faq.presentation.FAQViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

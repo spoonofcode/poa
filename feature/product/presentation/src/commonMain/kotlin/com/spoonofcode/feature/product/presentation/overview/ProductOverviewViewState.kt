@@ -2,7 +2,7 @@ package com.spoonofcode.feature.product.presentation.overview
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState
-import com.spoonofcode.poa.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.Product
 
 @Immutable
 internal data class ProductOverviewViewState(

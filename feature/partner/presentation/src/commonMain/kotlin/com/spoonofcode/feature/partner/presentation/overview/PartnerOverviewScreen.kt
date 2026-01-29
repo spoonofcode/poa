@@ -18,7 +18,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.partners
 

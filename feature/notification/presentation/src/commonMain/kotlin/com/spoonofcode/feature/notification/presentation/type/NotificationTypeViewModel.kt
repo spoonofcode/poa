@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
-import com.spoonofcode.poa.feature.partner.presentation.customer.overview.CustomerOverviewScreen
-import com.spoonofcode.poa.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
+import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOverviewScreen
+import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
 import kotlinx.coroutines.launch
 
 internal class NotificationTypeViewModel() : BaseViewModel<com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewState, com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction>(

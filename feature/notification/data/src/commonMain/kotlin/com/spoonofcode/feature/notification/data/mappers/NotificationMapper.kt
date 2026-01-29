@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.data.mappers
 
 import com.spoonofcode.feature.notification.data.remote.model.NotificationResponse
-import com.spoonofcode.poa.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.notification.domain.model.Notification
 
 fun NotificationResponse.toNotification(): Notification {
     return Notification(

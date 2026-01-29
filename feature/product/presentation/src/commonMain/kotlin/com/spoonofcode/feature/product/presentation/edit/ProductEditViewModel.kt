@@ -2,8 +2,8 @@ package com.spoonofcode.feature.product.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.poa.feature.product.domain.usecase.GetProductByIdUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.UpdateProductUseCase
+import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
+import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
 import kotlinx.coroutines.launch
 
 internal class ProductEditViewModel(

@@ -19,7 +19,7 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.partner.domain.model.PartnerUser
+import com.spoonofcode.feature.partner.domain.model.PartnerUser
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.my_customers
 import com.spoonofcode.core.presentation.poa

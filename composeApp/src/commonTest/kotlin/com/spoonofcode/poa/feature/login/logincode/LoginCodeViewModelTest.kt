@@ -6,11 +6,11 @@ import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.login.di.loginTestModule
-import com.spoonofcode.poa.feature.login.domain.repository.LoginRepository
-import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeViewAction
-import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeViewModel
-import com.spoonofcode.poa.feature.login.presentation.logincode.LoginCodeViewState
+import com.spoonofcode.feature.login.di.loginTestModule
+import com.spoonofcode.feature.login.domain.repository.LoginRepository
+import com.spoonofcode.feature.login.presentation.logincode.LoginCodeViewAction
+import com.spoonofcode.feature.login.presentation.logincode.LoginCodeViewModel
+import com.spoonofcode.feature.login.presentation.logincode.LoginCodeViewState
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

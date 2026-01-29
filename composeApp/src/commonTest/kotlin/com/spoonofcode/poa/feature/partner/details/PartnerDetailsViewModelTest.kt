@@ -4,10 +4,10 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.partner.data.mock.PartnerMockData.PARTNER_1
-import com.spoonofcode.poa.feature.partner.di.partnerTestModule
-import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewAction
-import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewState
+import com.spoonofcode.feature.partner.data.mock.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.di.partnerTestModule
+import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsViewAction
+import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

@@ -1,9 +1,9 @@
 package com.spoonofcode.feature.partner.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerByIdUseCase
-import com.spoonofcode.poa.feature.partner.domain.usecase.UpdatePartnerUseCase
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
+import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
+import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 

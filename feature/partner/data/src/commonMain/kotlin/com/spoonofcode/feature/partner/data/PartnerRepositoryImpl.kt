@@ -5,10 +5,10 @@ import com.spoonofcode.feature.partner.data.mappers.toPartnerUser
 import com.spoonofcode.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerDataSource
-import com.spoonofcode.poa.feature.partner.domain.model.Partner
-import com.spoonofcode.poa.feature.partner.domain.model.PartnerCategory
-import com.spoonofcode.poa.feature.partner.domain.model.PartnerUser
-import com.spoonofcode.poa.feature.partner.domain.repository.PartnerRepository
+import com.spoonofcode.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.model.PartnerCategory
+import com.spoonofcode.feature.partner.domain.model.PartnerUser
+import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 
 class PartnerRepositoryImpl(
     private val remotePartnerDataSource: RemotePartnerDataSource,

@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationSettingsUseCase
-import com.spoonofcode.poa.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
+import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
+import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException

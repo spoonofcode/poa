@@ -2,11 +2,11 @@ package com.spoonofcode.feature.partner.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
-import com.spoonofcode.poa.feature.partner.domain.usecase.GetPartnersUseCase
-import com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsScreen
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnersUseCase
+import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 

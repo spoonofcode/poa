@@ -26,7 +26,7 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.my_products
 

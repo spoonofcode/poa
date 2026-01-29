@@ -7,7 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import com.spoonofcode.poa.feature.partner.presentation.overview.PartnerOverviewScreen
+import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewScreen
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.partners
 import org.jetbrains.compose.resources.stringResource

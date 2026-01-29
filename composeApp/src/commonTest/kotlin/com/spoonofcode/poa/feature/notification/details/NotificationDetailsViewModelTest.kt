@@ -4,10 +4,10 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.poa.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
-import com.spoonofcode.poa.feature.notification.di.notificationTestModule
-import com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewAction
-import com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewState
+import com.spoonofcode.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
+import com.spoonofcode.feature.notification.di.notificationTestModule
+import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction
+import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

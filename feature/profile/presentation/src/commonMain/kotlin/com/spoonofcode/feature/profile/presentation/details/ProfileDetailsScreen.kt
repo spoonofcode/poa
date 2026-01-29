@@ -41,7 +41,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.profile.domain.model.Profile
+import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.edit_profile
 import com.spoonofcode.core.presentation.faq

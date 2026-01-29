@@ -32,8 +32,8 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.poa.feature.reward.data.model.DailyReward
-import com.spoonofcode.poa.feature.reward.data.model.DailyRewardStatus
+import com.spoonofcode.feature.reward.data.model.DailyReward
+import com.spoonofcode.feature.reward.data.model.DailyRewardStatus
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.daily_check_in
 import com.spoonofcode.core.presentation.day_number

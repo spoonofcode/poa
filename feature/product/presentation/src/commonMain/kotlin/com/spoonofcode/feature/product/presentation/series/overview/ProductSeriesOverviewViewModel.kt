@@ -3,8 +3,8 @@ package com.spoonofcode.feature.product.presentation.series.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen
-import com.spoonofcode.poa.feature.product.domain.usecase.GetProductSeriesUseCase
+import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
+import com.spoonofcode.feature.product.domain.usecase.GetProductSeriesUseCase
 import kotlinx.coroutines.launch
 
 internal class ProductSeriesOverviewViewModel(

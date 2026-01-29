@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.presentation.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.feature.notification.domain.usecase.GetNotificationByIdUseCase
+import com.spoonofcode.feature.notification.domain.usecase.GetNotificationByIdUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 

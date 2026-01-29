@@ -2,9 +2,9 @@ package com.spoonofcode.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.poa.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
-import com.spoonofcode.poa.feature.product.domain.usecase.GetUserProductsUseCase
-import com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen
+import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
+import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
+import com.spoonofcode.feature.product.presentation.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class ProductOverviewViewModel(

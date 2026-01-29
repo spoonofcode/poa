@@ -19,7 +19,7 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.core.presentation.base.BaseScreen
-import com.spoonofcode.poa.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.notification
 import com.spoonofcode.core.presentation.open_link

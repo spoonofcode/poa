@@ -4,11 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen
-import com.spoonofcode.poa.feature.reward.data.model.RewardType
-import com.spoonofcode.poa.feature.reward.domain.usecase.AddRewardToUserUseCase
-import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
-import com.spoonofcode.poa.feature.reward.domain.usecase.GetUserRewardsPointsUseCase
+import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewScreen
+import com.spoonofcode.feature.reward.data.model.RewardType
+import com.spoonofcode.feature.reward.domain.usecase.AddRewardToUserUseCase
+import com.spoonofcode.feature.reward.domain.usecase.GetUserDailyCheckInStatusUseCase
+import com.spoonofcode.feature.reward.domain.usecase.GetUserRewardsPointsUseCase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
