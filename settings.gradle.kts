@@ -31,3 +31,7 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":core:data")
 include(":core:presentation")
+include(":feature:profile:data")
+include(":feature:profile:domain")
+include(":feature:profile:presentation")
+
