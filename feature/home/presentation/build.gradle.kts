@@ -65,7 +65,6 @@ kotlin {
                 implementation(projects.core.presentation)
 
                 implementation(projects.feature.home.domain)
-                // Add KMP dependencies here
             }
         }
 

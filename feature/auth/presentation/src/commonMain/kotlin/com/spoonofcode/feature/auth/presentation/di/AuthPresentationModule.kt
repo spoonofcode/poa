@@ -20,7 +20,7 @@ import org.koin.dsl.module
 
 expect val platformLoginModule: Module
 
-val loginModule: Module = module {
+val authPresentationModule: Module = module {
     includes(platformLoginModule)
 
     singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
@@ -31,9 +31,7 @@ val loginModule: Module = module {
     singleOf(::RemoteLoginCodeDataSource)
     singleOf(::RemoteLoginRequestCodeDataSource)
 
-    factoryOf(::LoginGoogleUseCase)
-    factoryOf(::LoginCodeUseCase)
-    factoryOf(::LoginRequestCodeUseCase)
+
 
     viewModelOf(::LoginViewModel)
     viewModelOf(::LoginCodeViewModel)

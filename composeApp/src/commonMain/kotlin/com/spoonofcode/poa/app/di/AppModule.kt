@@ -6,7 +6,7 @@ import com.spoonofcode.core.data.network.di.networkModule
 import com.spoonofcode.core.data.recaptcha.di.recaptchaModule
 import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.uiModule
-import com.spoonofcode.feature.auth.presentation.di.loginModule
+import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
 import com.spoonofcode.feature.home.data.di.homeDataModule
 import com.spoonofcode.feature.home.domain.di.homeDomainModule
 import com.spoonofcode.feature.home.presentation.di.homePresentationModule
@@ -43,7 +43,7 @@ val appModule = module {
         homePresentationModule,
 
 
-        loginModule,
+        authPresentationModule,
 
         partnerDataModule,
         partnerDomainModule,
