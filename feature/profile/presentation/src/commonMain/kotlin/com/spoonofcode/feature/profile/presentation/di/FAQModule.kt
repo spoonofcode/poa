@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.faq.di
+package com.spoonofcode.feature.profile.presentation.di
 
 import com.spoonofcode.poa.feature.faq.presentation.FAQViewModel
 import org.koin.core.module.dsl.viewModelOf

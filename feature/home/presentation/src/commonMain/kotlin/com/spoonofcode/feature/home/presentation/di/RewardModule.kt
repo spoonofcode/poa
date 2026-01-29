@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.reward.di
+package com.spoonofcode.feature.home.presentation.di
 
 import com.spoonofcode.poa.feature.reward.data.RewardRepositoryImpl
 import com.spoonofcode.poa.feature.reward.data.remote.RemoteUserRewardDataSource

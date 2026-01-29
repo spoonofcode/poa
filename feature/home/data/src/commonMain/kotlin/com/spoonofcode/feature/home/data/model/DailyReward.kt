@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.reward.data.model
+package com.spoonofcode.feature.home.data.model
 
 import androidx.compose.runtime.Immutable
 import kotlinx.serialization.Serializable

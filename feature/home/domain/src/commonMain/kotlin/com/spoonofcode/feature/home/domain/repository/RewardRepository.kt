@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.reward.domain.repository
+package com.spoonofcode.feature.home.domain.repository
 
 import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
 import com.spoonofcode.poa.feature.reward.data.model.RewardType

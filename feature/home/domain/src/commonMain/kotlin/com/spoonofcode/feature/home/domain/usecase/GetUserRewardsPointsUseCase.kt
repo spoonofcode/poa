@@ -1,6 +1,6 @@
-package com.spoonofcode.poa.feature.reward.domain.usecase
+package com.spoonofcode.feature.home.domain.usecase
 
-import com.spoonofcode.poa.feature.reward.domain.repository.RewardRepository
+import com.spoonofcode.feature.home.domain.repository.RewardRepository
 
 class GetUserRewardsPointsUseCase(
     private val rewardRepository: RewardRepository,

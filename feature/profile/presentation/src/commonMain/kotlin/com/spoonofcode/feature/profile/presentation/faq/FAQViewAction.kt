@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.faq.presentation
+package com.spoonofcode.feature.profile.presentation.faq
 
 import com.spoonofcode.core.presentation.base.BaseViewAction
 

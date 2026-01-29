@@ -1,9 +1,9 @@
-package com.spoonofcode.poa.feature.reward.data
+package com.spoonofcode.feature.home.data
 
-import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
-import com.spoonofcode.poa.feature.reward.data.model.RewardType
-import com.spoonofcode.poa.feature.reward.data.remote.RemoteUserRewardDataSource
-import com.spoonofcode.poa.feature.reward.data.testdata.DAILY_CHECK_IN_STATUS
+import com.spoonofcode.feature.home.data.model.DailyCheckInStatus
+import com.spoonofcode.feature.home.data.model.RewardType
+import com.spoonofcode.feature.home.data.remote.RemoteUserRewardDataSource
+import com.spoonofcode.feature.home.data.testdata.DAILY_CHECK_IN_STATUS
 import com.spoonofcode.poa.feature.reward.domain.repository.RewardRepository
 
 class RewardRepositoryImpl(

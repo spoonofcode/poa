@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.feature.reward.data.model
+package com.spoonofcode.feature.home.data.model
 
 enum class RewardType {
     DAILY_CHECK_IN,

@@ -1,9 +1,9 @@
-package com.spoonofcode.poa.feature.reward.data.remote
+package com.spoonofcode.feature.home.data.remote
 
 import com.spoonofcode.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.poa.feature.reward.data.model.AddRewardToUserRequest
-import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
-import com.spoonofcode.poa.feature.reward.data.model.RewardType
+import com.spoonofcode.feature.home.data.model.AddRewardToUserRequest
+import com.spoonofcode.feature.home.data.model.DailyCheckInStatus
+import com.spoonofcode.feature.home.data.model.RewardType
 import io.ktor.http.HttpMethod
 
 class RemoteUserRewardDataSource : RemoteBaseDataSource(

@@ -1,8 +1,8 @@
-package com.spoonofcode.poa.feature.reward.data.testdata
+package com.spoonofcode.feature.home.data.testdata
 
-import com.spoonofcode.poa.feature.reward.data.model.DailyCheckInStatus
-import com.spoonofcode.poa.feature.reward.data.model.DailyReward
-import com.spoonofcode.poa.feature.reward.data.model.DailyRewardStatus
+import com.spoonofcode.feature.home.data.model.DailyCheckInStatus
+import com.spoonofcode.feature.home.data.model.DailyReward
+import com.spoonofcode.feature.home.data.model.DailyRewardStatus
 
 val DAILY_CHECK_IN_STATUS = DailyCheckInStatus(
     streak = 0,
