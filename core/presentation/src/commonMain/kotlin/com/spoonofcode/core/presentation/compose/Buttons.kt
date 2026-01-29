@@ -32,9 +32,9 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.ic_google
-import poa.core.presentation.generated.resources.sign_in_with_google
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.ic_google
+import com.spoonofcode.core.presentation.sign_in_with_google
 
 object Buttons {
 

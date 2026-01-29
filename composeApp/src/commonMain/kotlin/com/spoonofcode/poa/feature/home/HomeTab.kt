@@ -8,8 +8,8 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.spoonofcode.poa.feature.home.presentation.HomeScreen
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.home
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.home
 import org.jetbrains.compose.resources.stringResource
 
 object HomeTab : Tab {

@@ -36,12 +36,12 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.about_product
-import poa.core.presentation.generated.resources.add_product
-import poa.core.presentation.generated.resources.learn_more
-import poa.core.presentation.generated.resources.product
-import poa.core.presentation.generated.resources.visit_product_page
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.about_product
+import com.spoonofcode.core.presentation.add_product
+import com.spoonofcode.core.presentation.learn_more
+import com.spoonofcode.core.presentation.product
+import com.spoonofcode.core.presentation.visit_product_page
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(

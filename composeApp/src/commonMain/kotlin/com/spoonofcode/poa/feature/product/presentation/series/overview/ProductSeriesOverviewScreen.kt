@@ -25,10 +25,10 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.product.data.testdata.PRODUCTS
 import com.spoonofcode.poa.feature.product.domain.model.Product
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.my_product_series
-import poa.core.presentation.generated.resources.send_notification
-import poa.core.presentation.generated.resources.series_number
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.my_product_series
+import com.spoonofcode.core.presentation.send_notification
+import com.spoonofcode.core.presentation.series_number
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProductSeriesOverviewScreen(

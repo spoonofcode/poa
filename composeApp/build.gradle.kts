@@ -224,9 +224,3 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
-
-//compose.resources {
-//    publicResClass = true
-//    packageOfResClass = "com.spoonofcode.poa.resources"
-//    generateResClass = always
-//}

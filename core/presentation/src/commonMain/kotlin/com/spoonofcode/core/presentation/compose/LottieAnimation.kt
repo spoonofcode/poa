@@ -8,7 +8,7 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import poa.core.presentation.generated.resources.Res.readBytes
+import com.spoonofcode.core.presentation.Res.readBytes
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

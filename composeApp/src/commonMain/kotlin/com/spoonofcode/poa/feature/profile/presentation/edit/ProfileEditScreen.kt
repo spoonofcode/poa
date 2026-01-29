@@ -11,11 +11,11 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.edit_profile
-import poa.core.presentation.generated.resources.name
-import poa.core.presentation.generated.resources.poa
-import poa.core.presentation.generated.resources.save_changes
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.edit_profile
+import com.spoonofcode.core.presentation.name
+import com.spoonofcode.core.presentation.poa
+import com.spoonofcode.core.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.compose.Images

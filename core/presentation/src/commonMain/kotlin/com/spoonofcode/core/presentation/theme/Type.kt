@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.Font
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.roboto_bold
-import poa.core.presentation.generated.resources.roboto_extra_bold
-import poa.core.presentation.generated.resources.roboto_extra_light
-import poa.core.presentation.generated.resources.roboto_light
-import poa.core.presentation.generated.resources.roboto_medium
-import poa.core.presentation.generated.resources.roboto_regular
-import poa.core.presentation.generated.resources.roboto_semi_bold
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.roboto_bold
+import com.spoonofcode.core.presentation.roboto_extra_bold
+import com.spoonofcode.core.presentation.roboto_extra_light
+import com.spoonofcode.core.presentation.roboto_light
+import com.spoonofcode.core.presentation.roboto_medium
+import com.spoonofcode.core.presentation.roboto_regular
+import com.spoonofcode.core.presentation.roboto_semi_bold
 
 @Composable
 fun appFontFamily() = FontFamily(

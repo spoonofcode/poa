@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.data_could_not_be_loaded
-import poa.core.presentation.generated.resources.poa
-import poa.core.presentation.generated.resources.reload
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.data_could_not_be_loaded
+import com.spoonofcode.core.presentation.poa
+import com.spoonofcode.core.presentation.reload
 
 @Composable
 fun ErrorView(

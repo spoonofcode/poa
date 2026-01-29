@@ -28,9 +28,9 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.accept
-import poa.core.presentation.generated.resources.cancel
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.accept
+import com.spoonofcode.core.presentation.cancel
 import kotlin.time.Duration.Companion.days
 import kotlin.time.ExperimentalTime
 

@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.stringResource
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.search
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.search
 
 object TextFields {
     @Composable

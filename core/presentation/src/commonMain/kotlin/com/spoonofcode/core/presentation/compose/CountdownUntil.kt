@@ -10,9 +10,9 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.jetbrains.compose.resources.stringResource
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.time_is_up
-import poa.core.presentation.generated.resources.time_remaining
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.time_is_up
+import com.spoonofcode.core.presentation.time_remaining
 import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO

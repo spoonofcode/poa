@@ -20,9 +20,9 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.poa.feature.notification.domain.model.Notification
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.notification
-import poa.core.presentation.generated.resources.open_link
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.notification
+import com.spoonofcode.core.presentation.open_link
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationDetailsScreen(

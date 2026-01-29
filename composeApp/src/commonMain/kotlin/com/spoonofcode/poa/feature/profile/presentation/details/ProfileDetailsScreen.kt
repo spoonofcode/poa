@@ -42,16 +42,16 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.profile.domain.model.Profile
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.edit_profile
-import poa.core.presentation.generated.resources.faq
-import poa.core.presentation.generated.resources.logout
-import poa.core.presentation.generated.resources.my_products
-import poa.core.presentation.generated.resources.notifications
-import poa.core.presentation.generated.resources.partner_panel
-import poa.core.presentation.generated.resources.poa
-import poa.core.presentation.generated.resources.profile
-import poa.core.presentation.generated.resources.terms_and_conditions
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.edit_profile
+import com.spoonofcode.core.presentation.faq
+import com.spoonofcode.core.presentation.logout
+import com.spoonofcode.core.presentation.my_products
+import com.spoonofcode.core.presentation.notifications
+import com.spoonofcode.core.presentation.partner_panel
+import com.spoonofcode.core.presentation.poa
+import com.spoonofcode.core.presentation.profile
+import com.spoonofcode.core.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProfileDetailsScreen(

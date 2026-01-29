@@ -30,15 +30,15 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.expiration_date
-import poa.core.presentation.generated.resources.link
-import poa.core.presentation.generated.resources.notification
-import poa.core.presentation.generated.resources.selected_customers
-import poa.core.presentation.generated.resources.selected_series
-import poa.core.presentation.generated.resources.send_notification
-import poa.core.presentation.generated.resources.text
-import poa.core.presentation.generated.resources.title
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.expiration_date
+import com.spoonofcode.core.presentation.link
+import com.spoonofcode.core.presentation.notification
+import com.spoonofcode.core.presentation.selected_customers
+import com.spoonofcode.core.presentation.selected_series
+import com.spoonofcode.core.presentation.send_notification
+import com.spoonofcode.core.presentation.text
+import com.spoonofcode.core.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationEditScreen(

@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.check_in_again
-import poa.core.presentation.generated.resources.hours
-import poa.core.presentation.generated.resources.minutes
-import poa.core.presentation.generated.resources.seconds
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.check_in_again
+import com.spoonofcode.core.presentation.hours
+import com.spoonofcode.core.presentation.minutes
+import com.spoonofcode.core.presentation.seconds
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

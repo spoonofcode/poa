@@ -9,12 +9,12 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.from_all_partners
-import poa.core.presentation.generated.resources.from_my_partners
-import poa.core.presentation.generated.resources.notifications_settings
-import poa.core.presentation.generated.resources.notifications_settings_text
-import poa.core.presentation.generated.resources.save_changes
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.from_all_partners
+import com.spoonofcode.core.presentation.from_my_partners
+import com.spoonofcode.core.presentation.notifications_settings
+import com.spoonofcode.core.presentation.notifications_settings_text
+import com.spoonofcode.core.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationSettingsScreen :

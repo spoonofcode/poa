@@ -34,16 +34,16 @@ import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.poa.feature.reward.data.model.DailyReward
 import com.spoonofcode.poa.feature.reward.data.model.DailyRewardStatus
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.daily_check_in
-import poa.core.presentation.generated.resources.day_number
-import poa.core.presentation.generated.resources.home
-import poa.core.presentation.generated.resources.new_partners
-import poa.core.presentation.generated.resources.next_check_in
-import poa.core.presentation.generated.resources.points_short
-import poa.core.presentation.generated.resources.streak_days_count
-import poa.core.presentation.generated.resources.total_points
-import poa.core.presentation.generated.resources.your_streak
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.daily_check_in
+import com.spoonofcode.core.presentation.day_number
+import com.spoonofcode.core.presentation.home
+import com.spoonofcode.core.presentation.new_partners
+import com.spoonofcode.core.presentation.next_check_in
+import com.spoonofcode.core.presentation.points_short
+import com.spoonofcode.core.presentation.streak_days_count
+import com.spoonofcode.core.presentation.total_points
+import com.spoonofcode.core.presentation.your_streak
 import org.jetbrains.compose.resources.stringResource
 
 internal class HomeScreen(

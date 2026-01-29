@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.DrawableResource
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.poa
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.poa
 
 @Composable
 fun LoadingView(

@@ -12,18 +12,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Dividers
-import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import poa.core.presentation.generated.resources.Res
-import poa.core.presentation.generated.resources.email
-import poa.core.presentation.generated.resources.let_s_get_started
-import poa.core.presentation.generated.resources.or
-import poa.core.presentation.generated.resources.poa
-import poa.core.presentation.generated.resources.sign_in
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.email
+import com.spoonofcode.core.presentation.let_s_get_started
+import com.spoonofcode.core.presentation.or
+import com.spoonofcode.core.presentation.poa
+import com.spoonofcode.core.presentation.sign_in
 import org.jetbrains.compose.resources.stringResource
 
 internal class LoginScreen(
