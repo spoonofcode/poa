@@ -130,11 +130,11 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 # Build tools
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
-convention-android-application = { id = "com.plcoding.convention.android.application", version = "unspecified" }
-convention-android-application-compose = { id = "com.plcoding.convention.android.application.compose", version = "unspecified" }
-convention-cmp-application = { id = "com.plcoding.convention.cmp.application", version = "unspecified" }
-convention-kmp-library = { id = "com.plcoding.convention.kmp.library", version = "unspecified" }
-convention-cmp-library = { id = "com.plcoding.convention.cmp.library", version = "unspecified" }
-convention-cmp-feature = { id = "com.plcoding.convention.cmp.feature", version = "unspecified" }
-convention-buildkonfig = { id = "com.plcoding.convention.buildkonfig", version = "unspecified" }
-convention-room = { id = "com.plcoding.convention.room", version = "unspecified" }
+convention-android-application = { id = "com.spoonofcode.convention.android.application", version = "unspecified" }
+convention-android-application-compose = { id = "com.spoonofcode.convention.android.application.compose", version = "unspecified" }
+convention-cmp-application = { id = "com.spoonofcode.convention.cmp.application", version = "unspecified" }
+convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", version = "unspecified" }
+convention-cmp-library = { id = "com.spoonofcode.convention.cmp.library", version = "unspecified" }
+convention-cmp-feature = { id = "com.spoonofcode.convention.cmp.feature", version = "unspecified" }
+convention-buildkonfig = { id = "com.spoonofcode.convention.buildkonfig", version = "unspecified" }
+convention-room = { id = "com.spoonofcode.convention.room", version = "unspecified" }

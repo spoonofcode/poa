@@ -14,7 +14,7 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
             }
 
             extensions.configure<ApplicationExtension> {
-                namespace = "com.plcoding.chirp"
+                namespace = "com.spoonofcode.chirp"
 
                 defaultConfig {
                     applicationId = libs.findVersion("projectApplicationId").get().toString()

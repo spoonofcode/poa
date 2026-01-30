@@ -8,7 +8,7 @@ class CmpLibraryConventionPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("com.plcoding.convention.kmp.library")
+                apply("com.spoonofcode.convention.kmp.library")
                 apply("org.jetbrains.kotlin.plugin.compose")
                 apply("org.jetbrains.compose")
             }

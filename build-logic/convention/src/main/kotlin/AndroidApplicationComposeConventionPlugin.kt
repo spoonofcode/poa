@@ -9,7 +9,7 @@ class AndroidApplicationComposeConventionPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("com.plcoding.convention.android.application")
+                apply("com.spoonofcode.convention.android.application")
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
 
