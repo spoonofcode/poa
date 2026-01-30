@@ -254,5 +254,5 @@ android {
 
 dependencies {
     debugImplementation(libs.ui.tooling)
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 }
