@@ -67,6 +67,7 @@ kotlin {
                 implementation(projects.core.presentation)
 
                 implementation(projects.feature.home.domain)
+                implementation(projects.feature.appnavigation)
             }
         }
 

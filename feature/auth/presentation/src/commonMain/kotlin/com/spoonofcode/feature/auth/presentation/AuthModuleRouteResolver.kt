@@ -6,7 +6,7 @@ import com.spoonofcode.feature.appnavigation.AuthModule
 import com.spoonofcode.feature.auth.presentation.login.LoginScreen
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
 
-class AuthRouteResolver : ModuleRouteResolver<AuthModule> {
+class AuthModuleRouteResolver : ModuleRouteResolver<AuthModule> {
     override fun resolve(screen: com.spoonofcode.feature.appnavigation.Screen): Screen? =
         (screen as? AuthModule)?.let {
             when (it) {

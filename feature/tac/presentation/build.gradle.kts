@@ -65,6 +65,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.core.presentation)
+                implementation(projects.feature.appnavigation)
             }
         }
 
