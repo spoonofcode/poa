@@ -120,6 +120,9 @@ kotlin {
 
                 // TODO #109 Fix after migration to feature modules
                 api(projects.core.data)
+
+                // TODO #109 Fix after migration to feature modules
+                implementation(projects.feature.appnavigation)
             }
         }
 

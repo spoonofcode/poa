@@ -1,6 +1,6 @@
 package com.spoonofcode.core.presentation.navigation.route
 
-import com.spoonofcode.core.presentation.navigation.Screen
+import com.spoonofcode.feature.appnavigation.Screen
 
 class VoyagerRouteResolverImpl(
     private val routeResolver: List<ModuleRouteResolver<out Screen>>

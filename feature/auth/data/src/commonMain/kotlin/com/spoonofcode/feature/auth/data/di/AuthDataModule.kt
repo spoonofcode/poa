@@ -11,7 +11,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val authDataSourceModule: Module = module {
+val authDataModule: Module = module {
     singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
 
     singleOf(::RemoteLoginGoogleDataSource)

@@ -1,6 +1,4 @@
-package com.spoonofcode.poa.navigation
-
-import com.spoonofcode.core.presentation.navigation.Screen
+package com.spoonofcode.feature.appnavigation
 
 sealed class NotificationModule : Screen() {
     data class NotificationDetailsScreen(

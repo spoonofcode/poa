@@ -66,6 +66,7 @@ kotlin {
                 implementation(projects.core.presentation)
 
                 implementation(projects.feature.auth.domain)
+                implementation(projects.feature.appnavigation)
             }
         }
 

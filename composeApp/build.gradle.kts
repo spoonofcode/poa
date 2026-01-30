@@ -199,6 +199,8 @@ kotlin {
             implementation(projects.feature.scan.presentation)
 
             implementation(projects.feature.tac.presentation)
+
+            implementation(projects.feature.appnavigation)
         }
         commonTest.dependencies {
             implementation(libs.koin.test)

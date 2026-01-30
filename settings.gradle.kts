@@ -31,6 +31,7 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":core:data")
 include(":core:presentation")
+include(":feature:appnavigation")
 include(":feature:auth:data")
 include(":feature:auth:domain")
 include(":feature:auth:presentation")
@@ -53,4 +54,3 @@ include(":feature:scan:data")
 include(":feature:scan:domain")
 include(":feature:scan:presentation")
 include(":feature:tac:presentation")
-
