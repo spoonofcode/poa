@@ -3,11 +3,11 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.android.lint)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -84,7 +84,7 @@ kotlin {
 
             api(libs.androidx.credentials)
             api(libs.androidx.credentials.play.service.auth)
-            api(libs.googleid)
+            api(libs.google.id)
             api(libs.recaptcha)
             api(libs.firebase.messaging)
             api(project.dependencies.platform(libs.firebase.bom))
@@ -138,7 +138,7 @@ kotlin {
                 implementation(libs.androidx.credentials.play.service.auth)
                 implementation(libs.androidx.media3.exoplayer)
                 implementation(libs.androidx.media3.ui.compose)
-                implementation(libs.googleid)
+                implementation(libs.google.id)
                 implementation(libs.firebase.messaging)
                 implementation(project.dependencies.platform(libs.firebase.bom))
             }

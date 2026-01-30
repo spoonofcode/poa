@@ -4,13 +4,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.android.application)
     alias(libs.plugins.buildkonfig)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinCocoapods)
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.cocoapods)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
@@ -128,7 +128,7 @@ kotlin {
 
             implementation(libs.androidx.credentials)
             implementation(libs.androidx.credentials.play.service.auth)
-            implementation(libs.googleid)
+//            implementation(libs.google.id)
             implementation(libs.recaptcha)
             implementation(libs.firebase.messaging)
             implementation(project.dependencies.platform(libs.firebase.bom))
@@ -213,12 +213,12 @@ kotlin {
 
 android {
     namespace = "com.spoonofcode.poa"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.spoonofcode.poa"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -254,5 +254,5 @@ android {
 
 dependencies {
     debugImplementation(libs.ui.tooling)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
+    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
 }
