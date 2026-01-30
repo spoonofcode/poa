@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
@@ -10,28 +9,28 @@ import kotlinx.datetime.LocalDateTime
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,
-) : BaseViewModel<com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState, com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction>(
-    initialViewState = _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState(),
+) : BaseViewModel<NotificationEditViewState, NotificationEditViewAction>(
+    initialViewState = NotificationEditViewState(),
     initialScreenState = ScreenState.CONTENT,
 ) {
 
-    override fun onAction(action: com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction) {
+    override fun onAction(action: NotificationEditViewAction) {
         when (action) {
-            is com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
+            is NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
                 action.startDateTime
             )
 
-            is com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeLink -> changeLink(action.link)
-            is com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeText -> changeText(action.text)
-            is com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
-            is com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.InitView -> initView(action.itemIds)
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.SendNotification -> sendNotification()
+            is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
+            is NotificationEditViewAction.ChangeText -> changeText(action.text)
+            is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
+            is NotificationEditViewAction.InitView -> initView(action.itemIds)
+            NotificationEditViewAction.SendNotification -> sendNotification()
         }
     }
 
     private fun initView(itemIds: List<String>) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState(
+            NotificationEditViewState(
                 itemIds = itemIds
             )
         }
@@ -39,7 +38,7 @@ internal class NotificationEditViewModel(
 
     private fun changeTitle(title: String) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState(
+            NotificationEditViewState(
                 title = title
             )
         }
@@ -47,7 +46,7 @@ internal class NotificationEditViewModel(
 
     private fun changeText(text: String) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState(
+            NotificationEditViewState(
                 text = text
             )
         }
@@ -55,7 +54,7 @@ internal class NotificationEditViewModel(
 
     private fun changeExpirationDateTime(startDateTime: LocalDateTime) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState(
+            NotificationEditViewState(
                 expirationDateTime = startDateTime
             )
         }
@@ -63,7 +62,7 @@ internal class NotificationEditViewModel(
 
     private fun changeLink(link: String) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState(
+            NotificationEditViewState(
                 link = link
             )
         }
@@ -81,7 +80,8 @@ internal class NotificationEditViewModel(
                 topics = currentState.itemIds,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
-                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                // TODO #109 Fix after migration to feature modules
+//                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure { error ->
                 showErrorSnackbar(error)
             }

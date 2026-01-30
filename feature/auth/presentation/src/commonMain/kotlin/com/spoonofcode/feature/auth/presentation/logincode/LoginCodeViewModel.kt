@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.auth.presentation.logincode
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
@@ -38,7 +37,8 @@ internal class LoginCodeViewModel(
                 email = currentState().email,
                 code = currentState().code,
             ).onSuccess {
-                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                // TODO #109 Fix after migration to feature modules
+//                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
             }.onFailure {
                 showErrorSnackbar(it)
             }

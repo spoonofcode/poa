@@ -3,7 +3,6 @@ package com.spoonofcode.feature.product.presentation.series.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.feature.product.domain.usecase.GetProductSeriesUseCase
 import kotlinx.coroutines.launch
 
@@ -55,14 +54,15 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun navigateToNotification() {
-        viewModelScope.launch {
-            viewModelNavigator.push(
-                NotificationEditScreen(
-                    topics = getSelectedProductSeries(),
-                    itemIds = getSelectedProductSeriesNames()
-                )
-            )
-        }
+// TODO #109 Fix after migration to feature modules
+//        viewModelScope.launch {
+//            viewModelNavigator.push(
+//                NotificationEditScreen(
+//                    topics = getSelectedProductSeries(),
+//                    itemIds = getSelectedProductSeriesNames()
+//                )
+//            )
+//        }
     }
 
     private fun getSelectedProductSeries(): List<String> =

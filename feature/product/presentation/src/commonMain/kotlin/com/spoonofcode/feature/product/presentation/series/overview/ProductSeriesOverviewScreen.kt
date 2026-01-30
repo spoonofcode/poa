@@ -23,7 +23,6 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.product.data.testdata.PRODUCTS
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.my_product_series
@@ -127,7 +126,7 @@ fun ProductSeriesOverviewScreenContentPreview() {
     ProductSeriesOverviewScreen()
         .PreviewContent(
             viewState = ProductSeriesOverviewViewState(
-                productSeries = PRODUCTS,
+//                productSeries = PRODUCTS,
             )
         )
 }

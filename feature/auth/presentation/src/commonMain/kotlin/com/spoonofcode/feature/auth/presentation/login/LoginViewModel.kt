@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.auth.presentation.login
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.poa.app.MainHostScreen
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.domain.model.GoogleAccount
@@ -55,7 +54,8 @@ internal class LoginViewModel(
             val googleIdToken = requireNotNull(googleAccount?.idToken)
             loginGoogleUseCase(googleIdToken)
                 .onSuccess {
-                    viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                    // TODO #109 Fix after migration to feature modules
+//                    viewModelNavigator.replaceAll(listOf(MainHostScreen()))
                 }.onFailure {
                     showErrorSnackbar(it)
                 }

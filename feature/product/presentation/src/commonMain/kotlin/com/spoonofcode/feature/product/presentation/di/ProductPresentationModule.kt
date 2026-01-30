@@ -1,25 +1,10 @@
 package com.spoonofcode.feature.product.presentation.di
 
-import com.spoonofcode.feature.product.data.ProductRepositoryImpl
-import com.spoonofcode.feature.product.data.remote.RemoteProductDataSource
-import com.spoonofcode.feature.product.data.remote.RemoteUserProductDataSource
-import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
-import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
-import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
-import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
-import com.spoonofcode.feature.product.domain.usecase.GetProductByTagIdUseCase
-import com.spoonofcode.feature.product.domain.usecase.GetProductSeriesUseCase
-import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
-import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
 import com.spoonofcode.feature.product.presentation.details.ProductDetailsViewModel
 import com.spoonofcode.feature.product.presentation.edit.ProductEditViewModel
 import com.spoonofcode.feature.product.presentation.overview.ProductOverviewViewModel
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewViewModel
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val productPresentationModule = module {

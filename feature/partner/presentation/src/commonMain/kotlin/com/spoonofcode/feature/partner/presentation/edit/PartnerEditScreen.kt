@@ -9,7 +9,6 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.partner.data.mock.PartnerMockData
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.description
 import com.spoonofcode.core.presentation.facebook
@@ -98,7 +97,8 @@ internal class PartnerEditScreen(
             partnerId = "1"
         ).PreviewContent(
             PartnerEditViewState(
-                partner = PartnerMockData.PARTNER_1
+                // TODO #109 Fix after migration to feature modules
+//                partner = PartnerMockData.PARTNER_1
             )
         )
     }

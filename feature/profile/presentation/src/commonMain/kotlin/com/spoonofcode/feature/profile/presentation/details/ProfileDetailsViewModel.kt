@@ -2,14 +2,9 @@ package com.spoonofcode.feature.profile.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.feature.faq.presentation.FAQScreen
-import com.spoonofcode.feature.auth.presentation.login.LoginScreen
-import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsScreen
-import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
 import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.feature.profile.domain.usecase.LogoutUseCase
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditScreen
-import com.spoonofcode.feature.tac.presentation.TACScreen
 import kotlinx.coroutines.launch
 
 internal class ProfileDetailsViewModel(
@@ -53,33 +48,38 @@ internal class ProfileDetailsViewModel(
     }
 
     private fun navigateToPartnerPanel() {
-        viewModelScope.launch {
-            viewModelNavigator.push(screen = PartnerPanelScreen())
-        }
+        // TODO #109 Fix after migration to feature modules
+//        viewModelScope.launch {
+//            viewModelNavigator.push(screen = PartnerPanelScreen())
+//        }
     }
 
     private fun navigateToNotificationSettings() {
-        viewModelScope.launch {
-            viewModelNavigator.push(screen = NotificationSettingsScreen())
-        }
+        // TODO #109 Fix after migration to feature modules
+//        viewModelScope.launch {
+//            viewModelNavigator.push(screen = NotificationSettingsScreen())
+//        }
     }
 
     private fun navigateToTAC() {
-        viewModelScope.launch {
-            viewModelNavigator.push(screen = TACScreen())
-        }
+        // TODO #109 Fix after migration to feature modules
+//        viewModelScope.launch {
+//            viewModelNavigator.push(screen = TACScreen())
+//        }
     }
 
     private fun navigateToFAQ() {
-        viewModelScope.launch {
-            viewModelNavigator.push(screen = FAQScreen())
-        }
+        // TODO #109 Fix after migration to feature modules
+//        viewModelScope.launch {
+//            viewModelNavigator.push(screen = FAQScreen())
+//        }
     }
 
     private fun logout() {
-        viewModelScope.launch {
-            logoutUseCase()
-            viewModelNavigator.replaceAll(listOf(LoginScreen()))
-        }
+        // TODO #109 Fix after migration to feature modules
+//        viewModelScope.launch {
+//            logoutUseCase()
+//            viewModelNavigator.replaceAll(listOf(LoginScreen()))
+//        }
     }
 }

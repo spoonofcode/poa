@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.scan
 import org.jetbrains.compose.resources.stringResource
 
 object ScanTab : Tab {

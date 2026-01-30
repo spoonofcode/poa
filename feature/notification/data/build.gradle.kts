@@ -62,6 +62,8 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
                 implementation(projects.feature.notification.domain)
+
+                implementation(projects.core.data)
             }
         }
 
