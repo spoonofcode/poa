@@ -3,6 +3,7 @@ package com.spoonofcode.feature.auth.presentation.logincode
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 
@@ -37,8 +38,7 @@ internal class LoginCodeViewModel(
                 email = currentState().email,
                 code = currentState().code,
             ).onSuccess {
-                // TODO #109 Fix after migration to feature modules
-//                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))
             }.onFailure {
                 showErrorSnackbar(it)
             }

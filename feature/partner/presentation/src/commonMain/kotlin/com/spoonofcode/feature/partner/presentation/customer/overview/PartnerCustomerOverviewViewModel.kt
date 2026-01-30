@@ -1,9 +1,10 @@
 package com.spoonofcode.feature.partner.presentation.customer.overview
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerCustomerOverviewViewModel(
@@ -55,13 +56,14 @@ internal class PartnerCustomerOverviewViewModel(
 
     private fun navigateToNotification() {
         viewModelScope.launch {
-            // TODO #109 Fix after migration to feature modules
-//            viewModelNavigator.push(
-//                NotificationEditScreen(
-//                    topics = getSelectedUsers(),
-//                    itemIds = getSelectedNames()
-//                )
-//            )
+            viewModelNavigator.push(
+                routeResolver.resolve(
+                    NotificationModule.NotificationEditScreen(
+                        topics = getSelectedUsers(),
+                        itemIds = getSelectedNames()
+                    )
+                )
+            )
         }
     }
 

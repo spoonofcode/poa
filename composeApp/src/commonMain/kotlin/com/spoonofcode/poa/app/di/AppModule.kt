@@ -6,6 +6,8 @@ import com.spoonofcode.core.data.network.di.networkModule
 import com.spoonofcode.core.data.recaptcha.di.recaptchaModule
 import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.uiModule
+import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
+import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.data.di.authDataModule
 import com.spoonofcode.feature.auth.domain.di.authDomainModule
 import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
@@ -26,7 +28,10 @@ import com.spoonofcode.feature.profile.domain.di.profileDomainModule
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
+import com.spoonofcode.poa.AppModuleRouteResolver
 import com.spoonofcode.poa.app.getPlatform
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val appModule = module {
@@ -67,6 +72,6 @@ val appModule = module {
         scanPresentationModule,
         tacPresentationModule,
     )
-
+    factoryOf(::AppModuleRouteResolver) { bind<ModuleRouteResolver<AppModule>>() }
     single { getPlatform() }
 }

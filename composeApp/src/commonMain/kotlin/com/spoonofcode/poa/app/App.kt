@@ -9,6 +9,7 @@ import com.spoonofcode.core.data.network.SessionManager
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import com.spoonofcode.core.presentation.theme.AppTheme
 import com.spoonofcode.feature.appnavigation.AuthModule
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import org.koin.compose.getKoin
 
 @Composable
@@ -30,7 +31,6 @@ fun App(notificationId: String?) {
     }
 }
 
-// TODO #109 Fix after migration to feature modules
 @Composable
 private fun getStartScreens(
     sessionInitialized: Boolean,
@@ -41,14 +41,15 @@ private fun getStartScreens(
         if (notificationId.isNullOrEmpty()) {
             listOf(MainHostScreen())
         } else {
-            listOf(MainHostScreen())
-//            listOf(
-//                MainHostScreen(),
-//                NotificationOverviewScreen(),
-//                NotificationDetailsScreen(
-//                    notificationId = notificationId
-//                )
-//            )
+            listOf(
+                MainHostScreen(),
+                routeResolver.resolve(NotificationModule.NotificationOverviewScreen),
+                routeResolver.resolve(
+                    NotificationModule.NotificationDetailsScreen(
+                        notificationId = notificationId
+                    )
+                ),
+            )
         }
     } else {
         listOf(routeResolver.resolve(AuthModule.LoginScreen))

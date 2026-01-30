@@ -3,6 +3,7 @@ package com.spoonofcode.feature.notification.presentation.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
@@ -80,8 +81,7 @@ internal class NotificationEditViewModel(
                 topics = currentState.itemIds,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
-                // TODO #109 Fix after migration to feature modules
-//                viewModelNavigator.replaceAll(listOf(MainHostScreen()))
+                viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))
             }.onFailure { error ->
                 showErrorSnackbar(error)
             }

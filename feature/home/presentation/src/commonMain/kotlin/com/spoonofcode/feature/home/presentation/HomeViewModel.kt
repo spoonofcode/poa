@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserDailyCheckInStatusUseCase
@@ -77,9 +78,8 @@ internal class HomeViewModel(
     }
 
     private fun navigateToNotifications() {
-        // TODO #109 Fix after migration to feature modules
-//        viewModelScope.launch {
-//            viewModelNavigator.push(NotificationOverviewScreen())
-//        }
+        viewModelScope.launch {
+            viewModelNavigator.push(routeResolver.resolve(NotificationModule.NotificationOverviewScreen))
+        }
     }
 }
