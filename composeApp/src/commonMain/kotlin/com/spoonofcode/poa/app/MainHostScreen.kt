@@ -18,11 +18,11 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.spoonofcode.core.presentation.compose.Paddings.bottomScreenPadding
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.feature.home.HomeTab
+import com.spoonofcode.feature.home.presentation.HomeTab
 import com.spoonofcode.feature.partner.presentation.PartnerOverviewTab
 import com.spoonofcode.feature.product.presentation.ProductOverviewTab
 import com.spoonofcode.feature.profile.presentation.details.ProfileTab
-import com.spoonofcode.feature.scan.ScanTab
+import com.spoonofcode.feature.scan.presentation.ScanTab
 
 class MainHostScreen() : Screen {
 

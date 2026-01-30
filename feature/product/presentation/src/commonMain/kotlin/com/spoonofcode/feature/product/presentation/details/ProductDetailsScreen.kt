@@ -83,7 +83,7 @@ internal data class ProductDetailsScreen(
             val product = requireNotNull(viewState.product)
 
             if (product.videoLink != null) {
-                VideoAnimation(product.videoLink)
+                VideoAnimation(product.videoLink!!)
             } else {
                 Images.ImageLink(imageLink = product.imageLink)
             }

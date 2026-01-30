@@ -7,7 +7,6 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.core.data.network.SessionManager
 import com.spoonofcode.core.presentation.theme.AppTheme
-import com.spoonofcode.feature.auth.presentation.login.LoginScreen
 import org.koin.compose.getKoin
 
 @Composable
@@ -27,20 +26,23 @@ fun App(notificationId: String?) {
     }
 }
 
+// TODO #109 Fix after migration to feature modules
 @Composable
 private fun getStartScreens(sessionInitialized: Boolean, notificationId: String?): List<Screen> =
     if (sessionInitialized) {
         if (notificationId.isNullOrEmpty()) {
             listOf(MainHostScreen())
         } else {
-            listOf(
-                MainHostScreen(),
-                com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen(),
-                com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsScreen(
-                    notificationId = notificationId
-                )
-            )
+            listOf(MainHostScreen())
+//            listOf(
+//                MainHostScreen(),
+//                NotificationOverviewScreen(),
+//                NotificationDetailsScreen(
+//                    notificationId = notificationId
+//                )
+//            )
         }
     } else {
-        listOf(LoginScreen())
+        listOf(MainHostScreen())
+//        listOf(LoginScreen())
     }

@@ -54,7 +54,7 @@ internal class ProductEditScreen(
 
             // 1. Hero Section (Media)
             if (product.videoLink != null) {
-                VideoAnimation(videoLink = product.videoLink)
+                VideoAnimation(videoLink = product.videoLink!!)
             } else {
                 Images.ImageLink(imageLink = product.imageLink)
             }

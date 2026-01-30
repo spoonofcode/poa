@@ -71,6 +71,25 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
+        androidMain.dependencies {
+            api(libs.ui.tooling.preview)
+            api(libs.androidx.activity.compose)
+            api(libs.androidx.media3.exoplayer)
+            api(libs.androidx.media3.ui.compose)
+            api(libs.androidx.security)
+            api(libs.androidx.splash.screen)
+            api(libs.koin.android)
+            api(libs.koin.androidx.compose)
+            api(libs.ktor.client.okhttp)
+
+            api(libs.androidx.credentials)
+            api(libs.androidx.credentials.play.service.auth)
+            api(libs.googleid)
+            api(libs.recaptcha)
+            api(libs.firebase.messaging)
+            api(project.dependencies.platform(libs.firebase.bom))
+        }
+
         commonMain {
             dependencies {
                 api(libs.kotlin.stdlib)

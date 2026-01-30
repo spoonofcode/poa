@@ -45,7 +45,7 @@ internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewActio
     override fun provideContent(
         viewState: FAQViewState,
         onAction: (FAQViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
+    ): @Composable ColumnScope.() -> Unit {
         return {
             Texts.TL(text = stringResource(Res.string.faq_setion_1))
             ExpandableListItem(
@@ -97,7 +97,7 @@ internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewActio
 // region previews
 @Preview
 @Composable
-fun FAQScreenContentPreview() {
+private fun FAQScreenContentPreview() {
     FAQScreen().PreviewContent(
         viewState = FAQViewState(),
     )
