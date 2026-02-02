@@ -4,16 +4,16 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 
 plugins {
-    alias(libs.plugins.android.application)
+//    alias(libs.plugins.android.application)
     alias(libs.plugins.buildkonfig)
-    alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.compose.compiler)
+//    alias(libs.plugins.compose.multiplatform)
+//    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.cocoapods)
-    alias(libs.plugins.kotlin.multiplatform)
+//    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.mokkery)
+//    alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
-    alias(libs.plugins.google.services)
+//    alias(libs.plugins.google.services)
     alias(libs.plugins.convention.cmp.application)
 }
 
@@ -212,46 +212,46 @@ kotlin {
     }
 }
 
-android {
-    namespace = "com.spoonofcode.poa"
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
-
-    defaultConfig {
-        applicationId = "com.spoonofcode.poa"
-        minSdk = libs.versions.androidMinSdk.get().toInt()
-        targetSdk = libs.versions.androidTargetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    signingConfigs {
-        create("customDebug") {
-            storeFile = file("certificates/new-debug.keystore")
-            storePassword = "poa123"
-            keyAlias = "newdebugkey"
-            keyPassword = "poa123"
-        }
-    }
-    buildTypes {
-        getByName("debug") {
-            signingConfig = signingConfigs.getByName("customDebug")
-        }
-    }
-//    buildTypes {
-//        getByName("release") {
-//            isMinifyEnabled = false
+//android {
+//    namespace = "com.spoonofcode.poa"
+//    compileSdk = libs.versions.androidCompileSdk.get().toInt()
+//
+//    defaultConfig {
+//        applicationId = "com.spoonofcode.poa"
+//        minSdk = libs.versions.androidMinSdk.get().toInt()
+//        targetSdk = libs.versions.androidTargetSdk.get().toInt()
+//        versionCode = 1
+//        versionName = "1.0"
+//    }
+//    packaging {
+//        resources {
+//            excludes += "/META-INF/{AL2.0,LGPL2.1}"
 //        }
 //    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        isCoreLibraryDesugaringEnabled = true
-    }
-}
+//    signingConfigs {
+//        create("customDebug") {
+//            storeFile = file("certificates/new-debug.keystore")
+//            storePassword = "poa123"
+//            keyAlias = "newdebugkey"
+//            keyPassword = "poa123"
+//        }
+//    }
+//    buildTypes {
+//        getByName("debug") {
+//            signingConfig = signingConfigs.getByName("customDebug")
+//        }
+//    }
+////    buildTypes {
+////        getByName("release") {
+////            isMinifyEnabled = false
+////        }
+////    }
+//    compileOptions {
+//        sourceCompatibility = JavaVersion.VERSION_21
+//        targetCompatibility = JavaVersion.VERSION_21
+//        isCoreLibraryDesugaringEnabled = true
+//    }
+//}
 
 dependencies {
     debugImplementation(libs.ui.tooling)
