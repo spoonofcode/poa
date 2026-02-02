@@ -1,5 +1,5 @@
 import com.android.build.api.dsl.LibraryExtension
-import com.spoonofcode.convention.configureKotlinAndroid
+//import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
 import com.spoonofcode.convention.pathToResourcePrefix
@@ -21,7 +21,7 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             configureKotlinMultiplatform()
 
             extensions.configure<LibraryExtension> {
-                configureKotlinAndroid(this)
+//                configureKotlinAndroid(this)
 
                 resourcePrefix = this@with.pathToResourcePrefix()
 

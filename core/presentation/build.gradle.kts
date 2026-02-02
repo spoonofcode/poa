@@ -92,8 +92,8 @@ kotlin {
 
         commonMain {
             dependencies {
-                api(libs.kotlin.stdlib)
-                api(libs.components.resources)
+                implementation(libs.kotlin.stdlib)
+                implementation(libs.components.resources)
 
                 api(libs.compose.icons.fontawesome)
                 implementation(libs.compottie)
@@ -102,24 +102,24 @@ kotlin {
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.device)
 
-                api(libs.foundation)
-                api(libs.landscapist.coil)
-                api(libs.lifecycle.viewmodel.compose)
-                api(libs.runtime)
-                api(libs.material.icons.core)
-                api(libs.material.icons.extended)
-                api(libs.material3)
-                api(libs.ui)
-                api(libs.ui.tooling.preview)
-                api(libs.voyager.navigator)
-                api(libs.voyager.tab.navigator)
-                api(libs.voyager.transitions)
+                implementation(libs.foundation)
+                implementation(libs.landscapist.coil)
+                implementation(libs.lifecycle.viewmodel.compose)
+                implementation(libs.runtime)
+                implementation(libs.material.icons.core)
+                implementation(libs.material.icons.extended)
+                implementation(libs.material3)
+                implementation(libs.ui)
+                implementation(libs.ui.tooling.preview)
+                implementation(libs.voyager.navigator)
+                implementation(libs.voyager.tab.navigator)
+                implementation(libs.voyager.transitions)
 
-                api(libs.koin.core)
-                api(libs.koin.compose)
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
 
                 // TODO #109 Fix after migration to feature modules
-                api(projects.core.data)
+                implementation(projects.core.data)
 
                 // TODO #109 Fix after migration to feature modules
                 implementation(projects.feature.appnavigation)

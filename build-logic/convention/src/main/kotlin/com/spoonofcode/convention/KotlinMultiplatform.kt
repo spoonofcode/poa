@@ -11,7 +11,7 @@ internal fun Project.configureKotlinMultiplatform() {
     }
 
     configureAndroidTarget()
-    configureDesktopTarget()
+//    configureDesktopTarget()
 
     extensions.configure<KotlinMultiplatformExtension> {
         listOf(

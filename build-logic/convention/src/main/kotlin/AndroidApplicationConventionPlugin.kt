@@ -1,5 +1,5 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.spoonofcode.convention.configureKotlinAndroid
+//import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -33,7 +33,7 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
                     }
                 }
 
-                configureKotlinAndroid(this)
+//                configureKotlinAndroid(this)
             }
         }
     }
