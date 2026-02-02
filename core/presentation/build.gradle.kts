@@ -132,18 +132,6 @@ kotlin {
             }
         }
 
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.credentials)
-                implementation(libs.androidx.credentials.play.service.auth)
-                implementation(libs.androidx.media3.exoplayer)
-                implementation(libs.androidx.media3.ui.compose)
-                implementation(libs.google.id)
-                implementation(libs.firebase.messaging)
-                implementation(project.dependencies.platform(libs.firebase.bom))
-            }
-        }
-
         getByName("androidDeviceTest") {
             dependencies {
                 implementation(libs.androidx.runner)

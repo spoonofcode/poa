@@ -1,9 +1,10 @@
 import com.spoonofcode.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-class CmpFeatureConventionPlugin: Plugin<Project> {
+class CmpFeatureConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
@@ -11,30 +12,33 @@ class CmpFeatureConventionPlugin: Plugin<Project> {
                 apply("com.spoonofcode.convention.cmp.library")
             }
 
-            dependencies {
-                "commonMainImplementation"(project(":core:presentation"))
-                "commonMainImplementation"(project(":core:designsystem"))
+            // KONFIGURACJA KMP - musi być bezpośrednio w Project, nie w dependencies {}
+            extensions.configure<KotlinMultiplatformExtension> {
+                sourceSets.apply {
+                    getByName("commonMain").dependencies {
+                        // Zależności projektowe
+                        implementation(project(":core:presentation"))
+                        implementation(project(":core:designsystem"))
 
-                "commonMainImplementation"(platform(libs.findLibrary("koin-bom").get()))
-                "androidMainImplementation"(platform(libs.findLibrary("koin-bom").get()))
+                        // Biblioteki z libs.versions.toml (używając poprawnych aliasów)
+                        implementation(libs.findLibrary("koin-compose").get())
+                        implementation(libs.findLibrary("koin-compose").get())
+                        implementation(libs.findLibrary("koin-compose-viewmodel").get())
 
-                "commonMainImplementation"(libs.findLibrary("koin-compose").get())
-                "commonMainImplementation"(libs.findLibrary("koin-compose-viewmodel").get())
+                        implementation(libs.findLibrary("runtime").get()) // To jest jetbrains-compose-runtime
+                        implementation(libs.findLibrary("lifecycle-viewmodel-compose").get())
 
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-runtime").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-viewmodel").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-lifecycle-viewmodel").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-lifecycle-compose").get())
+                        // Nawigacja (Voyager)
+                        implementation(libs.findLibrary("voyager-navigator").get())
+                        implementation(libs.findLibrary("voyager-tab-navigator").get())
+                        implementation(libs.findLibrary("voyager-transitions").get())
+                    }
 
-                "commonMainImplementation"(libs.findLibrary("jetbrains-lifecycle-viewmodel-savedstate").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-savedstate").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-bundle").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-navigation").get())
-
-                "androidMainImplementation"(libs.findLibrary("koin-android").get())
-                "androidMainImplementation"(libs.findLibrary("koin-androidx-compose").get())
-                "androidMainImplementation"(libs.findLibrary("koin-androidx-navigation").get())
-                "androidMainImplementation"(libs.findLibrary("koin-core-viewmodel").get())
+                    getByName("androidMain").dependencies {
+                        implementation(libs.findLibrary("koin-android").get())
+                        implementation(libs.findLibrary("koin-androidx-compose").get())
+                    }
+                }
             }
         }
     }
