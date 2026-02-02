@@ -1,4 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
+import com.spoonofcode.convention.configureKotlinAndroid
+//import com.spoonofcode.convention.configureKotlinAndroid
 //import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
@@ -15,13 +17,14 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.multiplatform")
-                apply("org.jetbrains.kotlin.plugin.serialization")
+//                apply("org.jetbrains.kotlin.plugin.serialization")
+
             }
 
             configureKotlinMultiplatform()
 
             extensions.configure<LibraryExtension> {
-//                configureKotlinAndroid(this)
+                configureKotlinAndroid(this)
 
                 resourcePrefix = this@with.pathToResourcePrefix()
 

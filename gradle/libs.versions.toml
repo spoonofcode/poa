@@ -4,8 +4,15 @@ androidCompileSdk = "36"
 androidMinSdk = "24"
 androidTargetSdk = "36"
 
+projectApplicationId = "com.spoonofcode.poa"
+projectVersionName = "1.0"
+projectMinSdkVersion = "26"
+projectTargetSdkVersion = "36"
+projectCompileSdkVersion = "36"
+projectVersionCode = "1"
+
 # --- Android build tools / Gradle ---
-agp = "9.0.0"
+agp = "8.11.1"
 androidTools = "31.12.0"
 desugarJdkLibs = "2.1.5"
 googleServices = "4.4.4"
@@ -22,6 +29,7 @@ androidxSplash = "1.2.0"
 lifecycleViewModelCompose = "2.9.6"
 
 # --- Compose UI extras ---
+composeBom = "2025.07.00"
 material3 = "1.9.0"
 materialIconsCore = "1.7.3"
 composeIcons = "1.1.1"
@@ -81,6 +89,8 @@ androidx-splash-screen = { module = "androidx.core:core-splashscreen", version.r
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewModelCompose" }
 
 # --- Compose Multiplatform ---
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+
 runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }

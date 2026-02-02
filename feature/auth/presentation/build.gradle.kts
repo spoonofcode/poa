@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.convention.cmp.feature)
+//    alias(libs.plugins.convention.cmp.feature)
 }
 
 kotlin {

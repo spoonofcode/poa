@@ -5,20 +5,20 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
 // TODO #109 Fix after migration to feature modules
-//internal fun Project.configureAndroidCompose(
-//    commonExtension: CommonExtension<*, *, *, *, *, *>
-//) {
-//    with(commonExtension) {
-//        buildFeatures {
-//            compose = true
-//        }
-//
-//        dependencies {
-//            val bom = libs.findLibrary("androidx-compose-bom").get()
-//            "implementation"(platform(bom))
-//            "testImplementation"(platform(bom))
+internal fun Project.configureAndroidCompose(
+    commonExtension: CommonExtension<*, *, *, *, *, *>
+) {
+    with(commonExtension) {
+        buildFeatures {
+            compose = true
+        }
+
+        dependencies {
+            val bom = libs.findLibrary("androidx-compose-bom").get()
+            "implementation"(platform(bom))
+            "testImplementation"(platform(bom))
 //            "debugImplementation"(libs.findLibrary("androidx-compose-ui-tooling-preview").get())
 //            "debugImplementation"(libs.findLibrary("androidx-compose-ui-tooling").get())
-//        }
-//    }
-//}
+        }
+    }
+}

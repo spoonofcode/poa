@@ -9,9 +9,9 @@ class CmpFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             // TODO #109 Fix after migration to feature modules
-//            with(pluginManager) {
-//                apply("com.spoonofcode.convention.cmp.library")
-//            }
+            with(pluginManager) {
+                apply("com.spoonofcode.convention.cmp.library")
+            }
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {

@@ -28,7 +28,7 @@ class CmpApplicationConventionPlugin: Plugin<Project> {
             }
 
             dependencies {
-                "debugImplementation"(libs.findLibrary("androidx-compose-ui-tooling").get())
+//                "debugImplementation"(libs.findLibrary("androidx-compose-ui-tooling").get())
             }
         }
     }

@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.convention.cmp.application)
 }
 
 buildkonfig {
@@ -88,27 +89,27 @@ kotlin {
         }
     }
 
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-        iosTarget.binaries.all {
-            // pulls the system framework in and links it
-            linkerOpts("-framework", "CoreNFC")
-        }
-    }
+//    androidTarget {
+//        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+//        compilerOptions {
+//            jvmTarget.set(JvmTarget.JVM_21)
+//        }
+//    }
+//
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64()
+//    ).forEach { iosTarget ->
+//        iosTarget.binaries.framework {
+//            baseName = "ComposeApp"
+//            isStatic = true
+//        }
+//        iosTarget.binaries.all {
+//            // pulls the system framework in and links it
+//            linkerOpts("-framework", "CoreNFC")
+//        }
+//    }
 
     sourceSets {
         iosMain.dependencies {
@@ -254,5 +255,5 @@ android {
 
 dependencies {
     debugImplementation(libs.ui.tooling)
-    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
+//    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
 }
