@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.nfc
+package com.spoonofcode.core.nfc
 
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.flow.Flow

@@ -36,6 +36,7 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core:data")
+include(":core:nfc")
 include(":core:presentation")
 include(":feature:appnavigation")
 include(":feature:auth:data")
