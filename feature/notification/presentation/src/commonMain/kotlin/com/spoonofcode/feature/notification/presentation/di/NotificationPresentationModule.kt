@@ -21,12 +21,6 @@ import org.koin.dsl.module
 val notificationPresentationModule = module {
     factoryOf(::NotificationModuleRouteResolver) { bind<ModuleRouteResolver<NotificationModule>>() }
 
-    factoryOf(::SendNotificationUseCase)
-    factoryOf(::GetNotificationsUseCase)
-    factoryOf(::GetNotificationByIdUseCase)
-    factoryOf(::GetNotificationSettingsUseCase)
-    factoryOf(::UpdateNotificationSettingsUseCase)
-
     viewModelOf(::NotificationOverviewViewModel)
     viewModelOf(::NotificationDetailsViewModel)
     viewModelOf(::NotificationEditViewModel)

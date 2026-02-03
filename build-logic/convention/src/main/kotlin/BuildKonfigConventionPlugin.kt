@@ -1,5 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.codingfeline.buildkonfig.gradle.BuildKonfigExtension
 import com.spoonofcode.convention.pathToPackageName
 import org.gradle.api.Plugin
@@ -17,12 +18,21 @@ class BuildKonfigConventionPlugin: Plugin<Project> {
             extensions.configure<BuildKonfigExtension> {
                 packageName = target.pathToPackageName()
                 defaultConfigs {
-                    val apiKey = gradleLocalProperties(rootDir, rootProject.providers)
-                        .getProperty("API_KEY")
+                    val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
+                        .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
                         ?: throw IllegalStateException(
-                            "Missing API_KEY property in local.properties"
+                            "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
                         )
-                    buildConfigField(FieldSpec.Type.STRING, "API_KEY", apiKey)
+
+                    val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
+                        .getProperty("RECAPTCHA_SITE_KEY_IOS")
+                        ?: throw IllegalStateException(
+                            "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
+                        )
+
+
+                    buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
+                    buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
                 }
             }
         }

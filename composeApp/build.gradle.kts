@@ -5,7 +5,7 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 
 plugins {
 //    alias(libs.plugins.android.application)
-    alias(libs.plugins.buildkonfig)
+//    alias(libs.plugins.buildkonfig)
 //    alias(libs.plugins.compose.multiplatform)
 //    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.cocoapods)
@@ -15,27 +15,6 @@ plugins {
     alias(libs.plugins.kover)
 //    alias(libs.plugins.google.services)
     alias(libs.plugins.convention.cmp.application)
-}
-
-buildkonfig {
-    packageName = "com.spoonofcode.poa"
-    defaultConfigs {
-        val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
-            .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
-            ?: throw IllegalStateException(
-                "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
-            )
-
-        val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
-            .getProperty("RECAPTCHA_SITE_KEY_IOS")
-            ?: throw IllegalStateException(
-                "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
-            )
-
-
-        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
-        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
-    }
 }
 
 kover {
@@ -169,7 +148,9 @@ kotlin {
             implementation(libs.voyager.transitions)
 
             implementation(projects.core.data)
+            implementation(projects.core.nfc)
             implementation(projects.core.presentation)
+            implementation(projects.core.recaptcha)
 
             implementation(projects.feature.auth.data)
             implementation(projects.feature.auth.domain)

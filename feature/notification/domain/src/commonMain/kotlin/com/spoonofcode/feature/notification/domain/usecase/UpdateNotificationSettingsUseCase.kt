@@ -2,6 +2,7 @@ package com.spoonofcode.feature.notification.domain.usecase
 
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.firebase.FirebasePushService
 
 class UpdateNotificationSettingsUseCase(
     private val sessionManager: SessionManager,

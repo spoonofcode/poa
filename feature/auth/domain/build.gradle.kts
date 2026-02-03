@@ -10,6 +10,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.core.data)
+                implementation(projects.core.recaptcha)
             }
         }
 

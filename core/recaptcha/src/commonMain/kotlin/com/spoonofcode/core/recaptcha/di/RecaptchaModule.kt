@@ -1,7 +1,7 @@
 package com.spoonofcode.core.recaptcha.di
 
-import com.spoonofcode.core.data.recaptcha.RecaptchaClient
-import com.spoonofcode.core.data.recaptcha.RecaptchaClientImpl
+import com.spoonofcode.core.recaptcha.RecaptchaClient
+import com.spoonofcode.core.recaptcha.RecaptchaClientImpl
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

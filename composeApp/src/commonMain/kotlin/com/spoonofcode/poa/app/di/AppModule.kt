@@ -3,7 +3,6 @@ package com.spoonofcode.poa.app.di
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.data.domain.di.domainModule
 import com.spoonofcode.core.data.network.di.networkModule
-import com.spoonofcode.core.data.recaptcha.di.recaptchaModule
 import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.uiModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
@@ -30,6 +29,7 @@ import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.AppModuleRouteResolver
 import com.spoonofcode.core.data.getPlatform
+import com.spoonofcode.core.recaptcha.di.recaptchaModule
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module

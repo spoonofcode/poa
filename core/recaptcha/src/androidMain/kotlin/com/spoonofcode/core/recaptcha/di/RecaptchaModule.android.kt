@@ -1,8 +1,8 @@
 package com.spoonofcode.core.recaptcha.di
 
-import com.spoonofcode.core.data.recaptcha.AndroidRecaptchaPlatform
-import com.spoonofcode.core.data.recaptcha.RecaptchaPlatform
-import com.spoonofcode.poa.BuildKonfig
+import com.spoonofcode.core.recaptcha.AndroidRecaptchaPlatform
+import com.spoonofcode.core.recaptcha.BuildKonfig
+import com.spoonofcode.core.recaptcha.RecaptchaPlatform
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.bind
 import org.koin.dsl.module

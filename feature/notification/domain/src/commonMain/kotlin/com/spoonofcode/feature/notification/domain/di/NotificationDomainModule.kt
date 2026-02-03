@@ -6,8 +6,6 @@ import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCa
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val notificationDomainModule = module {

@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.data
 
 import com.spoonofcode.feature.partner.data.mappers.toPartner
 import com.spoonofcode.feature.partner.data.mappers.toPartnerUser
-import com.spoonofcode.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerDataSource
 import com.spoonofcode.feature.partner.domain.model.Partner
@@ -30,11 +29,19 @@ class PartnerRepositoryImpl(
         facebookLink: String?,
         youtubeLink: String?,
         xLink: String?
-    ): Result<Unit> {
-       return remotePartnerDataSource.update(
-
-        )
-    }
+    ): Result<Unit> = remotePartnerDataSource.update(
+        partnerId = partnerId,
+        name = name,
+        partnerCategory = partnerCategory,
+        email = email,
+        description = description,
+        imageLink = imageLink,
+        websiteLink = websiteLink,
+        instagramLink = instagramLink,
+        facebookLink = facebookLink,
+        youtubeLink = youtubeLink,
+        xLink = xLink,
+    )
 
     override suspend fun getPartners(): Result<List<Partner>> =
         remotePartnerDataSource.readAll().map { response ->
@@ -49,7 +56,7 @@ class PartnerRepositoryImpl(
     override suspend fun getCategories(): Result<List<PartnerCategory>> =
         remotePartnerCategoryDataSource.readAll().map { response ->
             response.map {
-                PartnerCategory(name =it)
+                PartnerCategory(name = it)
             }
         }
 }
