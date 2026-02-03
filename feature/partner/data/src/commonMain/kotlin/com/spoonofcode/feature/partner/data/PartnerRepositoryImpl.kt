@@ -18,14 +18,23 @@ class PartnerRepositoryImpl(
     override suspend fun getPartner(partnerId: String): Result<Partner> =
         remotePartnerDataSource.read(partnerId).map { it.toPartner() }
 
-    // TODO #109 Fix after migration to feature modules
-//    override suspend fun updatePartner(
-//        partnerId: String,
-//        partnerRequest: PartnerRequest
-//    ): Result<Boolean> = remotePartnerDataSource.update(
-//        partnerId = partnerId,
-//        partnerRequest = partnerRequest,
-//    ).map { true }
+    override suspend fun updatePartner(
+        partnerId: String,
+        name: String,
+        partnerCategory: String,
+        email: String?,
+        description: String?,
+        imageLink: String?,
+        websiteLink: String?,
+        instagramLink: String?,
+        facebookLink: String?,
+        youtubeLink: String?,
+        xLink: String?
+    ): Result<Unit> {
+       return remotePartnerDataSource.update(
+
+        )
+    }
 
     override suspend fun getPartners(): Result<List<Partner>> =
         remotePartnerDataSource.readAll().map { response ->

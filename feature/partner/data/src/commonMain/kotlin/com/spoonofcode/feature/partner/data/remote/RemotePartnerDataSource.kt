@@ -16,11 +16,30 @@ class RemotePartnerDataSource : RemoteBaseDataSource(
 
     suspend fun update(
         partnerId: String,
-        partnerRequest: PartnerRequest
+        name: String,
+        partnerCategory: String,
+        email: String? = null,
+        description: String? = null,
+        imageLink: String? = null,
+        websiteLink: String? = null,
+        instagramLink: String? = null,
+        facebookLink: String? = null,
+        youtubeLink: String? = null,
+        xLink: String? = null,
     ): Result<Unit> = doRequest(
         urlPostfixPath = partnerId,
         method = HttpMethod.Put,
-        requestBody = partnerRequest,
+        requestBody = PartnerRequest(
+            name = name,
+            email = email,
+            description = description,
+            imageLink = imageLink,
+            websiteLink = websiteLink,
+            instagramLink = instagramLink,
+            facebookLink = facebookLink,
+            youtubeLink = youtubeLink,
+            xLink = xLink,
+        ),
     )
 
     suspend fun readAll(): Result<List<PartnerResponse>> = doRequest(

@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.scan.presentation
 
 import androidx.compose.runtime.Immutable
+import com.spoonofcode.core.data.PlatformType
 //import com.spoonofcode.poa.app.PlatformType
 import com.spoonofcode.core.presentation.base.BaseViewState
 
@@ -8,6 +9,5 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 internal data class ScanViewState(
     val animationFilePath: String = "files/read_sensor_nfc.json",
     val contentDescription: String = "Scanning NFC tag",
-    // TODO #109 Fix after migration to feature modules
-//    val platformType: PlatformType = PlatformType.Android,
+    val platformType: PlatformType = PlatformType.Android,
 ) : BaseViewState()

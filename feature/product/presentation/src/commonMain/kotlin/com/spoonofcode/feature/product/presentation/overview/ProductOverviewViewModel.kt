@@ -2,9 +2,9 @@ package com.spoonofcode.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.appnavigation.ProductModule
 import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
-import com.spoonofcode.feature.product.presentation.details.ProductDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class ProductOverviewViewModel(
@@ -53,7 +53,11 @@ internal class ProductOverviewViewModel(
 
     private fun selectProduct(productId: String) {
         viewModelScope.launch {
-            viewModelNavigator.push(ProductDetailsScreen(productId = productId))
+            viewModelNavigator.push(
+                routeResolver.resolve(
+                    ProductModule.ProductDetailsScreen(productId = productId)
+                )
+            )
         }
     }
 }

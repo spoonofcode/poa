@@ -16,7 +16,6 @@ interface NfcReader {
     fun stop()
 }
 
-// TODO #109 Fix after migration to feature modules
 ///** Factory to get the platform implementation. */
-//@Composable
-//expect fun rememberNfcReader(): NfcReader
+@Composable
+expect fun rememberNfcReader(): NfcReader

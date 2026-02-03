@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.app
+package com.spoonofcode.core.data
 
 interface Platform {
     val name: String

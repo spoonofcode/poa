@@ -118,6 +118,5 @@ internal class IosNfcReader : NfcReader {
 
 /* ---------- Compose helper ---------- */
 
-// TODO #109 Fix after migration to feature modules
-//@Composable
-//actual fun rememberNfcReader(): NfcReader = IosNfcReader()
+@Composable
+actual fun rememberNfcReader(): NfcReader = IosNfcReader()

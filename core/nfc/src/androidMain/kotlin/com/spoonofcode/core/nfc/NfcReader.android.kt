@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.nfc
+package com.spoonofcode.core.nfc
 
 import android.app.Activity
 import android.nfc.NfcAdapter
@@ -53,6 +53,5 @@ internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
     }
 }
 
-// TODO #109 Fix after migration to feature modules
-//@Composable
-//actual fun rememberNfcReader(): NfcReader = AndroidNfcReader(LocalActivity.current as Activity)
+@Composable
+actual fun rememberNfcReader(): NfcReader = AndroidNfcReader(LocalActivity.current as Activity)

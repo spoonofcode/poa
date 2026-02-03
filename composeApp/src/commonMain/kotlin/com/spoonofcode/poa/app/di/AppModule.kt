@@ -29,7 +29,7 @@ import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.AppModuleRouteResolver
-import com.spoonofcode.poa.app.getPlatform
+import com.spoonofcode.core.data.getPlatform
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
