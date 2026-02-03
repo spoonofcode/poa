@@ -1,5 +1,6 @@
 package com.spoonofcode.core.data.network.di
 
+import com.spoonofcode.core.data.network.RemoteRefreshTokenDataSource
 import com.spoonofcode.core.data.logging.KermitLogger
 import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.data.network.HttpClientFactory
@@ -24,6 +25,7 @@ val networkModule: Module = module {
     single { NetworkConfigImpl() } bind NetworkConfig::class
     singleOf(::SessionManagerImpl).bind(SessionManager::class)
     singleOf(::NetworkManagerImpl).bind(NetworkManager::class)
+    singleOf(::RemoteRefreshTokenDataSource)
 
     single<POALogger> { KermitLogger }
     single {

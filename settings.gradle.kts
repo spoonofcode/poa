@@ -36,6 +36,7 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core:data")
+include(":core:firebase")
 include(":core:nfc")
 include(":core:presentation")
 include(":core:recaptcha")

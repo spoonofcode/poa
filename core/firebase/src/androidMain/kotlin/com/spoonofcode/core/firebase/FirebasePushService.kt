@@ -1,4 +1,4 @@
-package com.spoonofcode.core.presentation.utils
+package com.spoonofcode.core.firebase
 
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging

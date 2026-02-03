@@ -1,6 +1,6 @@
 package com.spoonofcode.core.data.network
 
-import com.spoonofcode.core.data.domain.usecase.RemoteRefreshTokenDataSource
+import com.spoonofcode.core.data.network.RemoteRefreshTokenDataSource
 import com.spoonofcode.core.data.logging.POALogger
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout

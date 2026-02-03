@@ -1,6 +1,5 @@
 package com.spoonofcode.feature.auth.data.di
 
-import com.spoonofcode.core.data.domain.usecase.RemoteRefreshTokenDataSource
 import com.spoonofcode.feature.auth.data.LoginRepositoryImpl
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginGoogleDataSource
@@ -15,7 +14,6 @@ val authDataModule: Module = module {
     singleOf(::LoginRepositoryImpl).bind<LoginRepository>()
 
     singleOf(::RemoteLoginGoogleDataSource)
-    singleOf(::RemoteRefreshTokenDataSource)
 
     singleOf(::RemoteLoginCodeDataSource)
     singleOf(::RemoteLoginRequestCodeDataSource)

@@ -1,4 +1,4 @@
-package com.spoonofcode.core.presentation.utils
+package com.spoonofcode.core.firebase
 
 expect class FirebasePushService {
     suspend fun getMessageToken(): String
