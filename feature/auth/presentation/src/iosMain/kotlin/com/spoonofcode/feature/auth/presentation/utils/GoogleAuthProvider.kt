@@ -1,4 +1,4 @@
-package com.spoonofcode.core.presentation.utils
+package com.spoonofcode.feature.auth.presentation.utils
 
 import androidx.compose.runtime.Composable
 

@@ -12,7 +12,7 @@ class RemoteRefreshTokenDataSource() : RemoteBaseDataSource(
     suspend fun create(
         refreshToken: String,
     ): Result<RefreshResponse> = doRequest(
-        method = HttpMethod.Companion.Post,
+        method = HttpMethod.Post,
         requestBody = RefreshRequest(
             refreshToken = refreshToken,
         ),

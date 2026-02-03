@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.com.spoonofcode.poa.core.ext
+package com.spoonofcode.core.data.ext
 
 import android.content.Context
 import java.util.Locale

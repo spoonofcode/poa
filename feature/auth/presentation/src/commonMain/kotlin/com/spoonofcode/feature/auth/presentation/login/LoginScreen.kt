@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,13 +19,20 @@ import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.compose.Buttons.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import com.spoonofcode.core.presentation.email
+import com.spoonofcode.core.presentation.ic_google
 import com.spoonofcode.core.presentation.let_s_get_started
 import com.spoonofcode.core.presentation.or
 import com.spoonofcode.core.presentation.poa
 import com.spoonofcode.core.presentation.sign_in
+import com.spoonofcode.core.presentation.sign_in_with_google
+import com.spoonofcode.feature.auth.presentation.utils.GoogleAuthProvider
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
@@ -67,11 +75,30 @@ internal class LoginScreen(
                 text = stringResource(resource = Res.string.or)
             )
 
-            Buttons.GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
+            GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
                 onAction(LoginViewAction.SignInWithGoogle(googleAccount =googleAccount))
             })
         }
     }
+}
+
+@Composable
+private fun GoogleSignInButton(
+    onGoogleSignInResult: (GoogleAccount?) -> Unit,
+) {
+    val googleAuthProvider = koinInject<GoogleAuthProvider>()
+    val googleAuthUiProvider = googleAuthProvider.getUiProvider()
+    val coroutineScope = rememberCoroutineScope()
+    PrimaryButton(
+        text = stringResource(resource = Res.string.sign_in_with_google),
+        leftIcon = Res.drawable.ic_google,
+        onClick = {
+            coroutineScope.launch {
+                val googleAccount = googleAuthUiProvider.signIn()
+                onGoogleSignInResult(googleAccount)
+            }
+        }
+    )
 }
 
 // region previews

@@ -2,7 +2,7 @@ package com.spoonofcode.feature.auth.presentation.di
 
 import androidx.credentials.CredentialManager
 import androidx.credentials.CredentialManager.Companion.create
-import com.spoonofcode.core.presentation.utils.GoogleAuthProvider
+import com.spoonofcode.feature.auth.presentation.utils.GoogleAuthProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind

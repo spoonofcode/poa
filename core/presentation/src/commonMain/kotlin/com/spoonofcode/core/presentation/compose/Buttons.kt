@@ -17,24 +17,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.spoonofcode.core.presentation.domain.model.GoogleAccount
 import com.spoonofcode.core.presentation.ext.addIf
-import com.spoonofcode.core.presentation.utils.GoogleAuthProvider
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.ic_google
-import com.spoonofcode.core.presentation.sign_in_with_google
 
 object Buttons {
 
@@ -88,24 +81,7 @@ object Buttons {
             Text(text)
         }
 
-    @Composable
-    fun GoogleSignInButton(
-        onGoogleSignInResult: (GoogleAccount?) -> Unit,
-    ) {
-        val googleAuthProvider = koinInject<GoogleAuthProvider>()
-        val googleAuthUiProvider = googleAuthProvider.getUiProvider()
-        val coroutineScope = rememberCoroutineScope()
-        PrimaryButton(
-            text = stringResource(resource = Res.string.sign_in_with_google),
-            leftIcon = Res.drawable.ic_google,
-            onClick = {
-                coroutineScope.launch {
-                    val googleAccount = googleAuthUiProvider.signIn()
-                    onGoogleSignInResult(googleAccount)
-                }
-            }
-        )
-    }
+
 
     @Composable
     fun IconTextButton(

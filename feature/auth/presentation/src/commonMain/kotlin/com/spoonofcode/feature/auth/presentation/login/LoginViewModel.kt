@@ -3,7 +3,7 @@ package com.spoonofcode.feature.auth.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.domain.model.GoogleAccount
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase

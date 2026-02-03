@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.auth.presentation.login
 
 import com.spoonofcode.core.presentation.base.BaseViewAction
-import com.spoonofcode.core.presentation.domain.model.GoogleAccount
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 
 internal sealed interface LoginViewAction : BaseViewAction {
     data class ChangeEmail(val email: String) : LoginViewAction

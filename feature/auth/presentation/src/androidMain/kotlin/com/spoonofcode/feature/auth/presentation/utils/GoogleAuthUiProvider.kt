@@ -1,4 +1,4 @@
-package com.spoonofcode.core.presentation.utils
+package com.spoonofcode.feature.auth.presentation.utils
 
 import android.content.Context
 import androidx.credentials.ClearCredentialStateRequest
@@ -9,7 +9,7 @@ import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.spoonofcode.core.presentation.domain.model.GoogleAccount
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 
 actual class GoogleAuthUiProvider(
     private val activityContext: Context,

@@ -11,16 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
-//import com.spoonofcode.core.presentation.compose.Chips.HorizontalScrollableFilterChipRow
+import com.spoonofcode.core.presentation.compose.Chips.HorizontalScrollableFilterChipRow
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.partner.domain.model.Partner
-import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.partners
+import com.spoonofcode.feature.partner.domain.model.Partner
 
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
@@ -46,11 +46,11 @@ internal class PartnerOverviewScreen(
                 onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
             )
 
-//            HorizontalScrollableFilterChipRow(
-//                categories = viewState.partnerCategories,
-//                selectedCategories = viewState.selectedPartnerCategories,
-//                onCategorySelected = { onAction(PartnerOverviewViewAction.ClickCategory(it)) }
-//            )
+            HorizontalScrollableFilterChipRow(
+                categories = viewState.partnerCategories.map { partnerCategory -> partnerCategory.name },
+                selectedCategories = viewState.selectedPartnerCategories,
+                onCategorySelected = { onAction(PartnerOverviewViewAction.ClickCategory(it)) }
+            )
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

@@ -1,6 +1,5 @@
-package com.spoonofcode.core.presentation.domain.model
+package com.spoonofcode.feature.auth.presentation.model
 
-// TODO #109 Fix after migration to feature modules
 data class GoogleAccount(
     val idToken: String,
     val displayName: String = "",

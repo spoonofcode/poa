@@ -1,18 +1,8 @@
 plugins {
-//    alias(libs.plugins.kotlin.multiplatform)
-//    alias(libs.plugins.android.kotlin.multiplatform.library)
-//    alias(libs.plugins.android.lint)
-//    alias(libs.plugins.compose.multiplatform)
-//    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.convention.cmp.feature)
 }
 
 kotlin {
-    // Source set declarations.
-    // Declaring a target automatically creates a source set with the same name. By default, the
-    // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
-    // common to share sources between related targets.
-    // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
         commonMain {
             dependencies {
@@ -32,9 +22,6 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.credentials)
                 implementation(libs.androidx.credentials.play.service.auth)
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
             }
         }
         iosMain {
