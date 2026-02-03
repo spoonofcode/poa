@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.recaptcha
+package com.spoonofcode.core.recaptcha
 
 interface RecaptchaPlatform {
     suspend fun execute(action: String): String // zwraca token

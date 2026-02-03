@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.recaptcha.di
+package com.spoonofcode.core.recaptcha.di
 
 import com.spoonofcode.core.data.recaptcha.RecaptchaClient
 import com.spoonofcode.core.data.recaptcha.RecaptchaClientImpl

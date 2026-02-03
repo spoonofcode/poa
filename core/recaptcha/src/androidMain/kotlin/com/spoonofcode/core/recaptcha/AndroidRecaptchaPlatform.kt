@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.recaptcha
+package com.spoonofcode.core.recaptcha
 
 import android.app.Application
 import com.google.android.recaptcha.Recaptcha

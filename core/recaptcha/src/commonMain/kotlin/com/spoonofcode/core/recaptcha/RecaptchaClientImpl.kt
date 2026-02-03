@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.recaptcha
+package com.spoonofcode.core.recaptcha
 
 class RecaptchaClientImpl(
     private val platform: RecaptchaPlatform
