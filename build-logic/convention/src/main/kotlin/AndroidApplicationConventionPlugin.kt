@@ -1,6 +1,6 @@
 import com.android.build.api.dsl.ApplicationExtension
+import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureKotlinAndroid
-//import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -10,9 +10,7 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply("com.android.application")
-            }
+            applyPlugin("android-application")
 
             extensions.configure<ApplicationExtension> {
                 namespace = "com.spoonofcode.poa"
