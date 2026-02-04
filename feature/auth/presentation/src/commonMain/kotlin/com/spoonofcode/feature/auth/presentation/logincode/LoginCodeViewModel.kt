@@ -24,19 +24,20 @@ internal class LoginCodeViewModel(
 
     private fun changeCode(code: String) {
         updateState {
-            LoginCodeViewState(
+            copy(
                 code = code,
-                isSignInWithCodeButtonEnable = code.length == VERIFICATION_CODE_LENGTH,
+                isSignInWithCodeButtonEnable = code.length == VERIFICATION_CODE_LENGTH
             )
         }
     }
 
     private fun signInWithCode() {
         showLoadingView()
+        val currentState = currentState()
         viewModelScope.launch {
             loginCodeUseCase(
-                email = currentState().email,
-                code = currentState().code,
+                email = currentState.email,
+                code = currentState.code,
             ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))
             }.onFailure {

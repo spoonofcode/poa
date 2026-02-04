@@ -10,7 +10,7 @@ plugins {
 //    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.cocoapods)
 //    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.kotlin.serialization)
 //    alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
 //    alias(libs.plugins.google.services)

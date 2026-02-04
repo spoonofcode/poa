@@ -23,7 +23,7 @@ internal class NotificationDetailsViewModel(
             getNotificationByIdUseCase(notificationId = notificationId)
                 .onSuccess {
                     showContentView {
-                        _root_ide_package_.com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState(
+                        NotificationDetailsViewState(
                             notification = it
                         )
                     }

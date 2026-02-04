@@ -12,7 +12,7 @@ class AuthModuleRouteResolver : ModuleRouteResolver<AuthModule> {
             when (it) {
                 AuthModule.LoginScreen -> LoginScreen()
                 is AuthModule.LoginCodeScreen -> LoginCodeScreen(
-                    it.email
+                    email = it.email,
                 )
             }
         }
