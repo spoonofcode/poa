@@ -4,16 +4,22 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal fun Project.configureIosTargets() {
+internal fun Project.configureIosTargets(
+    baseName: String? = null
+) {
     extensions.configure<KotlinMultiplatformExtension> {
-        listOf(
+        val targets = listOf(
             iosX64(),
             iosArm64(),
             iosSimulatorArm64()
-        ).forEach { iosTarget ->
-            iosTarget.binaries.framework {
-                baseName = "ComposeApp"
-                isStatic = true
+        )
+
+        baseName?.let { name ->
+            targets.forEach { target ->
+                target.binaries.framework {
+                    this.baseName = name
+                    this.isStatic = true
+                }
             }
         }
     }

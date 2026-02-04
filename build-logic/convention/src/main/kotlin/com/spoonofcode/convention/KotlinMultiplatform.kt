@@ -11,18 +11,9 @@ internal fun Project.configureKotlinMultiplatform() {
     }
 
     configureAndroidTarget()
+    configureIosTargets(baseName = pathToFrameworkName())
 
     extensions.configure<KotlinMultiplatformExtension> {
-        listOf(
-            iosX64(),
-            iosArm64(),
-            iosSimulatorArm64()
-        ).forEach { iosTarget ->
-            iosTarget.binaries.framework {
-                baseName = this@configureKotlinMultiplatform.pathToFrameworkName()
-            }
-        }
-
         applyHierarchyTemplate()
 
         compilerOptions {

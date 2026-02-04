@@ -1,7 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
+import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureKotlinAndroid
-//import com.spoonofcode.convention.configureKotlinAndroid
-//import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
 import com.spoonofcode.convention.pathToResourcePrefix
@@ -15,9 +14,9 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply(libs.findPlugin("android-library").get().get().pluginId)
-                apply(libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
-                apply(libs.findPlugin("kotlin-serialization").get().get().pluginId)
+                applyPlugin("android-library")
+                applyPlugin("kotlin-multiplatform")
+                applyPlugin("kotlin-serialization")
             }
 
             configureKotlinMultiplatform()

@@ -1,7 +1,7 @@
 import com.spoonofcode.convention.applyHierarchyTemplate
 import com.spoonofcode.convention.configureAndroidTarget
 import com.spoonofcode.convention.configureIosTargets
-import com.spoonofcode.convention.libs
+import com.spoonofcode.convention.pathToFrameworkName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -21,7 +21,7 @@ class CmpApplicationConventionPlugin: Plugin<Project> {
             }
 
             configureAndroidTarget()
-            configureIosTargets()
+            configureIosTargets(baseName = pathToFrameworkName())
 
             extensions.configure<KotlinMultiplatformExtension> {
                 applyHierarchyTemplate()
