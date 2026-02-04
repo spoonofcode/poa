@@ -37,7 +37,6 @@ internal class LoginViewModel(
 
     private fun signInWithCode() {
         viewModelScope.launch {
-            viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
             showLoadingView()
             loginRequestCodeUseCase(
                 email = currentState().email,
