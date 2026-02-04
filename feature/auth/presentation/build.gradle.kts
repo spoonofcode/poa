@@ -1,8 +1,25 @@
 plugins {
     alias(libs.plugins.convention.cmp.feature)
+    alias(libs.plugins.kotlin.cocoapods)
 }
 
 kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
+        ios.deploymentTarget = "18.0"
+
+//        podfile = project.file("../../../iosApp/Podfile")
+
+        pod("GoogleSignIn")
+
+        framework {
+            baseName = "FeatureAuth"
+            isStatic = true
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
