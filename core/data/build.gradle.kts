@@ -6,22 +6,25 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                // TODO #109 Fix after migration to feature modules
+                api(libs.kotlinx.datetime)
+                api(libs.ktor.client.core)
+
                 implementation(libs.kotlin.stdlib)
 
-                api(libs.connectivity.core)
-                api(libs.connectivity.device)
-                api(libs.koin.core)
-                api(libs.koin.compose)
-                api(libs.koin.compose.viewmodel)
-                api(libs.kotlinx.datetime)
-                api(libs.kotlinx.serialization.json)
-                api(libs.ktor.client.auth)
-                api(libs.ktor.client.content.negotiation)
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.logging)
-                api(libs.ktor.serialization.kotlinx.json)
-                api(libs.multiplatform.settings)
-                api(libs.touchlab.kermit)
+                implementation(libs.connectivity.core)
+                implementation(libs.connectivity.device)
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.client.auth)
+                implementation(libs.ktor.client.content.negotiation)
+
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.multiplatform.settings)
+                implementation(libs.touchlab.kermit)
             }
         }
 
@@ -35,7 +38,6 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.security)
                 implementation(libs.ktor.client.okhttp)
-                implementation(libs.recaptcha)
                 implementation(libs.firebase.messaging)
                 implementation(project.dependencies.platform(libs.firebase.bom))
             }
