@@ -1,10 +1,6 @@
 plugins {
-//    alias(libs.plugins.android.application)
 //    alias(libs.plugins.buildkonfig)
-//    alias(libs.plugins.compose.multiplatform)
-//    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.cocoapods)
-//    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
 //    alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
@@ -62,28 +58,6 @@ kotlin {
             isStatic = true
         }
     }
-
-//    androidTarget {
-//        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-//        compilerOptions {
-//            jvmTarget.set(JvmTarget.JVM_21)
-//        }
-//    }
-//
-//    listOf(
-//        iosX64(),
-//        iosArm64(),
-//        iosSimulatorArm64()
-//    ).forEach { iosTarget ->
-//        iosTarget.binaries.framework {
-//            baseName = "ComposeApp"
-//            isStatic = true
-//        }
-//        iosTarget.binaries.all {
-//            // pulls the system framework in and links it
-//            linkerOpts("-framework", "CoreNFC")
-//        }
-//    }
 
     sourceSets {
         iosMain.dependencies {
@@ -143,6 +117,7 @@ kotlin {
             implementation(libs.voyager.transitions)
 
             implementation(projects.core.data)
+            implementation(projects.core.firebase)
             implementation(projects.core.nfc)
             implementation(projects.core.presentation)
             implementation(projects.core.recaptcha)

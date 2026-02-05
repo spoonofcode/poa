@@ -38,8 +38,6 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.security)
                 implementation(libs.ktor.client.okhttp)
-                implementation(libs.firebase.messaging)
-                implementation(project.dependencies.platform(libs.firebase.bom))
             }
         }
 

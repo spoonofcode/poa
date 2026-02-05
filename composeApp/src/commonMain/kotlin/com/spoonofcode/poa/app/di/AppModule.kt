@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
-import com.spoonofcode.core.data.domain.di.domainModule
 import com.spoonofcode.core.data.network.di.networkModule
 import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.uiModule
@@ -38,7 +37,6 @@ val appModule = module {
     includes(
         // core
         coroutinesModule,
-        domainModule,
         uiModule,
         networkModule,
         recaptchaModule,

@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.data.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
@@ -14,7 +13,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
+    // TODO #109 Fix after migration to feature modules
+//    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,

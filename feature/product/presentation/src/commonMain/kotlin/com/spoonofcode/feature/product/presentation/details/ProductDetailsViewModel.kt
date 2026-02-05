@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.product.presentation.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.data.domain.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
@@ -13,7 +12,8 @@ internal class ProductDetailsViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
-    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
+    // TODO #109 Fix after migration to feature modules
+//    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
 
     override fun onAction(action: ProductDetailsViewAction) {
