@@ -39,6 +39,9 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.credentials)
                 implementation(libs.androidx.credentials.play.service.auth)
+
+                implementation(libs.google.id)
+                implementation(libs.recaptcha)
             }
         }
         iosMain {

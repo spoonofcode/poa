@@ -5,22 +5,18 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            api(libs.jetbrains.compose.ui.tooling.preview)
-            api(libs.androidx.activity.compose)
-            api(libs.androidx.media3.exoplayer)
-            api(libs.androidx.media3.ui.compose)
-            api(libs.androidx.security)
-            api(libs.androidx.splash.screen)
-            api(libs.koin.android)
-            api(libs.koin.androidx.compose)
-            api(libs.ktor.client.okhttp)
+            implementation(libs.jetbrains.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.media3.exoplayer)
+            implementation(libs.androidx.media3.ui.compose)
+            implementation(libs.androidx.security)
+            implementation(libs.androidx.splash.screen)
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.ktor.client.okhttp)
 
-            api(libs.androidx.credentials)
-            api(libs.androidx.credentials.play.service.auth)
-            api(libs.google.id)
-            api(libs.recaptcha)
-            api(libs.firebase.messaging)
-            api(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.messaging)
+            implementation(project.dependencies.platform(libs.firebase.bom))
         }
 
         commonMain {
@@ -28,7 +24,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.jetbrains.compose.components.resources)
 
-                api(libs.compose.icons.fontawesome)
+                implementation(libs.compose.icons.fontawesome)
                 implementation(libs.compottie)
                 implementation(libs.compottie.dot)
                 implementation(libs.compottie.network)
