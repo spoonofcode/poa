@@ -17,7 +17,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import com.spoonofcode.core.data.network.getUrlOpener
+import com.spoonofcode.core.presentation.web.getUrlOpener
 
 object Checkboxes {
     @Composable

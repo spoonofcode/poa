@@ -1,6 +1,6 @@
-package com.spoonofcode.core.data.domain.usecase
+package com.spoonofcode.core.firebase.usecase
 
-import com.spoonofcode.core.data.network.SessionManager
+//import com.spoonofcode.core.data.network.SessionManager
 
 // TODO #109 Fix after migration to feature modules
 class SubscribeUserTopicsUseCase(

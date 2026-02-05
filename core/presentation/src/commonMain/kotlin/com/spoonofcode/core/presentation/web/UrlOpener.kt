@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.presentation.web
 
 interface UrlOpener {
     fun openUrl(url: String)

@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.presentation.web
 
 import android.content.Context
 import android.content.Intent

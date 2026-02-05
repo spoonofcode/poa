@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.presentation.web
 
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
