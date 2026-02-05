@@ -1,8 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-
 plugins {
 //    alias(libs.plugins.android.application)
 //    alias(libs.plugins.buildkonfig)
@@ -96,7 +91,7 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.ui.tooling.preview)
+            implementation(libs.jetbrains.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.media3.ui.compose)
@@ -114,12 +109,12 @@ kotlin {
             implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
-            implementation(libs.components.resources)
-            implementation(libs.ui.tooling.preview)
-            implementation(libs.foundation)
-            implementation(libs.runtime)
-            implementation(libs.material3)
-            implementation(libs.ui)
+            implementation(libs.jetbrains.compose.components.resources)
+            implementation(libs.jetbrains.compose.ui.tooling.preview)
+            implementation(libs.jetbrains.compose.foundation)
+            implementation(libs.jetbrains.compose.runtime)
+            implementation(libs.jetbrains.compose.material3)
+            implementation(libs.jetbrains.compose.ui)
 
             implementation(libs.compose.icons.fontawesome)
             implementation(libs.compottie)
@@ -139,8 +134,8 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.landscapist.coil)
             implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.material.icons.core)
-            implementation(libs.material.icons.extended)
+            implementation(libs.jetbrains.compose.material.icons.core)
+            implementation(libs.jetbrains.compose.material.icons.extended)
             implementation(libs.multiplatform.settings)
             implementation(libs.touchlab.kermit)
             implementation(libs.voyager.navigator)
@@ -235,6 +230,6 @@ kotlin {
 //}
 
 dependencies {
-    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.jetbrains.compose.ui.tooling)
 //    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
 }

@@ -1,7 +1,7 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import com.codingfeline.buildkonfig.compiler.FieldSpec
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import com.codingfeline.buildkonfig.gradle.BuildKonfigExtension
+import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.pathToPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -12,7 +12,7 @@ class BuildKonfigConventionPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("com.codingfeline.buildkonfig")
+                applyPlugin("buildkonfig")
             }
 
             extensions.configure<BuildKonfigExtension> {

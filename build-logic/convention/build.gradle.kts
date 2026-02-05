@@ -12,7 +12,6 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.compose.gradle.plugin)
     compileOnly(libs.ksp.gradle.plugin)
-//    compileOnly(libs.androidx.room.gradle.plugin)
     implementation(libs.buildkonfig.gradle.plugin)
     implementation(libs.buildkonfig.compiler)
 }
@@ -38,36 +37,32 @@ tasks {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "com.spoonofcode.convention.android.application"
+            id = libs.plugins.convention.android.application.asProvider().get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidComposeApplication") {
-            id = "com.spoonofcode.convention.android.application.compose"
+            id = libs.plugins.convention.android.application.compose.get().pluginId
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
         register("cmpApplication") {
-            id = "com.spoonofcode.convention.cmp.application"
+            id = libs.plugins.convention.cmp.application.get().pluginId
             implementationClass = "CmpApplicationConventionPlugin"
         }
         register("kmpLibrary") {
-            id = "com.spoonofcode.convention.kmp.library"
+            id = libs.plugins.convention.kmp.library.get().pluginId
             implementationClass = "KmpLibraryConventionPlugin"
         }
         register("cmpLibrary") {
-            id = "com.spoonofcode.convention.cmp.library"
+            id = libs.plugins.convention.cmp.library.get().pluginId
             implementationClass = "CmpLibraryConventionPlugin"
         }
         register("cmpFeature") {
-            id = "com.spoonofcode.convention.cmp.feature"
+            id = libs.plugins.convention.cmp.feature.get().pluginId
             implementationClass = "CmpFeatureConventionPlugin"
         }
         register("buildKonfig") {
-            id = "com.spoonofcode.convention.buildkonfig"
+            id = libs.plugins.convention.buildkonfig.get().pluginId
             implementationClass = "BuildKonfigConventionPlugin"
-        }
-        register("room") {
-            id = "com.spoonofcode.convention.room"
-            implementationClass = "RoomConventionPlugin"
         }
     }
 }

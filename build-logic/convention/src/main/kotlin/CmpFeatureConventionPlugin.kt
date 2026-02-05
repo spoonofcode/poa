@@ -1,3 +1,4 @@
+import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -10,20 +11,19 @@ class CmpFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             // TODO #109 Fix after migration to feature modules
             with(pluginManager) {
-                apply("com.spoonofcode.convention.cmp.library")
+                applyPlugin("convention-cmp-library")
             }
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
-                        // Projekty Core
                         implementation(project(":core:presentation"))
                         implementation(project(":core:data"))
                         implementation(project(":feature:appnavigation"))
 
                         // Kotlin & Resources
                         implementation(libs.findLibrary("kotlin-stdlib").get())
-                        implementation(libs.findLibrary("components-resources").get())
+                        implementation(libs.findLibrary("jetbrains-compose-components-resources").get())
 
                         // UI & Animations
                         implementation(libs.findLibrary("compose-icons-fontawesome").get())
@@ -37,13 +37,13 @@ class CmpFeatureConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("connectivity-device").get())
 
                         // Compose Multiplatform
-                        implementation(libs.findLibrary("foundation").get())
-                        implementation(libs.findLibrary("runtime").get())
-                        implementation(libs.findLibrary("material3").get())
-                        implementation(libs.findLibrary("ui").get())
-                        implementation(libs.findLibrary("ui-tooling-preview").get())
-                        implementation(libs.findLibrary("material-icons-core").get())
-                        implementation(libs.findLibrary("material-icons-extended").get())
+                        implementation(libs.findLibrary("jetbrains-compose-foundation").get())
+                        implementation(libs.findLibrary("jetbrains-compose-runtime").get())
+                        implementation(libs.findLibrary("jetbrains-compose-material3").get())
+                        implementation(libs.findLibrary("jetbrains-compose-ui").get())
+                        implementation(libs.findLibrary("jetbrains-compose-ui-tooling-preview").get())
+                        implementation(libs.findLibrary("jetbrains-compose-material-icons-core").get())
+                        implementation(libs.findLibrary("jetbrains-compose-material-icons-extended").get())
 
                         // Lifecycle & ViewModel
                         implementation(libs.findLibrary("lifecycle-viewmodel-compose").get())
