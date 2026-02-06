@@ -14,29 +14,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
-import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.notification_type
-import com.spoonofcode.core.presentation.to_all
-import com.spoonofcode.core.presentation.to_all_my_customers
-import com.spoonofcode.core.presentation.to_selected_customers
-import com.spoonofcode.core.presentation.to_selected_series
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.feature.notification.presentation.Res
+import com.spoonofcode.feature.notification.presentation.notification_type
+import com.spoonofcode.feature.notification.presentation.to_all
+import com.spoonofcode.feature.notification.presentation.to_all_my_customers
+import com.spoonofcode.feature.notification.presentation.to_selected_customers
+import com.spoonofcode.feature.notification.presentation.to_selected_series
 
 internal class NotificationTypeScreen :
-    BaseScreen<com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewModel, com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewState, com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction>() {
+    BaseScreen<NotificationTypeViewModel, NotificationTypeViewState, NotificationTypeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification_type
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationTypeViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewState,
-        onAction: (com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction) -> Unit,
+        viewState: NotificationTypeViewState,
+        onAction: (NotificationTypeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -46,7 +45,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllCustomers) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )
@@ -54,7 +53,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -66,14 +65,14 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.Default.WebStories,
                     text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction.NavigateToPartnerProductSeries) },
+                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -85,9 +84,9 @@ internal class NotificationTypeScreen :
 @Preview
 @Composable
 private fun NotificationTypeScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.type.NotificationTypeScreen()
+    NotificationTypeScreen()
         .PreviewContent(
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewState()
+            NotificationTypeViewState()
     )
 }
 // endregion

@@ -24,10 +24,10 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.product.domain.model.Product
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.my_product_series
-import com.spoonofcode.core.presentation.send_notification
-import com.spoonofcode.core.presentation.series_number
+import com.spoonofcode.feature.product.presentation.Res
+import com.spoonofcode.feature.product.presentation.my_product_series
+import com.spoonofcode.feature.product.presentation.send_notification
+import com.spoonofcode.feature.product.presentation.series_number
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProductSeriesOverviewScreen(

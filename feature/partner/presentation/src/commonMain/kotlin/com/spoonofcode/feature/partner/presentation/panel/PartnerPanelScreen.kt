@@ -15,13 +15,13 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.partner_info
-import com.spoonofcode.core.presentation.partner_panel
-import com.spoonofcode.core.presentation.reports
-import com.spoonofcode.core.presentation.send_notification
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.partner_info
+import com.spoonofcode.feature.partner.presentation.partner_panel
+import com.spoonofcode.feature.partner.presentation.reports
+import com.spoonofcode.feature.partner.presentation.send_notification
 
 internal class PartnerPanelScreen() :
     BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction>() {

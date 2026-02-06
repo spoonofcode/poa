@@ -20,27 +20,27 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.feature.notification.domain.model.Notification
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.notification
-import com.spoonofcode.core.presentation.open_link
+import com.spoonofcode.feature.notification.presentation.Res
+import com.spoonofcode.feature.notification.presentation.notification
+import com.spoonofcode.feature.notification.presentation.open_link
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,
-) : BaseScreen<com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewModel, com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState, com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction>() {
+) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
-    override fun provideInitAction(onAction: (com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
+    override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState,
-        onAction: (com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction) -> Unit,
+        viewState: NotificationDetailsViewState,
+        onAction: (NotificationDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             val notification = requireNotNull(viewState.notification)
@@ -112,10 +112,10 @@ internal class NotificationDetailsScreen(
 @Preview
 @Composable
 private fun NotificationDetailsScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen(
+    NotificationDetailsScreen(
         notificationId = "1"
     ).PreviewContent(
-        _root_ide_package_.com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState()
+        NotificationDetailsViewState()
     )
 }
 // endregion

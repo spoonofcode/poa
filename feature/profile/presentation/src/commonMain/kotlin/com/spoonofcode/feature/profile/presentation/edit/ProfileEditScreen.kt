@@ -11,14 +11,14 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.edit_profile
-import com.spoonofcode.core.presentation.name
-import com.spoonofcode.core.presentation.poa
-import com.spoonofcode.core.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.feature.profile.presentation.Res
+import com.spoonofcode.feature.profile.presentation.edit_profile
+import com.spoonofcode.feature.profile.presentation.name
+import com.spoonofcode.feature.profile.presentation.poa
+import com.spoonofcode.feature.profile.presentation.save_changes
 
 internal class ProfileEditScreen() :
     BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction>() {

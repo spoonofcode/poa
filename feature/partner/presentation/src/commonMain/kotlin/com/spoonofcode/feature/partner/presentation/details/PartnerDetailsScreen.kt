@@ -23,9 +23,9 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.SocialIcons
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.about_partner
-import com.spoonofcode.core.presentation.partner
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.about_partner
+import com.spoonofcode.feature.partner.presentation.partner
 import org.jetbrains.compose.resources.stringResource
 
 

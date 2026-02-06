@@ -9,16 +9,16 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.description
-import com.spoonofcode.core.presentation.facebook
-import com.spoonofcode.core.presentation.instagram
-import com.spoonofcode.core.presentation.partner
-import com.spoonofcode.core.presentation.partner_name
-import com.spoonofcode.core.presentation.save_changes
-import com.spoonofcode.core.presentation.website
-import com.spoonofcode.core.presentation.x
-import com.spoonofcode.core.presentation.youtube
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.description
+import com.spoonofcode.feature.partner.presentation.facebook
+import com.spoonofcode.feature.partner.presentation.instagram
+import com.spoonofcode.feature.partner.presentation.partner
+import com.spoonofcode.feature.partner.presentation.partner_name
+import com.spoonofcode.feature.partner.presentation.save_changes
+import com.spoonofcode.feature.partner.presentation.website
+import com.spoonofcode.feature.partner.presentation.x
+import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerEditScreen(

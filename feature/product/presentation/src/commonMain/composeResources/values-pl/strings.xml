@@ -1,0 +1,22 @@
+<resources>
+    <string name="about_product">O produkcie</string>
+    <string name="add_product">Dodaj produkt</string>
+    <string name="custom_link">Własny link</string>
+    <string name="edit_product">Edytuj produkt</string>
+
+    <string name="learn_more">Dowiedz się więcej</string>
+
+    <string name="my_products">Moje produkty</string>
+    <string name="my_product_series">Moje serie produktów</string>
+
+    <string name="product">Produkt</string>
+    <string name="products">Produkty</string>
+
+    <string name="save_changes">Zapisz zmiany</string>
+    <string name="series_number">Seria Nr. %1$d</string>
+    <string name="send_notification">Wyślij powiadomienie</string>
+
+    <string name="visit_product_page">Odwiedź stronę produktu</string>
+
+    <string name="website">Strona</string>
+</resources>

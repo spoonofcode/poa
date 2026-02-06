@@ -8,8 +8,6 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.spoonofcode.feature.product.presentation.overview.ProductOverviewScreen
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.products
 import org.jetbrains.compose.resources.stringResource
 
 object ProductOverviewTab : Tab {

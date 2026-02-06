@@ -1,0 +1,6 @@
+<resources>
+    <string name="scan">Scan</string>
+    <string name="scan_info_android">Place the NFC tag on the back of your device.\nBring the upper part of the phone (camera area) close to the tag.</string>
+    <string name="scan_info_ios">Place the NFC tag on the back of your device.\nBring the top edge of the iPhone (near the "handset"/notch) close to the tag.</string>
+    <string name="scanning_in_progress">Scanning in progress</string>
+</resources>

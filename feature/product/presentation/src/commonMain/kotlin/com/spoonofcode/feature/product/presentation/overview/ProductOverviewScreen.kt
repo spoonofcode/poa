@@ -27,8 +27,8 @@ import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.product.domain.model.Product
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.my_products
+import com.spoonofcode.feature.product.presentation.Res
+import com.spoonofcode.feature.product.presentation.my_products
 
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,

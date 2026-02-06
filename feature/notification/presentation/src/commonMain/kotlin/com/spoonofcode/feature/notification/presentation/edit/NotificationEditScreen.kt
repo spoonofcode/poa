@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,35 +27,35 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.expiration_date
-import com.spoonofcode.core.presentation.link
-import com.spoonofcode.core.presentation.notification
-import com.spoonofcode.core.presentation.selected_customers
-import com.spoonofcode.core.presentation.selected_series
-import com.spoonofcode.core.presentation.send_notification
-import com.spoonofcode.core.presentation.text
-import com.spoonofcode.core.presentation.title
+import com.spoonofcode.feature.notification.presentation.Res
+import com.spoonofcode.feature.notification.presentation.expiration_date
+import com.spoonofcode.feature.notification.presentation.link
+import com.spoonofcode.feature.notification.presentation.notification
+import com.spoonofcode.feature.notification.presentation.selected_customers
+import com.spoonofcode.feature.notification.presentation.selected_series
+import com.spoonofcode.feature.notification.presentation.send_notification
+import com.spoonofcode.feature.notification.presentation.text
+import com.spoonofcode.feature.notification.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationEditScreen(
     val onlyToSelectedUsers: Boolean = false,
     val topics: List<String> = emptyList(),
     val itemIds: List<String> = emptyList(),
-) : BaseScreen<com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewModel, com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState, com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction>() {
+) : BaseScreen<NotificationEditViewModel, NotificationEditViewState, NotificationEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
-    override fun provideInitAction(onAction: (com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.InitView(itemIds = itemIds)) }
+    override fun provideInitAction(onAction: (NotificationEditViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationEditViewAction.InitView(itemIds = itemIds)) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState,
-        onAction: (com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction) -> Unit,
+        viewState: NotificationEditViewState,
+        onAction: (NotificationEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             if (viewState.itemIds.isNotEmpty()) {
@@ -76,13 +73,13 @@ internal class NotificationEditScreen(
 
             TextFields.Outlined(
                 value = viewState.title,
-                onValueChange = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeTitle(it)) },
+                onValueChange = { onAction(NotificationEditViewAction.ChangeTitle(it)) },
                 label = stringResource(resource = Res.string.title),
             )
 
             TextFields.Outlined(
                 value = viewState.text,
-                onValueChange = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeText(it)) },
+                onValueChange = { onAction(NotificationEditViewAction.ChangeText(it)) },
                 label = stringResource(resource = Res.string.text),
                 minLines = 8,
             )
@@ -92,7 +89,7 @@ internal class NotificationEditScreen(
                 value = viewState.expirationDateTime,
                 onValueChange = {
                     onAction(
-                        _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeExpirationDateTime(
+                        NotificationEditViewAction.ChangeExpirationDateTime(
                             it
                         )
                     )
@@ -102,7 +99,7 @@ internal class NotificationEditScreen(
 
             TextFields.Outlined(
                 value = viewState.link,
-                onValueChange = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.ChangeLink(it)) },
+                onValueChange = { onAction(NotificationEditViewAction.ChangeLink(it)) },
                 label = stringResource(resource = Res.string.link),
             )
 
@@ -110,7 +107,7 @@ internal class NotificationEditScreen(
 
             Buttons.PrimaryButton(
                 text = stringResource(resource = Res.string.send_notification),
-                onClick = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction.SendNotification) }
+                onClick = { onAction(NotificationEditViewAction.SendNotification) }
             )
         }
     }
@@ -185,9 +182,9 @@ internal class NotificationEditScreen(
 @Preview
 @Composable
 private fun NotificationEditScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen()
+    NotificationEditScreen()
         .PreviewContent(
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState()
+            NotificationEditViewState()
         )
 }
 // endregion

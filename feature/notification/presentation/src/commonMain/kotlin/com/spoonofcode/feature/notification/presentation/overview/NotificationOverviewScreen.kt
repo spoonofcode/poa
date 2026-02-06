@@ -37,23 +37,23 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.notifications
-import com.spoonofcode.core.presentation.tab_already_read
-import com.spoonofcode.core.presentation.tab_new
+import com.spoonofcode.feature.notification.presentation.Res
+import com.spoonofcode.feature.notification.presentation.notifications
+import com.spoonofcode.feature.notification.presentation.tab_already_read
+import com.spoonofcode.feature.notification.presentation.tab_new
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewModel, com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState, com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction>() {
+) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications
 
-    override fun provideInitAction(onAction: (com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction.InitView) }
+    override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
+        { onAction(NotificationOverviewViewAction.InitView) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewModel>()
+    override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
 
     override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,
@@ -62,13 +62,13 @@ internal class NotificationOverviewScreen(
 
     @Composable
     override fun provideContent(
-        viewState: com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState,
-        onAction: (com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction) -> Unit,
+        viewState: NotificationOverviewViewState,
+        onAction: (NotificationOverviewViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             NotificationTabs(
                 viewState.notifications,
-                selectNotification = { onAction(_root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction.SelectNotification(it)) },
+                selectNotification = { onAction(NotificationOverviewViewAction.SelectNotification(it)) },
             )
         }
     }
@@ -178,9 +178,9 @@ internal class NotificationOverviewScreen(
 @Preview
 @Composable
 fun NotificationOverviewScreenContentPreview() {
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewScreen()
+    NotificationOverviewScreen()
         .PreviewContent(
-            viewState = _root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState(),
+            viewState = NotificationOverviewViewState(),
         )
 }
 // endregion

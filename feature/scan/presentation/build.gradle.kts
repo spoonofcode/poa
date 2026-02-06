@@ -21,3 +21,9 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.spoonofcode.feature.scan.presentation"
+//    generateResClass = always
+}
