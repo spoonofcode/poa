@@ -1,0 +1,8 @@
+<resources>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="read">Czytaj</string>
+    <string name="save_changes">Zapisz zmiany</string>
+    <string name="star_mandatory">* obowiązkowe</string>
+    <string name="terms_and_conditions">Warunki i zasady</string>
+    <string name="terms_and_conditions_description">Aby uzyskać dostęp do aplikacji, musisz zaakceptować nasz regulamin</string>
+</resources>

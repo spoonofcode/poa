@@ -9,14 +9,7 @@ import com.spoonofcode.core.presentation.compose.Checkboxes
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.base.BaseScreen
-import com.spoonofcode.core.presentation.privacy_policy
-import com.spoonofcode.core.presentation.read
-import com.spoonofcode.core.presentation.save_changes
-import com.spoonofcode.core.presentation.star_mandatory
-import com.spoonofcode.core.presentation.terms_and_conditions
-import com.spoonofcode.core.presentation.terms_and_conditions_description
 import org.jetbrains.compose.resources.stringResource
 
 internal class TACScreen(
