@@ -1,13 +1,10 @@
 <resources>
     <string name="code">Code</string>
     <string name="email">E-mail</string>
-
     <string name="let_s_get_started">Let’s get started</string>
-
-    <string name="or"> Or </string>
     <string name="one_time_code_info_prefix">A verification code has been sent to your email address </string>
     <string name="one_time_code_info_postfix">. Please enter it below.</string>
-
+    <string name="or"> Or </string>
     <string name="sign_in">Sign in</string>
     <string name="sign_in_with_code">Sign in with code</string>
     <string name="sign_in_with_google">Sign in with Google</string>

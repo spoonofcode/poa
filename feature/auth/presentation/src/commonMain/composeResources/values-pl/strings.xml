@@ -1,13 +1,10 @@
 <resources>
     <string name="code">Kod</string>
     <string name="email">E-mail</string>
-
     <string name="let_s_get_started">Zaczynajmy</string>
-
-    <string name="or"> Lub </string>
     <string name="one_time_code_info_prefix">Kod weryfikacyjny został wysłany na adres e-mail </string>
     <string name="one_time_code_info_postfix">. Wpisz go poniżej.</string>
-
+    <string name="or"> Lub </string>
     <string name="sign_in">Zaloguj się</string>
     <string name="sign_in_with_code">Zaloguj się z kodem</string>
     <string name="sign_in_with_google">Zaloguj się z Google</string>

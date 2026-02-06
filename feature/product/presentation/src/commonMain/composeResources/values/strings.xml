@@ -3,19 +3,14 @@
     <string name="add_product">Add product</string>
     <string name="custom_link">Custom link</string>
     <string name="edit_product">Edit Product</string>
-
     <string name="learn_more">Learn more</string>
-
     <string name="my_products">My products</string>
     <string name="my_product_series">My product series</string>
-
     <string name="product">Product</string>
     <string name="products">Products</string>
-
     <string name="save_changes">Save changes</string>
     <string name="send_notification">Send notification</string>
     <string name="series_number">Series No. %1$d</string>
-
-    <string name="visit_product_page">Visit product page</string>
     <string name="website">Website</string>
+    <string name="visit_product_page">Visit product page</string>
 </resources>

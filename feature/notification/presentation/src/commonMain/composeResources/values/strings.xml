@@ -1,13 +1,9 @@
 <resources>
     <string name="expiration_date">Expiration date</string>
-
     <string name="from_all_partners">From all partners</string>
     <string name="from_my_partners">From my partners</string>
-
     <string name="link">Link</string>
-
     <string name="open_link">Open Link</string>
-
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_settings">Notification settings</string>
@@ -15,20 +11,14 @@
     <string name="notification_body">Notification text</string>
     <string name="notification_title">Notification title</string>
     <string name="notification_type">Notification type</string>
-
     <string name="save_changes">Save changes</string>
-
-    <string name="send_notification">Send notification</string>
-
     <string name="selected_customers">Selected customers: </string>
     <string name="selected_series">Selected series: </string>
-
+    <string name="send_notification">Send notification</string>
     <string name="tab_new">New</string>
     <string name="tab_already_read">Already read</string>
-
     <string name="title">Title</string>
     <string name="text">Text</string>
-
     <string name="to_all">To all</string>
     <string name="to_all_my_customers">To all my customers</string>
     <string name="to_all_partners">To selected customers</string>
