@@ -49,6 +49,7 @@ internal class LoginViewModel(
     }
 
     private fun signInWithGoogle(googleAccount: GoogleAccount?) {
+        println("BARTEK googleAccount = $googleAccount")
         viewModelScope.launch {
             showLoadingView()
             val googleIdToken = requireNotNull(googleAccount?.idToken)

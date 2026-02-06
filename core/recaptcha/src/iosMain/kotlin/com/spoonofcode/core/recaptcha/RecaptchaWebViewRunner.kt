@@ -1,6 +1,8 @@
 package com.spoonofcode.core.recaptcha
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import platform.Foundation.NSUUID
 import platform.WebKit.*
 import platform.darwin.NSObject
@@ -13,11 +15,9 @@ import platform.CoreGraphics.CGRectZero
 internal object RecaptchaWebViewRunner {
 
     @OptIn(ExperimentalForeignApi::class)
-    suspend fun run(siteKey: String, action: String): String =
+    suspend fun run(siteKey: String, action: String): String = withContext(Dispatchers.Main) {
         suspendCancellableCoroutine { cont ->
-
             val handlerName = "recaptchaHandler_${NSUUID().UUIDString}"
-
             val contentController = WKUserContentController()
 
             val handler = object : NSObject(), WKScriptMessageHandlerProtocol {
@@ -31,9 +31,15 @@ internal object RecaptchaWebViewRunner {
                     } else {
                         cont.resume(token)
                     }
+                    
+                    // Cleanup
+                    userContentController.removeScriptMessageHandlerForName(handlerName)
                 }
             }
 
+            // WKUserContentController holds a weak reference to the handler, 
+            // but the closure of suspendCancellableCoroutine and the handler itself 
+            // will keep everything alive until resume/cancellation.
             contentController.addScriptMessageHandler(handler, name = handlerName)
 
             val config = WKWebViewConfiguration().apply {
@@ -67,7 +73,8 @@ internal object RecaptchaWebViewRunner {
             webView.loadHTMLString(html, baseURL = null)
 
             cont.invokeOnCancellation {
-                try { contentController.removeScriptMessageHandlerForName(handlerName) } catch (_: Throwable) {}
+                contentController.removeScriptMessageHandlerForName(handlerName)
             }
         }
+    }
 }
