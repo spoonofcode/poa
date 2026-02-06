@@ -131,46 +131,46 @@ kotlin {
     }
 }
 
-//android {
-//    namespace = "com.spoonofcode.poa"
-//    compileSdk = libs.versions.androidCompileSdk.get().toInt()
-//
-//    defaultConfig {
-//        applicationId = "com.spoonofcode.poa"
-//        minSdk = libs.versions.androidMinSdk.get().toInt()
-//        targetSdk = libs.versions.androidTargetSdk.get().toInt()
-//        versionCode = 1
-//        versionName = "1.0"
-//    }
-//    packaging {
-//        resources {
-//            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-//        }
-//    }
-//    signingConfigs {
-//        create("customDebug") {
-//            storeFile = file("certificates/new-debug.keystore")
-//            storePassword = "poa123"
-//            keyAlias = "newdebugkey"
-//            keyPassword = "poa123"
-//        }
-//    }
+android {
+    namespace = "com.spoonofcode.poa"
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
+
+    defaultConfig {
+        applicationId = "com.spoonofcode.poa"
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    signingConfigs {
+        create("customDebug") {
+            storeFile = file("certificates/new-debug.keystore")
+            storePassword = "poa123"
+            keyAlias = "newdebugkey"
+            keyPassword = "poa123"
+        }
+    }
+    buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("customDebug")
+        }
+    }
 //    buildTypes {
-//        getByName("debug") {
-//            signingConfig = signingConfigs.getByName("customDebug")
+//        getByName("release") {
+//            isMinifyEnabled = false
 //        }
 //    }
-////    buildTypes {
-////        getByName("release") {
-////            isMinifyEnabled = false
-////        }
-////    }
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_21
-//        targetCompatibility = JavaVersion.VERSION_21
-//        isCoreLibraryDesugaringEnabled = true
-//    }
-//}
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+        isCoreLibraryDesugaringEnabled = true
+    }
+}
 
 dependencies {
     debugImplementation(libs.jetbrains.compose.ui.tooling)

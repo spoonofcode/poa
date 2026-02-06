@@ -39,7 +39,7 @@ compottie = "2.0.2"
 
 # --- Google / Firebase ---
 firebaseBom = "34.8.0"
-googleId = "1.1.1"
+googleId = "1.2.0"
 recaptcha = "18.8.0"
 
 # --- Networking / DI / Utils ---
