@@ -3,6 +3,7 @@ package com.spoonofcode.feature.profile.presentation.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.appnavigation.AuthModule
+import com.spoonofcode.feature.appnavigation.FAQModule
 import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.appnavigation.PartnerModule
 import com.spoonofcode.feature.appnavigation.ProfileModule
@@ -72,7 +73,7 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToFAQ() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(ProfileModule.FAQScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(FAQModule.FAQScreen))
         }
     }
 

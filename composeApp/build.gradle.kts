@@ -94,6 +94,8 @@ kotlin {
             implementation(projects.feature.auth.domain)
             implementation(projects.feature.auth.presentation)
 
+            implementation(projects.feature.faq.presentation)
+
             implementation(projects.feature.home.data)
             implementation(projects.feature.home.domain)
             implementation(projects.feature.home.presentation)

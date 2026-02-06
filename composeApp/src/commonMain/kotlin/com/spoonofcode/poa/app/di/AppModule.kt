@@ -29,6 +29,7 @@ import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.AppModuleRouteResolver
 import com.spoonofcode.core.data.getPlatform
 import com.spoonofcode.core.recaptcha.di.recaptchaModule
+import com.spoonofcode.feature.faq.presentation.di.faqPresentationModule
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -50,6 +51,8 @@ val appModule = module {
         authDataModule,
         authDomainModule,
         authPresentationModule,
+
+        faqPresentationModule,
 
         partnerDataModule,
         partnerDomainModule,

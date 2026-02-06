@@ -5,7 +5,6 @@ import com.spoonofcode.feature.appnavigation.ProfileModule
 import com.spoonofcode.feature.profile.presentation.ProfileModuleRouteResolver
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditViewModel
-import com.spoonofcode.feature.profile.presentation.faq.FAQViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
@@ -16,5 +15,4 @@ val profilePresentationModule = module {
 
     viewModelOf(::ProfileDetailsViewModel)
     viewModelOf(::ProfileEditViewModel)
-    viewModelOf(::FAQViewModel)
 }

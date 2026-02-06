@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.profile.presentation.faq
+package com.spoonofcode.feature.faq.presentation
 
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState

@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.profile.presentation.faq
+package com.spoonofcode.feature.faq.presentation
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState

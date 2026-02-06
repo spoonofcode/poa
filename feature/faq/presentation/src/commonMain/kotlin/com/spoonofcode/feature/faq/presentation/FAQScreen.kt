@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.profile.presentation.faq
+package com.spoonofcode.feature.faq.presentation
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
@@ -7,31 +7,6 @@ import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.ExpandableListItem
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.profile.presentation.Res
-import com.spoonofcode.feature.profile.presentation.faq
-import com.spoonofcode.feature.profile.presentation.faq_answer_1
-import com.spoonofcode.feature.profile.presentation.faq_answer_10
-import com.spoonofcode.feature.profile.presentation.faq_answer_2
-import com.spoonofcode.feature.profile.presentation.faq_answer_3
-import com.spoonofcode.feature.profile.presentation.faq_answer_4
-import com.spoonofcode.feature.profile.presentation.faq_answer_5
-import com.spoonofcode.feature.profile.presentation.faq_answer_6
-import com.spoonofcode.feature.profile.presentation.faq_answer_7
-import com.spoonofcode.feature.profile.presentation.faq_answer_8
-import com.spoonofcode.feature.profile.presentation.faq_answer_9
-import com.spoonofcode.feature.profile.presentation.faq_question_1
-import com.spoonofcode.feature.profile.presentation.faq_question_10
-import com.spoonofcode.feature.profile.presentation.faq_question_2
-import com.spoonofcode.feature.profile.presentation.faq_question_3
-import com.spoonofcode.feature.profile.presentation.faq_question_4
-import com.spoonofcode.feature.profile.presentation.faq_question_5
-import com.spoonofcode.feature.profile.presentation.faq_question_6
-import com.spoonofcode.feature.profile.presentation.faq_question_7
-import com.spoonofcode.feature.profile.presentation.faq_question_8
-import com.spoonofcode.feature.profile.presentation.faq_question_9
-import com.spoonofcode.feature.profile.presentation.faq_setion_1
-import com.spoonofcode.feature.profile.presentation.faq_setion_2
-import com.spoonofcode.feature.profile.presentation.faq_setion_3
 import org.jetbrains.compose.resources.stringResource
 
 internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction>() {

@@ -5,7 +5,6 @@ import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.feature.appnavigation.ProfileModule
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsScreen
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditScreen
-import com.spoonofcode.feature.profile.presentation.faq.FAQScreen
 
 class ProfileModuleRouteResolver : ModuleRouteResolver<ProfileModule> {
     override fun resolve(screen: com.spoonofcode.feature.appnavigation.Screen): Screen? =
@@ -13,7 +12,6 @@ class ProfileModuleRouteResolver : ModuleRouteResolver<ProfileModule> {
             when (it) {
                 ProfileModule.ProfileDetailsScreen -> ProfileDetailsScreen()
                 ProfileModule.ProfileEditScreen -> ProfileEditScreen()
-                ProfileModule.FAQScreen -> FAQScreen()
             }
         }
 }
