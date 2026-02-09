@@ -40,8 +40,8 @@ class CmpFeatureConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("jetbrains-compose-foundation").get())
                         implementation(libs.findLibrary("jetbrains-compose-runtime").get())
                         implementation(libs.findLibrary("jetbrains-compose-material3").get())
-                        api(libs.findLibrary("jetbrains-compose-ui").get())
-                        api(libs.findLibrary("jetbrains-compose-ui-tooling-preview").get())
+                        implementation(libs.findLibrary("jetbrains-compose-ui").get())
+                        implementation(libs.findLibrary("jetbrains-compose-ui-tooling-preview").get())
                         implementation(libs.findLibrary("jetbrains-compose-material-icons-core").get())
                         implementation(libs.findLibrary("jetbrains-compose-material-icons-extended").get())
 
