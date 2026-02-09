@@ -160,6 +160,8 @@ androidx-core = { group = "androidx.test", name = "core", version.ref = "android
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestJunit" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
+mokkery = { module = "dev.mokkery:mokkery-runtime", version.ref = "mokkery" }
+
 [plugins]
 # --- Android / Kotlin ---
 android-application = { id = "com.android.application", version.ref = "agp" }

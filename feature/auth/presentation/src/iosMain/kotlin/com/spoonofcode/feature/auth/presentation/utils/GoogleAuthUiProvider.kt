@@ -1,6 +1,5 @@
 package com.spoonofcode.feature.auth.presentation.utils
 
-// TODO #109 Fix after migration to feature modules
 import cocoapods.GoogleSignIn.GIDSignIn
 import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import kotlinx.cinterop.ExperimentalForeignApi

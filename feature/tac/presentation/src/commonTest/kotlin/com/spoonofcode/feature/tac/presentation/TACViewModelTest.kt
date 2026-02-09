@@ -1,14 +1,13 @@
-package com.spoonofcode.poa.feature.tac
+package com.spoonofcode.feature.tac.presentation
 
 import app.cash.turbine.test
-import com.spoonofcode.core.presentation.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.tac.di.tacTestModule
-import com.spoonofcode.feature.tac.presentation.TACViewModel
-import com.spoonofcode.feature.tac.presentation.TACViewState
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.tac.presentation.di.tacTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,6 +22,11 @@ class TACViewModelest : BaseViewModelTest() {
         modules = arrayOf(tacTestModule)
         super.setup()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun tearDown() {
+        super.tearDown()
     }
 
     @Test
