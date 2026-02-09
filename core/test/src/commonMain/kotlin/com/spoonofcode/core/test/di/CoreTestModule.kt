@@ -12,7 +12,6 @@ import org.koin.dsl.module
 
 val coreTestModule = module {
     singleOf(::FakeNetworkManager).bind(NetworkManager::class)
-
     singleOf(::ViewModelNavigatorImpl).bind(ViewModelNavigator::class)
-
+    single { VoyagerRouteResolverImpl(getAll()) } bind VoyagerRouteResolver::class
 }

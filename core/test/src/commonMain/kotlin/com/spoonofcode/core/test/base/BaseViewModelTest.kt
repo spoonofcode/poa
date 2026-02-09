@@ -1,26 +1,25 @@
 package com.spoonofcode.core.test.base
 
 //import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
-import dev.mokkery.MockMode
-import dev.mokkery.mock
-import org.koin.dsl.module
+import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
+import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import org.koin.test.get
+
 //import kotlin.test.BeforeTest
 
 abstract class BaseViewModelTest : BaseTest() {
-//    protected lateinit var viewModelNavigator: ViewModelNavigator
+    protected lateinit var viewModelNavigator: ViewModelNavigator
+    protected lateinit var routeResolver: VoyagerRouteResolver
 
-//    @BeforeTest
+    //    @BeforeTest
     override fun setup() {
-        modules = modules.plus(
-            testModule()
-        )
         super.setup()
-//        viewModelNavigator = get()
+        viewModelNavigator = get()
+        routeResolver = get()
     }
 
-    private fun testModule() = module {
+//    private fun testModule() = module {
 //        single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
-    }
+//    }
 
 }
