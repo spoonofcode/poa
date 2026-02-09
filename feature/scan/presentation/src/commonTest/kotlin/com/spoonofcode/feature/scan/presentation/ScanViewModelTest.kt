@@ -7,6 +7,7 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.feature.scan.di.scanTestModule
+import com.spoonofcode.feature.scan.presentation.di.scanTestModule
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi

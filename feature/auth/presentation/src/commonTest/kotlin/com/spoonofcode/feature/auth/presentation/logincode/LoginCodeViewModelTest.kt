@@ -1,16 +1,12 @@
 package com.spoonofcode.feature.auth.presentation.logincode
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.auth.di.loginTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
-import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeViewAction
-import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeViewModel
-import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeViewState
+import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -31,7 +27,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(loginTestModule)
+        modules = arrayOf(authPresentationModule)
         super.setup()
         loginRepository = getKoin().get()
         viewModel = getSut()
@@ -113,9 +109,8 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
         verifySuspend {
             loginRepository.loginWithCode(email = email, loginCode = any())
         }
-        verifySuspend {
-            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
-        }
+        verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend { viewModelNavigator.replaceAll(any()) }
     }
 
     @Test
@@ -156,8 +151,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
             loginRepository.loginWithCode(any(), any())
         }
 
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
-        }
+        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend(mode = exactly(0)) { viewModelNavigator.replaceAll(any()) }
     }
 }

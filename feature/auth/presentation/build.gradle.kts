@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.convention.cmp.feature)
     alias(libs.plugins.kotlin.cocoapods)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {

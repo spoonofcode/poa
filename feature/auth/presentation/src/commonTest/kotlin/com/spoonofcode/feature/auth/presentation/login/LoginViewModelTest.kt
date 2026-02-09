@@ -1,26 +1,23 @@
 package com.spoonofcode.feature.auth.presentation.login
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.auth.di.loginTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.AuthModule
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
-import com.spoonofcode.feature.auth.presentation.login.LoginViewAction
-import com.spoonofcode.feature.auth.presentation.login.LoginViewModel
-import com.spoonofcode.feature.auth.presentation.login.LoginViewState
-import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
+import com.spoonofcode.feature.auth.presentation.di.authPresentationTestModule
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
-import dev.mokkery.matcher.ofType
 import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -33,10 +30,15 @@ class LoginViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(loginTestModule)
+        modules = arrayOf(authPresentationTestModule)
         super.setup()
         loginRepository = getKoin().get()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun tearDown() {
+        super.tearDown()
     }
 
     @Test
@@ -78,7 +80,13 @@ class LoginViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
+            viewModel.onAction(
+                LoginViewAction.SignInWithGoogle(
+                    googleAccount = GoogleAccount(
+                        idToken = token,
+                    )
+                )
+            )
 
             assertEquals(
                 expected = ViewState(
@@ -89,12 +97,9 @@ class LoginViewModelTest : BaseViewModelTest() {
             )
         }
 
-        verifySuspend {
-            loginRepository.loginWithGoogle(any())
-        }
-        verifySuspend {
-            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
-        }
+        verifySuspend { loginRepository.loginWithGoogle(any()) }
+        verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend { viewModelNavigator.replaceAll(any()) }
     }
 
 
@@ -108,7 +113,13 @@ class LoginViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(LoginViewAction.SignInWithGoogle(token))
+            viewModel.onAction(
+                LoginViewAction.SignInWithGoogle(
+                    googleAccount = GoogleAccount(
+                        idToken = token,
+                    )
+                )
+            )
 
             assertEquals(
                 expected = ViewState(
@@ -156,12 +167,9 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
         advanceUntilIdle()
 
-        verifySuspend {
-            loginRepository.requestCode(email = email, recaptchaToken = any())
-        }
-        verifySuspend {
-            viewModelNavigator.push(ofType<LoginCodeScreen>())
-        }
+        verifySuspend { loginRepository.requestCode(email = email, recaptchaToken = any()) }
+        verifySuspend { routeResolver.resolve(AuthModule.LoginCodeScreen(email)) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 
     @Test
@@ -195,12 +203,8 @@ class LoginViewModelTest : BaseViewModelTest() {
             )
         }
 
-        verifySuspend {
-            loginRepository.requestCode(any(), any())
-        }
-
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.push(ofType<LoginCodeScreen>())
-        }
+        verifySuspend { loginRepository.requestCode(any(), any()) }
+        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AuthModule.LoginCodeScreen(email)) }
+        verifySuspend(mode = exactly(0)) { viewModelNavigator.push(any()) }
     }
 }

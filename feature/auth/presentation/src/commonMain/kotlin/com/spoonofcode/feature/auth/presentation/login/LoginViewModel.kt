@@ -3,11 +3,11 @@ package com.spoonofcode.feature.auth.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import kotlinx.coroutines.launch
 
 internal class LoginViewModel(
@@ -55,9 +55,11 @@ internal class LoginViewModel(
             val googleIdToken = requireNotNull(googleAccount?.idToken)
             loginGoogleUseCase(googleIdToken)
                 .onSuccess {
-                    viewModelNavigator.replaceAll(listOf(
-                        routeResolver.resolve(AppModule.MainHostScreen)
-                    ))
+                    viewModelNavigator.replaceAll(
+                        listOf(
+                            routeResolver.resolve(AppModule.MainHostScreen)
+                        )
+                    )
                 }.onFailure {
                     showErrorSnackbar(it)
                 }
