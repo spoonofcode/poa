@@ -15,7 +15,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-// TODO #131 Fix test 
+// TODO #131 Fix test
 val coreTestModule = module {
     single<Settings> { get<Settings.Factory>().create("poa-settings") }
     single<Settings> { MapSettings() }
