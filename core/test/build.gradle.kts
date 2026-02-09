@@ -1,3 +1,5 @@
+import dev.mokkery.gradle.ApplicationRule
+
 plugins {
     alias(libs.plugins.convention.buildkonfig)
     alias(libs.plugins.convention.kmp.library)
@@ -19,7 +21,8 @@ kotlin {
                 api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.coroutines.test)
 
-                api(libs.mokkery)
+                // Wystawiamy Mokkery jako api, żeby testy w feature mogły robić verify/every bez dodawania deps.
+                api(libs.mokkery.runtime)
 
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.device)
@@ -44,4 +47,15 @@ kotlin {
             }
         }
     }
+}
+
+kotlin.sourceSets.names.forEach { println("KMP sourceSet: $it") }
+
+// WAŻNE: bo mocks/helpers siedzą w commonMain, a nie w commonTest
+mokkery {
+//    rule.set(ApplicationRule.Listed("commonMain"))
+    // alternatywnie (prościej, ale szerzej):
+    // rule.set(ApplicationRule.All)
+
+    rule.set(ApplicationRule.All)
 }
