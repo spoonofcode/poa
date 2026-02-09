@@ -1,26 +1,29 @@
 package com.spoonofcode.core.test.base
 
-//import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
-//import androidx.compose.runtime.Composable
-//import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
-//import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
+import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
+import dev.mokkery.MockMode
+import dev.mokkery.mock
+import org.koin.dsl.module
 import org.koin.test.get
-
 //import kotlin.test.BeforeTest
 
 abstract class BaseViewModelTest : BaseTest() {
     protected lateinit var viewModelNavigator: ViewModelNavigator
-//    protected lateinit var routeResolver: VoyagerRouteResolver
+    protected lateinit var routeResolver: VoyagerRouteResolver
 
-    //    @BeforeTest
+//    @BeforeTest
     override fun setup() {
+        modules = modules.plus(
+            testModule()
+        )
         super.setup()
         viewModelNavigator = get()
-//        routeResolver = get()
+        routeResolver = get()
     }
 
-//    private fun testModule() = module {
-//        single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
-//    }
+    private fun testModule() = module {
+        single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
+        single { mock<VoyagerRouteResolver>(mode = MockMode.autofill) }
+    }
 }

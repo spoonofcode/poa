@@ -5,6 +5,7 @@ import com.russhwolf.settings.Settings
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigatorImpl
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
+import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolverImpl
 import com.spoonofcode.core.presentation.network.NetworkManager
 //import com.spoonofcode.core.test.FakeVoyagerRouteResolver
 import com.spoonofcode.core.test.network.FakeNetworkManager
@@ -27,5 +28,5 @@ val coreTestModule = module {
 //    singleOf(::FakeVoyagerRouteResolver).bind(VoyagerRouteResolver::class)
 
     singleOf(::ViewModelNavigatorImpl).bind(ViewModelNavigator::class)
-//    single { VoyagerRouteResolverImpl(getAll()) } bind VoyagerRouteResolver::class
+    single { VoyagerRouteResolverImpl(getAll()) } bind VoyagerRouteResolver::class
 }

@@ -12,6 +12,7 @@ import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewAc
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewState
 import com.spoonofcode.feature.profile.presentation.di.profileTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -115,11 +116,8 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToTAC)
         advanceUntilIdle()
 
-        // TODO #131 Fix test - to nie zadziała bo to nie są mocki tylko fake instancje.
-        //  Pomyśleć jak można to zrobić inaczej
-
-//        verifySuspend(mode = exactly(2)) { routeResolver.resolve(ProfileModule.ProfileEditScreen) }
-//        verifySuspend { viewModelNavigator.push(FakeVoyagerRouteResolver.DEFAULT_SCREEN) }
+        verifySuspend { routeResolver.resolve(TACModule.TACScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 
 }
