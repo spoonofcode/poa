@@ -10,6 +10,7 @@ kotlin {
             dependencies {
                 api(libs.kotlin.test)
                 implementation(projects.core.data)
+                implementation(projects.core.presentation)
 
                 api(libs.koin.core)
                 api(libs.koin.test)

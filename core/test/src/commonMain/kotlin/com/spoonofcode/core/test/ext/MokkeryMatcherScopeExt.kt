@@ -5,7 +5,7 @@ import dev.mokkery.matcher.matches
 import kotlin.reflect.KClass
 
 inline fun <reified T> MokkeryMatcherScope.containsTypes(
-    vararg types: KClass<out T>
+    vararg types: KClass<out Any>
 ): List<T> =
     matches(
         toString = {

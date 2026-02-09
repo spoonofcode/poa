@@ -1,11 +1,11 @@
 package com.spoonofcode.core.test.network
 
-import com.spoonofcode.core.data.network.NetworkManager
-import dev.mokkery.answering.returns
-import dev.mokkery.every
-import dev.mokkery.mock
+import com.spoonofcode.core.presentation.network.NetworkManager
+import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 
-fun networkManagerMock() = mock<NetworkManager> {
-    every { observeNetworkState() } returns MutableSharedFlow(1)
+class FakeNetworkManager : NetworkManager {
+    override suspend fun isOnline(): Boolean = true
+    override fun observeNetworkState(): SharedFlow<Connectivity.Status> = MutableSharedFlow(1)
 }

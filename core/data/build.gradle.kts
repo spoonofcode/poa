@@ -12,8 +12,6 @@ kotlin {
 
                 implementation(libs.kotlin.stdlib)
 
-                implementation(libs.connectivity.core)
-                implementation(libs.connectivity.device)
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
 

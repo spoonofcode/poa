@@ -8,6 +8,6 @@ val tacTestModule = module {
     includes(
         coreTestModule,
         tacPresentationModule,
-        uiModule,
+//        uiModule,
     )
 }

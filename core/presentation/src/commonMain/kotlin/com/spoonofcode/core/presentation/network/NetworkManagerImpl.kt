@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.presentation.network
 
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.flow.SharedFlow

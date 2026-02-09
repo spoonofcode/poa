@@ -1,5 +1,7 @@
 package com.spoonofcode.core.test.base
 
+import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.test.coroutines.StandardTestDispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -12,8 +14,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.get
-//import kotlin.test.AfterTest
-//import kotlin.test.BeforeTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class BaseTest : KoinTest {
@@ -28,9 +28,9 @@ abstract class BaseTest : KoinTest {
                 module {
                 },
                 *modules,
-//                module {
-//                    single<DispatcherProvider> { StandardTestDispatcherProvider(testDispatcher) }
-//                }
+                module {
+                    single<DispatcherProvider> { StandardTestDispatcherProvider(testDispatcher) }
+                }
             )
         }
         Dispatchers.setMain(testDispatcher)

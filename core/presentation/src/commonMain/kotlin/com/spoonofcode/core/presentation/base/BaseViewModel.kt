@@ -2,7 +2,7 @@ package com.spoonofcode.core.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.data.network.NetworkManager
+import com.spoonofcode.core.presentation.network.NetworkManager
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
