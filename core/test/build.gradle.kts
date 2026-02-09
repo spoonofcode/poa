@@ -18,6 +18,9 @@ kotlin {
                 api(libs.kotlinx.coroutines.test)
 
                 api(libs.mokkery)
+
+                implementation(libs.connectivity.core)
+                implementation(libs.connectivity.device)
             }
         }
 
