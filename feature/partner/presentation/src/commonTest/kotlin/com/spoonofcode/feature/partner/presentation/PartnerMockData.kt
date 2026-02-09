@@ -1,10 +1,11 @@
-package com.spoonofcode.poa.core.data.mockdata
+package com.spoonofcode.feature.partner.presentation
 
 import com.spoonofcode.feature.partner.domain.model.Partner
 
 object PartnerMockData {
     val PARTNER_1 = Partner(
         id = "550e8400-e29b-41d4-a716-446655440001",
+        partnerCategory = "1",
         name = "Beauty Saute",
         email = "beauty.saute@gmail.com",
         description = "Beauty Sautè to więcej niż odzież – to filozofia.",
@@ -17,6 +18,7 @@ object PartnerMockData {
     )
     val PARTNER_2 = Partner(
         id = "550e8400-e29b-41d4-a716-446655440002",
+        partnerCategory = "2",
         name = "Proof of Wear",
         email = "proof.of.wear@gmail.com",
         description = "Proof of Wear – sprawdz to.",

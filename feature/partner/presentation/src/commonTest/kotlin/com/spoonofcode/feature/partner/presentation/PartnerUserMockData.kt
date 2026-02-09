@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.mockdata
+package com.spoonofcode.feature.partner.presentation
 
 import com.spoonofcode.feature.partner.domain.model.PartnerUser
 

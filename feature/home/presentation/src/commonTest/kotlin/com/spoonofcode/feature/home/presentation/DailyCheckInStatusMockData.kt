@@ -1,6 +1,4 @@
-package com.spoonofcode.poa.core.data.mockdata
-
-import com.spoonofcode.feature.reward.data.model.DailyCheckInStatus
+package com.spoonofcode.feature.home.presentation
 
 object DailyCheckInStatusMockData {
     val DAILY_CHECK_IN_STATUS_1 = DailyCheckInStatus(

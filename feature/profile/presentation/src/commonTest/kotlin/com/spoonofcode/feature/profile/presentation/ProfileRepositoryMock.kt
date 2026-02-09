@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.feature.profile.presentation
 
 import com.spoonofcode.poa.core.data.mockdata.ProfileMockData.PROFILE_1
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository

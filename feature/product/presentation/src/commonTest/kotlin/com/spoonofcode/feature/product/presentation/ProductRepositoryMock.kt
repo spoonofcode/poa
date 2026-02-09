@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.feature.product.presentation
 
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
 import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1

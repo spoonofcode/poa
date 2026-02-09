@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.mockdata
+package com.spoonofcode.feature.notification.presentation
 
 import com.spoonofcode.feature.notification.domain.model.Notification
 import kotlinx.datetime.LocalDateTime

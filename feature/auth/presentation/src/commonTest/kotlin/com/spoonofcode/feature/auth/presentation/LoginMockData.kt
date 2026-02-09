@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.mockdata
+package com.spoonofcode.feature.auth.presentation
 
 import com.spoonofcode.feature.auth.domain.model.Login
 

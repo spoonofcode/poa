@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.feature.home.presentation
 
 import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.feature.reward.domain.repository.RewardRepository

@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.repository
+package com.spoonofcode.feature.partner.presentation
 
 import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS

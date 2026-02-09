@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.data.mockdata
+package com.spoonofcode.feature.product.presentation
 
 import com.spoonofcode.feature.product.domain.model.Product
 
