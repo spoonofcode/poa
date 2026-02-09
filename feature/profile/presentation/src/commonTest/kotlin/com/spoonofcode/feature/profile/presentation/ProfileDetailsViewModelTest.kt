@@ -3,8 +3,11 @@ package com.spoonofcode.feature.profile.presentation
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-//import com.spoonofcode.core.test.FakeVoyagerRouteResolver
 import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.AuthModule
+import com.spoonofcode.feature.appnavigation.FAQModule
+import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.PartnerModule
 import com.spoonofcode.feature.appnavigation.ProfileModule
 import com.spoonofcode.feature.appnavigation.TACModule
 import com.spoonofcode.feature.profile.presentation.ProfileMockData.PROFILE_1
@@ -13,7 +16,6 @@ import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewMo
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewState
 import com.spoonofcode.feature.profile.presentation.di.profileTestModule
 import dev.mokkery.matcher.any
-import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -71,45 +73,50 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         }
     }
 
-//    @Test
-//    fun `logout success`() = runTest {
-//        viewModel.onAction(ProfileDetailsViewAction.Logout)
-//        advanceUntilIdle()
-//
-//        verifySuspend { viewModelNavigator.replaceAll(containsTypes(AuthModule.LoginScreen::class)) }
-//    }
-//
-//    @Test
-//    fun `navigates to edit profile screen`() = runTest {
-//        viewModel.onAction(ProfileDetailsViewAction.NavigateToEditProfile)
-//        advanceUntilIdle()
-//
-//        verifySuspend { viewModelNavigator.push(ofType<ProfileEditScreen>()) }
-//    }
-//
-//    @Test
-//    fun `navigates to faq screen`() = runTest {
-//        viewModel.onAction(ProfileDetailsViewAction.NavigateToFAQ)
-//        advanceUntilIdle()
-//
-//        verifySuspend { viewModelNavigator.push(ofType<FAQScreen>()) }
-//    }
-//
-//    @Test
-//    fun `navigates to notification screen`() = runTest {
-//        viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
-//        advanceUntilIdle()
-//
-//        verifySuspend { viewModelNavigator.push(ofType<NotificationSettingsScreen>()) }
-//    }
-//
-//    @Test
-//    fun `navigates to partner panel screen`() = runTest {
-//        viewModel.onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
-//        advanceUntilIdle()
-//
-//        verifySuspend { viewModelNavigator.push(ofType<PartnerPanelScreen>()) }
-//    }
+    @Test
+    fun `logout success`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.Logout)
+        advanceUntilIdle()
+
+        verifySuspend { routeResolver.resolve(AuthModule.LoginScreen) }
+        verifySuspend { viewModelNavigator.replaceAll(any()) }
+    }
+
+    @Test
+    fun `navigates to edit profile screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToEditProfile)
+        advanceUntilIdle()
+
+        verifySuspend { routeResolver.resolve(ProfileModule.ProfileEditScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
+    }
+
+    @Test
+    fun `navigates to faq screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToFAQ)
+        advanceUntilIdle()
+
+        verifySuspend { routeResolver.resolve(FAQModule.FAQScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
+    }
+
+    @Test
+    fun `navigates to notification screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
+        advanceUntilIdle()
+
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationSettingsScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
+    }
+
+    @Test
+    fun `navigates to partner panel screen`() = runTest {
+        viewModel.onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
+        advanceUntilIdle()
+
+        verifySuspend { routeResolver.resolve(PartnerModule.PartnerPanelScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
+    }
 
     @Test
     fun `navigates to tac screen`() = runTest {

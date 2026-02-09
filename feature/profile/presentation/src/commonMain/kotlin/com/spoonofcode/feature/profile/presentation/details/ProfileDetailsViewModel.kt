@@ -10,7 +10,6 @@ import com.spoonofcode.feature.appnavigation.ProfileModule
 import com.spoonofcode.feature.appnavigation.TACModule
 import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.feature.profile.domain.usecase.LogoutUseCase
-import com.spoonofcode.feature.profile.presentation.edit.ProfileEditScreen
 import kotlinx.coroutines.launch
 
 internal class ProfileDetailsViewModel(
@@ -49,7 +48,7 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToEditProfile() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = ProfileEditScreen())
+            viewModelNavigator.push(screen = routeResolver.resolve(ProfileModule.ProfileEditScreen))
         }
     }
 

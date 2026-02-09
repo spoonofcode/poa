@@ -6,13 +6,11 @@ import dev.mokkery.MockMode
 import dev.mokkery.mock
 import org.koin.dsl.module
 import org.koin.test.get
-//import kotlin.test.BeforeTest
 
 abstract class BaseViewModelTest : BaseTest() {
     protected lateinit var viewModelNavigator: ViewModelNavigator
     protected lateinit var routeResolver: VoyagerRouteResolver
 
-//    @BeforeTest
     override fun setup() {
         modules = modules.plus(
             testModule()
