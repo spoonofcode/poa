@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.partner.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
 import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
 import com.spoonofcode.core.presentation.base.ScreenState

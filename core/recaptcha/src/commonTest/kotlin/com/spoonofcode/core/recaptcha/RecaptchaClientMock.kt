@@ -1,4 +1,4 @@
-package com.spoonofcode.poa.core.recaptcha
+package com.spoonofcode.core.recaptcha
 
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

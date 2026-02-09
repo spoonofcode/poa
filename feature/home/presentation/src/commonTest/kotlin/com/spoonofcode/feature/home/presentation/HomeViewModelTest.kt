@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.home.presentation
 
 import app.cash.turbine.test
-import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
 import com.spoonofcode.core.presentation.base.ScreenState

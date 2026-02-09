@@ -2,7 +2,7 @@ package com.spoonofcode.feature.notification.presentation.edit
 
 import app.cash.turbine.test
 import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState

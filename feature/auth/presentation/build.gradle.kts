@@ -31,7 +31,8 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(libs.kotlin.test)
+                implementation(libs.turbine)
+                implementation(projects.core.test)
             }
         }
 

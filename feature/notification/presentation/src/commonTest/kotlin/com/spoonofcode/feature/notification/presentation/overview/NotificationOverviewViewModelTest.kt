@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.presentation.BaseViewModelTest
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
