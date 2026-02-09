@@ -14,7 +14,7 @@ import com.spoonofcode.feature.profile.presentation.ProfileMockData.PROFILE_1
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewAction
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewState
-import com.spoonofcode.feature.profile.presentation.di.profileTestModule
+import com.spoonofcode.feature.profile.presentation.di.profilePresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,7 +32,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(profileTestModule)
+        modules = arrayOf(profilePresentationTestModule)
         super.setup()
         viewModel = getSut()
     }

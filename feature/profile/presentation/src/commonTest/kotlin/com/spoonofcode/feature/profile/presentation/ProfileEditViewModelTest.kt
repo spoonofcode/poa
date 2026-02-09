@@ -6,7 +6,7 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.feature.profile.presentation.ProfileMockData.PROFILE_1
-import com.spoonofcode.feature.profile.presentation.di.profileTestModule
+import com.spoonofcode.feature.profile.presentation.di.profilePresentationTestModule
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditViewAction
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditViewModel
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditViewState
@@ -26,7 +26,7 @@ class ProfileEditViewModelest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(profileTestModule)
+        modules = arrayOf(profilePresentationTestModule)
         super.setup()
         profileRepository = getKoin().get()
         viewModel = getSut()
