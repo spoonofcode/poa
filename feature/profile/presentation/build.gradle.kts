@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.cmp.feature)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -16,6 +17,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.turbine)
+                implementation(libs.mokkery)
                 implementation(projects.core.test)
             }
         }

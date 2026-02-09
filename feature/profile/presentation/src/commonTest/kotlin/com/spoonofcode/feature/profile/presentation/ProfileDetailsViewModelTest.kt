@@ -14,6 +14,7 @@ import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -28,6 +29,11 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         modules = arrayOf(profileTestModule)
         super.setup()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun tearDown() {
+        super.tearDown()
     }
 
     @Test
