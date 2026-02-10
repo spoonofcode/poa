@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.feature.tac.presentation.di.tacTestModule
+import com.spoonofcode.feature.tac.presentation.di.tacPresentationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
@@ -19,7 +19,7 @@ class TACViewModelest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(tacTestModule)
+        modules = arrayOf(tacPresentationTestModule)
         super.setup()
         viewModel = getSut()
     }

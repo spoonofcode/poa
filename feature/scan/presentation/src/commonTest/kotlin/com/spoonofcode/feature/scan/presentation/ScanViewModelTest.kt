@@ -6,8 +6,7 @@ import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.feature.scan.di.scanTestModule
-import com.spoonofcode.feature.scan.presentation.di.scanTestModule
+import com.spoonofcode.feature.scan.presentation.di.scanPresentationTestModule
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +23,7 @@ class ScanViewModelest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(scanTestModule)
+        modules = arrayOf(scanPresentationTestModule)
         super.setup()
         productRepository = getKoin().get()
         viewModel = getSut()

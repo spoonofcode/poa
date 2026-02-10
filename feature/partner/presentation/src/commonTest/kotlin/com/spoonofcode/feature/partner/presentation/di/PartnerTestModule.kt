@@ -1,19 +1,13 @@
 package com.spoonofcode.feature.partner.presentation.di
 
-import com.spoonofcode.poa.core.data.di.dataTestModule
-import com.spoonofcode.poa.core.domain.di.domainModule
-import com.spoonofcode.poa.core.network.di.networkTestModule
-import com.spoonofcode.poa.core.settings.di.settingsModule
-import com.spoonofcode.core.presentation.di.uiModule
+import com.spoonofcode.core.test.di.coreTestModule
+import com.spoonofcode.feature.partner.domain.di.partnerDomainModule
 import org.koin.dsl.module
 
-val partnerTestModule = module {
+val partnerPresentationTestModule = module {
     includes(
-        settingsModule,
-        networkTestModule,
-        dataTestModule,
-        domainModule,
-        partnerModule,
-        uiModule,
+        coreTestModule,
+        partnerDomainModule,
+        partnerPresentationModule,
     )
 }

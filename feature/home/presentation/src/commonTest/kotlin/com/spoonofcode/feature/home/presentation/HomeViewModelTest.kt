@@ -7,6 +7,7 @@ import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.home.di.homeTestModule
+import com.spoonofcode.feature.home.presentation.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import dev.mokkery.matcher.ofType
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
