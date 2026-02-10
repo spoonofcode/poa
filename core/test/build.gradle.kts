@@ -51,11 +51,7 @@ kotlin {
 
 kotlin.sourceSets.names.forEach { println("KMP sourceSet: $it") }
 
-// WAŻNE: bo mocks/helpers siedzą w commonMain, a nie w commonTest
+// Check sourceSet setup https://mokkery.dev/docs/Setup/
 mokkery {
-//    rule.set(ApplicationRule.Listed("commonMain"))
-    // alternatywnie (prościej, ale szerzej):
-    // rule.set(ApplicationRule.All)
-
     rule.set(ApplicationRule.All)
 }

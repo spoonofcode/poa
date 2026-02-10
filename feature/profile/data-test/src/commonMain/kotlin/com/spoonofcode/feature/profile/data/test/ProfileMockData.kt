@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.profile.presentation
+package com.spoonofcode.feature.profile.data.test
 
 import com.spoonofcode.feature.profile.domain.model.Profile
 

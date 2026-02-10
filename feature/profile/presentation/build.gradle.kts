@@ -1,5 +1,3 @@
-import dev.mokkery.gradle.ApplicationRule
-
 plugins {
     alias(libs.plugins.convention.cmp.feature)
     alias(libs.plugins.mokkery)
@@ -20,6 +18,7 @@ kotlin {
             dependencies {
                 implementation(libs.turbine)
                 implementation(projects.core.test)
+                implementation(projects.feature.profile.dataTest)
             }
         }
     }

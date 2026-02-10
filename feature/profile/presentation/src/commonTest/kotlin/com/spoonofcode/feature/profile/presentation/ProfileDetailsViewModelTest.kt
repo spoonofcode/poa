@@ -10,7 +10,7 @@ import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.appnavigation.PartnerModule
 import com.spoonofcode.feature.appnavigation.ProfileModule
 import com.spoonofcode.feature.appnavigation.TACModule
-import com.spoonofcode.feature.profile.presentation.ProfileMockData.PROFILE_1
+import com.spoonofcode.feature.profile.data.test.ProfileMockData.PROFILE_1
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewAction
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewState
