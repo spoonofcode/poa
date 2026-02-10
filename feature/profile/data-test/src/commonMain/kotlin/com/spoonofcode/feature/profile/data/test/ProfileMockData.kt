@@ -4,8 +4,8 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 
 object ProfileMockData {
     val PROFILE_1 = Profile(
-        name = "Profile name 1",
-        numberOfProductsOwnedByUser = 1,
-        customLink = "https://example.com",
+        id = "1",
+        email = "exmaple.mail.1@gmail.com",
+        roles = listOf("user", "partner"),
     )
 }

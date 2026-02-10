@@ -37,6 +37,7 @@ internal class ProfileDetailsViewModel(
                     showContentView {
                         ProfileDetailsViewState(
                             profile = it,
+                            partnerPanelVisible = it.roles.contains(PARTNER_ROLE)
                         )
                     }
                 }
@@ -81,5 +82,9 @@ internal class ProfileDetailsViewModel(
             logoutUseCase()
             viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AuthModule.LoginScreen)))
         }
+    }
+
+    companion object {
+        const val PARTNER_ROLE = "partner"
     }
 }
