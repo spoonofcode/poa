@@ -5,9 +5,6 @@ import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.notification.di.notificationTestModule
-import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction
-import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewModel
-import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -21,9 +18,9 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: NotificationSettingsViewModel
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(notificationTestModule)
-        super.setup()
+        super.beforeTest()
         viewModel = getSut()
     }
 

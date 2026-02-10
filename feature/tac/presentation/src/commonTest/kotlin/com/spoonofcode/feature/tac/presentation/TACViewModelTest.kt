@@ -18,15 +18,15 @@ class TACViewModelest : BaseViewModelTest() {
     private lateinit var viewModel: TACViewModel
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(tacPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         viewModel = getSut()
     }
 
     @AfterTest
-    override fun tearDown() {
-        super.tearDown()
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test

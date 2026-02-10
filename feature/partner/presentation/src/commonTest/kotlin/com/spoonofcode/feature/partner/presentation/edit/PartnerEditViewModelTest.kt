@@ -22,9 +22,9 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
     private lateinit var partnerRepository: PartnerRepository
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(partnerPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         partnerRepository = getKoin().get()
         viewModel = getSut()
     }

@@ -22,9 +22,9 @@ class HomeViewModelest : BaseViewModelTest() {
     private lateinit var viewModel: HomeViewModel
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(homePresentationTestModule)
-        super.setup()
+        super.beforeTest()
         viewModel = getSut()
     }
 

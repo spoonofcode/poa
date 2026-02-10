@@ -27,9 +27,9 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     private lateinit var productRepository: ProductRepository
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(productPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         productRepository = getKoin().get()
         viewModel = getSut()
     }

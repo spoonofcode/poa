@@ -21,9 +21,9 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: PartnerPanelViewModel
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(partnerPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         viewModel = getSut()
     }
 

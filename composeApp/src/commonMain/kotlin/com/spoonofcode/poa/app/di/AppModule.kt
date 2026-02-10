@@ -3,7 +3,7 @@ package com.spoonofcode.poa.app.di
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.data.network.di.networkModule
 import com.spoonofcode.core.data.settings.di.settingsModule
-import com.spoonofcode.core.presentation.di.uiModule
+import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.data.di.authDataModule
@@ -38,7 +38,7 @@ val appModule = module {
     includes(
         // core
         coroutinesModule,
-        uiModule,
+        presentationModule,
         networkModule,
         recaptchaModule,
         settingsModule,

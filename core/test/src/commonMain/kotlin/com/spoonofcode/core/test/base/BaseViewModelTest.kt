@@ -11,11 +11,11 @@ abstract class BaseViewModelTest : BaseTest() {
     protected lateinit var viewModelNavigator: ViewModelNavigator
     protected lateinit var routeResolver: VoyagerRouteResolver
 
-    override fun setup() {
+    override fun beforeTest() {
         modules = modules.plus(
             testModule()
         )
-        super.setup()
+        super.beforeTest()
         viewModelNavigator = get()
         routeResolver = get()
     }

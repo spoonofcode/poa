@@ -31,15 +31,15 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: ProfileDetailsViewModel
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(profilePresentationTestModule)
-        super.setup()
+        super.beforeTest()
         viewModel = getSut()
     }
 
     @AfterTest
-    override fun tearDown() {
-        super.tearDown()
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test

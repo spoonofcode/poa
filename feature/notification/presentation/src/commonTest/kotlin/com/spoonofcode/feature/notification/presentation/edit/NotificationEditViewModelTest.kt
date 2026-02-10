@@ -8,8 +8,6 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.notification.di.notificationTestModule
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewAction
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,9 +24,9 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
     private lateinit var notificationRepository: NotificationRepository
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(notificationTestModule)
-        super.setup()
+        super.beforeTest()
         notificationRepository = getKoin().get()
         viewModel = getSut()
     }

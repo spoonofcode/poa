@@ -6,6 +6,7 @@ import java.util.Locale
 fun Project.pathToPackageName(): String {
     val relativePackageName = path
         .replace(':', '.')
+        .replace('-', '.')
         .lowercase()
 
     return "com.spoonofcode$relativePackageName"
@@ -14,6 +15,7 @@ fun Project.pathToPackageName(): String {
 fun Project.pathToResourcePrefix(): String {
     return path
         .replace(':', '_')
+        .replace('-', '.')
         .lowercase()
         .drop(1) + "_"
 }

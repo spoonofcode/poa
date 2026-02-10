@@ -1,13 +1,11 @@
 package com.spoonofcode.feature.notification.presentation.details
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.notification.data.mock.NotificationMockData.NOTIFICATION_1
-import com.spoonofcode.feature.notification.di.notificationTestModule
-import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction
-import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.notification.presentation.NotificationMockData.NOTIFICATION_1
+import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -17,12 +15,12 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationDetailsViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.details.NotificationDetailsViewModel
+    private lateinit var viewModel: NotificationDetailsViewModel
 
     @BeforeTest
-    override fun setup() {
-        modules = arrayOf(notificationTestModule)
-        super.setup()
+    override fun beforeTest() {
+        modules = arrayOf(notificationPresentationTestModule)
+        super.beforeTest()
         viewModel = getSut()
     }
 

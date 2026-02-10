@@ -13,7 +13,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val uiModule = module {
+val presentationModule = module {
     single {
         Connectivity {
             autoStart = true

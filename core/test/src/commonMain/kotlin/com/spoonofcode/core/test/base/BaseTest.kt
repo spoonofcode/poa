@@ -21,8 +21,7 @@ abstract class BaseTest : KoinTest {
     protected var modules: Array<Module> = emptyArray()
     protected val testDispatcher: TestDispatcher by lazy { StandardTestDispatcher() }
 
-//    @BeforeTest
-    open fun setup() {
+    open fun beforeTest() {
         startKoin {
             modules(
                 module {
@@ -36,12 +35,10 @@ abstract class BaseTest : KoinTest {
         Dispatchers.setMain(testDispatcher)
     }
 
-//    @AfterTest
-    open fun tearDown() {
+    open fun afterTest() {
         Dispatchers.resetMain()
         stopKoin()
     }
 
     protected inline fun <reified T : Any> getSut(): T = get<T>()
-
 }

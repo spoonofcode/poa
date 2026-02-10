@@ -22,9 +22,9 @@ class ScanViewModelest : BaseViewModelTest() {
     private lateinit var productRepository: ProductRepository
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(scanPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         productRepository = getKoin().get()
         viewModel = getSut()
     }

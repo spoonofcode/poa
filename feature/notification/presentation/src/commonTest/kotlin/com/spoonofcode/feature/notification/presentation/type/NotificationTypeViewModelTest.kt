@@ -23,9 +23,9 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
     private lateinit var viewModel: NotificationTypeViewModel
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(notificationPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         viewModel = getSut()
     }
 

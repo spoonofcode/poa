@@ -29,16 +29,16 @@ class LoginViewModelTest : BaseViewModelTest() {
     private lateinit var loginRepository: LoginRepository
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(authPresentationTestModule)
-        super.setup()
+        super.beforeTest()
         loginRepository = getKoin().get()
         viewModel = getSut()
     }
 
     @AfterTest
-    override fun tearDown() {
-        super.tearDown()
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test

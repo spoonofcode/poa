@@ -26,9 +26,9 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
     private lateinit var loginRepository: LoginRepository
 
     @BeforeTest
-    override fun setup() {
+    override fun beforeTest() {
         modules = arrayOf(authPresentationModule)
-        super.setup()
+        super.beforeTest()
         loginRepository = getKoin().get()
         viewModel = getSut()
     }
