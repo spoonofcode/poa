@@ -10,6 +10,7 @@ import com.spoonofcode.feature.notification.presentation.di.notificationPresenta
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,6 +27,11 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
         super.beforeTest()
         notificationRepository = getKoin().get()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test

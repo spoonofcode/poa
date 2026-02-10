@@ -17,6 +17,7 @@ import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -36,6 +37,11 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
         viewModel = getSut()
     }
 
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
+    }
+
     @Test
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
@@ -48,7 +54,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
         }
     }
 
-    // TODO Fix this test
+    // TODO #131 Fix this test
     @Ignore
     @Test
     fun `init view success`() = runTest {

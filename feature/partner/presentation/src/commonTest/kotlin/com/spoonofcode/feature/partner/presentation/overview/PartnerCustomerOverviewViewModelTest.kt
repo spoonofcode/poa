@@ -18,6 +18,7 @@ import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -34,6 +35,11 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
         super.beforeTest()
         partnerRepository = getKoin().get()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test

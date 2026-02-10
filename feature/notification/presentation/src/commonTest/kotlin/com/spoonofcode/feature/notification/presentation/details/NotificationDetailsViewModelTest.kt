@@ -5,10 +5,10 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.notification.data.test.NotificationMockData.NOTIFICATION_1
-import com.spoonofcode.feature.notification.presentation.NotificationMockData.NOTIFICATION_1
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,6 +23,11 @@ class NotificationDetailsViewModelTest : BaseViewModelTest() {
         modules = arrayOf(notificationPresentationTestModule)
         super.beforeTest()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test

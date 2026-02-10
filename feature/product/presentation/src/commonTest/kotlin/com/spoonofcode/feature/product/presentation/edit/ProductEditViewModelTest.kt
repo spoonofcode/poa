@@ -11,6 +11,7 @@ import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -28,6 +29,11 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         super.beforeTest()
         productRepository = getKoin().get()
         viewModel = getSut()
+    }
+
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
     }
 
     @Test
