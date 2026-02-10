@@ -5,9 +5,9 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.PartnerModule
-import com.spoonofcode.feature.partner.presentation.PartnerCategoriesMockData.PARTNER_CATEGORIES
-import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNERS
-import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.data.test.PartnerCategoriesMockData.PARTNER_CATEGORIES
+import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNERS
+import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend

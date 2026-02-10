@@ -5,7 +5,8 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.home.presentation.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
+import com.spoonofcode.feature.home.data.test.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
+import com.spoonofcode.feature.home.data.test.TOTAL_POINTS
 import com.spoonofcode.feature.home.presentation.di.homePresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend

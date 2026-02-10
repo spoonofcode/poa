@@ -5,10 +5,10 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.data.test.PartnerUserMockData.PARTNER_USERS
+import com.spoonofcode.feature.partner.data.test.PartnerUserMockData.PARTNER_USER_1
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
-import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
-import com.spoonofcode.feature.partner.presentation.PartnerUserMockData.PARTNER_USERS
-import com.spoonofcode.feature.partner.presentation.PartnerUserMockData.PARTNER_USER_1
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewAction
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewState

@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.auth.presentation
+package com.spoonofcode.feature.auth.data.test
 
 import com.spoonofcode.feature.auth.domain.model.Login
 

@@ -4,8 +4,8 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
-import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend

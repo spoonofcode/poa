@@ -5,9 +5,9 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCTS
+import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCTS
-import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCT_1
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverViewViewAction
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewViewModel

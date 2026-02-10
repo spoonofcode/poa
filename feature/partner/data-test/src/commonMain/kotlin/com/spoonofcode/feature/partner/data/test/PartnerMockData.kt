@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.partner.presentation
+package com.spoonofcode.feature.partner.data.test
 
 import com.spoonofcode.feature.partner.domain.model.Partner
 

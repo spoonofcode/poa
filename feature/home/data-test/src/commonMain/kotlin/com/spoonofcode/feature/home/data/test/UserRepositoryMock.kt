@@ -1,7 +1,7 @@
-package com.spoonofcode.feature.home.presentation
+package com.spoonofcode.feature.home.data.test
 
-import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
-import com.spoonofcode.feature.reward.domain.repository.RewardRepository
+import com.spoonofcode.feature.home.data.test.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
+import com.spoonofcode.feature.home.domain.repository.RewardRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

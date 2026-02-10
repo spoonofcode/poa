@@ -4,8 +4,8 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.feature.notification.data.test.NotificationMockData.NOTIFICATIONS
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
-import com.spoonofcode.feature.notification.presentation.NotificationMockData.NOTIFICATIONS
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
