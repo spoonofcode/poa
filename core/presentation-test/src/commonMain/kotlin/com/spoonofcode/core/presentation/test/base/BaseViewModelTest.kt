@@ -1,10 +1,9 @@
-package com.spoonofcode.core.test.base
+package com.spoonofcode.core.presentation.test.base
 
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
-import dev.mokkery.MockMode
-import dev.mokkery.mock
-import org.koin.dsl.module
+import com.spoonofcode.core.presentation.test.di.presentationTestModule
+import com.spoonofcode.core.test.base.BaseTest
 import org.koin.test.get
 
 abstract class BaseViewModelTest : BaseTest() {
@@ -13,15 +12,10 @@ abstract class BaseViewModelTest : BaseTest() {
 
     override fun beforeTest() {
         modules = modules.plus(
-            testModule()
+            presentationTestModule
         )
         super.beforeTest()
         viewModelNavigator = get()
         routeResolver = get()
-    }
-
-    private fun testModule() = module {
-        single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
-        single { mock<VoyagerRouteResolver>(mode = MockMode.autofill) }
     }
 }

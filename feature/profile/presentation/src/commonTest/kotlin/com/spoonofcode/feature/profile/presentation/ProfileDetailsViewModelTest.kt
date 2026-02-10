@@ -3,7 +3,7 @@ package com.spoonofcode.feature.profile.presentation
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.AuthModule
 import com.spoonofcode.feature.appnavigation.FAQModule
 import com.spoonofcode.feature.appnavigation.NotificationModule

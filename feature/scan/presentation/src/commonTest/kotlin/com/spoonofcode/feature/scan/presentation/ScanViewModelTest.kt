@@ -3,7 +3,7 @@ package com.spoonofcode.feature.scan.presentation
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.ProductModule
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationTestModule

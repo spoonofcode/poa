@@ -3,7 +3,7 @@ package com.spoonofcode.feature.partner.presentation.edit
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule

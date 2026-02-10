@@ -17,7 +17,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(libs.turbine)
-                implementation(projects.core.test)
+                implementation(projects.core.presentationTest)
                 implementation(projects.feature.profile.dataTest)
             }
         }

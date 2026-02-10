@@ -3,7 +3,7 @@ package com.spoonofcode.feature.product.presentation.overview
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCTS

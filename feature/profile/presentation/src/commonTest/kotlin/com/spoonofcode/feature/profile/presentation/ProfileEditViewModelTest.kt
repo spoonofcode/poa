@@ -1,9 +1,9 @@
 package com.spoonofcode.feature.profile.presentation
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.profile.data.test.ProfileMockData.PROFILE_1
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationTestModule

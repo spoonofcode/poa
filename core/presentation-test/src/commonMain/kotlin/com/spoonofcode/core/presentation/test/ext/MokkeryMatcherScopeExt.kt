@@ -1,4 +1,4 @@
-package com.spoonofcode.core.test.ext
+package com.spoonofcode.core.presentation.test.ext
 
 import dev.mokkery.matcher.MokkeryMatcherScope
 import dev.mokkery.matcher.matches

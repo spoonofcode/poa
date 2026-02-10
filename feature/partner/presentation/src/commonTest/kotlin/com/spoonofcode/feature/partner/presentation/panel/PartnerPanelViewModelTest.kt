@@ -2,7 +2,7 @@ package com.spoonofcode.feature.partner.presentation.panel
 
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.appnavigation.PartnerModule
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule

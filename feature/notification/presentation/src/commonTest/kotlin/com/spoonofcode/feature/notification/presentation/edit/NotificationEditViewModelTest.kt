@@ -3,8 +3,8 @@ package com.spoonofcode.feature.notification.presentation.edit
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.core.test.ext.containsTypes
+import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.containsTypes
 import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule

@@ -49,8 +49,6 @@ kotlin {
     }
 }
 
-kotlin.sourceSets.names.forEach { println("KMP sourceSet: $it") }
-
 // Check sourceSet setup https://mokkery.dev/docs/Setup/
 mokkery {
     rule.set(ApplicationRule.All)

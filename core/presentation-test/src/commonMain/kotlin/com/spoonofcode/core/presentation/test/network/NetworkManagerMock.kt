@@ -1,4 +1,4 @@
-package com.spoonofcode.core.test.network
+package com.spoonofcode.core.presentation.test.network
 
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.mokkery.answering.returns
