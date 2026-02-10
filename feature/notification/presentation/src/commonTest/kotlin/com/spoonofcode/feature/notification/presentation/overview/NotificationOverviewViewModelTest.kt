@@ -1,12 +1,12 @@
 package com.spoonofcode.feature.notification.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.NotificationMockData.NOTIFICATIONS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.notification.di.notificationTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
+import com.spoonofcode.feature.notification.presentation.NotificationMockData.NOTIFICATIONS
+import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -22,7 +22,7 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun beforeTest() {
-        modules = arrayOf(notificationTestModule)
+        modules = arrayOf(notificationPresentationTestModule)
         super.beforeTest()
         notificationRepository = getKoin().get()
         viewModel = getSut()

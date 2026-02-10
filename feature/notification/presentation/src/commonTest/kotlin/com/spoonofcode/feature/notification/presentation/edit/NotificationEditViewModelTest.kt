@@ -1,13 +1,13 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import app.cash.turbine.test
-import com.spoonofcode.poa.app.MainHostScreen
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.ext.containsTypes
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.notification.di.notificationTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.core.test.ext.containsTypes
+import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
+import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,12 +20,12 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class NotificationEditViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditViewModel
+    private lateinit var viewModel: NotificationEditViewModel
     private lateinit var notificationRepository: NotificationRepository
 
     @BeforeTest
     override fun beforeTest() {
-        modules = arrayOf(notificationTestModule)
+        modules = arrayOf(notificationPresentationTestModule)
         super.beforeTest()
         notificationRepository = getKoin().get()
         viewModel = getSut()
@@ -164,8 +164,12 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         verifySuspend {
             notificationRepository.send(any(), any(), any(), any(), any(), any(), any())
         }
+
+        verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend { viewModelNavigator.replaceAll(any()) }
+
         verifySuspend {
-            viewModelNavigator.replaceAll(containsTypes(MainHostScreen::class))
+            viewModelNavigator.replaceAll(containsTypes(AppModule.MainHostScreen::class))
         }
     }
 }
