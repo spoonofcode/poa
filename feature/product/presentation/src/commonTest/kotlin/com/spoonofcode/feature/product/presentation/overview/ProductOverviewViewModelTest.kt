@@ -1,18 +1,15 @@
 package com.spoonofcode.feature.product.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.product.di.productTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.ProductModule
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.feature.product.presentation.details.ProductDetailsScreen
-import com.spoonofcode.feature.product.presentation.overview.ProductOverviewViewAction
-import com.spoonofcode.feature.product.presentation.overview.ProductOverviewViewModel
-import com.spoonofcode.feature.product.presentation.overview.ProductOverviewViewState
-import dev.mokkery.matcher.ofType
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCTS
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -29,7 +26,7 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(productTestModule)
+        modules = arrayOf(productPresentationTestModule)
         super.setup()
         productRepository = getKoin().get()
         viewModel = getSut()
@@ -110,6 +107,8 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<ProductDetailsScreen>()) }
+        verifySuspend { routeResolver.resolve(ProductModule.ProductDetailsScreen(productId = PRODUCT_1.id)) }
+        verifySuspend { viewModelNavigator.push(any()) }
+
     }
 }

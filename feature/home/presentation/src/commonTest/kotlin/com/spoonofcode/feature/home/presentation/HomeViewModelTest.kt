@@ -1,14 +1,13 @@
 package com.spoonofcode.feature.home.presentation
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
-import com.spoonofcode.poa.core.data.repository.TOTAL_POINTS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.home.di.homeTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.home.presentation.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
-import dev.mokkery.matcher.ofType
+import com.spoonofcode.feature.home.presentation.di.homePresentationTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -24,7 +23,7 @@ class HomeViewModelest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(homeTestModule)
+        modules = arrayOf(homePresentationTestModule)
         super.setup()
         viewModel = getSut()
     }
@@ -93,6 +92,7 @@ class HomeViewModelest : BaseViewModelTest() {
         viewModel.onAction(HomeViewAction.NavigateToNotifications)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.overview.NotificationOverviewScreen>()) }
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationOverviewScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }

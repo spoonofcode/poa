@@ -1,18 +1,19 @@
 package com.spoonofcode.feature.partner.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.PartnerUserMockData.PARTNER_USERS
-import com.spoonofcode.poa.core.data.mockdata.PartnerUserMockData.PARTNER_USER_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.partner.data.mock.PartnerMockData.PARTNER_1
-import com.spoonofcode.feature.partner.di.partnerTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
+import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.presentation.PartnerUserMockData.PARTNER_USERS
+import com.spoonofcode.feature.partner.presentation.PartnerUserMockData.PARTNER_USER_1
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewAction
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewState
-import dev.mokkery.matcher.ofType
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -29,7 +30,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(partnerTestModule)
+        modules = arrayOf(partnerPresentationTestModule)
         super.setup()
         partnerRepository = getKoin().get()
         viewModel = getSut()
@@ -121,6 +122,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerCustomerOverviewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.notification.presentation.edit.NotificationEditScreen>()) }
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }

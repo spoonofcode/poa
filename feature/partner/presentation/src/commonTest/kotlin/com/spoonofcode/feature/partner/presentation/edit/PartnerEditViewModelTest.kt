@@ -1,15 +1,12 @@
 package com.spoonofcode.feature.partner.presentation.edit
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.partner.data.mock.PartnerMockData.PARTNER_1
-import com.spoonofcode.feature.partner.di.partnerTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
-import com.spoonofcode.feature.partner.presentation.edit.PartnerEditViewAction
-import com.spoonofcode.feature.partner.presentation.edit.PartnerEditViewModel
-import com.spoonofcode.feature.partner.presentation.edit.PartnerEditViewState
+import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +23,7 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(partnerTestModule)
+        modules = arrayOf(partnerPresentationTestModule)
         super.setup()
         partnerRepository = getKoin().get()
         viewModel = getSut()
@@ -316,7 +313,16 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            partnerRepository.updatePartner(any(), any())
+            partnerRepository.updatePartner(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+            )
         }
 
         verifySuspend {

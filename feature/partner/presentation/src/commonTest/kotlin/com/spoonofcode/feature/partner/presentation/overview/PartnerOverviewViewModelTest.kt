@@ -1,18 +1,15 @@
 package com.spoonofcode.feature.partner.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.PartnerCategoriesMockData.PARTNER_CATEGORIES
-import com.spoonofcode.poa.core.data.mockdata.PartnerMockData.PARTNERS
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.partner.data.mock.PartnerMockData.PARTNER_1
-import com.spoonofcode.feature.partner.di.partnerTestModule
-import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
-import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewViewAction
-import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewViewModel
-import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewViewState
-import dev.mokkery.matcher.ofType
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.PartnerModule
+import com.spoonofcode.feature.partner.presentation.PartnerCategoriesMockData.PARTNER_CATEGORIES
+import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNERS
+import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -28,7 +25,7 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(partnerTestModule)
+        modules = arrayOf(partnerPresentationTestModule)
         super.setup()
         viewModel = getSut()
     }
@@ -66,16 +63,16 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `click category`() = runTest {
-        val categoryId = "New category id"
+        val categoryName = "Category name"
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(PartnerOverviewViewAction.ClickCategory(categoryId = categoryId))
+            viewModel.onAction(PartnerOverviewViewAction.ClickCategory(categoryName = categoryName))
 
             assertEquals(
                 expected = ViewState(
                     data = PartnerOverviewViewState(
-                        selectedPartnerCategories = setOf(categoryId),
+                        selectedPartnerCategories = setOf(categoryName),
                     ),
                 ),
                 actual = awaitItem()
@@ -109,6 +106,7 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerOverviewViewAction.SelectPartner(partnerId = PARTNER_1.id))
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<PartnerDetailsScreen>()) }
+        verifySuspend { routeResolver.resolve(PartnerModule.PartnerDetailsScreen(partnerId = PARTNER_1.id)) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }

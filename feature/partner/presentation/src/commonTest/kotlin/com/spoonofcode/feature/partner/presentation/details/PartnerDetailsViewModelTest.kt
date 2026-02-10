@@ -1,13 +1,11 @@
 package com.spoonofcode.feature.partner.presentation.details
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.partner.data.mock.PartnerMockData.PARTNER_1
-import com.spoonofcode.feature.partner.di.partnerTestModule
-import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsViewAction
-import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsViewState
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.partner.presentation.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -17,11 +15,11 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class PartnerDetailsViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: com.spoonofcode.poa.feature.partner.presentation.details.PartnerDetailsViewModel
+    private lateinit var viewModel: PartnerDetailsViewModel
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(partnerTestModule)
+        modules = arrayOf(partnerPresentationTestModule)
         super.setup()
         viewModel = getSut()
     }

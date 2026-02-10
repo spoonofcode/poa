@@ -1,15 +1,12 @@
 package com.spoonofcode.feature.product.presentation.edit
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.product.di.productTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.feature.product.presentation.edit.ProductEditViewAction
-import com.spoonofcode.feature.product.presentation.edit.ProductEditViewModel
-import com.spoonofcode.feature.product.presentation.edit.ProductEditViewState
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +24,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(productTestModule)
+        modules = arrayOf(productPresentationTestModule)
         super.setup()
         productRepository = getKoin().get()
         viewModel = getSut()

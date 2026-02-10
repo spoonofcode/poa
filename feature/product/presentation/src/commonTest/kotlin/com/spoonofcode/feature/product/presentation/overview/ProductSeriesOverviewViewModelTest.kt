@@ -1,18 +1,18 @@
 package com.spoonofcode.feature.product.presentation.overview
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
-import com.spoonofcode.feature.product.di.productTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCTS
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverViewViewAction
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewViewModel
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewViewState
-import dev.mokkery.matcher.ofType
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -30,7 +30,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(productTestModule)
+        modules = arrayOf(productPresentationTestModule)
         super.setup()
         productRepository = getKoin().get()
         viewModel = getSut()
@@ -118,6 +118,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProductSeriesOverViewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }

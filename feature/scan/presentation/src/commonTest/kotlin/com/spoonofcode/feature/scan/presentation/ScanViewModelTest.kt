@@ -1,13 +1,13 @@
 package com.spoonofcode.feature.scan.presentation
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.ProductModule
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationTestModule
-import dev.mokkery.matcher.ofType
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -59,6 +59,7 @@ class ScanViewModelest : BaseViewModelTest() {
             productRepository.getProductByTagId(PRODUCT_1.tagId!!)
         }
 
-        verifySuspend { viewModelNavigator.push(ofType<com.spoonofcode.poa.feature.product.presentation.details.ProductDetailsScreen>()) }
+        verifySuspend { routeResolver.resolve(ProductModule.ProductDetailsScreen()) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }

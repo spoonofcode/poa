@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.product.presentation
 
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCTS
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCTS
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCT_1
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

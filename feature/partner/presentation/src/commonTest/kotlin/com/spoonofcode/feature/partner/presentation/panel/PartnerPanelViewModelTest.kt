@@ -1,15 +1,12 @@
 package com.spoonofcode.feature.partner.presentation.panel
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.notification.presentation.type.NotificationTypeScreen
-import com.spoonofcode.feature.partner.di.partnerTestModule
-import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
-import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelViewAction
-import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelViewModel
-import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelViewState
-import dev.mokkery.matcher.ofType
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.PartnerModule
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -25,7 +22,7 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(partnerTestModule)
+        modules = arrayOf(partnerPresentationTestModule)
         super.setup()
         viewModel = getSut()
     }
@@ -47,7 +44,9 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<PartnerEditScreen>()) }
+        verifySuspend { routeResolver.resolve(PartnerModule.PartnerEditScreen(partnerId = any())) }
+        verifySuspend { viewModelNavigator.push(any()) }
+
     }
 
     @Test
@@ -55,6 +54,7 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerPanelViewAction.NavigateToNotificationType)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationTypeScreen>()) }
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationTypeScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }

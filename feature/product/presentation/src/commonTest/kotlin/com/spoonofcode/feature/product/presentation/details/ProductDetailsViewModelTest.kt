@@ -1,20 +1,16 @@
 package com.spoonofcode.feature.product.presentation.details
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
-import com.spoonofcode.poa.core.data.mockdata.ProductMockData.PRODUCT_1
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.product.di.productTestModule
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.ProductModule
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.feature.product.presentation.details.ProductDetailsViewAction
-import com.spoonofcode.feature.product.presentation.details.ProductDetailsViewModel
-import com.spoonofcode.feature.product.presentation.details.ProductDetailsViewState
-import com.spoonofcode.feature.product.presentation.edit.ProductEditScreen
+import com.spoonofcode.feature.product.presentation.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
-import dev.mokkery.matcher.ofType
 import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,7 +28,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(productTestModule)
+        modules = arrayOf(productPresentationTestModule)
         super.setup()
         productRepository = getKoin().get()
         viewModel = getSut()
@@ -184,9 +180,8 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
         advanceUntilIdle()
 
-        verifySuspend {
-            viewModelNavigator.push(ofType<ProductEditScreen>())
-        }
+        verifySuspend { routeResolver.resolve(ProductModule.ProductEditScreen(productId = PRODUCT_1.id)) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 
     @Test

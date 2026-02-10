@@ -1,17 +1,14 @@
 package com.spoonofcode.feature.notification.presentation.type
 
 import app.cash.turbine.test
-import com.spoonofcode.core.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.feature.notification.di.notificationTestModule
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
-import com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewAction
-import com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewModel
-import com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewState
-import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOverviewScreen
-import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
-import dev.mokkery.matcher.ofType
+import com.spoonofcode.core.test.base.BaseViewModelTest
+import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.PartnerModule
+import com.spoonofcode.feature.appnavigation.ProductModule
+import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
+import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -27,7 +24,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun setup() {
-        modules = arrayOf(notificationTestModule)
+        modules = arrayOf(notificationPresentationTestModule)
         super.setup()
         viewModel = getSut()
     }
@@ -50,7 +47,8 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.NavigateToAllCustomers)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 
     @Test
@@ -58,7 +56,8 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<CustomerOverviewScreen>()) }
+        verifySuspend { routeResolver.resolve(PartnerModule.CustomerOverviewScreen(partnerId = any())) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 
     @Test
@@ -66,7 +65,8 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<ProductSeriesOverviewScreen>()) }
+        verifySuspend { routeResolver.resolve(ProductModule.ProductSeriesOverviewScreen) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 
     @Test
@@ -74,6 +74,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { viewModelNavigator.push(ofType<NotificationEditScreen>()) }
+        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { viewModelNavigator.push(any()) }
     }
 }
