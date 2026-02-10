@@ -97,7 +97,7 @@ internal class PartnerEditScreen(
             partnerId = "1"
         ).PreviewContent(
             PartnerEditViewState(
-                // TODO #109 Fix after migration to feature modules
+                // TODO #133 fix previews
 //                partner = PartnerMockData.PARTNER_1
             )
         )

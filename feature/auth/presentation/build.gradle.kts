@@ -34,6 +34,7 @@ kotlin {
             dependencies {
                 implementation(libs.turbine)
                 implementation(projects.core.presentationTest)
+                implementation(projects.core.recaptcha)
                 implementation(projects.feature.auth.dataTest)
             }
         }

@@ -6,7 +6,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                // TODO #109 Fix after migration to feature modules
+                // TODO #132 Optimize dependecies
                 api(libs.kotlinx.datetime)
                 api(libs.ktor.client.core)
 

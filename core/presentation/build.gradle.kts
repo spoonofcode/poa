@@ -48,10 +48,10 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
 
-                // TODO #109 Fix after migration to feature modules
+                // TODO #132 Optimize dependencies
                 implementation(projects.core.data)
 
-                // TODO #109 Fix after migration to feature modules
+                // TODO #132 Optimize dependencies
                 implementation(projects.feature.appnavigation)
             }
         }

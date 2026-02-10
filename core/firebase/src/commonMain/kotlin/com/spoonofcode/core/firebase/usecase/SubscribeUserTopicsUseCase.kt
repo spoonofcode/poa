@@ -2,7 +2,7 @@ package com.spoonofcode.core.firebase.usecase
 
 //import com.spoonofcode.core.data.network.SessionManager
 
-// TODO #109 Fix after migration to feature modules
+// TODO #134 Fix firebase notifications
 class SubscribeUserTopicsUseCase(
 //    private val productRepository: ProductRepository,
 //    private val sessionManager: SessionManager,

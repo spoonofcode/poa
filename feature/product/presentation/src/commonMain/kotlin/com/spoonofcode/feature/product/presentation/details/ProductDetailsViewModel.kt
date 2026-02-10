@@ -12,7 +12,7 @@ internal class ProductDetailsViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
-    // TODO #109 Fix after migration to feature modules
+    // TODO #134 Fix firebase notifications
 //    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
 

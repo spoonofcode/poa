@@ -13,7 +13,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    // TODO #109 Fix after migration to feature modules
+    // TODO #134 Fix firebase notifications
 //    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,

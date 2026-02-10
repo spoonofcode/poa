@@ -9,7 +9,7 @@ class CmpFeatureConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            // TODO #109 Fix after migration to feature modules
+            // TODO #132 Optimize dependecies
             with(pluginManager) {
                 applyPlugin("convention-cmp-library")
             }
