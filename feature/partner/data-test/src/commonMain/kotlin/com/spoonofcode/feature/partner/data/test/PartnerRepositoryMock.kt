@@ -12,7 +12,16 @@ import dev.mokkery.mock
 
 internal fun partnerRepositoryMock() = mock<PartnerRepository> {
     everySuspend { getPartner(any()) } returns Result.success(PARTNER_1)
-    everySuspend { updatePartner(any(), any()) } returns Result.success(true)
+    everySuspend {
+        updatePartner(
+            any(),
+            any(),
+            any(),
+            any(),
+            any(),
+            any(),
+        )
+    } returns Result.success(Unit)
     everySuspend { getPartners() } returns Result.success(PARTNERS)
     everySuspend { getPartnerUsers(any()) } returns Result.success(PARTNER_USERS)
     everySuspend { getCategories() } returns Result.success(PARTNER_CATEGORIES)
