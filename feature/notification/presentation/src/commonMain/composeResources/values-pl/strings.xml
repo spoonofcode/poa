@@ -1,0 +1,26 @@
+<resources>
+    <string name="expiration_date">Data ważności</string>
+    <string name="from_all_partners">Od wszystkich partnerów</string>
+    <string name="from_my_partners">Od moich partnerów</string>
+    <string name="link">Link</string>
+    <string name="open_link">Otwórz link</string>
+    <string name="notification">Powiadomienie</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="notifications_settings">Ustawienia powiadomień</string>
+    <string name="notifications_settings_text">Wybierz które powiadomienia chcesz otrzymywać</string>
+    <string name="notification_body">Tekst powiadomienia</string>
+    <string name="notification_title">Tytuł powiadomienia</string>
+    <string name="notification_type">Typ powiadomienia</string>
+    <string name="save_changes">Zapisz zmiany</string>
+    <string name="selected_customers">Wybrani użytkownicy: </string>
+    <string name="selected_series">Wybrane serie: </string>
+    <string name="send_notification">Wyślij powiadomienie</string>
+    <string name="tab_new">Nowe</string>
+    <string name="tab_already_read">Przeczytane</string>
+    <string name="title">Tytuł</string>
+    <string name="text">Tekst</string>
+    <string name="to_all">Do wszystkich</string>
+    <string name="to_all_my_customers">Do wszystkich moich klientów</string>
+    <string name="to_selected_customers">Do wybranych klientów</string>
+    <string name="to_selected_series">Do wybranych serii</string>
+</resources>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="accept">Zaakceptuj</string>
+    <string name="app_name">POA</string>
+    <string name="cancel">Anuluj</string>
+    <string name="check_in_again">Możesz się ponownie zalogować!</string>
+    <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
+    <string name="data_has_been_loaded">Dane zostały załadowane</string>
+    <string name="hours">Godziny</string>
+    <string name="loading">Ładowanie...</string>
+    <string name="minutes">Minuty</string>
+    <string name="reload">Odśwież</string>
+    <string name="search">Szukaj</string>
+    <string name="seconds">Sekundy</string>
+    <string name="time_is_up">Czas minął!</string>
+    <string name="time_remaining">Pozostały czas:</string>
+</resources>

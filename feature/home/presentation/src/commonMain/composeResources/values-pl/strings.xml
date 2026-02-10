@@ -1,0 +1,12 @@
+<resources>
+    <string name="home">Home</string>
+    <string name="collect_reward">Odbierz dzisiejszą nagrodę</string>
+    <string name="daily_check_in">Codzienne logowanie</string>
+    <string name="day_number">Dzień %1$d</string>
+    <string name="new_partners">Nowi partnerzy</string>
+    <string name="next_check_in">NASTĘPNE LOGOWANIE ZA</string>
+    <string name="points_short">pkt</string>
+    <string name="streak_days_count">dni</string>
+    <string name="total_points">Twoje punkty</string>
+    <string name="your_streak">Twoja seria</string>
+</resources>

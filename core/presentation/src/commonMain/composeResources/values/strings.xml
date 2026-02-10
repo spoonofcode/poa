@@ -1,0 +1,16 @@
+<resources>
+    <string name="accept">Accept</string>
+    <string name="app_name">POA</string>
+    <string name="cancel">Cancel</string>
+    <string name="check_in_again">You can check in again!</string>
+    <string name="data_could_not_be_loaded">Data could not be loaded</string>
+    <string name="data_has_been_loaded">Data has been loaded</string>
+    <string name="hours">Hours</string>
+    <string name="loading">Loading...</string>
+    <string name="minutes">Minutes</string>
+    <string name="reload">Reload</string>
+    <string name="search">Search</string>
+    <string name="seconds">Seconds</string>
+    <string name="time_is_up">Time is up!</string>
+    <string name="time_remaining">Time remaining:</string>
+</resources>

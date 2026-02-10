@@ -1,0 +1,8 @@
+<resources>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="read">Read</string>
+    <string name="save_changes">Save changes</string>
+    <string name="star_mandatory">* mandatory</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="terms_and_conditions_description">In order to access the app, you have to accept our terms and conditions</string>
+</resources>

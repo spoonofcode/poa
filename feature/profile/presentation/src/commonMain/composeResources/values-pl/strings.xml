@@ -1,0 +1,13 @@
+<resources>
+    <string name="edit_profile">Edytuj profil</string>
+    <string name="faq">FAQ</string>
+    <string name="logout">Wyloguj</string>
+    <string name="partner_panel">Panel partnerski</string>
+    <string name="profile">Profil</string>
+    <string name="my_products">Moje produkty</string>
+    <string name="name">Nazwa</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="save_changes">Zapisz zmiany</string>
+    <string name="settings">Ustawienia</string>
+    <string name="terms_and_conditions">Warunki i zasady</string>
+</resources>

@@ -1,40 +1,11 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.buildkonfig)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinCocoapods)
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinxSerialization)
-    alias(libs.plugins.mokkery)
+//    alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.kotlin.cocoapods)
+    alias(libs.plugins.kotlin.serialization)
+//    alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
-    alias(libs.plugins.google.services)
-}
-
-buildkonfig {
-    packageName = "com.spoonofcode.poa"
-    defaultConfigs {
-        val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
-            .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
-            ?: throw IllegalStateException(
-                "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
-            )
-
-        val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
-            .getProperty("RECAPTCHA_SITE_KEY_IOS")
-            ?: throw IllegalStateException(
-                "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
-            )
-
-
-        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
-        buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
-    }
+//    alias(libs.plugins.google.services)
+    alias(libs.plugins.convention.cmp.application)
 }
 
 kover {
@@ -88,84 +59,70 @@ kotlin {
         }
     }
 
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-        iosTarget.binaries.all {
-            // pulls the system framework in and links it
-            linkerOpts("-framework", "CoreNFC")
-        }
-    }
-
     sourceSets {
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
         }
 
         androidMain.dependencies {
-            implementation(libs.ui.tooling.preview)
+            implementation(libs.jetbrains.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.media3.exoplayer)
-            implementation(libs.androidx.media3.ui.compose)
-            implementation(libs.androidx.security)
             implementation(libs.androidx.splash.screen)
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
-            implementation(libs.ktor.client.okhttp)
-
-            implementation(libs.androidx.credentials)
-            implementation(libs.androidx.credentials.play.service.auth)
-            implementation(libs.googleid)
-            implementation(libs.recaptcha)
-            implementation(libs.firebase.messaging)
-            implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
-            implementation(libs.components.resources)
-            implementation(libs.ui.tooling.preview)
-            implementation(libs.foundation)
-            implementation(libs.runtime)
-            implementation(libs.material3)
-            implementation(libs.ui)
+            implementation(libs.jetbrains.compose.components.resources)
+            implementation(libs.jetbrains.compose.ui.tooling.preview)
+            implementation(libs.jetbrains.compose.foundation)
+            implementation(libs.jetbrains.compose.runtime)
+            implementation(libs.jetbrains.compose.material3)
+            implementation(libs.jetbrains.compose.ui)
 
-            implementation(libs.compose.icons.fontawesome)
-            implementation(libs.compottie)
-            implementation(libs.compottie.dot)
-            implementation(libs.compottie.network)
-            implementation(libs.connectivity.core)
-            implementation(libs.connectivity.device)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.kotlinx.datetime)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.ktor.client.auth)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.landscapist.coil)
-            implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.material.icons.core)
-            implementation(libs.material.icons.extended)
-            implementation(libs.multiplatform.settings)
             implementation(libs.touchlab.kermit)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
+
+            implementation(projects.core.data)
+            implementation(projects.core.firebase)
+            implementation(projects.core.nfc)
+            implementation(projects.core.presentation)
+            implementation(projects.core.recaptcha)
+
+            implementation(projects.feature.auth.data)
+            implementation(projects.feature.auth.domain)
+            implementation(projects.feature.auth.presentation)
+
+            implementation(projects.feature.faq.presentation)
+
+            implementation(projects.feature.home.data)
+            implementation(projects.feature.home.domain)
+            implementation(projects.feature.home.presentation)
+
+            implementation(projects.feature.notification.data)
+            implementation(projects.feature.notification.domain)
+            implementation(projects.feature.notification.presentation)
+
+            implementation(projects.feature.partner.data)
+            implementation(projects.feature.partner.domain)
+            implementation(projects.feature.partner.presentation)
+
+            implementation(projects.feature.product.data)
+            implementation(projects.feature.product.domain)
+            implementation(projects.feature.product.presentation)
+
+            implementation(projects.feature.profile.data)
+            implementation(projects.feature.profile.domain)
+            implementation(projects.feature.profile.presentation)
+
+            implementation(projects.feature.scan.data)
+            implementation(projects.feature.scan.domain)
+            implementation(projects.feature.scan.presentation)
+
+            implementation(projects.feature.tac.presentation)
+
+            implementation(projects.feature.appnavigation)
         }
         commonTest.dependencies {
             implementation(libs.koin.test)
@@ -178,12 +135,12 @@ kotlin {
 
 android {
     namespace = "com.spoonofcode.poa"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.spoonofcode.poa"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -211,19 +168,13 @@ android {
 //        }
 //    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
         isCoreLibraryDesugaringEnabled = true
     }
 }
 
 dependencies {
-    debugImplementation(libs.ui.tooling)
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
-}
-
-compose.resources {
-    publicResClass = true
-    packageOfResClass = "com.spoonofcode.poa.resources"
-    generateResClass = always
+    debugImplementation(libs.jetbrains.compose.ui.tooling)
+//    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
 }
