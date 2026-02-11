@@ -10,6 +10,5 @@ fun NotificationResponse.toNotification(): Notification {
         text = text,
         link = link,
         expirationDateTime = expirationDateTime,
-        alreadyRead = alreadyRead,
     )
 }

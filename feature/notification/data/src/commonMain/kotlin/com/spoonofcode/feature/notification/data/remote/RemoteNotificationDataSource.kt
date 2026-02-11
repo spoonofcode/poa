@@ -13,29 +13,25 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         title: String,
         text: String,
         link: String?,
-        imageUrl: String?,
-        topics: List<String>,
+        topic: String,
         expirationDateTime: LocalDateTime?,
-        alreadyRead: Boolean
-    ): Result<Unit> = doRequest<Boolean>(
+    ): Result<NotificationResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = NotificationRequest(
             title = title,
             text = text,
             link = link,
-            imageUrl = imageUrl,
-            topics = topics,
+            topic = topic,
             expirationDateTime = expirationDateTime,
-            alreadyRead = alreadyRead,
         ),
-    ).map { true }
+    )
 
-     suspend fun read(notificationId: String): Result<NotificationResponse> = doRequest(
+    suspend fun read(notificationId: String): Result<NotificationResponse> = doRequest(
         urlPostfixPath = notificationId,
         method = HttpMethod.Get,
     )
 
-     suspend fun readAll(): Result<List<NotificationResponse>> =
+    suspend fun readAll(): Result<List<NotificationResponse>> =
         doRequest<List<NotificationResponse>>(
             method = HttpMethod.Get,
         )

@@ -39,7 +39,7 @@ internal class NotificationEditViewModel(
 
     private fun changeTitle(title: String) {
         updateState {
-            NotificationEditViewState(
+            copy(
                 title = title
             )
         }
@@ -47,23 +47,23 @@ internal class NotificationEditViewModel(
 
     private fun changeText(text: String) {
         updateState {
-            NotificationEditViewState(
+            copy(
                 text = text
             )
         }
     }
 
-    private fun changeExpirationDateTime(startDateTime: LocalDateTime) {
+    private fun changeExpirationDateTime(expirationDateTime: LocalDateTime) {
         updateState {
-            NotificationEditViewState(
-                expirationDateTime = startDateTime
+            copy(
+                expirationDateTime = expirationDateTime
             )
         }
     }
 
     private fun changeLink(link: String) {
         updateState {
-            NotificationEditViewState(
+            copy(
                 link = link
             )
         }
@@ -72,13 +72,13 @@ internal class NotificationEditViewModel(
     private fun sendNotification() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState =
-                currentState()
+            val currentState = currentState()
             sendNotificationUseCase(
                 title = currentState.title,
                 text = currentState.text,
                 link = currentState.link,
-                topics = currentState.itemIds,
+                topic = "global",
+//                topics = currentState.itemIds,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))

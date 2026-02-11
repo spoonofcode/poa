@@ -11,16 +11,13 @@ class SendNotificationUseCase(
         text: String,
         link: String? = null,
         imageUrl: String? = null,
-        topics: List<String>,
+        topic: String,
         expirationDateTime: LocalDateTime? = null,
-        alreadyRead: Boolean = false,
     ): Result<Unit> = notificationRepository.send(
         title = title,
         text = text,
         link = link,
-        imageUrl = imageUrl,
-        topics = topics,
+        topic = topic,
         expirationDateTime = expirationDateTime,
-        alreadyRead = alreadyRead,
     )
 }

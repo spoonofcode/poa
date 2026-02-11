@@ -13,19 +13,15 @@ class NotificationRepositoryImpl(
         title: String,
         text: String,
         link: String?,
-        imageUrl: String?,
-        topics: List<String>,
-        expirationDateTime: LocalDateTime?,
-        alreadyRead: Boolean
+        topic: String,
+        expirationDateTime: LocalDateTime?
     ): Result<Unit> = remoteNotificationDataSource.create(
         title = title,
         text = text,
         link = link,
-        imageUrl = imageUrl,
-        topics = topics,
+        topic = topic,
         expirationDateTime = expirationDateTime,
-        alreadyRead = alreadyRead,
-    )
+    ).map { Unit }
 
     override suspend fun read(notificationId: String): Result<Notification> =
         remoteNotificationDataSource.read(notificationId).map { it.toNotification() }

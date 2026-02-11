@@ -8,10 +8,8 @@ interface NotificationRepository {
         title: String,
         text: String,
         link: String? = null,
-        imageUrl: String? = null,
-        topics: List<String>,
+        topic: String,
         expirationDateTime: LocalDateTime? = null,
-        alreadyRead: Boolean = false,
     ): Result<Unit>
 
     suspend fun read(notificationId: String): Result<Notification>
