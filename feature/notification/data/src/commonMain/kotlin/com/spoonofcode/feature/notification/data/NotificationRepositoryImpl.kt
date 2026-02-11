@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.notification.data
 
+import com.spoonofcode.core.data.ext.toZonedInstant
 import com.spoonofcode.feature.notification.data.mappers.toNotification
 import com.spoonofcode.feature.notification.data.remote.RemoteNotificationDataSource
-import com.spoonofcode.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
@@ -21,7 +21,7 @@ class NotificationRepositoryImpl(
         text = text,
         link = link,
         topic = topic,
-        expirationDateTime = expirationDateTime,
+        expirationDateTime = expirationDateTime?.toZonedInstant(),
     ).map { Unit }
 
     override suspend fun update(
@@ -37,7 +37,7 @@ class NotificationRepositoryImpl(
         text = text,
         link = link,
         topic = topic,
-        expirationDateTime = expirationDateTime,
+        expirationDateTime = expirationDateTime?.toZonedInstant(),
     ).map { Unit }
 
     override suspend fun delete(notificationId: String): Result<Unit> =

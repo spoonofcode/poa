@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.notification.data.remote.model
 
-import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 data class NotificationRequest(
@@ -11,5 +11,5 @@ data class NotificationRequest(
     val link: String? = null,
     val topic: String,
     @SerialName("expiration_datetime")
-    val expirationDateTime: LocalDateTime? = null,
+    val expirationDateTime: Instant? = null,
 )

@@ -1,12 +1,14 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.core.data.utils.TimeZoneUtils
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toLocalDateTime
 
 internal class NotificationEditViewModel(
     private val sendNotificationUseCase: SendNotificationUseCase,

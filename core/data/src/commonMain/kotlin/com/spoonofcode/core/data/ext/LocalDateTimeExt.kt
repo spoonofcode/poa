@@ -11,7 +11,7 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.ExperimentalTime
-
+import kotlin.time.Instant
 
 private val DEFAULT_DATE_TIME_FORMAT = LocalDateTime.Format {
     date(
@@ -57,3 +57,6 @@ fun LocalDateTime.minus(hours: Int): LocalDateTime =
 
 fun LocalDateTime.roundToNextHour(): LocalDateTime =
     LocalDateTime(this.year, this.monthNumber, this.dayOfMonth, this.plus(1).hour, 0, 0, 0)
+
+
+fun LocalDateTime.toZonedInstant(): Instant = this.toInstant(TimeZoneUtils.DEFAULT_ZONE)

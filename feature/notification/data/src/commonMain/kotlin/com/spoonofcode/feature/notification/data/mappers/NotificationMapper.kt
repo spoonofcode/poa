@@ -1,5 +1,6 @@
 package com.spoonofcode.feature.notification.data.mappers
 
+import com.spoonofcode.core.data.ext.toZonedLocalDateTime
 import com.spoonofcode.feature.notification.data.remote.model.NotificationResponse
 import com.spoonofcode.feature.notification.domain.model.Notification
 
@@ -9,9 +10,9 @@ fun NotificationResponse.toNotification(): Notification {
         title = title,
         text = text,
         link = link,
-        createdDataTime = createdDataTime,
-        modificationDateTime = modificationDateTime,
-        expirationDateTime = expirationDateTime,
+        createdDataTime = createdDataTime.toZonedLocalDateTime(),
+        modificationDateTime = modificationDateTime.toZonedLocalDateTime(),
+        expirationDateTime = expirationDateTime?.toZonedLocalDateTime(),
         state = state,
         topic = topic,
     )

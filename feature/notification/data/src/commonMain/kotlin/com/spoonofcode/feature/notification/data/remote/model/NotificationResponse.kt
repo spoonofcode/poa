@@ -1,9 +1,8 @@
 package com.spoonofcode.feature.notification.data.remote.model
 
-import com.spoonofcode.core.data.serialization.LocalDateTimeRFC1123Serializer
-import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 data class NotificationResponse(
@@ -12,14 +11,11 @@ data class NotificationResponse(
     val text: String,
     val link: String? = null,
     @SerialName("created_datetime")
-    @Serializable(with = LocalDateTimeRFC1123Serializer::class)
-    val createdDataTime: LocalDateTime,
+    val createdDataTime: Instant,
     @SerialName("modification_time")
-    @Serializable(with = LocalDateTimeRFC1123Serializer::class)
-    val modificationDateTime: LocalDateTime,
+    val modificationDateTime: Instant,
     @SerialName("expiration_datetime")
-    @Serializable(with = LocalDateTimeRFC1123Serializer::class)
-    val expirationDateTime: LocalDateTime? = null,
+    val expirationDateTime: Instant? = null,
     val state: String,
     val topic: String,
 )

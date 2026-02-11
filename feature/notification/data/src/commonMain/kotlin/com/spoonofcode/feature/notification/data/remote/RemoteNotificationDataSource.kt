@@ -4,7 +4,7 @@ import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.feature.notification.data.remote.model.NotificationResponse
 import io.ktor.http.HttpMethod
-import kotlinx.datetime.LocalDateTime
+import kotlin.time.Instant
 
 class RemoteNotificationDataSource : RemoteBaseDataSource(
     collectionName = "api/notifications",
@@ -14,7 +14,7 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         text: String,
         link: String?,
         topic: String,
-        expirationDateTime: LocalDateTime?,
+        expirationDateTime: Instant?,
     ): Result<NotificationResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = NotificationRequest(
@@ -32,7 +32,7 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         text: String,
         link: String?,
         topic: String,
-        expirationDateTime: LocalDateTime?,
+        expirationDateTime: Instant?,
     ): Result<Unit> = doRequest(
         urlPostfixPath = notificationId,
         method = HttpMethod.Put,
