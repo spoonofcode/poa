@@ -2,6 +2,7 @@ package com.spoonofcode.feature.notification.data
 
 import com.spoonofcode.feature.notification.data.mappers.toNotification
 import com.spoonofcode.feature.notification.data.remote.RemoteNotificationDataSource
+import com.spoonofcode.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
@@ -9,7 +10,7 @@ import kotlinx.datetime.LocalDateTime
 class NotificationRepositoryImpl(
     private val remoteNotificationDataSource: RemoteNotificationDataSource,
 ) : NotificationRepository {
-    override suspend fun send(
+    override suspend fun create(
         title: String,
         text: String,
         link: String?,
@@ -22,6 +23,26 @@ class NotificationRepositoryImpl(
         topic = topic,
         expirationDateTime = expirationDateTime,
     ).map { Unit }
+
+    override suspend fun update(
+        notificationId: String,
+        title: String,
+        text: String,
+        link: String?,
+        topic: String,
+        expirationDateTime: LocalDateTime?
+    ): Result<Unit> = remoteNotificationDataSource.update(
+        title = title,
+        text = text,
+        link = link,
+        topic = topic,
+        expirationDateTime = expirationDateTime,
+    ).map { Unit }
+
+    override suspend fun delete(notificationId: String): Result<Unit> =
+        remoteNotificationDataSource.delete(
+            notificationId = notificationId
+        )
 
     override suspend fun read(notificationId: String): Result<Notification> =
         remoteNotificationDataSource.read(notificationId).map { it.toNotification() }
