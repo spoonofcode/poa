@@ -38,6 +38,13 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="com.spoonofcode.core.firebase.services.PushNotificationService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_poa_white" />
