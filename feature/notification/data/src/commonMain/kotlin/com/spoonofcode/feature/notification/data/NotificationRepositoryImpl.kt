@@ -32,6 +32,7 @@ class NotificationRepositoryImpl(
         topic: String,
         expirationDateTime: LocalDateTime?
     ): Result<Unit> = remoteNotificationDataSource.update(
+        notificationId = notificationId,
         title = title,
         text = text,
         link = link,

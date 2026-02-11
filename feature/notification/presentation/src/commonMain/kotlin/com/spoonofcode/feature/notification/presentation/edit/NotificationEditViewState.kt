@@ -14,8 +14,8 @@ internal data class NotificationEditViewState(
     val text: String = "",
     val link: String = "",
     val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState.Companion.ONE_WEEK_IN_HOURS)
-        .roundToNextHour(),
+//        .plus(ONE_WEEK_IN_HOURS)
+//        .roundToNextHour(),
 ) : BaseViewState() {
     companion object {
         private const val ONE_WEEK_IN_HOURS = 168
