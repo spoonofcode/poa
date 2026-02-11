@@ -9,6 +9,10 @@ fun NotificationResponse.toNotification(): Notification {
         title = title,
         text = text,
         link = link,
+        createdDataTime = createdDataTime,
+        modificationDateTime = modificationDateTime,
         expirationDateTime = expirationDateTime,
+        state = state,
+        topic = topic,
     )
 }

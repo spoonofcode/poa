@@ -9,6 +9,9 @@ data class Notification(
     val title: String,
     val text: String,
     val link: String? = null,
+    val createdDataTime: LocalDateTime,
+    val modificationDateTime: LocalDateTime,
     val expirationDateTime: LocalDateTime? = null,
-    val alreadyRead: Boolean = false,
+    val state: String,
+    val topic: String,
 )
