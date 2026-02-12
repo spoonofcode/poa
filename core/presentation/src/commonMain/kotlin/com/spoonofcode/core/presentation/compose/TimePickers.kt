@@ -15,6 +15,7 @@ import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -34,6 +35,7 @@ object TimePickers {
         label: String? = null,
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,
+        minTime: LocalTime? = null
     ) {
         val timePickerState = rememberTimePickerState(
             initialHour = value.hour,
@@ -90,9 +92,17 @@ object TimePickers {
                     onConfirm(timePickerState)
                 }
             ) {
-                TimePicker(
-                    state = timePickerState,
-                )
+                if (minTime != null) {
+                    MinTimePicker(
+                        state = timePickerState,
+                        minHour = minTime.hour,
+                        minMinute = minTime.minute
+                    )
+                } else {
+                    TimePicker(
+                        state = timePickerState,
+                    )
+                }
             }
         }
     }
@@ -117,5 +127,25 @@ object TimePickers {
             },
             text = { content() }
         )
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun MinTimePicker(
+        state: TimePickerState,
+        minHour: Int,
+        minMinute: Int,
+    ) {
+        val minTotal = minHour * 60 + minMinute
+
+        LaunchedEffect(state.hour, state.minute) {
+            val pickedTotal = state.hour * 60 + state.minute
+            if (pickedTotal < minTotal) {
+                state.hour = minHour
+                state.minute = minMinute
+            }
+        }
+
+        TimePicker(state = state)
     }
 }

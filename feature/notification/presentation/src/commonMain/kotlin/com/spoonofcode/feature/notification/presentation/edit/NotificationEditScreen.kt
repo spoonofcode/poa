@@ -87,6 +87,7 @@ internal class NotificationEditScreen(
             DatePickers.DatePickerWithTimer(
                 label = stringResource(resource = Res.string.expiration_date),
                 value = viewState.expirationDateTime,
+                minDateTime = viewState.minExpirationDateTime,
                 onValueChange = {
                     onAction(
                         NotificationEditViewAction.ChangeExpirationDateTime(
