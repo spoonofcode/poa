@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.spoonofcode.core.data.ext.formatedLocalDate
+import com.spoonofcode.core.data.ext.isAfterToday
 import com.spoonofcode.core.data.ext.toZonedLocalDate
 import com.spoonofcode.core.data.ext.zonedStartOfDayInMillis
 import com.spoonofcode.core.data.utils.LocalDateUtils
@@ -132,7 +133,7 @@ object DatePickers {
                     onConfirm = {},
                     onDismiss = {},
                     modifier = Modifier.weight(.5f),
-                    minTime = minDateTime?.time,
+                    minTime = if (value.isAfterToday()) null else minDateTime?.time,
                 )
             }
         }

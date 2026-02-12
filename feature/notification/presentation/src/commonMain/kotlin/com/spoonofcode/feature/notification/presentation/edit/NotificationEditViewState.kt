@@ -14,13 +14,13 @@ internal data class NotificationEditViewState(
     val text: String = "",
     val link: String = "",
     val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(ONE_HOUR)
+        .plus(TWO_HOURS)
         .roundToNextHour(),
     val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(ONE_HOUR)
+        .plus(TWO_HOURS)
         .roundToNextHour(),
 ) : BaseViewState() {
     companion object {
-        private const val ONE_HOUR = 1
+        private const val TWO_HOURS = 2
     }
 }

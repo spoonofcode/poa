@@ -31,11 +31,11 @@ object TimePickers {
     fun TimePicker(
         value: LocalDateTime = LocalDateTimeUtils.now(),
         onValueChange: (LocalDateTime) -> Unit,
-        modifier: Modifier = Modifier.fillMaxWidth(),
         label: String? = null,
+        minTime: LocalTime? = null,
         onConfirm: (TimePickerState) -> Unit,
         onDismiss: () -> Unit,
-        minTime: LocalTime? = null
+        modifier: Modifier = Modifier.fillMaxWidth(),
     ) {
         val timePickerState = rememberTimePickerState(
             initialHour = value.hour,
