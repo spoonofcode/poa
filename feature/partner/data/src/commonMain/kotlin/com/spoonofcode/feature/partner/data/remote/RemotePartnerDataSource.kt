@@ -31,6 +31,7 @@ class RemotePartnerDataSource : RemoteBaseDataSource(
         method = HttpMethod.Put,
         requestBody = PartnerRequest(
             name = name,
+            partnerCategory = partnerCategory,
             email = email,
             description = description,
             imageLink = imageLink,
