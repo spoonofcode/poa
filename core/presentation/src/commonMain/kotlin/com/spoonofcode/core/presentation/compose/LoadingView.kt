@@ -9,11 +9,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.DrawableResource
 import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.poa
+import com.spoonofcode.core.presentation.taggy_go_logo
 
 @Composable
 fun LoadingView(
-    iconRes: DrawableResource = Res.drawable.poa,
+    iconRes: DrawableResource = Res.drawable.taggy_go_logo,
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(Paddings.screenPadding),
