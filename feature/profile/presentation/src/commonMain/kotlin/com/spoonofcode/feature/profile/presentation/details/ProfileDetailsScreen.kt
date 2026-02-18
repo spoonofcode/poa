@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
@@ -44,9 +45,12 @@ import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.ProfilePreviewParameterProvider
 import com.spoonofcode.feature.profile.presentation.Res
+import com.spoonofcode.feature.profile.presentation.cancel
 import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.faq
 import com.spoonofcode.feature.profile.presentation.logout
+import com.spoonofcode.feature.profile.presentation.logout_dialog_text
+import com.spoonofcode.feature.profile.presentation.logout_dialog_title
 import com.spoonofcode.feature.profile.presentation.notifications
 import com.spoonofcode.feature.profile.presentation.partner_panel
 import com.spoonofcode.feature.profile.presentation.poa
@@ -72,6 +76,17 @@ internal class ProfileDetailsScreen(
         onAction: (ProfileDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            if (viewState.isLogoutDialogVisible) {
+                Dialogs.AlertDialog(
+                    title = stringResource(Res.string.logout_dialog_title),
+                    text = stringResource(Res.string.logout_dialog_text),
+                    confirmButtonText = stringResource(Res.string.logout),
+                    dismissButtonText = stringResource(Res.string.cancel),
+                    confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
+                    dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
+                )
+            }
+
             val profile = requireNotNull(viewState.profile)
 
             // 1. Profile Header

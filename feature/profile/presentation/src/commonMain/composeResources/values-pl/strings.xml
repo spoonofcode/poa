@@ -1,7 +1,10 @@
 <resources>
+    <string name="cancel">Anuluj</string>
     <string name="edit_profile">Edytuj profil</string>
     <string name="faq">FAQ</string>
     <string name="logout">Wyloguj</string>
+    <string name="logout_dialog_title">Czy na pewno chcesz się wylogować?</string>
+    <string name="logout_dialog_text">Po wylogowaniu Twoje dane, w tym informacje o produktach, zostaną ukryte. Aby je zobaczyć, wystarczy zalogować się ponownie.</string>
     <string name="partner_panel">Panel partnerski</string>
     <string name="profile">Profil</string>
     <string name="my_products">Moje produkty</string>

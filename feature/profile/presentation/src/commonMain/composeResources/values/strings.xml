@@ -1,7 +1,10 @@
 <resources>
+    <string name="cancel">Cancel</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="faq">FAQ</string>
     <string name="logout">Logout</string>
+    <string name="logout_dialog_title">Are you sure you want to logout?</string>
+    <string name="logout_dialog_text">When you log out, your data, including your product information, will be hidden. To see it, simply log in again.</string>
     <string name="partner_panel">Partner panel</string>
     <string name="profile">Profile</string>
     <string name="my_products">My products</string>

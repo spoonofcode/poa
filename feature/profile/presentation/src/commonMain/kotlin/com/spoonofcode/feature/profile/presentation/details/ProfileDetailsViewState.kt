@@ -8,4 +8,5 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 internal data class ProfileDetailsViewState(
     val profile: Profile? = null,
     val partnerPanelVisible: Boolean = false,
+    val isLogoutDialogVisible: Boolean = false,
 ) : BaseViewState()
