@@ -76,16 +76,7 @@ internal class ProfileDetailsScreen(
         onAction: (ProfileDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            if (viewState.isLogoutDialogVisible) {
-                Dialogs.AlertDialog(
-                    title = stringResource(Res.string.logout_dialog_title),
-                    text = stringResource(Res.string.logout_dialog_text),
-                    confirmButtonText = stringResource(Res.string.logout),
-                    dismissButtonText = stringResource(Res.string.cancel),
-                    confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
-                    dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
-                )
-            }
+            Dialogs(viewState, onAction)
 
             val profile = requireNotNull(viewState.profile)
 
@@ -175,6 +166,23 @@ internal class ProfileDetailsScreen(
             }
 
             Spacer(Modifier.height(32.dp))
+        }
+    }
+
+    @Composable
+    private fun Dialogs(
+        viewState: ProfileDetailsViewState,
+        onAction: (ProfileDetailsViewAction) -> Unit
+    ) {
+        if (viewState.isLogoutDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.logout_dialog_title),
+                text = stringResource(Res.string.logout_dialog_text),
+                confirmButtonText = stringResource(Res.string.logout),
+                dismissButtonText = stringResource(Res.string.cancel),
+                confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
+                dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
+            )
         }
     }
 

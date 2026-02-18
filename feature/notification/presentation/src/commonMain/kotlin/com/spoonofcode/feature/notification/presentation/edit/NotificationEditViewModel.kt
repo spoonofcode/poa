@@ -26,6 +26,8 @@ internal class NotificationEditViewModel(
             is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
             is NotificationEditViewAction.InitView -> initView(action.itemIds)
             NotificationEditViewAction.SendNotification -> sendNotification()
+            NotificationEditViewAction.CancelSendNotification -> cancelSendNotification()
+            NotificationEditViewAction.ConfirmSendNotification -> confirmSendNotification()
         }
     }
 
@@ -70,6 +72,22 @@ internal class NotificationEditViewModel(
     }
 
     private fun sendNotification() {
+        updateState {
+            copy(
+                isSendNotificationDialogVisible = true
+            )
+        }
+    }
+
+    private fun cancelSendNotification() {
+        updateState {
+            copy(
+                isSendNotificationDialogVisible = false
+            )
+        }
+    }
+
+    private fun confirmSendNotification() {
         viewModelScope.launch {
             showLoadingView()
             val currentState = currentState()

@@ -23,17 +23,21 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.DatePickers
+import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
+import com.spoonofcode.feature.notification.presentation.cancel
 import com.spoonofcode.feature.notification.presentation.expiration_date
 import com.spoonofcode.feature.notification.presentation.link
 import com.spoonofcode.feature.notification.presentation.notification
 import com.spoonofcode.feature.notification.presentation.selected_customers
 import com.spoonofcode.feature.notification.presentation.selected_series
 import com.spoonofcode.feature.notification.presentation.send_notification
+import com.spoonofcode.feature.notification.presentation.send_notification_dialog_text
+import com.spoonofcode.feature.notification.presentation.send_notification_dialog_title
 import com.spoonofcode.feature.notification.presentation.text
 import com.spoonofcode.feature.notification.presentation.title
 import org.jetbrains.compose.resources.stringResource
@@ -58,6 +62,8 @@ internal class NotificationEditScreen(
         onAction: (NotificationEditViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            Dialogs(viewState, onAction)
+
             if (viewState.itemIds.isNotEmpty()) {
                 val title = if (onlyToSelectedUsers) {
                     stringResource(Res.string.selected_customers)
@@ -175,6 +181,23 @@ internal class NotificationEditScreen(
             ) {
                 Texts.LL(text = text)
             }
+        }
+    }
+
+    @Composable
+    private fun Dialogs(
+        viewState: NotificationEditViewState,
+        onAction: (NotificationEditViewAction) -> Unit
+    ) {
+        if (viewState.isSendNotificationDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.send_notification_dialog_title),
+                text = stringResource(Res.string.send_notification_dialog_text),
+                confirmButtonText = stringResource(Res.string.send_notification),
+                dismissButtonText = stringResource(Res.string.cancel),
+                confirmAction = { onAction(NotificationEditViewAction.ConfirmSendNotification) },
+                dismissAction = { onAction(NotificationEditViewAction.CancelSendNotification) }
+            )
         }
     }
 }

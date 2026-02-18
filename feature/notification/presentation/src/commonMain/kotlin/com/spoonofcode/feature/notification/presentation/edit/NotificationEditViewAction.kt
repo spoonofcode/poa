@@ -12,4 +12,6 @@ internal sealed interface NotificationEditViewAction : BaseViewAction {
     data class ChangeTitle(val title: String) : NotificationEditViewAction
     data class InitView(val itemIds: List<String>) : NotificationEditViewAction
     data object SendNotification : NotificationEditViewAction
+    data object ConfirmSendNotification : NotificationEditViewAction
+    data object CancelSendNotification : NotificationEditViewAction
 }

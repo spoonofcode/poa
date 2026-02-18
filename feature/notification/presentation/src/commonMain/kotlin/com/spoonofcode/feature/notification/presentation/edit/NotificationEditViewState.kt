@@ -19,6 +19,7 @@ internal data class NotificationEditViewState(
     val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
         .plus(TWO_HOURS)
         .roundToNextHour(),
+    val isSendNotificationDialogVisible: Boolean = false,
 ) : BaseViewState() {
     companion object {
         private const val TWO_HOURS = 2
