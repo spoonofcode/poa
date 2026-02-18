@@ -44,6 +44,7 @@ object Images {
                 contentDescription = null,
                 modifier = Modifier
                     .height(200.dp)
+                    .background(MaterialTheme.colorScheme.onBackground)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop
