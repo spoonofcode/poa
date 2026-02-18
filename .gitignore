@@ -102,3 +102,6 @@ GoogleService-Info.plist
 
 # Certificates
 certificates/
+
+# Github
+/.github
