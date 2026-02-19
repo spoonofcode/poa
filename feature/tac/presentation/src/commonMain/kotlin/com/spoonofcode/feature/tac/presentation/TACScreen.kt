@@ -42,7 +42,7 @@ internal class TACScreen(
                 onCheckedChange = { onAction(TACViewAction.ChangePrivacyPolicyAccepted(it)) },
                 text = stringResource(Res.string.privacy_policy),
                 linkText = stringResource(Res.string.read),
-                linkUrl = "https://example.com/privacy-policy"
+                linkUrl = viewState.privacyPolicyLink,
             )
 
             Checkboxes.CheckboxTextLinkRow(
@@ -50,7 +50,7 @@ internal class TACScreen(
                 onCheckedChange = { onAction(TACViewAction.ChangeTermsAndConditionsAccepted(it)) },
                 text = stringResource(Res.string.terms_and_conditions),
                 linkText = stringResource(Res.string.read),
-                linkUrl = "https://example.com/terms-and-conditions"
+                linkUrl = viewState.marketingLink,
             )
 
             Spacers.Weight1(this)
