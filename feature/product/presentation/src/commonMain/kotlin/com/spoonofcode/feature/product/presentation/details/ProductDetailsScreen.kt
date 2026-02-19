@@ -60,6 +60,7 @@ internal data class ProductDetailsScreen(
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
     override fun provideTopBarActions(
+        viewState: ProductDetailsViewState,
         onAction: (ProductDetailsViewAction) -> Unit,
     ) = if (hasOwnerUser) {
         listOf(

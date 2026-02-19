@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
@@ -52,12 +53,13 @@ internal class HomeScreen(
     override fun provideTopAppBarTitle() = Res.string.home
 
     override fun provideTopBarActions(
+        viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
-            badgeCount = 5,
+            badgeCount = viewState.unreadNotificationsCount,
         ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 

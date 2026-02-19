@@ -25,4 +25,7 @@ interface NotificationRepository {
 
     suspend fun read(notificationId: String): Result<Notification>
     suspend fun readAll(): Result<List<Notification>>
+
+    suspend fun markAsRead(notificationId: String)
+    suspend fun isRead(notificationId: String): Boolean
 }

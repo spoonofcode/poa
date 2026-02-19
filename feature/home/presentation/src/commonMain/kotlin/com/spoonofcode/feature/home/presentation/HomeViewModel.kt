@@ -9,6 +9,7 @@ import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserRewardsPointsUseCase
+import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -19,12 +20,12 @@ internal class HomeViewModel(
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
+    private val getNotificationsUseCase: GetNotificationsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
     override fun onAction(action: HomeViewAction) {
         when (action) {
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
-            HomeViewAction.GetNumberOfNewNotifications -> getNumberOfNewNotifications()
             HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
         }
@@ -37,19 +38,31 @@ internal class HomeViewModel(
             val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
             val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
             val partnersDeferred = async { getNewPartnersUseCase() }
+            val notificationsDeferred = async { getNotificationsUseCase() }
 
-            runCatching {
+            val result = runCatching {
                 val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
                 val totalPoints = totalPointsDeferred.await().getOrThrow()
                 val partnerImageLinks = partnersDeferred.await().getOrThrow()
                     .mapNotNull { partner -> partner.imageLink }
-                Triple(dailyCheckInStatus, totalPoints, partnerImageLinks)
-            }.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks) ->
+                val unreadNotificationsCount =
+                    notificationsDeferred.await().getOrNull()?.count { !it.isRead } ?: 0
+
+                Quadruple(
+                    dailyCheckInStatus,
+                    totalPoints,
+                    partnerImageLinks,
+                    unreadNotificationsCount
+                )
+            }
+
+            result.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks, unreadCount) ->
                 showContentView {
                     HomeViewState(
                         dailyCheckInStatus = dailyCheckInStatus,
                         totalPoints = totalPoints,
                         partnerImageLinks = partnerImageLinks,
+                        unreadNotificationsCount = unreadCount,
                     )
                 }
             }.onFailure {
@@ -73,14 +86,16 @@ internal class HomeViewModel(
         }
     }
 
-    private fun getNumberOfNewNotifications(): Int {
-        // TODO: Implement logic to get the actual number of new notifications and move to viewState
-        return 5
-    }
-
     private fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(routeResolver.resolve(NotificationModule.NotificationOverviewScreen))
         }
     }
+
+    private data class Quadruple<out A, out B, out C, out D>(
+        val first: A,
+        val second: B,
+        val third: C,
+        val fourth: D
+    )
 }

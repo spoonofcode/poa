@@ -11,5 +11,4 @@ val notificationDataModule = module {
     singleOf(::RemoteNotificationDataSource)
 
     singleOf(::NotificationRepositoryImpl).bind<NotificationRepository>()
-
 }
