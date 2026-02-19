@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.data
 
-import com.russhwolf.settings.Settings
 import com.spoonofcode.core.data.ext.toZonedInstant
+import com.spoonofcode.feature.notification.data.local.LocalNotificationDataSource
 import com.spoonofcode.feature.notification.data.mappers.toNotification
 import com.spoonofcode.feature.notification.data.remote.RemoteNotificationDataSource
 import com.spoonofcode.feature.notification.domain.model.Notification
@@ -10,12 +10,9 @@ import kotlinx.datetime.LocalDateTime
 
 class NotificationRepositoryImpl(
     private val remoteNotificationDataSource: RemoteNotificationDataSource,
-    private val settings: Settings,
+    private val localNotificationDataSource: LocalNotificationDataSource,
 ) : NotificationRepository {
 
-    private companion object {
-        const val READ_NOTIFICATIONS_KEY = "read_notifications_ids"
-    }
 
     override suspend fun create(
         title: String,
@@ -66,15 +63,9 @@ class NotificationRepositoryImpl(
             }
 
     override suspend fun markAsRead(notificationId: String) {
-        val currentRead = settings.getString(READ_NOTIFICATIONS_KEY, "")
-        if (!currentRead.contains(notificationId)) {
-            val updatedRead =
-                if (currentRead.isEmpty()) notificationId else "$currentRead,$notificationId"
-            settings.putString(READ_NOTIFICATIONS_KEY, updatedRead)
-        }
+        localNotificationDataSource.markAsRead(notificationId = notificationId)
     }
 
-    override suspend fun isRead(notificationId: String): Boolean {
-        return settings.getString(READ_NOTIFICATIONS_KEY, "").contains(notificationId)
-    }
+    override suspend fun isRead(notificationId: String): Boolean =
+        localNotificationDataSource.isRead(notificationId = notificationId)
 }
