@@ -13,9 +13,10 @@ class LoginGoogleUseCase(
     ): Result<Unit> {
         return loginRepository.loginWithGoogle(
             googleUserToken = googleIdToken,
-        ).map { loginGoogleResponse ->
-            sessionManager.saveSessionAccessToken(token = loginGoogleResponse.jwtAccessToken)
-            sessionManager.saveSessionRefreshToken(token = loginGoogleResponse.jwtRefreshToken)
+        ).map { login ->
+            sessionManager.saveSessionAccessToken(token = login.jwtAccessToken)
+            sessionManager.saveSessionRefreshToken(token = login.jwtRefreshToken)
+            sessionManager.saveSessionUserEmail(email = login.email)
             sessionManager.enableAllNotifications()
         }
     }

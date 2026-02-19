@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class Login(
     val jwtAccessToken: String,
     val jwtRefreshToken: String,
+    val email: String,
 )
