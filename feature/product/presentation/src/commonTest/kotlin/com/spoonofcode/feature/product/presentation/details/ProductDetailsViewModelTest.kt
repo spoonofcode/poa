@@ -106,7 +106,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(2)
 
-            viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+            viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
 
             assertEquals(
                 expected = ViewState(
@@ -137,12 +137,12 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
         viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
 
-        viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+        viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
 
         viewModel.viewState.test {
             skipItems(2)
 
-            viewModel.onAction(ProductDetailsViewAction.AddProductToUser)
+            viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
 
             assertEquals(
                 expected = ViewState(
@@ -197,7 +197,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(2)
 
-            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromUser)
+            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromProfile)
 
             assertEquals(
                 expected = ViewState(
@@ -230,7 +230,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(2)
 
-            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromUser)
+            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromProfile)
 
             assertEquals(
                 expected = ViewState(

@@ -18,10 +18,12 @@ internal class ProductDetailsViewModel(
 
     override fun onAction(action: ProductDetailsViewAction) {
         when (action) {
-            ProductDetailsViewAction.AddProductToUser -> addProductToUser()
-            ProductDetailsViewAction.DeleteProductFromUser -> deleteProductFromUser()
+            ProductDetailsViewAction.AddProductToProfile -> addProductToProfile()
+            ProductDetailsViewAction.DeleteProductFromProfile -> deleteProductFromProfile()
             ProductDetailsViewAction.EditProduct -> editProduct()
             is ProductDetailsViewAction.InitView -> initView(productId = action.productId)
+            ProductDetailsViewAction.CancelDeleteProductFromProfile -> cancelDeleteProductFromProfile()
+            ProductDetailsViewAction.ConfirmDeleteProductFromProfile -> confirmDeleteProductFromProfile()
         }
     }
 
@@ -42,7 +44,7 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    private fun addProductToUser() {
+    private fun addProductToProfile() {
         showLoadingView()
         viewModelScope.launch {
             val currentState = currentState()
@@ -66,7 +68,23 @@ internal class ProductDetailsViewModel(
         }
     }
 
-    private fun deleteProductFromUser() {
+    private fun deleteProductFromProfile() {
+        updateState {
+            copy(
+                isDeleteProductDialogVisible = true,
+            )
+        }
+    }
+
+    private fun cancelDeleteProductFromProfile() {
+        updateState {
+            copy(
+                isDeleteProductDialogVisible = false,
+            )
+        }
+    }
+
+    private fun confirmDeleteProductFromProfile() {
         showLoadingView()
         viewModelScope.launch {
             val currentState = currentState()

@@ -1,4 +1,5 @@
 <resources>
+    <string name="cancel">Cancel</string>
     <string name="expiration_date">Expiration date</string>
     <string name="from_all_partners">From all partners</string>
     <string name="from_my_partners">From my partners</string>
@@ -15,6 +16,8 @@
     <string name="selected_customers">Selected customers: </string>
     <string name="selected_series">Selected series: </string>
     <string name="send_notification">Send notification</string>
+    <string name="send_notification_dialog_title">Are you sure you want to send notification?</string>
+    <string name="send_notification_dialog_text">Please ensure that the information you enter is correct. Once the notification is sent, it cannot be edited later.</string>
     <string name="tab_new">New</string>
     <string name="tab_already_read">Already read</string>
     <string name="title">Title</string>

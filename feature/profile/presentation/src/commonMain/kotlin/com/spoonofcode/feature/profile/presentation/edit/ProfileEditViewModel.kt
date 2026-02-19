@@ -37,8 +37,8 @@ internal class ProfileEditViewModel(
     }
 
     private fun changeCustomLink(link: String) {
-        val currentProfile = currentState().profile
-        updateState { ProfileEditViewState(profile = currentProfile?.copy(customLink = link)) }
+//        val currentProfile = currentState().profile
+//        updateState { ProfileEditViewState(profile = currentProfile?.copy(customLink = link)) }
     }
 
     private fun saveChanges() {

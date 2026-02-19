@@ -21,6 +21,8 @@ internal class ProfileDetailsViewModel(
         when (action) {
             ProfileDetailsViewAction.InitView -> initView()
             ProfileDetailsViewAction.Logout -> logout()
+            ProfileDetailsViewAction.ConfirmLogout -> confirmLogout()
+            ProfileDetailsViewAction.CancelLogout -> cancelLogout()
             ProfileDetailsViewAction.NavigateToEditProfile -> navigateToEditProfile()
             ProfileDetailsViewAction.NavigateToFAQ -> navigateToFAQ()
             ProfileDetailsViewAction.NavigateToNotificationSettings -> navigateToNotificationSettings()
@@ -37,6 +39,7 @@ internal class ProfileDetailsViewModel(
                     showContentView {
                         ProfileDetailsViewState(
                             profile = it,
+                            partnerPanelVisible = it.roles.contains(PARTNER_ROLE)
                         )
                     }
                 }
@@ -76,10 +79,31 @@ internal class ProfileDetailsViewModel(
         }
     }
 
-    private fun logout() {
+    private fun confirmLogout() {
+        showLoadingView()
         viewModelScope.launch {
             logoutUseCase()
             viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AuthModule.LoginScreen)))
         }
+    }
+
+    private fun cancelLogout() {
+        updateState {
+            copy(
+                isLogoutDialogVisible = false,
+            )
+        }
+    }
+
+    private fun logout() {
+        updateState {
+            copy(
+                isLogoutDialogVisible = true,
+            )
+        }
+    }
+
+    companion object {
+        const val PARTNER_ROLE = "partner"
     }
 }

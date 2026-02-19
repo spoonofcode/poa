@@ -9,7 +9,7 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun notificationRepositoryMock() = mock<NotificationRepository> {
-    everySuspend { send(any(), any(), any(), any(), any(), any(), any()) } returns Result.success(
+    everySuspend { create(any(), any(), any(), any(), any(), any(), any()) } returns Result.success(
         Unit
     )
     everySuspend { read(any()) } returns Result.success(NOTIFICATION_1)

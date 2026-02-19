@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -44,15 +45,17 @@ object Images {
                 contentDescription = null,
                 modifier = Modifier
                     .height(200.dp)
+                    .background(MaterialTheme.colorScheme.onBackground)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp)),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
             )
         }
     }
 
     @Composable
-    fun ImageLink(imageLink: String ,modifier: Modifier = Modifier) {
+    fun ImageLink(imageLink: String, modifier: Modifier = Modifier) {
         CoilImage(
             imageModel = { imageLink },
             imageOptions = ImageOptions(

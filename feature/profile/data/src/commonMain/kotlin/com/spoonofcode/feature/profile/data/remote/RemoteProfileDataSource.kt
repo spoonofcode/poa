@@ -4,11 +4,10 @@ import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.feature.profile.data.model.ProfileResponse
 import io.ktor.http.HttpMethod
 
-class RemoteUserDataSource : RemoteBaseDataSource(
-    collectionName = "users"
+class RemoteProfileDataSource : RemoteBaseDataSource(
+    collectionName = "api/profile"
 ) {
     suspend fun readUserProfile(): Result<ProfileResponse> = doRequest(
-        urlPostfixPath = "profile",
         method = HttpMethod.Get,
     )
 }

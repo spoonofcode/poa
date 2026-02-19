@@ -9,10 +9,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -20,29 +22,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.spoonofcode.core.data.ext.formatedLocalDate
-import com.spoonofcode.core.data.utils.LocalDateTimeUtils
-import com.spoonofcode.core.data.utils.TimeZoneUtils
-import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.compose.resources.stringResource
+import com.spoonofcode.core.data.ext.isAfterToday
+import com.spoonofcode.core.data.ext.toZonedLocalDate
+import com.spoonofcode.core.data.ext.zonedStartOfDayInMillis
+import com.spoonofcode.core.data.utils.LocalDateUtils
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.accept
 import com.spoonofcode.core.presentation.cancel
-import kotlin.time.Duration.Companion.days
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 object DatePickers {
 
     @OptIn(ExperimentalTime::class)
     @Composable
     fun DatePicker(
-        value: LocalDate = LocalDateTimeUtils.now().date,
+        value: LocalDate = LocalDateUtils.today(),
         onValueChange: (LocalDate) -> Unit,
-        modifier: Modifier = Modifier.fillMaxWidth(),
         label: String? = null,
+        minDate: LocalDate? = null,
+        modifier: Modifier = Modifier.fillMaxWidth(),
     ) {
         val date = remember { mutableStateOf(value) }
         val isOpen = remember { mutableStateOf(false) }
@@ -80,14 +82,15 @@ object DatePickers {
                     if (it != null) {
                         date.value = Instant
                             .fromEpochMilliseconds(it)
-                            .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE).date
+                            .toZonedLocalDate()
                     }
                     onValueChange(date.value)
                 },
                 onCancel = {
                     isOpen.value = false
                 },
-                selectedDate = date.value
+                selectedDate = date.value.zonedStartOfDayInMillis(),
+                minDateUtcMillis = minDate?.zonedStartOfDayInMillis(),
             )
         }
     }
@@ -96,8 +99,9 @@ object DatePickers {
     @Composable
     fun DatePickerWithTimer(
         value: LocalDateTime,
-        label: String? = null,
         onValueChange: (LocalDateTime) -> Unit,
+        label: String? = null,
+        minDateTime: LocalDateTime? = null,
         modifier: Modifier = Modifier
     ) {
         Column(
@@ -117,6 +121,7 @@ object DatePickers {
                             )
                         )
                     },
+                    minDate = minDateTime?.date,
                     modifier = Modifier.weight(1f)
                 )
                 Spacers.HorizontalBetweenFields()
@@ -127,7 +132,8 @@ object DatePickers {
                     },
                     onConfirm = {},
                     onDismiss = {},
-                    modifier = Modifier.weight(.5f)
+                    modifier = Modifier.weight(.5f),
+                    minTime = if (value.isAfterToday()) null else minDateTime?.time,
                 )
             }
         }
@@ -138,14 +144,21 @@ object DatePickers {
     private fun DatePickerDialog(
         onAccept: (Long?) -> Unit,
         onCancel: () -> Unit,
-        selectedDate: LocalDate,
+        selectedDate: Long,
+        minDateUtcMillis: Long? = null
     ) {
-        // We need to add on day to have selectedDate in Milliseconds
+
         val state = rememberDatePickerState(
-            initialSelectedDateMillis = selectedDate
-                .atStartOfDayIn(TimeZoneUtils.DEFAULT_ZONE)
-                .plus(1.days)
-                .toEpochMilliseconds()
+            initialSelectedDateMillis = selectedDate,
+            selectableDates = if (minDateUtcMillis == null) {
+                DatePickerDefaults.AllDates
+            } else {
+                object : SelectableDates {
+                    override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                        return utcTimeMillis >= minDateUtcMillis
+                    }
+                }
+            }
         )
 
         DatePickerDialog(
@@ -164,5 +177,4 @@ object DatePickers {
             DatePicker(state = state)
         }
     }
-
 }

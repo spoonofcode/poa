@@ -2,7 +2,6 @@ package com.spoonofcode.feature.profile.presentation.details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -38,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
@@ -45,10 +45,12 @@ import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.ProfilePreviewParameterProvider
 import com.spoonofcode.feature.profile.presentation.Res
+import com.spoonofcode.feature.profile.presentation.cancel
 import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.faq
 import com.spoonofcode.feature.profile.presentation.logout
-import com.spoonofcode.feature.profile.presentation.my_products
+import com.spoonofcode.feature.profile.presentation.logout_dialog_text
+import com.spoonofcode.feature.profile.presentation.logout_dialog_title
 import com.spoonofcode.feature.profile.presentation.notifications
 import com.spoonofcode.feature.profile.presentation.partner_panel
 import com.spoonofcode.feature.profile.presentation.poa
@@ -74,6 +76,8 @@ internal class ProfileDetailsScreen(
         onAction: (ProfileDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            Dialogs(viewState, onAction)
+
             val profile = requireNotNull(viewState.profile)
 
             // 1. Profile Header
@@ -96,7 +100,7 @@ internal class ProfileDetailsScreen(
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Texts.HSB(
-                        text = profile.name,
+                        text = profile.email,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacers.VerticalBetweenFields()
@@ -109,25 +113,26 @@ internal class ProfileDetailsScreen(
                 }
             }
 
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                ProfileStatItem(
-                    label = stringResource(Res.string.my_products),
-                    value = profile.numberOfProductsOwnedByUser.toString()
-                )
-            }
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceEvenly
+//            ) {
+//                ProfileStatItem(
+//                    label = stringResource(Res.string.my_products),
+//                    value = profile.numberOfProductsOwnedByUser.toString()
+//                )
+//            }
 
             Spacers.VerticalBetweenFields()
 
-            Cards.ElevatedCard {
-                ChevronItem(
-                    icon = Icons.Default.Person,
-                    title = stringResource(Res.string.partner_panel),
-                    onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) }
-                )
+            if (viewState.partnerPanelVisible) {
+                Cards.ElevatedCard {
+                    ChevronItem(
+                        icon = Icons.Default.Person,
+                        title = stringResource(Res.string.partner_panel),
+                        onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) }
+                    )
+                }
             }
 
             Cards.ElevatedCard {
@@ -161,6 +166,23 @@ internal class ProfileDetailsScreen(
             }
 
             Spacer(Modifier.height(32.dp))
+        }
+    }
+
+    @Composable
+    private fun Dialogs(
+        viewState: ProfileDetailsViewState,
+        onAction: (ProfileDetailsViewAction) -> Unit
+    ) {
+        if (viewState.isLogoutDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.logout_dialog_title),
+                text = stringResource(Res.string.logout_dialog_text),
+                confirmButtonText = stringResource(Res.string.logout),
+                dismissButtonText = stringResource(Res.string.cancel),
+                confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
+                dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
+            )
         }
     }
 

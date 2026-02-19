@@ -27,18 +27,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.web.getUrlOpener
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.ext.koinViewModel
+import com.spoonofcode.core.presentation.web.getUrlOpener
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.about_product
 import com.spoonofcode.feature.product.presentation.add_product
+import com.spoonofcode.feature.product.presentation.cancel
+import com.spoonofcode.feature.product.presentation.delete_product
+import com.spoonofcode.feature.product.presentation.delete_product_from_profile_text
+import com.spoonofcode.feature.product.presentation.delete_product_from_profile_title
 import com.spoonofcode.feature.product.presentation.learn_more
 import com.spoonofcode.feature.product.presentation.product
 import com.spoonofcode.feature.product.presentation.visit_product_page
@@ -63,9 +68,13 @@ internal data class ProductDetailsScreen(
                 description = "Edit",
                 onClick = { onAction(ProductDetailsViewAction.EditProduct) },
             ),
-            TopBarAction(Icons.Default.Delete, "Delete") {
-                onAction(ProductDetailsViewAction.DeleteProductFromUser)
-            }
+            TopBarAction(
+                icon = Icons.Default.Delete,
+                description = "Delete",
+                onClick = {
+                    onAction(ProductDetailsViewAction.DeleteProductFromProfile)
+                }
+            )
         )
     } else {
         emptyList()
@@ -80,6 +89,8 @@ internal data class ProductDetailsScreen(
         onAction: (ProductDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            Dialogs(viewState = viewState, onAction = onAction)
+
             val product = requireNotNull(viewState.product)
 
             if (product.videoLink != null) {
@@ -155,7 +166,7 @@ internal data class ProductDetailsScreen(
                 if (!hasOwnerUser) {
                     Buttons.PrimaryButton(
                         text = stringResource(Res.string.add_product),
-                        onClick = { onAction(ProductDetailsViewAction.AddProductToUser) },
+                        onClick = { onAction(ProductDetailsViewAction.AddProductToProfile) },
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
@@ -204,6 +215,23 @@ internal data class ProductDetailsScreen(
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.size(18.dp)
+            )
+        }
+    }
+
+    @Composable
+    private fun Dialogs(
+        viewState: ProductDetailsViewState,
+        onAction: (ProductDetailsViewAction) -> Unit
+    ) {
+        if (viewState.isDeleteProductDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.delete_product_from_profile_title),
+                text = stringResource(Res.string.delete_product_from_profile_text),
+                confirmButtonText = stringResource(Res.string.delete_product),
+                dismissButtonText = stringResource(Res.string.cancel),
+                confirmAction = { onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile) },
+                dismissAction = { onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile) }
             )
         }
     }

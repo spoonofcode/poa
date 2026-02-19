@@ -162,7 +162,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            notificationRepository.send(any(), any(), any(), any(), any(), any(), any())
+            notificationRepository.create(any(), any(), any(), any(), any(), any(), any())
         }
 
         verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }

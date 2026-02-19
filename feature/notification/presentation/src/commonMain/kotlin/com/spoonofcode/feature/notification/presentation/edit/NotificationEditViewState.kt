@@ -2,8 +2,8 @@ package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.data.ext.plus
-import com.spoonofcode.core.data.utils.LocalDateTimeUtils
 import com.spoonofcode.core.data.ext.roundToNextHour
+import com.spoonofcode.core.data.utils.LocalDateTimeUtils
 import com.spoonofcode.core.presentation.base.BaseViewState
 import kotlinx.datetime.LocalDateTime
 
@@ -14,10 +14,14 @@ internal data class NotificationEditViewState(
     val text: String = "",
     val link: String = "",
     val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(_root_ide_package_.com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewState.Companion.ONE_WEEK_IN_HOURS)
+        .plus(TWO_HOURS)
         .roundToNextHour(),
+    val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
+        .plus(TWO_HOURS)
+        .roundToNextHour(),
+    val isSendNotificationDialogVisible: Boolean = false,
 ) : BaseViewState() {
     companion object {
-        private const val ONE_WEEK_IN_HOURS = 168
+        private const val TWO_HOURS = 2
     }
 }

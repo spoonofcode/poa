@@ -7,4 +7,5 @@ import com.spoonofcode.feature.product.domain.model.Product
 @Immutable
 internal data class ProductDetailsViewState(
     val product: Product? = null,
+    val isDeleteProductDialogVisible: Boolean = false,
 ) : BaseViewState()

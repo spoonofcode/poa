@@ -16,14 +16,14 @@ class ProfilePreviewParameterProvider : PreviewParameterProvider<Profile> {
 object PreviewParameterData {
     val profile_1 =
         Profile(
-            name = "Bartosz luczak (Lycha)",
-            numberOfProductsOwnedByUser = 4,
-            customLink = "https://example.com"
+            id = "1",
+            email = "exmaple.mail.1@gmail.com",
+            roles = listOf("user"),
         )
 
     val profile_2 = Profile(
-        name = "Bartosz luczak (Lycha)",
-        numberOfProductsOwnedByUser = 2,
-        customLink = "https://example.com"
+        id = "2",
+        email = "exmaple.mail.2@gmail.com",
+        roles = listOf("user","partner"),
     )
 }

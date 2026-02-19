@@ -1,15 +1,17 @@
 package com.spoonofcode.core.firebase.usecase
 
+import com.spoonofcode.core.firebase.FirebasePushService
+
 //import com.spoonofcode.core.data.network.SessionManager
 
 // TODO #134 Fix firebase notifications
 class SubscribeUserTopicsUseCase(
 //    private val productRepository: ProductRepository,
 //    private val sessionManager: SessionManager,
-//    private val firebasePushService: FirebasePushService,
+    private val firebasePushService: FirebasePushService,
 ) {
     suspend operator fun invoke() {
-//        subscribeToGlobalTopic()
+        subscribeToGlobalTopic()
 //        subscribeByUserId()
 //        subscribeBySeriesId()
     }
@@ -30,12 +32,12 @@ class SubscribeUserTopicsUseCase(
 //        }
 //    }
 //
-//    private suspend fun subscribeToGlobalTopic() {
-//        firebasePushService.subscribeToTopic(TOPIC_GLOBAL)
-//    }
+    private suspend fun subscribeToGlobalTopic() {
+        firebasePushService.subscribeToTopic(TOPIC_GLOBAL)
+    }
 
     companion object {
-        private const val TOPIC_GLOBAL = "topic_global"
+        private const val TOPIC_GLOBAL = "global"
         private const val TOPIC_USER_ID = "topic_user_id_"
         private const val TOPIC_PRODUCT_SERIE_ID = "topic_product_serie_id_"
     }

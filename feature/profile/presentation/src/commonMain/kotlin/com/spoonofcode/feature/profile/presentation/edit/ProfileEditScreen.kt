@@ -45,7 +45,7 @@ internal class ProfileEditScreen() :
             }
 
             TextFields.Outlined(
-                value = viewState.profile!!.name ?: "",
+                value = viewState.profile!!.email ?: "",
                 onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
                 label = stringResource(resource = Res.string.name),
             )

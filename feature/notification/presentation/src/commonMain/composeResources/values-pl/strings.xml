@@ -1,4 +1,5 @@
 <resources>
+    <string name="cancel">Anuluj</string>
     <string name="expiration_date">Data ważności</string>
     <string name="from_all_partners">Od wszystkich partnerów</string>
     <string name="from_my_partners">Od moich partnerów</string>
@@ -15,6 +16,8 @@
     <string name="selected_customers">Wybrani użytkownicy: </string>
     <string name="selected_series">Wybrane serie: </string>
     <string name="send_notification">Wyślij powiadomienie</string>
+    <string name="send_notification_dialog_title">Czy na pewno chcesz wysłać powiadomienie?</string>
+    <string name="send_notification_dialog_text">Upewnij się, że podane informacje są poprawne. Po wysłaniu powiadomienia nie będzie można go później edytować.</string>
     <string name="tab_new">Nowe</string>
     <string name="tab_already_read">Przeczytane</string>
     <string name="title">Tytuł</string>

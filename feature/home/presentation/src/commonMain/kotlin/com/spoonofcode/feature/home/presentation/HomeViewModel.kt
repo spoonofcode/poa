@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.core.firebase.usecase.SubscribeUserTopicsUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
@@ -13,8 +14,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    // TODO #134 Fix firebase notifications
-//    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
+    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
@@ -32,7 +32,7 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-//            subscribeUserTopicsUseCase()
+            subscribeUserTopicsUseCase()
             loadRewardsStatus()
         }
     }

@@ -1,7 +1,11 @@
 <resources>
+    <string name="cancel">Cancel</string>
     <string name="about_product">About product</string>
     <string name="add_product">Add product</string>
     <string name="custom_link">Custom link</string>
+    <string name="delete_product">Delete product</string>
+    <string name="delete_product_from_profile_title">Are you sure you want to remove the product from your profile?</string>
+    <string name="delete_product_from_profile_text">The product will be removed from your profile. To add it, you'll need to scan it again.</string>
     <string name="edit_product">Edit Product</string>
     <string name="learn_more">Learn more</string>
     <string name="my_products">My products</string>

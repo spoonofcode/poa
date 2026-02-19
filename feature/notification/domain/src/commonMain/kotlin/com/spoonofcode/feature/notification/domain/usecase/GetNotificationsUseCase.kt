@@ -9,7 +9,7 @@ class GetNotificationsUseCase(
     suspend operator fun invoke(): Result<List<Notification>> = notificationRepository.readAll()
         .map {
             it.sortedWith(
-                compareBy<Notification> { it.alreadyRead } // false first
+                compareBy<Notification> { it.state == "delivered" } // false first
                     .thenByDescending { it.expirationDateTime } // newest first
             )
         }

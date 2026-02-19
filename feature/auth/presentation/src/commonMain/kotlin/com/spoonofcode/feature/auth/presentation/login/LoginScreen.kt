@@ -29,6 +29,7 @@ import com.spoonofcode.feature.auth.presentation.or
 import com.spoonofcode.feature.auth.presentation.poa
 import com.spoonofcode.feature.auth.presentation.sign_in
 import com.spoonofcode.feature.auth.presentation.sign_in_with_google
+import com.spoonofcode.feature.auth.presentation.taggy_go_logo
 import com.spoonofcode.feature.auth.presentation.utils.GoogleAuthProvider
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -54,7 +55,7 @@ internal class LoginScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Images.CircleImage(imageRes = Res.drawable.poa)
+                Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
                 Spacers.VerticalBetweenFields()
                 Texts.HL(stringResource(resource = Res.string.let_s_get_started))
             }

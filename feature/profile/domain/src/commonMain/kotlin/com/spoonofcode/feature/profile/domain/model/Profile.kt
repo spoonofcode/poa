@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Profile(
-    val name: String,
-    val numberOfProductsOwnedByUser: Long,
-    val customLink: String,
+    val id: String,
+    val email: String,
+    val roles: List<String>,
 )

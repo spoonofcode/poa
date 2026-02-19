@@ -1,10 +1,8 @@
 plugins {
-//    alias(libs.plugins.buildkonfig)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.mokkery)
     alias(libs.plugins.kover)
-//    alias(libs.plugins.google.services)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.convention.cmp.application)
 }
 

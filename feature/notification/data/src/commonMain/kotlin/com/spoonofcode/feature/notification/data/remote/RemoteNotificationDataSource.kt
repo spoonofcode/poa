@@ -4,7 +4,7 @@ import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.feature.notification.data.remote.model.NotificationResponse
 import io.ktor.http.HttpMethod
-import kotlinx.datetime.LocalDateTime
+import kotlin.time.Instant
 
 class RemoteNotificationDataSource : RemoteBaseDataSource(
     collectionName = "api/notifications",
@@ -13,29 +13,49 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         title: String,
         text: String,
         link: String?,
-        imageUrl: String?,
-        topics: List<String>,
-        expirationDateTime: LocalDateTime?,
-        alreadyRead: Boolean
-    ): Result<Unit> = doRequest<Boolean>(
+        topic: String,
+        expirationDateTime: Instant?,
+    ): Result<NotificationResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = NotificationRequest(
             title = title,
             text = text,
             link = link,
-            imageUrl = imageUrl,
-            topics = topics,
+            topic = topic,
             expirationDateTime = expirationDateTime,
-            alreadyRead = alreadyRead,
         ),
-    ).map { true }
+    )
 
-     suspend fun read(notificationId: String): Result<NotificationResponse> = doRequest(
+    suspend fun update(
+        notificationId: String,
+        title: String,
+        text: String,
+        link: String?,
+        topic: String,
+        expirationDateTime: Instant?,
+    ): Result<Unit> = doRequest(
+        urlPostfixPath = notificationId,
+        method = HttpMethod.Put,
+        requestBody = NotificationRequest(
+            title = title,
+            text = text,
+            link = link,
+            topic = topic,
+            expirationDateTime = expirationDateTime,
+        ),
+    )
+
+    suspend fun delete(notificationId: String): Result<Unit> = doRequest(
+        urlPostfixPath = notificationId,
+        method = HttpMethod.Put,
+    )
+
+    suspend fun read(notificationId: String): Result<NotificationResponse> = doRequest(
         urlPostfixPath = notificationId,
         method = HttpMethod.Get,
     )
 
-     suspend fun readAll(): Result<List<NotificationResponse>> =
+    suspend fun readAll(): Result<List<NotificationResponse>> =
         doRequest<List<NotificationResponse>>(
             method = HttpMethod.Get,
         )

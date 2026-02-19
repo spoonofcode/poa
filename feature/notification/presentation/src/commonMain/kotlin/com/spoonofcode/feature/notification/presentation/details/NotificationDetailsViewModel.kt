@@ -7,13 +7,13 @@ import kotlinx.coroutines.launch
 
 internal class NotificationDetailsViewModel(
     private val getNotificationByIdUseCase: GetNotificationByIdUseCase,
-) : BaseViewModel<com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState, com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction>(
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewState()
+) : BaseViewModel<NotificationDetailsViewState, NotificationDetailsViewAction>(
+    NotificationDetailsViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction) {
+    override fun onAction(action: NotificationDetailsViewAction) {
         when (action) {
-            is com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewAction.InitView -> initView(notificationId = action.notificationId)
+            is NotificationDetailsViewAction.InitView -> initView(notificationId = action.notificationId)
         }
     }
 

@@ -75,8 +75,6 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
     }
 
     companion object Companion {
-        private const val KTOR_SESSION_ACCESS_TOKEN = "ktor_session_access_token"
-        private const val KTOR_SESSION_REFRESH_TOKEN = "ktor_session_refresh_token"
         private const val SESSION_ACCESS_TOKEN = "session_access_token"
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
         private const val SESSION_USER_ID = "session_user_id"

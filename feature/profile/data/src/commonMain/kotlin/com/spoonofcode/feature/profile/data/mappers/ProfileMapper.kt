@@ -5,8 +5,8 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 
 fun ProfileResponse.toProfile(): Profile {
     return Profile(
-        name = name,
-        numberOfProductsOwnedByUser = numberOfProductsOwnedByUser,
-        customLink = customLink,
+        id = id,
+        email = email,
+        roles = roles,
     )
 }

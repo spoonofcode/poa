@@ -1,13 +1,13 @@
 package com.spoonofcode.feature.profile.data.di
 
 import com.spoonofcode.feature.profile.data.ProfileRepositoryImpl
-import com.spoonofcode.feature.profile.data.remote.RemoteUserDataSource
+import com.spoonofcode.feature.profile.data.remote.RemoteProfileDataSource
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val profileDataModule = module {
-    singleOf(::RemoteUserDataSource)
+    singleOf(::RemoteProfileDataSource)
     singleOf(::ProfileRepositoryImpl).bind<ProfileRepository>()
 }
