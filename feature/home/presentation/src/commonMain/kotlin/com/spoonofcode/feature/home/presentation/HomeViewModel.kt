@@ -1,7 +1,8 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.firebase.usecase.SubscribeUserTopicsUseCase
+import com.spoonofcode.core.firebase.FirebaseMessagingTopics
+import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
     private val getNewPartnersUseCase: GetNewPartnersUseCase,
-    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
+    private val subscribeToFirebaseTopicsUseCase: SubscribeToFirebaseMessagingTopicUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
@@ -34,7 +35,7 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            subscribeUserTopicsUseCase()
+            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.GLOBAL.name)
             val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
             val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
             val partnersDeferred = async { getNewPartnersUseCase() }
