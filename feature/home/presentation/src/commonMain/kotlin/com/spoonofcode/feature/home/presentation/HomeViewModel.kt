@@ -9,11 +9,12 @@ import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserRewardsPointsUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
+    private val getNewPartnersUseCase: GetNewPartnersUseCase,
     private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
@@ -33,28 +34,28 @@ internal class HomeViewModel(
         showLoadingView()
         viewModelScope.launch {
             subscribeUserTopicsUseCase()
-            loadRewardsStatus()
-        }
-    }
+            val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
+            val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
+            val partnersDeferred = async { getNewPartnersUseCase() }
 
-    private suspend fun loadRewardsStatus() = coroutineScope {
-        val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
-        val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
-
-        runCatching {
-            val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
-            val totalPoints = totalPointsDeferred.await().getOrThrow()
-            dailyCheckInStatus to totalPoints
-        }.onSuccess { (dailyCheckInStatus, totalPoints) ->
-            showContentView {
-                HomeViewState(
-                    dailyCheckInStatus = dailyCheckInStatus,
-                    totalPoints = totalPoints,
-                )
+            runCatching {
+                val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
+                val totalPoints = totalPointsDeferred.await().getOrThrow()
+                val partnerImageLinks = partnersDeferred.await().getOrThrow()
+                    .mapNotNull { partner -> partner.imageLink }
+                Triple(dailyCheckInStatus, totalPoints, partnerImageLinks)
+            }.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks) ->
+                showContentView {
+                    HomeViewState(
+                        dailyCheckInStatus = dailyCheckInStatus,
+                        totalPoints = totalPoints,
+                        partnerImageLinks = partnerImageLinks,
+                    )
+                }
+            }.onFailure {
+                showErrorView()
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
             }
-        }.onFailure {
-            showErrorView()
-            showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
         }
     }
 
@@ -64,7 +65,7 @@ internal class HomeViewModel(
             addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
                 .onSuccess {
                     showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
-                    loadRewardsStatus()
+                    initView()
                 }
                 .onFailure {
                     showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${it.message}"))

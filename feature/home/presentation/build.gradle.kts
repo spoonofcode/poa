@@ -11,6 +11,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.feature.home.domain)
+                implementation(projects.feature.partner.domain)
                 implementation(projects.core.firebase)
             }
         }
