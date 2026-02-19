@@ -100,8 +100,8 @@ internal class NotificationOverviewScreen(
                     )
                 }
             }
-            val notificationsAlreadyReaded = notifications.filter { it.state == "delivered" }
-            val notificationsNotReaded = notifications.filter { it.state == "pending" }
+            val notificationsAlreadyReaded = notifications.filter { it.isRead }
+            val notificationsNotReaded = notifications.filter { !(it.isRead) }
 
             when (selectedTabIndex) {
                 0 -> NotificationTab(notificationsNotReaded, selectNotification)
