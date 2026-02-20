@@ -4,6 +4,7 @@ androidCompileSdk = "36"
 androidMinSdk = "24"
 androidTargetSdk = "36"
 
+calfPermissions = "0.9.0"
 projectApplicationId = "com.spoonofcode.poa"
 projectVersionName = "1.0"
 projectMinSdkVersion = "26"
@@ -72,6 +73,7 @@ voyager = "1.1.0-beta03"
 # --- Gradle plugins as deps (only if you use them from build-logic / convention plugins) ---
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+calf-permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "calfPermissions" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }

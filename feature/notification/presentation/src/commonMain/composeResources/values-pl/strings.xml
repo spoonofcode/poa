@@ -5,6 +5,8 @@
     <string name="from_my_partners">Od moich partnerów</string>
     <string name="link">Link</string>
     <string name="open_link">Otwórz link</string>
+    <string name="open_settings">Odtwórz ustawienia</string>
+    <string name="open_settings_info">Powiadomienia są wyłączone. Włącz je, aby otrzymywać aktualizacje i przypomnienia.</string>
     <string name="notification">Powiadomienie</string>
     <string name="notifications">Powiadomienia</string>
     <string name="notifications_settings">Ustawienia powiadomień</string>

@@ -35,7 +35,7 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.GLOBAL.name)
+//            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.GLOBAL.name)
             val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
             val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
             val partnersDeferred = async { getNewPartnersUseCase() }

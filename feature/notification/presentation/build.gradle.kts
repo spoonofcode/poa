@@ -9,6 +9,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
+                implementation(libs.calf.permissions)
 
                 implementation(projects.feature.notification.domain)
             }

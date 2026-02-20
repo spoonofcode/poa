@@ -5,6 +5,8 @@
     <string name="from_my_partners">From my partners</string>
     <string name="link">Link</string>
     <string name="open_link">Open Link</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="open_settings_info">Notifications are turned off. Enable them to get updates and reminders.</string>
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_settings">Notification settings</string>

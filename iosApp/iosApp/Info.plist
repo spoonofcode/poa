@@ -63,5 +63,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSUserNotificationsUsageDescription</key>
+    <string>Notifications permission is required to show notifications</string>
 </dict>
 </plist>
