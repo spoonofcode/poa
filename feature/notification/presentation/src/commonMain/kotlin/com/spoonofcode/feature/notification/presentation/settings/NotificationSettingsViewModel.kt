@@ -1,28 +1,28 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
-import com.spoonofcode.core.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
-) : BaseViewModel<com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewState, com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction>(
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewState()
+) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(
+    NotificationSettingsViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction) {
+    override fun onAction(action: NotificationSettingsViewAction) {
         when (action) {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction.InitView -> initView()
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction.SaveChanges -> saveChanges()
-            is com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
+            NotificationSettingsViewAction.InitView -> initView()
+            NotificationSettingsViewAction.SaveChanges -> saveChanges()
+            is NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
                 action.enable
             )
 
-            is com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
+            is NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
                 action.enable
             )
         }
@@ -34,7 +34,7 @@ internal class NotificationSettingsViewModel(
             try {
                 val notificationSettings = getNotificationSettingsUseCase()
                 showContentView {
-                    _root_ide_package_.com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewState(
+                    NotificationSettingsViewState(
                         notificationSettings = notificationSettings,
                     )
                 }
@@ -48,7 +48,7 @@ internal class NotificationSettingsViewModel(
 
     private fun switchNotificationFromAllPartners(enable: Boolean) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewState(
+            NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     notificationFromAllPartnersEnable = enable,
                 )
@@ -58,7 +58,7 @@ internal class NotificationSettingsViewModel(
 
     private fun switchNotificationFromMyPartners(enable: Boolean) {
         updateState {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewState(
+            NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     notificationFromMyPartnersEnable = enable,
                 )

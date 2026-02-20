@@ -3,7 +3,6 @@ package com.spoonofcode.feature.notification.presentation.settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,8 +24,8 @@ import com.spoonofcode.feature.notification.presentation.from_all_partners
 import com.spoonofcode.feature.notification.presentation.from_my_partners
 import com.spoonofcode.feature.notification.presentation.notifications_settings
 import com.spoonofcode.feature.notification.presentation.notifications_settings_text
-import com.spoonofcode.feature.notification.presentation.open_settings
-import com.spoonofcode.feature.notification.presentation.open_settings_info
+import com.spoonofcode.feature.notification.presentation.open_app_settings
+import com.spoonofcode.feature.notification.presentation.open_app_settings_info
 import com.spoonofcode.feature.notification.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
@@ -94,13 +93,13 @@ internal class NotificationSettingsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Texts.BL(
-                        text = stringResource(resource = Res.string.open_settings_info),
+                        text = stringResource(resource = Res.string.open_app_settings_info),
                         textAlign = TextAlign.Center,
                     )
                     Spacers.VerticalBetweenFields()
                     Buttons.PrimaryButton(
-                        text = stringResource(resource = Res.string.open_settings),
-                        onClick = { notificationPermissionState.launchPermissionRequest() }
+                        text = stringResource(resource = Res.string.open_app_settings),
+                        onClick = { notificationPermissionState.openAppSettings() }
                     )
                 }
             }
