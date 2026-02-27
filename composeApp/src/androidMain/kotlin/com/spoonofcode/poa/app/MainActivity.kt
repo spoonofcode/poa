@@ -21,6 +21,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private companion object {
-        private const val NOTIFICATION_ID_KEY = "notificationId"
+        private const val NOTIFICATION_ID_KEY = "notification_id"
     }
 }

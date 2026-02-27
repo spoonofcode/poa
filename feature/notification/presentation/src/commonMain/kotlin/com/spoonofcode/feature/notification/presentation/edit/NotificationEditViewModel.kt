@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.core.firebase.FirebaseMessagingTopics
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
@@ -107,7 +108,7 @@ internal class NotificationEditViewModel(
                 title = currentState.title,
                 text = currentState.text,
                 link = currentState.link,
-                topic = "global",
+                topic = FirebaseMessagingTopics.global.name,
 //                topics = currentState.itemIds,
                 deliveryDateTime = currentState.deliveryDateTime,
                 expirationDateTime = currentState.expirationDateTime
