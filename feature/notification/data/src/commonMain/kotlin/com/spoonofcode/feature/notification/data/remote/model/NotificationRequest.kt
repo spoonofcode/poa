@@ -10,6 +10,8 @@ data class NotificationRequest(
     val text: String,
     val link: String? = null,
     val topic: String,
+    @SerialName("delivery_datetime")
+    val deliveryDateTime: Instant? = null,
     @SerialName("expiration_datetime")
     val expirationDateTime: Instant? = null,
 )

@@ -12,13 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.core.data.ext.toMillis
+import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
@@ -81,17 +82,17 @@ internal class NotificationDetailsScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
-//                notification.expirationDateTime?.let { expiresAt ->
+                notification.expirationDateTime?.let { expiresAt ->
                     Spacers.VerticalBetweenFields()
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         CountdownTimer(
-                            targetTimeMillis = 1769727600000L
+                            targetTimeMillis = expiresAt.toMillis()
                         )
                     }
-//                }
+                }
 
                 notification.link
                     ?.takeIf { it.isNotBlank() }

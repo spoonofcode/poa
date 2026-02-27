@@ -97,6 +97,7 @@ internal class NotificationEditViewModel(
                 link = currentState.link,
                 topic = "global",
 //                topics = currentState.itemIds,
+                deliveryDateTime = currentState.deliveryDateTime,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))

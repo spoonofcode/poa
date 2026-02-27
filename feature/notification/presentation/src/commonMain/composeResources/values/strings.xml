@@ -1,5 +1,6 @@
 <resources>
     <string name="cancel">Cancel</string>
+    <string name="delivery_date">Delivery date</string>
     <string name="expiration_date">Expiration date</string>
     <string name="from_all_partners">From all partners</string>
     <string name="from_my_partners">From my partners</string>

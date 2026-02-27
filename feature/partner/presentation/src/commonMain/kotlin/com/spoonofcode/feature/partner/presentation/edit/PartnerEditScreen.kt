@@ -53,6 +53,7 @@ internal class PartnerEditScreen(
                     value = partner.description.orEmpty(),
                     onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
                     label = stringResource(resource = Res.string.description),
+                    minLines = 8,
                 )
                 TextFields.Outlined(
                     value = partner.websiteLink.orEmpty(),

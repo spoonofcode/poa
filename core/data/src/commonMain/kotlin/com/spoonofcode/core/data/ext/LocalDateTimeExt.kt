@@ -62,3 +62,5 @@ fun LocalDateTime.roundToNextHour(): LocalDateTime =
 
 
 fun LocalDateTime.toZonedInstant(): Instant = this.toInstant(TimeZoneUtils.DEFAULT_ZONE)
+
+fun LocalDateTime.toMillis(): Long = this.toInstant(TimeZoneUtils.DEFAULT_ZONE).toEpochMilliseconds()
