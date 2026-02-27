@@ -4,7 +4,9 @@ import com.spoonofcode.core.presentation.base.BaseViewAction
 import kotlinx.datetime.LocalDateTime
 
 internal sealed interface NotificationEditViewAction : BaseViewAction {
-    data class ChangeExpirationDateTime(val startDateTime: LocalDateTime) :
+    data class ChangeDeliveryDateTime(val selectedDateTime: LocalDateTime) :
+        NotificationEditViewAction
+    data class ChangeExpirationDateTime(val selectedDateTime: LocalDateTime) :
         NotificationEditViewAction
 
     data class ChangeLink(val link: String) : NotificationEditViewAction

@@ -13,9 +13,12 @@ internal data class NotificationEditViewState(
     val title: String = "",
     val text: String = "",
     val link: String = "",
-    val deliveryDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(TWO_HOURS)
-        .roundToNextHour(),
+    val minDeliveryDateTime: LocalDateTime = LocalDateTimeUtils.now(),
+//        .plus(TWO_HOURS)
+//        .roundToNextHour(),
+    val deliveryDateTime: LocalDateTime = LocalDateTimeUtils.now(),
+//        .plus(TWO_HOURS)
+//        .roundToNextHour(),
     val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
         .plus(TWO_HOURS)
         .roundToNextHour(),

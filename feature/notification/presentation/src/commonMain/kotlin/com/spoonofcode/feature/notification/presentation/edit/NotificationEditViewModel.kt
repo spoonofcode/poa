@@ -17,8 +17,12 @@ internal class NotificationEditViewModel(
 
     override fun onAction(action: NotificationEditViewAction) {
         when (action) {
+            is NotificationEditViewAction.ChangeDeliveryDateTime -> changeDeliveryDateTime(
+                action.selectedDateTime
+            )
+
             is NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
-                action.startDateTime
+                action.selectedDateTime
             )
 
             is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
@@ -55,10 +59,18 @@ internal class NotificationEditViewModel(
         }
     }
 
-    private fun changeExpirationDateTime(expirationDateTime: LocalDateTime) {
+    private fun changeDeliveryDateTime(selectedDateTime: LocalDateTime) {
         updateState {
             copy(
-                expirationDateTime = expirationDateTime
+                deliveryDateTime = selectedDateTime
+            )
+        }
+    }
+
+    private fun changeExpirationDateTime(selectedDateTime: LocalDateTime) {
+        updateState {
+            copy(
+                expirationDateTime = selectedDateTime
             )
         }
     }

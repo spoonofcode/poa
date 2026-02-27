@@ -1,6 +1,8 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
+//import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
+//import com.spoonofcode.core.firebase.usecase.UnsubscribeFromFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
@@ -10,6 +12,8 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
+//    private val subscribeToFirebaseTopicsUseCase: SubscribeToFirebaseMessagingTopicUseCase,
+//    private val unsubscribeFromFirebaseMessagingTopicUseCase: UnsubscribeFromFirebaseMessagingTopicUseCase,
 ) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(
     NotificationSettingsViewState()
 ) {

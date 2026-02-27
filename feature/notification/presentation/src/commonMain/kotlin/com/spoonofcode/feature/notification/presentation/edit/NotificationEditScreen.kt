@@ -93,11 +93,11 @@ internal class NotificationEditScreen(
 
             DatePickers.DatePickerWithTimer(
                 label = stringResource(resource = Res.string.delivery_date),
-                value = viewState.expirationDateTime,
-                minDateTime = viewState.minExpirationDateTime,
+                value = viewState.deliveryDateTime,
+//                minDateTime = viewState.minDeliveryDateTime,
                 onValueChange = {
                     onAction(
-                        NotificationEditViewAction.ChangeExpirationDateTime(
+                        NotificationEditViewAction.ChangeDeliveryDateTime(
                             it
                         )
                     )
