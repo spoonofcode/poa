@@ -6,5 +6,6 @@ object LoginMockData {
     val LOGIN_1 = Login(
         jwtAccessToken = "jwtAccessToken 1",
         jwtRefreshToken = "jwtRefreshToken 1",
+        email = "user@email.com",
     )
 }

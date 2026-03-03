@@ -6,7 +6,7 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.appnavigation.AppModule
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
-import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
+import com.spoonofcode.feature.auth.presentation.di.authPresentationTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -28,7 +28,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
 
     @BeforeTest
     override fun beforeTest() {
-        modules = arrayOf(authPresentationModule)
+        modules = arrayOf(authPresentationTestModule)
         super.beforeTest()
         loginRepository = getKoin().get()
         viewModel = getSut()
@@ -73,6 +73,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
     @Test
     fun `change code`() = runTest {
         val code = "123456"
+        val incomplete_code = "12345"
         viewModel.viewState.test {
             skipItems(1)
 
@@ -82,6 +83,20 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = LoginCodeViewState(
                         code = code,
+                        isSignInWithCodeButtonEnable = true,
+                    ),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+
+            viewModel.onAction(LoginCodeViewAction.ChangeCode(incomplete_code))
+
+            assertEquals(
+                expected = ViewState(
+                    data = LoginCodeViewState(
+                        code = incomplete_code,
+                        isSignInWithCodeButtonEnable = false,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -104,7 +119,11 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginCodeViewState(email = email, code = code),
+                    data = LoginCodeViewState(
+                        email = email,
+                        code = code,
+                        isSignInWithCodeButtonEnable = true,
+                    ),
                     screenState = ScreenState.LOADING,
                 ),
                 actual = awaitItem()
@@ -137,7 +156,11 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginCodeViewState(email = email, code = code),
+                    data = LoginCodeViewState(
+                        email = email,
+                        code = code,
+                        isSignInWithCodeButtonEnable = true,
+                    ),
                     screenState = ScreenState.LOADING,
                 ),
                 actual = awaitItem()
@@ -145,7 +168,11 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginCodeViewState(email = email, code = code),
+                    data = LoginCodeViewState(
+                        email = email,
+                        code = code,
+                        isSignInWithCodeButtonEnable = true,
+                    ),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
