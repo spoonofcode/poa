@@ -83,7 +83,8 @@ kotlin {
             implementation(libs.voyager.transitions)
 
             implementation(projects.core.data)
-            implementation(projects.core.firebase)
+            implementation(projects.core.firebase.data)
+            implementation(projects.core.firebase.domain)
             implementation(projects.core.nfc)
             implementation(projects.core.presentation)
             implementation(projects.core.recaptcha)

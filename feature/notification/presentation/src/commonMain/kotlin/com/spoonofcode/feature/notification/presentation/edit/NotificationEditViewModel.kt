@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.firebase.FirebaseMessagingTopics
+import com.spoonofcode.core.firebase.domain.FirebaseMessagingTopics
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule

@@ -28,7 +28,8 @@ import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.AppModuleRouteResolver
 import com.spoonofcode.core.data.getPlatform
-import com.spoonofcode.core.firebase.di.firebaseModule
+import com.spoonofcode.core.firebase.data.di.firebaseDataModule
+import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
 import com.spoonofcode.core.recaptcha.di.recaptchaModule
 import com.spoonofcode.feature.faq.presentation.di.faqPresentationModule
 import org.koin.core.module.dsl.bind
@@ -39,7 +40,8 @@ val appModule = module {
     includes(
         // core
         coroutinesModule,
-        firebaseModule,
+        firebaseDataModule,
+        firebaseDomainModule,
         presentationModule,
         networkModule,
         recaptchaModule,

@@ -10,7 +10,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.core.data)
-                implementation(projects.core.firebase)
+                implementation(projects.core.firebase.data)
             }
         }
 
