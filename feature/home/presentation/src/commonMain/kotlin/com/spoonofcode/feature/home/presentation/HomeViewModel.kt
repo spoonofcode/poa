@@ -1,7 +1,8 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.firebase.usecase.SubscribeUserTopicsUseCase
+import com.spoonofcode.core.firebase.FirebaseMessagingTopics
+import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
@@ -9,21 +10,23 @@ import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserRewardsPointsUseCase
+import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
-    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
+    private val getNewPartnersUseCase: GetNewPartnersUseCase,
+    private val subscribeToFirebaseTopicsUseCase: SubscribeToFirebaseMessagingTopicUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
+    private val getNotificationsUseCase: GetNotificationsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
     override fun onAction(action: HomeViewAction) {
         when (action) {
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
-            HomeViewAction.GetNumberOfNewNotifications -> getNumberOfNewNotifications()
             HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
         }
@@ -32,29 +35,41 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            subscribeUserTopicsUseCase()
-            loadRewardsStatus()
-        }
-    }
+            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.global.name)
+            val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
+            val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
+            val partnersDeferred = async { getNewPartnersUseCase() }
+            val notificationsDeferred = async { getNotificationsUseCase() }
 
-    private suspend fun loadRewardsStatus() = coroutineScope {
-        val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
-        val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
+            val result = runCatching {
+                val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
+                val totalPoints = totalPointsDeferred.await().getOrThrow()
+                val partnerImageLinks = partnersDeferred.await().getOrThrow()
+                    .mapNotNull { partner -> partner.imageLink }
+                val unreadNotificationsCount =
+                    notificationsDeferred.await().getOrNull()?.count { !it.isRead } ?: 0
 
-        runCatching {
-            val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
-            val totalPoints = totalPointsDeferred.await().getOrThrow()
-            dailyCheckInStatus to totalPoints
-        }.onSuccess { (dailyCheckInStatus, totalPoints) ->
-            showContentView {
-                HomeViewState(
-                    dailyCheckInStatus = dailyCheckInStatus,
-                    totalPoints = totalPoints,
+                Quadruple(
+                    dailyCheckInStatus,
+                    totalPoints,
+                    partnerImageLinks,
+                    unreadNotificationsCount
                 )
             }
-        }.onFailure {
-            showErrorView()
-            showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+
+            result.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks, unreadCount) ->
+                showContentView {
+                    HomeViewState(
+                        dailyCheckInStatus = dailyCheckInStatus,
+                        totalPoints = totalPoints,
+                        partnerImageLinks = partnerImageLinks,
+                        unreadNotificationsCount = unreadCount,
+                    )
+                }
+            }.onFailure {
+                showErrorView()
+                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+            }
         }
     }
 
@@ -64,7 +79,7 @@ internal class HomeViewModel(
             addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
                 .onSuccess {
                     showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
-                    loadRewardsStatus()
+                    initView()
                 }
                 .onFailure {
                     showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${it.message}"))
@@ -72,14 +87,16 @@ internal class HomeViewModel(
         }
     }
 
-    private fun getNumberOfNewNotifications(): Int {
-        // TODO: Implement logic to get the actual number of new notifications and move to viewState
-        return 5
-    }
-
     private fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(routeResolver.resolve(NotificationModule.NotificationOverviewScreen))
         }
     }
+
+    private data class Quadruple<out A, out B, out C, out D>(
+        val first: A,
+        val second: B,
+        val third: C,
+        val fourth: D
+    )
 }

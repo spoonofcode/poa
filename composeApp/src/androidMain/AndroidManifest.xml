@@ -34,7 +34,11 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_taggy_go_logo" />
+            android:resource="@drawable/taggy_go_logo" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/ic_taggy_go_logo_background" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.spoonofcode.feature.partner.domain.di
 
+import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
@@ -17,5 +18,6 @@ val partnerDomainModule = module {
     factoryOf(::GetPartnersFilteredByTextUseCase)
     factoryOf(::GetPartnersUseCase)
     factoryOf(::GetPartnerUsersUseCase)
+    factoryOf(::GetNewPartnersUseCase)
     factoryOf(::UpdatePartnerUseCase)
 }

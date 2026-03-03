@@ -38,6 +38,14 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         settings.getStringOrNull(SESSION_USER_ID)
     ) { "User ID cannot be null" }
 
+    override fun saveSessionUserEmail(email: String) {
+        settings.putString(SESSION_USER_EMAIL, email)
+    }
+
+    override fun getSessionUserEmail(): String = requireNotNull(
+        settings.getStringOrNull(SESSION_USER_ID)
+    ) { "User email cannot be null" }
+
     override fun getSettingsNotificationFromAllPartners(): Boolean = requireNotNull(
         settings.getBooleanOrNull(SETTINGS_NOTIFICATION_FROM_ALL_PARTNERS)
     ) { "SettingsNotificationFromAllPartners cannot be null" }
@@ -78,6 +86,7 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         private const val SESSION_ACCESS_TOKEN = "session_access_token"
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
         private const val SESSION_USER_ID = "session_user_id"
+        private const val SESSION_USER_EMAIL = "session_user_email"
         private const val SETTINGS_NOTIFICATION_FROM_ALL_PARTNERS =
             "settings_notification_from_all_partners"
         private const val SETTINGS_NOTIFICATION_FROM_MY_PARTNERS =

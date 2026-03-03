@@ -9,6 +9,7 @@ interface NotificationRepository {
         text: String,
         link: String? = null,
         topic: String,
+        deliveryDateTime: LocalDateTime? = null,
         expirationDateTime: LocalDateTime? = null,
     ): Result<Unit>
 
@@ -18,6 +19,7 @@ interface NotificationRepository {
         text: String,
         link: String? = null,
         topic: String,
+        deliveryDateTime: LocalDateTime? = null,
         expirationDateTime: LocalDateTime? = null,
     ): Result<Unit>
 
@@ -25,4 +27,7 @@ interface NotificationRepository {
 
     suspend fun read(notificationId: String): Result<Notification>
     suspend fun readAll(): Result<List<Notification>>
+
+    suspend fun markAsRead(notificationId: String)
+    suspend fun isRead(notificationId: String): Boolean
 }

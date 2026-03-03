@@ -12,12 +12,14 @@ class SendNotificationUseCase(
         link: String? = null,
         imageUrl: String? = null,
         topic: String,
+        deliveryDateTime: LocalDateTime? = null,
         expirationDateTime: LocalDateTime? = null,
     ): Result<Unit> = notificationRepository.create(
         title = title,
         text = text,
         link = link,
         topic = topic,
+        deliveryDateTime = deliveryDateTime,
         expirationDateTime = expirationDateTime,
     )
 }

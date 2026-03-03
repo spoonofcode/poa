@@ -8,14 +8,14 @@ import kotlinx.coroutines.launch
 
 internal class NotificationOverviewViewModel(
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState, com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction>(
-    _root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState()
+) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction>(
+    NotificationOverviewViewState()
 ) {
 
-    override fun onAction(action: com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction) {
+    override fun onAction(action: NotificationOverviewViewAction) {
         when (action) {
-            _root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction.InitView -> initView()
-            is com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewAction.SelectNotification -> selectNotification(
+            NotificationOverviewViewAction.InitView -> initView()
+            is NotificationOverviewViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
         }
@@ -27,7 +27,7 @@ internal class NotificationOverviewViewModel(
             getNotificationsUseCase()
                 .onSuccess {
                     showContentView {
-                        _root_ide_package_.com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewState(
+                        NotificationOverviewViewState(
                             notifications = it,
                         )
                     }
@@ -41,7 +41,7 @@ internal class NotificationOverviewViewModel(
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                _root_ide_package_.com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen(
+                NotificationDetailsScreen(
                     notificationId = notificationId
                 )
             )

@@ -1,6 +1,6 @@
 package com.spoonofcode.core.firebase
 
-actual class FirebasePushService {
+actual class FirebaseMessagingService {
 //    actual suspend fun getMessageToken(): String? = suspendCancellableCoroutine { cont ->
 //        FirebasePushServiceObjC.getToken { token ->
 //            cont.resume(token)

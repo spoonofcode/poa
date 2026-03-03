@@ -9,8 +9,11 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
+                implementation(libs.calf.permissions)
 
                 implementation(projects.feature.home.domain)
+                implementation(projects.feature.partner.domain)
+                implementation(projects.feature.notification.domain)
                 implementation(projects.core.firebase)
             }
         }

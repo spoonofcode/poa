@@ -17,6 +17,9 @@ data class NotificationResponse(
     @SerialName("modification_time")
     @Serializable(with = RFC1123InstantSerializer::class)
     val modificationDateTime: Instant,
+    @SerialName("delivery_datetime")
+    @Serializable(with = RFC1123InstantSerializer::class)
+    val deliveryDateTime: Instant? = null,
     @SerialName("expiration_datetime")
     @Serializable(with = RFC1123InstantSerializer::class)
     val expirationDateTime: Instant? = null,

@@ -54,6 +54,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
         )
 
     protected open fun provideTopBarActions(
+        viewState: VS,
         onAction: (VA) -> Unit,
     ): List<TopBarAction> = emptyList()
 
@@ -138,7 +139,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
                         backNavigationEnable = backNavigationEnable,
                         topAppBarTitle = topAppBarTitle,
                         navigationBackAction = navigationBackAction,
-                        iconBarActions = provideTopBarActions(onAction)
+                        iconBarActions = provideTopBarActions(viewState, onAction)
                     )
                 }
             },

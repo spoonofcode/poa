@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
@@ -46,15 +45,14 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.ProfilePreviewParameterProvider
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.cancel
-import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.faq
 import com.spoonofcode.feature.profile.presentation.logout
 import com.spoonofcode.feature.profile.presentation.logout_dialog_text
 import com.spoonofcode.feature.profile.presentation.logout_dialog_title
 import com.spoonofcode.feature.profile.presentation.notifications
 import com.spoonofcode.feature.profile.presentation.partner_panel
-import com.spoonofcode.feature.profile.presentation.poa
 import com.spoonofcode.feature.profile.presentation.profile
+import com.spoonofcode.feature.profile.presentation.taggy_go_logo
 import com.spoonofcode.feature.profile.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 
@@ -93,7 +91,7 @@ internal class ProfileDetailsScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Images.CircleImage(
-                        imageRes = Res.drawable.poa,
+                        imageRes = Res.drawable.taggy_go_logo,
                         modifier = Modifier.size(92.dp)
                     )
                 }
@@ -105,11 +103,12 @@ internal class ProfileDetailsScreen(
                     )
                     Spacers.VerticalBetweenFields()
 
-                    Buttons.PrimaryButton(
-                        text = stringResource(Res.string.edit_profile),
-                        fillMaxWidth = false,
-                        onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
-                    )
+                    // TODO #137-Add edit profile
+//                    Buttons.PrimaryButton(
+//                        text = stringResource(Res.string.edit_profile),
+//                        fillMaxWidth = false,
+//                        onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
+//                    )
                 }
             }
 

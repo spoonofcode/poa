@@ -13,9 +13,10 @@ class LoginCodeUseCase(
     ): Result<Unit> = loginRepository.loginWithCode(
         email = email,
         loginCode = code,
-    ).map { loginResponse ->
-        sessionManager.saveSessionAccessToken(token = loginResponse.jwtAccessToken)
-        sessionManager.saveSessionRefreshToken(token = loginResponse.jwtRefreshToken)
+    ).map { login ->
+        sessionManager.saveSessionAccessToken(token = login.jwtAccessToken)
+        sessionManager.saveSessionRefreshToken(token = login.jwtRefreshToken)
+        sessionManager.saveSessionUserEmail(email = login.email)
         sessionManager.enableAllNotifications()
     }
 }

@@ -2,23 +2,23 @@ package com.spoonofcode.feature.notification.domain.usecase
 
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.core.data.network.SessionManager
-import com.spoonofcode.core.firebase.FirebasePushService
+import com.spoonofcode.core.firebase.FirebaseMessagingService
 
 class UpdateNotificationSettingsUseCase(
     private val sessionManager: SessionManager,
-    private val firebasePushService: FirebasePushService,
+    private val firebaseMessagingService: FirebaseMessagingService,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings) {
                 if (notificationSettings.notificationFromAllPartnersEnable) {
-            firebasePushService.subscribeToTopic("all_partners")
+            firebaseMessagingService.subscribeToTopic("all_partners")
         } else {
-            firebasePushService.unsubscribeFromTopic("all_partners")
+            firebaseMessagingService.unsubscribeFromTopic("all_partners")
         }
 
         if (notificationSettings.notificationFromMyPartnersEnable) {
-            firebasePushService.subscribeToTopic("my_partners")
+            firebaseMessagingService.subscribeToTopic("my_partners")
         } else {
-            firebasePushService.unsubscribeFromTopic("my_partners")
+            firebaseMessagingService.unsubscribeFromTopic("my_partners")
         }
 
         sessionManager.saveSettingsNotificationFromAllPartners(notificationSettings.notificationFromAllPartnersEnable)

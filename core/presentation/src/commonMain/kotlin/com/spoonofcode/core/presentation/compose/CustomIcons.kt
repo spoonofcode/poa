@@ -8,6 +8,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Badge
@@ -119,7 +120,8 @@ object CustomIcons {
                         Text(if (count > 99) "99+" else count.toString())
                     }
                 }
-            }
+            },
+            modifier = Modifier.padding(end = 12.dp)
         ) {
             IconButton(onClick = onClick) {
                 Icon(

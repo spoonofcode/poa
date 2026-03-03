@@ -30,6 +30,7 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.cancel
+import com.spoonofcode.feature.notification.presentation.delivery_date
 import com.spoonofcode.feature.notification.presentation.expiration_date
 import com.spoonofcode.feature.notification.presentation.link
 import com.spoonofcode.feature.notification.presentation.notification
@@ -88,6 +89,20 @@ internal class NotificationEditScreen(
                 onValueChange = { onAction(NotificationEditViewAction.ChangeText(it)) },
                 label = stringResource(resource = Res.string.text),
                 minLines = 8,
+            )
+
+            DatePickers.DatePickerWithTimer(
+                label = stringResource(resource = Res.string.delivery_date),
+                value = viewState.deliveryDateTime,
+//                minDateTime = viewState.minDeliveryDateTime,
+                onValueChange = {
+                    onAction(
+                        NotificationEditViewAction.ChangeDeliveryDateTime(
+                            it
+                        )
+                    )
+                },
+                modifier = Modifier,
             )
 
             DatePickers.DatePickerWithTimer(

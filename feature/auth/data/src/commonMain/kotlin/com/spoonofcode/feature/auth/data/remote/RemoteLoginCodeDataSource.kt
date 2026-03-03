@@ -2,7 +2,7 @@ package com.spoonofcode.feature.auth.data.remote
 
 import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.feature.auth.data.remote.model.LoginCodeRequest
-import com.spoonofcode.feature.auth.data.remote.model.LoginResponse
+import com.spoonofcode.feature.auth.data.remote.model.LoginCodeResponse
 import io.ktor.http.HttpMethod
 
 class RemoteLoginCodeDataSource() : RemoteBaseDataSource(
@@ -11,7 +11,7 @@ class RemoteLoginCodeDataSource() : RemoteBaseDataSource(
     suspend fun create(
         email: String,
         loginCode: String,
-    ): Result<LoginResponse> = doRequest(
+    ): Result<LoginCodeResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = LoginCodeRequest(
             email = email,

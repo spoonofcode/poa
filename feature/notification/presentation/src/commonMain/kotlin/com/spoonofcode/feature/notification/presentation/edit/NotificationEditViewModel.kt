@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
+import com.spoonofcode.core.firebase.FirebaseMessagingTopics
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
@@ -17,8 +18,12 @@ internal class NotificationEditViewModel(
 
     override fun onAction(action: NotificationEditViewAction) {
         when (action) {
+            is NotificationEditViewAction.ChangeDeliveryDateTime -> changeDeliveryDateTime(
+                action.selectedDateTime
+            )
+
             is NotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
-                action.startDateTime
+                action.selectedDateTime
             )
 
             is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
@@ -55,10 +60,18 @@ internal class NotificationEditViewModel(
         }
     }
 
-    private fun changeExpirationDateTime(expirationDateTime: LocalDateTime) {
+    private fun changeDeliveryDateTime(selectedDateTime: LocalDateTime) {
         updateState {
             copy(
-                expirationDateTime = expirationDateTime
+                deliveryDateTime = selectedDateTime
+            )
+        }
+    }
+
+    private fun changeExpirationDateTime(selectedDateTime: LocalDateTime) {
+        updateState {
+            copy(
+                expirationDateTime = selectedDateTime
             )
         }
     }
@@ -95,8 +108,9 @@ internal class NotificationEditViewModel(
                 title = currentState.title,
                 text = currentState.text,
                 link = currentState.link,
-                topic = "global",
+                topic = FirebaseMessagingTopics.global.name,
 //                topics = currentState.itemIds,
+                deliveryDateTime = currentState.deliveryDateTime,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
                 viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))

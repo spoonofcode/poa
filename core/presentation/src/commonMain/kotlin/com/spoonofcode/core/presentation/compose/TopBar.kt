@@ -42,20 +42,20 @@ fun TopBar(
         },
         actions = {
             iconBarActions.forEach { iconBarAction ->
-                if (iconBarAction.badgeCount != null) {
-                    IconWithBadge(
-                        icon = iconBarAction.icon,
-                        contentDescription = iconBarAction.description,
-                        count = iconBarAction.badgeCount,
-                        onClick = iconBarAction.onClick
-                    )
-                } else {
+                if (iconBarAction.badgeCount == null || iconBarAction.badgeCount == 0) {
                     IconButton(onClick = iconBarAction.onClick) {
                         Icon(
                             imageVector = iconBarAction.icon,
                             contentDescription = iconBarAction.description
                         )
                     }
+                } else {
+                    IconWithBadge(
+                        icon = iconBarAction.icon,
+                        contentDescription = iconBarAction.description,
+                        count = iconBarAction.badgeCount,
+                        onClick = iconBarAction.onClick
+                    )
                 }
             }
         }

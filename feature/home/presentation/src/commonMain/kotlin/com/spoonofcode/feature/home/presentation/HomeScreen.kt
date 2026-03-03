@@ -15,14 +15,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
+import com.mohamedrejeb.calf.permissions.Permission
+import com.mohamedrejeb.calf.permissions.isGranted
+import com.mohamedrejeb.calf.permissions.isNotGranted
+import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
@@ -32,15 +40,6 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.home.presentation.daily_check_in
-import com.spoonofcode.feature.home.presentation.day_number
-import com.spoonofcode.feature.home.presentation.home
-import com.spoonofcode.feature.home.presentation.new_partners
-import com.spoonofcode.feature.home.presentation.next_check_in
-import com.spoonofcode.feature.home.presentation.points_short
-import com.spoonofcode.feature.home.presentation.streak_days_count
-import com.spoonofcode.feature.home.presentation.total_points
-import com.spoonofcode.feature.home.presentation.your_streak
 import com.spoonofcode.feature.home.domain.model.DailyReward
 import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 import org.jetbrains.compose.resources.stringResource
@@ -52,12 +51,13 @@ internal class HomeScreen(
     override fun provideTopAppBarTitle() = Res.string.home
 
     override fun provideTopBarActions(
+        viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
-            badgeCount = 5,
+            badgeCount = viewState.unreadNotificationsCount,
         ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 
@@ -67,12 +67,23 @@ internal class HomeScreen(
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
+    @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     override fun provideContent(
         viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
+            val notificationPermissionState = rememberPermissionState(
+                Permission.Notification
+            )
+
+            LaunchedEffect(notificationPermissionState.status) {
+                if (notificationPermissionState.status.isNotGranted) {
+                    notificationPermissionState.launchPermissionRequest()
+                }
+            }
+
             AutoImageSlider(
                 label = stringResource(Res.string.new_partners),
                 imageLinks = viewState.partnerImageLinks,
