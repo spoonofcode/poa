@@ -1,4 +1,3 @@
-import com.spoonofcode.convention.applyPlugin
 import dev.mokkery.gradle.ApplicationRule
 
 plugins {
