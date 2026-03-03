@@ -8,6 +8,7 @@ import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.home.data.test.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.feature.home.data.test.TOTAL_POINTS
 import com.spoonofcode.feature.home.presentation.di.homePresentationTestModule
+import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNERS
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -54,18 +55,13 @@ class HomeViewModelest : BaseViewModelTest() {
 
             viewModel.onAction(HomeViewAction.DailyCheckIn)
 
-//            assertEquals(
-//                expected = HomeViewState(
-//                    screenState = ScreenState.LOADING,
-//                ),
-//                actual = awaitItem()
-//            )
-
             assertEquals(
                 expected = ViewState(
                     data = HomeViewState(
                         dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
-                        totalPoints = TOTAL_POINTS
+                        totalPoints = TOTAL_POINTS,
+                        partnerImageLinks = PARTNERS.map { partner -> partner.imageLink } as List<String>,
+                        unreadNotificationsCount = 3,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -85,7 +81,9 @@ class HomeViewModelest : BaseViewModelTest() {
                 expected = ViewState(
                     data = HomeViewState(
                         dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
-                        totalPoints = TOTAL_POINTS
+                        totalPoints = TOTAL_POINTS,
+                        partnerImageLinks = PARTNERS.map { partner -> partner.imageLink } as List<String>,
+                        unreadNotificationsCount = 3,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

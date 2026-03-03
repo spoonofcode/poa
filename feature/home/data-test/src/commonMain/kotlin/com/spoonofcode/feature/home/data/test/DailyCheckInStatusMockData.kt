@@ -1,5 +1,7 @@
 package com.spoonofcode.feature.home.data.test
 
+import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
+
 object DailyCheckInStatusMockData {
     val DAILY_CHECK_IN_STATUS_1 = DailyCheckInStatus(
         streak = 1,

@@ -23,6 +23,8 @@ kotlin {
                 implementation(libs.turbine)
                 implementation(projects.core.presentationTest)
                 implementation(projects.feature.home.dataTest)
+                implementation(projects.feature.partner.dataTest)
+                implementation(projects.feature.notification.dataTest)
             }
         }
     }
