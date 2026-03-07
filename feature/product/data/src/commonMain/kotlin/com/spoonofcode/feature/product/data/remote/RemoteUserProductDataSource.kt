@@ -6,10 +6,9 @@ import com.spoonofcode.feature.product.data.remote.model.ProductResponse
 import io.ktor.http.HttpMethod
 
 class RemoteUserProductDataSource : RemoteBaseDataSource(
-    collectionName = "users",
+    collectionName = "api/products",
 ) {
     suspend fun readUserProducts(): Result<List<ProductResponse>> = doRequest(
-        urlPostfixPath = "products",
         method = HttpMethod.Get,
     )
 

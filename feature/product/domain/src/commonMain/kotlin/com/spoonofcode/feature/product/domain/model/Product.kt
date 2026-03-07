@@ -1,16 +1,17 @@
 package com.spoonofcode.feature.product.domain.model
 
+import kotlinx.datetime.LocalDateTime
+
 data class Product(
     val id: String,
-    val ownerUserId: String? = null,
-    val partnerId: String,
-    val name: String,
-    val description: String,
-    val seriesId: String,
-    val collectionName: String,
-    val imageLink: String,
-    val videoLink: String? =null,
-    val tagId: String? = null,
-    val websiteLink: String? = null,
+    val createdAt: LocalDateTime,
     val customLink: String? = null,
+    val description: String? = null,
+    val imageLink: String? = null,
+    val name: String? = null,
+    val ownerEmail: String? = null,
+    val partnerId: String? = null,
+    val seriesId: String? = null,
+    val seriesName: String? = null,
+    val videoLink: String? = null,
 )

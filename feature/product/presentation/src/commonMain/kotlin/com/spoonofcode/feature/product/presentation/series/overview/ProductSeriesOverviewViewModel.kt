@@ -70,9 +70,10 @@ internal class ProductSeriesOverviewViewModel(
     private fun getSelectedProductSeries(): List<String> =
         currentState().checkedProductSeriesIds.map { serieId -> "productSerieId$serieId" }.toList()
 
-    private fun getSelectedProductSeriesNames(): List<String> =
-        currentState().productSeries.filter { "${it.id}" in currentState().checkedProductSeriesIds }
-            .map { productSeries -> productSeries.name }.toList()
+    // TODO Fix this list of products
+    private fun getSelectedProductSeriesNames(): List<String> = emptyList()
+//        currentState().productSeries.filter { "${it.id}" in currentState().checkedProductSeriesIds }
+//            .map { productSeries -> productSeries.name }.toList()
 
     private companion object {
         private const val MAX_SELECTED_PRODUCT_SERIES = 5

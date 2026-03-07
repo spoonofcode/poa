@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.home.presentation.di
 
-import com.spoonofcode.core.firebase.di.firebaseModule
+//import com.spoonofcode.core.firebase.data.di.firebaseDataModule
+//import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
 import com.spoonofcode.feature.home.data.test.di.homeDataTestModule
 import com.spoonofcode.feature.home.domain.di.homeDomainModule
 import com.spoonofcode.feature.notification.data.test.di.notificationDataTestModule
@@ -15,7 +16,8 @@ val homePresentationTestModule = module {
         homeDomainModule,
         homePresentationModule,
 
-        firebaseModule,
+//        firebaseDataModule,
+//        firebaseDomainModule,
 
         notificationDomainModule,
         notificationDataTestModule,

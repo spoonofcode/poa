@@ -6,31 +6,26 @@ class UpdateProductUseCase(
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(
-        productId: String,
-        ownerUserId: String? = null,
-        partnerId: String,
-        name: String,
-        description: String,
-        seriesId: String,
-        collectionName: String,
-        imageLink: String,
-        videoLink: String? = null,
-        tagId: String? = null,
-        websiteLink: String? = null,
+        id: String,
         customLink: String? = null,
+        description: String? = null,
+        imageLink: String? = null,
+        name: String? = null,
+        ownerEmail: String? = null,
+        partnerId: String? = null,
+        seriesId: String? = null,
+        seriesName: String? = null,
+        videoLink: String? = null,
     ): Result<Unit> =
         productRepository.update(
-            productId = productId,
-            ownerUserId = ownerUserId,
+            productId = id,
             partnerId = partnerId,
             name = name,
             description = description,
             seriesId = seriesId,
-            collectionName = collectionName,
+            seriesName = seriesName,
             imageLink = imageLink,
             videoLink = videoLink,
-            tagId = tagId,
-            websiteLink = websiteLink,
-            customLink = customLink
+            customLink = customLink,
         )
 }

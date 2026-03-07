@@ -37,7 +37,7 @@ internal class ScanViewModel(
                         routeResolver.resolve(
                             ProductModule.ProductDetailsScreen(
                                 productId = it.id,
-                                hasOwnerUser = it.ownerUserId != null,
+                                hasOwnerUser = it.ownerEmail != null,
                             )
                         )
                     )

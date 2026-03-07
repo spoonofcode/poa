@@ -11,16 +11,13 @@ interface ProductRepository {
     suspend fun deleteProductFromUser(productId: String): Result<Unit>
     suspend fun update(
         productId: String,
-        ownerUserId: String? = null,
-        partnerId: String,
-        name: String,
-        description: String,
-        seriesId: String,
-        collectionName: String,
-        imageLink: String,
+        partnerId: String? = null,
+        name: String? = null,
+        description: String? = null,
+        seriesId: String? = null,
+        seriesName: String? = null,
+        imageLink: String? = null,
         videoLink: String? = null,
-        tagId: String? = null,
-        websiteLink: String? = null,
         customLink: String? = null,
     ): Result<Unit>
 }

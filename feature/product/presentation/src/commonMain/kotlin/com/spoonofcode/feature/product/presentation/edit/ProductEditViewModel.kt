@@ -46,18 +46,14 @@ internal class ProductEditViewModel(
         viewModelScope.launch {
             val product = requireNotNull(currentState().product)
             updateProductUseCase(
-                productId = product.id,
+                id = product.id,
                 name = product.name,
-                ownerUserId = product.ownerUserId,
                 partnerId = product.partnerId,
                 description = product.description,
                 imageLink = product.imageLink,
                 videoLink = product.videoLink,
-                collectionName = product.collectionName,
-                websiteLink = product.websiteLink,
+                seriesName = product.seriesName,
                 customLink = product.customLink,
-                seriesId = product.seriesId,
-                tagId = product.tagId,
             )
                 .onSuccess {
                     viewModelNavigator.pop()

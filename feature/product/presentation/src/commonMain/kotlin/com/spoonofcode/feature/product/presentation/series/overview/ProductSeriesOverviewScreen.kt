@@ -59,17 +59,17 @@ internal class ProductSeriesOverviewScreen(
                         val checkedProductSeries =
                             viewState.checkedProductSeriesIds.contains(product.seriesId)
 
-                        ProductSeriesItem(
-                            item = product,
-                            onClick = {
-                                onAction(
-                                    ProductSeriesOverViewViewAction.CheckedProductSeries(
-                                        product.seriesId
-                                    )
-                                )
-                            },
-                            checkedProductSeries = checkedProductSeries,
-                        )
+//                        ProductSeriesItem(
+//                            item = product,
+//                            onClick = {
+//                                onAction(
+//                                    ProductSeriesOverViewViewAction.CheckedProductSeries(
+//                                        product.seriesId
+//                                    )
+//                                )
+//                            },
+//                            checkedProductSeries = checkedProductSeries,
+//                        )
                     }
                 }
 
@@ -94,19 +94,23 @@ internal class ProductSeriesOverviewScreen(
             onClick = onClick
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Images.ImageLink(
-                    imageLink = item.imageLink,
-                    modifier = Modifier.size(80.dp),
+                item.imageLink?.let {
+                    Images.ImageLink(
+                        imageLink = it,
+                        modifier = Modifier.size(80.dp),
                     )
+                }
 
                 Spacers.HorizontalBetweenFields()
 
-                Texts.BLB(
-                    text = stringResource(
-                        resource = Res.string.series_number,
-                        item.seriesId
+                item.seriesId?.let {
+                    Texts.BLB(
+                        text = stringResource(
+                            resource = Res.string.series_number,
+                            it
+                        )
                     )
-                )
+                }
 
                 Spacers.Weight1(this)
 
