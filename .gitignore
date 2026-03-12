@@ -29,12 +29,11 @@ captures/
 *.obj
 
 # iOS files
-*.xcworkspace
-*.xcodeproj/
 xcuserdata/
 DerivedData/
 build/
 *.ipa
+*.bundle
 
 # macOS files
 .DS_Store
