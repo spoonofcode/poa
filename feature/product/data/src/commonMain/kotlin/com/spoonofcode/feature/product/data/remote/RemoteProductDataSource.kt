@@ -18,11 +18,6 @@ class RemoteProductDataSource : RemoteBaseDataSource(
         method = HttpMethod.Get,
     )
 
-    suspend fun readProductSeriesIds(): Result<List<String>> = doRequest(
-        urlPostfixPath = "product-series-ids",
-        method = HttpMethod.Get,
-    )
-
     suspend fun addProductToUser(productId: String): Result<Unit> = doRequest(
         method = HttpMethod.Post,
         requestBody = AddProductToUserRequest(productId = productId),

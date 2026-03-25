@@ -3,10 +3,8 @@ package com.spoonofcode.feature.product.presentation.series.overview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
@@ -18,12 +16,11 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.ProductSeries
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_product_series
 import com.spoonofcode.feature.product.presentation.send_notification
@@ -55,21 +52,21 @@ internal class ProductSeriesOverviewScreen(
                         .padding(bottom = 60.dp),
                     verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
                 ) {
-                    items(viewState.productSeries) { product ->
+                    items(viewState.productSeries) { productSerie ->
                         val checkedProductSeries =
-                            viewState.checkedProductSeriesIds.contains(product.seriesId)
+                            viewState.checkedProductSeriesIds.contains(productSerie.name)
 
-//                        ProductSeriesItem(
-//                            item = product,
-//                            onClick = {
-//                                onAction(
-//                                    ProductSeriesOverViewViewAction.CheckedProductSeries(
-//                                        product.seriesId
-//                                    )
-//                                )
-//                            },
-//                            checkedProductSeries = checkedProductSeries,
-//                        )
+                        ProductSeriesItem(
+                            item = productSerie,
+                            onClick = {
+                                onAction(
+                                    ProductSeriesOverViewViewAction.CheckedProductSeries(
+                                        productSerie.name
+                                    )
+                                )
+                            },
+                            checkedProductSeries = checkedProductSeries,
+                        )
                     }
                 }
 
@@ -86,39 +83,28 @@ internal class ProductSeriesOverviewScreen(
 
     @Composable
     fun ProductSeriesItem(
-        item: Product,
+        item: ProductSeries,
         onClick: () -> Unit,
         checkedProductSeries: Boolean,
     ) {
         Cards.ElevatedCard(
             onClick = onClick
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                item.imageLink?.let {
-                    Images.ImageLink(
-                        imageLink = it,
-                        modifier = Modifier.size(80.dp),
+            item.name?.let {
+                Texts.BLB(
+                    text = stringResource(
+                        resource = Res.string.series_number,
+                        it
                     )
-                }
-
-                Spacers.HorizontalBetweenFields()
-
-                item.seriesId?.let {
-                    Texts.BLB(
-                        text = stringResource(
-                            resource = Res.string.series_number,
-                            it
-                        )
-                    )
-                }
-
-                Spacers.Weight1(this)
-
-                Checkbox(
-                    checked = checkedProductSeries,
-                    onCheckedChange = { onClick() }
                 )
             }
+
+            Spacers.Weight1(this)
+
+            Checkbox(
+                checked = checkedProductSeries,
+                onCheckedChange = { onClick() }
+            )
         }
     }
 }

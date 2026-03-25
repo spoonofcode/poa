@@ -4,11 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.product.domain.usecase.GetProductSeriesUseCase
+import com.spoonofcode.feature.product.domain.usecase.GetPartnerProductSeriesUseCase
 import kotlinx.coroutines.launch
 
 internal class ProductSeriesOverviewViewModel(
-    private val getProductSeriesUseCase: GetProductSeriesUseCase,
+    private val getPartnerProductSeriesUseCase: GetPartnerProductSeriesUseCase,
 ) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction>(
     ProductSeriesOverviewViewState()
 ) {
@@ -24,7 +24,7 @@ internal class ProductSeriesOverviewViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            getProductSeriesUseCase()
+            getPartnerProductSeriesUseCase()
                 .onSuccess {
                     showContentView {
                         ProductSeriesOverviewViewState(
