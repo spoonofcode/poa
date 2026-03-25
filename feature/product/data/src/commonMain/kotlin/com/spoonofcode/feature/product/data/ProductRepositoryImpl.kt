@@ -13,11 +13,6 @@ class ProductRepositoryImpl(
     override suspend fun getProduct(productId: String): Result<Product> =
         remoteProducts.readProduct(productId).map { it.toProduct() }
 
-    // TODO #99 Adopt poa backend
-    override suspend fun getProductByTagId(tagId: String): Result<Product> =
-        Result.success(PRODUCTS.last())
-//        remoteProducts.readProductByTagId(tagId).map { it.toProduct() }
-
     override suspend fun getUserProducts(): Result<List<Product>> =
         remoteProducts.readUserProducts().map { list -> list.map { it.toProduct() } }
 
@@ -32,23 +27,10 @@ class ProductRepositoryImpl(
 
     override suspend fun update(
         productId: String,
-        partnerId: String?,
-        name: String?,
-        description: String?,
-        seriesId: String?,
-        seriesName: String?,
-        imageLink: String?,
-        videoLink: String?,
         customLink: String?,
-    ): Result<Unit> = remoteProducts.update(
-        productId = productId,
-        partnerId = partnerId,
-        name = name,
-        description = description,
-        seriesId = seriesId,
-        seriesName = seriesName,
-        imageLink = imageLink,
-        videoLink = videoLink,
-        customLink = customLink,
-    )
+    ): Result<Unit> =
+        remoteProducts.update(
+            productId = productId,
+            customLink = customLink,
+        )
 }

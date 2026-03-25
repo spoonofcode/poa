@@ -2,8 +2,8 @@ package com.spoonofcode.feature.product.data.remote
 
 import com.spoonofcode.core.data.base.RemoteBaseDataSource
 import com.spoonofcode.feature.product.data.remote.model.AddProductToUserRequest
-import com.spoonofcode.feature.product.data.remote.model.ProductRequest
 import com.spoonofcode.feature.product.data.remote.model.ProductResponse
+import com.spoonofcode.feature.product.data.remote.model.UpdateUserProductRequest
 import io.ktor.http.HttpMethod
 
 class RemoteProductDataSource : RemoteBaseDataSource(
@@ -29,32 +29,16 @@ class RemoteProductDataSource : RemoteBaseDataSource(
     )
 
     suspend fun deleteProductFromUser(productId: String): Result<Unit> = doRequest(
-        urlPostfixPath = "products/$productId",
-        method = HttpMethod.Delete,
+        urlPostfixPath = "$productId/abandon",
+        method = HttpMethod.Post,
     )
 
     suspend fun update(
         productId: String,
-        partnerId: String? = null,
-        name: String? = null,
-        description: String? = null,
-        seriesId: String? = null,
-        seriesName: String? = null,
-        imageLink: String? = null,
-        videoLink: String? = null,
-        customLink: String? = null,
+        customLink: String? = null
     ): Result<Unit> = doRequest(
         urlPostfixPath = productId,
         method = HttpMethod.Put,
-        requestBody = ProductRequest(
-            partnerId = partnerId,
-            name = name,
-            description = description,
-            seriesId = seriesId,
-            seriesName = seriesName,
-            imageLink = imageLink,
-            videoLink = videoLink,
-            customLink = customLink,
-        ),
+        requestBody = UpdateUserProductRequest(customLink = customLink),
     )
 }

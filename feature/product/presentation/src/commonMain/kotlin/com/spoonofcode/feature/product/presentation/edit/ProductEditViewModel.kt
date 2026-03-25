@@ -47,12 +47,6 @@ internal class ProductEditViewModel(
             val product = requireNotNull(currentState().product)
             updateProductUseCase(
                 id = product.id,
-                name = product.name,
-                partnerId = product.partnerId,
-                description = product.description,
-                imageLink = product.imageLink,
-                videoLink = product.videoLink,
-                seriesName = product.seriesName,
                 customLink = product.customLink,
             )
                 .onSuccess {
