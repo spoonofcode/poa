@@ -4,18 +4,20 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerCustomerOverviewViewModel(
     private val getPartnerUsersUseCase: GetPartnerUsersUseCase,
+    private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
 ) : BaseViewModel<PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction>(
     PartnerCustomerOverviewViewState()
 ) {
 
     override fun onAction(action: PartnerCustomerOverviewViewAction) {
         when (action) {
-            is PartnerCustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(userId = action.userId)
+            is PartnerCustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(userId = action.customerId)
             is PartnerCustomerOverviewViewAction.InitView -> initView(partnerId = action.partnerId)
             PartnerCustomerOverviewViewAction.NavigateToNotification -> navigateToNotification()
         }
@@ -24,11 +26,11 @@ internal class PartnerCustomerOverviewViewModel(
     private fun initView(partnerId: String) {
         showLoadingView()
         viewModelScope.launch {
-            getPartnerUsersUseCase(partnerId)
+            getPartnerCustomersUseCase()
                 .onSuccess {
                     showContentView {
                         PartnerCustomerOverviewViewState(
-                            partnerUsers = it,
+                            customers = it,
                         )
                     }
                 }
@@ -71,8 +73,8 @@ internal class PartnerCustomerOverviewViewModel(
         currentState().checkedUserIds.map { userId -> "userId$userId" }.toList()
 
     private fun getSelectedNames(): List<String> =
-        currentState().partnerUsers.filter { it.id in currentState().checkedUserIds }
-            .map { user -> user.fullName }.toList()
+        currentState().customers.filter { it.id in currentState().checkedUserIds }
+            .map { customer -> customer.name }.toList()
 
     private companion object {
         private const val MAX_SELECTED_USERS = 5

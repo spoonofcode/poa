@@ -2,10 +2,10 @@ package com.spoonofcode.feature.partner.presentation.customer.overview
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState
-import com.spoonofcode.feature.partner.domain.model.PartnerUser
+import com.spoonofcode.feature.partner.domain.model.Customer
 
 @Immutable
 internal data class PartnerCustomerOverviewViewState(
-    val partnerUsers: List<PartnerUser> = emptyList(),
+    val customers: List<Customer> = emptyList(),
     val checkedUserIds: Set<String> = emptySet(),
 ) : BaseViewState()

@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
@@ -19,11 +21,11 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.partner.domain.model.PartnerUser
+import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_customers
-import com.spoonofcode.feature.partner.presentation.poa
 import com.spoonofcode.feature.partner.presentation.send_notification
+import com.spoonofcode.feature.partner.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
 internal class CustomerOverviewScreen(
@@ -48,13 +50,19 @@ internal class CustomerOverviewScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
             ) {
-                items(viewState.partnerUsers) { user ->
+                items(viewState.customers) { customer ->
                     val checkedCustomer =
-                        viewState.checkedUserIds.contains(user.id)
+                        viewState.checkedUserIds.contains(customer.id)
 
                     CustomerItem(
-                        item = user,
-                        onClick = { onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(user.id)) },
+                        item = customer,
+                        onClick = {
+                            onAction(
+                                PartnerCustomerOverviewViewAction.CheckedCustomer(
+                                    customer.id!!
+                                )
+                            )
+                        },
                         checkedCustomer = checkedCustomer,
                     )
                 }
@@ -72,20 +80,25 @@ internal class CustomerOverviewScreen(
 
     @Composable
     fun CustomerItem(
-        item: PartnerUser,
+        item: Customer,
         onClick: () -> Unit,
         checkedCustomer: Boolean,
     ) {
         Cards.ElevatedCard(
             onClick = onClick
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Images.CircleImage(imageRes = Res.drawable.poa, imageSize = 64.dp)
-
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Images.CircleImage(
+                    imageRes = Res.drawable.taggy_go_logo,
+                    imageSize = 64.dp,
+                )
                 Spacers.HorizontalBetweenFields()
 
                 Column {
-                    Texts.BLB(item.fullName)
+                    Texts.BLB(item.name)
                     Texts.BM(item.email)
                 }
 

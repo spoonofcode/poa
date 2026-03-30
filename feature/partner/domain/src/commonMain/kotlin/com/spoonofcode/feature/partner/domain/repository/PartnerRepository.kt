@@ -1,5 +1,6 @@
 package com.spoonofcode.feature.partner.domain.repository
 
+import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.feature.partner.domain.model.PartnerUser
@@ -24,5 +25,6 @@ interface PartnerRepository {
     suspend fun getPartners(): Result<List<Partner>>
     suspend fun getPartnerUsers(partnerId: String): Result<List<PartnerUser>>
     suspend fun getPartnerSeries(): Result<List<ProductSeries>>
+    suspend fun getPartnerCustomers(): Result<List<Customer>>
     suspend fun getCategories(): Result<List<PartnerCategory>>
 }

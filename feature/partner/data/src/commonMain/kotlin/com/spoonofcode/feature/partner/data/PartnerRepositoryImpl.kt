@@ -3,8 +3,10 @@ package com.spoonofcode.feature.partner.data
 import com.spoonofcode.feature.partner.data.mappers.toPartner
 import com.spoonofcode.feature.partner.data.mappers.toPartnerUser
 import com.spoonofcode.feature.partner.data.mappers.toProductSeries
+import com.spoonofcode.feature.partner.data.mappers.toCustomer
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerDataSource
+import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.feature.partner.domain.model.PartnerUser
@@ -55,11 +57,15 @@ class PartnerRepositoryImpl(
             response.map { it.toPartnerUser() }
         }
 
-    override suspend fun getPartnerSeries(): Result<List<ProductSeries>> {
-        return remotePartnerDataSource.readPartnerSeries().map { response ->
+    override suspend fun getPartnerSeries(): Result<List<ProductSeries>> =
+        remotePartnerDataSource.readPartnerSeries().map { response ->
             response.map { it.toProductSeries() }
         }
-    }
+
+    override suspend fun getPartnerCustomers(): Result<List<Customer>> =
+        remotePartnerDataSource.readPartnerCustomers().map { response ->
+            response.map { it.toCustomer() }
+        }
 
     override suspend fun getCategories(): Result<List<PartnerCategory>> =
         remotePartnerCategoryDataSource.readAll().map { response ->
