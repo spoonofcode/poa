@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.product.domain.model
+package com.spoonofcode.feature.partner.domain.model
 
 data class ProductSeries(
     val askContactMessage: String,

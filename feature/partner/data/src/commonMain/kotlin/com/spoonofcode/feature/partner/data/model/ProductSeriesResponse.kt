@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.product.data.remote.model
+package com.spoonofcode.feature.partner.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

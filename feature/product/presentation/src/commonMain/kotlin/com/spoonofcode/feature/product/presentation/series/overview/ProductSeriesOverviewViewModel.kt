@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.product.domain.usecase.GetPartnerProductSeriesUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerProductSeriesUseCase
 import kotlinx.coroutines.launch
 
 internal class ProductSeriesOverviewViewModel(

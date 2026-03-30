@@ -1,7 +1,7 @@
-package com.spoonofcode.feature.product.data.mappers
+package com.spoonofcode.feature.partner.data.mappers
 
-import com.spoonofcode.feature.product.data.remote.model.ProductSeriesResponse
-import com.spoonofcode.feature.product.domain.model.ProductSeries
+import com.spoonofcode.feature.partner.data.model.ProductSeriesResponse
+import com.spoonofcode.feature.partner.domain.model.ProductSeries
 
 fun ProductSeriesResponse.toProductSeries(): ProductSeries {
     return ProductSeries(
