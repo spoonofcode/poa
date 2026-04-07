@@ -29,14 +29,13 @@ import com.spoonofcode.feature.partner.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
 internal class CustomerOverviewScreen(
-    val partnerId: String,
     override val verticalScrollEnable: Boolean = false,
 ) : BaseScreen<PartnerCustomerOverviewViewModel, PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_customers
 
     override fun provideInitAction(onAction: (PartnerCustomerOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerCustomerOverviewViewAction.InitView(partnerId = partnerId)) }
+        { onAction(PartnerCustomerOverviewViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerCustomerOverviewViewModel>()
@@ -52,15 +51,13 @@ internal class CustomerOverviewScreen(
             ) {
                 items(viewState.customers) { customer ->
                     val checkedCustomer =
-                        viewState.checkedUserIds.contains(customer.id)
+                        viewState.checkedUserEmails.contains(customer.email)
 
                     CustomerItem(
                         item = customer,
                         onClick = {
                             onAction(
-                                PartnerCustomerOverviewViewAction.CheckedCustomer(
-                                    customer.id!!
-                                )
+                                PartnerCustomerOverviewViewAction.CheckedCustomer(customer.email)
                             )
                         },
                         checkedCustomer = checkedCustomer,
@@ -71,7 +68,7 @@ internal class CustomerOverviewScreen(
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
-                enabled = viewState.checkedUserIds.isNotEmpty(),
+                enabled = viewState.checkedUserEmails.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
                 onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) }
             )
@@ -117,9 +114,7 @@ internal class CustomerOverviewScreen(
 @Preview
 @Composable
 fun CustomerOverviewScreenContentPreview() {
-    CustomerOverviewScreen(
-        partnerId = "1"
-    ).PreviewContent(
+    CustomerOverviewScreen().PreviewContent(
         viewState = PartnerCustomerOverviewViewState(),
     )
 }

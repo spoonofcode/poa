@@ -15,7 +15,7 @@ internal class ProductSeriesOverviewViewModel(
 
     override fun onAction(action: ProductSeriesOverViewViewAction) {
         when (action) {
-            is ProductSeriesOverViewViewAction.CheckedProductSeries -> checkedProductSeries(action.productSeriesId)
+            is ProductSeriesOverViewViewAction.CheckedProductSeries -> checkedProductSeries(action.name)
             ProductSeriesOverViewViewAction.InitView -> initView()
             ProductSeriesOverViewViewAction.NavigateToNotification -> navigateToNotification()
         }
@@ -38,9 +38,9 @@ internal class ProductSeriesOverviewViewModel(
         }
     }
 
-    private fun checkedProductSeries(productSeriesId: String) {
-        val selected = currentState().checkedProductSeriesIds.toMutableSet()
-        val wasAdded = selected.contains(productSeriesId)
+    private fun checkedProductSeries(name: String) {
+        val selected = currentState().checkedProductSeriesNames.toMutableSet()
+        val wasAdded = selected.contains(name)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
             showSnackbar(
@@ -49,9 +49,13 @@ internal class ProductSeriesOverviewViewModel(
             return
         }
 
-        if (wasAdded) selected.remove(productSeriesId) else selected.add(productSeriesId)
+        if (wasAdded) selected.remove(name) else selected.add(name)
 
-        updateState { ProductSeriesOverviewViewState(checkedProductSeriesIds = selected) }
+        updateState {
+            copy(
+                checkedProductSeriesNames = selected,
+            )
+        }
     }
 
     private fun navigateToNotification() {
@@ -59,21 +63,13 @@ internal class ProductSeriesOverviewViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     NotificationModule.NotificationEditScreen(
-                        topics = getSelectedProductSeries(),
-                        itemIds = getSelectedProductSeriesNames()
+                        selectedTopics = currentState().checkedProductSeriesNames,
+                        selectedNames = currentState().checkedProductSeriesNames,
                     )
                 )
             )
         }
     }
-
-    private fun getSelectedProductSeries(): List<String> =
-        currentState().checkedProductSeriesIds.map { serieId -> "productSerieId$serieId" }.toList()
-
-    // TODO Fix this list of products
-    private fun getSelectedProductSeriesNames(): List<String> = emptyList()
-//        currentState().productSeries.filter { "${it.id}" in currentState().checkedProductSeriesIds }
-//            .map { productSeries -> productSeries.name }.toList()
 
     private companion object {
         private const val MAX_SELECTED_PRODUCT_SERIES = 5

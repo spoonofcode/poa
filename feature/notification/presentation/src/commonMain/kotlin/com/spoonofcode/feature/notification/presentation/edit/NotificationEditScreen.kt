@@ -44,15 +44,22 @@ import com.spoonofcode.feature.notification.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationEditScreen(
-    val onlyToSelectedUsers: Boolean = false,
-    val topics: List<String> = emptyList(),
-    val itemIds: List<String> = emptyList(),
+    val onlyToSelectedCustomers: Boolean = false,
+    val selectedTopics: Set<String> = emptySet(),
+    val selectedNames: Set<String> = emptySet(),
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState, NotificationEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification
 
     override fun provideInitAction(onAction: (NotificationEditViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationEditViewAction.InitView(itemIds = itemIds)) }
+        {
+            onAction(
+                NotificationEditViewAction.InitView(
+                    selectedTopics = selectedTopics,
+                    selectedNames = selectedNames,
+                )
+            )
+        }
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationEditViewModel>()
@@ -65,8 +72,8 @@ internal class NotificationEditScreen(
         return {
             Dialogs(viewState, onAction)
 
-            if (viewState.itemIds.isNotEmpty()) {
-                val title = if (onlyToSelectedUsers) {
+            if (viewState.selectedTopics.isNotEmpty()) {
+                val title = if (onlyToSelectedCustomers) {
                     stringResource(Res.string.selected_customers)
                 } else {
                     stringResource(Res.string.selected_series)
@@ -74,7 +81,7 @@ internal class NotificationEditScreen(
 
                 StaticSelectedItemsPanel(
                     title = title,
-                    items = viewState.itemIds,
+                    items = viewState.selectedNames,
                 )
             }
 
@@ -137,7 +144,7 @@ internal class NotificationEditScreen(
     @Composable
     fun StaticSelectedItemsPanel(
         title: String,
-        items: List<String>,
+        items: Set<String>,
         labelFor: (String) -> String = { it },
         modifier: Modifier = Modifier,
     ) {

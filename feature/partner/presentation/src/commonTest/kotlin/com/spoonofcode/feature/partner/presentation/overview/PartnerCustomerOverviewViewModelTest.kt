@@ -69,7 +69,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = PartnerCustomerOverviewViewState(
                         customers = PARTNER_USERS,
-                        checkedUserIds = emptySet(),
+                        checkedUserEmails = emptySet(),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -97,7 +97,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = PartnerCustomerOverviewViewState(
                         customers = PARTNER_USERS,
-                        checkedUserIds = emptySet(),
+                        checkedUserEmails = emptySet(),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -106,7 +106,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
 
             viewModel.onAction(
                 PartnerCustomerOverviewViewAction.CheckedCustomer(
-                    customerId = PARTNER_USER_1.id,
+                    email = PARTNER_USER_1.id,
                 )
             )
 
@@ -114,7 +114,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = PartnerCustomerOverviewViewState(
                         customers = PARTNER_USERS,
-                        checkedUserIds = setOf(PARTNER_USER_1.id),
+                        checkedUserEmails = setOf(PARTNER_USER_1.id),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

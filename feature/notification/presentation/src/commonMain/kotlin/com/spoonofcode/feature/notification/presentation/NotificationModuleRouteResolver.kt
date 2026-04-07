@@ -18,6 +18,9 @@ class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModule> 
                 )
 
                 is NotificationModule.NotificationEditScreen -> NotificationEditScreen(
+                    onlyToSelectedCustomers = it.onlyToSelectedCustomers,
+                    selectedNames = it.selectedNames,
+                    selectedTopics = it.selectedTopics,
                 )
 
                 NotificationModule.NotificationOverviewScreen -> NotificationOverviewScreen()

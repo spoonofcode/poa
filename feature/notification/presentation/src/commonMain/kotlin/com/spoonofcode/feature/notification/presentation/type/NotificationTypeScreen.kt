@@ -54,7 +54,8 @@ internal class NotificationTypeScreen :
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
                     onClick = { onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    enabled = viewState.buttonToAllPartnerCustomersEnable,
                 )
             }
 
@@ -87,6 +88,6 @@ private fun NotificationTypeScreenContentPreview() {
     NotificationTypeScreen()
         .PreviewContent(
             NotificationTypeViewState()
-    )
+        )
 }
 // endregion

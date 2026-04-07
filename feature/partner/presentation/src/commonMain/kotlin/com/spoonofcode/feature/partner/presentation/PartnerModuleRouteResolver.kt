@@ -12,7 +12,7 @@ class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModule> {
     override fun resolve(screen: com.spoonofcode.feature.appnavigation.Screen): Screen? =
         (screen as? PartnerModule)?.let {
             when (it) {
-                is PartnerModule.CustomerOverviewScreen -> CustomerOverviewScreen(partnerId = it.partnerId)
+                is PartnerModule.CustomerOverviewScreen -> CustomerOverviewScreen()
                 is PartnerModule.PartnerDetailsScreen -> PartnerDetailsScreen(partnerId = it.partnerId)
                 is PartnerModule.PartnerEditScreen -> PartnerEditScreen(partnerId = it.partnerId)
                 PartnerModule.PartnerPanelScreen -> PartnerPanelScreen()

@@ -29,17 +29,21 @@ internal class NotificationEditViewModel(
             is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
             is NotificationEditViewAction.ChangeText -> changeText(action.text)
             is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
-            is NotificationEditViewAction.InitView -> initView(action.itemIds)
+            is NotificationEditViewAction.InitView -> initView(action.selectedTopics, action.selectedNames)
             NotificationEditViewAction.SendNotification -> sendNotification()
             NotificationEditViewAction.CancelSendNotification -> cancelSendNotification()
             NotificationEditViewAction.ConfirmSendNotification -> confirmSendNotification()
         }
     }
 
-    private fun initView(itemIds: List<String>) {
+    private fun initView(
+        selectedTopics: Set<String>,
+        selectedNames: Set<String>
+    ) {
         updateState {
             NotificationEditViewState(
-                itemIds = itemIds
+                selectedTopics = selectedTopics,
+                selectedNames = selectedNames,
             )
         }
     }

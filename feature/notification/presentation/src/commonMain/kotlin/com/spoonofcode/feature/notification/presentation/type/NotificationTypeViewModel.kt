@@ -32,15 +32,9 @@ internal class NotificationTypeViewModel() :
     }
 
     private fun navigateToPartnerCustomers() {
-        // TODO #99 Adopt poa backend - read partner id from profile backend
-        val partnerId = "4KJzqfBSQ1WbwysYa0j9"
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModule.CustomerOverviewScreen(
-                        partnerId = partnerId,
-                    )
-                )
+                routeResolver.resolve(PartnerModule.CustomerOverviewScreen)
             )
         }
     }

@@ -7,5 +7,5 @@ import com.spoonofcode.feature.partner.domain.model.ProductSeries
 @Immutable
 internal data class ProductSeriesOverviewViewState(
     val productSeries: List<ProductSeries> = emptyList(),
-    val checkedProductSeriesIds: Set<String> = emptySet(),
+    val checkedProductSeriesNames: Set<String> = emptySet(),
 ) : BaseViewState()
