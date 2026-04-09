@@ -1,6 +1,10 @@
 package com.spoonofcode.feature.auth.presentation.utils
 
+import android.Manifest
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
@@ -15,6 +19,30 @@ actual class GoogleAuthUiProvider(
     private val activityContext: Context,
     private val credentialManager: CredentialManager
 ) {
+
+    @RequiresPermission(Manifest.permission.CREDENTIAL_MANAGER_QUERY_CANDIDATE_CREDENTIALS)
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    actual suspend fun isGoogleAccountAvailable(): Boolean {
+        val credentialManager = CredentialManager.create(activityContext)
+
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setServerClientId(SERVER_CLIENT_ID)
+            .setFilterByAuthorizedAccounts(false)
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        return try {
+            val prepareResponse = credentialManager.prepareGetCredential(request)
+
+            prepareResponse.hasCredentialResults(GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     actual suspend fun signIn(): GoogleAccount? = try {
         val credential = credentialManager.getCredential(
             context = activityContext,
@@ -53,7 +81,11 @@ actual class GoogleAuthUiProvider(
     private fun getGoogleIdOption(): GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
         .setAutoSelectEnabled(true)
-        // TODO #13 Switch to POA Backend API - set Web client id
-        .setServerClientId("179822836066-khn4c0frmekufu9advbecrrr3tofcsem.apps.googleusercontent.com")
+        .setServerClientId(SERVER_CLIENT_ID)
         .build()
+
+companion object {
+    const val SERVER_CLIENT_ID = "179822836066-khn4c0frmekufu9advbecrrr3tofcsem.apps.googleusercontent.com"
+}
+
 }

@@ -3,9 +3,9 @@ package com.spoonofcode.feature.notification.presentation.type
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.appnavigation.PartnerModule
 import com.spoonofcode.feature.appnavigation.ProductModule
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
 import kotlinx.coroutines.launch
 
 internal class NotificationTypeViewModel() :
@@ -26,7 +26,7 @@ internal class NotificationTypeViewModel() :
     private fun navigateToAllCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                NotificationEditScreen()
+                routeResolver.resolve(NotificationModule.NotificationEditScreen())
             )
         }
     }
@@ -48,7 +48,7 @@ internal class NotificationTypeViewModel() :
     private fun navigateToAllPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                NotificationEditScreen()
+                routeResolver.resolve(NotificationModule.NotificationEditScreen())
             )
         }
     }
