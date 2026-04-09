@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.notification.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.firebase.domain.FirebaseMessagingTopics
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
@@ -29,7 +28,11 @@ internal class NotificationEditViewModel(
             is NotificationEditViewAction.ChangeLink -> changeLink(action.link)
             is NotificationEditViewAction.ChangeText -> changeText(action.text)
             is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
-            is NotificationEditViewAction.InitView -> initView(action.selectedTopics, action.selectedNames)
+            is NotificationEditViewAction.InitView -> initView(
+                action.selectedTopics,
+                action.selectedNames
+            )
+
             NotificationEditViewAction.SendNotification -> sendNotification()
             NotificationEditViewAction.CancelSendNotification -> cancelSendNotification()
             NotificationEditViewAction.ConfirmSendNotification -> confirmSendNotification()
@@ -112,8 +115,7 @@ internal class NotificationEditViewModel(
                 title = currentState.title,
                 text = currentState.text,
                 link = currentState.link,
-                topic = FirebaseMessagingTopics.global.name,
-//                topics = currentState.itemIds,
+                topics = currentState.selectedTopics.toList(),
                 deliveryDateTime = currentState.deliveryDateTime,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {

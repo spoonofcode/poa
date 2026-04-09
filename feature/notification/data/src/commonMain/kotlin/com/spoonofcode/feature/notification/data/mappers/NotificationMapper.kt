@@ -14,6 +14,6 @@ fun NotificationResponse.toNotification(): Notification {
         modificationDateTime = modificationDateTime.toZonedLocalDateTime(),
         expirationDateTime = expirationDateTime?.toZonedLocalDateTime(),
         state = state,
-        topic = topic,
+        topics = topics,
     )
 }

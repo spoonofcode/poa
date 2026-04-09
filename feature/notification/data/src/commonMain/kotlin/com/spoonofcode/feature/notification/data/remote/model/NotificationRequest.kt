@@ -9,7 +9,7 @@ data class NotificationRequest(
     val title: String,
     val text: String,
     val link: String? = null,
-    val topic: String,
+    val topics: List<String>,
     @SerialName("delivery_datetime")
     val deliveryDateTime: Instant? = null,
     @SerialName("expiration_datetime")
