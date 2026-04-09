@@ -74,7 +74,7 @@ internal class PartnerOverviewScreen(
     ) {
         Cards.ElevatedCard(
             onClick = onClick,
-            modifier = modifier.fillMaxWidth().height(140.dp),
+            modifier = modifier.fillMaxWidth().height(180.dp),
         ) {
             Images.ImageLink(imageLink = item.imageLink!!)
         }

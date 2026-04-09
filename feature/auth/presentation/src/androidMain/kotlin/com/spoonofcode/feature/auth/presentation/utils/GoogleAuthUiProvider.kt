@@ -25,17 +25,8 @@ actual class GoogleAuthUiProvider(
     actual suspend fun isGoogleAccountAvailable(): Boolean {
         val credentialManager = CredentialManager.create(activityContext)
 
-        val googleIdOption = GetGoogleIdOption.Builder()
-            .setServerClientId(SERVER_CLIENT_ID)
-            .setFilterByAuthorizedAccounts(false)
-            .build()
-
-        val request = GetCredentialRequest.Builder()
-            .addCredentialOption(googleIdOption)
-            .build()
-
         return try {
-            val prepareResponse = credentialManager.prepareGetCredential(request)
+            val prepareResponse = credentialManager.prepareGetCredential(getCredentialRequest())
 
             prepareResponse.hasCredentialResults(GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)
         } catch (e: Exception) {
@@ -84,8 +75,8 @@ actual class GoogleAuthUiProvider(
         .setServerClientId(SERVER_CLIENT_ID)
         .build()
 
-companion object {
-    const val SERVER_CLIENT_ID = "179822836066-khn4c0frmekufu9advbecrrr3tofcsem.apps.googleusercontent.com"
-}
-
+    companion object {
+        const val SERVER_CLIENT_ID =
+            "179822836066-khn4c0frmekufu9advbecrrr3tofcsem.apps.googleusercontent.com"
+    }
 }

@@ -11,6 +11,7 @@ class GetNewPartnersUseCase(
         return partnerRepository.getPartners().map { partners ->
             partners
                 .filter { !it.imageLink.isNullOrBlank() }
+                .shuffled()
                 .take(limit)
         }
     }
