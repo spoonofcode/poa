@@ -99,7 +99,7 @@ internal class ProductOverviewScreen(
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
             ) {
-                Images.ImageLink(imageLink = product.imageLink)
+                product.imageLink?.let { Images.ImageLink(imageLink = it) }
             }
 
             Column(
@@ -108,13 +108,15 @@ internal class ProductOverviewScreen(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Texts.LSB(text = product.collectionName.uppercase())
-                Texts.TMB(
-                    text = product.name,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                product.seriesName?.let { Texts.LSB(text = it.uppercase()) }
+                product.name?.let {
+                    Texts.TMB(
+                        text = it,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
         }
     }

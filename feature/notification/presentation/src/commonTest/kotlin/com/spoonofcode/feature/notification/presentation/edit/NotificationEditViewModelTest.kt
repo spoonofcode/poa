@@ -13,6 +13,7 @@ import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDateTime
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -31,6 +32,11 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel = getSut()
     }
 
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
+    }
+
     @Test
     fun `initial state is default`() = runTest {
         viewModel.viewState.test {
@@ -46,16 +52,21 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `init view`() = runTest {
-        val itemIds = listOf("1", "2")
+        val selectedTopics = setOf("test1@gmail.com", "test2@gmail.com")
+        val selectedNames = setOf("Test name 1", "Test name 2")
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.InitView(itemIds = itemIds))
+            viewModel.onAction(NotificationEditViewAction.InitView(
+                selectedTopics = selectedTopics,
+                selectedNames = selectedNames,
+            ))
 
             assertEquals(
                 expected = ViewState(
                     data = NotificationEditViewState(
-                        itemIds = itemIds,
+                        selectedTopics = selectedTopics,
+                        selectedNames = selectedNames,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -126,14 +137,16 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `send notification success`() = runTest {
-        val itemIds = listOf("1", "2")
+        val selectedTopics = setOf("test1@gmail.com", "test2@gmail.com")
+        val selectedNames = setOf("Test name 1", "Test name 2")
         val title = "New title"
         val text = "New text"
         val link = "New link"
         val expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1)
         viewModel.updateState {
             copy(
-                itemIds = itemIds,
+                selectedTopics = selectedTopics,
+                selectedNames = selectedNames,
                 title = title,
                 text = text,
                 link = link,
@@ -149,7 +162,8 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = NotificationEditViewState(
-                        itemIds = itemIds,
+                        selectedTopics = selectedTopics,
+                        selectedNames = selectedNames,
                         title = title,
                         text = text,
                         link = link,
@@ -162,7 +176,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            notificationRepository.create(any(), any(), any(), any(), any(), any(), any())
+            notificationRepository.create(any(), any(), any(), any(), any(), any())
         }
 
         verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }

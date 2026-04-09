@@ -3,17 +3,9 @@ package com.spoonofcode.feature.product.presentation.edit
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,51 +48,32 @@ internal class ProductEditScreen(
             if (product.videoLink != null) {
                 VideoAnimation(videoLink = product.videoLink!!)
             } else {
-                Images.ImageLink(imageLink = product.imageLink)
+                product.imageLink?.let { Images.ImageLink(imageLink = it) }
             }
 
             Column(
                 modifier = Modifier.padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Texts.LLB(
-                    text = product.collectionName.uppercase(),
-                )
-
-                Texts.HSB(
-                    text = product.name,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                product.tagId?.let { tag ->
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = MaterialTheme.colorScheme.secondaryContainer,
-                        modifier = Modifier.padding(top = 4.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                Icons.Default.QrCode,
-                                contentDescription = null,
-                                modifier = Modifier.size(14.dp),
-                                tint = MaterialTheme.colorScheme.onSecondaryContainer
-                            )
-                            Texts.LS(
-                                text = "TAG: $tag",
-                                color = MaterialTheme.colorScheme.onSecondaryContainer
-                            )
-                        }
-                    }
+                product.seriesName?.let {
+                    Texts.LLB(
+                        text = it.uppercase(),
+                    )
                 }
 
-                Cards.DescriptionCard(
-                    title = stringResource(Res.string.about_product),
-                    description = product.description
-                )
+                product.name?.let {
+                    Texts.HSB(
+                        text = it,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                product.description?.let {
+                    Cards.DescriptionCard(
+                        title = stringResource(Res.string.about_product),
+                        description = it
+                    )
+                }
 
                 TextFields.Outlined(
                     value = product.customLink ?: "",

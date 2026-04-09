@@ -14,7 +14,7 @@ kotlin {
                 implementation(projects.feature.home.domain)
                 implementation(projects.feature.partner.domain)
                 implementation(projects.feature.notification.domain)
-                implementation(projects.core.firebase)
+                implementation(projects.core.firebase.domain)
             }
         }
 
@@ -23,6 +23,8 @@ kotlin {
                 implementation(libs.turbine)
                 implementation(projects.core.presentationTest)
                 implementation(projects.feature.home.dataTest)
+                implementation(projects.feature.partner.dataTest)
+                implementation(projects.feature.notification.dataTest)
             }
         }
     }

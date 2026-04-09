@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
@@ -23,11 +22,11 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_product_series
 import com.spoonofcode.feature.product.presentation.send_notification
-import com.spoonofcode.feature.product.presentation.series_number
+import com.spoonofcode.feature.product.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
 internal class ProductSeriesOverviewScreen(
@@ -55,16 +54,16 @@ internal class ProductSeriesOverviewScreen(
                         .padding(bottom = 60.dp),
                     verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
                 ) {
-                    items(viewState.productSeries) { product ->
+                    items(viewState.productSeries) { productSerie ->
                         val checkedProductSeries =
-                            viewState.checkedProductSeriesIds.contains(product.seriesId)
+                            viewState.checkedProductSeriesNames.contains(productSerie.name)
 
                         ProductSeriesItem(
-                            item = product,
+                            item = productSerie,
                             onClick = {
                                 onAction(
                                     ProductSeriesOverViewViewAction.CheckedProductSeries(
-                                        product.seriesId
+                                        productSerie.name
                                     )
                                 )
                             },
@@ -74,7 +73,7 @@ internal class ProductSeriesOverviewScreen(
                 }
 
                 Buttons.PrimaryButton(
-                    enabled = viewState.checkedProductSeriesIds.isNotEmpty(),
+                    enabled = viewState.checkedProductSeriesNames.isNotEmpty(),
                     modifier = Modifier
                         .align(Alignment.BottomCenter),
                     text = stringResource(resource = Res.string.send_notification),
@@ -86,27 +85,24 @@ internal class ProductSeriesOverviewScreen(
 
     @Composable
     fun ProductSeriesItem(
-        item: Product,
+        item: ProductSeries,
         onClick: () -> Unit,
         checkedProductSeries: Boolean,
     ) {
         Cards.ElevatedCard(
             onClick = onClick
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Images.ImageLink(
-                    imageLink = item.imageLink,
-                    modifier = Modifier.size(80.dp),
-                    )
-
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Images.CircleImage(
+                    imageRes = Res.drawable.taggy_go_logo,
+                    imageSize = 64.dp,
+                )
                 Spacers.HorizontalBetweenFields()
 
-                Texts.BLB(
-                    text = stringResource(
-                        resource = Res.string.series_number,
-                        item.seriesId
-                    )
-                )
+                Texts.BLB(item.name)
 
                 Spacers.Weight1(this)
 

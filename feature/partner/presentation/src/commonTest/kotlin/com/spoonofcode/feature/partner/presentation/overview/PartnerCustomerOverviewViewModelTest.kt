@@ -68,8 +68,8 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = PartnerCustomerOverviewViewState(
-                        partnerUsers = PARTNER_USERS,
-                        checkedUserIds = emptySet(),
+                        customers = PARTNER_USERS,
+                        checkedUserEmails = emptySet(),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -96,8 +96,8 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
             assertEquals(
                 expected = ViewState(
                     data = PartnerCustomerOverviewViewState(
-                        partnerUsers = PARTNER_USERS,
-                        checkedUserIds = emptySet(),
+                        customers = PARTNER_USERS,
+                        checkedUserEmails = emptySet(),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),
@@ -106,15 +106,15 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
 
             viewModel.onAction(
                 PartnerCustomerOverviewViewAction.CheckedCustomer(
-                    userId = PARTNER_USER_1.id,
+                    email = PARTNER_USER_1.id,
                 )
             )
 
             assertEquals(
                 expected = ViewState(
                     data = PartnerCustomerOverviewViewState(
-                        partnerUsers = PARTNER_USERS,
-                        checkedUserIds = setOf(PARTNER_USER_1.id),
+                        customers = PARTNER_USERS,
+                        checkedUserEmails = setOf(PARTNER_USER_1.id),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

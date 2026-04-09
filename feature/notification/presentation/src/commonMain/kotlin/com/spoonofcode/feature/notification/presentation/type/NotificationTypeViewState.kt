@@ -6,4 +6,5 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 @Immutable
 internal data class NotificationTypeViewState(
     val buttonToAllEnable: Boolean = false,
+    val buttonToAllPartnerCustomersEnable: Boolean = false,
 ) : BaseViewState()

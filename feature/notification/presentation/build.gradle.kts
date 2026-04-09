@@ -11,7 +11,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.calf.permissions)
 
-                implementation(projects.core.firebase)
+                implementation(projects.core.firebase.domain)
                 implementation(projects.feature.notification.domain)
             }
         }

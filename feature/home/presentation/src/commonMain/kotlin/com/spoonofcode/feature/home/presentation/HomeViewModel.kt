@@ -1,8 +1,7 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.firebase.FirebaseMessagingTopics
-import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
+import com.spoonofcode.core.firebase.domain.usecase.SubscribeToFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
@@ -35,7 +34,7 @@ internal class HomeViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.global.name)
+//            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.global.name)
             val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
             val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
             val partnersDeferred = async { getNewPartnersUseCase() }

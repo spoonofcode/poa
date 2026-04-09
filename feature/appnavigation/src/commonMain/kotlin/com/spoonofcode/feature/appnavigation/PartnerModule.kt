@@ -9,9 +9,7 @@ sealed class PartnerModule : Screen() {
         val partnerId: String,
     ) : PartnerModule()
 
-    data class CustomerOverviewScreen(
-        val partnerId: String,
-    ) : PartnerModule()
+    object CustomerOverviewScreen: PartnerModule()
 
     object  PartnerPanelScreen : PartnerModule()
 }

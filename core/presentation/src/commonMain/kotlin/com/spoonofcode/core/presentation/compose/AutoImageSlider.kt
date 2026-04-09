@@ -10,13 +10,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -41,9 +39,6 @@ fun AutoImageSlider(
     label: String? = null,
     imageLinks: List<String>,
     modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.extraLarge,
-    aspectRatio: Float = 16f / 9f,
-    pageSpacing: Dp = 8.dp,
     indicatorSize: Dp = 8.dp,
     indicatorSpacing: Dp = 8.dp,
     activeColor: Color = MaterialTheme.colorScheme.primary,
@@ -77,15 +72,11 @@ fun AutoImageSlider(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Cards.ElevatedCard {
+        Cards.ElevatedCard(
+            modifier = modifier.fillMaxWidth().height(180.dp),
+        ) {
             HorizontalPager(
                 state = pagerState,
-                pageSpacing = pageSpacing,
-                flingBehavior = PagerDefaults.flingBehavior(pagerState),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(aspectRatio)
-                    .clip(shape)
             ) { page ->
                 Images.ImageLink(imageLink = imageLinks[page])
             }

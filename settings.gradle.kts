@@ -36,7 +36,9 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core:data")
-include(":core:firebase")
+include(":core:firebase:data")
+include(":core:firebase:data-test")
+include(":core:firebase:domain")
 include(":core:nfc")
 include(":core:presentation")
 include(":core:presentation-test")

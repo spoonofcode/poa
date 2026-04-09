@@ -6,9 +6,9 @@ sealed class NotificationModule : Screen() {
     ) : NotificationModule()
 
     data class NotificationEditScreen(
-        val onlyToSelectedUsers: Boolean = false,
-        val topics: List<String> = emptyList(),
-        val itemIds: List<String> = emptyList(),
+        val onlyToSelectedCustomers: Boolean = false,
+        val selectedNames: Set<String> = emptySet(),
+        val selectedTopics: Set<String> = emptySet(),
     ) : NotificationModule()
 
     object NotificationOverviewScreen : NotificationModule()

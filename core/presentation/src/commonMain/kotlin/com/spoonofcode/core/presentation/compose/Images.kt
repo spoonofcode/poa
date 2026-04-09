@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,26 +30,32 @@ import org.jetbrains.compose.resources.painterResource
 object Images {
     @Composable
     fun CircleImage(
-        modifier: Modifier = Modifier,
         imageRes: DrawableResource,
-        imageSize: Dp = 120.dp,
+        imageSize: Dp = 100.dp,
     ) {
-        Surface(
-            modifier = modifier
-                .size(imageSize),
-            shape = CircleShape,
+        Box(
+            modifier = Modifier
+                .size(imageSize)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(resource = imageRes),
-                contentDescription = null,
+            Surface(
                 modifier = Modifier
-                    .height(200.dp)
-                    .background(MaterialTheme.colorScheme.onBackground)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp)),
-                contentScale = ContentScale.Crop,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
-            )
+                    .size(imageSize * 0.9f),
+                shape = CircleShape,
+            ) {
+                Image(
+                    painter = painterResource(resource = imageRes),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.onBackground)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop,
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
+                )
+            }
         }
     }
 

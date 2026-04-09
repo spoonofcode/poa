@@ -62,7 +62,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(PartnerModule.CustomerOverviewScreen(partnerId = any())) }
+        verifySuspend { routeResolver.resolve(PartnerModule.CustomerOverviewScreen) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 

@@ -5,11 +5,11 @@ import com.spoonofcode.core.data.Platform
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.ProductModule
-import com.spoonofcode.feature.product.domain.usecase.GetProductByTagIdUseCase
+import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
-    private val getProductByTagIdUseCase: GetProductByTagIdUseCase,
+    private val getProductByIdUseCase: GetProductByIdUseCase,
     private val platform: Platform,
 ) : BaseViewModel<ScanViewState, ScanViewAction>(
     initialViewState = ScanViewState(),
@@ -31,13 +31,13 @@ internal class ScanViewModel(
     private fun checkProduct(tagId: String) {
         viewModelScope.launch {
             showLoadingView()
-            getProductByTagIdUseCase(tagId = tagId)
+            getProductByIdUseCase(productId = tagId)
                 .onSuccess {
                     viewModelNavigator.push(
                         routeResolver.resolve(
                             ProductModule.ProductDetailsScreen(
                                 productId = it.id,
-                                hasOwnerUser = it.ownerUserId != null,
+                                hasOwnerUser = it.ownerEmail != null,
                             )
                         )
                     )

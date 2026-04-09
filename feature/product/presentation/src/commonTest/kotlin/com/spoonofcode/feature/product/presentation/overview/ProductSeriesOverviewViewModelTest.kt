@@ -102,7 +102,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
 
             viewModel.onAction(
                 ProductSeriesOverViewViewAction.CheckedProductSeries(
-                    productSeriesId = PRODUCT_1.seriesId,
+                    name = PRODUCT_1.seriesId,
                 )
             )
 
@@ -110,7 +110,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = ProductSeriesOverviewViewState(
                         productSeries = PRODUCTS,
-                        checkedProductSeriesIds = setOf(PRODUCT_1.seriesId),
+                        checkedProductSeriesNames = setOf(PRODUCT_1.seriesId),
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

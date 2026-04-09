@@ -9,7 +9,8 @@ import kotlinx.datetime.LocalDateTime
 
 @Immutable
 internal data class NotificationEditViewState(
-    val itemIds: List<String> = emptyList(),
+    val selectedTopics: Set<String> = emptySet(),
+    val selectedNames: Set<String> = emptySet(),
     val title: String = "",
     val text: String = "",
     val link: String = "",

@@ -1,54 +1,39 @@
 package com.spoonofcode.feature.product.data.remote
 
 import com.spoonofcode.core.data.base.RemoteBaseDataSource
-import com.spoonofcode.feature.product.data.remote.model.ProductRequest
+import com.spoonofcode.feature.product.data.remote.model.AddProductToUserRequest
 import com.spoonofcode.feature.product.data.remote.model.ProductResponse
+import com.spoonofcode.feature.product.data.remote.model.UpdateUserProductRequest
 import io.ktor.http.HttpMethod
 
 class RemoteProductDataSource : RemoteBaseDataSource(
-    collectionName = "products",
+    collectionName = "api/products",
 ) {
-    suspend fun read(
-        productId: String,
-    ): Result<ProductResponse> = doRequest<ProductResponse>(
+    suspend fun readProduct(productId: String): Result<ProductResponse> = doRequest(
         urlPostfixPath = productId,
         method = HttpMethod.Get,
     )
 
+    suspend fun readUserProducts(): Result<List<ProductResponse>> = doRequest(
+        method = HttpMethod.Get,
+    )
+
+    suspend fun addProductToUser(productId: String): Result<Unit> = doRequest(
+        method = HttpMethod.Post,
+        requestBody = AddProductToUserRequest(productId = productId),
+    )
+
+    suspend fun deleteProductFromUser(productId: String): Result<Unit> = doRequest(
+        urlPostfixPath = "$productId/abandon",
+        method = HttpMethod.Post,
+    )
+
     suspend fun update(
         productId: String,
-        ownerUserId: String?,
-        partnerId: String,
-        name: String,
-        description: String,
-        seriesId: String,
-        collectionName: String,
-        imageLink: String,
-        videoLink: String?,
-        tagId: String?,
-        websiteLink: String?,
-        customLink: String?,
+        customLink: String? = null
     ): Result<Unit> = doRequest(
         urlPostfixPath = productId,
         method = HttpMethod.Put,
-        requestBody = ProductRequest(
-            ownerUserId = ownerUserId,
-            partnerId = partnerId,
-            name = name,
-            description = description,
-            seriesId = seriesId,
-            collectionName = collectionName,
-            imageLink = imageLink,
-            videoLink = videoLink,
-            tagId = tagId,
-            websiteLink = websiteLink,
-            customLink = customLink,
-        ),
+        requestBody = UpdateUserProductRequest(customLink = customLink),
     )
-
-    suspend fun readProductByTagId(tagId: String): Result<ProductResponse> =
-        doRequest<ProductResponse>(
-            method = HttpMethod.Get,
-            queryParams = mapOf("tagId" to tagId),
-        )
 }

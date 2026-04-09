@@ -8,7 +8,7 @@ interface NotificationRepository {
         title: String,
         text: String,
         link: String? = null,
-        topic: String,
+        topics: List<String>,
         deliveryDateTime: LocalDateTime? = null,
         expirationDateTime: LocalDateTime? = null,
     ): Result<Unit>
@@ -18,7 +18,7 @@ interface NotificationRepository {
         title: String,
         text: String,
         link: String? = null,
-        topic: String,
+        topics: List<String>,
         deliveryDateTime: LocalDateTime? = null,
         expirationDateTime: LocalDateTime? = null,
     ): Result<Unit>

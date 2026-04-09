@@ -6,7 +6,12 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -72,10 +77,6 @@ internal class LoginScreen(
                 onClick = { onAction(LoginViewAction.SignInWithCode) }
             )
 
-            Dividers.LabeledDivider(
-                text = stringResource(resource = Res.string.or)
-            )
-
             GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
                 onAction(LoginViewAction.SignInWithGoogle(googleAccount =googleAccount))
             })
@@ -89,17 +90,31 @@ private fun GoogleSignInButton(
 ) {
     val googleAuthProvider = koinInject<GoogleAuthProvider>()
     val googleAuthUiProvider = googleAuthProvider.getUiProvider()
-    val coroutineScope = rememberCoroutineScope()
-    PrimaryButton(
-        text = stringResource(resource = Res.string.sign_in_with_google),
-        leftIcon = Res.drawable.ic_google,
-        onClick = {
-            coroutineScope.launch {
-                val googleAccount = googleAuthUiProvider.signIn()
-                onGoogleSignInResult(googleAccount)
+
+    var isVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        isVisible = googleAuthUiProvider.isGoogleAccountAvailable()
+    }
+
+    if(isVisible){
+        val coroutineScope = rememberCoroutineScope()
+
+        Dividers.LabeledDivider(
+            text = stringResource(resource = Res.string.or)
+        )
+
+        PrimaryButton(
+            text = stringResource(resource = Res.string.sign_in_with_google),
+            leftIcon = Res.drawable.ic_google,
+            onClick = {
+                coroutineScope.launch {
+                    val googleAccount = googleAuthUiProvider.signIn()
+                    onGoogleSignInResult(googleAccount)
+                }
             }
-        }
-    )
+        )
+    }
 }
 
 // region previews

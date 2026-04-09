@@ -13,10 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -46,7 +44,6 @@ import com.spoonofcode.feature.product.presentation.delete_product_from_profile_
 import com.spoonofcode.feature.product.presentation.delete_product_from_profile_title
 import com.spoonofcode.feature.product.presentation.learn_more
 import com.spoonofcode.feature.product.presentation.product
-import com.spoonofcode.feature.product.presentation.visit_product_page
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
@@ -97,21 +94,23 @@ internal data class ProductDetailsScreen(
             if (product.videoLink != null) {
                 VideoAnimation(product.videoLink!!)
             } else {
-                Images.ImageLink(imageLink = product.imageLink)
+                product.imageLink?.let { Images.ImageLink(imageLink = it) }
             }
 
             Column(
                 modifier = Modifier.padding(top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Texts.LLB(text = product.collectionName.uppercase())
+                product.seriesName?.let { Texts.LLB(text = it.uppercase()) }
 
-                Texts.HSB(
-                    text = product.name,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                product.name?.let {
+                    Texts.HSB(
+                        text = it,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
 
-                product.tagId?.let { tag ->
+                product.seriesId?.let { tag ->
                     Surface(
                         shape = RoundedCornerShape(8.dp),
                         color = MaterialTheme.colorScheme.secondaryContainer,
@@ -136,25 +135,16 @@ internal data class ProductDetailsScreen(
                     }
                 }
 
-                Cards.DescriptionCard(
-                    title = stringResource(Res.string.about_product),
-                    description = product.description
-                )
+                product.description?.let {
+                    Cards.DescriptionCard(
+                        title = stringResource(Res.string.about_product),
+                        description = it
+                    )
+                }
 
-                if (!product.websiteLink.isNullOrBlank() || !product.customLink.isNullOrBlank()) {
+                if (!product.customLink.isNullOrBlank()) {
                     Cards.ElevatedCard {
                         Column {
-                            ClickableInfoRow(
-                                text = stringResource(Res.string.visit_product_page),
-                                url = product.websiteLink,
-                                icon = Icons.Default.Language
-                            )
-                            if (!product.websiteLink.isNullOrBlank() && !product.customLink.isNullOrBlank()) {
-                                HorizontalDivider(
-                                    modifier = Modifier.padding(horizontal = 16.dp),
-                                    color = MaterialTheme.colorScheme.outlineVariant
-                                )
-                            }
                             ClickableInfoRow(
                                 text = stringResource(Res.string.learn_more),
                                 url = product.customLink,

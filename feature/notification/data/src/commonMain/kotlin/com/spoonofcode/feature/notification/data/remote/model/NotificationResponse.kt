@@ -24,5 +24,5 @@ data class NotificationResponse(
     @Serializable(with = RFC1123InstantSerializer::class)
     val expirationDateTime: Instant? = null,
     val state: String,
-    val topic: String,
+    val topics: List<String>,
 )

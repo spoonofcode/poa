@@ -7,7 +7,7 @@ class GetFilteredProductsByTextUseCase {
         searchText: String,
         products: List<Product>,
     ): List<Product> = products.filter { product ->
-        product.name.contains(searchText, ignoreCase = true)
+        product.name!!.contains(searchText, ignoreCase = true)
     }
 }
 

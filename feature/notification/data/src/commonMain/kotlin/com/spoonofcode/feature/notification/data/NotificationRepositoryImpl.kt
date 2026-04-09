@@ -18,14 +18,14 @@ class NotificationRepositoryImpl(
         title: String,
         text: String,
         link: String?,
-        topic: String,
+        topics: List<String>,
         deliveryDateTime: LocalDateTime?,
         expirationDateTime: LocalDateTime?
     ): Result<Unit> = remoteNotificationDataSource.create(
         title = title,
         text = text,
         link = link,
-        topic = topic,
+        topics = topics,
         deliveryDateTime = deliveryDateTime?.toZonedInstant(),
         expirationDateTime = expirationDateTime?.toZonedInstant(),
     ).map { Unit }
@@ -35,7 +35,7 @@ class NotificationRepositoryImpl(
         title: String,
         text: String,
         link: String?,
-        topic: String,
+        topics: List<String>,
         deliveryDateTime: LocalDateTime?,
         expirationDateTime: LocalDateTime?
     ): Result<Unit> = remoteNotificationDataSource.update(
@@ -43,7 +43,7 @@ class NotificationRepositoryImpl(
         title = title,
         text = text,
         link = link,
-        topic = topic,
+        topics = topics,
         deliveryDateTime = deliveryDateTime?.toZonedInstant(),
         expirationDateTime = expirationDateTime?.toZonedInstant(),
     ).map { Unit }

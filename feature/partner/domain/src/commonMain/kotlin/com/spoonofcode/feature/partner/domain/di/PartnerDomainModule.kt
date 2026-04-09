@@ -3,6 +3,8 @@ package com.spoonofcode.feature.partner.domain.di
 import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerProductSeriesUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
@@ -20,4 +22,6 @@ val partnerDomainModule = module {
     factoryOf(::GetPartnerUsersUseCase)
     factoryOf(::GetNewPartnersUseCase)
     factoryOf(::UpdatePartnerUseCase)
+    factoryOf(::GetPartnerProductSeriesUseCase)
+    factoryOf(::GetPartnerCustomersUseCase)
 }
