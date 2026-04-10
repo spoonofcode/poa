@@ -4,33 +4,39 @@ import com.spoonofcode.core.data.network.SessionManager
 import com.spoonofcode.core.firebase.data.FirebaseMessagingService
 import com.spoonofcode.feature.notification.domain.FirebaseMessagingTopicPrefixes
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
+import com.spoonofcode.feature.product.domain.repository.ProductRepository
 
 class UpdateNotificationSettingsUseCase(
     private val sessionManager: SessionManager,
     private val firebaseMessagingService: FirebaseMessagingService,
-//    private val productRepository: ProductRepository,
+    private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
         if (notificationSettings.isPersonalizedPartnerNotificationsEnabled) {
-            firebaseMessagingService.subscribeToTopic(getUserTopic()).onFailure { return Result.failure(it) }
-//            firebaseMessagingService.subscribeToTopic(getSerieTopic()).onFailure { return Result.failure(it) }
+            firebaseMessagingService.subscribeToTopic(getUserTopic())
+                .onFailure { return Result.failure(it) }
         } else {
-            firebaseMessagingService.unsubscribeFromTopic(getUserTopic()).onFailure { return Result.failure(it) }
+            firebaseMessagingService.unsubscribeFromTopic(getUserTopic())
+                .onFailure { return Result.failure(it) }
         }
 
-//        if (notificationSettings.isProductSeriesNotificationsEnabled) {
-//            productRepository.getUserProducts().onSuccess { products ->
-//                products.forEach { product->
-//                    firebaseMessagingService.subscribeToTopic(getSerieTopic(product.seriesName))
-//                }
-//            }
-//                .onFailure {
-//                    showErrorView()
-//                }
-//            firebaseMessagingService.subscribeToTopic(getSerieTopic())
-//        } else {
-//            firebaseMessagingService.unsubscribeFromTopic(getSerieTopic())
-//        }
+        if (notificationSettings.isProductSeriesNotificationsEnabled) {
+            productRepository.getUserProducts().onSuccess { products ->
+                val uniqueSeries = products.mapNotNull { it.seriesName }.distinct()
+                uniqueSeries.forEach { seriesName ->
+                    firebaseMessagingService.subscribeToTopic(getSerieTopic(seriesName))
+                        .onFailure { return Result.failure(it) }
+                }
+            }
+        } else {
+            productRepository.getUserProducts().onSuccess { products ->
+                val uniqueSeries = products.mapNotNull { it.seriesName }.distinct()
+                uniqueSeries.forEach { seriesName ->
+                    firebaseMessagingService.unsubscribeFromTopic(getSerieTopic(seriesName))
+                        .onFailure { return Result.failure(it) }
+                }
+            }
+        }
 
         sessionManager.saveSettingsPersonalizedPartnerNotifications(notificationSettings.isPersonalizedPartnerNotificationsEnabled)
         sessionManager.saveSettingsProductSeriesNotifications(notificationSettings.isProductSeriesNotificationsEnabled)
@@ -41,7 +47,7 @@ class UpdateNotificationSettingsUseCase(
     private fun getUserTopic(): String =
         FirebaseMessagingTopicPrefixes.user.createTopic(sessionManager.getSessionUserEmail())
 
-    private fun getSerieTopic(serieName:String): String =
-        FirebaseMessagingTopicPrefixes.serie.createTopic(sessionManager.getSessionUserEmail())
+    private fun getSerieTopic(serieName: String): String =
+        FirebaseMessagingTopicPrefixes.serie.createTopic(serieName)
 
 }

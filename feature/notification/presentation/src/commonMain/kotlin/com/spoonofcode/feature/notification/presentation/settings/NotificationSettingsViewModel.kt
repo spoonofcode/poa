@@ -12,8 +12,6 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
-//    private val subscribeToFirebaseTopicsUseCase: SubscribeToFirebaseMessagingTopicUseCase,
-//    private val unsubscribeFromFirebaseMessagingTopicUseCase: UnsubscribeFromFirebaseMessagingTopicUseCase,
 ) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(
     NotificationSettingsViewState()
 ) {
@@ -73,15 +71,12 @@ internal class NotificationSettingsViewModel(
     private fun saveChanges() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                updateNotificationSettingsUseCase(
-                    notificationSettings = currentState().notificationSettings
-                )
-
+            updateNotificationSettingsUseCase(
+                notificationSettings = currentState().notificationSettings
+            ).onSuccess {
                 viewModelNavigator.pop()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                showErrorView()
+            }.onFailure {
+                showErrorSnackbar(it)
             }
         }
     }
