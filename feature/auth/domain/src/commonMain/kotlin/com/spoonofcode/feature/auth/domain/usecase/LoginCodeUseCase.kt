@@ -17,6 +17,6 @@ class LoginCodeUseCase(
         sessionManager.saveSessionAccessToken(token = login.jwtAccessToken)
         sessionManager.saveSessionRefreshToken(token = login.jwtRefreshToken)
         sessionManager.saveSessionUserEmail(email = login.email)
-        sessionManager.enableAllNotifications()
+        sessionManager.disableAllNotifications()
     }
 }

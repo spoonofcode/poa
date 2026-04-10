@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 //import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
 //import com.spoonofcode.core.firebase.usecase.UnsubscribeFromFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import kotlinx.coroutines.launch
@@ -27,6 +29,10 @@ internal class NotificationSettingsViewModel(
             is NotificationSettingsViewAction.SwitchNotificationsForSelectedProductSeries -> switchNotificationsForSelectedProductSeries(
                 action.enable
             )
+
+            NotificationSettingsViewAction.AcceptNotificationSettings -> acceptNotificationSettings()
+            NotificationSettingsViewAction.ShowRationaleNotificationDialog -> showRationaleNotificationDialog()
+            NotificationSettingsViewAction.CloseRationaleNotificationDialog -> closeRationaleNotificationDialog()
         }
     }
 
@@ -78,6 +84,30 @@ internal class NotificationSettingsViewModel(
             }.onFailure {
                 showErrorSnackbar(it)
             }
+        }
+    }
+
+    private fun acceptNotificationSettings() {
+        viewModelScope.launch {
+            updateNotificationSettingsUseCase(
+                notificationSettings = NotificationSettings()
+            )
+        }
+    }
+
+    private fun showRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = true
+            )
+        }
+    }
+
+    private fun closeRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = false
+            )
         }
     }
 }

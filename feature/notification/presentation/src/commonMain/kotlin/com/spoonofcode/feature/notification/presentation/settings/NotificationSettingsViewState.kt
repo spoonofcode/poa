@@ -7,4 +7,5 @@ import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 @Immutable
 internal data class NotificationSettingsViewState(
     val notificationSettings: NotificationSettings = NotificationSettings(),
+    val isRationaleNotificationDialogVisible: Boolean = false,
 ) : BaseViewState()

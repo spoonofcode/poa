@@ -30,6 +30,8 @@ internal class HomeViewModel(
             HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
             HomeViewAction.AcceptNotificationSettings -> acceptNotificationSettings()
+            HomeViewAction.ShowRationaleNotificationDialog -> showRationaleNotificationDialog()
+            HomeViewAction.CloseRationaleNotificationDialog -> closeRationaleNotificationDialog()
         }
     }
 
@@ -97,6 +99,22 @@ internal class HomeViewModel(
         viewModelScope.launch {
             updateNotificationSettingsUseCase(
                 notificationSettings = NotificationSettings()
+            )
+        }
+    }
+
+    private fun showRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = true
+            )
+        }
+    }
+
+    private fun closeRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = false
             )
         }
     }

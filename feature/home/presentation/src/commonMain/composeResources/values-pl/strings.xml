@@ -9,4 +9,8 @@
     <string name="streak_days_count">dni</string>
     <string name="total_points">Twoje punkty</string>
     <string name="your_streak">Twoja seria</string>
+    <string name="rational_notification_dialog_title">Powiadomienia są ważne.</string>
+    <string name="rational_notification_dialog_text">Dzięki nim nie przegapisz kluczowych aktualizacji. Czy chcesz je włączyć?</string>
+    <string name="rational_notification_dialog_confirm_button_text">Tak, włącz</string>
+    <string name="rational_notification_dialog_dismiss_button_text">Nie, dziękuję</string>
 </resources>

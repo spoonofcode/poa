@@ -5,9 +5,6 @@
     <string name="personalized_notifications_from_partners">Spersonalizowane od partnerów</string>
     <string name="notifications_for_selected_product_series">Do wybranych serii produktów</string>
     <string name="link">Link</string>
-    <string name="open_link">Otwórz link</string>
-    <string name="open_app_settings">Odtwórz ustawienia</string>
-    <string name="open_app_settings_info">Powiadomienia aplikacji są wyłączone. Włącz je, aby otrzymywać aktualizacje i przypomnienia.</string>
     <string name="notification">Powiadomienie</string>
     <string name="notifications">Powiadomienia</string>
     <string name="notifications_settings">Ustawienia powiadomień</string>
@@ -15,6 +12,13 @@
     <string name="notification_body">Tekst powiadomienia</string>
     <string name="notification_title">Tytuł powiadomienia</string>
     <string name="notification_type">Typ powiadomienia</string>
+    <string name="open_link">Otwórz link</string>
+    <string name="open_app_settings">Odtwórz ustawienia</string>
+    <string name="open_app_settings_info">Powiadomienia aplikacji są wyłączone. Włącz je, aby otrzymywać aktualizacje i przypomnienia.</string>
+    <string name="rational_notification_dialog_title">Powiadomienia są ważne.</string>
+    <string name="rational_notification_dialog_text">Dzięki nim nie przegapisz kluczowych aktualizacji. Czy chcesz je włączyć?</string>
+    <string name="rational_notification_dialog_confirm_button_text">Tak, włącz</string>
+    <string name="rational_notification_dialog_dismiss_button_text">Nie, dziękuję</string>
     <string name="save_changes">Zapisz zmiany</string>
     <string name="selected_customers">Wybrani użytkownicy: </string>
     <string name="selected_series">Wybrane serie: </string>

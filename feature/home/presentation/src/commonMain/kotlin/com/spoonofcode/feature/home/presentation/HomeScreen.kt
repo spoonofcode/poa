@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -28,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Permission
 import com.mohamedrejeb.calf.permissions.PermissionStatus
-import com.mohamedrejeb.calf.permissions.isNotGranted
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import com.mohamedrejeb.calf.permissions.shouldShowRationale
 import com.spoonofcode.core.presentation.base.BaseScreen
@@ -36,6 +34,7 @@ import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
+import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
@@ -72,27 +71,16 @@ internal class HomeScreen(
         viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit
     ) {
-//        if (showRationaleDialog) {
-//            // Możesz użyć Calf Alert Dialog lub standardowego Material Design
-//            AlertDialog(
-//                onDismissRequest = { showRationaleDialog = false },
-//                title = { Text("Powiadomienia są ważne") },
-//                text = { Text("Dzięki nim nie przegapisz kluczowych aktualizacji. Czy chcesz je włączyć?") },
-//                confirmButton = {
-//                    Button(onClick = {
-//                        showRationaleDialog = false
-//                        notificationPermissionState.launchPermissionRequest()
-//                    }) {
-//                        Text("Tak, włącz")
-//                    }
-//                },
-//                dismissButton = {
-//                    TextButton(onClick = { showRationaleDialog = false }) {
-//                        Text("Nie, dziękuję")
-//                    }
-//                }
-//            )
-//        }
+        if (viewState.isRationaleNotificationDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.rational_notification_dialog_title),
+                text = stringResource(Res.string.rational_notification_dialog_text),
+                confirmButtonText = stringResource(Res.string.rational_notification_dialog_confirm_button_text),
+                dismissButtonText = stringResource(Res.string.rational_notification_dialog_dismiss_button_text),
+                confirmAction = { onAction(HomeViewAction.AcceptNotificationSettings) },
+                dismissAction = { onAction(HomeViewAction.CloseRationaleNotificationDialog) }
+            )
+        }
     }
 
     @OptIn(ExperimentalPermissionsApi::class)
@@ -106,25 +94,14 @@ internal class HomeScreen(
                 Permission.Notification
             )
 
-//            LaunchedEffect(notificationPermissionState.status) {
-//                println("BARTEK notification status = ${notificationPermissionState.status}")
-//                if (notificationPermissionState.status.isNotGranted) {
-//                    println("BARTEK notification launchPermissionRequest")
-//                    notificationPermissionState.launchPermissionRequest()
-//                }
-//            }
-
             LaunchedEffect(notificationPermissionState.status) {
                 when (notificationPermissionState.status) {
-                    PermissionStatus.Granted -> {
-                        onAction(HomeViewAction.AcceptNotificationSettings)
-                    }
+                    PermissionStatus.Granted -> {}
 
                     is PermissionStatus.Denied -> {
                         if (notificationPermissionState.status.shouldShowRationale) {
-//                            showRationaleDialog = true
+                            onAction(HomeViewAction.ShowRationaleNotificationDialog)
                         } else {
-                            // Pierwsza próba lub trwałe odrzucenie
                             notificationPermissionState.launchPermissionRequest()
                         }
                     }

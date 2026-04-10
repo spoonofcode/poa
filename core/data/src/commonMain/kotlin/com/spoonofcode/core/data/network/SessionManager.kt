@@ -3,7 +3,7 @@ package com.spoonofcode.core.data.network
 interface SessionManager {
     fun isSessionInitialized(): Boolean
     fun clearSession()
-    fun enableAllNotifications()
+    fun disableAllNotifications()
     fun saveSessionAccessToken(token: String)
     fun getSessionAccessToken(): String?
     fun saveSessionRefreshToken(token: String)
