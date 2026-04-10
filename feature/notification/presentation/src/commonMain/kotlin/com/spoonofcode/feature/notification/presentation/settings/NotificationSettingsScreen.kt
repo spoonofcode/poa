@@ -20,18 +20,16 @@ import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
-import com.spoonofcode.feature.notification.presentation.from_all_partners
-import com.spoonofcode.feature.notification.presentation.from_my_partners
+import com.spoonofcode.feature.notification.presentation.notifications_for_selected_product_series
 import com.spoonofcode.feature.notification.presentation.notifications_settings
 import com.spoonofcode.feature.notification.presentation.notifications_settings_text
 import com.spoonofcode.feature.notification.presentation.open_app_settings
 import com.spoonofcode.feature.notification.presentation.open_app_settings_info
+import com.spoonofcode.feature.notification.presentation.personalized_notifications_from_partners
 import com.spoonofcode.feature.notification.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
-internal class NotificationSettingsScreen(
-    override val verticalScrollEnable: Boolean = false,
-) :
+internal class NotificationSettingsScreen :
     BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notifications_settings
@@ -57,11 +55,11 @@ internal class NotificationSettingsScreen(
                 Texts.TM(stringResource(Res.string.notifications_settings_text))
 
                 Switchs.LabelSwitch(
-                    label = stringResource(Res.string.from_all_partners),
-                    checked = viewState.notificationSettings.notificationFromAllPartnersEnable,
+                    label = stringResource(Res.string.personalized_notifications_from_partners),
+                    checked = viewState.notificationSettings.isPersonalizedPartnerNotificationsEnabled,
                     onCheckedChange = {
                         onAction(
-                            NotificationSettingsViewAction.SwitchNotificationFromAllPartners(
+                            NotificationSettingsViewAction.SwitchPersonalizedNotificationsFromPartners(
                                 it
                             )
                         )
@@ -69,11 +67,11 @@ internal class NotificationSettingsScreen(
                 )
 
                 Switchs.LabelSwitch(
-                    label = stringResource(Res.string.from_my_partners),
-                    checked = viewState.notificationSettings.notificationFromMyPartnersEnable,
+                    label = stringResource(Res.string.notifications_for_selected_product_series),
+                    checked = viewState.notificationSettings.isProductSeriesNotificationsEnabled,
                     onCheckedChange = {
                         onAction(
-                            NotificationSettingsViewAction.SwitchNotificationFromMyPartners(
+                            NotificationSettingsViewAction.SwitchNotificationsForSelectedProductSeries(
                                 it
                             )
                         )

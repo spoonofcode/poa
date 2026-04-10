@@ -15,11 +15,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Button
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -28,9 +27,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Permission
-import com.mohamedrejeb.calf.permissions.isGranted
+import com.mohamedrejeb.calf.permissions.PermissionStatus
 import com.mohamedrejeb.calf.permissions.isNotGranted
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
+import com.mohamedrejeb.calf.permissions.shouldShowRationale
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
@@ -67,6 +67,34 @@ internal class HomeScreen(
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
+    @Composable
+    override fun provideDialogs(
+        viewState: HomeViewState,
+        onAction: (HomeViewAction) -> Unit
+    ) {
+//        if (showRationaleDialog) {
+//            // Możesz użyć Calf Alert Dialog lub standardowego Material Design
+//            AlertDialog(
+//                onDismissRequest = { showRationaleDialog = false },
+//                title = { Text("Powiadomienia są ważne") },
+//                text = { Text("Dzięki nim nie przegapisz kluczowych aktualizacji. Czy chcesz je włączyć?") },
+//                confirmButton = {
+//                    Button(onClick = {
+//                        showRationaleDialog = false
+//                        notificationPermissionState.launchPermissionRequest()
+//                    }) {
+//                        Text("Tak, włącz")
+//                    }
+//                },
+//                dismissButton = {
+//                    TextButton(onClick = { showRationaleDialog = false }) {
+//                        Text("Nie, dziękuję")
+//                    }
+//                }
+//            )
+//        }
+    }
+
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     override fun provideContent(
@@ -78,9 +106,28 @@ internal class HomeScreen(
                 Permission.Notification
             )
 
+//            LaunchedEffect(notificationPermissionState.status) {
+//                println("BARTEK notification status = ${notificationPermissionState.status}")
+//                if (notificationPermissionState.status.isNotGranted) {
+//                    println("BARTEK notification launchPermissionRequest")
+//                    notificationPermissionState.launchPermissionRequest()
+//                }
+//            }
+
             LaunchedEffect(notificationPermissionState.status) {
-                if (notificationPermissionState.status.isNotGranted) {
-                    notificationPermissionState.launchPermissionRequest()
+                when (notificationPermissionState.status) {
+                    PermissionStatus.Granted -> {
+                        onAction(HomeViewAction.AcceptNotificationSettings)
+                    }
+
+                    is PermissionStatus.Denied -> {
+                        if (notificationPermissionState.status.shouldShowRationale) {
+//                            showRationaleDialog = true
+                        } else {
+                            // Pierwsza próba lub trwałe odrzucenie
+                            notificationPermissionState.launchPermissionRequest()
+                        }
+                    }
                 }
             }
 

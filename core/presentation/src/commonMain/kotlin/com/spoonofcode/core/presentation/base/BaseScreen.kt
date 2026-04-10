@@ -71,7 +71,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     protected open fun provideDialogs(
         viewState: VS,
         onAction: (VA) -> Unit,
-    ): @Composable () -> Unit = {}
+    ) {
+    }
 
     @Composable
     protected abstract fun provideViewModel(): VM

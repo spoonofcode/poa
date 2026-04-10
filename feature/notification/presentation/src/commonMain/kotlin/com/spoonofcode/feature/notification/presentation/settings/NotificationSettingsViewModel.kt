@@ -22,11 +22,11 @@ internal class NotificationSettingsViewModel(
         when (action) {
             NotificationSettingsViewAction.InitView -> initView()
             NotificationSettingsViewAction.SaveChanges -> saveChanges()
-            is NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
+            is NotificationSettingsViewAction.SwitchPersonalizedNotificationsFromPartners -> switchPersonalizedNotificationsFromPartners(
                 action.enable
             )
 
-            is NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
+            is NotificationSettingsViewAction.SwitchNotificationsForSelectedProductSeries -> switchNotificationsForSelectedProductSeries(
                 action.enable
             )
         }
@@ -50,21 +50,21 @@ internal class NotificationSettingsViewModel(
         }
     }
 
-    private fun switchNotificationFromAllPartners(enable: Boolean) {
+    private fun switchPersonalizedNotificationsFromPartners(enable: Boolean) {
         updateState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
-                    notificationFromAllPartnersEnable = enable,
+                    isPersonalizedPartnerNotificationsEnabled = enable,
                 )
             )
         }
     }
 
-    private fun switchNotificationFromMyPartners(enable: Boolean) {
+    private fun switchNotificationsForSelectedProductSeries(enable: Boolean) {
         updateState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
-                    notificationFromMyPartnersEnable = enable,
+                    isProductSeriesNotificationsEnabled = enable,
                 )
             )
         }
@@ -74,7 +74,10 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             showLoadingView()
             try {
-                updateNotificationSettingsUseCase.invoke(notificationSettings = currentState().notificationSettings)
+                updateNotificationSettingsUseCase(
+                    notificationSettings = currentState().notificationSettings
+                )
+
                 viewModelNavigator.pop()
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -2,8 +2,8 @@
     <string name="cancel">Cancel</string>
     <string name="delivery_date">Delivery date</string>
     <string name="expiration_date">Expiration date</string>
-    <string name="from_all_partners">From all partners</string>
-    <string name="from_my_partners">From my partners</string>
+    <string name="personalized_notifications_from_partners">Personalized notifications from partners</string>
+    <string name="notifications_for_selected_product_series">Notifications for selected product series</string>
     <string name="link">Link</string>
     <string name="open_link">Open Link</string>
     <string name="open_app_settings">Open settings</string>

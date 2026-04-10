@@ -12,8 +12,8 @@ interface SessionManager {
     fun getSessionUserId(): String
     fun saveSessionUserEmail(email: String)
     fun getSessionUserEmail(): String
-    fun getSettingsNotificationFromAllPartners(): Boolean
-    fun saveSettingsNotificationFromAllPartners(enable: Boolean)
-    fun getSettingsNotificationFromMyPartners(): Boolean
-    fun saveSettingsNotificationFromMyPartners(enable: Boolean)
+    fun getSettingsPersonalizedPartnerNotifications(): Boolean
+    fun saveSettingsPersonalizedPartnerNotifications(enable: Boolean)
+    fun getSettingsProductSeriesNotifications(): Boolean
+    fun saveSettingsProductSeriesNotifications(enable: Boolean)
 }

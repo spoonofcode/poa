@@ -14,8 +14,8 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
     }
 
     override fun enableAllNotifications() {
-        saveSettingsNotificationFromAllPartners(true)
-        saveSettingsNotificationFromMyPartners(true)
+        saveSettingsPersonalizedPartnerNotifications(true)
+        saveSettingsProductSeriesNotifications(true)
     }
 
     override fun saveSessionAccessToken(token: String) {
@@ -43,23 +43,23 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
     }
 
     override fun getSessionUserEmail(): String = requireNotNull(
-        settings.getStringOrNull(SESSION_USER_ID)
+        settings.getStringOrNull(SESSION_USER_EMAIL)
     ) { "User email cannot be null" }
 
-    override fun getSettingsNotificationFromAllPartners(): Boolean = requireNotNull(
-        settings.getBooleanOrNull(SETTINGS_NOTIFICATION_FROM_ALL_PARTNERS)
+    override fun getSettingsPersonalizedPartnerNotifications(): Boolean = requireNotNull(
+        settings.getBooleanOrNull(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS)
     ) { "SettingsNotificationFromAllPartners cannot be null" }
 
-    override fun saveSettingsNotificationFromAllPartners(enable: Boolean) {
-        settings.putBoolean(SETTINGS_NOTIFICATION_FROM_ALL_PARTNERS, enable)
+    override fun saveSettingsPersonalizedPartnerNotifications(enable: Boolean) {
+        settings.putBoolean(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS, enable)
     }
 
-    override fun getSettingsNotificationFromMyPartners(): Boolean = requireNotNull(
-        settings.getBooleanOrNull(SETTINGS_NOTIFICATION_FROM_MY_PARTNERS)
+    override fun getSettingsProductSeriesNotifications(): Boolean = requireNotNull(
+        settings.getBooleanOrNull(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS)
     ) { "SettingsNotificationFromAllPartners cannot be null" }
 
-    override fun saveSettingsNotificationFromMyPartners(enable: Boolean) {
-        settings.putBoolean(SETTINGS_NOTIFICATION_FROM_MY_PARTNERS, enable)
+    override fun saveSettingsProductSeriesNotifications(enable: Boolean) {
+        settings.putBoolean(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS, enable)
     }
 
     private fun clearSessionAccessToken() {
@@ -75,11 +75,11 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
     }
 
     private fun clearSettingsNotificationFromAllPartners() {
-        settings.remove(SETTINGS_NOTIFICATION_FROM_ALL_PARTNERS)
+        settings.remove(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS)
     }
 
     private fun clearSettingsNotificationFromMyPartners() {
-        settings.remove(SETTINGS_NOTIFICATION_FROM_MY_PARTNERS)
+        settings.remove(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS)
     }
 
     companion object Companion {
@@ -87,9 +87,9 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
         private const val SESSION_USER_ID = "session_user_id"
         private const val SESSION_USER_EMAIL = "session_user_email"
-        private const val SETTINGS_NOTIFICATION_FROM_ALL_PARTNERS =
-            "settings_notification_from_all_partners"
-        private const val SETTINGS_NOTIFICATION_FROM_MY_PARTNERS =
-            "settings_notification_from_my_partners"
+        private const val SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS =
+            "settings_personalized_partner_notifications"
+        private const val SETTINGS_PRODUCT_SERIES_NOTIFICATIONS =
+            "settings_product_series_notifications"
     }
 }
