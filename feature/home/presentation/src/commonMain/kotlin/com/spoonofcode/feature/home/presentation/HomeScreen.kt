@@ -19,14 +19,19 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Permission
 import com.mohamedrejeb.calf.permissions.PermissionStatus
+import com.mohamedrejeb.calf.permissions.isGranted
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import com.mohamedrejeb.calf.permissions.shouldShowRationale
 import com.spoonofcode.core.presentation.base.BaseScreen
@@ -35,6 +40,7 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
@@ -66,18 +72,26 @@ internal class HomeScreen(
     @Composable
     override fun provideViewModel() = koinViewModel<HomeViewModel>()
 
+    @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     override fun provideDialogs(
         viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit
     ) {
+        val notificationPermissionState = rememberPermissionState(
+            Permission.Notification
+        )
+
         if (viewState.isRationaleNotificationDialogVisible) {
             Dialogs.AlertDialog(
                 title = stringResource(Res.string.rational_notification_dialog_title),
                 text = stringResource(Res.string.rational_notification_dialog_text),
                 confirmButtonText = stringResource(Res.string.rational_notification_dialog_confirm_button_text),
                 dismissButtonText = stringResource(Res.string.rational_notification_dialog_dismiss_button_text),
-                confirmAction = { onAction(HomeViewAction.AcceptNotificationSettings) },
+                confirmAction = {
+                    onAction(HomeViewAction.CloseRationaleNotificationDialog)
+                    notificationPermissionState.launchPermissionRequest()
+                },
                 dismissAction = { onAction(HomeViewAction.CloseRationaleNotificationDialog) }
             )
         }
@@ -94,19 +108,11 @@ internal class HomeScreen(
                 Permission.Notification
             )
 
-            LaunchedEffect(notificationPermissionState.status) {
-                when (notificationPermissionState.status) {
-                    PermissionStatus.Granted -> {}
-
-                    is PermissionStatus.Denied -> {
-                        if (notificationPermissionState.status.shouldShowRationale) {
-                            onAction(HomeViewAction.ShowRationaleNotificationDialog)
-                        } else {
-                            notificationPermissionState.launchPermissionRequest()
-                        }
-                    }
-                }
-            }
+            RequestPermission(
+                notificationPermissionState = notificationPermissionState,
+                onGrantedAction = { onAction(HomeViewAction.AcceptNotificationSettings) },
+                onShowRationalAction = { onAction(HomeViewAction.ShowRationaleNotificationDialog) }
+            )
 
             AutoImageSlider(
                 label = stringResource(Res.string.new_partners),

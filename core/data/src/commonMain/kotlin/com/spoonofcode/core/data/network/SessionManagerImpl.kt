@@ -13,9 +13,9 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         clearSettingsNotificationFromMyPartners()
     }
 
-    override fun disableAllNotifications() {
-        saveSettingsPersonalizedPartnerNotifications(false)
-        saveSettingsProductSeriesNotifications(false)
+    override fun enableAllNotifications() {
+        saveSettingsPersonalizedPartnerNotifications(true)
+        saveSettingsProductSeriesNotifications(true)
     }
 
     override fun saveSessionAccessToken(token: String) {

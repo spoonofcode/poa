@@ -99,7 +99,12 @@ internal class HomeViewModel(
         viewModelScope.launch {
             updateNotificationSettingsUseCase(
                 notificationSettings = NotificationSettings()
-            )
+            ).onSuccess {
+                closeRationaleNotificationDialog()
+            }.onFailure {
+                closeRationaleNotificationDialog()
+                showErrorSnackbar(it)
+            }
         }
     }
 

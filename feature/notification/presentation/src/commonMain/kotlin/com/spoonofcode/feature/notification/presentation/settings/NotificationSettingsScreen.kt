@@ -1,25 +1,22 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Permission
-import com.mohamedrejeb.calf.permissions.PermissionStatus
 import com.mohamedrejeb.calf.permissions.isGranted
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
-import com.mohamedrejeb.calf.permissions.shouldShowRationale
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
@@ -51,18 +48,26 @@ internal class NotificationSettingsScreen(
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationSettingsViewModel>()
 
+    @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     override fun provideDialogs(
         viewState: NotificationSettingsViewState,
         onAction: (NotificationSettingsViewAction) -> Unit
     ) {
+        val notificationPermissionState = rememberPermissionState(
+            Permission.Notification
+        )
+
         if (viewState.isRationaleNotificationDialogVisible) {
             Dialogs.AlertDialog(
                 title = stringResource(Res.string.rational_notification_dialog_title),
                 text = stringResource(Res.string.rational_notification_dialog_text),
                 confirmButtonText = stringResource(Res.string.rational_notification_dialog_confirm_button_text),
                 dismissButtonText = stringResource(Res.string.rational_notification_dialog_dismiss_button_text),
-                confirmAction = { onAction(NotificationSettingsViewAction.AcceptNotificationSettings) },
+                confirmAction = {
+                    onAction(NotificationSettingsViewAction.CloseRationaleNotificationDialog)
+                    notificationPermissionState.launchPermissionRequest()
+                },
                 dismissAction = { onAction(NotificationSettingsViewAction.CloseRationaleNotificationDialog) }
             )
         }
@@ -80,18 +85,11 @@ internal class NotificationSettingsScreen(
                 Permission.Notification
             )
 
-            LaunchedEffect(notificationPermissionState.status) {
-                when (notificationPermissionState.status) {
-                    PermissionStatus.Granted -> {}
-                    is PermissionStatus.Denied -> {
-                        if (notificationPermissionState.status.shouldShowRationale) {
-                            onAction(NotificationSettingsViewAction.ShowRationaleNotificationDialog)
-                        } else {
-                            notificationPermissionState.launchPermissionRequest()
-                        }
-                    }
-                }
-            }
+            RequestPermission(
+                notificationPermissionState = notificationPermissionState,
+                onGrantedAction = { onAction(NotificationSettingsViewAction.AcceptNotificationSettings) },
+                onShowRationalAction = { onAction(NotificationSettingsViewAction.ShowRationaleNotificationDialog) }
+            )
 
             if (notificationPermissionState.status.isGranted) {
                 Texts.TM(stringResource(Res.string.notifications_settings_text))
@@ -139,7 +137,9 @@ internal class NotificationSettingsScreen(
                     Spacers.VerticalBetweenFields()
                     Buttons.PrimaryButton(
                         text = stringResource(resource = Res.string.open_app_settings),
-                        onClick = { notificationPermissionState.openAppSettings() }
+                        onClick = {
+                            notificationPermissionState.openAppSettings()
+                        }
                     )
                 }
             }

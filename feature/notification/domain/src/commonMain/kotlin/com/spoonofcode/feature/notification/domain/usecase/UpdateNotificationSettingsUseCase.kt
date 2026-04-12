@@ -22,9 +22,9 @@ class UpdateNotificationSettingsUseCase(
 
         if (notificationSettings.isProductSeriesNotificationsEnabled) {
             productRepository.getUserProducts().onSuccess { products ->
-                val uniqueSeries = products.mapNotNull { it.seriesName }.distinct()
-                uniqueSeries.forEach { seriesName ->
-                    firebaseMessagingService.subscribeToTopic(getSerieTopic(seriesName))
+                val uniqueSeries = products.mapNotNull { it.seriesId }.distinct()
+                uniqueSeries.forEach { seriesId ->
+                    firebaseMessagingService.subscribeToTopic(getSerieTopic(seriesId))
                         .onFailure { return Result.failure(it) }
                 }
             }
@@ -45,9 +45,9 @@ class UpdateNotificationSettingsUseCase(
     }
 
     private fun getUserTopic(): String =
-        FirebaseMessagingTopicPrefixes.user.createTopic(sessionManager.getSessionUserEmail())
+        FirebaseMessagingTopicPrefixes.user.createTopic(sessionManager.getSessionUserId())
 
-    private fun getSerieTopic(serieName: String): String =
-        FirebaseMessagingTopicPrefixes.serie.createTopic(serieName)
+    private fun getSerieTopic(seriesId: String): String =
+        FirebaseMessagingTopicPrefixes.serie.createTopic(seriesId)
 
 }
