@@ -20,6 +20,24 @@ class UpdateNotificationSettingsUseCase(
                 .onFailure { return Result.failure(it) }
         }
 
+        if (notificationSettings.isNotificationsFromPartnersEnabled) {
+            productRepository.getUserProducts().onSuccess { products ->
+                val uniquePartnerIds = products.mapNotNull { it.partnerId }.distinct()
+                uniquePartnerIds.forEach { partnerId ->
+                    firebaseMessagingService.subscribeToTopic(getPartnerTopic(partnerId))
+                        .onFailure { return Result.failure(it) }
+                }
+            }
+        } else {
+            productRepository.getUserProducts().onSuccess { products ->
+                val uniquePartnerIds = products.mapNotNull { it.partnerId }.distinct()
+                uniquePartnerIds.forEach { partnerId ->
+                    firebaseMessagingService.unsubscribeFromTopic(getPartnerTopic(partnerId))
+                        .onFailure { return Result.failure(it) }
+                }
+            }
+        }
+
         if (notificationSettings.isNotificationsMyProductSeriesEnabled) {
             productRepository.getUserProducts().onSuccess { products ->
                 val uniqueSeries = products.mapNotNull { it.seriesId }.distinct()
@@ -46,6 +64,9 @@ class UpdateNotificationSettingsUseCase(
 
     private fun getUserTopic(): String =
         NotificationType.user.createTopic(sessionManager.getSessionUserId())
+
+    private fun getPartnerTopic(partnerId: String): String =
+        NotificationType.partner.createTopic(partnerId)
 
     private fun getSerieTopic(seriesId: String): String =
         NotificationType.serie.createTopic(seriesId)
