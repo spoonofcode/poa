@@ -12,7 +12,7 @@ class UpdateNotificationSettingsUseCase(
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
-        if (notificationSettings.isPersonalizedPartnerNotificationsEnabled) {
+        if (notificationSettings.isNotificationsPersonalizedEnabled) {
             firebaseMessagingService.subscribeToTopic(getUserTopic())
                 .onFailure { return Result.failure(it) }
         } else {
@@ -20,7 +20,7 @@ class UpdateNotificationSettingsUseCase(
                 .onFailure { return Result.failure(it) }
         }
 
-        if (notificationSettings.isProductSeriesNotificationsEnabled) {
+        if (notificationSettings.isNotificationsMyProductSeriesEnabled) {
             productRepository.getUserProducts().onSuccess { products ->
                 val uniqueSeries = products.mapNotNull { it.seriesId }.distinct()
                 uniqueSeries.forEach { seriesId ->
@@ -38,8 +38,8 @@ class UpdateNotificationSettingsUseCase(
             }
         }
 
-        sessionManager.saveSettingsPersonalizedPartnerNotifications(notificationSettings.isPersonalizedPartnerNotificationsEnabled)
-        sessionManager.saveSettingsProductSeriesNotifications(notificationSettings.isProductSeriesNotificationsEnabled)
+        sessionManager.saveSettingsPersonalizedPartnerNotifications(notificationSettings.isNotificationsPersonalizedEnabled)
+        sessionManager.saveSettingsProductSeriesNotifications(notificationSettings.isNotificationsMyProductSeriesEnabled)
 
         return Result.success(Unit)
     }

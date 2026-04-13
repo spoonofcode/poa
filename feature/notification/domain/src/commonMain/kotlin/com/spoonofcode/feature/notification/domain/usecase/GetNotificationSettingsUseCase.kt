@@ -8,7 +8,7 @@ class GetNotificationSettingsUseCase(
 ) {
     operator fun invoke(): NotificationSettings =
         NotificationSettings(
-            isPersonalizedPartnerNotificationsEnabled = sessionManager.getSettingsPersonalizedPartnerNotifications(),
-            isProductSeriesNotificationsEnabled = sessionManager.getSettingsProductSeriesNotifications(),
+            isNotificationsPersonalizedEnabled = sessionManager.getSettingsPersonalizedPartnerNotifications(),
+            isNotificationsMyProductSeriesEnabled = sessionManager.getSettingsProductSeriesNotifications(),
         )
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 //import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
 //import com.spoonofcode.core.firebase.usecase.UnsubscribeFromFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
@@ -22,11 +21,15 @@ internal class NotificationSettingsViewModel(
         when (action) {
             NotificationSettingsViewAction.InitView -> initView()
             NotificationSettingsViewAction.SaveChanges -> saveChanges()
-            is NotificationSettingsViewAction.SwitchPersonalizedNotificationsFromPartners -> switchPersonalizedNotificationsFromPartners(
+            is NotificationSettingsViewAction.SwitchNotificationsPersonalized -> switchNotificationsPersonalized(
                 action.enable
             )
 
-            is NotificationSettingsViewAction.SwitchNotificationsForSelectedProductSeries -> switchNotificationsForSelectedProductSeries(
+            is NotificationSettingsViewAction.SwitchNotificationsFromPartners -> switchNotificationsFromPartners(
+                action.enable
+            )
+
+            is NotificationSettingsViewAction.SwitchNotificationsMyProductSeries -> switchNotificationsMyProductSeries(
                 action.enable
             )
 
@@ -54,21 +57,31 @@ internal class NotificationSettingsViewModel(
         }
     }
 
-    private fun switchPersonalizedNotificationsFromPartners(enable: Boolean) {
+    private fun switchNotificationsPersonalized(enable: Boolean) {
         updateState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
-                    isPersonalizedPartnerNotificationsEnabled = enable,
+                    isNotificationsPersonalizedEnabled = enable,
                 )
             )
         }
     }
 
-    private fun switchNotificationsForSelectedProductSeries(enable: Boolean) {
+    private fun switchNotificationsFromPartners(enable: Boolean) {
         updateState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
-                    isProductSeriesNotificationsEnabled = enable,
+                    isNotificationsFromPartnersEnabled = enable,
+                )
+            )
+        }
+    }
+
+    private fun switchNotificationsMyProductSeries(enable: Boolean) {
+        updateState {
+            NotificationSettingsViewState(
+                notificationSettings = notificationSettings.copy(
+                    isNotificationsMyProductSeriesEnabled = enable,
                 )
             )
         }

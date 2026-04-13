@@ -2,9 +2,15 @@
     <string name="cancel">Cancel</string>
     <string name="delivery_date">Delivery date</string>
     <string name="expiration_date">Expiration date</string>
-    <string name="personalized_notifications_from_partners">Personalized notifications from partners</string>
-    <string name="notifications_for_selected_product_series">Notifications for selected product series</string>
     <string name="link">Link</string>
+
+    <string name="notifications_personalized_title">Personalized</string>
+    <string name="notifications_personalized_description">You will receive personalized notifications from our partners whose products you own.</string>
+    <string name="notifications_from_partners_title">From partners</string>
+    <string name="notifications_from_partners_description">You will receive notifications from our partners whose products you own.</string>
+    <string name="notifications_my_product_series_title">My Product Series</string>
+    <string name="notifications_my_product_series_description">You will receive notifications from our partners whose products you own.</string>
+
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_settings">Notification settings</string>

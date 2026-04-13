@@ -22,12 +22,16 @@ import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
-import com.spoonofcode.feature.notification.presentation.notifications_for_selected_product_series
+import com.spoonofcode.feature.notification.presentation.notifications_from_partners_description
+import com.spoonofcode.feature.notification.presentation.notifications_from_partners_title
+import com.spoonofcode.feature.notification.presentation.notifications_my_product_series_description
+import com.spoonofcode.feature.notification.presentation.notifications_my_product_series_title
+import com.spoonofcode.feature.notification.presentation.notifications_personalized_description
+import com.spoonofcode.feature.notification.presentation.notifications_personalized_title
 import com.spoonofcode.feature.notification.presentation.notifications_settings
 import com.spoonofcode.feature.notification.presentation.notifications_settings_text
 import com.spoonofcode.feature.notification.presentation.open_app_settings
 import com.spoonofcode.feature.notification.presentation.open_app_settings_info
-import com.spoonofcode.feature.notification.presentation.personalized_notifications_from_partners
 import com.spoonofcode.feature.notification.presentation.rational_notification_dialog_confirm_button_text
 import com.spoonofcode.feature.notification.presentation.rational_notification_dialog_dismiss_button_text
 import com.spoonofcode.feature.notification.presentation.rational_notification_dialog_text
@@ -95,11 +99,12 @@ internal class NotificationSettingsScreen(
                 Texts.TM(stringResource(Res.string.notifications_settings_text))
 
                 Switchs.LabelSwitch(
-                    label = stringResource(Res.string.personalized_notifications_from_partners),
-                    checked = viewState.notificationSettings.isPersonalizedPartnerNotificationsEnabled,
+                    title = stringResource(Res.string.notifications_personalized_title),
+                    description = stringResource(Res.string.notifications_personalized_description),
+                    checked = viewState.notificationSettings.isNotificationsPersonalizedEnabled,
                     onCheckedChange = {
                         onAction(
-                            NotificationSettingsViewAction.SwitchPersonalizedNotificationsFromPartners(
+                            NotificationSettingsViewAction.SwitchNotificationsPersonalized(
                                 it
                             )
                         )
@@ -107,16 +112,31 @@ internal class NotificationSettingsScreen(
                 )
 
                 Switchs.LabelSwitch(
-                    label = stringResource(Res.string.notifications_for_selected_product_series),
-                    checked = viewState.notificationSettings.isProductSeriesNotificationsEnabled,
+                    title = stringResource(Res.string.notifications_from_partners_title),
+                    description = stringResource(Res.string.notifications_from_partners_description),
+                    checked = viewState.notificationSettings.isNotificationsFromPartnersEnabled,
                     onCheckedChange = {
                         onAction(
-                            NotificationSettingsViewAction.SwitchNotificationsForSelectedProductSeries(
+                            NotificationSettingsViewAction.SwitchNotificationsFromPartners(
                                 it
                             )
                         )
                     },
                 )
+
+                Switchs.LabelSwitch(
+                    title = stringResource(Res.string.notifications_my_product_series_title),
+                    description = stringResource(Res.string.notifications_my_product_series_description),
+                    checked = viewState.notificationSettings.isNotificationsMyProductSeriesEnabled,
+                    onCheckedChange = {
+                        onAction(
+                            NotificationSettingsViewAction.SwitchNotificationsMyProductSeries(
+                                it
+                            )
+                        )
+                    },
+                )
+
 
                 Spacers.Weight1(this)
 
