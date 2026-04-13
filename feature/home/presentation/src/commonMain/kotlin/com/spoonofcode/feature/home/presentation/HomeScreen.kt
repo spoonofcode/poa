@@ -19,21 +19,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Permission
-import com.mohamedrejeb.calf.permissions.PermissionStatus
-import com.mohamedrejeb.calf.permissions.isGranted
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
-import com.mohamedrejeb.calf.permissions.shouldShowRationale
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
@@ -110,7 +102,7 @@ internal class HomeScreen(
 
             RequestPermission(
                 notificationPermissionState = notificationPermissionState,
-                onGrantedAction = { onAction(HomeViewAction.AcceptNotificationSettings) },
+                onGrantedAction = { onAction(HomeViewAction.GrantedNotificationSettings) },
                 onShowRationalAction = { onAction(HomeViewAction.ShowRationaleNotificationDialog) }
             )
 

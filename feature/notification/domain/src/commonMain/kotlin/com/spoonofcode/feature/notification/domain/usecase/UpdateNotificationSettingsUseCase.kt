@@ -12,13 +12,13 @@ class UpdateNotificationSettingsUseCase(
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
-//        if (notificationSettings.isPersonalizedPartnerNotificationsEnabled) {
-//            firebaseMessagingService.subscribeToTopic(getUserTopic())
-//                .onFailure { return Result.failure(it) }
-//        } else {
-//            firebaseMessagingService.unsubscribeFromTopic(getUserTopic())
-//                .onFailure { return Result.failure(it) }
-//        }
+        if (notificationSettings.isPersonalizedPartnerNotificationsEnabled) {
+            firebaseMessagingService.subscribeToTopic(getUserTopic())
+                .onFailure { return Result.failure(it) }
+        } else {
+            firebaseMessagingService.unsubscribeFromTopic(getUserTopic())
+                .onFailure { return Result.failure(it) }
+        }
 
         if (notificationSettings.isProductSeriesNotificationsEnabled) {
             productRepository.getUserProducts().onSuccess { products ->

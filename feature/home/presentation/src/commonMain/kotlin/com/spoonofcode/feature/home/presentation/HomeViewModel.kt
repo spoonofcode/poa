@@ -29,7 +29,7 @@ internal class HomeViewModel(
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
             HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
-            HomeViewAction.AcceptNotificationSettings -> acceptNotificationSettings()
+            HomeViewAction.GrantedNotificationSettings -> grantedNotificationSettings()
             HomeViewAction.ShowRationaleNotificationDialog -> showRationaleNotificationDialog()
             HomeViewAction.CloseRationaleNotificationDialog -> closeRationaleNotificationDialog()
         }
@@ -95,7 +95,8 @@ internal class HomeViewModel(
         }
     }
 
-    private fun acceptNotificationSettings() {
+    private fun grantedNotificationSettings() {
+        println("BARTEK GrantedNotificationSettings")
         viewModelScope.launch {
             updateNotificationSettingsUseCase(
                 notificationSettings = NotificationSettings()
