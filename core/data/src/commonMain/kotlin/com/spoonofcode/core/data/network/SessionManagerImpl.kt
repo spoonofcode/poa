@@ -14,8 +14,8 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
     }
 
     override fun enableAllNotifications() {
-        saveSettingsPersonalizedPartnerNotifications(true)
-        saveSettingsProductSeriesNotifications(true)
+        saveNotificationsPersonalizedSettings(true)
+        saveNotificationsMyProductSeriesSettings(true)
     }
 
     override fun saveSessionAccessToken(token: String) {
@@ -46,19 +46,19 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         settings.getStringOrNull(SESSION_USER_EMAIL)
     ) { "User email cannot be null" }
 
-    override fun getSettingsPersonalizedPartnerNotifications(): Boolean = requireNotNull(
+    override fun getNotificationsPersonalizedSettings(): Boolean = requireNotNull(
         settings.getBooleanOrNull(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS)
     ) { "SettingsNotificationFromAllPartners cannot be null" }
 
-    override fun saveSettingsPersonalizedPartnerNotifications(enable: Boolean) {
+    override fun saveNotificationsPersonalizedSettings(enable: Boolean) {
         settings.putBoolean(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS, enable)
     }
 
-    override fun getSettingsProductSeriesNotifications(): Boolean = requireNotNull(
+    override fun getNotificationsMyProductSeriesSettings(): Boolean = requireNotNull(
         settings.getBooleanOrNull(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS)
     ) { "SettingsNotificationFromAllPartners cannot be null" }
 
-    override fun saveSettingsProductSeriesNotifications(enable: Boolean) {
+    override fun saveNotificationsMyProductSeriesSettings(enable: Boolean) {
         settings.putBoolean(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS, enable)
     }
 
