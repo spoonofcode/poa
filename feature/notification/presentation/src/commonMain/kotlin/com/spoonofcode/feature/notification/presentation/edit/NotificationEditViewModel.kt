@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
@@ -29,6 +30,7 @@ internal class NotificationEditViewModel(
             is NotificationEditViewAction.ChangeText -> changeText(action.text)
             is NotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
             is NotificationEditViewAction.InitView -> initView(
+                action.notificationType,
                 action.selectedTopics,
                 action.selectedNames
             )
@@ -40,11 +42,13 @@ internal class NotificationEditViewModel(
     }
 
     private fun initView(
+        notificationType: NotificationType,
         selectedTopics: Set<String>,
         selectedNames: Set<String>
     ) {
         updateState {
             NotificationEditViewState(
+                notificationType = notificationType,
                 selectedTopics = selectedTopics,
                 selectedNames = selectedNames,
             )

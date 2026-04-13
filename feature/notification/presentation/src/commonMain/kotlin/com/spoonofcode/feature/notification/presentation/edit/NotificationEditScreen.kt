@@ -28,6 +28,7 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
+import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.cancel
 import com.spoonofcode.feature.notification.presentation.delivery_date
@@ -44,7 +45,7 @@ import com.spoonofcode.feature.notification.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationEditScreen(
-    val onlyToSelectedCustomers: Boolean = false,
+    val notificationType: NotificationType,
     val selectedTopics: Set<String> = emptySet(),
     val selectedNames: Set<String> = emptySet(),
 ) : BaseScreen<NotificationEditViewModel, NotificationEditViewState, NotificationEditViewAction>() {
@@ -55,6 +56,7 @@ internal class NotificationEditScreen(
         {
             onAction(
                 NotificationEditViewAction.InitView(
+                    notificationType = notificationType,
                     selectedTopics = selectedTopics,
                     selectedNames = selectedNames,
                 )
@@ -73,10 +75,10 @@ internal class NotificationEditScreen(
             Dialogs(viewState, onAction)
 
             if (viewState.selectedTopics.isNotEmpty()) {
-                val title = if (onlyToSelectedCustomers) {
-                    stringResource(Res.string.selected_customers)
-                } else {
-                    stringResource(Res.string.selected_series)
+                val title = when (viewState.notificationType) {
+                    NotificationType.user -> stringResource(Res.string.selected_customers)
+                    NotificationType.serie -> stringResource(Res.string.selected_series)
+                    else -> ""
                 }
 
                 StaticSelectedItemsPanel(
@@ -228,7 +230,9 @@ internal class NotificationEditScreen(
 @Preview
 @Composable
 private fun NotificationEditScreenContentPreview() {
-    NotificationEditScreen()
+    NotificationEditScreen(
+        notificationType = NotificationType.global
+    )
         .PreviewContent(
             NotificationEditViewState()
         )

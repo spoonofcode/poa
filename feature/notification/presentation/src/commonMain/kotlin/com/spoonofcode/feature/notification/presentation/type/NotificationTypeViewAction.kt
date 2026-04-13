@@ -3,8 +3,8 @@ package com.spoonofcode.feature.notification.presentation.type
 import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface NotificationTypeViewAction : BaseViewAction {
-    data object NavigateToAllCustomers : NotificationTypeViewAction
-    data object NavigateToPartnerCustomers : NotificationTypeViewAction
-    data object NavigateToPartnerProductSeries : NotificationTypeViewAction
-    data object NavigateToAllPartnerCustomers : NotificationTypeViewAction
+    data object SendNotificationToAllCustomers : NotificationTypeViewAction
+    data object SendNotificationToSelectedPartnerCustomers : NotificationTypeViewAction
+    data object SendNotificationToSelectedPartnerProductSeries : NotificationTypeViewAction
+    data object SendNotificationToAllPartnerCustomers : NotificationTypeViewAction
 }

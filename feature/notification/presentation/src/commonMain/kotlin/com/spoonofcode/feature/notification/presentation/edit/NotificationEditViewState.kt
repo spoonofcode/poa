@@ -5,10 +5,12 @@ import com.spoonofcode.core.data.ext.plus
 import com.spoonofcode.core.data.ext.roundToNextHour
 import com.spoonofcode.core.data.utils.LocalDateTimeUtils
 import com.spoonofcode.core.presentation.base.BaseViewState
+import com.spoonofcode.feature.notification.domain.model.NotificationType
 import kotlinx.datetime.LocalDateTime
 
 @Immutable
 internal data class NotificationEditViewState(
+    val notificationType: NotificationType =NotificationType.global,
     val selectedTopics: Set<String> = emptySet(),
     val selectedNames: Set<String> = emptySet(),
     val title: String = "",

@@ -50,7 +50,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to notification screen for all customers`() = runTest {
-        viewModel.onAction(NotificationTypeViewAction.NavigateToAllCustomers)
+        viewModel.onAction(NotificationTypeViewAction.SendNotificationToAllCustomers)
         advanceUntilIdle()
 
         verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
@@ -59,7 +59,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to partner customers overview screen`() = runTest {
-        viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerCustomers)
+        viewModel.onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers)
         advanceUntilIdle()
 
         verifySuspend { routeResolver.resolve(PartnerModule.CustomerOverviewScreen) }
@@ -68,7 +68,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to partner product series overview screen`() = runTest {
-        viewModel.onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries)
+        viewModel.onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries)
         advanceUntilIdle()
 
         verifySuspend { routeResolver.resolve(ProductModule.ProductSeriesOverviewScreen) }
@@ -77,7 +77,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to notification screen for all partner customers`() = runTest {
-        viewModel.onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers)
+        viewModel.onAction(NotificationTypeViewAction.SendNotificationToAllPartnerCustomers)
         advanceUntilIdle()
 
         verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }

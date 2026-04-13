@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
 import kotlinx.coroutines.launch
 
@@ -63,7 +64,7 @@ internal class PartnerCustomerOverviewViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     NotificationModule.NotificationEditScreen(
-                        onlyToSelectedCustomers = true,
+                        notificationTypeName = NotificationType.user.name,
                         selectedTopics = currentState().checkedUserIds,
                         selectedNames = currentState().customers
                             .filter { it.id in currentState().checkedUserIds }

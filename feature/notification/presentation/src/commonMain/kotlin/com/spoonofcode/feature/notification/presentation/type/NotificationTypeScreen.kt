@@ -45,7 +45,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToAllCustomers) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )
@@ -53,9 +53,8 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
-                    onClick = { onAction(NotificationTypeViewAction.NavigateToAllPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToAllPartnerCustomers) },
                     modifier = Modifier.weight(1f),
-                    enabled = viewState.buttonToAllPartnerCustomersEnable,
                 )
             }
 
@@ -66,14 +65,14 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerCustomers) },
+                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.Default.WebStories,
                     text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = { onAction(NotificationTypeViewAction.NavigateToPartnerProductSeries) },
+                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries) },
                     modifier = Modifier.weight(1f)
                 )
             }
