@@ -16,6 +16,10 @@
     <string name="notifications_settings">Ustawienia powiadomień</string>
     <string name="notifications_settings_text">Wybierz które powiadomienia chcesz otrzymywać</string>
     <string name="notification_body">Tekst powiadomienia</string>
+    <string name="notification_channels">Kanały powiadomień</string>
+    <string name="notification_push">Powiadomienia push</string>
+    <string name="notification_email">Wiadomości email</string>
+    <string name="notification_tel_and_sms">Tel. i Sms</string>
     <string name="notification_title">Tytuł powiadomienia</string>
     <string name="notification_type">Typ powiadomienia</string>
     <string name="open_link">Otwórz link</string>
@@ -31,8 +35,10 @@
     <string name="send_notification">Wyślij powiadomienie</string>
     <string name="send_notification_dialog_title">Czy na pewno chcesz wysłać powiadomienie?</string>
     <string name="send_notification_dialog_text">Upewnij się, że podane informacje są poprawne. Po wysłaniu powiadomienia nie będzie można go później edytować.</string>
-    <string name="tab_new">Nowe</string>
     <string name="tab_already_read">Przeczytane</string>
+    <string name="tab_email">Email</string>
+    <string name="tab_new">Nowe</string>
+    <string name="tab_push">Push</string>
     <string name="title">Tytuł</string>
     <string name="text">Tekst</string>
     <string name="to_all">Do wszystkich</string>

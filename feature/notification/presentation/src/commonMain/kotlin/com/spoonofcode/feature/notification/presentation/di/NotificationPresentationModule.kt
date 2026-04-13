@@ -8,6 +8,7 @@ import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCa
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.presentation.NotificationModuleRouteResolver
+import com.spoonofcode.feature.notification.presentation.channel.NotificationChannelViewModel
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewModel
 import com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewModel
 import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewModel
@@ -22,6 +23,7 @@ val notificationPresentationModule = module {
     factoryOf(::NotificationModuleRouteResolver) { bind<ModuleRouteResolver<NotificationModule>>() }
 
     viewModelOf(::NotificationOverviewViewModel)
+    viewModelOf(::NotificationChannelViewModel)
     viewModelOf(::NotificationDetailsViewModel)
     viewModelOf(::NotificationEditViewModel)
     viewModelOf(::NotificationTypeViewModel)

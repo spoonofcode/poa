@@ -10,12 +10,15 @@
     <string name="notifications_from_partners_description">You will receive notifications from our partners whose products you own.</string>
     <string name="notifications_my_product_series_title">My Product Series</string>
     <string name="notifications_my_product_series_description">You will receive notifications from our partners whose products you own.</string>
-
     <string name="notification">Notification</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_settings">Notification settings</string>
     <string name="notifications_settings_text">Choose which notifications you want to receive</string>
     <string name="notification_body">Notification text</string>
+    <string name="notification_channels">Notification channels</string>
+    <string name="notification_push">Push notifications</string>
+    <string name="notification_email">Email messages</string>
+    <string name="notification_tel_and_sms">Tel. and SMS</string>
     <string name="notification_title">Notification title</string>
     <string name="notification_type">Notification type</string>
     <string name="open_link">Open Link</string>
@@ -31,8 +34,8 @@
     <string name="send_notification">Send notification</string>
     <string name="send_notification_dialog_title">Are you sure you want to send notification?</string>
     <string name="send_notification_dialog_text">Please ensure that the information you enter is correct. Once the notification is sent, it cannot be edited later.</string>
-    <string name="tab_new">New</string>
     <string name="tab_already_read">Already read</string>
+    <string name="tab_new">New</string>
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="to_all">To all</string>

@@ -14,4 +14,5 @@ sealed class NotificationModule : Screen() {
     object NotificationOverviewScreen : NotificationModule()
     object NotificationSettingsScreen : NotificationModule()
     object NotificationTypeScreen : NotificationModule()
+    object NotificationChannelScreen : NotificationModule()
 }
