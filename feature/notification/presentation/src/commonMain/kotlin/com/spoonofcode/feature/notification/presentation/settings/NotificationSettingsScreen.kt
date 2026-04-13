@@ -22,6 +22,8 @@ import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
+import com.spoonofcode.feature.notification.presentation.notifications_all_push_description
+import com.spoonofcode.feature.notification.presentation.notifications_all_push_title
 import com.spoonofcode.feature.notification.presentation.notifications_from_partners_description
 import com.spoonofcode.feature.notification.presentation.notifications_from_partners_title
 import com.spoonofcode.feature.notification.presentation.notifications_my_product_series_description
@@ -97,6 +99,19 @@ internal class NotificationSettingsScreen(
 
             if (notificationPermissionState.status.isGranted) {
                 Texts.TM(stringResource(Res.string.notifications_settings_text))
+
+                Switchs.LabelSwitch(
+                    title = stringResource(Res.string.notifications_all_push_title),
+                    description = stringResource(Res.string.notifications_all_push_description),
+                    checked = viewState.isAllPushNotificationsSettingsEnable,
+                    onCheckedChange = {
+                        onAction(
+                            NotificationSettingsViewAction.SwitchAllNotification(
+                                it
+                            )
+                        )
+                    },
+                )
 
                 Switchs.LabelSwitch(
                     title = stringResource(Res.string.notifications_personalized_title),

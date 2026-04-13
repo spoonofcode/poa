@@ -8,4 +8,9 @@ import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 internal data class NotificationSettingsViewState(
     val notificationSettings: NotificationSettings = NotificationSettings(),
     val isRationaleNotificationDialogVisible: Boolean = false,
-) : BaseViewState()
+) : BaseViewState() {
+    val isAllPushNotificationsSettingsEnable: Boolean
+        get() = notificationSettings.isNotificationsPersonalizedEnabled &&
+                notificationSettings.isNotificationsFromPartnersEnabled &&
+                notificationSettings.isNotificationsMyProductSeriesEnabled
+}

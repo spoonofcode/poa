@@ -4,6 +4,8 @@
     <string name="expiration_date">Data ważności</string>
     <string name="link">Link</string>
 
+    <string name="notifications_all_push_title">Wszystkie powiadomienia Push</string>
+    <string name="notifications_all_push_description">Otrzymuj wszystkie powiadomienia Push</string>
     <string name="notifications_personalized_title">Spersonalizowane</string>
     <string name="notifications_personalized_description">Będziesz otrzymywać spersonalizowane powiadomienia od naszych partnerów, których produkty posiadasz.</string>
     <string name="notifications_from_partners_title">Od partnerów</string>
