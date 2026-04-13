@@ -12,54 +12,44 @@ class UpdateNotificationSettingsUseCase(
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
-        if (notificationSettings.isNotificationsPersonalizedEnabled) {
-            firebaseMessagingService.subscribeToTopic(getUserTopic())
-                .onFailure { return Result.failure(it) }
-        } else {
-            firebaseMessagingService.unsubscribeFromTopic(getUserTopic())
-                .onFailure { return Result.failure(it) }
+        handleTopicSubscription(
+            isEnabled = notificationSettings.isNotificationsPersonalizedEnabled,
+            topic = getUserTopic()
+        ).getOrThrow()
+
+        val products = productRepository.getUserProducts().getOrThrow()
+
+        val partnerIds = products.mapNotNull { it.partnerId }.distinct()
+        partnerIds.forEach { id ->
+            handleTopicSubscription(
+                isEnabled = notificationSettings.isNotificationsFromPartnersEnabled,
+                topic = getPartnerTopic(id)
+            ).getOrThrow()
         }
 
-        if (notificationSettings.isNotificationsFromPartnersEnabled) {
-            productRepository.getUserProducts().onSuccess { products ->
-                val uniquePartnerIds = products.mapNotNull { it.partnerId }.distinct()
-                uniquePartnerIds.forEach { partnerId ->
-                    firebaseMessagingService.subscribeToTopic(getPartnerTopic(partnerId))
-                        .onFailure { return Result.failure(it) }
-                }
-            }
-        } else {
-            productRepository.getUserProducts().onSuccess { products ->
-                val uniquePartnerIds = products.mapNotNull { it.partnerId }.distinct()
-                uniquePartnerIds.forEach { partnerId ->
-                    firebaseMessagingService.unsubscribeFromTopic(getPartnerTopic(partnerId))
-                        .onFailure { return Result.failure(it) }
-                }
-            }
+        val seriesIds = products.mapNotNull { it.seriesId }.distinct()
+        seriesIds.forEach { id ->
+            handleTopicSubscription(
+                isEnabled = notificationSettings.isNotificationsMyProductSeriesEnabled,
+                topic = getSerieTopic(id)
+            ).getOrThrow()
         }
 
-        if (notificationSettings.isNotificationsMyProductSeriesEnabled) {
-            productRepository.getUserProducts().onSuccess { products ->
-                val uniqueSeries = products.mapNotNull { it.seriesId }.distinct()
-                uniqueSeries.forEach { seriesId ->
-                    firebaseMessagingService.subscribeToTopic(getSerieTopic(seriesId))
-                        .onFailure { return Result.failure(it) }
-                }
-            }
-        } else {
-            productRepository.getUserProducts().onSuccess { products ->
-                val uniqueSeries = products.mapNotNull { it.seriesName }.distinct()
-                uniqueSeries.forEach { seriesName ->
-                    firebaseMessagingService.unsubscribeFromTopic(getSerieTopic(seriesName))
-                        .onFailure { return Result.failure(it) }
-                }
-            }
-        }
-
-        sessionManager.saveSettingsPersonalizedPartnerNotifications(notificationSettings.isNotificationsPersonalizedEnabled)
-        sessionManager.saveSettingsProductSeriesNotifications(notificationSettings.isNotificationsMyProductSeriesEnabled)
-
+        saveLocalSettings(notificationSettings)
         return Result.success(Unit)
+    }
+
+    private suspend fun handleTopicSubscription(isEnabled: Boolean, topic: String): Result<Unit> {
+        return if (isEnabled) {
+            firebaseMessagingService.subscribeToTopic(topic)
+        } else {
+            firebaseMessagingService.unsubscribeFromTopic(topic)
+        }
+    }
+
+    private fun saveLocalSettings(settings: NotificationSettings) {
+        sessionManager.saveSettingsPersonalizedPartnerNotifications(settings.isNotificationsPersonalizedEnabled)
+        sessionManager.saveSettingsProductSeriesNotifications(settings.isNotificationsMyProductSeriesEnabled)
     }
 
     private fun getUserTopic(): String =
