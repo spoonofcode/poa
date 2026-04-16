@@ -1,19 +1,15 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
-//import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
-//import com.spoonofcode.core.firebase.usecase.UnsubscribeFromFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
-//    private val subscribeToFirebaseTopicsUseCase: SubscribeToFirebaseMessagingTopicUseCase,
-//    private val unsubscribeFromFirebaseMessagingTopicUseCase: UnsubscribeFromFirebaseMessagingTopicUseCase,
 ) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(
     NotificationSettingsViewState()
 ) {
@@ -22,49 +18,81 @@ internal class NotificationSettingsViewModel(
         when (action) {
             NotificationSettingsViewAction.InitView -> initView()
             NotificationSettingsViewAction.SaveChanges -> saveChanges()
-            is NotificationSettingsViewAction.SwitchNotificationFromAllPartners -> switchNotificationFromAllPartners(
+            is NotificationSettingsViewAction.SwitchAllNotification -> switchAllNotification(
                 action.enable
             )
 
-            is NotificationSettingsViewAction.SwitchNotificationFromMyPartners -> switchNotificationFromMyPartners(
+            is NotificationSettingsViewAction.SwitchNotificationsPersonalized -> switchNotificationsPersonalized(
                 action.enable
             )
+
+            is NotificationSettingsViewAction.SwitchNotificationsFromPartners -> switchNotificationsFromPartners(
+                action.enable
+            )
+
+            is NotificationSettingsViewAction.SwitchNotificationsMyProductSeries -> switchNotificationsMyProductSeries(
+                action.enable
+            )
+
+            NotificationSettingsViewAction.AcceptNotificationSettings -> acceptNotificationSettings()
+            NotificationSettingsViewAction.ShowRationaleNotificationDialog -> showRationaleNotificationDialog()
+            NotificationSettingsViewAction.CloseRationaleNotificationDialog -> closeRationaleNotificationDialog()
         }
     }
 
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val notificationSettings = getNotificationSettingsUseCase()
-                showContentView {
-                    NotificationSettingsViewState(
-                        notificationSettings = notificationSettings,
-                    )
+            getNotificationSettingsUseCase()
+                .onSuccess {
+                    showContentView {
+                        copy(
+                            notificationSettings = notificationSettings,
+                        )
+                    }
+                }.onFailure {
+                    showErrorSnackbar(it)
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
         }
     }
 
-    private fun switchNotificationFromAllPartners(enable: Boolean) {
+    private fun switchAllNotification(enable: Boolean) {
         updateState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
-                    notificationFromAllPartnersEnable = enable,
+                    isNotificationsPersonalizedEnabled = enable,
+                    isNotificationsFromPartnersEnabled = enable,
+                    isNotificationsMyProductSeriesEnabled = enable,
                 )
             )
         }
     }
 
-    private fun switchNotificationFromMyPartners(enable: Boolean) {
+    private fun switchNotificationsPersonalized(enable: Boolean) {
         updateState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
-                    notificationFromMyPartnersEnable = enable,
+                    isNotificationsPersonalizedEnabled = enable,
+                )
+            )
+        }
+    }
+
+    private fun switchNotificationsFromPartners(enable: Boolean) {
+        updateState {
+            NotificationSettingsViewState(
+                notificationSettings = notificationSettings.copy(
+                    isNotificationsFromPartnersEnabled = enable,
+                )
+            )
+        }
+    }
+
+    private fun switchNotificationsMyProductSeries(enable: Boolean) {
+        updateState {
+            NotificationSettingsViewState(
+                notificationSettings = notificationSettings.copy(
+                    isNotificationsMyProductSeriesEnabled = enable,
                 )
             )
         }
@@ -73,13 +101,42 @@ internal class NotificationSettingsViewModel(
     private fun saveChanges() {
         viewModelScope.launch {
             showLoadingView()
-            try {
-                updateNotificationSettingsUseCase.invoke(notificationSettings = currentState().notificationSettings)
+            updateNotificationSettingsUseCase(
+                notificationSettings = currentState().notificationSettings
+            ).onSuccess {
                 viewModelNavigator.pop()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                showErrorView()
+            }.onFailure {
+                showErrorSnackbar(it)
             }
+        }
+    }
+
+    private fun acceptNotificationSettings() {
+        viewModelScope.launch {
+            updateNotificationSettingsUseCase(
+                notificationSettings = NotificationSettings()
+            ).onSuccess {
+                closeRationaleNotificationDialog()
+            }.onFailure {
+                closeRationaleNotificationDialog()
+                showErrorSnackbar(it)
+            }
+        }
+    }
+
+    private fun showRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = true
+            )
+        }
+    }
+
+    private fun closeRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = false
+            )
         }
     }
 }

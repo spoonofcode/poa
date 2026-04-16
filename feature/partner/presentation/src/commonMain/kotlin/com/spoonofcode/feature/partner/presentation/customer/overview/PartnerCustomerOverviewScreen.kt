@@ -51,13 +51,13 @@ internal class CustomerOverviewScreen(
             ) {
                 items(viewState.customers) { customer ->
                     val checkedCustomer =
-                        viewState.checkedUserEmails.contains(customer.email)
+                        viewState.checkedUserIds.contains(customer.id)
 
                     CustomerItem(
                         item = customer,
                         onClick = {
                             onAction(
-                                PartnerCustomerOverviewViewAction.CheckedCustomer(customer.email)
+                                PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id!!)
                             )
                         },
                         checkedCustomer = checkedCustomer,
@@ -68,7 +68,7 @@ internal class CustomerOverviewScreen(
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
-                enabled = viewState.checkedUserEmails.isNotEmpty(),
+                enabled = viewState.checkedUserIds.isNotEmpty(),
                 text = stringResource(resource = Res.string.send_notification),
                 onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) }
             )

@@ -13,6 +13,7 @@ kotlin {
 
                 implementation(projects.feature.product.domain)
                 implementation(projects.feature.partner.domain)
+                implementation(projects.feature.notification.domain)
             }
         }
 

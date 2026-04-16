@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NotificationSettings(
-    val notificationFromAllPartnersEnable: Boolean = true,
-    val notificationFromMyPartnersEnable: Boolean = true,
+    val isNotificationsPersonalizedEnabled: Boolean = false,
+    val isNotificationsFromPartnersEnabled: Boolean = false,
+    val isNotificationsMyProductSeriesEnabled: Boolean = false,
 )

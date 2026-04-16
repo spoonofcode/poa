@@ -6,9 +6,11 @@ import com.spoonofcode.core.data.network.SessionManager
 class GetNotificationSettingsUseCase(
     private val sessionManager: SessionManager,
 ) {
-    operator fun invoke(): NotificationSettings =
+    operator fun invoke(): Result<NotificationSettings> = runCatching {
         NotificationSettings(
-            notificationFromAllPartnersEnable = sessionManager.getSettingsNotificationFromAllPartners(),
-            notificationFromMyPartnersEnable = sessionManager.getSettingsNotificationFromMyPartners(),
+            isNotificationsPersonalizedEnabled = sessionManager.getNotificationsPersonalizedSettings(),
+            isNotificationsMyProductSeriesEnabled = sessionManager.getNotificationsMyProductSeriesSettings(),
+            isNotificationsFromPartnersEnabled = sessionManager.getNotificationsFromPartnersSettings(),
         )
+    }
 }

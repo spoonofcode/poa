@@ -6,6 +6,7 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.appnavigation.PartnerModule
 import com.spoonofcode.feature.appnavigation.ProductModule
+import com.spoonofcode.feature.notification.domain.model.NotificationType
 import kotlinx.coroutines.launch
 
 internal class NotificationTypeViewModel() :
@@ -16,22 +17,26 @@ internal class NotificationTypeViewModel() :
 
     override fun onAction(action: NotificationTypeViewAction) {
         when (action) {
-            NotificationTypeViewAction.NavigateToAllCustomers -> navigateToAllCustomers()
-            NotificationTypeViewAction.NavigateToPartnerCustomers -> navigateToPartnerCustomers()
-            NotificationTypeViewAction.NavigateToPartnerProductSeries -> navigateToPartnerProductSeries()
-            NotificationTypeViewAction.NavigateToAllPartnerCustomers -> navigateToAllPartnerCustomers()
+            NotificationTypeViewAction.SendNotificationToAllCustomers -> sendNotificationToAllCustomers()
+            NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers -> sendNotificationToSelectedPartnerCustomers()
+            NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries -> sendNotificationToSelectedPartnerProductSeries()
+            NotificationTypeViewAction.SendNotificationToAllPartnerCustomers -> sendNotificationToAllPartnerCustomers()
         }
     }
 
-    private fun navigateToAllCustomers() {
+    private fun sendNotificationToAllCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(NotificationModule.NotificationEditScreen())
+                routeResolver.resolve(
+                    NotificationModule.NotificationEditScreen(
+                        notificationTypeName = NotificationType.global.name,
+                    )
+                )
             )
         }
     }
 
-    private fun navigateToPartnerCustomers() {
+    private fun sendNotificationToSelectedPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(PartnerModule.CustomerOverviewScreen)
@@ -39,16 +44,20 @@ internal class NotificationTypeViewModel() :
         }
     }
 
-    private fun navigateToPartnerProductSeries() {
+    private fun sendNotificationToSelectedPartnerProductSeries() {
         viewModelScope.launch {
             viewModelNavigator.push(routeResolver.resolve(ProductModule.ProductSeriesOverviewScreen))
         }
     }
 
-    private fun navigateToAllPartnerCustomers() {
+    private fun sendNotificationToAllPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(NotificationModule.NotificationEditScreen())
+                routeResolver.resolve(
+                    NotificationModule.NotificationEditScreen(
+                        notificationTypeName = NotificationType.partner.name,
+                    )
+                )
             )
         }
     }

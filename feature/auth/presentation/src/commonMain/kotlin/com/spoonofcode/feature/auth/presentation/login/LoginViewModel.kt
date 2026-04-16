@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
@@ -49,7 +50,6 @@ internal class LoginViewModel(
     }
 
     private fun signInWithGoogle(googleAccount: GoogleAccount?) {
-        println("BARTEK googleAccount = $googleAccount")
         viewModelScope.launch {
             showLoadingView()
             val googleIdToken = requireNotNull(googleAccount?.idToken)
@@ -57,7 +57,8 @@ internal class LoginViewModel(
                 .onSuccess {
                     viewModelNavigator.replaceAll(
                         listOf(
-                            routeResolver.resolve(AppModule.MainHostScreen)
+                            routeResolver.resolve(AppModule.MainHostScreen),
+                            routeResolver.resolve(NotificationModule.NotificationSettingsScreen)
                         )
                     )
                 }.onFailure {

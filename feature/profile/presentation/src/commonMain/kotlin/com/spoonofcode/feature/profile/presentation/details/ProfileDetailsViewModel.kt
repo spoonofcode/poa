@@ -63,7 +63,7 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToNotificationSettings() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(NotificationModule.NotificationSettingsScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(NotificationModule.NotificationChannelScreen))
         }
     }
 

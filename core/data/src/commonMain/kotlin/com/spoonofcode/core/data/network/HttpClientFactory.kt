@@ -89,7 +89,7 @@ class HttpClientFactory(
                                     refreshToken = refreshResponse.jwtRefreshToken,
                                 )
                             }.onFailure { error ->
-                                sessionManager.clearSession()
+//                                sessionManager.clearSession()
                             }
 
                         bearerTokens

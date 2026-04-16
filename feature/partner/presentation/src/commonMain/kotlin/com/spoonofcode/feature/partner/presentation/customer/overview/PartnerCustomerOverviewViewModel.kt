@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
 import kotlinx.coroutines.launch
 
@@ -15,7 +16,7 @@ internal class PartnerCustomerOverviewViewModel(
 
     override fun onAction(action: PartnerCustomerOverviewViewAction) {
         when (action) {
-            is PartnerCustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(email = action.email)
+            is PartnerCustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(id = action.id)
             is PartnerCustomerOverviewViewAction.InitView -> initView()
             PartnerCustomerOverviewViewAction.NavigateToNotification -> navigateToNotification()
         }
@@ -38,9 +39,9 @@ internal class PartnerCustomerOverviewViewModel(
         }
     }
 
-    private fun checkedCustomer(email: String) {
-        val selected = currentState().checkedUserEmails.toMutableSet()
-        val wasAdded = selected.contains(email)
+    private fun checkedCustomer(id: String) {
+        val selected = currentState().checkedUserIds.toMutableSet()
+        val wasAdded = selected.contains(id)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_USERS) {
             showSnackbar(
@@ -49,11 +50,11 @@ internal class PartnerCustomerOverviewViewModel(
             return
         }
 
-        if (wasAdded) selected.remove(email) else selected.add(email)
+        if (wasAdded) selected.remove(id) else selected.add(id)
 
         updateState {
             copy(
-                checkedUserEmails = selected
+                checkedUserIds = selected
             )
         }
     }
@@ -63,10 +64,10 @@ internal class PartnerCustomerOverviewViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     NotificationModule.NotificationEditScreen(
-                        onlyToSelectedCustomers = true,
-                        selectedTopics = currentState().checkedUserEmails,
+                        notificationTypeName = NotificationType.user.name,
+                        selectedTopics = currentState().checkedUserIds,
                         selectedNames = currentState().customers
-                            .filter { it.email in currentState().checkedUserEmails }
+                            .filter { it.id in currentState().checkedUserIds }
                             .map { it.name }.toSet()
                     )
                 )

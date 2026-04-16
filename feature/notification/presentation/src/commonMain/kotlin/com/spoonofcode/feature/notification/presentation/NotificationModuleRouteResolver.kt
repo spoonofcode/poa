@@ -3,6 +3,8 @@ package com.spoonofcode.feature.notification.presentation
 import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.notification.domain.model.NotificationType
+import com.spoonofcode.feature.notification.presentation.channel.NotificationChannelScreen
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen
 import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewScreen
@@ -18,7 +20,8 @@ class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModule> 
                 )
 
                 is NotificationModule.NotificationEditScreen -> NotificationEditScreen(
-                    onlyToSelectedCustomers = it.onlyToSelectedCustomers,
+                    notificationType = NotificationType.fromString(it.notificationTypeName)
+                        ?: NotificationType.global,
                     selectedNames = it.selectedNames,
                     selectedTopics = it.selectedTopics,
                 )
@@ -26,6 +29,7 @@ class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModule> 
                 NotificationModule.NotificationOverviewScreen -> NotificationOverviewScreen()
                 NotificationModule.NotificationSettingsScreen -> NotificationSettingsScreen()
                 NotificationModule.NotificationTypeScreen -> NotificationTypeScreen()
+                NotificationModule.NotificationChannelScreen -> NotificationChannelScreen()
             }
         }
 }

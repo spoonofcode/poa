@@ -9,11 +9,21 @@ actual class FirebaseMessagingService() {
         return Firebase.messaging.token.await()
     }
 
-    actual suspend fun subscribeToTopic(topic: String) {
-        Firebase.messaging.subscribeToTopic(topic).await()
+    actual suspend fun subscribeToTopic(topic: String): Result<Unit> {
+        return try {
+            Firebase.messaging.subscribeToTopic(topic).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(Exception("topic=$topic subscription error", e))
+        }
     }
 
-    actual suspend fun unsubscribeFromTopic(topic: String) {
-        Firebase.messaging.unsubscribeFromTopic(topic).await()
+    actual suspend fun unsubscribeFromTopic(topic: String): Result<Unit> {
+        return try {
+            Firebase.messaging.unsubscribeFromTopic(topic).await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(Exception("topic=$topic  unsubscription error", e))
+        }
     }
 }

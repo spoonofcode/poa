@@ -7,6 +7,7 @@ fun LoginCodeResponse.toLogin(): Login {
     return Login(
         jwtAccessToken = jwtAccessToken,
         jwtRefreshToken = jwtRefreshToken,
+        id = userProfile.id,
         email = userProfile.email,
     )
 }

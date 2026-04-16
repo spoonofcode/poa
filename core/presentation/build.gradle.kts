@@ -25,6 +25,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.jetbrains.compose.components.resources)
 
+                implementation(libs.calf.permissions)
                 implementation(libs.compose.icons.fontawesome)
                 implementation(libs.compottie)
                 implementation(libs.compottie.dot)

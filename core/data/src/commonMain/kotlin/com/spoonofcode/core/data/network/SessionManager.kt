@@ -3,7 +3,7 @@ package com.spoonofcode.core.data.network
 interface SessionManager {
     fun isSessionInitialized(): Boolean
     fun clearSession()
-    fun enableAllNotifications()
+    fun disableAllNotifications()
     fun saveSessionAccessToken(token: String)
     fun getSessionAccessToken(): String?
     fun saveSessionRefreshToken(token: String)
@@ -12,8 +12,10 @@ interface SessionManager {
     fun getSessionUserId(): String
     fun saveSessionUserEmail(email: String)
     fun getSessionUserEmail(): String
-    fun getSettingsNotificationFromAllPartners(): Boolean
-    fun saveSettingsNotificationFromAllPartners(enable: Boolean)
-    fun getSettingsNotificationFromMyPartners(): Boolean
-    fun saveSettingsNotificationFromMyPartners(enable: Boolean)
+    fun getNotificationsPersonalizedSettings(): Boolean
+    fun saveNotificationsPersonalizedSettings(enable: Boolean)
+    fun getNotificationsMyProductSeriesSettings(): Boolean
+    fun saveNotificationsMyProductSeriesSettings(enable: Boolean)
+    fun getNotificationsFromPartnersSettings(): Boolean
+    fun saveNotificationsFromPartnersSettings(enable: Boolean)
 }

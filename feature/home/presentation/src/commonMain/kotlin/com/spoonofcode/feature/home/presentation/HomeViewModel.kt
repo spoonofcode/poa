@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.firebase.domain.usecase.SubscribeToFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModule
@@ -9,18 +8,20 @@ import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserDailyCheckInStatusUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserRewardsPointsUseCase
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
+import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 internal class HomeViewModel(
     private val getNewPartnersUseCase: GetNewPartnersUseCase,
-    private val subscribeToFirebaseTopicsUseCase: SubscribeToFirebaseMessagingTopicUseCase,
     private val addRewardToUserUseCase: AddRewardToUserUseCase,
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
     private val getNotificationsUseCase: GetNotificationsUseCase,
+    private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
 ) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
 
     override fun onAction(action: HomeViewAction) {
@@ -28,13 +29,15 @@ internal class HomeViewModel(
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
             HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
+            HomeViewAction.GrantedNotificationSettings -> grantedNotificationSettings()
+            HomeViewAction.ShowRationaleNotificationDialog -> showRationaleNotificationDialog()
+            HomeViewAction.CloseRationaleNotificationDialog -> closeRationaleNotificationDialog()
         }
     }
 
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-//            subscribeToFirebaseTopicsUseCase(topic = FirebaseMessagingTopics.global.name)
             val dailyCheckInStatusDeferred = async { getUserDailyCheckInStatusUseCase() }
             val totalPointsDeferred = async { getUserRewardsPointsUseCase() }
             val partnersDeferred = async { getNewPartnersUseCase() }
@@ -89,6 +92,35 @@ internal class HomeViewModel(
     private fun navigateToNotifications() {
         viewModelScope.launch {
             viewModelNavigator.push(routeResolver.resolve(NotificationModule.NotificationOverviewScreen))
+        }
+    }
+
+    private fun grantedNotificationSettings() {
+        viewModelScope.launch {
+            updateNotificationSettingsUseCase(
+                notificationSettings = NotificationSettings()
+            ).onSuccess {
+                closeRationaleNotificationDialog()
+            }.onFailure {
+                closeRationaleNotificationDialog()
+                showErrorSnackbar(it)
+            }
+        }
+    }
+
+    private fun showRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = true
+            )
+        }
+    }
+
+    private fun closeRationaleNotificationDialog() {
+        updateState {
+            copy(
+                isRationaleNotificationDialogVisible = false
+            )
         }
     }
 

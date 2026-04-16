@@ -7,9 +7,19 @@ internal sealed interface NotificationSettingsViewAction : BaseViewAction {
         NotificationSettingsViewAction
     data object SaveChanges :
         NotificationSettingsViewAction
-    data class SwitchNotificationFromAllPartners(val enable: Boolean) :
+
+    data class SwitchAllNotification(val enable: Boolean) :
+        NotificationSettingsViewAction
+    data class SwitchNotificationsPersonalized(val enable: Boolean) :
         NotificationSettingsViewAction
 
-    data class SwitchNotificationFromMyPartners(val enable: Boolean) :
+    data class SwitchNotificationsFromPartners(val enable: Boolean) :
         NotificationSettingsViewAction
+
+    data class SwitchNotificationsMyProductSeries(val enable: Boolean) :
+        NotificationSettingsViewAction
+
+    data object AcceptNotificationSettings : NotificationSettingsViewAction
+    data object ShowRationaleNotificationDialog : NotificationSettingsViewAction
+    data object CloseRationaleNotificationDialog : NotificationSettingsViewAction
 }

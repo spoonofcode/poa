@@ -1,7 +1,7 @@
 package com.spoonofcode.core.presentation.compose
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Switch
@@ -13,7 +13,8 @@ object Switchs {
 
     @Composable
     fun LabelSwitch(
-        label: String,
+        title: String,
+        description: String,
         checked: Boolean,
         onCheckedChange: (Boolean) -> Unit,
         modifier: Modifier = Modifier,
@@ -27,9 +28,15 @@ object Switchs {
                     onClick = { onCheckedChange(!checked) }
                 ),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Texts.BL(text = label)
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Texts.BL(text = title)
+                Texts.BS(text = description)
+            }
+
+            Spacers.HorizontalBetweenFields()
 
             Switch(
                 checked = checked,
