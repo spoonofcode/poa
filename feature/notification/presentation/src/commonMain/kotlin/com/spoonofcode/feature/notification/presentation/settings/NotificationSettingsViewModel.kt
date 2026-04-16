@@ -49,7 +49,7 @@ internal class NotificationSettingsViewModel(
             try {
                 val notificationSettings = getNotificationSettingsUseCase()
                 showContentView {
-                    NotificationSettingsViewState(
+                    copy(
                         notificationSettings = notificationSettings,
                     )
                 }

@@ -9,13 +9,16 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         clearSessionAccessToken()
         clearSessionRefreshToken()
         clearSessionUserId()
-        clearSettingsNotificationFromAllPartners()
-        clearSettingsNotificationFromMyPartners()
+        clearSessionUserEmail()
+        clearNotificationsPersonalizedSettings()
+        clearNotificationsMyProductSeriesSettings()
+        clearNotificationsFromPartnersSettings()
     }
 
-    override fun enableAllNotifications() {
-        saveNotificationsPersonalizedSettings(true)
-        saveNotificationsMyProductSeriesSettings(true)
+    override fun disableAllNotifications() {
+        saveNotificationsPersonalizedSettings(false)
+        saveNotificationsMyProductSeriesSettings(false)
+        saveNotificationsFromPartnersSettings(false)
     }
 
     override fun saveSessionAccessToken(token: String) {
@@ -47,19 +50,27 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
     ) { "User email cannot be null" }
 
     override fun getNotificationsPersonalizedSettings(): Boolean = requireNotNull(
-        settings.getBooleanOrNull(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS)
-    ) { "SettingsNotificationFromAllPartners cannot be null" }
+        settings.getBooleanOrNull(NOTIFICATIONS_PERSONALIZED_SETTINGS)
+    ) { "NOTIFICATIONS_PERSONALIZED_SETTINGS cannot be null" }
 
     override fun saveNotificationsPersonalizedSettings(enable: Boolean) {
-        settings.putBoolean(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS, enable)
+        settings.putBoolean(NOTIFICATIONS_PERSONALIZED_SETTINGS, enable)
     }
 
     override fun getNotificationsMyProductSeriesSettings(): Boolean = requireNotNull(
-        settings.getBooleanOrNull(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS)
-    ) { "SettingsNotificationFromAllPartners cannot be null" }
+        settings.getBooleanOrNull(NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS)
+    ) { "NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS cannot be null" }
 
     override fun saveNotificationsMyProductSeriesSettings(enable: Boolean) {
-        settings.putBoolean(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS, enable)
+        settings.putBoolean(NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS, enable)
+    }
+
+    override fun getNotificationsFromPartnersSettings(): Boolean = requireNotNull(
+        settings.getBooleanOrNull(NOTIFICATIONS_FROM_PARTNERS_SETTINGS)
+    ) { "SettingsNotificationFromAllPartners cannot be null" }
+
+    override fun saveNotificationsFromPartnersSettings(enable: Boolean) {
+        settings.putBoolean(NOTIFICATIONS_FROM_PARTNERS_SETTINGS, enable)
     }
 
     private fun clearSessionAccessToken() {
@@ -74,12 +85,20 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         settings.remove(SESSION_USER_ID)
     }
 
-    private fun clearSettingsNotificationFromAllPartners() {
-        settings.remove(SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS)
+    private fun clearSessionUserEmail() {
+        settings.remove(SESSION_USER_EMAIL)
     }
 
-    private fun clearSettingsNotificationFromMyPartners() {
-        settings.remove(SETTINGS_PRODUCT_SERIES_NOTIFICATIONS)
+    private fun clearNotificationsPersonalizedSettings() {
+        settings.remove(NOTIFICATIONS_PERSONALIZED_SETTINGS)
+    }
+
+    private fun clearNotificationsMyProductSeriesSettings() {
+        settings.remove(NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS)
+    }
+
+    private fun clearNotificationsFromPartnersSettings() {
+        settings.remove(NOTIFICATIONS_FROM_PARTNERS_SETTINGS)
     }
 
     companion object Companion {
@@ -87,9 +106,11 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         private const val SESSION_REFRESH_TOKEN = "session_refresh_token"
         private const val SESSION_USER_ID = "session_user_id"
         private const val SESSION_USER_EMAIL = "session_user_email"
-        private const val SETTINGS_PERSONALIZED_PARTNER_NOTIFICATIONS =
-            "settings_personalized_partner_notifications"
-        private const val SETTINGS_PRODUCT_SERIES_NOTIFICATIONS =
-            "settings_product_series_notifications"
+        private const val NOTIFICATIONS_PERSONALIZED_SETTINGS =
+            "notifications_personalized_settings"
+        private const val NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS =
+            "notifications_my_product_series_settings"
+        private const val NOTIFICATIONS_FROM_PARTNERS_SETTINGS =
+            "notifications_from_partners_settings"
     }
 }

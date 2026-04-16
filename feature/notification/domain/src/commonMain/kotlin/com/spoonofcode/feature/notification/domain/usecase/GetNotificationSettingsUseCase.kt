@@ -10,5 +10,6 @@ class GetNotificationSettingsUseCase(
         NotificationSettings(
             isNotificationsPersonalizedEnabled = sessionManager.getNotificationsPersonalizedSettings(),
             isNotificationsMyProductSeriesEnabled = sessionManager.getNotificationsMyProductSeriesSettings(),
+            isNotificationsFromPartnersEnabled = sessionManager.getNotificationsFromPartnersSettings(),
         )
 }

@@ -96,7 +96,6 @@ internal class HomeViewModel(
     }
 
     private fun grantedNotificationSettings() {
-        println("BARTEK GrantedNotificationSettings")
         viewModelScope.launch {
             updateNotificationSettingsUseCase(
                 notificationSettings = NotificationSettings()

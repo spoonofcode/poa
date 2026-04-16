@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.NotificationModule
 import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 
@@ -39,7 +40,12 @@ internal class LoginCodeViewModel(
                 email = currentState.email,
                 code = currentState.code,
             ).onSuccess {
-                viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))
+                viewModelNavigator.replaceAll(
+                    listOf(
+                        routeResolver.resolve(AppModule.MainHostScreen),
+                        routeResolver.resolve(NotificationModule.NotificationSettingsScreen),
+                    )
+                )
             }.onFailure {
                 showErrorSnackbar(it)
             }
