@@ -1,14 +1,11 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
-//import com.spoonofcode.core.firebase.usecase.SubscribeToFirebaseMessagingTopicUseCase
-//import com.spoonofcode.core.firebase.usecase.UnsubscribeFromFirebaseMessagingTopicUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import kotlinx.coroutines.launch
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
@@ -46,18 +43,16 @@ internal class NotificationSettingsViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            try {
-                val notificationSettings = getNotificationSettingsUseCase()
-                showContentView {
-                    copy(
-                        notificationSettings = notificationSettings,
-                    )
+            getNotificationSettingsUseCase()
+                .onSuccess {
+                    showContentView {
+                        copy(
+                            notificationSettings = notificationSettings,
+                        )
+                    }
+                }.onFailure {
+                    showErrorSnackbar(it)
                 }
-            } catch (ce: CancellationException) {
-                throw ce
-            } catch (e: Exception) {
-                showErrorView()
-            }
         }
     }
 
