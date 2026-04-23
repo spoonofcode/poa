@@ -107,3 +107,6 @@ certificates/
 /docs
 AGENTS.md
 README_NEW.md
+
+#Excluded
+!gradle-wrapper.jar
