@@ -1,32 +1,48 @@
 package com.spoonofcode.poa.app
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.presentation.compose.LoadingView
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import com.spoonofcode.core.presentation.theme.AppTheme
 import com.spoonofcode.feature.appnavigation.AuthModule
 import com.spoonofcode.feature.appnavigation.NotificationModule
 import org.koin.compose.getKoin
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-@Preview
-fun App(notificationId: String?) {
-    val sessionManager: SessionManager = getKoin().get()
+fun App(
+    notificationId: String?,
+    viewModel: AppViewModel = koinViewModel()
+) {
     val routeResolver: VoyagerRouteResolver = getKoin().get()
 
+    val state by viewModel.state.collectAsState()
+
     AppTheme {
-        Navigator(
-            screens = getStartScreens(
-                sessionInitialized = sessionManager.isSessionInitialized(),
-                notificationId = notificationId,
-                routeResolver
-            )
-        ) { navigator ->
-            SlideTransition(navigator = navigator)
+        when (val currentState = state) {
+            is AppViewState.Loading -> {
+                LoadingView()
+            }
+
+            is AppViewState.LoggedIn, is AppViewState.LoggedOut -> {
+                Navigator(
+                    screens = getStartScreens(
+                        sessionInitialized = currentState is AppViewState.LoggedIn,
+                        notificationId = notificationId,
+                        routeResolver = routeResolver
+                    )
+                ) { navigator ->
+                    SlideTransition(navigator = navigator)
+                }
+            }
         }
     }
 }

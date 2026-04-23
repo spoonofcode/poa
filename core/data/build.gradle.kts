@@ -15,6 +15,8 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
 
+                implementation(libs.ksafe)
+
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.client.auth)
                 implementation(libs.ktor.client.content.negotiation)

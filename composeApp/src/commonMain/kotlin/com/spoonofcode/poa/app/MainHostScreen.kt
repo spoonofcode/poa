@@ -24,7 +24,7 @@ import com.spoonofcode.feature.product.presentation.ProductOverviewTab
 import com.spoonofcode.feature.profile.presentation.details.ProfileTab
 import com.spoonofcode.feature.scan.presentation.ScanTab
 
-class MainHostScreen() : Screen {
+class MainHostScreen : Screen {
 
     @Composable
     override fun Content() {
