@@ -18,10 +18,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.navigator.internal.BackHandler
 import com.spoonofcode.core.presentation.compose.ErrorView
 import com.spoonofcode.core.presentation.compose.LoadingView
 import com.spoonofcode.core.presentation.compose.Paddings
@@ -83,6 +85,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
         onAction: (VA) -> Unit,
     ): @Composable ColumnScope.() -> Unit
 
+    @OptIn(InternalVoyagerApi::class)
     @Composable
     override fun Content() {
         val navigator: Navigator =
@@ -94,6 +97,10 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
 
         NavigationHandler(viewModel.navigationFlow, navigator)
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
+
+        if (backNavigationEnable.not()) {
+            BackHandler(true) { }
+        }
 
         LaunchedEffect(true) {
             provideInitAction(viewModel::onAction).invoke()
