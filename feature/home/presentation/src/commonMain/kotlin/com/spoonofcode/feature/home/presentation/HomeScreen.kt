@@ -24,15 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
-import com.mohamedrejeb.calf.permissions.Permission
-import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
-import com.spoonofcode.core.presentation.compose.Dialogs
-import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
@@ -66,46 +62,11 @@ internal class HomeScreen(
 
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
-    override fun provideDialogs(
-        viewState: HomeViewState,
-        onAction: (HomeViewAction) -> Unit
-    ) {
-        val notificationPermissionState = rememberPermissionState(
-            Permission.Notification
-        )
-
-        if (viewState.isRationaleNotificationDialogVisible) {
-            Dialogs.AlertDialog(
-                title = stringResource(Res.string.rational_notification_dialog_title),
-                text = stringResource(Res.string.rational_notification_dialog_text),
-                confirmButtonText = stringResource(Res.string.rational_notification_dialog_confirm_button_text),
-                dismissButtonText = stringResource(Res.string.rational_notification_dialog_dismiss_button_text),
-                confirmAction = {
-                    onAction(HomeViewAction.CloseRationaleNotificationDialog)
-                    notificationPermissionState.launchPermissionRequest()
-                },
-                dismissAction = { onAction(HomeViewAction.CloseRationaleNotificationDialog) }
-            )
-        }
-    }
-
-    @OptIn(ExperimentalPermissionsApi::class)
-    @Composable
     override fun provideContent(
         viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            val notificationPermissionState = rememberPermissionState(
-                Permission.Notification
-            )
-
-            RequestPermission(
-                notificationPermissionState = notificationPermissionState,
-                onGrantedAction = { onAction(HomeViewAction.GrantedNotificationSettings) },
-                onShowRationalAction = { onAction(HomeViewAction.ShowRationaleNotificationDialog) }
-            )
-
             AutoImageSlider(
                 label = stringResource(Res.string.new_partners),
                 imageLinks = viewState.partnerImageLinks,

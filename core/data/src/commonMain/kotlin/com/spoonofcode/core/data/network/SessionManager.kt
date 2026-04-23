@@ -3,7 +3,6 @@ package com.spoonofcode.core.data.network
 interface SessionManager {
     suspend fun isSessionInitialized(): Boolean
     suspend fun clearSession()
-    suspend fun disableAllNotifications()
     suspend fun saveSessionAccessToken(token: String)
     suspend fun getSessionAccessToken(): String?
     suspend fun saveSessionRefreshToken(token: String)

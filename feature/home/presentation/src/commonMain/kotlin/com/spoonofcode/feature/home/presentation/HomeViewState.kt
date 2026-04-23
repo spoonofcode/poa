@@ -10,5 +10,4 @@ internal data class HomeViewState(
     val dailyCheckInStatus: DailyCheckInStatus? = null,
     val totalPoints: Int = 0,
     val unreadNotificationsCount: Int = 0,
-    val isRationaleNotificationDialogVisible: Boolean = false,
 ) : BaseViewState()
