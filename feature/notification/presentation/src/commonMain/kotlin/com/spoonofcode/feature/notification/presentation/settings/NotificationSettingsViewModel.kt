@@ -44,7 +44,7 @@ internal class NotificationSettingsViewModel(
         showLoadingView()
         viewModelScope.launch {
             getNotificationSettingsUseCase()
-                .onSuccess {
+                .onSuccess { notificationSettings ->
                     showContentView {
                         copy(
                             notificationSettings = notificationSettings,
@@ -112,16 +112,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun acceptNotificationSettings() {
-        viewModelScope.launch {
-            updateNotificationSettingsUseCase(
-                notificationSettings = NotificationSettings()
-            ).onSuccess {
-                closeRationaleNotificationDialog()
-            }.onFailure {
-                closeRationaleNotificationDialog()
-                showErrorSnackbar(it)
-            }
-        }
+        closeRationaleNotificationDialog()
     }
 
     private fun showRationaleNotificationDialog() {

@@ -42,6 +42,7 @@ import com.spoonofcode.feature.notification.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationSettingsScreen(
+    override val backNavigationEnable: Boolean = true,
     override val verticalScrollEnable: Boolean = false,
 ) :
     BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {

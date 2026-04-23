@@ -12,7 +12,10 @@ sealed class NotificationModule : Screen() {
     ) : NotificationModule()
 
     object NotificationOverviewScreen : NotificationModule()
-    object NotificationSettingsScreen : NotificationModule()
+    data class NotificationSettingsScreen(
+        val backNavigationEnabled: Boolean = true,
+    ) : NotificationModule()
+
     object NotificationTypeScreen : NotificationModule()
     object NotificationChannelScreen : NotificationModule()
 }

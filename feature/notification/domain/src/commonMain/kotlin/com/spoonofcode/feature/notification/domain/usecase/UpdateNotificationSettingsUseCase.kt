@@ -47,13 +47,13 @@ class UpdateNotificationSettingsUseCase(
         }
     }
 
-    private fun saveLocalSettings(settings: NotificationSettings) {
+    private suspend fun saveLocalSettings(settings: NotificationSettings) {
         sessionManager.saveNotificationsPersonalizedSettings(settings.isNotificationsPersonalizedEnabled)
         sessionManager.saveNotificationsFromPartnersSettings(settings.isNotificationsFromPartnersEnabled)
         sessionManager.saveNotificationsMyProductSeriesSettings(settings.isNotificationsMyProductSeriesEnabled)
     }
 
-    private fun getUserTopic(): String =
+    private suspend fun getUserTopic(): String =
         NotificationType.user.createTopic(sessionManager.getSessionUserId())
 
     private fun getPartnerTopic(partnerId: String): String =

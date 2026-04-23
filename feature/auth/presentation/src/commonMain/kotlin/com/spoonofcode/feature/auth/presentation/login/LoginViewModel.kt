@@ -58,7 +58,11 @@ internal class LoginViewModel(
                     viewModelNavigator.replaceAll(
                         listOf(
                             routeResolver.resolve(AppModule.MainHostScreen),
-                            routeResolver.resolve(NotificationModule.NotificationSettingsScreen)
+                            routeResolver.resolve(
+                                NotificationModule.NotificationSettingsScreen(
+                                    backNavigationEnabled = false
+                                )
+                            )
                         )
                     )
                 }.onFailure {

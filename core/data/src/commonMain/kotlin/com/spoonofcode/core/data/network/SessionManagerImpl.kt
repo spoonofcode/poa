@@ -3,9 +3,9 @@ package com.spoonofcode.core.data.network
 import com.russhwolf.settings.Settings
 
 class SessionManagerImpl(private val settings: Settings) : SessionManager {
-    override fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
+    override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 
-    override fun clearSession() {
+    override suspend fun clearSession() {
         clearSessionAccessToken()
         clearSessionRefreshToken()
         clearSessionUserId()
@@ -15,61 +15,55 @@ class SessionManagerImpl(private val settings: Settings) : SessionManager {
         clearNotificationsFromPartnersSettings()
     }
 
-    override fun disableAllNotifications() {
-        saveNotificationsPersonalizedSettings(false)
-        saveNotificationsMyProductSeriesSettings(false)
-        saveNotificationsFromPartnersSettings(false)
-    }
-
-    override fun saveSessionAccessToken(token: String) {
+    override suspend fun saveSessionAccessToken(token: String) {
         settings.putString(SESSION_ACCESS_TOKEN, token)
     }
 
-    override fun getSessionAccessToken(): String? = settings.getStringOrNull(SESSION_ACCESS_TOKEN)
+    override suspend fun getSessionAccessToken(): String? = settings.getStringOrNull(SESSION_ACCESS_TOKEN)
 
-    override fun saveSessionRefreshToken(token: String) {
+    override suspend fun saveSessionRefreshToken(token: String) {
         settings.putString(SESSION_REFRESH_TOKEN, token)
     }
 
-    override fun getSessionRefreshToken(): String? = settings.getStringOrNull(SESSION_REFRESH_TOKEN)
+    override suspend fun getSessionRefreshToken(): String? = settings.getStringOrNull(SESSION_REFRESH_TOKEN)
 
-    override fun saveSessionUserId(userId: String) {
+    override suspend fun saveSessionUserId(userId: String) {
         settings.putString(SESSION_USER_ID, userId)
     }
 
-    override fun getSessionUserId(): String = requireNotNull(
+    override suspend fun getSessionUserId(): String = requireNotNull(
         settings.getStringOrNull(SESSION_USER_ID)
     ) { "User ID cannot be null" }
 
-    override fun saveSessionUserEmail(email: String) {
+    override suspend fun saveSessionUserEmail(email: String) {
         settings.putString(SESSION_USER_EMAIL, email)
     }
 
-    override fun getSessionUserEmail(): String = requireNotNull(
+    override suspend fun getSessionUserEmail(): String = requireNotNull(
         settings.getStringOrNull(SESSION_USER_EMAIL)
     ) { "User email cannot be null" }
 
-    override fun getNotificationsPersonalizedSettings(): Boolean = requireNotNull(
+    override suspend fun getNotificationsPersonalizedSettings(): Boolean = requireNotNull(
         settings.getBooleanOrNull(NOTIFICATIONS_PERSONALIZED_SETTINGS)
     ) { "NOTIFICATIONS_PERSONALIZED_SETTINGS cannot be null" }
 
-    override fun saveNotificationsPersonalizedSettings(enable: Boolean) {
+    override suspend fun saveNotificationsPersonalizedSettings(enable: Boolean) {
         settings.putBoolean(NOTIFICATIONS_PERSONALIZED_SETTINGS, enable)
     }
 
-    override fun getNotificationsMyProductSeriesSettings(): Boolean = requireNotNull(
+    override suspend fun getNotificationsMyProductSeriesSettings(): Boolean = requireNotNull(
         settings.getBooleanOrNull(NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS)
     ) { "NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS cannot be null" }
 
-    override fun saveNotificationsMyProductSeriesSettings(enable: Boolean) {
+    override suspend fun saveNotificationsMyProductSeriesSettings(enable: Boolean) {
         settings.putBoolean(NOTIFICATIONS_MY_PRODUCT_SERIES_SETTINGS, enable)
     }
 
-    override fun getNotificationsFromPartnersSettings(): Boolean = requireNotNull(
+    override suspend fun getNotificationsFromPartnersSettings(): Boolean = requireNotNull(
         settings.getBooleanOrNull(NOTIFICATIONS_FROM_PARTNERS_SETTINGS)
     ) { "SettingsNotificationFromAllPartners cannot be null" }
 
-    override fun saveNotificationsFromPartnersSettings(enable: Boolean) {
+    override suspend fun saveNotificationsFromPartnersSettings(enable: Boolean) {
         settings.putBoolean(NOTIFICATIONS_FROM_PARTNERS_SETTINGS, enable)
     }
 

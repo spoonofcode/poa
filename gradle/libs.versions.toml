@@ -5,6 +5,8 @@ androidMinSdk = "30"
 androidTargetSdk = "36"
 
 calfPermissions = "0.9.0"
+ksafe = "1.8.1"
+ksafeCompose = "1.8.1"
 projectApplicationId = "com.spoonofcode.poa"
 projectVersionName = "1.0"
 projectMinSdkVersion = "30"
@@ -76,6 +78,8 @@ android-tools-common = { group = "com.android.tools", name = "common", version.r
 calf-permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "calfPermissions" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+ksafe-compose = { module = "eu.anifantakis:ksafe-compose", version.ref = "ksafeCompose" }
+ksafe = { module = "eu.anifantakis:ksafe", version.ref = "ksafe" }
 ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 buildkonfig-gradle-plugin = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
 buildkonfig-compiler = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-compiler", version.ref = "buildkonfig" }

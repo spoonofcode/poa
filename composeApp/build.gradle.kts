@@ -77,10 +77,14 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.touchlab.kermit)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
             implementation(libs.voyager.transitions)
+
+            implementation(libs.ksafe)
+            implementation(libs.ksafe.compose)
 
             implementation(projects.core.data)
             implementation(projects.core.firebase.data)

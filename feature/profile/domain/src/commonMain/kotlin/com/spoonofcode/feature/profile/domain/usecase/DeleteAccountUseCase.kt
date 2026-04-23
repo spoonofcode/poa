@@ -5,7 +5,7 @@ import com.spoonofcode.core.data.network.SessionManager
 class DeleteAccountUseCase(
     private val sessionManager: SessionManager,
 ) {
-    operator fun invoke() {
+    suspend operator fun invoke() {
         sessionManager.clearSession()
     }
 }
