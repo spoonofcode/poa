@@ -19,10 +19,11 @@ actual class FirebaseMessagingService {
     }
 
     actual suspend fun subscribeToTopic(topic: String): Result<Unit> {
-        TODO("Not yet implemented")
+        return Result.success(Unit)
     }
 
     actual suspend fun unsubscribeFromTopic(topic: String): Result<Unit> {
-        TODO("Not yet implemented")
+        return Result.success(Unit)
+
     }
 }
