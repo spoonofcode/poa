@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.base.model
+package com.spoonofcode.core.network.base.model
 
 import kotlinx.serialization.Serializable
 

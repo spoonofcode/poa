@@ -12,6 +12,7 @@ kotlin {
                 implementation(libs.multiplatform.settings)
 
                 implementation(projects.core.data)
+                implementation(projects.core.network)
             }
         }
 

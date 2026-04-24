@@ -1,7 +1,5 @@
 package com.spoonofcode.core.presentation.di
 
-import com.spoonofcode.core.data.network.NetworkConfig
-import com.spoonofcode.core.data.network.NetworkConfigImpl
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigatorImpl
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
@@ -20,7 +18,6 @@ val presentationModule = module {
         }
     }
     singleOf(::NetworkManagerImpl).bind(NetworkManager::class)
-    single { NetworkConfigImpl() } bind NetworkConfig::class
     single { VoyagerRouteResolverImpl(getAll()) } bind VoyagerRouteResolver::class
     singleOf(::ViewModelNavigatorImpl).bind(ViewModelNavigator::class)
 }

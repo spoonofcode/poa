@@ -2,7 +2,7 @@ package com.spoonofcode.poa.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.data.network.SessionRepository
+import com.spoonofcode.core.session.domain.SessionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

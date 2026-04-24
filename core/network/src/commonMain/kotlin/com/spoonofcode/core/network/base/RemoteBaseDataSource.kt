@@ -1,8 +1,8 @@
-package com.spoonofcode.core.data.base
+package com.spoonofcode.core.network.base
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
-import com.spoonofcode.core.data.network.HttpStatusCodes
-import com.spoonofcode.core.data.network.NetworkConfig
+import com.spoonofcode.core.network.HttpStatusCodes
+import com.spoonofcode.core.network.NetworkConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.auth.AuthCircuitBreaker

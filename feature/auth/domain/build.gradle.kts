@@ -11,6 +11,7 @@ kotlin {
 
                 implementation(projects.core.data)
                 implementation(projects.core.recaptcha)
+                implementation(projects.core.session.domain)
             }
         }
 

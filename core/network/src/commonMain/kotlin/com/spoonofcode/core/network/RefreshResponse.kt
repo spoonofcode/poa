@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

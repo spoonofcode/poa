@@ -1,6 +1,7 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.network
 
 import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.session.domain.SessionRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.auth.Auth
@@ -68,7 +69,8 @@ class HttpClientFactory(
                     }
                     refreshTokens {
                         if (response.request.url.encodedPath.contains("api/login") ||
-                            response.request.url.encodedPath.contains("api/refresh")) {
+                            response.request.url.encodedPath.contains("api/refresh")
+                        ) {
                             return@refreshTokens null
                         }
 

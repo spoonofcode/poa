@@ -2,7 +2,7 @@ package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState
-import com.spoonofcode.core.data.network.NotificationSettings
+import com.spoonofcode.core.session.domain.model.NotificationSettings
 
 @Immutable
 internal data class NotificationSettingsViewState(

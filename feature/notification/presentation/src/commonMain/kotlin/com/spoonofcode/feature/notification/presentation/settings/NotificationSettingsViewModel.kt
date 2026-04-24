@@ -2,7 +2,6 @@ package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.data.network.NotificationSettings
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import kotlinx.coroutines.launch

@@ -1,20 +1,19 @@
-package com.spoonofcode.core.data.network.di
+package com.spoonofcode.core.network.di
 
-import com.spoonofcode.core.data.network.RemoteRefreshTokenDataSource
 import com.spoonofcode.core.data.logging.KermitLogger
 import com.spoonofcode.core.data.logging.POALogger
-import com.spoonofcode.core.data.network.HttpClientFactory
-import com.spoonofcode.core.data.network.SessionRepository
-import com.spoonofcode.core.data.network.SessionRepositoryKSafeImpl
+import com.spoonofcode.core.network.HttpClientFactory
+import com.spoonofcode.core.network.NetworkConfig
+import com.spoonofcode.core.network.NetworkConfigImpl
+import com.spoonofcode.core.network.RemoteRefreshTokenDataSource
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val networkModule: Module = module {
-    singleOf(::SessionRepositoryKSafeImpl).bind(SessionRepository::class)
     singleOf(::RemoteRefreshTokenDataSource)
-
+    single { NetworkConfigImpl() } bind NetworkConfig::class
     single<POALogger> { KermitLogger }
     single {
         HttpClientFactory(get(), get(), get()).create()

@@ -10,6 +10,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.core.data)
+                implementation(projects.core.network)
                 implementation(projects.feature.auth.domain)
             }
         }

@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.profile.domain.usecase
 
-import com.spoonofcode.core.data.network.SessionRepository
+import com.spoonofcode.core.session.domain.SessionRepository
 
 class DeleteAccountUseCase(
     private val sessionRepository: SessionRepository,

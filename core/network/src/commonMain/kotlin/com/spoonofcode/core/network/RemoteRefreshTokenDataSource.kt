@@ -1,6 +1,6 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.network
 
-import com.spoonofcode.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import io.ktor.http.HttpMethod
 
 class RemoteRefreshTokenDataSource : RemoteBaseDataSource(

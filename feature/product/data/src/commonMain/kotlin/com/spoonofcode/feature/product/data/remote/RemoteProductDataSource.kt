@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.product.data.remote
 
-import com.spoonofcode.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import com.spoonofcode.feature.product.data.remote.model.AddProductToUserRequest
 import com.spoonofcode.feature.product.data.remote.model.ProductResponse
 import com.spoonofcode.feature.product.data.remote.model.UpdateUserProductRequest

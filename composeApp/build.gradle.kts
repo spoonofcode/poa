@@ -89,9 +89,12 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.core.firebase.data)
             implementation(projects.core.firebase.domain)
+            implementation(projects.core.network)
             implementation(projects.core.nfc)
             implementation(projects.core.presentation)
             implementation(projects.core.recaptcha)
+            implementation(projects.core.session.data)
+            implementation(projects.core.session.domain)
 
             implementation(projects.feature.auth.data)
             implementation(projects.feature.auth.domain)

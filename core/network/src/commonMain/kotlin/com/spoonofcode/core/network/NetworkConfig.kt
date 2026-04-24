@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.network
 
 interface NetworkConfig {
     val baseUrl: String

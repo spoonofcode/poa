@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.domain.usecase
 
-import com.spoonofcode.core.data.network.NotificationSettings
-import com.spoonofcode.core.data.network.SessionRepository
+import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.model.NotificationSettings
 
 class GetNotificationSettingsUseCase(
     private val sessionRepository: SessionRepository,
