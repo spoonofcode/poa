@@ -1,6 +1,8 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.session.domain
 
-interface SessionManager {
+import com.spoonofcode.core.session.domain.model.NotificationSettings
+
+interface SessionRepository {
     suspend fun isSessionInitialized(): Boolean
     suspend fun initSession(
         accessToken: String,

@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.session.domain.model
 
 import kotlinx.serialization.Serializable
 

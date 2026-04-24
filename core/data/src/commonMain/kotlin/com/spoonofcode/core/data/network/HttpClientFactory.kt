@@ -20,7 +20,7 @@ import kotlinx.serialization.json.Json
 
 class HttpClientFactory(
     private val poaLogger: POALogger,
-    private val sessionManager: SessionManager,
+    private val sessionRepository: SessionRepository,
     private val remoteRefreshTokenDataSource: RemoteRefreshTokenDataSource,
 ) {
     fun create(): HttpClient {
@@ -57,8 +57,8 @@ class HttpClientFactory(
             install(Auth) {
                 bearer {
                     loadTokens {
-                        val accessToken = sessionManager.getSessionAccessToken()
-                        val refreshToken = sessionManager.getSessionRefreshToken()
+                        val accessToken = sessionRepository.getSessionAccessToken()
+                        val refreshToken = sessionRepository.getSessionRefreshToken()
                         accessToken?.let {
                             BearerTokens(
                                 accessToken = it,
@@ -72,16 +72,16 @@ class HttpClientFactory(
                             return@refreshTokens null
                         }
 
-                        val refreshToken = sessionManager.getSessionRefreshToken()
+                        val refreshToken = sessionRepository.getSessionRefreshToken()
                         if (refreshToken.isNullOrBlank()) {
-                            sessionManager.clearSession()
+                            sessionRepository.clearSession()
                             return@refreshTokens null
                         }
 
                         var bearerTokens: BearerTokens? = null
                         remoteRefreshTokenDataSource.create(refreshToken)
                             .onSuccess { refreshResponse ->
-                                sessionManager.updateSessionTokens(
+                                sessionRepository.updateSessionTokens(
                                     accessToken = refreshResponse.jwtAccessToken,
                                     refreshToken = refreshResponse.jwtRefreshToken,
                                 )

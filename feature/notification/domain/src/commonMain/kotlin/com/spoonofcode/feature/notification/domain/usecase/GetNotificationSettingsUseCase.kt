@@ -1,12 +1,12 @@
 package com.spoonofcode.feature.notification.domain.usecase
 
 import com.spoonofcode.core.data.network.NotificationSettings
-import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.data.network.SessionRepository
 
 class GetNotificationSettingsUseCase(
-    private val sessionManager: SessionManager,
+    private val sessionRepository: SessionRepository,
 ) {
     suspend operator fun invoke(): Result<NotificationSettings> = runCatching {
-        sessionManager.getNotificationSettings()
+        sessionRepository.getNotificationSettings()
     }
 }

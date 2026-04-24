@@ -1,13 +1,15 @@
-package com.spoonofcode.core.data.network
+package com.spoonofcode.core.session.data
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.model.NotificationSettings
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
-class SessionManagerKSafeImpl(
+class SessionRepositoryImpl(
     private val ksafe: KSafe,
     private val dispatcherProvider: DispatcherProvider
-) : SessionManager {
+) : SessionRepository {
 
     override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 
@@ -57,11 +59,20 @@ class SessionManagerKSafeImpl(
         }
 
     override suspend fun getNotificationSettings(): NotificationSettings {
-        return  withContext(dispatcherProvider.io()) {
+        return withContext(dispatcherProvider.io()) {
             NotificationSettings(
-                isNotificationsPersonalizedEnabled = ksafe.get(Keys.Notifications.IS_PERSONALIZED, false),
-                isNotificationsFromPartnersEnabled = ksafe.get(Keys.Notifications.IS_PARTNERS_ENABLED, false),
-                isNotificationsMyProductSeriesEnabled = ksafe.get(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, false)
+                isNotificationsPersonalizedEnabled = ksafe.get(
+                    Keys.Notifications.IS_PERSONALIZED,
+                    false
+                ),
+                isNotificationsFromPartnersEnabled = ksafe.get(
+                    Keys.Notifications.IS_PARTNERS_ENABLED,
+                    false
+                ),
+                isNotificationsMyProductSeriesEnabled = ksafe.get(
+                    Keys.Notifications.IS_PRODUCT_SERIES_ENABLED,
+                    false
+                )
             )
 
         }
@@ -75,7 +86,10 @@ class SessionManagerKSafeImpl(
         withContext(dispatcherProvider.io()) {
             ksafe.put(Keys.Notifications.IS_PERSONALIZED, notificationsPersonalizedEnabled)
             ksafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, notificationsFromPartnersEnabled)
-            ksafe.put(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, notificationsMyProductSeriesEnabled)
+            ksafe.put(
+                Keys.Notifications.IS_PRODUCT_SERIES_ENABLED,
+                notificationsMyProductSeriesEnabled
+            )
         }
     }
 

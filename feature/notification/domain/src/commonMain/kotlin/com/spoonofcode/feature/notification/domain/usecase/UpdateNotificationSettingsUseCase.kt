@@ -1,13 +1,13 @@
 package com.spoonofcode.feature.notification.domain.usecase
 
-import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.data.network.SessionRepository
 import com.spoonofcode.core.firebase.data.FirebaseMessagingService
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.core.data.network.NotificationSettings
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 
 class UpdateNotificationSettingsUseCase(
-    private val sessionManager: SessionManager,
+    private val sessionRepository: SessionRepository,
     private val firebaseMessagingService: FirebaseMessagingService,
     private val productRepository: ProductRepository,
 ) {
@@ -48,7 +48,7 @@ class UpdateNotificationSettingsUseCase(
     }
 
     private suspend fun saveLocalSettings(settings: NotificationSettings) {
-        sessionManager.setNotificationSettings(
+        sessionRepository.setNotificationSettings(
             notificationsPersonalizedEnabled = settings.isNotificationsPersonalizedEnabled,
             notificationsFromPartnersEnabled = settings.isNotificationsFromPartnersEnabled,
             notificationsMyProductSeriesEnabled = settings.isNotificationsMyProductSeriesEnabled,
@@ -56,7 +56,7 @@ class UpdateNotificationSettingsUseCase(
     }
 
     private suspend fun getUserTopic(): String =
-        NotificationType.user.createTopic(sessionManager.getSessionUserId())
+        NotificationType.user.createTopic(sessionRepository.getSessionUserId())
 
     private fun getPartnerTopic(partnerId: String): String =
         NotificationType.partner.createTopic(partnerId)

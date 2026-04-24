@@ -1,11 +1,11 @@
 package com.spoonofcode.feature.profile.domain.usecase
 
-import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.data.network.SessionRepository
 
 class LogoutUseCase(
-    private val sessionManager: SessionManager,
+    private val sessionRepository: SessionRepository,
 ) {
     suspend operator fun invoke() {
-        sessionManager.clearSession()
+        sessionRepository.clearSession()
     }
 }
