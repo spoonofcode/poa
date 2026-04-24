@@ -2,12 +2,14 @@ package com.spoonofcode.feature.notification.domain.usecase
 
 import com.spoonofcode.core.firebase.data.FirebaseMessagingService
 import com.spoonofcode.core.session.domain.SessionRepository
-import com.spoonofcode.core.session.domain.model.NotificationSettings
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
+import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 
 class UpdateNotificationSettingsUseCase(
     private val sessionRepository: SessionRepository,
+    private val notificationRepository: NotificationRepository,
     private val firebaseMessagingService: FirebaseMessagingService,
     private val productRepository: ProductRepository,
 ) {
@@ -48,7 +50,7 @@ class UpdateNotificationSettingsUseCase(
     }
 
     private suspend fun saveLocalSettings(settings: NotificationSettings) {
-        sessionRepository.setNotificationSettings(
+        notificationRepository.setNotificationSettings(
             notificationsPersonalizedEnabled = settings.isNotificationsPersonalizedEnabled,
             notificationsFromPartnersEnabled = settings.isNotificationsFromPartnersEnabled,
             notificationsMyProductSeriesEnabled = settings.isNotificationsMyProductSeriesEnabled,

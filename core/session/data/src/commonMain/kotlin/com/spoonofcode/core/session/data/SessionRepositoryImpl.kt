@@ -2,7 +2,6 @@ package com.spoonofcode.core.session.data
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.core.session.domain.SessionRepository
-import com.spoonofcode.core.session.domain.model.NotificationSettings
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
@@ -58,42 +57,6 @@ class SessionRepositoryImpl(
             ) { "User ID cannot be null" }
         }
 
-    override suspend fun getNotificationSettings(): NotificationSettings {
-        return withContext(dispatcherProvider.io()) {
-            NotificationSettings(
-                isNotificationsPersonalizedEnabled = ksafe.get(
-                    Keys.Notifications.IS_PERSONALIZED,
-                    false
-                ),
-                isNotificationsFromPartnersEnabled = ksafe.get(
-                    Keys.Notifications.IS_PARTNERS_ENABLED,
-                    false
-                ),
-                isNotificationsMyProductSeriesEnabled = ksafe.get(
-                    Keys.Notifications.IS_PRODUCT_SERIES_ENABLED,
-                    false
-                )
-            )
-
-        }
-    }
-
-    override suspend fun setNotificationSettings(
-        notificationsPersonalizedEnabled: Boolean,
-        notificationsFromPartnersEnabled: Boolean,
-        notificationsMyProductSeriesEnabled: Boolean
-    ) {
-        withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Notifications.IS_PERSONALIZED, notificationsPersonalizedEnabled)
-            ksafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, notificationsFromPartnersEnabled)
-            ksafe.put(
-                Keys.Notifications.IS_PRODUCT_SERIES_ENABLED,
-                notificationsMyProductSeriesEnabled
-            )
-        }
-    }
-
-    // --- KEY DEFINITIONS ---
     private object Keys {
         private const val BASE_PREFIX = "com.spoonofcode"
 
@@ -102,13 +65,6 @@ class SessionRepositoryImpl(
             const val ACCESS_TOKEN = "$PREFIX.access_token"
             const val REFRESH_TOKEN = "$PREFIX.refresh_token"
             const val USER_ID = "$PREFIX.user_id"
-        }
-
-        object Notifications {
-            private const val PREFIX = "$BASE_PREFIX.settings.notifications"
-            const val IS_PERSONALIZED = "$PREFIX.personalized"
-            const val IS_PRODUCT_SERIES_ENABLED = "$PREFIX.product_series"
-            const val IS_PARTNERS_ENABLED = "$PREFIX.partners"
         }
     }
 }

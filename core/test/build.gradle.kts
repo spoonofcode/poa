@@ -13,6 +13,7 @@ kotlin {
                 api(libs.kotlin.test)
                 implementation(projects.core.data)
                 implementation(projects.core.presentation)
+                implementation(projects.core.session.domain)
                 implementation(projects.feature.appnavigation)
 
                 api(libs.koin.core)

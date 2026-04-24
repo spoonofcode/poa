@@ -1,6 +1,5 @@
 package com.spoonofcode.core.session.domain
 
-import com.spoonofcode.core.session.domain.model.NotificationSettings
 
 interface SessionRepository {
     suspend fun isSessionInitialized(): Boolean
@@ -17,10 +16,4 @@ interface SessionRepository {
     suspend fun getSessionAccessToken(): String?
     suspend fun getSessionRefreshToken(): String?
     suspend fun getSessionUserId(): String
-    suspend fun getNotificationSettings(): NotificationSettings
-    suspend fun setNotificationSettings(
-        notificationsPersonalizedEnabled: Boolean,
-        notificationsFromPartnersEnabled: Boolean,
-        notificationsMyProductSeriesEnabled: Boolean
-    )
 }

@@ -1,4 +1,4 @@
-package com.spoonofcode.core.session.domain.model
+package com.spoonofcode.feature.notification.domain.model
 
 import kotlinx.serialization.Serializable
 
