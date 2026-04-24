@@ -2,13 +2,14 @@ package com.spoonofcode.feature.scan.presentation
 
 import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ScanModule
+import com.spoonofcode.feature.appnavigation.ModuleRoute
+import com.spoonofcode.feature.appnavigation.ScanModuleRoute
 
-class ScanModuleRouteResolver : ModuleRouteResolver<ScanModule> {
-    override fun resolve(screen: com.spoonofcode.feature.appnavigation.Screen): Screen? =
-        (screen as? ScanModule)?.let {
+class ScanModuleRouteResolver : ModuleRouteResolver<ScanModuleRoute> {
+    override fun resolve(moduleRoute: ModuleRoute): Screen? =
+        (moduleRoute as? ScanModuleRoute)?.let {
             when (it) {
-                ScanModule.ScanScreen -> ScanScreen()
+                ScanModuleRoute.Scan -> ScanScreen()
             }
         }
 }

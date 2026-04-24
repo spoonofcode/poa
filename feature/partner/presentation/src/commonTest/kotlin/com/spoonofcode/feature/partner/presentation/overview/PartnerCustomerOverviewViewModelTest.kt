@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.data.test.PartnerUserMockData.PARTNER_USERS
 import com.spoonofcode.feature.partner.data.test.PartnerUserMockData.PARTNER_USER_1
@@ -128,7 +128,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerCustomerOverviewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

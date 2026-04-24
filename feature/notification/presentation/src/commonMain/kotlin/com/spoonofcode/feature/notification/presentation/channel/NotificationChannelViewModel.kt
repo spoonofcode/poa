@@ -3,7 +3,7 @@ package com.spoonofcode.feature.notification.presentation.channel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import kotlinx.coroutines.launch
 
 internal class NotificationChannelViewModel :
@@ -22,7 +22,7 @@ internal class NotificationChannelViewModel :
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(
-                    NotificationModule.NotificationSettingsScreen()
+                    NotificationModuleRoute.NotificationSettingsScreen()
                 )
             )
         }

@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.product.presentation.di
 
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ProductModule
+import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.presentation.ProductModuleRouteResolver
 import com.spoonofcode.feature.product.presentation.details.ProductDetailsViewModel
 import com.spoonofcode.feature.product.presentation.edit.ProductEditViewModel
@@ -13,7 +13,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val productPresentationModule = module {
-    factoryOf(::ProductModuleRouteResolver) { bind<ModuleRouteResolver<ProductModule>>() }
+    factoryOf(::ProductModuleRouteResolver) { bind<ModuleRouteResolver<ProductModuleRoute>>() }
 
     viewModelOf(::ProductDetailsViewModel)
     viewModelOf(::ProductEditViewModel)

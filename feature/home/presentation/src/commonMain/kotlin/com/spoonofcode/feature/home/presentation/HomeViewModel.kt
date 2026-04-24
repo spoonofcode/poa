@@ -3,7 +3,7 @@ package com.spoonofcode.feature.home.presentation
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
 import com.spoonofcode.feature.home.domain.usecase.GetUserDailyCheckInStatusUseCase
@@ -85,7 +85,7 @@ internal class HomeViewModel(
 
     private fun navigateToNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModule.NotificationOverviewScreen))
+            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationOverview))
         }
     }
 

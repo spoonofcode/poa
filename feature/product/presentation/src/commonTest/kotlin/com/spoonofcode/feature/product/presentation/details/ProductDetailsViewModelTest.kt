@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.ProductModule
+import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
@@ -186,7 +186,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
 
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(ProductModule.ProductEditScreen(productId = PRODUCT_1.id)) }
+        verifySuspend { routeResolver.resolve(ProductModuleRoute.ProductEdit(productId = PRODUCT_1.id)) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 

@@ -4,8 +4,8 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.AppModule
-import com.spoonofcode.feature.appnavigation.AuthModule
+import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 import com.spoonofcode.feature.auth.presentation.di.authPresentationTestModule
 import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
@@ -98,7 +98,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend { loginRepository.loginWithGoogle(any()) }
-        verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend { routeResolver.resolve(AppModuleRoute.MainHost) }
         verifySuspend { viewModelNavigator.replaceAll(any()) }
     }
 
@@ -168,7 +168,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         advanceUntilIdle()
 
         verifySuspend { loginRepository.requestCode(email = email, recaptchaToken = any()) }
-        verifySuspend { routeResolver.resolve(AuthModule.LoginCodeScreen(email)) }
+        verifySuspend { routeResolver.resolve(AuthModuleRoute.LoginCode(email)) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -204,7 +204,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend { loginRepository.requestCode(any(), any()) }
-        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AuthModule.LoginCodeScreen(email)) }
+        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AuthModuleRoute.LoginCode(email)) }
         verifySuspend(mode = exactly(0)) { viewModelNavigator.push(any()) }
     }
 }

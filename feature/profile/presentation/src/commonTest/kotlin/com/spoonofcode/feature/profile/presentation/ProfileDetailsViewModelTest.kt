@@ -4,12 +4,12 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.AuthModule
-import com.spoonofcode.feature.appnavigation.FAQModule
-import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.appnavigation.PartnerModule
-import com.spoonofcode.feature.appnavigation.ProfileModule
-import com.spoonofcode.feature.appnavigation.TACModule
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
+import com.spoonofcode.feature.appnavigation.FAQModuleRoute
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
+import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.profile.data.test.ProfileMockData.PROFILE_1
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewAction
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
@@ -78,7 +78,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.Logout)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(AuthModule.LoginScreen) }
+        verifySuspend { routeResolver.resolve(AuthModuleRoute.Login) }
         verifySuspend { viewModelNavigator.replaceAll(any()) }
     }
 
@@ -87,7 +87,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToEditProfile)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(ProfileModule.ProfileEditScreen) }
+        verifySuspend { routeResolver.resolve(ProfileModuleRoute.ProfileEdit) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -96,7 +96,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToFAQ)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(FAQModule.FAQScreen) }
+        verifySuspend { routeResolver.resolve(FAQModuleRoute.FAQ) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -105,7 +105,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationSettingsScreen) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationSettingsScreen) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -114,7 +114,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(PartnerModule.PartnerPanelScreen) }
+        verifySuspend { routeResolver.resolve(PartnerModuleRoute.PartnerPanel) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -123,7 +123,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToTAC)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(TACModule.TACScreen) }
+        verifySuspend { routeResolver.resolve(TACModuleRoute.TAC) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 

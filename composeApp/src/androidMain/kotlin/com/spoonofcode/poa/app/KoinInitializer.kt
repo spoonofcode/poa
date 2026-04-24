@@ -1,7 +1,7 @@
 package com.spoonofcode.poa.app
 
 import android.content.Context
-import com.spoonofcode.poa.app.di.appModule
+import com.spoonofcode.poa.app.di.appModuleRoute
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +14,7 @@ actual class KoinInitializer(
             androidContext(context)
             androidLogger()
             modules(
-                appModule,
+                appModuleRoute,
             )
         }
     }

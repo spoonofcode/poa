@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 import com.spoonofcode.feature.auth.presentation.di.authPresentationTestModule
 import dev.mokkery.answering.returns
@@ -134,7 +134,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
         verifySuspend {
             loginRepository.loginWithCode(email = email, loginCode = any())
         }
-        verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend { routeResolver.resolve(AppModuleRoute.MainHost) }
         verifySuspend { viewModelNavigator.replaceAll(any()) }
     }
 
@@ -184,7 +184,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
             loginRepository.loginWithCode(any(), any())
         }
 
-        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AppModuleRoute.MainHost) }
         verifySuspend(mode = exactly(0)) { viewModelNavigator.replaceAll(any()) }
     }
 }

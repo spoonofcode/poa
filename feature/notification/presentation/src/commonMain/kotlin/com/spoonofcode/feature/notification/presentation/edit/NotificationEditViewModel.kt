@@ -3,7 +3,7 @@ package com.spoonofcode.feature.notification.presentation.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
 import kotlinx.coroutines.launch
@@ -123,7 +123,7 @@ internal class NotificationEditViewModel(
                 deliveryDateTime = currentState.deliveryDateTime,
                 expirationDateTime = currentState.expirationDateTime
             ).onSuccess {
-                viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModule.MainHostScreen)))
+                viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModuleRoute.MainHost)))
             }.onFailure { error ->
                 showErrorSnackbar(error)
             }

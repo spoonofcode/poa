@@ -2,13 +2,14 @@ package com.spoonofcode.feature.home.presentation
 
 import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.HomeModule
+import com.spoonofcode.feature.appnavigation.HomeModuleRoute
+import com.spoonofcode.feature.appnavigation.ModuleRoute
 
-class HomeModuleRouteResolver : ModuleRouteResolver<HomeModule> {
-    override fun resolve(screen: com.spoonofcode.feature.appnavigation.Screen): Screen? =
-        (screen as? HomeModule)?.let {
+class HomeModuleRouteResolver : ModuleRouteResolver<HomeModuleRoute> {
+    override fun resolve(moduleRoute: ModuleRoute): Screen? =
+        (moduleRoute as? HomeModuleRoute)?.let {
             when (it) {
-                HomeModule.HomeScreen -> HomeScreen()
+                HomeModuleRoute.Home -> HomeScreen()
             }
         }
 }
