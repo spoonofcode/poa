@@ -9,8 +9,6 @@ class SessionManagerKSafeImpl(
     private val dispatcherProvider: DispatcherProvider
 ) : SessionManager {
 
-    // --- SESSION ---
-
     override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 
     override suspend fun initSession(
@@ -58,21 +56,16 @@ class SessionManagerKSafeImpl(
             ) { "User ID cannot be null" }
         }
 
-    // --- NOTIFICATIONS ---
-    override suspend fun getNotificationsPersonalizedSettings(): Boolean =
-        withContext(dispatcherProvider.io()) {
-            ksafe.get(Keys.Notifications.IS_PERSONALIZED, false)
-        }
+    override suspend fun getNotificationSettings(): NotificationSettings {
+        return  withContext(dispatcherProvider.io()) {
+            NotificationSettings(
+                isNotificationsPersonalizedEnabled = ksafe.get(Keys.Notifications.IS_PERSONALIZED, false),
+                isNotificationsFromPartnersEnabled = ksafe.get(Keys.Notifications.IS_PARTNERS_ENABLED, false),
+                isNotificationsMyProductSeriesEnabled = ksafe.get(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, false)
+            )
 
-    override suspend fun getNotificationsMyProductSeriesSettings(): Boolean =
-        withContext(dispatcherProvider.io()) {
-            ksafe.get(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, false)
         }
-
-    override suspend fun getNotificationsFromPartnersSettings(): Boolean =
-        withContext(dispatcherProvider.io()) {
-            ksafe.get(Keys.Notifications.IS_PARTNERS_ENABLED, false)
-        }
+    }
 
     override suspend fun setNotificationSettings(
         notificationsPersonalizedEnabled: Boolean,
@@ -87,7 +80,6 @@ class SessionManagerKSafeImpl(
     }
 
     // --- KEY DEFINITIONS ---
-
     private object Keys {
         private const val BASE_PREFIX = "com.spoonofcode"
 

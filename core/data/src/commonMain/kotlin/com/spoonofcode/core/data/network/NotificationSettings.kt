@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.domain.model
+package com.spoonofcode.core.data.network
 
 import kotlinx.serialization.Serializable
 

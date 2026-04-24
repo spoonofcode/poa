@@ -15,9 +15,7 @@ interface SessionManager {
     suspend fun getSessionAccessToken(): String?
     suspend fun getSessionRefreshToken(): String?
     suspend fun getSessionUserId(): String
-    suspend fun getNotificationsPersonalizedSettings(): Boolean
-    suspend fun getNotificationsMyProductSeriesSettings(): Boolean
-    suspend fun getNotificationsFromPartnersSettings(): Boolean
+    suspend fun getNotificationSettings(): NotificationSettings
     suspend fun setNotificationSettings(
         notificationsPersonalizedEnabled: Boolean,
         notificationsFromPartnersEnabled: Boolean,

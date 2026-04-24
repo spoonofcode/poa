@@ -3,7 +3,7 @@ package com.spoonofcode.feature.notification.domain.usecase
 import com.spoonofcode.core.data.network.SessionManager
 import com.spoonofcode.core.firebase.data.FirebaseMessagingService
 import com.spoonofcode.feature.notification.domain.model.NotificationType
-import com.spoonofcode.feature.notification.domain.model.NotificationSettings
+import com.spoonofcode.core.data.network.NotificationSettings
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 
 class UpdateNotificationSettingsUseCase(
