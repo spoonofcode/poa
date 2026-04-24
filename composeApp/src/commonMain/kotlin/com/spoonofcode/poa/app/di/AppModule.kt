@@ -1,7 +1,6 @@
 package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
-import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.feature.appnavigation.AppModule
@@ -52,7 +51,6 @@ val appModule = module {
         recaptchaModule,
         sessionDataModule,
         sessionDomainModule,
-        settingsModule,
         storageDataModule,
 
         // features

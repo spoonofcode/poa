@@ -3,6 +3,7 @@ package com.spoonofcode.feature.notification.data.remote
 import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import com.spoonofcode.feature.notification.data.remote.model.NotificationRequest
 import com.spoonofcode.feature.notification.data.remote.model.NotificationResponse
+import com.spoonofcode.feature.notification.data.remote.model.notificationList
 import io.ktor.http.HttpMethod
 import kotlin.time.Instant
 

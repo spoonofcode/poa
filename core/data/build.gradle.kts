@@ -17,7 +17,6 @@ kotlin {
 
                 implementation(libs.kotlinx.serialization.json)
 
-                implementation(libs.multiplatform.settings)
                 implementation(libs.touchlab.kermit)
             }
         }

@@ -23,7 +23,7 @@ LIBRARIES USED:
 * Navigation - Voyager (https://github.com/adrielcafe/voyager)
 * UI - Material Design (https://m3.material.io/)
 * Network monitoring - Connectivity (https://github.com/jordond/connectivity)
-* Settings - Multiplatform Settings (https://github.com/russhwolf/multiplatform-settings)
+* Storage - KSafe (https://github.com/ioannisa/KSafe)
 * Google auth(https://developers.google.com/identity/protocols/oauth2?hl=pl)
 
 HELPFUL MATERIALS !!!

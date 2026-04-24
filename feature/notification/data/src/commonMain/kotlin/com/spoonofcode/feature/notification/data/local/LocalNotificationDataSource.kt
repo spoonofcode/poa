@@ -1,41 +1,41 @@
 package com.spoonofcode.feature.notification.data.local
 
-import com.russhwolf.settings.Settings
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
 class LocalNotificationDataSource(
-    private val settings: Settings,
-    private val ksafe: KSafe,
+    private val kSafe: KSafe,
     private val dispatcherProvider: DispatcherProvider
 ) {
-    fun markAsRead(notificationId: String) {
-        val currentRead = settings.getString(READ_NOTIFICATIONS_KEY, "")
+    suspend fun markAsRead(notificationId: String) {
+        val currentRead = kSafe.get<Set<String>>(Keys.READ_NOTIFICATIONS_KEY, emptySet())
+
         if (!currentRead.contains(notificationId)) {
-            val updatedRead =
-                if (currentRead.isEmpty()) notificationId else "$currentRead,$notificationId"
-            settings.putString(READ_NOTIFICATIONS_KEY, updatedRead)
+            val updatedRead = currentRead + notificationId
+
+            kSafe.put(Keys.READ_NOTIFICATIONS_KEY, updatedRead)
         }
     }
 
-    fun isRead(notificationId: String): Boolean {
-        return settings.getString(READ_NOTIFICATIONS_KEY, "").contains(notificationId)
+    suspend fun isRead(notificationId: String): Boolean {
+        return kSafe.get<Set<String>>(Keys.READ_NOTIFICATIONS_KEY, emptySet())
+            .contains(notificationId)
     }
 
     suspend fun getNotificationSettings(): NotificationSettings {
         return withContext(dispatcherProvider.io()) {
             NotificationSettings(
-                isNotificationsPersonalizedEnabled = ksafe.get(
+                isNotificationsPersonalizedEnabled = kSafe.get(
                     Keys.Notifications.IS_PERSONALIZED,
                     false
                 ),
-                isNotificationsFromPartnersEnabled = ksafe.get(
+                isNotificationsFromPartnersEnabled = kSafe.get(
                     Keys.Notifications.IS_PARTNERS_ENABLED,
                     false
                 ),
-                isNotificationsMyProductSeriesEnabled = ksafe.get(
+                isNotificationsMyProductSeriesEnabled = kSafe.get(
                     Keys.Notifications.IS_PRODUCT_SERIES_ENABLED,
                     false
                 )
@@ -49,20 +49,18 @@ class LocalNotificationDataSource(
         notificationsMyProductSeriesEnabled: Boolean
     ) {
         withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Notifications.IS_PERSONALIZED, notificationsPersonalizedEnabled)
-            ksafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, notificationsFromPartnersEnabled)
-            ksafe.put(
+            kSafe.put(Keys.Notifications.IS_PERSONALIZED, notificationsPersonalizedEnabled)
+            kSafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, notificationsFromPartnersEnabled)
+            kSafe.put(
                 Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, notificationsMyProductSeriesEnabled
             )
         }
     }
 
-    private companion object {
-        const val READ_NOTIFICATIONS_KEY = "read_notifications_ids"
-    }
-
     private object Keys {
         private const val BASE_PREFIX = "com.spoonofcode"
+
+        const val READ_NOTIFICATIONS_KEY = "read_notifications_ids"
 
         object Notifications {
             private const val PREFIX = "$BASE_PREFIX.settings.notifications"

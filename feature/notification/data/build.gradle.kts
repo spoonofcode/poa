@@ -9,7 +9,6 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
                 implementation(projects.feature.notification.domain)
-                implementation(libs.multiplatform.settings)
                 implementation(libs.ksafe)
 
                 implementation(projects.core.data)

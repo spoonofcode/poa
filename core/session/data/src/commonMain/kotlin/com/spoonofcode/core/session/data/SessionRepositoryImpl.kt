@@ -6,7 +6,7 @@ import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
 class SessionRepositoryImpl(
-    private val ksafe: KSafe,
+    private val kSafe: KSafe,
     private val dispatcherProvider: DispatcherProvider
 ) : SessionRepository {
 
@@ -18,9 +18,9 @@ class SessionRepositoryImpl(
         userId: String
     ) {
         withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
-            ksafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
-            ksafe.put(Keys.Session.USER_ID, userId)
+            kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
+            kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
+            kSafe.put(Keys.Session.USER_ID, userId)
         }
     }
 
@@ -29,31 +29,31 @@ class SessionRepositoryImpl(
         refreshToken: String
     ) {
         withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
-            ksafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
+            kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
+            kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
         }
     }
 
     override suspend fun clearSession() {
         withContext(dispatcherProvider.io()) {
-            ksafe.clearAll()
+            kSafe.clearAll()
         }
     }
 
     override suspend fun getSessionAccessToken(): String? =
         withContext(dispatcherProvider.io()) {
-            ksafe.get<String?>(Keys.Session.ACCESS_TOKEN, null)
+            kSafe.get<String?>(Keys.Session.ACCESS_TOKEN, null)
         }
 
     override suspend fun getSessionRefreshToken(): String? =
         withContext(dispatcherProvider.io()) {
-            ksafe.get<String?>(Keys.Session.REFRESH_TOKEN, null)
+            kSafe.get<String?>(Keys.Session.REFRESH_TOKEN, null)
         }
 
     override suspend fun getSessionUserId(): String =
         withContext(dispatcherProvider.io()) {
             requireNotNull(
-                ksafe.get<String?>(Keys.Session.USER_ID, null)
+                kSafe.get<String?>(Keys.Session.USER_ID, null)
             ) { "User ID cannot be null" }
         }
 

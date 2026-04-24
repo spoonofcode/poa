@@ -27,8 +27,6 @@ kotlin {
 
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.device)
-                implementation(libs.multiplatform.settings)
-                implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             }
         }
 
