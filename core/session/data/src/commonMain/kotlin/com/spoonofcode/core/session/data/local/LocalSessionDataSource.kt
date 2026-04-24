@@ -8,8 +8,6 @@ class LocalSessionDataSource(
     private val kSafe: KSafe,
     private val dispatcherProvider: DispatcherProvider
 ) {
-    suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
-
     suspend fun initSession(
         accessToken: String,
         refreshToken: String,

@@ -3,6 +3,7 @@ package com.spoonofcode.feature.notification.data.local
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import eu.anifantakis.lib.ksafe.KSafe
+import eu.anifantakis.lib.ksafe.KSafeWriteMode
 import kotlinx.coroutines.withContext
 
 class LocalNotificationDataSource(
@@ -15,7 +16,11 @@ class LocalNotificationDataSource(
         if (!currentRead.contains(notificationId)) {
             val updatedRead = currentRead + notificationId
 
-            kSafe.put(Keys.READ_IDS, updatedRead)
+            kSafe.put(
+                key = Keys.READ_IDS,
+                value = updatedRead,
+                mode = KSafeWriteMode.Plain,
+            )
         }
     }
 
@@ -28,16 +33,16 @@ class LocalNotificationDataSource(
         return withContext(dispatcherProvider.io()) {
             NotificationSettings(
                 isNotificationsPersonalizedEnabled = kSafe.get(
-                    Keys.Settings.PERSONALIZED_ENABLED,
-                    false
+                    key = Keys.Settings.PERSONALIZED_ENABLED,
+                    defaultValue = false
                 ),
                 isNotificationsFromPartnersEnabled = kSafe.get(
-                    Keys.Settings.PARTNERS_ENABLED,
-                    false
+                    key = Keys.Settings.PARTNERS_ENABLED,
+                    defaultValue = false
                 ),
                 isNotificationsMyProductSeriesEnabled = kSafe.get(
-                    Keys.Settings.PRODUCT_SERIES_ENABLED,
-                    false
+                    key = Keys.Settings.PRODUCT_SERIES_ENABLED,
+                    defaultValue = false
                 )
             )
         }
@@ -49,10 +54,20 @@ class LocalNotificationDataSource(
         notificationsMyProductSeriesEnabled: Boolean
     ) {
         withContext(dispatcherProvider.io()) {
-            kSafe.put(Keys.Settings.PERSONALIZED_ENABLED, notificationsPersonalizedEnabled)
-            kSafe.put(Keys.Settings.PARTNERS_ENABLED, notificationsFromPartnersEnabled)
             kSafe.put(
-                Keys.Settings.PRODUCT_SERIES_ENABLED, notificationsMyProductSeriesEnabled
+                key = Keys.Settings.PERSONALIZED_ENABLED,
+                value = notificationsPersonalizedEnabled,
+                mode = KSafeWriteMode.Plain,
+            )
+            kSafe.put(
+                key = Keys.Settings.PARTNERS_ENABLED,
+                value = notificationsFromPartnersEnabled,
+                mode = KSafeWriteMode.Plain,
+            )
+            kSafe.put(
+                key = Keys.Settings.PRODUCT_SERIES_ENABLED,
+                value = notificationsMyProductSeriesEnabled,
+                mode = KSafeWriteMode.Plain,
             )
         }
     }
