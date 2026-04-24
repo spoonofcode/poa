@@ -48,9 +48,11 @@ class UpdateNotificationSettingsUseCase(
     }
 
     private suspend fun saveLocalSettings(settings: NotificationSettings) {
-        sessionManager.saveNotificationsPersonalizedSettings(settings.isNotificationsPersonalizedEnabled)
-        sessionManager.saveNotificationsFromPartnersSettings(settings.isNotificationsFromPartnersEnabled)
-        sessionManager.saveNotificationsMyProductSeriesSettings(settings.isNotificationsMyProductSeriesEnabled)
+        sessionManager.setNotificationSettings(
+            notificationsPersonalizedEnabled = settings.isNotificationsPersonalizedEnabled,
+            notificationsFromPartnersEnabled = settings.isNotificationsFromPartnersEnabled,
+            notificationsMyProductSeriesEnabled = settings.isNotificationsMyProductSeriesEnabled,
+        )
     }
 
     private suspend fun getUserTopic(): String =

@@ -1,6 +1,5 @@
 package com.spoonofcode.core.data.network
 
-import com.spoonofcode.core.data.network.RemoteRefreshTokenDataSource
 import com.spoonofcode.core.data.logging.POALogger
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
@@ -82,8 +81,10 @@ class HttpClientFactory(
                         var bearerTokens: BearerTokens? = null
                         remoteRefreshTokenDataSource.create(refreshToken)
                             .onSuccess { refreshResponse ->
-                                sessionManager.saveSessionAccessToken(refreshResponse.jwtAccessToken)
-                                sessionManager.saveSessionRefreshToken(refreshResponse.jwtRefreshToken)
+                                sessionManager.updateSessionTokens(
+                                    accessToken = refreshResponse.jwtAccessToken,
+                                    refreshToken = refreshResponse.jwtRefreshToken,
+                                )
                                 bearerTokens = BearerTokens(
                                     accessToken = refreshResponse.jwtAccessToken,
                                     refreshToken = refreshResponse.jwtRefreshToken,

@@ -13,15 +13,31 @@ class SessionManagerKSafeImpl(
 
     override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 
-    override suspend fun clearSession() {
+    override suspend fun initSession(
+        accessToken: String,
+        refreshToken: String,
+        userId: String
+    ) {
         withContext(dispatcherProvider.io()) {
-            ksafe.clearAll()
+            ksafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
+            ksafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
+            ksafe.put(Keys.Session.USER_ID, userId)
         }
     }
 
-    override suspend fun saveSessionAccessToken(token: String) {
+    override suspend fun updateSessionTokens(
+        accessToken: String,
+        refreshToken: String
+    ) {
         withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Session.ACCESS_TOKEN, token)
+            ksafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
+            ksafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
+        }
+    }
+
+    override suspend fun clearSession() {
+        withContext(dispatcherProvider.io()) {
+            ksafe.clearAll()
         }
     }
 
@@ -30,22 +46,10 @@ class SessionManagerKSafeImpl(
             ksafe.get<String?>(Keys.Session.ACCESS_TOKEN, null)
         }
 
-    override suspend fun saveSessionRefreshToken(token: String) {
-        withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Session.REFRESH_TOKEN, token)
-        }
-    }
-
     override suspend fun getSessionRefreshToken(): String? =
         withContext(dispatcherProvider.io()) {
             ksafe.get<String?>(Keys.Session.REFRESH_TOKEN, null)
         }
-
-    override suspend fun saveSessionUserId(userId: String) {
-        withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Session.USER_ID, userId)
-        }
-    }
 
     override suspend fun getSessionUserId(): String =
         withContext(dispatcherProvider.io()) {
@@ -54,51 +58,31 @@ class SessionManagerKSafeImpl(
             ) { "User ID cannot be null" }
         }
 
-    override suspend fun saveSessionUserEmail(email: String) {
-        withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Session.USER_EMAIL, email)
-        }
-    }
-
-    override suspend fun getSessionUserEmail(): String =
-        withContext(dispatcherProvider.io()) {
-            requireNotNull(
-                ksafe.get<String?>(Keys.Session.USER_EMAIL, null)
-            ) { "User email cannot be null" }
-        }
-
     // --- NOTIFICATIONS ---
-
     override suspend fun getNotificationsPersonalizedSettings(): Boolean =
         withContext(dispatcherProvider.io()) {
             ksafe.get(Keys.Notifications.IS_PERSONALIZED, false)
         }
-
-    override suspend fun saveNotificationsPersonalizedSettings(enable: Boolean) {
-        withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Notifications.IS_PERSONALIZED, enable)
-        }
-    }
 
     override suspend fun getNotificationsMyProductSeriesSettings(): Boolean =
         withContext(dispatcherProvider.io()) {
             ksafe.get(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, false)
         }
 
-    override suspend fun saveNotificationsMyProductSeriesSettings(enable: Boolean) {
-        withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, enable)
-        }
-    }
-
     override suspend fun getNotificationsFromPartnersSettings(): Boolean =
         withContext(dispatcherProvider.io()) {
             ksafe.get(Keys.Notifications.IS_PARTNERS_ENABLED, false)
         }
 
-    override suspend fun saveNotificationsFromPartnersSettings(enable: Boolean) {
+    override suspend fun setNotificationSettings(
+        notificationsPersonalizedEnabled: Boolean,
+        notificationsFromPartnersEnabled: Boolean,
+        notificationsMyProductSeriesEnabled: Boolean
+    ) {
         withContext(dispatcherProvider.io()) {
-            ksafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, enable)
+            ksafe.put(Keys.Notifications.IS_PERSONALIZED, notificationsPersonalizedEnabled)
+            ksafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, notificationsFromPartnersEnabled)
+            ksafe.put(Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, notificationsMyProductSeriesEnabled)
         }
     }
 
@@ -112,7 +96,6 @@ class SessionManagerKSafeImpl(
             const val ACCESS_TOKEN = "$PREFIX.access_token"
             const val REFRESH_TOKEN = "$PREFIX.refresh_token"
             const val USER_ID = "$PREFIX.user_id"
-            const val USER_EMAIL = "$PREFIX.user_email"
         }
 
         object Notifications {

@@ -5,7 +5,6 @@ import com.spoonofcode.core.data.logging.KermitLogger
 import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.data.network.HttpClientFactory
 import com.spoonofcode.core.data.network.SessionManager
-import com.spoonofcode.core.data.network.SessionManagerImpl
 import com.spoonofcode.core.data.network.SessionManagerKSafeImpl
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf

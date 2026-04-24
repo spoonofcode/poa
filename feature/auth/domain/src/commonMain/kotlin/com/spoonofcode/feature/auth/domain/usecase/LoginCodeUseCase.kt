@@ -14,9 +14,10 @@ class LoginCodeUseCase(
         email = email,
         loginCode = code,
     ).map { login ->
-        sessionManager.saveSessionAccessToken(token = login.jwtAccessToken)
-        sessionManager.saveSessionRefreshToken(token = login.jwtRefreshToken)
-        sessionManager.saveSessionUserEmail(email = login.email)
-        sessionManager.saveSessionUserId(userId = login.id)
+        sessionManager.initSession(
+            accessToken = login.jwtAccessToken,
+            refreshToken = login.jwtRefreshToken,
+            userId = login.id,
+        )
     }
 }
