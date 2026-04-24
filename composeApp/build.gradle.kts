@@ -95,6 +95,7 @@ kotlin {
             implementation(projects.core.recaptcha)
             implementation(projects.core.session.data)
             implementation(projects.core.session.domain)
+            implementation(projects.core.storage.data)
 
             implementation(projects.feature.auth.data)
             implementation(projects.feature.auth.domain)

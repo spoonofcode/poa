@@ -15,8 +15,6 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)
 
-                implementation(libs.ksafe)
-
                 implementation(libs.kotlinx.serialization.json)
 
                 implementation(libs.multiplatform.settings)

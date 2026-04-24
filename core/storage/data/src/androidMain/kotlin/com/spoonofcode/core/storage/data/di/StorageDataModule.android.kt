@@ -1,9 +1,9 @@
-package com.spoonofcode.core.data.storage.di
+package com.spoonofcode.core.storage.data.di
 
 import eu.anifantakis.lib.ksafe.KSafe
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
-actual val platformStorageModule = module {
+actual val platformStorageDataModule = module {
     single { KSafe(androidApplication()) }
 }
