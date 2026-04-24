@@ -10,6 +10,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
 
                 implementation(projects.core.data)
+                implementation(projects.core.session.domain)
             }
         }
 

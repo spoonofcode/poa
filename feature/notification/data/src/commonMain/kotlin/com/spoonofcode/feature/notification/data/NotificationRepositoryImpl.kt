@@ -5,6 +5,7 @@ import com.spoonofcode.feature.notification.data.local.LocalNotificationDataSour
 import com.spoonofcode.feature.notification.data.mappers.toNotification
 import com.spoonofcode.feature.notification.data.remote.RemoteNotificationDataSource
 import com.spoonofcode.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
 
@@ -72,4 +73,21 @@ class NotificationRepositoryImpl(
 
     override suspend fun isRead(notificationId: String): Boolean =
         localNotificationDataSource.isRead(notificationId = notificationId)
+
+    override suspend fun getNotificationSettings(): NotificationSettings {
+        return localNotificationDataSource.getNotificationSettings()
+    }
+
+    override suspend fun setNotificationSettings(
+        notificationsPersonalizedEnabled: Boolean,
+        notificationsFromPartnersEnabled: Boolean,
+        notificationsMyProductSeriesEnabled: Boolean
+    ) {
+        localNotificationDataSource.setNotificationSettings(
+            notificationsPersonalizedEnabled = notificationsPersonalizedEnabled,
+            notificationsFromPartnersEnabled = notificationsFromPartnersEnabled,
+            notificationsMyProductSeriesEnabled = notificationsMyProductSeriesEnabled,
+
+            )
+    }
 }

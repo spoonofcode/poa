@@ -1,8 +1,6 @@
 package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
-import com.spoonofcode.core.data.network.di.networkModule
-import com.spoonofcode.core.data.settings.di.settingsModule
 import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.feature.appnavigation.AppModule
@@ -28,15 +26,17 @@ import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.AppModuleRouteResolver
 import com.spoonofcode.core.data.getPlatform
-import com.spoonofcode.core.data.storage.di.storageModule
 import com.spoonofcode.core.firebase.data.di.firebaseDataModule
 import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
+import com.spoonofcode.core.network.di.networkModule
 import com.spoonofcode.core.recaptcha.di.recaptchaModule
+import com.spoonofcode.core.session.data.di.sessionDataModule
+import com.spoonofcode.core.session.domain.di.sessionDomainModule
+import com.spoonofcode.core.storage.data.di.storageDataModule
 import com.spoonofcode.feature.faq.presentation.di.faqPresentationModule
 import com.spoonofcode.poa.app.AppViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -49,8 +49,9 @@ val appModule = module {
         presentationModule,
         networkModule,
         recaptchaModule,
-        settingsModule,
-        storageModule,
+        sessionDataModule,
+        sessionDomainModule,
+        storageDataModule,
 
         // features
         homeDataModule,

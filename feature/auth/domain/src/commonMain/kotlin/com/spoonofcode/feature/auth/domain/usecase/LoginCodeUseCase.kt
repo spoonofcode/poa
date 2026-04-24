@@ -1,11 +1,11 @@
 package com.spoonofcode.feature.auth.domain.usecase
 
-import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.session.domain.SessionRepository
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
 class LoginCodeUseCase(
     private val loginRepository: LoginRepository,
-    private val sessionManager: SessionManager,
+    private val sessionRepository: SessionRepository,
 ) {
     suspend operator fun invoke(
         email: String,
@@ -14,9 +14,10 @@ class LoginCodeUseCase(
         email = email,
         loginCode = code,
     ).map { login ->
-        sessionManager.saveSessionAccessToken(token = login.jwtAccessToken)
-        sessionManager.saveSessionRefreshToken(token = login.jwtRefreshToken)
-        sessionManager.saveSessionUserEmail(email = login.email)
-        sessionManager.saveSessionUserId(userId = login.id)
+        sessionRepository.initSession(
+            accessToken = login.jwtAccessToken,
+            refreshToken = login.jwtRefreshToken,
+            userId = login.id,
+        )
     }
 }

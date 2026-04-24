@@ -13,6 +13,7 @@ kotlin {
                 api(libs.kotlin.test)
                 implementation(projects.core.data)
                 implementation(projects.core.presentation)
+                implementation(projects.core.session.domain)
                 implementation(projects.feature.appnavigation)
 
                 api(libs.koin.core)
@@ -26,8 +27,6 @@ kotlin {
 
                 implementation(libs.connectivity.core)
                 implementation(libs.connectivity.device)
-                implementation(libs.multiplatform.settings)
-                implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             }
         }
 

@@ -11,6 +11,7 @@ kotlin {
                 implementation(projects.feature.home.domain)
 
                 implementation(projects.core.data)
+                implementation(projects.core.network)
             }
         }
 

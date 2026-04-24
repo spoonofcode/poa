@@ -2,14 +2,14 @@ package com.spoonofcode.poa.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.data.network.SessionManager
+import com.spoonofcode.core.session.domain.SessionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AppViewModel(
-    private val sessionManager: SessionManager
+    private val sessionRepository: SessionRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AppViewState>(AppViewState.Loading)
@@ -21,7 +21,7 @@ class AppViewModel(
 
     private fun checkSession() {
         viewModelScope.launch {
-            val isInitialized = sessionManager.isSessionInitialized()
+            val isInitialized = sessionRepository.isSessionInitialized()
             _state.value = if (isInitialized) {
                 AppViewState.LoggedIn
             } else {

@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.partner.data.remote
 
-import com.spoonofcode.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import io.ktor.http.HttpMethod
 
 class RemotePartnerCategoryDataSource : RemoteBaseDataSource(

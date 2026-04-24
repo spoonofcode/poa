@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.partner.data.remote
 
-import com.spoonofcode.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import com.spoonofcode.feature.partner.data.model.CustomerResponse
 import com.spoonofcode.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.feature.partner.data.model.PartnerResponse

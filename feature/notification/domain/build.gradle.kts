@@ -11,6 +11,7 @@ kotlin {
 
                 implementation(projects.core.data)
                 implementation(projects.core.firebase.data)
+                implementation(projects.core.session.domain)
                 implementation(projects.feature.product.domain)
             }
         }

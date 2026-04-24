@@ -1,24 +1,87 @@
 package com.spoonofcode.feature.notification.data.local
 
-import com.russhwolf.settings.Settings
+import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
+import eu.anifantakis.lib.ksafe.KSafe
+import eu.anifantakis.lib.ksafe.KSafeWriteMode
+import kotlinx.coroutines.withContext
 
 class LocalNotificationDataSource(
-    private val settings: Settings,
+    private val kSafe: KSafe,
+    private val dispatcherProvider: DispatcherProvider
 ) {
-    fun markAsRead(notificationId: String) {
-        val currentRead = settings.getString(READ_NOTIFICATIONS_KEY, "")
+    suspend fun markAsRead(notificationId: String) {
+        val currentRead = kSafe.get<Set<String>>(Keys.READ_IDS, emptySet())
+
         if (!currentRead.contains(notificationId)) {
-            val updatedRead =
-                if (currentRead.isEmpty()) notificationId else "$currentRead,$notificationId"
-            settings.putString(READ_NOTIFICATIONS_KEY, updatedRead)
+            val updatedRead = currentRead + notificationId
+
+            kSafe.put(
+                key = Keys.READ_IDS,
+                value = updatedRead,
+                mode = KSafeWriteMode.Plain,
+            )
         }
     }
 
-    fun isRead(notificationId: String): Boolean {
-        return settings.getString(READ_NOTIFICATIONS_KEY, "").contains(notificationId)
+    suspend fun isRead(notificationId: String): Boolean {
+        return kSafe.get<Set<String>>(Keys.READ_IDS, emptySet())
+            .contains(notificationId)
     }
 
-    private companion object {
-        const val READ_NOTIFICATIONS_KEY = "read_notifications_ids"
+    suspend fun getNotificationSettings(): NotificationSettings {
+        return withContext(dispatcherProvider.io()) {
+            NotificationSettings(
+                isNotificationsPersonalizedEnabled = kSafe.get(
+                    key = Keys.Settings.PERSONALIZED_ENABLED,
+                    defaultValue = false
+                ),
+                isNotificationsFromPartnersEnabled = kSafe.get(
+                    key = Keys.Settings.PARTNERS_ENABLED,
+                    defaultValue = false
+                ),
+                isNotificationsMyProductSeriesEnabled = kSafe.get(
+                    key = Keys.Settings.PRODUCT_SERIES_ENABLED,
+                    defaultValue = false
+                )
+            )
+        }
+    }
+
+    suspend fun setNotificationSettings(
+        notificationsPersonalizedEnabled: Boolean,
+        notificationsFromPartnersEnabled: Boolean,
+        notificationsMyProductSeriesEnabled: Boolean
+    ) {
+        withContext(dispatcherProvider.io()) {
+            kSafe.put(
+                key = Keys.Settings.PERSONALIZED_ENABLED,
+                value = notificationsPersonalizedEnabled,
+                mode = KSafeWriteMode.Plain,
+            )
+            kSafe.put(
+                key = Keys.Settings.PARTNERS_ENABLED,
+                value = notificationsFromPartnersEnabled,
+                mode = KSafeWriteMode.Plain,
+            )
+            kSafe.put(
+                key = Keys.Settings.PRODUCT_SERIES_ENABLED,
+                value = notificationsMyProductSeriesEnabled,
+                mode = KSafeWriteMode.Plain,
+            )
+        }
+    }
+
+    private object Keys {
+        private const val PREFIX = "com.spoonofcode.feature.notification"
+
+        const val READ_IDS = "$PREFIX.read_ids"
+
+        object Settings {
+            private const val SETTINGS_PREFIX = "$PREFIX.settings"
+            const val PERSONALIZED_ENABLED = "$SETTINGS_PREFIX.personalized_enabled"
+            const val PRODUCT_SERIES_ENABLED = "$SETTINGS_PREFIX.product_series_enabled"
+            const val PARTNERS_ENABLED = "$SETTINGS_PREFIX.partners_enabled"
+        }
     }
 }

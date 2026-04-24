@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.auth.data.remote
 
-import com.spoonofcode.core.data.base.RemoteBaseDataSource
+import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import com.spoonofcode.feature.auth.data.remote.model.LoginRequestCodeRequest
 import io.ktor.http.HttpMethod
 
