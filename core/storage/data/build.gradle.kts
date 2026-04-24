@@ -21,6 +21,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.koin.core)
+                implementation(libs.koin.compose)
             }
         }
 
