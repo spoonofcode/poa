@@ -58,10 +58,9 @@ class SessionRepositoryImpl(
         }
 
     private object Keys {
-        private const val BASE_PREFIX = "com.spoonofcode"
+        private const val PREFIX = "com.spoonofcode.core.session"
 
         object Session {
-            private const val PREFIX = "$BASE_PREFIX.session"
             const val ACCESS_TOKEN = "$PREFIX.access_token"
             const val REFRESH_TOKEN = "$PREFIX.refresh_token"
             const val USER_ID = "$PREFIX.user_id"

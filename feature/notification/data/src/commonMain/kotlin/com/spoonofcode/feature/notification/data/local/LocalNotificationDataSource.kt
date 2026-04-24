@@ -10,17 +10,17 @@ class LocalNotificationDataSource(
     private val dispatcherProvider: DispatcherProvider
 ) {
     suspend fun markAsRead(notificationId: String) {
-        val currentRead = kSafe.get<Set<String>>(Keys.READ_NOTIFICATIONS_KEY, emptySet())
+        val currentRead = kSafe.get<Set<String>>(Keys.READ_IDS, emptySet())
 
         if (!currentRead.contains(notificationId)) {
             val updatedRead = currentRead + notificationId
 
-            kSafe.put(Keys.READ_NOTIFICATIONS_KEY, updatedRead)
+            kSafe.put(Keys.READ_IDS, updatedRead)
         }
     }
 
     suspend fun isRead(notificationId: String): Boolean {
-        return kSafe.get<Set<String>>(Keys.READ_NOTIFICATIONS_KEY, emptySet())
+        return kSafe.get<Set<String>>(Keys.READ_IDS, emptySet())
             .contains(notificationId)
     }
 
@@ -28,15 +28,15 @@ class LocalNotificationDataSource(
         return withContext(dispatcherProvider.io()) {
             NotificationSettings(
                 isNotificationsPersonalizedEnabled = kSafe.get(
-                    Keys.Notifications.IS_PERSONALIZED,
+                    Keys.Settings.PERSONALIZED_ENABLED,
                     false
                 ),
                 isNotificationsFromPartnersEnabled = kSafe.get(
-                    Keys.Notifications.IS_PARTNERS_ENABLED,
+                    Keys.Settings.PARTNERS_ENABLED,
                     false
                 ),
                 isNotificationsMyProductSeriesEnabled = kSafe.get(
-                    Keys.Notifications.IS_PRODUCT_SERIES_ENABLED,
+                    Keys.Settings.PRODUCT_SERIES_ENABLED,
                     false
                 )
             )
@@ -49,24 +49,24 @@ class LocalNotificationDataSource(
         notificationsMyProductSeriesEnabled: Boolean
     ) {
         withContext(dispatcherProvider.io()) {
-            kSafe.put(Keys.Notifications.IS_PERSONALIZED, notificationsPersonalizedEnabled)
-            kSafe.put(Keys.Notifications.IS_PARTNERS_ENABLED, notificationsFromPartnersEnabled)
+            kSafe.put(Keys.Settings.PERSONALIZED_ENABLED, notificationsPersonalizedEnabled)
+            kSafe.put(Keys.Settings.PARTNERS_ENABLED, notificationsFromPartnersEnabled)
             kSafe.put(
-                Keys.Notifications.IS_PRODUCT_SERIES_ENABLED, notificationsMyProductSeriesEnabled
+                Keys.Settings.PRODUCT_SERIES_ENABLED, notificationsMyProductSeriesEnabled
             )
         }
     }
 
     private object Keys {
-        private const val BASE_PREFIX = "com.spoonofcode"
+        private const val PREFIX = "com.spoonofcode.feature.notification"
 
-        const val READ_NOTIFICATIONS_KEY = "read_notifications_ids"
+        const val READ_IDS = "$PREFIX.read_ids"
 
-        object Notifications {
-            private const val PREFIX = "$BASE_PREFIX.settings.notifications"
-            const val IS_PERSONALIZED = "$PREFIX.personalized"
-            const val IS_PRODUCT_SERIES_ENABLED = "$PREFIX.product_series"
-            const val IS_PARTNERS_ENABLED = "$PREFIX.partners"
+        object Settings {
+            private const val SETTINGS_PREFIX = "$PREFIX.settings"
+            const val PERSONALIZED_ENABLED = "$SETTINGS_PREFIX.personalized_enabled"
+            const val PRODUCT_SERIES_ENABLED = "$SETTINGS_PREFIX.product_series_enabled"
+            const val PARTNERS_ENABLED = "$SETTINGS_PREFIX.partners_enabled"
         }
     }
 }
