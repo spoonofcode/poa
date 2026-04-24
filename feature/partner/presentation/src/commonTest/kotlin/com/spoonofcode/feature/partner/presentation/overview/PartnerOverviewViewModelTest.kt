@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.PartnerModule
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.data.test.PartnerCategoriesMockData.PARTNER_CATEGORIES
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNERS
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
@@ -112,7 +112,7 @@ class PartnerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerOverviewViewAction.SelectPartner(partnerId = PARTNER_1.id))
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(PartnerModule.PartnerDetailsScreen(partnerId = PARTNER_1.id)) }
+        verifySuspend { routeResolver.resolve(PartnerModuleRoute.PartnerDetails(partnerId = PARTNER_1.id)) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

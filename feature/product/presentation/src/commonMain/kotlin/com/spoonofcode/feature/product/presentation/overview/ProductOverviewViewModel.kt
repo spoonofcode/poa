@@ -2,7 +2,7 @@ package com.spoonofcode.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.feature.appnavigation.ProductModule
+import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ internal class ProductOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(
-                    ProductModule.ProductDetailsScreen(productId = productId)
+                    ProductModuleRoute.ProductDetails(productId = productId)
                 )
             )
         }

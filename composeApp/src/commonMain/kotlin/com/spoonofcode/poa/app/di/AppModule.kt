@@ -3,7 +3,7 @@ package com.spoonofcode.poa.app.di
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.auth.data.di.authDataModule
 import com.spoonofcode.feature.auth.domain.di.authDomainModule
 import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
@@ -40,7 +40,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val appModule = module {
+val appModuleRoute = module {
     includes(
         // core
         coroutinesModule,
@@ -83,7 +83,7 @@ val appModule = module {
         scanPresentationModule,
         tacPresentationModule,
     )
-    factoryOf(::AppModuleRouteResolver) { bind<ModuleRouteResolver<AppModule>>() }
+    factoryOf(::AppModuleRouteResolver) { bind<ModuleRouteResolver<AppModuleRoute>>() }
     single { getPlatform() }
     viewModelOf(::AppViewModel)
 }

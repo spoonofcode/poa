@@ -9,8 +9,8 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.spoonofcode.core.presentation.compose.LoadingView
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import com.spoonofcode.core.presentation.theme.AppTheme
-import com.spoonofcode.feature.appnavigation.AuthModule
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -56,14 +56,14 @@ private fun getStartScreens(
         } else {
             listOf(
                 MainHostScreen(),
-                routeResolver.resolve(NotificationModule.NotificationOverviewScreen),
+                routeResolver.resolve(NotificationModuleRoute.NotificationOverview),
                 routeResolver.resolve(
-                    NotificationModule.NotificationDetailsScreen(
+                    NotificationModuleRoute.NotificationDetails(
                         notificationId = notificationId
                     )
                 ),
             )
         }
     } else {
-        listOf(routeResolver.resolve(AuthModule.LoginScreen))
+        listOf(routeResolver.resolve(AuthModuleRoute.Login))
     }

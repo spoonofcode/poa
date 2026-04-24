@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.auth.presentation.di
 
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.AuthModule
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.auth.domain.di.authDomainModule
 import com.spoonofcode.feature.auth.presentation.AuthModuleRouteResolver
 import com.spoonofcode.feature.auth.presentation.login.LoginViewModel
@@ -20,7 +20,7 @@ val authPresentationModule: Module = module {
         authDomainModule,
     )
 
-    factoryOf(::AuthModuleRouteResolver) { bind<ModuleRouteResolver<AuthModule>>() }
+    factoryOf(::AuthModuleRouteResolver) { bind<ModuleRouteResolver<AuthModuleRoute>>() }
 
     viewModelOf(::LoginViewModel)
     viewModelOf(::LoginCodeViewModel)

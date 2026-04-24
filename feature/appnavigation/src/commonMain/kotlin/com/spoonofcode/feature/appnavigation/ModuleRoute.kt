@@ -1,3 +1,3 @@
 package com.spoonofcode.feature.appnavigation
 
-abstract class Screen
+abstract class ModuleRoute

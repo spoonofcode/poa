@@ -3,7 +3,7 @@ package com.spoonofcode.feature.partner.presentation.panel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
 import kotlinx.coroutines.launch
 
@@ -31,7 +31,7 @@ internal class PartnerPanelViewModel() :
 
     fun navigateToNotificationType() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModule.NotificationTypeScreen))
+            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationType))
         }
     }
 

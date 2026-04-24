@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.home.data.test.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.feature.home.data.test.TOTAL_POINTS
 import com.spoonofcode.feature.home.presentation.di.homePresentationTestModule
@@ -97,7 +97,7 @@ class HomeViewModelest : BaseViewModelTest() {
         viewModel.onAction(HomeViewAction.NavigateToNotifications)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationOverviewScreen) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationOverview) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

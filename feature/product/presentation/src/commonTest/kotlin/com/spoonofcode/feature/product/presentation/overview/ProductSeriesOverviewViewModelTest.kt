@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.NotificationModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCTS
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
@@ -124,7 +124,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProductSeriesOverViewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

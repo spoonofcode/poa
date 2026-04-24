@@ -4,9 +4,9 @@ import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.appnavigation.PartnerModule
-import com.spoonofcode.feature.appnavigation.ProductModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
@@ -53,7 +53,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.SendNotificationToAllCustomers)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -62,7 +62,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(PartnerModule.CustomerOverviewScreen) }
+        verifySuspend { routeResolver.resolve(PartnerModuleRoute.CustomerOverview) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -71,7 +71,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(ProductModule.ProductSeriesOverviewScreen) }
+        verifySuspend { routeResolver.resolve(ProductModuleRoute.ProductSeriesOverview) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -80,7 +80,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.SendNotificationToAllPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationEditScreen()) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

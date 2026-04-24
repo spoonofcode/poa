@@ -5,7 +5,7 @@ import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.test.ext.containsTypes
-import com.spoonofcode.feature.appnavigation.AppModule
+import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
 import dev.mokkery.matcher.any
@@ -179,11 +179,11 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
             notificationRepository.create(any(), any(), any(), any(), any(), any())
         }
 
-        verifySuspend { routeResolver.resolve(AppModule.MainHostScreen) }
+        verifySuspend { routeResolver.resolve(AppModuleRoute.MainHost) }
         verifySuspend { viewModelNavigator.replaceAll(any()) }
 
         verifySuspend {
-            viewModelNavigator.replaceAll(containsTypes(AppModule.MainHostScreen::class))
+            viewModelNavigator.replaceAll(containsTypes(AppModuleRoute.MainHost::class))
         }
     }
 }

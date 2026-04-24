@@ -1,12 +1,7 @@
 package com.spoonofcode.feature.notification.presentation.di
 
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.notification.domain.usecase.GetNotificationByIdUseCase
-import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
-import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
-import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
-import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.notification.presentation.NotificationModuleRouteResolver
 import com.spoonofcode.feature.notification.presentation.channel.NotificationChannelViewModel
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewModel
@@ -20,7 +15,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val notificationPresentationModule = module {
-    factoryOf(::NotificationModuleRouteResolver) { bind<ModuleRouteResolver<NotificationModule>>() }
+    factoryOf(::NotificationModuleRouteResolver) { bind<ModuleRouteResolver<NotificationModuleRoute>>() }
 
     viewModelOf(::NotificationOverviewViewModel)
     viewModelOf(::NotificationChannelViewModel)

@@ -2,12 +2,12 @@ package com.spoonofcode.feature.profile.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.feature.appnavigation.AuthModule
-import com.spoonofcode.feature.appnavigation.FAQModule
-import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.appnavigation.PartnerModule
-import com.spoonofcode.feature.appnavigation.ProfileModule
-import com.spoonofcode.feature.appnavigation.TACModule
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
+import com.spoonofcode.feature.appnavigation.FAQModuleRoute
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
+import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.feature.profile.domain.usecase.LogoutUseCase
 import kotlinx.coroutines.launch
@@ -51,31 +51,31 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToEditProfile() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(ProfileModule.ProfileEditScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(ProfileModuleRoute.ProfileEdit))
         }
     }
 
     private fun navigateToPartnerPanel() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(PartnerModule.PartnerPanelScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(PartnerModuleRoute.PartnerPanel))
         }
     }
 
     private fun navigateToNotificationSettings() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(NotificationModule.NotificationChannelScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(NotificationModuleRoute.NotificationChannel))
         }
     }
 
     private fun navigateToTAC() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(TACModule.TACScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(TACModuleRoute.TAC))
         }
     }
 
     private fun navigateToFAQ() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(FAQModule.FAQScreen))
+            viewModelNavigator.push(screen = routeResolver.resolve(FAQModuleRoute.FAQ))
         }
     }
 
@@ -83,7 +83,7 @@ internal class ProfileDetailsViewModel(
         showLoadingView()
         viewModelScope.launch {
             logoutUseCase()
-            viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AuthModule.LoginScreen)))
+            viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AuthModuleRoute.Login)))
         }
     }
 

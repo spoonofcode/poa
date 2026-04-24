@@ -3,8 +3,8 @@ package com.spoonofcode.feature.partner.presentation.panel
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.NotificationModule
-import com.spoonofcode.feature.appnavigation.PartnerModule
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
@@ -44,7 +44,7 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(PartnerModule.PartnerEditScreen(partnerId = any())) }
+        verifySuspend { routeResolver.resolve(PartnerModuleRoute.PartnerEdit(partnerId = any())) }
         verifySuspend { viewModelNavigator.push(any()) }
 
     }
@@ -54,7 +54,7 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerPanelViewAction.NavigateToNotificationType)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModule.NotificationTypeScreen) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationType) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }
