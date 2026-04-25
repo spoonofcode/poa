@@ -22,7 +22,7 @@ internal class NotificationChannelViewModel :
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(
-                    NotificationModuleRoute.NotificationSettingsScreen()
+                    NotificationModuleRoute.NotificationSettings()
                 )
             )
         }

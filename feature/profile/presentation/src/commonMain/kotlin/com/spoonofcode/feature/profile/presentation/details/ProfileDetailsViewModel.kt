@@ -69,7 +69,7 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToTAC() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(TACModuleRoute.TAC))
+            viewModelNavigator.push(screen = routeResolver.resolve(TACModuleRoute.TAC()))
         }
     }
 

@@ -127,6 +127,8 @@ kotlin {
             implementation(projects.feature.scan.domain)
             implementation(projects.feature.scan.presentation)
 
+            implementation(projects.feature.tac.data)
+            implementation(projects.feature.tac.domain)
             implementation(projects.feature.tac.presentation)
 
             implementation(projects.feature.appnavigation)

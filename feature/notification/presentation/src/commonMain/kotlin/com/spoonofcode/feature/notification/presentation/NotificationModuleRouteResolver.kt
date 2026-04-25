@@ -28,7 +28,7 @@ class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModuleRo
                 )
 
                 NotificationModuleRoute.NotificationOverview -> NotificationOverviewScreen()
-                is NotificationModuleRoute.NotificationSettingsScreen -> NotificationSettingsScreen(
+                is NotificationModuleRoute.NotificationSettings -> NotificationSettingsScreen(
                     backNavigationEnable = it.backNavigationEnabled
                 )
 

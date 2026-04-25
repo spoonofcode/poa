@@ -105,7 +105,7 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationSettingsScreen) }
+        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationSettings) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
