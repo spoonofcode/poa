@@ -19,7 +19,10 @@ fun VideoAnimation(videoLink: String) {
             url = videoLink,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(4f / 3f)
+                .aspectRatio(
+                    ratio = 1f,
+                    matchHeightConstraintsFirst = true
+                )
                 .clip(RoundedCornerShape(16.dp))
                 .shadow(4.dp, RoundedCornerShape(16.dp))
                 .background(MaterialTheme.colorScheme.surfaceVariant),

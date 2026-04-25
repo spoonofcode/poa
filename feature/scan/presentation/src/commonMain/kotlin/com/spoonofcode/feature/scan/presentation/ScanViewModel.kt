@@ -16,15 +16,18 @@ internal class ScanViewModel(
     initialScreenState = ScreenState.CONTENT,
 ) {
 
-    init {
-        updateState {
-            ScanViewState(platformType = platform.platformType)
+    override fun onAction(action: ScanViewAction) {
+        when (action) {
+            is ScanViewAction.InitView -> initView()
+            is ScanViewAction.CheckProduct -> checkProduct(action.tagId)
         }
     }
 
-    override fun onAction(action: ScanViewAction) {
-        when (action) {
-            is ScanViewAction.CheckProduct -> checkProduct(action.tagId)
+    private fun initView() {
+        showContentView {
+            copy(
+                platformType = platform.platformType
+            )
         }
     }
 
