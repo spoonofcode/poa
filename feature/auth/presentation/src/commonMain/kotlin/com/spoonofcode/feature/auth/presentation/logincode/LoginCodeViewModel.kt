@@ -5,6 +5,7 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 
@@ -44,7 +45,12 @@ internal class LoginCodeViewModel(
                     listOf(
                         routeResolver.resolve(AppModuleRoute.MainHost),
                         routeResolver.resolve(
-                            NotificationModuleRoute.NotificationSettingsScreen(
+                            NotificationModuleRoute.NotificationSettings(
+                                backNavigationEnabled = false
+                            ),
+                        ),
+                        routeResolver.resolve(
+                            TACModuleRoute.TAC(
                                 backNavigationEnabled = false
                             )
                         ),

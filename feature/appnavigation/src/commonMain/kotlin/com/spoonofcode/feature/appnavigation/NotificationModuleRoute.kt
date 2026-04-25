@@ -12,7 +12,7 @@ sealed class NotificationModuleRoute : ModuleRoute() {
     ) : NotificationModuleRoute()
 
     object NotificationOverview : NotificationModuleRoute()
-    data class NotificationSettingsScreen(
+    data class NotificationSettings(
         val backNavigationEnabled: Boolean = true,
     ) : NotificationModuleRoute()
 

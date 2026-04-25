@@ -9,4 +9,7 @@ internal data class TACViewState(
     val isTermsAndConditionsAccepted: Boolean = false,
     val privacyPolicyLink: String = "https://proof-of-wear.com/privacy-mobile.html",
     val marketingLink: String = "https://proof-of-wear.com/marketing-mobile.html",
-) : BaseViewState()
+) : BaseViewState() {
+    val isSaveChangesButtonEnable: Boolean
+        get() = isPrivacyPolicyAccepted && isTermsAndConditionsAccepted
+}

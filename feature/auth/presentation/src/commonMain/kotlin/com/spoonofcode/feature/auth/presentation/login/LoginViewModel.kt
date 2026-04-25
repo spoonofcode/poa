@@ -5,6 +5,7 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
@@ -59,10 +60,15 @@ internal class LoginViewModel(
                         listOf(
                             routeResolver.resolve(AppModuleRoute.MainHost),
                             routeResolver.resolve(
-                                NotificationModuleRoute.NotificationSettingsScreen(
+                                NotificationModuleRoute.NotificationSettings(
                                     backNavigationEnabled = false
                                 )
-                            )
+                            ),
+                            routeResolver.resolve(
+                                TACModuleRoute.TAC(
+                                    backNavigationEnabled = false
+                                )
+                            ),
                         )
                     )
                 }.onFailure {

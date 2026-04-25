@@ -8,11 +8,12 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
-                implementation(projects.feature.notification.domain)
                 implementation(libs.ksafe)
 
                 implementation(projects.core.data)
                 implementation(projects.core.network)
+
+                implementation(projects.feature.notification.domain)
             }
         }
 

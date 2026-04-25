@@ -9,7 +9,9 @@ class TACModuleRouteResolver : ModuleRouteResolver<TACModuleRoute> {
     override fun resolve(moduleRoute: ModuleRoute): Screen? =
         (moduleRoute as? TACModuleRoute)?.let {
             when (it) {
-                TACModuleRoute.TAC -> TACScreen()
+                is TACModuleRoute.TAC -> TACScreen(
+                    backNavigationEnable = it.backNavigationEnabled
+                )
             }
         }
 }

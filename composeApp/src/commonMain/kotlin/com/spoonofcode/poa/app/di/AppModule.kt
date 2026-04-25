@@ -1,12 +1,21 @@
 package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
+import com.spoonofcode.core.data.getPlatform
+import com.spoonofcode.core.firebase.data.di.firebaseDataModule
+import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
+import com.spoonofcode.core.network.di.networkModule
 import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
+import com.spoonofcode.core.recaptcha.di.recaptchaModule
+import com.spoonofcode.core.session.data.di.sessionDataModule
+import com.spoonofcode.core.session.domain.di.sessionDomainModule
+import com.spoonofcode.core.storage.data.di.storageDataModule
 import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.auth.data.di.authDataModule
 import com.spoonofcode.feature.auth.domain.di.authDomainModule
 import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
+import com.spoonofcode.feature.faq.presentation.di.faqPresentationModule
 import com.spoonofcode.feature.home.data.di.homeDataModule
 import com.spoonofcode.feature.home.domain.di.homeDomainModule
 import com.spoonofcode.feature.home.presentation.di.homePresentationModule
@@ -23,17 +32,10 @@ import com.spoonofcode.feature.profile.data.di.profileDataModule
 import com.spoonofcode.feature.profile.domain.di.profileDomainModule
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
+import com.spoonofcode.feature.tac.data.di.tacDataModule
+import com.spoonofcode.feature.tac.domain.di.tacDomainModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
 import com.spoonofcode.poa.AppModuleRouteResolver
-import com.spoonofcode.core.data.getPlatform
-import com.spoonofcode.core.firebase.data.di.firebaseDataModule
-import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
-import com.spoonofcode.core.network.di.networkModule
-import com.spoonofcode.core.recaptcha.di.recaptchaModule
-import com.spoonofcode.core.session.data.di.sessionDataModule
-import com.spoonofcode.core.session.domain.di.sessionDomainModule
-import com.spoonofcode.core.storage.data.di.storageDataModule
-import com.spoonofcode.feature.faq.presentation.di.faqPresentationModule
 import com.spoonofcode.poa.app.AppViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
@@ -81,6 +83,9 @@ val appModuleRoute = module {
         notificationPresentationModule,
 
         scanPresentationModule,
+
+        tacDataModule,
+        tacDomainModule,
         tacPresentationModule,
     )
     factoryOf(::AppModuleRouteResolver) { bind<ModuleRouteResolver<AppModuleRoute>>() }

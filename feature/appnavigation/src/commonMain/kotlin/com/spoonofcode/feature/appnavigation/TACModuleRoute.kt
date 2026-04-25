@@ -1,5 +1,7 @@
 package com.spoonofcode.feature.appnavigation
 
 sealed class TACModuleRoute : ModuleRoute() {
-    object TAC : TACModuleRoute()
+    data class TAC(
+        val backNavigationEnabled: Boolean = true,
+    ) : TACModuleRoute()
 }
