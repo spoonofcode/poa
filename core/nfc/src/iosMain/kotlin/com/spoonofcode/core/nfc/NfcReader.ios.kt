@@ -1,6 +1,7 @@
 package com.spoonofcode.core.nfc
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import kotlinx.cinterop.*
 import kotlinx.cinterop.get
 import kotlinx.coroutines.*
@@ -37,12 +38,15 @@ internal class IosNfcReader : NfcReader {
     /** Delegate is Obj-C land → separated to avoid the mix-in error */
     private val delegate = object : NSObject(), NFCTagReaderSessionDelegateProtocol {
 
-        override fun tagReaderSessionDidBecomeActive(session: NFCTagReaderSession) = Unit
+        override fun tagReaderSessionDidBecomeActive(session: NFCTagReaderSession) {
+            println("NFC Session became active")
+        }
 
         override fun tagReaderSession(
             session: NFCTagReaderSession,
             didInvalidateWithError: NSError
         ) {
+            println("NFC Session invalidated: ${didInvalidateWithError.localizedDescription}")
             this@IosNfcReader.session = null
         }
 
@@ -119,4 +123,4 @@ internal class IosNfcReader : NfcReader {
 /* ---------- Compose helper ---------- */
 
 @Composable
-actual fun rememberNfcReader(): NfcReader = IosNfcReader()
+actual fun rememberNfcReader(): NfcReader = remember { IosNfcReader() }
