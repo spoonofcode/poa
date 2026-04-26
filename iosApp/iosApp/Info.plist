@@ -38,7 +38,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NFCReaderUsageDescription</key>
-	<string>NFCReaderUsageDescription</string>
+	<string>The app needs access to NFC to read tags</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Notifications permission is required to show notifications</string>
 	<key>UIApplicationSceneManifest</key>
@@ -58,5 +58,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+    <key>com.apple.developer.nfc.readersession.formats</key>
+    <array>
+        <string>NDEF</string>
+        <string>TAG</string>
+    </array>
 </dict>
 </plist>

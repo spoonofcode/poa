@@ -84,6 +84,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
 
     protected fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
+//        showSnackbar(SnackbarEvent.Error(message = "Something went wrong. Please try again later."))
         _viewState.update {
             it.copy(screenState = ScreenState.CONTENT)
         }
