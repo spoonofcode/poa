@@ -1,5 +1,7 @@
 <resources>
+    <string name="product_not_found">Produkt nie znaleziony</string>
     <string name="scan">Skanuj</string>
+    <string name="scan_again">Skanuj jeszcze raz</string>
     <string name="scan_info_android">Umieść tag NFC z tyłu urządzenia.\nZbliż górną część telefonu (okolice aparatu) do taga.</string>
     <string name="scan_info_ios">Umieść tag NFC z tyłu urządzenia.\nZbliż górną krawędź iPhone’a (przy „słuchawce”/notchu) do taga.</string>
     <string name="scanning_in_progress">Trwa skanowanie</string>
