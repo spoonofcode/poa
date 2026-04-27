@@ -31,9 +31,9 @@ import com.spoonofcode.feature.product.presentation.di.productPresentationModule
 import com.spoonofcode.feature.profile.data.di.profileDataModule
 import com.spoonofcode.feature.profile.domain.di.profileDomainModule
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
-import com.spoonofcode.feature.scan.data.di.scanDataModule
-import com.spoonofcode.feature.scan.domain.di.scanDomainModule
-import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
+import com.spoonofcode.feature.scan.nfc.data.di.scanDataModule
+import com.spoonofcode.feature.scan.nfc.domain.di.scanDomainModule
+import com.spoonofcode.feature.scan.nfc.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.data.di.tacDataModule
 import com.spoonofcode.feature.tac.domain.di.tacDomainModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
