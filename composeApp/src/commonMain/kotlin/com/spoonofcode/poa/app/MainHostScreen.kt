@@ -22,7 +22,7 @@ import com.spoonofcode.feature.home.presentation.HomeTab
 import com.spoonofcode.feature.partner.presentation.PartnerOverviewTab
 import com.spoonofcode.feature.product.presentation.ProductOverviewTab
 import com.spoonofcode.feature.profile.presentation.details.ProfileTab
-import com.spoonofcode.feature.scan.presentation.ScanTab
+import com.spoonofcode.feature.scan.nfc.presentation.ScanTab
 
 class MainHostScreen : Screen {
 

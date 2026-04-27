@@ -123,9 +123,9 @@ kotlin {
             implementation(projects.feature.profile.domain)
             implementation(projects.feature.profile.presentation)
 
-            implementation(projects.feature.scan.data)
-            implementation(projects.feature.scan.domain)
-            implementation(projects.feature.scan.presentation)
+            implementation(projects.feature.scanNfc.data)
+            implementation(projects.feature.scanNfc.domain)
+            implementation(projects.feature.scanNfc.presentation)
 
             implementation(projects.feature.tac.data)
             implementation(projects.feature.tac.domain)
