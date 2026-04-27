@@ -40,23 +40,30 @@ internal class ScanViewModel(
             showLoadingView()
             val urlOnTag = nfcTag.ndef
             if (urlOnTag?.contains(POA_DOMAIN_NAME) == true) {
-                getTagPublicIdUseCase(url =urlOnTag)
-                    .onSuccess { publicId ->
-                        println("BARTEK publicId = $publicId")
-//                        getProductByIdUseCase(productId = publicId)
-//                            .onSuccess {
-//                                viewModelNavigator.push(
-//                                    routeResolver.resolve(
-//                                        ProductModuleRoute.ProductDetails(
-//                                            productId = it.id,
-//                                            hasOwnerUser = it.ownerEmail != null,
-//                                        )
-//                                    )
-//                                )
-//                            }
-//                            .onFailure {
-//                                showErrorView()
-//                            }
+                getTagPublicIdUseCase(url = urlOnTag)
+                    .onSuccess { nfcTag ->
+                        if (nfcTag.tagType in VALID_NFC_TAG_TYPES) {
+                            getProductByIdUseCase(productId = nfcTag.publicId)
+                                .onSuccess {
+                                    viewModelNavigator.push(
+                                        routeResolver.resolve(
+                                            ProductModuleRoute.ProductDetails(
+                                                productId = it.id,
+                                                hasOwnerUser = it.ownerEmail != null,
+                                            )
+                                        )
+                                    )
+                                }
+                                .onFailure {
+                                    showErrorView()
+                                }
+                        } else {
+                            showContentView {
+                                copy(
+                                    isProductNotFoundViewVisible = true,
+                                )
+                            }
+                        }
                     }.onFailure {
                         showErrorView()
                     }
@@ -82,5 +89,6 @@ internal class ScanViewModel(
 
     companion object {
         private const val POA_DOMAIN_NAME = "proof-of-wear.com"
+        private val VALID_NFC_TAG_TYPES = setOf("nft", "uniqe_tag")
     }
 }

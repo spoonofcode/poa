@@ -2,6 +2,7 @@ package com.spoonofcode.feature.scan.data.remote
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.core.network.HttpStatusCodes
+import com.spoonofcode.feature.scan.data.remote.model.TagResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -19,10 +20,18 @@ class RemoteTagDataSource(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,
 ) {
-    suspend fun readTagPublicId(url: String): Result<String> = doRequest(
-        urlString = url,
-        method = HttpMethod.Get,
-    )
+    suspend fun readTagPublicId(url: String): Result<TagResponse> {
+        val formattedUrl = if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            "https://$url"
+        } else {
+            url
+        }.filterNot { it.isWhitespace() || it.isISOControl() }
+
+        return doRequest(
+            urlString = formattedUrl,
+            method = HttpMethod.Get,
+        )
+    }
 
     private suspend inline fun <reified T> doRequest(
         urlString: String = "",

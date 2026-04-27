@@ -1,5 +1,6 @@
 package com.spoonofcode.feature.scan.domain.usecase
 
+import com.spoonofcode.feature.scan.domain.model.Tag
 import com.spoonofcode.feature.scan.domain.repository.TagRepository
 
 class GetTagPublicIdUseCase(
@@ -7,5 +8,5 @@ class GetTagPublicIdUseCase(
 ) {
     suspend operator fun invoke(
         url: String
-    ): Result<String> = tagRepository.getProductPublicId(url = url)
+    ): Result<Tag> = tagRepository.getNFCTAg(url = url)
 }
