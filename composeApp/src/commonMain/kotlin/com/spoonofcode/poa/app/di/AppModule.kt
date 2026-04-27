@@ -31,6 +31,8 @@ import com.spoonofcode.feature.product.presentation.di.productPresentationModule
 import com.spoonofcode.feature.profile.data.di.profileDataModule
 import com.spoonofcode.feature.profile.domain.di.profileDomainModule
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationModule
+import com.spoonofcode.feature.scan.data.di.scanDataModule
+import com.spoonofcode.feature.scan.domain.di.scanDomainModule
 import com.spoonofcode.feature.scan.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.data.di.tacDataModule
 import com.spoonofcode.feature.tac.domain.di.tacDomainModule
@@ -82,6 +84,8 @@ val appModuleRoute = module {
         notificationDomainModule,
         notificationPresentationModule,
 
+        scanDataModule,
+        scanDomainModule,
         scanPresentationModule,
 
         tacDataModule,

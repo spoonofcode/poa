@@ -7,10 +7,12 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
+import com.spoonofcode.feature.scan.domain.usecase.GetTagPublicIdUseCase
 import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val getTagPublicIdUseCase: GetTagPublicIdUseCase,
     private val platform: Platform,
 ) : BaseViewModel<ScanViewState, ScanViewAction>(
     initialViewState = ScanViewState(),
@@ -36,21 +38,30 @@ internal class ScanViewModel(
     private fun checkProduct(nfcTag: NfcTag) {
         viewModelScope.launch {
             showLoadingView()
-            if (nfcTag.ndef?.contains(POA_DOMAIN_NAME) == true) {
-                getProductByIdUseCase(productId = "tagId")
-                    .onSuccess {
-                        viewModelNavigator.push(
-                            routeResolver.resolve(
-                                ProductModuleRoute.ProductDetails(
-                                    productId = it.id,
-                                    hasOwnerUser = it.ownerEmail != null,
-                                )
-                            )
-                        )
-                    }
-                    .onFailure {
+            val urlOnTag = nfcTag.ndef
+            if (urlOnTag?.contains(POA_DOMAIN_NAME) == true) {
+                getTagPublicIdUseCase(url =urlOnTag)
+                    .onSuccess { publicId ->
+                        println("BARTEK publicId = $publicId")
+//                        getProductByIdUseCase(productId = publicId)
+//                            .onSuccess {
+//                                viewModelNavigator.push(
+//                                    routeResolver.resolve(
+//                                        ProductModuleRoute.ProductDetails(
+//                                            productId = it.id,
+//                                            hasOwnerUser = it.ownerEmail != null,
+//                                        )
+//                                    )
+//                                )
+//                            }
+//                            .onFailure {
+//                                showErrorView()
+//                            }
+                    }.onFailure {
                         showErrorView()
                     }
+
+
             } else {
                 showContentView {
                     copy(

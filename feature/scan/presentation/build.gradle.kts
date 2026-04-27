@@ -11,6 +11,7 @@ kotlin {
 
                 implementation(projects.core.nfc)
                 implementation(projects.feature.product.domain)
+                implementation(projects.feature.scan.domain)
             }
         }
 
