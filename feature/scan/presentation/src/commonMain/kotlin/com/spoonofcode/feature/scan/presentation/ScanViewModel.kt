@@ -7,12 +7,12 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
-import com.spoonofcode.feature.scan.domain.usecase.GetTagPublicIdUseCase
+import com.spoonofcode.feature.scan.domain.usecase.GetNFCTagUseCase
 import kotlinx.coroutines.launch
 
 internal class ScanViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
-    private val getTagPublicIdUseCase: GetTagPublicIdUseCase,
+    private val getNFCTagUseCase: GetNFCTagUseCase,
     private val platform: Platform,
 ) : BaseViewModel<ScanViewState, ScanViewAction>(
     initialViewState = ScanViewState(),
@@ -40,7 +40,7 @@ internal class ScanViewModel(
             showLoadingView()
             val urlOnTag = nfcTag.ndef
             if (urlOnTag?.contains(POA_DOMAIN_NAME) == true) {
-                getTagPublicIdUseCase(url = urlOnTag)
+                getNFCTagUseCase(url = urlOnTag)
                     .onSuccess { nfcTag ->
                         if (nfcTag.tagType in VALID_NFC_TAG_TYPES) {
                             getProductByIdUseCase(productId = nfcTag.publicId)

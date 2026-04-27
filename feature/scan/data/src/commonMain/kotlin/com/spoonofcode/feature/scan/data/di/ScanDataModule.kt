@@ -1,14 +1,14 @@
 package com.spoonofcode.feature.scan.data.di
 
-import com.spoonofcode.feature.scan.data.TagRepositoryImpl
-import com.spoonofcode.feature.scan.data.remote.RemoteTagDataSource
-import com.spoonofcode.feature.scan.domain.repository.TagRepository
+import com.spoonofcode.feature.scan.data.NFCTagRepositoryImpl
+import com.spoonofcode.feature.scan.data.remote.RemoteNFCTagDataSource
+import com.spoonofcode.feature.scan.domain.repository.NFCTagRepository
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val scanDataModule = module {
-    singleOf(::RemoteTagDataSource)
+    singleOf(::RemoteNFCTagDataSource)
 
-    singleOf(::TagRepositoryImpl).bind<TagRepository>()
+    singleOf(::NFCTagRepositoryImpl).bind<NFCTagRepository>()
 }

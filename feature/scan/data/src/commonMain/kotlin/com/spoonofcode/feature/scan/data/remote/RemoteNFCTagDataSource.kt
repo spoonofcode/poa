@@ -2,7 +2,7 @@ package com.spoonofcode.feature.scan.data.remote
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.core.network.HttpStatusCodes
-import com.spoonofcode.feature.scan.data.remote.model.TagResponse
+import com.spoonofcode.feature.scan.data.remote.model.NFCTagResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -16,11 +16,11 @@ import io.ktor.http.contentType
 import io.ktor.util.reflect.typeInfo
 import kotlinx.coroutines.withContext
 
-class RemoteTagDataSource(
+class RemoteNFCTagDataSource(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,
 ) {
-    suspend fun readTagPublicId(url: String): Result<TagResponse> {
+    suspend fun readNFCTagPublicId(url: String): Result<NFCTagResponse> {
         val formattedUrl = if (!url.startsWith("http://") && !url.startsWith("https://")) {
             "https://$url"
         } else {

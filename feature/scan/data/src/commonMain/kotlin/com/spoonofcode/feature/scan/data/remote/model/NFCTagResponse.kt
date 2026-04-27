@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TagResponse(
+data class NFCTagResponse(
     @SerialName("tag_data")
     val tagData: TagData,
 ) {

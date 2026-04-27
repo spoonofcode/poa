@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.scan.domain.model
 
-data class Tag(
+data class NFCTag(
     val publicId: String,
     val tagType: String,
 )
