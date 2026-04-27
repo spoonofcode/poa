@@ -10,4 +10,5 @@ internal data class ScanViewState(
     val animationFilePath: String = "files/read_sensor_nfc.json",
     val contentDescription: String = "Scanning NFC tag",
     val platformType: PlatformType = PlatformType.Android,
+    val isProductNotFoundViewVisible: Boolean = false,
 ) : BaseViewState()
