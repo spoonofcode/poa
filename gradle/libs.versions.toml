@@ -15,7 +15,7 @@ projectCompileSdkVersion = "36"
 projectVersionCode = "1"
 
 # --- Android build tools / Gradle ---
-agp = "8.11.1"
+agp = "9.2.0"
 androidTools = "32.2.0"
 desugarJdkLibs = "2.1.5"
 googleServices = "4.4.4"
@@ -64,7 +64,7 @@ androidxTestCore = "1.7.0"
 androidxTestJunit = "1.3.0"
 
 # --- Tooling / Codegen ---
-ksp = "2.2.0-2.0.2"
+ksp = "2.3.6"
 buildkonfig = "0.17.1"
 kover = "0.9.8"
 mokkery = "3.3.0"
