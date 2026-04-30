@@ -40,7 +40,7 @@ internal class ScanViewModel(
             showLoadingView()
             val urlOnTag = nfcTag.ndef
             if (urlOnTag?.contains(POA_DOMAIN_NAME) == true) {
-                getNFCTagUseCase(url = urlOnTag)
+                getNFCTagUseCase(url = transformUrl(urlOnTag))
                     .onSuccess { nfcTag ->
                         if (nfcTag.tagType in VALID_NFC_TAG_TYPES) {
                             getProductByIdUseCase(productId = nfcTag.publicId)
@@ -89,6 +89,16 @@ internal class ScanViewModel(
 
     companion object {
         private const val POA_DOMAIN_NAME = "proof-of-wear.com"
+        private const val POA_AUTH_DOMAIN_NAME = "auth.proof-of-wear.com"
+        private const val POA_TEST_DOMAIN_NAME = "pow-test1-960238188791.europe-west1.run.app"
         private val VALID_NFC_TAG_TYPES = setOf("nft", "uniqe_tag")
+
+        fun transformUrl(originalUrl: String): String {
+            return if(originalUrl.contains(POA_AUTH_DOMAIN_NAME)){
+                originalUrl.replace(POA_AUTH_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
+            } else {
+                originalUrl.replace(POA_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
+            }
+        }
     }
 }
