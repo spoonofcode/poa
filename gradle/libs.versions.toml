@@ -65,7 +65,7 @@ androidxTestJunit = "1.3.0"
 
 # --- Tooling / Codegen ---
 ksp = "2.3.6"
-buildkonfig = "0.17.1"
+buildkonfig = "0.18.0"
 kover = "0.9.8"
 mokkery = "3.3.0"
 voyager = "1.1.0-beta03"
