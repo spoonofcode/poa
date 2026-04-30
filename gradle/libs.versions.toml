@@ -16,32 +16,32 @@ projectVersionCode = "1"
 
 # --- Android build tools / Gradle ---
 agp = "8.11.1"
-androidTools = "31.12.0"
+androidTools = "32.2.0"
 desugarJdkLibs = "2.1.5"
 googleServices = "4.4.4"
 
 # --- Kotlin / KMP / Compose ---
-kotlin = "2.3.0"
-composeMultiplatform = "1.10.0"
+kotlin = "2.3.21"
+composeMultiplatform = "1.10.3"
 
 # --- AndroidX ---
-androidxActivityCompose = "1.12.2"
-androidxCredentials = "1.5.0"
+androidxActivityCompose = "1.13.0"
+androidxCredentials = "1.6.0"
 androidxSecurity = "1.1.0"
 androidxSplash = "1.2.0"
-lifecycleViewModelCompose = "2.9.6"
+lifecycleViewModelCompose = "2.10.0"
 
 # --- Compose UI extras ---
-composeBom = "2025.07.00"
+composeBom = "2026.04.01"
 material3 = "1.9.0"
 materialIconsCore = "1.7.3"
 composeIcons = "1.1.1"
-landscapistCoil = "2.8.2"
-media3 = "1.9.0"
-compottie = "2.0.2"
+landscapistCoil = "2.9.7"
+media3 = "1.10.0"
+compottie = "2.1.0"
 
 # --- Google / Firebase ---
-firebaseBom = "34.8.0"
+firebaseBom = "34.12.0"
 googleId = "1.2.0"
 recaptcha = "18.8.0"
 
@@ -53,8 +53,8 @@ connectivity = "2.4.0"
 
 # --- KotlinX ---
 kotlinxDatetime = "0.7.1"
-kotlinxSerializationJson = "1.9.0"
-kotlinxCoroutines = "1.10.1"
+kotlinxSerializationJson = "1.11.0"
+kotlinxCoroutines = "1.10.2"
 kotlinxCoroutinesTest = "1.10.2"
 
 # --- Testing ---
@@ -66,8 +66,8 @@ androidxTestJunit = "1.3.0"
 # --- Tooling / Codegen ---
 ksp = "2.2.0-2.0.2"
 buildkonfig = "0.17.1"
-kover = "0.9.4"
-mokkery = "3.1.1"
+kover = "0.9.8"
+mokkery = "3.3.0"
 voyager = "1.1.0-beta03"
 
 [libraries]
