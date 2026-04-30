@@ -5,10 +5,10 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
 internal fun Project.configureAndroidCompose(
-    commonExtension: CommonExtension<*, *, *, *, *, *>
+    commonExtension: CommonExtension
 ) {
     with(commonExtension) {
-        buildFeatures {
+        buildFeatures.apply {
             compose = true
         }
 
