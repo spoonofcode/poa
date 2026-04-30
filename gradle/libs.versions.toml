@@ -4,7 +4,7 @@ androidCompileSdk = "36"
 androidMinSdk = "30"
 androidTargetSdk = "36"
 
-calfPermissions = "0.9.0"
+calfPermissions = "0.11.0"
 ksafe = "1.8.1"
 ksafeCompose = "1.8.1"
 projectApplicationId = "com.spoonofcode.poa"
