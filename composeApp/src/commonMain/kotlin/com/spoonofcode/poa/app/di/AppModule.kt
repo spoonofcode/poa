@@ -3,7 +3,6 @@ package com.spoonofcode.poa.app.di
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.data.getPlatform
 import com.spoonofcode.core.firebase.data.di.firebaseDataModule
-import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
 import com.spoonofcode.core.network.di.networkModule
 import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
@@ -49,7 +48,6 @@ val appModuleRoute = module {
         // core
         coroutinesModule,
         firebaseDataModule,
-        firebaseDomainModule,
         presentationModule,
         networkModule,
         recaptchaModule,
