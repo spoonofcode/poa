@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.product.data
+package com.spoonofcode.feature.product.data.repository
 
 import com.spoonofcode.feature.product.data.mappers.toProduct
 import com.spoonofcode.feature.product.data.remote.RemoteProductDataSource

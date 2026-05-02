@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.data
+package com.spoonofcode.feature.notification.data.repository
 
 import com.spoonofcode.core.data.ext.toZonedInstant
 import com.spoonofcode.feature.notification.data.local.LocalNotificationDataSource

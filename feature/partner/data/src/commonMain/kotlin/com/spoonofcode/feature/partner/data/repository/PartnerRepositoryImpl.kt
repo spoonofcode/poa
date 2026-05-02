@@ -1,9 +1,9 @@
-package com.spoonofcode.feature.partner.data
+package com.spoonofcode.feature.partner.data.repository
 
+import com.spoonofcode.feature.partner.data.mappers.toCustomer
 import com.spoonofcode.feature.partner.data.mappers.toPartner
 import com.spoonofcode.feature.partner.data.mappers.toPartnerUser
 import com.spoonofcode.feature.partner.data.mappers.toProductSeries
-import com.spoonofcode.feature.partner.data.mappers.toCustomer
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerDataSource
 import com.spoonofcode.feature.partner.domain.model.Customer

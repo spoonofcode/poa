@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.partner.data.di
 
-import com.spoonofcode.feature.partner.data.PartnerRepositoryImpl
+import com.spoonofcode.feature.partner.data.repository.PartnerRepositoryImpl
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerCategoryDataSource
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerDataSource
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
