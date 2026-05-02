@@ -5,7 +5,7 @@ import com.spoonofcode.feature.scan.nfc.domain.model.NFCTag
 
 fun NFCTagResponse.toTag(): NFCTag {
     return NFCTag(
-        publicId = tagData.tagType,
-        tagType = tagData.publicId,
+        publicId = tagData.publicId,
+        tagType = tagData.tagType,
     )
 }
