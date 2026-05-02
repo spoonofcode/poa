@@ -43,7 +43,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val appModuleRoute = module {
+val appModule = module {
     includes(
         // core
         coroutinesModule,
