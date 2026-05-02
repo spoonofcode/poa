@@ -6,7 +6,7 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
-internal fun firebaseMessagingServiceMock() = mock<FirebaseMessagingRepositoryImpl> {
+internal fun firebaseMessagingRepositoryMock() = mock<FirebaseMessagingRepositoryImpl> {
     everySuspend { subscribeToTopic(any()) } returns Unit
     everySuspend { unsubscribeFromTopic(any()) } returns Unit
 }
