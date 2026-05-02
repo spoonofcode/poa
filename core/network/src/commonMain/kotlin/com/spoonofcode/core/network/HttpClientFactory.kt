@@ -85,12 +85,12 @@ class HttpClientFactory(
                         remoteRefreshTokenDataSource.create(refreshToken)
                             .onSuccess { refreshResponse ->
                                 sessionRepository.updateSessionTokens(
-                                    accessToken = refreshResponse.jwtAccessToken,
-                                    refreshToken = refreshResponse.jwtRefreshToken,
+                                    accessToken = refreshResponse.accessToken,
+                                    refreshToken = refreshResponse.refreshToken,
                                 )
                                 bearerTokens = BearerTokens(
-                                    accessToken = refreshResponse.jwtAccessToken,
-                                    refreshToken = refreshResponse.jwtRefreshToken,
+                                    accessToken = refreshResponse.accessToken,
+                                    refreshToken = refreshResponse.refreshToken,
                                 )
                             }.onFailure { error ->
 //                                sessionManager.clearSession()

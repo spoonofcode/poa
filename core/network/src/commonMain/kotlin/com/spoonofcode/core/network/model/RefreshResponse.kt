@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RefreshResponse(
     @SerialName("access_token")
-    val jwtAccessToken: String,
+    val accessToken: String,
     @SerialName("refresh_token")
-    val jwtRefreshToken: String,
+    val refreshToken: String,
 )

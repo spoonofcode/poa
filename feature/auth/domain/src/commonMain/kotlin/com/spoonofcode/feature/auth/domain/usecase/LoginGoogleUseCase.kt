@@ -14,8 +14,8 @@ class LoginGoogleUseCase(
             googleUserToken = googleIdToken,
         ).map { login ->
             sessionRepository.initSession(
-                accessToken = login.jwtAccessToken,
-                refreshToken = login.jwtRefreshToken,
+                accessToken = login.accessToken,
+                refreshToken = login.refreshToken,
                 userId = login.id,
             )
         }
