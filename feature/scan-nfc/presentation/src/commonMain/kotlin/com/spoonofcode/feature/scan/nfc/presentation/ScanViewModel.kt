@@ -91,7 +91,7 @@ internal class ScanViewModel(
         private const val POA_DOMAIN_NAME = "proof-of-wear.com"
         private const val POA_AUTH_DOMAIN_NAME = "auth.proof-of-wear.com"
         private const val POA_TEST_DOMAIN_NAME = "pow-test1-960238188791.europe-west1.run.app"
-        private val VALID_NFC_TAG_TYPES = setOf("nft", "uniqe_tag")
+        private val VALID_NFC_TAG_TYPES = setOf("nft", "unique_item")
 
         fun transformUrl(originalUrl: String): String {
             return if(originalUrl.contains(POA_AUTH_DOMAIN_NAME)){
