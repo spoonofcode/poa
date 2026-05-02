@@ -2,7 +2,7 @@ package com.spoonofcode.core.network
 
 import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.network.remote.RemoteRefreshTokenDataSource
-import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.repository.SessionRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.auth.Auth

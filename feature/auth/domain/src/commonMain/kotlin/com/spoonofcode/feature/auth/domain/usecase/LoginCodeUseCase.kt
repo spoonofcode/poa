@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.auth.domain.usecase
 
-import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
 class LoginCodeUseCase(

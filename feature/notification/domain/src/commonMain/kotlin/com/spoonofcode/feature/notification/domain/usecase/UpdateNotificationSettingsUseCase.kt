@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.domain.usecase
 
 import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingRepository
-import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository

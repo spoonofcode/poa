@@ -1,7 +1,7 @@
-package com.spoonofcode.core.session.data
+package com.spoonofcode.core.session.data.repository
 
 import com.spoonofcode.core.session.data.local.LocalSessionDataSource
-import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.repository.SessionRepository
 
 class SessionRepositoryImpl(
     private val localSessionDataSource: LocalSessionDataSource,
