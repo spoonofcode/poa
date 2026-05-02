@@ -1,4 +1,4 @@
-package com.spoonofcode.core.network
+package com.spoonofcode.core.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RefreshResponse(
     @SerialName("access_token")
-    val jwtAccessToken: String,
+    val accessToken: String,
     @SerialName("refresh_token")
-    val jwtRefreshToken: String,
+    val refreshToken: String,
 )

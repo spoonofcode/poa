@@ -5,8 +5,8 @@ import com.spoonofcode.feature.auth.domain.model.Login
 
 fun LoginGoogleResponse.toLogin(): Login {
     return Login(
-        jwtAccessToken = jwtAccessToken,
-        jwtRefreshToken = jwtRefreshToken,
+        accessToken = accessToken,
+        refreshToken = refreshToken,
         id = userProfile.id,
         email = userProfile.email,
     )

@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.tac.data
+package com.spoonofcode.feature.tac.data.repository
 
 import com.spoonofcode.feature.tac.data.local.LocalTACDataSource
 import com.spoonofcode.feature.tac.domain.model.TACSettings

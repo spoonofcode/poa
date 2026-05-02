@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.auth.data.di
 
-import com.spoonofcode.feature.auth.data.LoginRepositoryImpl
+import com.spoonofcode.feature.auth.data.repository.LoginRepositoryImpl
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginCodeDataSource
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginGoogleDataSource
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginRequestCodeDataSource

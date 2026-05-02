@@ -1,23 +1,20 @@
-package com.spoonofcode.core.firebase.data
+package com.spoonofcode.core.firebase.data.repository
 
-import cocoapods.FirebaseMessaging.FIRMessaging
+import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingRepository
 import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 @OptIn(ExperimentalForeignApi::class)
-actual class FirebaseMessagingService {
+actual class FirebaseMessagingRepositoryImpl : FirebaseMessagingRepository {
 
-    actual suspend fun getMessageToken(): String {
+    actual override suspend fun getMessageToken(): String {
         TODO("Not yet implemented")
     }
 
-    actual suspend fun subscribeToTopic(topic: String): Result<Unit> {
+    actual override suspend fun subscribeToTopic(topic: String): Result<Unit> {
         return Result.success(Unit)
     }
 
-    actual suspend fun unsubscribeFromTopic(topic: String): Result<Unit> {
+    actual override suspend fun unsubscribeFromTopic(topic: String): Result<Unit> {
         return Result.success(Unit)
 
     }

@@ -1,7 +1,5 @@
 package com.spoonofcode.feature.home.domain.model
 
-import kotlinx.serialization.Serializable
-
 
 enum class DailyRewardStatus {
     CLAIMED,
@@ -9,7 +7,6 @@ enum class DailyRewardStatus {
     LOCKED
 }
 
-@Serializable
 data class DailyReward(
     val day: Int,
     val points: Int,

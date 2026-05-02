@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.notification.data.di
 
-import com.spoonofcode.feature.notification.data.NotificationRepositoryImpl
+import com.spoonofcode.feature.notification.data.repository.NotificationRepositoryImpl
 import com.spoonofcode.feature.notification.data.local.LocalNotificationDataSource
 import com.spoonofcode.feature.notification.data.remote.RemoteNotificationDataSource
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository

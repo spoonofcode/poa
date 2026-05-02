@@ -6,7 +6,7 @@
 
     <application>
         <service
-            android:name="com.spoonofcode.core.firebase.data.services.PushNotificationService"
+            android:name="com.spoonofcode.core.firebase.data.services.AppFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

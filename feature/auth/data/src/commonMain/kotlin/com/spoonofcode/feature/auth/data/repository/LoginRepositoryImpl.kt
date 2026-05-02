@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.auth.data
+package com.spoonofcode.feature.auth.data.repository
 
 import com.spoonofcode.feature.auth.data.mappers.toLogin
 import com.spoonofcode.feature.auth.data.remote.RemoteLoginCodeDataSource

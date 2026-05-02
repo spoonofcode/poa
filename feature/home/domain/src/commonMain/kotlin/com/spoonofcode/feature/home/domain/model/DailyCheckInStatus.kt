@@ -1,8 +1,5 @@
 package com.spoonofcode.feature.home.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class DailyCheckInStatus(
     val streak: Int,
     val nextCheckInTimeMillis: Long,

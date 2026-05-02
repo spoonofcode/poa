@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.auth.domain.usecase
 
-import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
 class LoginGoogleUseCase(
@@ -14,8 +14,8 @@ class LoginGoogleUseCase(
             googleUserToken = googleIdToken,
         ).map { login ->
             sessionRepository.initSession(
-                accessToken = login.jwtAccessToken,
-                refreshToken = login.jwtRefreshToken,
+                accessToken = login.accessToken,
+                refreshToken = login.refreshToken,
                 userId = login.id,
             )
         }

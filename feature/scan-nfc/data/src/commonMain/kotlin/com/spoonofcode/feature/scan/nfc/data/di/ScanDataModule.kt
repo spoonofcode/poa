@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.scan.nfc.data.di
 
-import com.spoonofcode.feature.scan.nfc.data.NFCTagRepositoryImpl
+import com.spoonofcode.feature.scan.nfc.data.repository.NFCTagRepositoryImpl
 import com.spoonofcode.feature.scan.nfc.data.remote.RemoteNFCTagDataSource
 import com.spoonofcode.feature.scan.nfc.domain.repository.NFCTagRepository
 import org.koin.core.module.dsl.singleOf

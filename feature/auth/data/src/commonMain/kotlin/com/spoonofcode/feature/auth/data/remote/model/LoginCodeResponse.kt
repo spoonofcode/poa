@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LoginCodeResponse(
     @SerialName("access_token")
-    val jwtAccessToken: String,
+    val accessToken: String,
     @SerialName("refresh_token")
-    val jwtRefreshToken: String,
+    val refreshToken: String,
     @SerialName("user_profile")
     val userProfile: UserProfile
 ) {

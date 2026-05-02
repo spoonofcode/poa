@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.notification.domain.usecase
 
-import com.spoonofcode.core.firebase.data.FirebaseMessagingService
-import com.spoonofcode.core.session.domain.SessionRepository
+import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingRepository
+import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
@@ -10,7 +10,7 @@ import com.spoonofcode.feature.product.domain.repository.ProductRepository
 class UpdateNotificationSettingsUseCase(
     private val sessionRepository: SessionRepository,
     private val notificationRepository: NotificationRepository,
-    private val firebaseMessagingService: FirebaseMessagingService,
+    private val firebaseMessagingRepository: FirebaseMessagingRepository,
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
@@ -43,9 +43,9 @@ class UpdateNotificationSettingsUseCase(
 
     private suspend fun handleTopicSubscription(isEnabled: Boolean, topic: String): Result<Unit> {
         return if (isEnabled) {
-            firebaseMessagingService.subscribeToTopic(topic)
+            firebaseMessagingRepository.subscribeToTopic(topic)
         } else {
-            firebaseMessagingService.unsubscribeFromTopic(topic)
+            firebaseMessagingRepository.unsubscribeFromTopic(topic)
         }
     }
 

@@ -1,5 +1,4 @@
-package com.spoonofcode.core.session.domain
-
+package com.spoonofcode.core.session.domain.repository
 
 interface SessionRepository {
     suspend fun isSessionInitialized(): Boolean
