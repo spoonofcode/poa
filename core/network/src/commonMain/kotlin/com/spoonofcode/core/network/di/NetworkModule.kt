@@ -5,7 +5,7 @@ import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.network.HttpClientFactory
 import com.spoonofcode.core.network.NetworkConfig
 import com.spoonofcode.core.network.NetworkConfigImpl
-import com.spoonofcode.core.network.RemoteRefreshTokenDataSource
+import com.spoonofcode.core.network.remote.RemoteRefreshTokenDataSource
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
