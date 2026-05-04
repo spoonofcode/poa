@@ -108,12 +108,18 @@ internal class ProductOverviewScreen(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                product.seriesName?.let { Texts.LSB(text = it.uppercase()) }
+                product.seriesName?.let {
+                    Texts.LSB(
+                        text = it.uppercase(),
+                        maxLines = 1,
+                    )
+                }
                 product.name?.let {
                     Texts.TMB(
                         text = it,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 2,
+                        minLines = 2,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }

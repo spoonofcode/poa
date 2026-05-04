@@ -132,6 +132,7 @@ object Texts {
     fun TMB(
         text: String,
         maxLines: Int = Int.MAX_VALUE,
+        minLines: Int = 1,
         overflow: TextOverflow = TextOverflow.Clip,
         color: Color = Color.Unspecified,
         modifier: Modifier = Modifier,
@@ -140,6 +141,7 @@ object Texts {
             text = text,
             modifier = modifier,
             maxLines = maxLines,
+            minLines = minLines,
             overflow = overflow,
             color = color,
             style = MaterialTheme.typography.titleMedium,
@@ -342,10 +344,12 @@ object Texts {
     fun LSB(
         text: String,
         color: Color = Color.Unspecified,
+        maxLines: Int = Int.MAX_VALUE,
     ) {
         Text(
             text = text,
             color = color,
+            maxLines = maxLines,
             style = MaterialTheme.typography.labelSmall,
             fontWeight = FontWeight.Bold,
         )
