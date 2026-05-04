@@ -20,20 +20,23 @@ internal class NotificationDetailsViewModel(
     }
 
     private fun initView(notificationId: String) {
-        showLoadingView()
         viewModelScope.launch {
-            getNotificationByIdUseCase(notificationId = notificationId)
-                .onSuccess {
-                    showContentView {
-                        NotificationDetailsViewState(
-                            notification = it
-                        )
-                    }
-                    markNotificationAsReadUseCase(notificationId = notificationId)
-                }
-                .onFailure {
-                    showErrorView()
-                }
+        markNotificationAsReadUseCase(notificationId = notificationId)
         }
+//        showLoadingView()
+//        viewModelScope.launch {
+//            getNotificationByIdUseCase(notificationId = notificationId)
+//                .onSuccess {
+//                    showContentView {
+//                        NotificationDetailsViewState(
+//                            notification = it
+//                        )
+//                    }
+//                    markNotificationAsReadUseCase(notificationId = notificationId)
+//                }
+//                .onFailure {
+//                    showErrorView()
+//                }
+//        }
     }
 }

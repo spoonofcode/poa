@@ -11,12 +11,15 @@ class LocalSessionDataSource(
     suspend fun initSession(
         accessToken: String,
         refreshToken: String,
-        userId: String
+        userId: String,
+        userEmail: String,
     ) {
         withContext(dispatcherProvider.io()) {
+            kSafe.clearAll()
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
             kSafe.put(Keys.Session.USER_ID, userId)
+            kSafe.put(Keys.Session.USER_EMAIL, userEmail)
         }
     }
 
@@ -53,6 +56,13 @@ class LocalSessionDataSource(
             ) { "User ID cannot be null" }
         }
 
+    suspend fun getSessionUserEmail(): String =
+        withContext(dispatcherProvider.io()) {
+            requireNotNull(
+                kSafe.get<String?>(Keys.Session.USER_EMAIL, null)
+            ) { "User Email cannot be null" }
+        }
+
     private object Keys {
         private const val PREFIX = "com.spoonofcode.core.session"
 
@@ -60,6 +70,7 @@ class LocalSessionDataSource(
             const val ACCESS_TOKEN = "$PREFIX.access_token"
             const val REFRESH_TOKEN = "$PREFIX.refresh_token"
             const val USER_ID = "$PREFIX.user_id"
+            const val USER_EMAIL = "$PREFIX.user_email"
         }
     }
 }

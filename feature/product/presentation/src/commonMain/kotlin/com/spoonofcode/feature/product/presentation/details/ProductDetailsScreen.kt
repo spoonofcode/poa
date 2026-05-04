@@ -35,6 +35,7 @@ import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.core.presentation.web.getUrlOpener
+import com.spoonofcode.feature.product.domain.model.ProductStatus
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.about_product
 import com.spoonofcode.feature.product.presentation.add_product
@@ -44,11 +45,12 @@ import com.spoonofcode.feature.product.presentation.delete_product_from_profile_
 import com.spoonofcode.feature.product.presentation.delete_product_from_profile_title
 import com.spoonofcode.feature.product.presentation.learn_more
 import com.spoonofcode.feature.product.presentation.product
+import com.spoonofcode.feature.product.presentation.product_already_assigned
+import com.spoonofcode.feature.product.presentation.send_message
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
     val productId: String,
-    val hasOwnerUser: Boolean = true,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.product
@@ -59,7 +61,7 @@ internal data class ProductDetailsScreen(
     override fun provideTopBarActions(
         viewState: ProductDetailsViewState,
         onAction: (ProductDetailsViewAction) -> Unit,
-    ) = if (hasOwnerUser) {
+    ) = if (viewState.productStatus == ProductStatus.OWNED_BY_SELF) {
         listOf(
             TopBarAction(
                 icon = Icons.Default.Edit,
@@ -82,13 +84,28 @@ internal data class ProductDetailsScreen(
         { onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
+    override fun provideDialogs(
+        viewState: ProductDetailsViewState,
+        onAction: (ProductDetailsViewAction) -> Unit
+    ) {
+        if (viewState.isDeleteProductDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.delete_product_from_profile_title),
+                text = stringResource(Res.string.delete_product_from_profile_text),
+                confirmButtonText = stringResource(Res.string.delete_product),
+                dismissButtonText = stringResource(Res.string.cancel),
+                confirmAction = { onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile) },
+                dismissAction = { onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile) }
+            )
+        }
+    }
+
+    @Composable
     override fun provideContent(
         viewState: ProductDetailsViewState,
         onAction: (ProductDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            Dialogs(viewState = viewState, onAction = onAction)
-
             val product = requireNotNull(viewState.product)
 
             if (!product.videoLink.isNullOrEmpty()) {
@@ -153,15 +170,43 @@ internal data class ProductDetailsScreen(
                         }
                     }
                 }
-
-                if (!hasOwnerUser) {
-                    Buttons.PrimaryButton(
-                        text = stringResource(Res.string.add_product),
-                        onClick = { onAction(ProductDetailsViewAction.AddProductToProfile) },
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                }
+                ProductBottomButton(
+                    productStatus = viewState.productStatus,
+                    addProductToProfile = { onAction(ProductDetailsViewAction.AddProductToProfile) },
+                    onSendMessageClick = {},
+                )
             }
+        }
+    }
+
+    @Composable
+    private fun ProductBottomButton(
+        productStatus: ProductStatus,
+        addProductToProfile: () -> Unit,
+        onSendMessageClick: () -> Unit,
+    ) {
+        when (productStatus) {
+            ProductStatus.UNASSIGNED -> {
+                Buttons.PrimaryButton(
+                    text = stringResource(Res.string.add_product),
+                    onClick = addProductToProfile,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            ProductStatus.OWNED_BY_OTHER -> {
+                Texts.BMB(
+                    text = stringResource(Res.string.product_already_assigned),
+                    color = MaterialTheme.colorScheme.error
+                )
+                Buttons.PrimaryButton(
+                    text = stringResource(Res.string.send_message),
+                    onClick = onSendMessageClick,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            else -> {}
         }
     }
 
@@ -206,23 +251,6 @@ internal data class ProductDetailsScreen(
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.size(18.dp)
-            )
-        }
-    }
-
-    @Composable
-    private fun Dialogs(
-        viewState: ProductDetailsViewState,
-        onAction: (ProductDetailsViewAction) -> Unit
-    ) {
-        if (viewState.isDeleteProductDialogVisible) {
-            Dialogs.AlertDialog(
-                title = stringResource(Res.string.delete_product_from_profile_title),
-                text = stringResource(Res.string.delete_product_from_profile_text),
-                confirmButtonText = stringResource(Res.string.delete_product),
-                dismissButtonText = stringResource(Res.string.cancel),
-                confirmAction = { onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile) },
-                dismissAction = { onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile) }
             )
         }
     }

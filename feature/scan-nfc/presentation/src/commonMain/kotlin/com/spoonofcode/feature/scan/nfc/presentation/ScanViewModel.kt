@@ -44,12 +44,11 @@ internal class ScanViewModel(
                     .onSuccess { nfcTag ->
                         if (nfcTag.tagType in VALID_NFC_TAG_TYPES) {
                             getProductByIdUseCase(productId = nfcTag.publicId)
-                                .onSuccess {
+                                .onSuccess { product ->
                                     viewModelNavigator.push(
                                         routeResolver.resolve(
                                             ProductModuleRoute.ProductDetails(
-                                                productId = it.id,
-                                                hasOwnerUser = it.ownerEmail != null,
+                                                productId = product.id,
                                             )
                                         )
                                     )

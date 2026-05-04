@@ -118,10 +118,10 @@ internal class NotificationOverviewScreen(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
         ) {
-            items(notifications) { partner ->
+            items(notifications) { notification ->
                 NotificationItem(
-                    item = partner,
-                    onClick = { selectNotification(partner.id) }
+                    item = notification,
+                    onClick = { selectNotification(notification.id) }
                 )
             }
         }

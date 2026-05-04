@@ -17,6 +17,7 @@ class LoginGoogleUseCase(
                 accessToken = login.accessToken,
                 refreshToken = login.refreshToken,
                 userId = login.id,
+                userEmail = login.email,
             )
         }
     }

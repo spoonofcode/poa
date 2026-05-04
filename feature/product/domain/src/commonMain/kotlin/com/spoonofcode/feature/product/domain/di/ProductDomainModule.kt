@@ -4,6 +4,7 @@ import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
+import com.spoonofcode.feature.product.domain.usecase.GetProductStatusUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
 import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
 import org.koin.core.module.dsl.factoryOf
@@ -16,4 +17,5 @@ val productDomainModule = module {
     factoryOf(::GetUserProductsUseCase)
     factoryOf(::AddProductToUserUseCase)
     factoryOf(::DeleteProductFromUserUseCase)
+    factoryOf(::GetProductStatusUseCase)
 }

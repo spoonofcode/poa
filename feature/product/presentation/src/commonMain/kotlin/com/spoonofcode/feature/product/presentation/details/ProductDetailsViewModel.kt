@@ -5,6 +5,7 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
+import com.spoonofcode.feature.product.domain.usecase.GetProductStatusUseCase
 import com.spoonofcode.feature.product.presentation.edit.ProductEditScreen
 import kotlinx.coroutines.launch
 
@@ -12,6 +13,7 @@ internal class ProductDetailsViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
+    private val getProductStatusUseCase: GetProductStatusUseCase,
     // TODO #134 Fix firebase notifications
 //    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
@@ -31,10 +33,13 @@ internal class ProductDetailsViewModel(
         showLoadingView()
         viewModelScope.launch {
             getProductByIdUseCase(productId = productId)
-                .onSuccess {
+                .onSuccess { product ->
+                    val productStatus = getProductStatusUseCase(ownerEmail = product.ownerEmail)
+
                     showContentView {
                         copy(
-                            product = it
+                            product = product,
+                            productStatus = productStatus,
                         )
                     }
                 }
