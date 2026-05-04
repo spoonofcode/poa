@@ -5,13 +5,12 @@ import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
-import com.spoonofcode.feature.product.domain.repository.ProductRepository
 
 class UpdateNotificationSettingsUseCase(
     private val sessionRepository: SessionRepository,
     private val notificationRepository: NotificationRepository,
     private val firebaseMessagingRepository: FirebaseMessagingRepository,
-    private val productRepository: ProductRepository,
+    private val topicSyncHandlers: List<NotificationTopicSyncHandler>,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
         handleTopicSubscription(
@@ -19,22 +18,8 @@ class UpdateNotificationSettingsUseCase(
             topic = getUserTopic()
         ).getOrThrow()
 
-        val products = productRepository.getUserProducts().getOrThrow()
-
-        val partnerIds = products.mapNotNull { it.partnerId }.distinct()
-        partnerIds.forEach { id ->
-            handleTopicSubscription(
-                isEnabled = notificationSettings.isNotificationsFromPartnersEnabled,
-                topic = getPartnerTopic(id)
-            ).getOrThrow()
-        }
-
-        val seriesIds = products.mapNotNull { it.seriesId }.distinct()
-        seriesIds.forEach { id ->
-            handleTopicSubscription(
-                isEnabled = notificationSettings.isNotificationsMyProductSeriesEnabled,
-                topic = getSerieTopic(id)
-            ).getOrThrow()
+        topicSyncHandlers.forEach { handler ->
+            handler.syncTopics(notificationSettings).getOrThrow()
         }
 
         saveLocalSettings(notificationSettings)
@@ -59,11 +44,4 @@ class UpdateNotificationSettingsUseCase(
 
     private suspend fun getUserTopic(): String =
         NotificationType.user.createTopic(sessionRepository.getSessionUserId())
-
-    private fun getPartnerTopic(partnerId: String): String =
-        NotificationType.partner.createTopic(partnerId)
-
-    private fun getSerieTopic(seriesId: String): String =
-        NotificationType.serie.createTopic(seriesId)
-
 }

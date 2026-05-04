@@ -11,6 +11,8 @@ kotlin {
 
                 implementation(projects.core.data)
                 implementation(projects.core.session.domain)
+                implementation(projects.core.firebase.domain)
+                implementation(projects.feature.notification.domain)
             }
         }
 

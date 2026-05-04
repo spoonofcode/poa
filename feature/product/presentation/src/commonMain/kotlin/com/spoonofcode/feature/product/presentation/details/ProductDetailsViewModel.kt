@@ -14,8 +14,6 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
     private val getProductStatusUseCase: GetProductStatusUseCase,
-    // TODO #134 Fix firebase notifications
-//    private val subscribeUserTopicsUseCase: SubscribeUserTopicsUseCase,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction>(ProductDetailsViewState()) {
 
     override fun onAction(action: ProductDetailsViewAction) {
@@ -52,17 +50,15 @@ internal class ProductDetailsViewModel(
     private fun addProductToProfile() {
         showLoadingView()
         viewModelScope.launch {
-            val currentState = currentState()
+            val product = requireNotNull(currentState().product)
             addProductToUserUseCase(
-                productId = currentState.product!!.id
-            )
-                .onSuccess {
-                    //                subscribeUserTopicsUseCase()
-                    viewModelNavigator.pop()
-                }
-                .onFailure {
-                    showErrorSnackbar(it)
-                }
+                productId = product.id,
+                productSerieId = product.seriesId,
+            ).onSuccess {
+                viewModelNavigator.pop()
+            }.onFailure {
+                showErrorSnackbar(it)
+            }
         }
     }
 
@@ -92,9 +88,10 @@ internal class ProductDetailsViewModel(
     private fun confirmDeleteProductFromProfile() {
         showLoadingView()
         viewModelScope.launch {
-            val currentState = currentState()
+            val product = requireNotNull(currentState().product)
             deleteProductFromUserUseCase(
-                productId = currentState.product!!.id
+                productId = product.id,
+                productSerieId = product.seriesId,
             )
                 .onSuccess {
                     viewModelNavigator.pop()
