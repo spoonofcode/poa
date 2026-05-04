@@ -15,7 +15,6 @@ class ProductModuleRouteResolver : ModuleRouteResolver<ProductModuleRoute> {
             when (it) {
                 is ProductModuleRoute.ProductDetails -> ProductDetailsScreen(
                     productId = it.productId,
-                    hasOwnerUser = it.hasOwnerUser,
                 )
 
                 is ProductModuleRoute.ProductEdit -> ProductEditScreen(productId = it.productId)

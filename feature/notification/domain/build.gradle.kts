@@ -12,7 +12,6 @@ kotlin {
                 implementation(projects.core.data)
                 implementation(projects.core.firebase.domain)
                 implementation(projects.core.session.domain)
-                implementation(projects.feature.product.domain)
             }
         }
 

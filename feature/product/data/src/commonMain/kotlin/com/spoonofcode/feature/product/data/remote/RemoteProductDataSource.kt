@@ -19,6 +19,7 @@ class RemoteProductDataSource : RemoteBaseDataSource(
     )
 
     suspend fun addProductToUser(productId: String): Result<Unit> = doRequest(
+        urlPostfixPath = "$productId/claim",
         method = HttpMethod.Post,
         requestBody = AddProductToUserRequest(productId = productId),
     )

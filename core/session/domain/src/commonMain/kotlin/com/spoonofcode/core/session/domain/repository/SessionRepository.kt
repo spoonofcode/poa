@@ -5,7 +5,8 @@ interface SessionRepository {
     suspend fun initSession(
         accessToken: String,
         refreshToken: String,
-        userId: String
+        userId: String,
+        userEmail: String,
     )
     suspend fun updateSessionTokens(
         accessToken: String,
@@ -15,4 +16,5 @@ interface SessionRepository {
     suspend fun getSessionAccessToken(): String?
     suspend fun getSessionRefreshToken(): String?
     suspend fun getSessionUserId(): String
+    suspend fun getSessionUserEmail(): String
 }

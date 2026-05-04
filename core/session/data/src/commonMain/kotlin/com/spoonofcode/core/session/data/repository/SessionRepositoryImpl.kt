@@ -12,12 +12,14 @@ class SessionRepositoryImpl(
     override suspend fun initSession(
         accessToken: String,
         refreshToken: String,
-        userId: String
+        userId: String,
+        userEmail: String,
     ) {
         localSessionDataSource.initSession(
             accessToken = accessToken,
             refreshToken = refreshToken,
             userId = userId,
+            userEmail = userEmail,
         )
     }
 
@@ -42,4 +44,6 @@ class SessionRepositoryImpl(
         localSessionDataSource.getSessionRefreshToken()
 
     override suspend fun getSessionUserId(): String = localSessionDataSource.getSessionUserId()
+
+    override suspend fun getSessionUserEmail(): String = localSessionDataSource.getSessionUserEmail()
 }
