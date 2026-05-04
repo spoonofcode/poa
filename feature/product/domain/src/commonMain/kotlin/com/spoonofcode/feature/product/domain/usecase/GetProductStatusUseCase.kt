@@ -11,9 +11,9 @@ class GetProductStatusUseCase(
     ): ProductStatus {
         val userEmail = sessionRepository.getSessionUserEmail()
 
-        return when (ownerEmail) {
-            null -> ProductStatus.UNASSIGNED
-            userEmail -> ProductStatus.OWNED_BY_SELF
+        return when {
+            ownerEmail.isNullOrEmpty() -> ProductStatus.UNASSIGNED
+            ownerEmail == userEmail -> ProductStatus.OWNED_BY_SELF
             else -> ProductStatus.OWNED_BY_OTHER
         }
     }
