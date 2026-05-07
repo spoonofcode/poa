@@ -18,8 +18,14 @@ object RFC1123InstantSerializer : KSerializer<Instant> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("Rfc1123Instant", PrimitiveKind.STRING)
 
-    override fun deserialize(decoder: Decoder): Instant =
-        Instant.parse(decoder.decodeString(), DateTimeComponents.Formats.RFC_1123)
+    override fun deserialize(decoder: Decoder): Instant {
+        val string = decoder.decodeString()
+        return try {
+            Instant.parse(string, DateTimeComponents.Formats.RFC_1123)
+        } catch (e: Exception) {
+            Instant.parse(string)
+        }
+    }
 
     override fun serialize(encoder: Encoder, value: Instant) {
         val text = DateTimeComponents.Formats.RFC_1123.format {
