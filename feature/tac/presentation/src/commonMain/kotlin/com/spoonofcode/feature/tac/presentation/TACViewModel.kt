@@ -63,8 +63,8 @@ internal class TACViewModel(
             showLoadingView()
             updateTACSettingsUseCase(
                 tacSettings = TACSettings(
-                    isPrivacyPolicyAccepted = currentState().isPrivacyPolicyAccepted,
-                    isTermsAndConditionsAccepted = currentState().isTermsAndConditionsAccepted,
+                    isPrivacyPolicyAccepted = currentContentViewState().isPrivacyPolicyAccepted,
+                    isTermsAndConditionsAccepted = currentContentViewState().isTermsAndConditionsAccepted,
                 )
             ).onSuccess {
                 viewModelNavigator.pop()

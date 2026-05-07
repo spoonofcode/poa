@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 internal class ProfileDetailsViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction>(ProfileDetailsViewState()) {
+) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction>() {
 
     override fun onAction(action: ProfileDetailsViewAction) {
         when (action) {
@@ -36,12 +36,12 @@ internal class ProfileDetailsViewModel(
         viewModelScope.launch {
             getProfileUseCase()
                 .onSuccess {
-                    showContentView {
+                    showContentView (
                         ProfileDetailsViewState(
                             profile = it,
                             partnerPanelVisible = it.roles.contains(PARTNER_ROLE)
                         )
-                    }
+                    )
                 }
                 .onFailure {
                     showErrorView()

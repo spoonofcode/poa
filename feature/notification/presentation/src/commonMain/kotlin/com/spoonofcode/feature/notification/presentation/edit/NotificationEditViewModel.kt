@@ -114,7 +114,7 @@ internal class NotificationEditViewModel(
     private fun confirmSendNotification() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState = currentState()
+            val currentState = currentContentViewState()
             sendNotificationUseCase(
                 title = currentState.title,
                 text = currentState.text,

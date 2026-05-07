@@ -86,6 +86,7 @@ androidx-credentials = { module = "androidx.credentials:credentials", version.re
 androidx-credentials-play-service-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidxCredentials" }
 androidx-security = { module = "androidx.security:security-crypto", version.ref = "androidxSecurity" }
 androidx-splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplash" }
+lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewModelCompose" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewModelCompose" }
 
 # --- Compose Multiplatform ---

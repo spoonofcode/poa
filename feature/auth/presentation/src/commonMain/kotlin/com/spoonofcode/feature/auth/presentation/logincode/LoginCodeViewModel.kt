@@ -35,7 +35,7 @@ internal class LoginCodeViewModel(
 
     private fun signInWithCode() {
         showLoadingView()
-        val currentState = currentState()
+        val currentState = currentContentViewState()
         viewModelScope.launch {
             loginCodeUseCase(
                 email = currentState.email,

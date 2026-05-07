@@ -44,7 +44,7 @@ internal class ProfileEditViewModel(
     private fun saveChanges() {
         showLoadingView()
         viewModelScope.launch {
-            val profile = requireNotNull(currentState().profile)
+            val profile = requireNotNull(currentContentViewState().profile)
             // TODO Fix this usecase
 //                updateProfileUseCase(
 //                    profileRequest = ProfileRequest(

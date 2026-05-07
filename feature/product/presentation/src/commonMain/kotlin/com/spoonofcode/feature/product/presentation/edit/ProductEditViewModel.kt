@@ -37,14 +37,14 @@ internal class ProductEditViewModel(
     }
 
     private fun changeCustomLink(link: String) {
-        val currentProduct = currentState().product
+        val currentProduct = currentContentViewState().product
         updateState { copy(product = currentProduct?.copy(customLink = link)) }
     }
 
     private fun saveChanges() {
         showLoadingView()
         viewModelScope.launch {
-            val product = requireNotNull(currentState().product)
+            val product = requireNotNull(currentContentViewState().product)
             updateProductUseCase(
                 id = product.id,
                 customLink = product.customLink,

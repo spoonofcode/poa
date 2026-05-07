@@ -101,7 +101,7 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             showLoadingView()
             updateNotificationSettingsUseCase(
-                notificationSettings = currentState().notificationSettings
+                notificationSettings = currentContentViewState().notificationSettings
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {

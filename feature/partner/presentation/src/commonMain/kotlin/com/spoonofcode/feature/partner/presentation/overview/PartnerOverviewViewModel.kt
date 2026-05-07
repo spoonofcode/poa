@@ -68,7 +68,7 @@ internal class PartnerOverviewViewModel(
     }
 
     private fun applyFilters() {
-        val currentState = currentState()
+        val currentState = currentContentViewState()
 
         var filtered = currentState.initPartners
 

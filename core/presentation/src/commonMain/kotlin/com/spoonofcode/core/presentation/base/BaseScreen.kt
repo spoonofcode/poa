@@ -111,11 +111,9 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
 
         ContentView(
             snackbarHostState = snackbarHostState,
-            viewState = uiState.data,
-            screenState = uiState.screenState,
+            viewState = uiState,
             navigationBackAction = navigationBackAction,
             onAction = viewModel::onAction
-
         )
     }
 
@@ -123,15 +121,16 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     @Composable
     private fun ContentView(
         snackbarHostState: SnackbarHostState,
-        viewState: VS,
-        screenState: ScreenState,
+        viewState: ViewState<VS>,
         navigationBackAction: () -> Unit,
         onAction: (VA) -> Unit,
     ) {
-        provideDialogs(
-            viewState = viewState,
-            onAction = onAction,
-        )
+        if (viewState is ViewState.Content) {
+            provideDialogs(
+                viewState = viewState.data,
+                onAction = onAction,
+            )
+        }
 
         Scaffold(
             snackbarHost = {
@@ -147,17 +146,21 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
                         backNavigationEnable = backNavigationEnable,
                         topAppBarTitle = topAppBarTitle,
                         navigationBackAction = navigationBackAction,
-                        iconBarActions = provideTopBarActions(viewState, onAction)
+                        iconBarActions = if (viewState is ViewState.Content) {
+                            provideTopBarActions(viewState.data, onAction)
+                        } else {
+                            emptyList()
+                        }
                     )
                 }
             },
-            modifier = Modifier.viewEnable(screenState != ScreenState.LOADING)
+            modifier = Modifier.viewEnable(viewState !is ViewState.Loading)
                 .fillMaxSize()
         ) { innerPadding ->
-            when (screenState) {
-                ScreenState.LOADING -> LoadingView()
-                ScreenState.ERROR -> ErrorView(reload = provideReloadAction(onAction))
-                ScreenState.CONTENT -> Column(
+            when (viewState) {
+                is ViewState.Loading -> LoadingView()
+                is ViewState.Error -> ErrorView(reload = provideReloadAction(onAction))
+                is ViewState.Content -> Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .addIf(verticalScrollEnable) { verticalScroll(rememberScrollState()) }
@@ -165,7 +168,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
                         .padding(provideContentPadding()),
                     verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding),
                     content = provideContent(
-                        viewState = viewState,
+                        viewState = viewState.data,
                         onAction = onAction,
                     )
                 )
@@ -176,14 +179,12 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA>, VS : BaseViewState, VA : B
     @Composable
     fun PreviewContent(
         viewState: VS,
-        screenState: ScreenState = ScreenState.CONTENT,
     ) {
         AppTheme {
             val snackbarHostState = remember { SnackbarHostState() }
             ContentView(
                 snackbarHostState = snackbarHostState,
-                viewState = viewState,
-                screenState = screenState,
+                viewState = ViewState.Content(viewState),
                 navigationBackAction = {},
                 onAction = {},
             )

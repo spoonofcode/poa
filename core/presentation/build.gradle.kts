@@ -35,6 +35,7 @@ kotlin {
 
                 implementation(libs.jetbrains.compose.foundation)
                 implementation(libs.landscapist.coil)
+                implementation(libs.lifecycle.runtime.compose)
                 implementation(libs.lifecycle.viewmodel.compose)
                 implementation(libs.jetbrains.compose.runtime)
                 implementation(libs.jetbrains.compose.material.icons.core)

@@ -50,7 +50,7 @@ internal class ProductDetailsViewModel(
     private fun addProductToProfile() {
         showLoadingView()
         viewModelScope.launch {
-            val product = requireNotNull(currentState().product)
+            val product = requireNotNull(currentContentViewState().product)
             addProductToUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,
@@ -63,7 +63,7 @@ internal class ProductDetailsViewModel(
     }
 
     private fun editProduct() {
-        val productId = currentState().product!!.id
+        val productId = currentContentViewState().product!!.id
         viewModelScope.launch {
             viewModelNavigator.push(ProductEditScreen(productId = productId))
         }
@@ -88,7 +88,7 @@ internal class ProductDetailsViewModel(
     private fun confirmDeleteProductFromProfile() {
         showLoadingView()
         viewModelScope.launch {
-            val product = requireNotNull(currentState().product)
+            val product = requireNotNull(currentContentViewState().product)
             deleteProductFromUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,

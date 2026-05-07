@@ -84,5 +84,5 @@ internal class PartnerEditViewModel(
         }
     }
 
-    private fun getCurrentPartner(): Partner = requireNotNull(currentState().partner)
+    private fun getCurrentPartner(): Partner = requireNotNull(currentContentViewState().partner)
 }

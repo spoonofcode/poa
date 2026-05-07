@@ -40,7 +40,7 @@ internal class ProductOverviewViewModel(
 
     private fun changeSearchText(searchText: String) {
         viewModelScope.launch {
-            val products = currentState().initProducts
+            val products = currentContentViewState().initProducts
             val filteredProducts = getFilteredProductsByTextUseCase(
                 searchText = searchText,
                 products = products,

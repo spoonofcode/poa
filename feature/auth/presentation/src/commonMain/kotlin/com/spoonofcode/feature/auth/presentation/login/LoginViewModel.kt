@@ -41,9 +41,9 @@ internal class LoginViewModel(
         viewModelScope.launch {
             showLoadingView()
             loginRequestCodeUseCase(
-                email = currentState().email,
+                email = currentContentViewState().email,
             ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
+                viewModelNavigator.push(LoginCodeScreen(email = currentContentViewState().email))
             }.onFailure {
                 showErrorSnackbar(it)
             }

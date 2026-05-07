@@ -40,7 +40,7 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun checkedProductSeries(name: String) {
-        val selected = currentState().checkedProductSeriesNames.toMutableSet()
+        val selected = currentContentViewState().checkedProductSeriesNames.toMutableSet()
         val wasAdded = selected.contains(name)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
@@ -65,8 +65,8 @@ internal class ProductSeriesOverviewViewModel(
                 routeResolver.resolve(
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.serie.name,
-                        selectedTopics = currentState().checkedProductSeriesNames,
-                        selectedNames = currentState().checkedProductSeriesNames,
+                        selectedTopics = currentContentViewState().checkedProductSeriesNames,
+                        selectedNames = currentContentViewState().checkedProductSeriesNames,
                     )
                 )
             )

@@ -2,10 +2,10 @@ package com.spoonofcode.core.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.presentation.network.NetworkManager
-import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
+import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,8 +19,7 @@ import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
 abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
-    initialViewState: VS,
-    initialScreenState: ScreenState = ScreenState.LOADING // Start Screen with LoadingView
+    initialState: ViewState<VS> = ViewState.Loading
 ) : ViewModel() {
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
@@ -29,7 +28,14 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
-    private val _viewState = MutableStateFlow(ViewState(initialViewState, initialScreenState))
+    // Bufor na ostatnie znane dane
+    private var lastContentData: VS? = if (initialState is ViewState.Content) {
+        initialState.data
+    } else {
+        null
+    }
+
+    private val _viewState = MutableStateFlow(initialState)
     val viewState = _viewState.asStateFlow()
 
     private val _isOnline = MutableStateFlow(false)
@@ -49,12 +55,15 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
         }
     }
 
-    fun currentState(): VS = viewState.value.data
+    fun currentContentViewState(): VS {
+        return requireNotNull(lastContentData)
+    }
 
     fun updateState(
         transformation: VS.() -> VS,
     ) {
-        _viewState.update { it.copy(data = it.data.transformation()) }
+        _viewState.update { (it as ViewState.Content).copy(data = it.data.transformation()) }
+        lastContentData = (_viewState.value as ViewState.Content).data
     }
 
     fun showSnackbar(snackbarEvent: SnackbarEvent) {
@@ -64,30 +73,29 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
     }
 
     protected fun showLoadingView() {
-        _viewState.update { it.copy(screenState = ScreenState.LOADING) }
+        _viewState.value = ViewState.Loading
     }
 
     protected fun showErrorView() {
-        _viewState.update { it.copy(screenState = ScreenState.ERROR) }
+        _viewState.value = ViewState.Error
     }
 
     protected fun showContentView(
-        transformation: VS.() -> VS,
+        data: VS
     ) {
-        _viewState.update {
-            it.copy(
-                screenState = ScreenState.CONTENT,
-                data = it.data.transformation(),
-            )
-        }
+        _viewState.value = ViewState.Content(data = data)
     }
 
     protected fun showErrorSnackbar(e: Throwable) {
         showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
 //        showSnackbar(SnackbarEvent.Error(message = "Something went wrong. Please try again later."))
-        _viewState.update {
-            it.copy(screenState = ScreenState.CONTENT)
-        }
+        // Po błędzie w snackbarze zazwyczaj chcemy wrócić do Content,
+        // ale jeśli nie byliśmy w nim wcześniej, musimy zdecydować co pokazać.
+//        _viewState.update { currentState ->
+//            if (currentState is ViewState.Content) currentState else ViewState.Content(
+//                lastContentData
+//            )
+//        }
     }
 
     @OptIn(FlowPreview::class)

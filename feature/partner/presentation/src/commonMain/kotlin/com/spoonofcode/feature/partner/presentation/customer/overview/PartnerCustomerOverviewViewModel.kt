@@ -40,7 +40,7 @@ internal class PartnerCustomerOverviewViewModel(
     }
 
     private fun checkedCustomer(id: String) {
-        val selected = currentState().checkedUserIds.toMutableSet()
+        val selected = currentContentViewState().checkedUserIds.toMutableSet()
         val wasAdded = selected.contains(id)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_USERS) {
@@ -65,9 +65,9 @@ internal class PartnerCustomerOverviewViewModel(
                 routeResolver.resolve(
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.user.name,
-                        selectedTopics = currentState().checkedUserIds,
-                        selectedNames = currentState().customers
-                            .filter { it.id in currentState().checkedUserIds }
+                        selectedTopics = currentContentViewState().checkedUserIds,
+                        selectedNames = currentContentViewState().customers
+                            .filter { it.id in currentContentViewState().checkedUserIds }
                             .map { it.name }.toSet()
                     )
                 )
