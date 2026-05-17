@@ -5,6 +5,7 @@ import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.usecase.NotificationTopicSyncHandler
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.core.data.logging.KermitLogger
 
 class ProductNotificationTopicSyncHandler(
     private val productRepository: ProductRepository,
@@ -38,8 +39,10 @@ class ProductNotificationTopicSyncHandler(
 
     private suspend fun handleTopicSubscription(isEnabled: Boolean, topic: String): Result<Unit> {
         return if (isEnabled) {
+            poaLogger.debug("Subscribing to topic: $topic")
             firebaseMessagingRepository.subscribeToTopic(topic)
         } else {
+            poaLogger.debug("Unsubscribing from topic: $topic")
             firebaseMessagingRepository.unsubscribeFromTopic(topic)
         }
     }
@@ -49,4 +52,8 @@ class ProductNotificationTopicSyncHandler(
 
     private fun getSerieTopic(seriesId: String): String =
         NotificationType.serie.createTopic(seriesId)
+
+    companion object {
+        private val poaLogger = KermitLogger
+    }
 }

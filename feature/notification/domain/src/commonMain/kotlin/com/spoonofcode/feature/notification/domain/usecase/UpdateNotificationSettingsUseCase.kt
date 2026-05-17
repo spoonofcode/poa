@@ -5,6 +5,7 @@ import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
+import com.spoonofcode.core.data.logging.KermitLogger
 
 class UpdateNotificationSettingsUseCase(
     private val sessionRepository: SessionRepository,
@@ -28,8 +29,10 @@ class UpdateNotificationSettingsUseCase(
 
     private suspend fun handleTopicSubscription(isEnabled: Boolean, topic: String): Result<Unit> {
         return if (isEnabled) {
+            poaLogger.debug("Subscribing to topic: $topic")
             firebaseMessagingRepository.subscribeToTopic(topic)
         } else {
+            poaLogger.debug("Unsubscribing from topic: $topic")
             firebaseMessagingRepository.unsubscribeFromTopic(topic)
         }
     }
@@ -44,4 +47,8 @@ class UpdateNotificationSettingsUseCase(
 
     private suspend fun getUserTopic(): String =
         NotificationType.user.createTopic(sessionRepository.getSessionUserId())
+
+    companion object {
+        private val poaLogger = KermitLogger
+    }
 }
