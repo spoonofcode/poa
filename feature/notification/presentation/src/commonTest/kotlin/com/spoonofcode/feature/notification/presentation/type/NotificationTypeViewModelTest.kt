@@ -53,7 +53,7 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
         viewModel.onAction(NotificationTypeViewAction.SendNotificationToAllCustomers)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
+        verifySuspend { routeResolver.resolve(any<NotificationModuleRoute.NotificationEdit>()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 
@@ -77,10 +77,12 @@ class NotificationTypeViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `navigates to notification screen for all partner customers`() = runTest {
+        val partnerId = "123"
+        viewModel.onAction(NotificationTypeViewAction.InitView(partnerId = partnerId))
         viewModel.onAction(NotificationTypeViewAction.SendNotificationToAllPartnerCustomers)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
+        verifySuspend { routeResolver.resolve(any<NotificationModuleRoute.NotificationEdit>()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

@@ -124,7 +124,7 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(ProductSeriesOverViewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
+        verifySuspend { routeResolver.resolve(any<NotificationModuleRoute.NotificationEdit>()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

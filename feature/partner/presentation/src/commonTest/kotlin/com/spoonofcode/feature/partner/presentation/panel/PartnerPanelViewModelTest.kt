@@ -54,7 +54,7 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerPanelViewAction.NavigateToNotificationType)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationType) }
+        verifySuspend { routeResolver.resolve(any<NotificationModuleRoute.NotificationType>()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

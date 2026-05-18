@@ -16,6 +16,8 @@ sealed class NotificationModuleRoute : ModuleRoute() {
         val backNavigationEnabled: Boolean = true,
     ) : NotificationModuleRoute()
 
-    object NotificationType : NotificationModuleRoute()
+    data class NotificationType(
+        val partnerId: String,
+    ) : NotificationModuleRoute()
     object NotificationChannel : NotificationModuleRoute()
 }

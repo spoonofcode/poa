@@ -32,7 +32,9 @@ class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModuleRo
                     backNavigationEnable = it.backNavigationEnabled
                 )
 
-                NotificationModuleRoute.NotificationType -> NotificationTypeScreen()
+                is NotificationModuleRoute.NotificationType -> NotificationTypeScreen(
+                    partnerId = it.partnerId
+                )
                 NotificationModuleRoute.NotificationChannel -> NotificationChannelScreen()
             }
         }

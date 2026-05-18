@@ -30,8 +30,16 @@ internal class PartnerPanelViewModel() :
     }
 
     fun navigateToNotificationType() {
+        // TODO #99 Adopt poa backend - read partner id from profile backend
+        val partnerId = "4KJzqfBSQ1WbwysYa0j9"
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationType))
+            viewModelNavigator.push(
+                routeResolver.resolve(
+                    NotificationModuleRoute.NotificationType(
+                        partnerId = partnerId
+                    )
+                )
+            )
         }
     }
 

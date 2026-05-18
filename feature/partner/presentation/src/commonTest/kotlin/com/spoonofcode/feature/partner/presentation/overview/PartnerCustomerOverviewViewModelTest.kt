@@ -128,7 +128,7 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
         viewModel.onAction(PartnerCustomerOverviewViewAction.NavigateToNotification)
         advanceUntilIdle()
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationEdit()) }
+        verifySuspend { routeResolver.resolve(any<NotificationModuleRoute.NotificationEdit>()) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
 }

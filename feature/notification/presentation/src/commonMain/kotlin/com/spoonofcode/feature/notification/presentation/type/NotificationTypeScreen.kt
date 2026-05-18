@@ -24,13 +24,21 @@ import com.spoonofcode.feature.notification.presentation.to_all_my_customers
 import com.spoonofcode.feature.notification.presentation.to_selected_customers
 import com.spoonofcode.feature.notification.presentation.to_selected_series
 
-internal class NotificationTypeScreen :
+internal class NotificationTypeScreen(
+    private val partnerId: String,
+) :
     BaseScreen<NotificationTypeViewModel, NotificationTypeViewState, NotificationTypeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification_type
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationTypeViewModel>()
+
+    override fun provideInitAction(onAction: (NotificationTypeViewAction) -> Unit): () -> Unit {
+        return {
+            onAction(NotificationTypeViewAction.InitView(partnerId = partnerId))
+        }
+    }
 
     @Composable
     override fun provideContent(
@@ -84,7 +92,7 @@ internal class NotificationTypeScreen :
 @Preview
 @Composable
 private fun NotificationTypeScreenContentPreview() {
-    NotificationTypeScreen()
+    NotificationTypeScreen(partnerId = "1")
         .PreviewContent(
             NotificationTypeViewState()
         )

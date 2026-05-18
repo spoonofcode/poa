@@ -17,11 +17,16 @@ internal class NotificationTypeViewModel() :
 
     override fun onAction(action: NotificationTypeViewAction) {
         when (action) {
+            is NotificationTypeViewAction.InitView -> initView(action.partnerId)
             NotificationTypeViewAction.SendNotificationToAllCustomers -> sendNotificationToAllCustomers()
             NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers -> sendNotificationToSelectedPartnerCustomers()
             NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries -> sendNotificationToSelectedPartnerProductSeries()
             NotificationTypeViewAction.SendNotificationToAllPartnerCustomers -> sendNotificationToAllPartnerCustomers()
         }
+    }
+
+    private fun initView(partnerId: String) {
+        updateState { copy(partnerId = partnerId) }
     }
 
     private fun sendNotificationToAllCustomers() {
@@ -40,7 +45,7 @@ internal class NotificationTypeViewModel() :
     private fun sendNotificationToSelectedPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(PartnerModuleRoute.CustomerOverview)
+                routeResolver.resolve(PartnerModuleRoute.CustomerOverview),
             )
         }
     }
@@ -52,11 +57,18 @@ internal class NotificationTypeViewModel() :
     }
 
     private fun sendNotificationToAllPartnerCustomers() {
+        val partnerId = currentState().partnerId
+        val topics = setOf(
+            NotificationType.partner.createTopic("all"), // topic for all partners
+            NotificationType.partner.createTopic(partnerId) // partner unique topic
+        )
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.partner.name,
+                        selectedTopics = topics,
+                        selectedNames = setOf("All Partner Customers"),
                     )
                 )
             )

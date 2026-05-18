@@ -3,6 +3,7 @@ package com.spoonofcode.feature.notification.presentation.type
 import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface NotificationTypeViewAction : BaseViewAction {
+    data class InitView(val partnerId: String) : NotificationTypeViewAction
     data object SendNotificationToAllCustomers : NotificationTypeViewAction
     data object SendNotificationToSelectedPartnerCustomers : NotificationTypeViewAction
     data object SendNotificationToSelectedPartnerProductSeries : NotificationTypeViewAction
