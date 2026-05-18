@@ -65,7 +65,9 @@ internal class PartnerCustomerOverviewViewModel(
                 routeResolver.resolve(
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.user.name,
-                        selectedTopics = currentState().checkedUserIds,
+                        selectedTopics = currentState().checkedUserIds.map {
+                            NotificationType.user.createTopic(it)
+                        }.toSet(),
                         selectedNames = currentState().customers
                             .filter { it.id in currentState().checkedUserIds }
                             .map { it.name }.toSet()

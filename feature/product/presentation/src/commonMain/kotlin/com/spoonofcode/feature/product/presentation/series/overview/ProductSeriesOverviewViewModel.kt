@@ -65,7 +65,9 @@ internal class ProductSeriesOverviewViewModel(
                 routeResolver.resolve(
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.serie.name,
-                        selectedTopics = currentState().checkedProductSeriesNames,
+                        selectedTopics = currentState().checkedProductSeriesNames.map {
+                            NotificationType.serie.createTopic(it)
+                        }.toSet(),
                         selectedNames = currentState().checkedProductSeriesNames,
                     )
                 )
