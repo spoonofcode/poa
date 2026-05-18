@@ -31,7 +31,6 @@ internal class NotificationTypeViewModel() :
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.global.name,
                         selectedTopics = setOf(NotificationType.global.name),
-                        selectedNames = setOf("All Customers")
                     )
                 )
             )
