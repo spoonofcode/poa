@@ -11,7 +11,6 @@ enum class NotificationType {
     }
 
     companion object {
-        // Metoda szukająca typu po nazwie
         fun fromString(value: String): NotificationType? {
             return entries.find { it.name.equals(value, ignoreCase = true) }
         }

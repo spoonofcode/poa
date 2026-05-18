@@ -30,7 +30,7 @@ internal class NotificationTypeViewModel() :
                 routeResolver.resolve(
                     NotificationModuleRoute.NotificationEdit(
                         notificationTypeName = NotificationType.global.name,
-                        selectedTopics = setOf(NotificationType.global.createTopic("")),
+                        selectedTopics = setOf(NotificationType.global.name),
                         selectedNames = setOf("All Customers")
                     )
                 )
