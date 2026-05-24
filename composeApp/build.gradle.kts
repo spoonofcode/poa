@@ -150,8 +150,8 @@ android {
         applicationId = "com.spoonofcode.poa"
         minSdk = libs.versions.androidMinSdk.get().toInt()
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
-        versionCode = (System.getenv("ANDROID_RELEASE_VERSION" or "1").toInt()
-        versionName = (System.getenv("ANDROID_RELEASE_VERSION" or "1")
+        versionCode = (System.getenv("ANDROID_RELEASE_VERSION") ?: "1").toInt()
+        versionName = System.getenv("ANDROID_RELEASE_VERSION") ?: "1.0"
     }
     packaging {
         resources {
@@ -165,11 +165,13 @@ android {
             keyAlias = "newdebugkey"
             keyPassword = "poa123"
         }
-        create("ci") {
-            storeFile = file(${System.getenv("KEYSTORE_PATH")})
-            storePassword = System.getenv("KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("KEY_ALIAS")
-            keyPassword = System.getenv("KEY_PASSWORD")
+        if (System.getenv("KEYSTORE_PATH") != null) {
+            create("ci") {
+                storeFile = file(System.getenv("KEYSTORE_PATH"))
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
         }
     }
     buildTypes {
