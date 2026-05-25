@@ -5,5 +5,5 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 
 @Immutable
 internal data class PartnerPanelViewState(
-    val text: String = ""
+    val partnerId: String? = null
 ) : BaseViewState()

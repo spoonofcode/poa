@@ -5,33 +5,50 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
+import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
 import kotlinx.coroutines.launch
 
-internal class PartnerPanelViewModel() :
+internal class PartnerPanelViewModel(
+    private val getProfileUseCase: GetProfileUseCase
+) :
     BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction>(
         initialViewState = PartnerPanelViewState(),
-        initialScreenState = ScreenState.CONTENT,
+        initialScreenState = ScreenState.LOADING,
     ) {
 
     override fun onAction(action: PartnerPanelViewAction) {
         when (action) {
+            PartnerPanelViewAction.InitView -> initView()
             PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
             PartnerPanelViewAction.NavigateToPartnerEdit -> navigateToPartnerEdit()
             PartnerPanelViewAction.NavigateToReports -> navigateToReports()
         }
     }
 
+    private fun initView() {
+        showLoadingView()
+        viewModelScope.launch {
+            getProfileUseCase()
+                .onSuccess {
+                    showContentView {
+                        copy(partnerId = it.id)
+                    }
+                }
+                .onFailure {
+                    showErrorView()
+                }
+        }
+    }
+
     fun navigateToPartnerEdit() {
-        // TODO #99 Adopt poa backend - read partner id from profile backend
-        val partnerId = "4KJzqfBSQ1WbwysYa0j9"
+        val partnerId = viewState.value.data.partnerId ?: return
         viewModelScope.launch {
             viewModelNavigator.push(PartnerEditScreen(partnerId = partnerId))
         }
     }
 
     fun navigateToNotificationType() {
-        // TODO #99 Adopt poa backend - read partner id from profile backend
-        val partnerId = "4KJzqfBSQ1WbwysYa0j9"
+        val partnerId = viewState.value.data.partnerId ?: return
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(

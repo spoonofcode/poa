@@ -28,6 +28,9 @@ internal class PartnerPanelScreen() :
 
     override fun provideTopAppBarTitle() = Res.string.partner_panel
 
+    override fun provideInitAction(onAction: (PartnerPanelViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerPanelViewAction.InitView) }
+
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
 
