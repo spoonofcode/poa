@@ -3,11 +3,11 @@ package com.spoonofcode.feature.partner.presentation.notification
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
-import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationsUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerNotificationsViewModel(
-    private val getNotificationsUseCase: GetNotificationsUseCase,
+    private val getPartnerNotificationsUseCase: GetPartnerNotificationsUseCase,
 ) :
     BaseViewModel<PartnerNotificationsViewState, PartnerNotificationsViewAction>(
         PartnerNotificationsViewState(),
@@ -25,11 +25,11 @@ internal class PartnerNotificationsViewModel(
     private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            getNotificationsUseCase()
+            getPartnerNotificationsUseCase()
                 .onSuccess {
                     showContentView {
                         PartnerNotificationsViewState(
-                            notifications = it,
+                            partnerNotifications = it,
                         )
                     }
                 }

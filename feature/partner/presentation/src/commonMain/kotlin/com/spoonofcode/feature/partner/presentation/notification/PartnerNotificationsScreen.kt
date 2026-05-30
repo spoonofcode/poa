@@ -28,18 +28,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.spoonofcode.core.data.ext.toMillis
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.partner_notifications
 import com.spoonofcode.feature.partner.presentation.tab_already_sent
 import com.spoonofcode.feature.partner.presentation.tab_pending
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
 
 internal class PartnerNotificationsScreen :
     BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
@@ -56,7 +58,7 @@ internal class PartnerNotificationsScreen :
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             NotificationTabs(
-                viewState.notifications,
+                viewState.partnerNotifications,
                 selectNotification = { onAction(PartnerNotificationsViewAction.SelectNotification(it)) },
             )
         }
@@ -65,7 +67,7 @@ internal class PartnerNotificationsScreen :
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun NotificationTabs(
-        notifications: List<Notification>,
+        notifications: List<PartnerNotification>,
         selectNotification: (String) -> Unit,
     ) {
         val tabs = listOf(
@@ -89,12 +91,12 @@ internal class PartnerNotificationsScreen :
                     )
                 }
             }
-            val notificationsAlreadyReaded = notifications.filter { it.isRead }
-            val notificationsNotReaded = notifications.filter { !(it.isRead) }
+            val notificationsPending = notifications.filterNot { it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds() }
+            val notificationsAlreadySent = notifications.filter { it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds() }
 
             when (selectedTabIndex) {
-                0 -> NotificationTab(notificationsNotReaded, selectNotification)
-                1 -> NotificationTab(notificationsAlreadyReaded, selectNotification)
+                0 -> NotificationTab(notificationsPending, selectNotification)
+                1 -> NotificationTab(notificationsAlreadySent, selectNotification)
             }
         }
     }
@@ -102,7 +104,7 @@ internal class PartnerNotificationsScreen :
     data class TabItem(val title: String)
 
     @Composable
-    fun NotificationTab(notifications: List<Notification>, selectNotification: (String) -> Unit) {
+    fun NotificationTab(notifications: List<PartnerNotification>, selectNotification: (String) -> Unit) {
         Spacers.VerticalBetweenFields()
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
@@ -118,7 +120,7 @@ internal class PartnerNotificationsScreen :
 
     @Composable
     fun NotificationItem(
-        item: Notification,
+        item: PartnerNotification,
         onClick: () -> Unit,
     ) {
         Row(
