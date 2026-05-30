@@ -10,10 +10,12 @@ fun NotificationResponse.toNotification(): Notification {
         title = title,
         text = text,
         link = link,
+        deliveryDateTime = deliveryDateTime.toZonedLocalDateTime(),
         createdDataTime = createdDataTime.toZonedLocalDateTime(),
         modificationDateTime = modificationDateTime.toZonedLocalDateTime(),
-        expirationDateTime = expirationDateTime?.toZonedLocalDateTime(),
+        expirationDateTime = expirationDateTime.toZonedLocalDateTime(),
         state = state,
         topics = topics,
+        ownerId = ownerId,
     )
 }

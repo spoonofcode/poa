@@ -11,18 +11,20 @@ data class NotificationResponse(
     val title: String,
     val text: String,
     val link: String? = null,
+    @SerialName("delivery_datetime")
+    @Serializable(with = RFC1123InstantSerializer::class)
+    val deliveryDateTime: Instant,
     @SerialName("created_datetime")
     @Serializable(with = RFC1123InstantSerializer::class)
     val createdDataTime: Instant,
     @SerialName("modification_time")
     @Serializable(with = RFC1123InstantSerializer::class)
     val modificationDateTime: Instant,
-    @SerialName("delivery_datetime")
-    @Serializable(with = RFC1123InstantSerializer::class)
-    val deliveryDateTime: Instant? = null,
     @SerialName("expiration_datetime")
     @Serializable(with = RFC1123InstantSerializer::class)
-    val expirationDateTime: Instant? = null,
+    val expirationDateTime: Instant,
     val state: String,
     val topics: List<String>,
+    @SerialName("owner_id")
+    val ownerId: String,
 )

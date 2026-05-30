@@ -10,8 +10,9 @@ interface NotificationRepository {
         text: String,
         link: String? = null,
         topics: List<String>,
-        deliveryDateTime: LocalDateTime? = null,
-        expirationDateTime: LocalDateTime? = null,
+        deliveryDateTime: LocalDateTime,
+        expirationDateTime: LocalDateTime,
+        ownerId: String,
     ): Result<Unit>
 
     suspend fun update(
@@ -20,8 +21,9 @@ interface NotificationRepository {
         text: String,
         link: String? = null,
         topics: List<String>,
-        deliveryDateTime: LocalDateTime? = null,
-        expirationDateTime: LocalDateTime? = null,
+        deliveryDateTime: LocalDateTime,
+        expirationDateTime: LocalDateTime,
+        ownerId: String,
     ): Result<Unit>
 
     suspend fun delete(notificationId: String): Result<Unit>

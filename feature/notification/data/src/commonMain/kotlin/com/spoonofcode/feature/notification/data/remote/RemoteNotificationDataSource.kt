@@ -14,8 +14,9 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         text: String,
         link: String?,
         topics: List<String>,
-        deliveryDateTime: Instant?,
-        expirationDateTime: Instant?,
+        deliveryDateTime: Instant,
+        expirationDateTime: Instant,
+        ownerId: String,
     ): Result<NotificationResponse> = doRequest(
         method = HttpMethod.Post,
         requestBody = NotificationRequest(
@@ -25,6 +26,7 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
             topics = topics,
             deliveryDateTime = deliveryDateTime,
             expirationDateTime = expirationDateTime,
+            ownerId = ownerId,
         ),
     )
 
@@ -34,8 +36,9 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
         text: String,
         link: String?,
         topics: List<String>,
-        deliveryDateTime: Instant?,
-        expirationDateTime: Instant?,
+        deliveryDateTime: Instant,
+        expirationDateTime: Instant,
+        ownerId: String,
     ): Result<Unit> = doRequest(
         urlPostfixPath = notificationId,
         method = HttpMethod.Put,
@@ -46,6 +49,7 @@ class RemoteNotificationDataSource : RemoteBaseDataSource(
             topics = topics,
             deliveryDateTime = deliveryDateTime,
             expirationDateTime = expirationDateTime,
+            ownerId = ownerId,
         ),
     )
 
