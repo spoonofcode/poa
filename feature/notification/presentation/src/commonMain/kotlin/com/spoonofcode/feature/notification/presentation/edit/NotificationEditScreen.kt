@@ -40,6 +40,7 @@ import com.spoonofcode.feature.notification.presentation.selected_series
 import com.spoonofcode.feature.notification.presentation.send_notification
 import com.spoonofcode.feature.notification.presentation.send_notification_dialog_text
 import com.spoonofcode.feature.notification.presentation.send_notification_dialog_title
+import com.spoonofcode.feature.notification.presentation.send_notification_to_all_my_clietns
 import com.spoonofcode.feature.notification.presentation.text
 import com.spoonofcode.feature.notification.presentation.title
 import org.jetbrains.compose.resources.stringResource
@@ -78,6 +79,7 @@ internal class NotificationEditScreen(
                 val title = when (viewState.notificationType) {
                     NotificationType.user -> stringResource(Res.string.selected_customers)
                     NotificationType.serie -> stringResource(Res.string.selected_series)
+                    NotificationType.partner -> stringResource(Res.string.send_notification_to_all_my_clietns)
                     else -> ""
                 }
 
