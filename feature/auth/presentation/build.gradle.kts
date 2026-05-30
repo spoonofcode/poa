@@ -27,6 +27,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.feature.auth.domain)
+                implementation(projects.core.session.domain)
             }
         }
 

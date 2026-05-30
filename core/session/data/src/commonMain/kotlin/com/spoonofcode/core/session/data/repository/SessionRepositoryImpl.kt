@@ -1,11 +1,15 @@
 package com.spoonofcode.core.session.data.repository
 
 import com.spoonofcode.core.session.data.local.LocalSessionDataSource
+import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import com.spoonofcode.core.session.domain.repository.SessionRepository
+import org.koin.core.component.KoinComponent
 
 class SessionRepositoryImpl(
     private val localSessionDataSource: LocalSessionDataSource,
-) : SessionRepository {
+) : SessionRepository, KoinComponent {
+
+    private val logoutHandlers: List<LogoutHandler> by lazy { getKoin().getAll<LogoutHandler>() }
 
     override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
 
@@ -15,6 +19,7 @@ class SessionRepositoryImpl(
         userId: String,
         userEmail: String,
     ) {
+        clearSession()
         localSessionDataSource.initSession(
             accessToken = accessToken,
             refreshToken = refreshToken,
@@ -35,6 +40,7 @@ class SessionRepositoryImpl(
 
     override suspend fun clearSession() {
         localSessionDataSource.clearSession()
+        logoutHandlers.forEach { runCatching { it.onLogout() } }
     }
 
     override suspend fun getSessionAccessToken(): String? =
