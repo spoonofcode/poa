@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.presentation.partner
+package com.spoonofcode.feature.partner.presentation.notification
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState

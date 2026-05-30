@@ -39,7 +39,7 @@ internal class PartnerPanelViewModel(
 
     fun navigateToPartnerNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationType))
+            viewModelNavigator.push(routeResolver.resolve(PartnerModuleRoute.PartnerNotifications))
         }
     }
 

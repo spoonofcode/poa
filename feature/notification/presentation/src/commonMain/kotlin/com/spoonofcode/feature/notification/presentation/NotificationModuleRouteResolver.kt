@@ -9,7 +9,6 @@ import com.spoonofcode.feature.notification.presentation.channel.NotificationCha
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen
 import com.spoonofcode.feature.notification.presentation.edit.NotificationEditScreen
 import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewScreen
-import com.spoonofcode.feature.notification.presentation.partner.PartnerNotificationsScreen
 import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsScreen
 import com.spoonofcode.feature.notification.presentation.type.NotificationTypeScreen
 
@@ -35,7 +34,6 @@ class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModuleRo
 
                 NotificationModuleRoute.NotificationType -> NotificationTypeScreen()
                 NotificationModuleRoute.NotificationChannel -> NotificationChannelScreen()
-                NotificationModuleRoute.PartnerNotifications -> PartnerNotificationsScreen()
             }
         }
 }

@@ -18,5 +18,4 @@ sealed class NotificationModuleRoute : ModuleRoute() {
 
     object NotificationType : NotificationModuleRoute()
     object NotificationChannel : NotificationModuleRoute()
-    object PartnerNotifications : NotificationModuleRoute()
 }

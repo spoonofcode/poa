@@ -8,4 +8,5 @@ sealed class PartnerModuleRoute : ModuleRoute() {
     data object PartnerEdit : PartnerModuleRoute()
     data object CustomerOverview : PartnerModuleRoute()
     data object PartnerPanel : PartnerModuleRoute()
+    data object PartnerNotifications : PartnerModuleRoute()
 }

@@ -39,10 +39,8 @@
     <string name="send_notification_dialog_text">Upewnij się, że podane informacje są poprawne. Po wysłaniu powiadomienia nie będzie można go później edytować.</string>
     <string name="send_notification_to_all_my_clietns">Wyślij powiadomienie do wszystkich moich klientów</string>
     <string name="tab_already_read">Przeczytane</string>
-    <string name="tab_already_sent">Wysłane</string>
     <string name="tab_email">Email</string>
     <string name="tab_new">Nowe</string>
-    <string name="tab_pending">Oczekujące</string>
     <string name="title">Tytuł</string>
     <string name="text">Tekst</string>
     <string name="to_all">Do wszystkich</string>

@@ -9,10 +9,13 @@
     <string name="partner_name">Partner name</string>
     <string name="partner_info">Partner info</string>
     <string name="partner_panel">Partner panel</string>
+    <string name="partner_notifications">Partner notifications</string>
     <string name="partners">Partners</string>
     <string name="reports">Reports</string>
     <string name="save_changes">Save changes</string>
     <string name="send_notification">Send notification</string>
+    <string name="tab_already_sent">Already sent</string>
+    <string name="tab_pending">Pending</string>
     <string name="website">Website</string>
     <string name="x">X</string>
     <string name="youtube">Youtube</string>

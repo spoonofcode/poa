@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -61,10 +62,10 @@ internal class PartnerPanelScreen() :
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 IconTextButton(
-                    enabled = false,
-                    icon = Icons.Default.BarChart,
+                    enabled = true,
+                    icon = Icons.Default.Notifications,
                     text = stringResource(resource = Res.string.reports),
-                    onClick = { onAction(PartnerPanelViewAction.NavigateToReports) },
+                    onClick = { onAction(PartnerPanelViewAction.NavigateToPartnerNotifications) },
                     modifier = Modifier.weight(0.5f)
                 )
 
@@ -73,7 +74,7 @@ internal class PartnerPanelScreen() :
                     icon = Icons.Default.BarChart,
                     text = stringResource(resource = Res.string.reports),
                     onClick = { },
-                    modifier = Modifier.weight(0.5f).alpha(0f) // alpha=0f to hide
+                    modifier = Modifier.weight(0.5f)
                 )
             }
         }

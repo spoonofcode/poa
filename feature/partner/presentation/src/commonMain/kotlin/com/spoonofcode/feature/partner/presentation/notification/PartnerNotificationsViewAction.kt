@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.presentation.partner
+package com.spoonofcode.feature.partner.presentation.notification
 
 import com.spoonofcode.core.presentation.base.BaseViewAction
 

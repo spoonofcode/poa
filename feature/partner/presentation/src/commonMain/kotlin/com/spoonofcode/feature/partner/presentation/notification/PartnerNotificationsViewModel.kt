@@ -1,10 +1,9 @@
-package com.spoonofcode.feature.notification.presentation.partner
+package com.spoonofcode.feature.partner.presentation.notification
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
-import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen
 import kotlinx.coroutines.launch
 
 internal class PartnerNotificationsViewModel(
@@ -43,9 +42,7 @@ internal class PartnerNotificationsViewModel(
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                NotificationDetailsScreen(
-                    notificationId = notificationId
-                )
+                routeResolver.resolve(NotificationModuleRoute.NotificationDetails(notificationId))
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.presentation.partner
+package com.spoonofcode.feature.partner.presentation.notification
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,18 +35,16 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
-import com.spoonofcode.feature.notification.presentation.Res
-import com.spoonofcode.feature.notification.presentation.notification_type
-import com.spoonofcode.feature.notification.presentation.tab_already_read
-import com.spoonofcode.feature.notification.presentation.tab_already_sent
-import com.spoonofcode.feature.notification.presentation.tab_new
-import com.spoonofcode.feature.notification.presentation.tab_pending
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.partner_notifications
+import com.spoonofcode.feature.partner.presentation.tab_already_sent
+import com.spoonofcode.feature.partner.presentation.tab_pending
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationsScreen :
     BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notification_type
+    override fun provideTopAppBarTitle() = Res.string.partner_notifications
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerNotificationsViewModel>()

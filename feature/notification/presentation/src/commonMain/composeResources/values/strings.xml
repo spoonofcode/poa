@@ -39,9 +39,7 @@
     <string name="send_notification_dialog_text">Please ensure that the information you enter is correct. Once the notification is sent, it cannot be edited later.</string>
     <string name="send_notification_to_all_my_clients">Send notification to all my clients</string>
     <string name="tab_already_read">Already read</string>
-    <string name="tab_already_sent">Already sent</string>
     <string name="tab_new">New</string>
-    <string name="tab_pending">Pending</string>
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="to_all">To all</string>

@@ -7,6 +7,7 @@ import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationsScreen
 import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
 
 class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
@@ -17,6 +18,7 @@ class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
                 is PartnerModuleRoute.PartnerDetails -> PartnerDetailsScreen(partnerId = it.partnerId)
                 is PartnerModuleRoute.PartnerEdit -> PartnerEditScreen()
                 PartnerModuleRoute.PartnerPanel -> PartnerPanelScreen()
+                PartnerModuleRoute.PartnerNotifications -> PartnerNotificationsScreen()
             }
         }
 }
