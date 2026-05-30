@@ -15,7 +15,7 @@ class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
             when (it) {
                 is PartnerModuleRoute.CustomerOverview -> CustomerOverviewScreen()
                 is PartnerModuleRoute.PartnerDetails -> PartnerDetailsScreen(partnerId = it.partnerId)
-                is PartnerModuleRoute.PartnerEdit -> PartnerEditScreen(partnerId = it.partnerId)
+                is PartnerModuleRoute.PartnerEdit -> PartnerEditScreen()
                 PartnerModuleRoute.PartnerPanel -> PartnerPanelScreen()
             }
         }
