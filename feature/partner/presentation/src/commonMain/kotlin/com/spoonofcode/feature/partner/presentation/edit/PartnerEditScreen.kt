@@ -92,9 +92,7 @@ internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditVi
     @Preview
     @Composable
     private fun InitializedPartnerEditScreenPreview() {
-        PartnerEditScreen(
-            partnerId = "1"
-        ).PreviewContent(
+        PartnerEditScreen().PreviewContent(
             PartnerEditViewState(
                 // TODO #133 fix previews
 //                partner = PartnerMockData.PARTNER_1
