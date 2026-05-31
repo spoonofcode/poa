@@ -37,6 +37,7 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.my_notifications
 import com.spoonofcode.feature.partner.presentation.partner_notifications
 import com.spoonofcode.feature.partner.presentation.tab_already_sent
 import com.spoonofcode.feature.partner.presentation.tab_pending
@@ -46,7 +47,10 @@ import kotlin.time.Clock
 internal class PartnerNotificationsScreen :
     BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
 
-    override fun provideTopAppBarTitle() = Res.string.partner_notifications
+    override fun provideTopAppBarTitle() = Res.string.my_notifications
+
+    override fun provideInitAction(onAction: (PartnerNotificationsViewAction) -> Unit): () -> Unit =
+        { onAction(PartnerNotificationsViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerNotificationsViewModel>()

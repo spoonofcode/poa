@@ -19,6 +19,7 @@ import com.spoonofcode.core.presentation.ext.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.my_notifications
 import com.spoonofcode.feature.partner.presentation.partner_info
 import com.spoonofcode.feature.partner.presentation.partner_panel
 import com.spoonofcode.feature.partner.presentation.reports
@@ -64,7 +65,7 @@ internal class PartnerPanelScreen() :
                 IconTextButton(
                     enabled = true,
                     icon = Icons.Default.Notifications,
-                    text = stringResource(resource = Res.string.reports),
+                    text = stringResource(resource = Res.string.my_notifications),
                     onClick = { onAction(PartnerPanelViewAction.NavigateToPartnerNotifications) },
                     modifier = Modifier.weight(0.5f)
                 )
