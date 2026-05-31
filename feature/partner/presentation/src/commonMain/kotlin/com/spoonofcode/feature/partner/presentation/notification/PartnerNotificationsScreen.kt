@@ -3,6 +3,7 @@ package com.spoonofcode.feature.partner.presentation.notification
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.toMillis
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
@@ -38,14 +40,14 @@ import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
-import com.spoonofcode.feature.partner.presentation.partner_notifications
 import com.spoonofcode.feature.partner.presentation.tab_already_sent
 import com.spoonofcode.feature.partner.presentation.tab_pending
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
-internal class PartnerNotificationsScreen :
-    BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
+internal class PartnerNotificationsScreen(
+    override val verticalScrollEnable: Boolean = false,
+) : BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.my_notifications
 
@@ -54,6 +56,11 @@ internal class PartnerNotificationsScreen :
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerNotificationsViewModel>()
+
+    override fun provideContentPadding() = PaddingValues(
+        start = Paddings.screenPadding,
+        end = Paddings.screenPadding,
+    )
 
     @Composable
     override fun provideContent(
@@ -95,8 +102,12 @@ internal class PartnerNotificationsScreen :
                     )
                 }
             }
-            val notificationsPending = notifications.filterNot { it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds() }
-            val notificationsAlreadySent = notifications.filter { it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds() }
+            val notificationsPending = notifications.filterNot {
+                it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
+            }
+            val notificationsAlreadySent = notifications.filter {
+                it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
+            }
 
             when (selectedTabIndex) {
                 0 -> NotificationTab(notificationsPending, selectNotification)
@@ -108,7 +119,10 @@ internal class PartnerNotificationsScreen :
     data class TabItem(val title: String)
 
     @Composable
-    fun NotificationTab(notifications: List<PartnerNotification>, selectNotification: (String) -> Unit) {
+    fun NotificationTab(
+        notifications: List<PartnerNotification>,
+        selectNotification: (String) -> Unit
+    ) {
         Spacers.VerticalBetweenFields()
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
