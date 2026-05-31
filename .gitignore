@@ -103,7 +103,6 @@ GoogleService-Info.plist
 certificates/
 
 # Github
-/.github
 /docs
 AGENTS.md
 README_NEW.md

@@ -150,8 +150,8 @@ android {
         applicationId = "com.spoonofcode.poa"
         minSdk = libs.versions.androidMinSdk.get().toInt()
         targetSdk = libs.versions.androidTargetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = (System.getenv("ANDROID_RELEASE_VERSION") ?: "1").toInt()
+        versionName = System.getenv("ANDROID_RELEASE_VERSION") ?: "1.0"
     }
     packaging {
         resources {
@@ -165,17 +165,33 @@ android {
             keyAlias = "newdebugkey"
             keyPassword = "poa123"
         }
+        if (System.getenv("KEYSTORE_PATH") != null) {
+            create("ci") {
+                storeFile = file(System.getenv("KEYSTORE_PATH"))
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
     }
     buildTypes {
         getByName("debug") {
             signingConfig = signingConfigs.getByName("customDebug")
+            isDebuggable = true
+        }
+        getByName("release") {
+            // isMinifyEnabled = false
+            isDebuggable = false
+            // Dynamically assign the signing config based on the environment
+            if (System.getenv("KEYSTORE_PATH") != null) {
+                signingConfig = signingConfigs.getByName("ci")
+            } else {
+                signingConfig = null
+            }
+
         }
     }
-//    buildTypes {
-//        getByName("release") {
-//            isMinifyEnabled = false
-//        }
-//    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
