@@ -13,6 +13,7 @@ import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.spoonofcode.feature.auth.presentation.BuildKonfig
 import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 
 actual class GoogleAuthUiProvider(
@@ -72,13 +73,6 @@ actual class GoogleAuthUiProvider(
     private fun getGoogleIdOption(): GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
         .setAutoSelectEnabled(true)
-        .setServerClientId(SERVER_CLIENT_ID)
+        .setServerClientId(BuildKonfig.GOOGLE_ID_SERVER_CLIENT_ID_ANDROID)
         .build()
-
-    companion object {
-        const val SERVER_CLIENT_ID =
-            // TODO move to configuration
-            // "179822836066-khn4c0frmekufu9advbecrrr3tofcsem.apps.googleusercontent.com" // proof-of-wear.com//
-            "960238188791-7lkvnrfrbn3rbeu6tc6utih3q8rodqo1.apps.googleusercontent.com" // https://pow-test1-960238188791.europe-west1.run.app/
-    }
 }
