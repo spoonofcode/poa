@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.data.remote
 
 import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import com.spoonofcode.feature.partner.data.model.CustomerResponse
+import com.spoonofcode.feature.partner.data.model.PartnerNotificationResponse
 import com.spoonofcode.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.feature.partner.data.model.PartnerResponse
 import com.spoonofcode.feature.partner.data.model.PartnerUserResponse
@@ -61,6 +62,11 @@ class RemotePartnerDataSource : RemoteBaseDataSource(
 
     suspend fun readPartnerCustomers(): Result<List<CustomerResponse>> = doRequest(
         urlPostfixPath = "me/customers",
+        method = HttpMethod.Get,
+    )
+
+    suspend fun readPartnerNotifications(): Result<List<PartnerNotificationResponse>> = doRequest(
+        urlPostfixPath = "me/notifications",
         method = HttpMethod.Get,
     )
 }

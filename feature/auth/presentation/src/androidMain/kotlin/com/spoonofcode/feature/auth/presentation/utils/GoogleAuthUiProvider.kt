@@ -79,6 +79,6 @@ actual class GoogleAuthUiProvider(
         const val SERVER_CLIENT_ID =
             // TODO move to configuration
             // "179822836066-khn4c0frmekufu9advbecrrr3tofcsem.apps.googleusercontent.com" // proof-of-wear.com//
-            "504758671015-ion5ot94c1n7siadgat4qno8o05d71g3.apps.googleusercontent.com" // https://pow-test1-960238188791.europe-west1.run.app/
+            "960238188791-7lkvnrfrbn3rbeu6tc6utih3q8rodqo1.apps.googleusercontent.com" // https://pow-test1-960238188791.europe-west1.run.app/
     }
 }

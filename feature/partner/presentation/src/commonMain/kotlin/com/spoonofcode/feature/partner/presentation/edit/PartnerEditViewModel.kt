@@ -1,14 +1,14 @@
 package com.spoonofcode.feature.partner.presentation.edit
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
-import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
-import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUseCase
+import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerEditViewModel(
-    private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
+    private val getPartnerUseCase: GetPartnerUseCase,
     private val updatePartnerUseCase: UpdatePartnerUseCase
 ) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction>(PartnerEditViewState()) {
 
@@ -21,15 +21,15 @@ internal class PartnerEditViewModel(
             is PartnerEditViewAction.ChangeWebsiteLink -> changeWebsiteLink(action.link)
             is PartnerEditViewAction.ChangeXLink -> changeXLink(action.link)
             is PartnerEditViewAction.ChangeYoutubeLink -> changeYoutubeLink(action.link)
-            is PartnerEditViewAction.InitView -> initView(action.partnerId)
+            is PartnerEditViewAction.InitView -> initView()
             PartnerEditViewAction.SaveChanges -> saveChanges()
         }
     }
 
-    private fun initView(partnerId: String) {
+    private fun initView() {
         showLoadingView()
         viewModelScope.launch {
-            getPartnerByIdUseCase(partnerId = partnerId)
+            getPartnerUseCase()
                 .onSuccess {
                     showContentView {
                         copy(

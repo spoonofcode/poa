@@ -21,14 +21,12 @@ import com.spoonofcode.feature.partner.presentation.x
 import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
-internal class PartnerEditScreen(
-    private val partnerId: String,
-) : BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction>() {
+internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.partner
 
     override fun provideInitAction(onAction: (PartnerEditViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerEditViewAction.InitView(partnerId = partnerId)) }
+        { onAction(PartnerEditViewAction.InitView) }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
@@ -94,9 +92,7 @@ internal class PartnerEditScreen(
     @Preview
     @Composable
     private fun InitializedPartnerEditScreenPreview() {
-        PartnerEditScreen(
-            partnerId = "1"
-        ).PreviewContent(
+        PartnerEditScreen().PreviewContent(
             PartnerEditViewState(
                 // TODO #133 fix previews
 //                partner = PartnerMockData.PARTNER_1

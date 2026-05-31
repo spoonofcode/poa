@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.partner.presentation.details
 
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerDetailsViewModel(
