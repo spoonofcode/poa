@@ -19,13 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
-import org.jetbrains.compose.resources.stringResource
 import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.check_in_again
 import com.spoonofcode.core.presentation.hours
 import com.spoonofcode.core.presentation.minutes
 import com.spoonofcode.core.presentation.seconds
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -54,18 +53,16 @@ fun CountdownTimer(targetTimeMillis: Long) {
     val minutes = (totalSeconds % 3600) / 60
     val seconds = totalSeconds % 60
 
-    if (remainingTime > 0) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (remainingTime > 0) {
             CountdownUnit(value = hours, label = stringResource(Res.string.hours))
             CountdownUnit(value = minutes, label = stringResource(Res.string.minutes))
             CountdownUnit(value = seconds, label = stringResource(Res.string.seconds))
+        } else {
+            CountdownUnit(value = 0, label = stringResource(Res.string.hours))
+            CountdownUnit(value = 0, label = stringResource(Res.string.minutes))
+            CountdownUnit(value = 0, label = stringResource(Res.string.seconds))
         }
-    } else {
-        Text(
-            text = stringResource(Res.string.check_in_again),
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold
-        )
     }
 }
 
