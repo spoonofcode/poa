@@ -11,7 +11,9 @@ data class NotificationRequest(
     val link: String? = null,
     val topics: List<String>,
     @SerialName("delivery_datetime")
-    val deliveryDateTime: Instant? = null,
+    val deliveryDateTime: Instant,
     @SerialName("expiration_datetime")
-    val expirationDateTime: Instant? = null,
+    val expirationDateTime: Instant,
+    @SerialName("owner_id")
+    val ownerId: String,
 )

@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.data.repository
 
 import com.spoonofcode.feature.partner.data.mappers.toCustomer
 import com.spoonofcode.feature.partner.data.mappers.toPartner
+import com.spoonofcode.feature.partner.data.mappers.toPartnerNotification
 import com.spoonofcode.feature.partner.data.mappers.toPartnerUser
 import com.spoonofcode.feature.partner.data.mappers.toProductSeries
 import com.spoonofcode.feature.partner.data.remote.RemotePartnerCategoryDataSource
@@ -9,6 +10,7 @@ import com.spoonofcode.feature.partner.data.remote.RemotePartnerDataSource
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.PartnerCategory
+import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.domain.model.PartnerUser
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
@@ -72,5 +74,10 @@ class PartnerRepositoryImpl(
             response.map {
                 PartnerCategory(name = it)
             }
+        }
+
+    override suspend fun getPartnerNotifications(): Result<List<PartnerNotification>> =
+        remotePartnerDataSource.readPartnerNotifications().map { response ->
+            response.map { it.toPartnerNotification() }
         }
 }

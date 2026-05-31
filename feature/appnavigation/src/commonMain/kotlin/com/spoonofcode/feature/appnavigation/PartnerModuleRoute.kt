@@ -5,11 +5,8 @@ sealed class PartnerModuleRoute : ModuleRoute() {
         val partnerId: String,
     ) : PartnerModuleRoute()
 
-    data class PartnerEdit(
-        val partnerId: String,
-    ) : PartnerModuleRoute()
-
-    object CustomerOverview: PartnerModuleRoute()
-
-    object  PartnerPanel : PartnerModuleRoute()
+    data object PartnerEdit : PartnerModuleRoute()
+    data object CustomerOverview : PartnerModuleRoute()
+    data object PartnerPanel : PartnerModuleRoute()
+    data object PartnerNotifications : PartnerModuleRoute()
 }

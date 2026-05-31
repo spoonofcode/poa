@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.convention.buildkonfig)
     alias(libs.plugins.convention.cmp.feature)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.mokkery)
@@ -27,6 +28,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.feature.auth.domain)
+                implementation(projects.core.session.domain)
             }
         }
 

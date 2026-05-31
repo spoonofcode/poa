@@ -7,10 +7,12 @@ data class Notification(
     val title: String,
     val text: String,
     val link: String? = null,
+    val deliveryDateTime: LocalDateTime,
     val createdDataTime: LocalDateTime,
     val modificationDateTime: LocalDateTime,
-    val expirationDateTime: LocalDateTime? = null,
+    val expirationDateTime: LocalDateTime,
     val state: String,
     val topics: List<String>,
     val isRead: Boolean = false,
+    val ownerId: String,
 )

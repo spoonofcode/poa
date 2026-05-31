@@ -8,6 +8,8 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
+                implementation(projects.core.data)
+                implementation(projects.core.session.domain)
             }
         }
 
