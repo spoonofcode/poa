@@ -8,6 +8,7 @@ import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOv
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationsScreen
+import com.spoonofcode.feature.partner.presentation.notification.details.PartnerNotificationDetailsScreen
 import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
 
 class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
@@ -19,6 +20,9 @@ class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
                 is PartnerModuleRoute.PartnerEdit -> PartnerEditScreen()
                 PartnerModuleRoute.PartnerPanel -> PartnerPanelScreen()
                 PartnerModuleRoute.PartnerNotifications -> PartnerNotificationsScreen()
+                is PartnerModuleRoute.PartnerNotificationDetails -> PartnerNotificationDetailsScreen(
+                    notificationId = it.notificationId
+                )
             }
         }
 }

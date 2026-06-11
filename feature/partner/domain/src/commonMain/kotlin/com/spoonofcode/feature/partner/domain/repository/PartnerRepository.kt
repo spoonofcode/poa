@@ -29,4 +29,5 @@ interface PartnerRepository {
     suspend fun getPartnerCustomers(): Result<List<Customer>>
     suspend fun getCategories(): Result<List<PartnerCategory>>
     suspend fun getPartnerNotifications(): Result<List<PartnerNotification>>
+    suspend fun deletePartnerNotification(): Result<List<PartnerNotification>>
 }

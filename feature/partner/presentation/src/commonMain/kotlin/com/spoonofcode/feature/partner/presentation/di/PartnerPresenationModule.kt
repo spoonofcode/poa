@@ -7,6 +7,7 @@ import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCus
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsViewModel
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditViewModel
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationsViewModel
+import com.spoonofcode.feature.partner.presentation.notification.details.PartnerNotificationDetailsViewModel
 import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewViewModel
 import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelViewModel
 import org.koin.core.module.dsl.bind
@@ -24,4 +25,5 @@ val partnerPresentationModule = module {
     viewModelOf(::PartnerPanelViewModel)
     viewModelOf(::PartnerEditViewModel)
     viewModelOf(::PartnerNotificationsViewModel)
+    viewModelOf(::PartnerNotificationDetailsViewModel)
 }
