@@ -5,10 +5,8 @@ import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.notification.presentation.NotificationModuleRouteResolver
 import com.spoonofcode.feature.notification.presentation.channel.NotificationChannelViewModel
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsViewModel
-import com.spoonofcode.feature.notification.presentation.edit.NotificationEditViewModel
 import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewViewModel
 import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsViewModel
-import com.spoonofcode.feature.notification.presentation.type.NotificationTypeViewModel
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
@@ -20,7 +18,5 @@ val notificationPresentationModule = module {
     viewModelOf(::NotificationOverviewViewModel)
     viewModelOf(::NotificationChannelViewModel)
     viewModelOf(::NotificationDetailsViewModel)
-    viewModelOf(::NotificationEditViewModel)
-    viewModelOf(::NotificationTypeViewModel)
     viewModelOf(::NotificationSettingsViewModel)
 }

@@ -5,6 +5,7 @@ import com.spoonofcode.feature.partner.domain.usecase.GetNewPartnersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationTopicUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationsUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerProductSeriesUseCase
@@ -33,5 +34,6 @@ val partnerDomainModule = module {
     factoryOf(::GetPartnerNotificationsUseCase)
     factoryOf(::GetPartnerNotificationUseCase)
     factoryOf(::PartnerSendNotificationUseCase)
+    factoryOf(::GetPartnerNotificationTopicUseCase)
     factoryOf(::UpdatePartnerUseCase)
 }

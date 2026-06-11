@@ -23,7 +23,7 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.notification.domain.model.Notification
+import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.notification
 
@@ -84,7 +84,7 @@ internal class PartnerNotificationDetailsScreen(
 
     @Composable
     fun NotificationCard(
-        notification: Notification,
+        notification: PartnerNotification,
         onOpenLink: (String) -> Unit = {}
     ) {
         Cards.ElevatedCard {

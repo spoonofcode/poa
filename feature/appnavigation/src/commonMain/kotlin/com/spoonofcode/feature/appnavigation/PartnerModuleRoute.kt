@@ -12,4 +12,12 @@ sealed class PartnerModuleRoute : ModuleRoute() {
     data class PartnerNotificationDetails(
         val notificationId: String,
     ) : PartnerModuleRoute()
+
+    data class PartnerNotificationEdit(
+        val notificationTypeName: String,
+        val selectedNames: Set<String> = emptySet(),
+        val selectedTopics: Set<String> = emptySet(),
+    ) : PartnerModuleRoute()
+
+    data object PartnerNotificationType : PartnerModuleRoute()
 }

@@ -3,14 +3,10 @@ package com.spoonofcode.feature.partner.presentation.panel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
-import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUseCase
 import kotlinx.coroutines.launch
 
-internal class PartnerPanelViewModel(
-    private val getPartnerUseCase: GetPartnerUseCase,
-) :
+internal class PartnerPanelViewModel :
     BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction>(
         initialViewState = PartnerPanelViewState(),
         initialScreenState = ScreenState.CONTENT,
@@ -18,14 +14,14 @@ internal class PartnerPanelViewModel(
 
     override fun onAction(action: PartnerPanelViewAction) {
         when (action) {
-            PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
-            PartnerPanelViewAction.NavigateToPartnerNotifications -> navigateToPartnerNotifications()
             PartnerPanelViewAction.NavigateToPartnerEdit -> navigateToPartnerEdit()
+            PartnerPanelViewAction.NavigateToPartnerNotifications -> navigateToPartnerNotifications()
+            PartnerPanelViewAction.NavigateToNotificationType -> navigateToNotificationType()
             PartnerPanelViewAction.NavigateToReports -> navigateToReports()
         }
     }
 
-    fun navigateToPartnerEdit() {
+    private fun navigateToPartnerEdit() {
         viewModelScope.launch {
             viewModelNavigator.push(routeResolver.resolve(PartnerModuleRoute.PartnerEdit))
         }
@@ -33,7 +29,7 @@ internal class PartnerPanelViewModel(
 
     fun navigateToNotificationType() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationType))
+            viewModelNavigator.push(routeResolver.resolve(PartnerModuleRoute.PartnerNotificationType))
         }
     }
 
@@ -43,7 +39,7 @@ internal class PartnerPanelViewModel(
         }
     }
 
-    fun navigateToReports() {
-        // TODO Add reports screen
+    private fun navigateToReports() {
+        // TODO
     }
 }

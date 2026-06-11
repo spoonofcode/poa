@@ -3,7 +3,6 @@ package com.spoonofcode.feature.notification.domain.di
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationByIdUseCase
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationsUseCase
-import com.spoonofcode.feature.notification.domain.usecase.GetPartnerNotificationTopicUseCase
 import com.spoonofcode.feature.notification.domain.usecase.MarkNotificationAsReadUseCase
 import com.spoonofcode.feature.notification.domain.usecase.NotificationTopicSyncHandler
 import com.spoonofcode.feature.notification.domain.usecase.SendNotificationUseCase
@@ -25,5 +24,4 @@ val notificationDomainModule = module {
         )
     }
     factoryOf(::MarkNotificationAsReadUseCase)
-    factoryOf(::GetPartnerNotificationTopicUseCase)
 }

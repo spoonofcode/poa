@@ -29,6 +29,11 @@
     <string name="title">Tytuł</string>
     <string name="text">Treść</string>
     <string name="link">Link</string>
+    <string name="notification_type">Typ powiadomienia</string>
+    <string name="to_all">Do wszystkich</string>
+    <string name="to_all_my_customers">Do wszystkich moich klientów</string>
+    <string name="to_selected_customers">Do wybranych klientów</string>
+    <string name="to_selected_series">Do wybranych serii</string>
     <string name="website">Strona</string>
     <string name="x">X</string>
     <string name="youtube">Youtube</string>
