@@ -2,12 +2,12 @@ package com.spoonofcode.feature.partner.presentation.notification.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.feature.notification.domain.usecase.GetNotificationByIdUseCase
 import com.spoonofcode.feature.partner.domain.usecase.DeletePartnerNotificationUseCase
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerNotificationDetailsViewModel(
-    private val getNotificationByIdUseCase: GetNotificationByIdUseCase,
+    private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val deletePartnerNotificationUseCase: DeletePartnerNotificationUseCase,
 ) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction>(
     PartnerNotificationDetailsViewState()
@@ -24,7 +24,7 @@ internal class PartnerNotificationDetailsViewModel(
     private fun initView(notificationId: String) {
         showLoadingView()
         viewModelScope.launch {
-            getNotificationByIdUseCase(notificationId = notificationId)
+            getPartnerNotificationUseCase(notificationId = notificationId)
                 .onSuccess {
                     showContentView {
                         PartnerNotificationDetailsViewState(

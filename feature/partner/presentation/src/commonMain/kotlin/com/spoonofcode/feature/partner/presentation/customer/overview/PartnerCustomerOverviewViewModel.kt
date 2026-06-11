@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
-import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
 import kotlinx.coroutines.launch
 

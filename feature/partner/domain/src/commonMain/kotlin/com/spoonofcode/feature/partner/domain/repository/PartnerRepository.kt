@@ -3,7 +3,6 @@ package com.spoonofcode.feature.partner.domain.repository
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.PartnerCategory
-import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.domain.model.PartnerUser
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 
@@ -28,6 +27,4 @@ interface PartnerRepository {
     suspend fun getPartnerSeries(): Result<List<ProductSeries>>
     suspend fun getPartnerCustomers(): Result<List<Customer>>
     suspend fun getCategories(): Result<List<PartnerCategory>>
-    suspend fun getPartnerNotifications(): Result<List<PartnerNotification>>
-    suspend fun deletePartnerNotification(): Result<List<PartnerNotification>>
 }
