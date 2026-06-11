@@ -13,6 +13,7 @@ import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUsersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersUseCase
+import com.spoonofcode.feature.partner.domain.usecase.PartnerSendNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -31,5 +32,6 @@ val partnerDomainModule = module {
     factoryOf(::GetPartnerUseCase)
     factoryOf(::GetPartnerNotificationsUseCase)
     factoryOf(::GetPartnerNotificationUseCase)
+    factoryOf(::PartnerSendNotificationUseCase)
     factoryOf(::UpdatePartnerUseCase)
 }
