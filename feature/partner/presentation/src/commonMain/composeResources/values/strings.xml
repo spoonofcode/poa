@@ -1,6 +1,9 @@
 <resources>
     <string name="about_partner">About partner</string>
     <string name="description">Description</string>
+    <string name="delete_notification">Delete notification</string>
+    <string name="delete_notification_title">Are you sure you want to delete the notification?</string>
+    <string name="delete_notification_text">The notification will be removed from the list and will never be sent.</string>
     <string name="facebook">Facebook</string>
     <string name="instagram">Instagram</string>
     <string name="my_customers">My customers</string>
@@ -22,7 +25,7 @@
     <string name="selected_series">Selected series: </string>
     <string name="send_notification">Send notification</string>
     <string name="send_notification_dialog_title">Are you sure you want to send notification?</string>
-    <string name="send_notification_dialog_text">Please ensure that the information you enter is correct. Once the notification is sent, it cannot be edited later.</string>
+    <string name="send_notification_dialog_text">Please ensure that the information you enter is correct.</string>
     <string name="send_notification_to_all_my_clients">Send notification to all my clients</string>
     <string name="tab_already_sent">Already sent</string>
     <string name="tab_pending">Pending</string>

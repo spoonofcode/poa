@@ -1,31 +1,34 @@
 package com.spoonofcode.feature.partner.presentation.notification.details
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.data.ext.toMillis
+import com.spoonofcode.core.data.ext.formatedLocalDateTime
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.CountdownTimer
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.partner.domain.model.PartnerNotification
+import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.cancel
+import com.spoonofcode.feature.partner.presentation.delete_notification
+import com.spoonofcode.feature.partner.presentation.delete_notification_text
+import com.spoonofcode.feature.partner.presentation.delete_notification_title
+import com.spoonofcode.feature.partner.presentation.delivery_date
+import com.spoonofcode.feature.partner.presentation.expiration_date
+import com.spoonofcode.feature.partner.presentation.link
 import com.spoonofcode.feature.partner.presentation.notification
+import com.spoonofcode.feature.partner.presentation.notification.compose.StaticSelectedItemsPanel
+import com.spoonofcode.feature.partner.presentation.selected_customers
+import com.spoonofcode.feature.partner.presentation.selected_series
+import com.spoonofcode.feature.partner.presentation.send_notification_to_all_my_clients
+import com.spoonofcode.feature.partner.presentation.text
+import com.spoonofcode.feature.partner.presentation.title
+import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationDetailsScreen(
     private val notificationId: String,
@@ -62,71 +65,71 @@ internal class PartnerNotificationDetailsScreen(
     override fun provideViewModel() = koinViewModel<PartnerNotificationDetailsViewModel>()
 
     @Composable
+    override fun provideDialogs(
+        viewState: PartnerNotificationDetailsViewState,
+        onAction: (PartnerNotificationDetailsViewAction) -> Unit
+    ) {
+        if (viewState.isDeleteNotificationDialogVisible) {
+            Dialogs.AlertDialog(
+                title = stringResource(Res.string.delete_notification_title),
+                text = stringResource(Res.string.delete_notification_text),
+                confirmButtonText = stringResource(Res.string.delete_notification),
+                dismissButtonText = stringResource(Res.string.cancel),
+                confirmAction = { onAction(PartnerNotificationDetailsViewAction.ConfirmDeleteNotification) },
+                dismissAction = { onAction(PartnerNotificationDetailsViewAction.CancelDeleteNotification) }
+            )
+        }
+    }
+
+    @Composable
     override fun provideContent(
         viewState: PartnerNotificationDetailsViewState,
         onAction: (PartnerNotificationDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-            val notification = requireNotNull(viewState.notification)
-            val uriHandler = LocalUriHandler.current
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                NotificationCard(
-                    notification = notification,
-                    onOpenLink = { uriHandler.openUri(it) }
-                )
-            }
-        }
-    }
-
-    @Composable
-    fun NotificationCard(
-        notification: PartnerNotification,
-        onOpenLink: (String) -> Unit = {}
-    ) {
-        Cards.ElevatedCard {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Texts.TLB(
-                    text = notification.title,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                Spacers.VerticalBetweenFields()
-
-                Texts.BL(
-                    text = notification.text,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                notification.expirationDateTime?.let { expiresAt ->
-                    Spacers.VerticalBetweenFields()
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CountdownTimer(
-                            targetTimeMillis = expiresAt.toMillis()
-                        )
+//            Dialogs(viewState, onAction)
+            viewState.notification?.let {
+                if (viewState.notification.topics.isNotEmpty()) {
+                    val title = when (viewState.notificationType) {
+                        PartnerNotificationType.user -> stringResource(Res.string.selected_customers)
+                        PartnerNotificationType.serie -> stringResource(Res.string.selected_series)
+                        PartnerNotificationType.partner -> stringResource(Res.string.send_notification_to_all_my_clients)
+                        else -> ""
                     }
+
+                    StaticSelectedItemsPanel(
+                        title = title,
+                        items = setOf("Example A, Example B"),
+                    )
                 }
 
-                notification.link
-                    ?.takeIf { it.isNotBlank() }
-                    ?.let { link ->
-                        Spacers.VerticalBetweenFields()
-//                        Buttons.PrimaryButton(
-//                            text = stringResource(com.spoonofcode.feature.notification.presentation.Res.string.open_link),
-//                            onClick = { onOpenLink(link) },
-//                            modifier = Modifier.fillMaxWidth()
-//                        )
-                    }
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.title),
+                    description = it.title
+                )
+
+
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.text),
+                    description = viewState.notification.text
+                )
+
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.delivery_date),
+                    description = viewState.notification.deliveryDateTime.formatedLocalDateTime()
+                )
+
+                Cards.DescriptionCard(
+                    title = stringResource(Res.string.expiration_date),
+                    description = viewState.notification.expirationDateTime.formatedLocalDateTime()
+                )
+
+                viewState.notification.link?.let { description ->
+                    Cards.DescriptionCard(
+                        title = stringResource(Res.string.link),
+                        description = description
+                    )
+                }
             }
         }
     }

@@ -1,6 +1,9 @@
 <resources>
     <string name="about_partner">O partnerze</string>
     <string name="description">Opis</string>
+    <string name="delete_notification">Usuń powiadomienie</string>
+    <string name="delete_notification_title">Czy na pewno chcesz usunąć powiadomienie?</string>
+    <string name="delete_notification_text">Powiadomienie zostanie usunięty z listy i nigdy nie zostanie wysłane.</string>
     <string name="facebook">Facebook</string>
     <string name="instagram">Instagram</string>
     <string name="my_customers">Moi klienci</string>
@@ -22,7 +25,7 @@
     <string name="selected_series">Wybrane serie: </string>
     <string name="send_notification">Wyślij powiadomienie</string>
     <string name="send_notification_dialog_title">Czy na pewno chcesz wysłać powiadomienie?</string>
-    <string name="send_notification_dialog_text">Upewnij się, że wprowadzone informacje są poprawne. Po wysłaniu powiadomienia nie będzie można go później edytować.</string>
+    <string name="send_notification_dialog_text">Upewnij się, że wprowadzone informacje są poprawne.</string>
     <string name="send_notification_to_all_my_clients">Wyślij powiadomienie do wszystkich moich klientów</string>
     <string name="tab_already_sent">Wysłane</string>
     <string name="tab_pending">Oczekujące</string>

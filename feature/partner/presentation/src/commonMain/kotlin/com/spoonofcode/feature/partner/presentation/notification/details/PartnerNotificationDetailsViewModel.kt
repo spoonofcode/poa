@@ -3,6 +3,7 @@ package com.spoonofcode.feature.partner.presentation.notification.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.DeletePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ internal class PartnerNotificationDetailsViewModel(
             is PartnerNotificationDetailsViewAction.InitView -> initView(action.notificationId)
             PartnerNotificationDetailsViewAction.DeleteNotification -> deleteNotification()
             PartnerNotificationDetailsViewAction.EditNotification -> editNotification()
+            PartnerNotificationDetailsViewAction.CancelDeleteNotification -> cancelDeleteNotification()
+            PartnerNotificationDetailsViewAction.ConfirmDeleteNotification -> confirmDeleteNotification()
         }
     }
 
@@ -26,10 +29,11 @@ internal class PartnerNotificationDetailsViewModel(
         showLoadingView()
         viewModelScope.launch {
             getPartnerNotificationUseCase(notificationId = notificationId)
-                .onSuccess {
+                .onSuccess { notification ->
                     showContentView {
                         PartnerNotificationDetailsViewState(
-                            notification = it
+                            notification = notification,
+                            notificationType = getNotificationType(notification.topics.toSet()),
                         )
                     }
                 }
@@ -39,9 +43,42 @@ internal class PartnerNotificationDetailsViewModel(
         }
     }
 
+    private fun getNotificationType(selectedTopics: Set<String>): PartnerNotificationType {
+        val firstTopic = selectedTopics.firstOrNull() ?: return PartnerNotificationType.global
+        val typePrefix = firstTopic.substringBefore("_")
+        return PartnerNotificationType.fromString(typePrefix) ?: PartnerNotificationType.global
+    }
+
     private fun deleteNotification() {
+        updateState {
+            copy(
+                isDeleteNotificationDialogVisible = true,
+            )
+        }
         viewModelScope.launch {
             deletePartnerNotificationUseCase.invoke(notificationId = currentState().notification!!.id)
+        }
+    }
+
+    private fun cancelDeleteNotification() {
+        updateState {
+            copy(
+                isDeleteNotificationDialogVisible = false,
+            )
+        }
+    }
+
+    private fun confirmDeleteNotification() {
+        showLoadingView()
+        viewModelScope.launch {
+            val notification = requireNotNull(currentState().notification)
+            deletePartnerNotificationUseCase(
+                notificationId = notification.id,
+            ).onSuccess {
+                viewModelNavigator.pop()
+            }.onFailure {
+                showErrorSnackbar(it)
+            }
         }
     }
 
