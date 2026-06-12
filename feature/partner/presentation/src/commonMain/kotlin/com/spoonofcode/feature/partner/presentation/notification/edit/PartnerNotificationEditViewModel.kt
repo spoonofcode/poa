@@ -3,16 +3,17 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.PartnerSendNotificationUseCase
+import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 internal class PartnerNotificationEditViewModel(
     private val sendNotificationUseCase: PartnerSendNotificationUseCase,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
+    private val updatePartnerNotificationUseCase: UpdatePartnerNotificationUseCase,
 ) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction>(
     initialViewState = PartnerNotificationEditViewState(),
     initialScreenState = ScreenState.CONTENT,
@@ -55,6 +56,7 @@ internal class PartnerNotificationEditViewModel(
                     .onSuccess { notification ->
                         showContentView {
                             PartnerNotificationEditViewState(
+                                notificationId = notificationId,
                                 notificationType = getNotificationType(notification.topics.toSet()),
                                 selectedTopics = notification.topics.toSet(),
                                 selectedNames = selectedNames,
@@ -147,17 +149,33 @@ internal class PartnerNotificationEditViewModel(
         viewModelScope.launch {
             showLoadingView()
             val currentState = currentState()
-            sendNotificationUseCase(
-                title = currentState.title,
-                text = currentState.text,
-                link = currentState.link,
-                topics = currentState.selectedTopics.toList(),
-                deliveryDateTime = currentState.deliveryDateTime,
-                expirationDateTime = currentState.expirationDateTime
-            ).onSuccess {
-                viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AppModuleRoute.MainHost)))
-            }.onFailure { error ->
-                showErrorSnackbar(error)
+            if (currentState.notificationId != null) {
+                updatePartnerNotificationUseCase(
+                    notificationId = currentState.notificationId,
+                    title = currentState.title,
+                    text = currentState.text,
+                    link = currentState.link,
+                    topics = currentState.selectedTopics.toList(),
+                    deliveryDateTime = currentState.deliveryDateTime,
+                    expirationDateTime = currentState.expirationDateTime
+                ).onSuccess {
+                    viewModelNavigator.pop()
+                }.onFailure { error ->
+                    showErrorSnackbar(error)
+                }
+            } else {
+                sendNotificationUseCase(
+                    title = currentState.title,
+                    text = currentState.text,
+                    link = currentState.link,
+                    topics = currentState.selectedTopics.toList(),
+                    deliveryDateTime = currentState.deliveryDateTime,
+                    expirationDateTime = currentState.expirationDateTime
+                ).onSuccess {
+                    viewModelNavigator.pop()
+                }.onFailure { error ->
+                    showErrorSnackbar(error)
+                }
             }
         }
     }

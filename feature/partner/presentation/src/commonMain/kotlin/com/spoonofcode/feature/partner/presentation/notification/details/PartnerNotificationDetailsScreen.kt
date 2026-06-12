@@ -98,7 +98,7 @@ internal class PartnerNotificationDetailsScreen(
 
                     StaticSelectedItemsPanel(
                         title = title,
-                        items = setOf("Example A, Example B"),
+                        items = setOf("Example A, Example B, Example C"),
                     )
                 }
 

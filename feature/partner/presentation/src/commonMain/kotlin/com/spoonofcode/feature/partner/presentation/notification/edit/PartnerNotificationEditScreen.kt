@@ -19,6 +19,7 @@ import com.spoonofcode.feature.partner.presentation.expiration_date
 import com.spoonofcode.feature.partner.presentation.link
 import com.spoonofcode.feature.partner.presentation.notification
 import com.spoonofcode.feature.partner.presentation.notification.compose.StaticSelectedItemsPanel
+import com.spoonofcode.feature.partner.presentation.save_changes
 import com.spoonofcode.feature.partner.presentation.selected_customers
 import com.spoonofcode.feature.partner.presentation.selected_series
 import com.spoonofcode.feature.partner.presentation.send_notification
@@ -138,7 +139,11 @@ internal class PartnerNotificationEditScreen(
             Spacers.Weight1(this)
 
             Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.send_notification),
+                text = if (viewState.notificationId == null) {
+                    stringResource(resource = Res.string.send_notification)
+                } else {
+                    stringResource(resource = Res.string.save_changes)
+                },
                 onClick = { onAction(PartnerNotificationEditViewAction.SendNotification) }
             )
         }
