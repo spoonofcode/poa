@@ -159,7 +159,6 @@ internal class PartnerNotificationEditViewModel(
             }.onFailure { error ->
                 showErrorSnackbar(error)
             }
-
         }
     }
 }

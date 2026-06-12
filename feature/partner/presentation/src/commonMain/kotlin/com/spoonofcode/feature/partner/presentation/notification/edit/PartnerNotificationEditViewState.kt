@@ -23,7 +23,7 @@ internal data class PartnerNotificationEditViewState(
         .plus(TWO_HOURS)
         .roundToNextHour(),
     val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(TWO_HOURS)
+        .plus(TWENTY_SIX_HOURS)
         .roundToNextHour(),
     val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
         .plus(TWO_HOURS)
@@ -31,6 +31,7 @@ internal data class PartnerNotificationEditViewState(
     val isSendNotificationDialogVisible: Boolean = false,
 ) : BaseViewState() {
     companion object {
+        private const val TWENTY_SIX_HOURS = 26
         private const val TWO_HOURS = 2
     }
 }
