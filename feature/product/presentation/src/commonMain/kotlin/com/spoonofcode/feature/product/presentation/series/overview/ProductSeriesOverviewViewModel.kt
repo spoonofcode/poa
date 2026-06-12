@@ -3,8 +3,8 @@ package com.spoonofcode.feature.product.presentation.series.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
-import com.spoonofcode.feature.notification.domain.model.NotificationType
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerProductSeriesUseCase
 import kotlinx.coroutines.launch
 
@@ -63,10 +63,9 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(
-                    NotificationModuleRoute.NotificationEdit(
-                        notificationTypeName = NotificationType.serie.name,
+                    PartnerModuleRoute.PartnerNotificationEdit(
                         selectedTopics = currentState().checkedProductSeriesNames.map {
-                            NotificationType.serie.createTopic(it)
+                            PartnerNotificationType.serie.createTopic(it)
                         }.toSet(),
                         selectedNames = currentState().checkedProductSeriesNames,
                     )

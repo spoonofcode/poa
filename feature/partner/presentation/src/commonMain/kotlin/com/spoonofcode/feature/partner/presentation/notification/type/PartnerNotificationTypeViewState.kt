@@ -1,9 +1,9 @@
-package com.spoonofcode.feature.notification.presentation.type
+package com.spoonofcode.feature.partner.presentation.notification.type
 
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.presentation.base.BaseViewState
 
 @Immutable
-internal data class NotificationTypeViewState(
+internal data class PartnerNotificationTypeViewState(
     val buttonToAllEnable: Boolean = false,
 ) : BaseViewState()

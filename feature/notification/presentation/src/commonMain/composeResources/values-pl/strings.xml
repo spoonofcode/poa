@@ -1,9 +1,4 @@
 <resources>
-    <string name="cancel">Anuluj</string>
-    <string name="delivery_date">Data dostarczenia</string>
-    <string name="expiration_date">Data ważności</string>
-    <string name="link">Link</string>
-
     <string name="notifications_all_push_title">Wszystkie powiadomienia Push</string>
     <string name="notifications_all_push_description">Otrzymuj wszystkie powiadomienia Push</string>
     <string name="notifications_personalized_title">Spersonalizowane</string>
@@ -32,19 +27,6 @@
     <string name="rational_notification_dialog_confirm_button_text">Tak, włącz</string>
     <string name="rational_notification_dialog_dismiss_button_text">Nie, dziękuję</string>
     <string name="save_changes">Zapisz zmiany</string>
-    <string name="selected_customers">Wybrani użytkownicy: </string>
-    <string name="selected_series">Wybrane serie: </string>
-    <string name="send_notification">Wyślij powiadomienie</string>
-    <string name="send_notification_dialog_title">Czy na pewno chcesz wysłać powiadomienie?</string>
-    <string name="send_notification_dialog_text">Upewnij się, że podane informacje są poprawne. Po wysłaniu powiadomienia nie będzie można go później edytować.</string>
-    <string name="send_notification_to_all_my_clietns">Wyślij powiadomienie do wszystkich moich klientów</string>
     <string name="tab_already_read">Przeczytane</string>
-    <string name="tab_email">Email</string>
     <string name="tab_new">Nowe</string>
-    <string name="title">Tytuł</string>
-    <string name="text">Tekst</string>
-    <string name="to_all">Do wszystkich</string>
-    <string name="to_all_my_customers">Do wszystkich moich klientów</string>
-    <string name="to_selected_customers">Do wybranych klientów</string>
-    <string name="to_selected_series">Do wybranych serii</string>
 </resources>

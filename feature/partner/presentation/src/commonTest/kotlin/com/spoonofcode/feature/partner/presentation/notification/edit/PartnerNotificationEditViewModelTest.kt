@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.presentation.edit
+package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ScreenState
@@ -6,8 +6,8 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.test.ext.containsTypes
 import com.spoonofcode.feature.appnavigation.AppModuleRoute
-import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
-import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
+import com.spoonofcode.feature.partner.domain.repository.PartnerNotificationRepository
+import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,14 +19,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class NotificationEditViewModelTest : BaseViewModelTest() {
+class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: NotificationEditViewModel
-    private lateinit var notificationRepository: NotificationRepository
+    private lateinit var viewModel: PartnerNotificationEditViewModel
+    private lateinit var notificationRepository: PartnerNotificationRepository
 
     @BeforeTest
     override fun beforeTest() {
-        modules = arrayOf(notificationPresentationTestModule)
+        modules = arrayOf(partnerPresentationTestModule)
         super.beforeTest()
         notificationRepository = getKoin().get()
         viewModel = getSut()
@@ -42,7 +42,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             assertEquals(
                 expected = ViewState(
-                    data = NotificationEditViewState(),
+                    data = PartnerNotificationEditViewState(),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
@@ -57,14 +57,16 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.InitView(
+            viewModel.onAction(PartnerNotificationEditViewAction.InitView(
+                notificationType = com.spoonofcode.feature.partner.domain.model.PartnerNotificationType.global,
                 selectedTopics = selectedTopics,
                 selectedNames = selectedNames,
             ))
 
             assertEquals(
                 expected = ViewState(
-                    data = NotificationEditViewState(
+                    data = PartnerNotificationEditViewState(
+                        notificationType = com.spoonofcode.feature.partner.domain.model.PartnerNotificationType.global,
                         selectedTopics = selectedTopics,
                         selectedNames = selectedNames,
                     ),
@@ -81,11 +83,11 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.ChangeLink(link))
+            viewModel.onAction(PartnerNotificationEditViewAction.ChangeLink(link))
 
             assertEquals(
                 expected = ViewState(
-                    data = NotificationEditViewState(
+                    data = PartnerNotificationEditViewState(
                         link = link,
                     ),
                     screenState = ScreenState.CONTENT,
@@ -101,11 +103,11 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.ChangeText(text))
+            viewModel.onAction(PartnerNotificationEditViewAction.ChangeText(text))
 
             assertEquals(
                 expected = ViewState(
-                    data = NotificationEditViewState(
+                    data = PartnerNotificationEditViewState(
                         text = text,
                     ),
                     screenState = ScreenState.CONTENT,
@@ -121,11 +123,11 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.ChangeTitle(title))
+            viewModel.onAction(PartnerNotificationEditViewAction.ChangeTitle(title))
 
             assertEquals(
                 expected = ViewState(
-                    data = NotificationEditViewState(
+                    data = PartnerNotificationEditViewState(
                         title = title,
                     ),
                     screenState = ScreenState.CONTENT,
@@ -157,17 +159,36 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         viewModel.viewState.test {
             skipItems(1)
 
-            viewModel.onAction(NotificationEditViewAction.SendNotification)
+            viewModel.onAction(PartnerNotificationEditViewAction.SendNotification)
 
             assertEquals(
                 expected = ViewState(
-                    data = NotificationEditViewState(
+                    data = PartnerNotificationEditViewState(
                         selectedTopics = selectedTopics,
                         selectedNames = selectedNames,
                         title = title,
                         text = text,
                         link = link,
-                        expirationDateTime = expirationDateTime
+                        expirationDateTime = expirationDateTime,
+                        isSendNotificationDialogVisible = true
+                    ),
+                    screenState = ScreenState.CONTENT,
+                ),
+                actual = awaitItem()
+            )
+
+            viewModel.onAction(PartnerNotificationEditViewAction.ConfirmSendNotification)
+
+            assertEquals(
+                expected = ViewState(
+                    data = PartnerNotificationEditViewState(
+                        selectedTopics = selectedTopics,
+                        selectedNames = selectedNames,
+                        title = title,
+                        text = text,
+                        link = link,
+                        expirationDateTime = expirationDateTime,
+                        isSendNotificationDialogVisible = true
                     ),
                     screenState = ScreenState.LOADING,
                 ),
@@ -176,7 +197,7 @@ class NotificationEditViewModelTest : BaseViewModelTest() {
         }
 
         verifySuspend {
-            notificationRepository.create(any(), any(), any(), any(), any(), any())
+            notificationRepository.createNotification(any(), any(), any(), any(), any(), any(), any())
         }
 
         verifySuspend { routeResolver.resolve(AppModuleRoute.MainHost) }
