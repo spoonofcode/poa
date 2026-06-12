@@ -14,5 +14,5 @@ internal data class PartnerNotificationDetailsViewState(
     val isDeleteNotificationDialogVisible: Boolean = false,
 ) : BaseViewState() {
     val isNotificationEditable: Boolean
-        get() = (notification?.deliveryDateTime?.toMillis() ?: 0) < Clock.System.now().toEpochMilliseconds()
+        get() = (notification?.deliveryDateTime?.toMillis() ?: 0) > Clock.System.now().toEpochMilliseconds()
 }
