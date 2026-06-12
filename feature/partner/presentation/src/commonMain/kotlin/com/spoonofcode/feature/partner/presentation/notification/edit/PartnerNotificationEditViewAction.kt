@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import com.spoonofcode.core.presentation.base.BaseViewAction
-import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import kotlinx.datetime.LocalDateTime
 
 internal sealed interface PartnerNotificationEditViewAction : BaseViewAction {
@@ -15,6 +14,7 @@ internal sealed interface PartnerNotificationEditViewAction : BaseViewAction {
     data class ChangeText(val text: String) : PartnerNotificationEditViewAction
     data class ChangeTitle(val title: String) : PartnerNotificationEditViewAction
     data class InitView(
+        val notificationId: String? = null,
         val selectedTopics: Set<String>,
         val selectedNames: Set<String>,
     ) : PartnerNotificationEditViewAction

@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.notification.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.usecase.DeletePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ internal class PartnerNotificationDetailsViewModel(
         when (action) {
             is PartnerNotificationDetailsViewAction.InitView -> initView(action.notificationId)
             PartnerNotificationDetailsViewAction.DeleteNotification -> deleteNotification()
-            PartnerNotificationDetailsViewAction.EditNotification -> editNotificaiton()
+            PartnerNotificationDetailsViewAction.EditNotification -> editNotification()
         }
     }
 
@@ -44,11 +45,15 @@ internal class PartnerNotificationDetailsViewModel(
         }
     }
 
-    private fun editNotificaiton() {
+    private fun editNotification() {
         viewModelScope.launch {
-//            viewModelNavigator.push(
-//                routeResolver.resolve(NotificationModuleRoute.NotificationDetails(notificationId))
-//            )
+            viewModelNavigator.push(
+                routeResolver.resolve(
+                    PartnerModuleRoute.PartnerNotificationEdit(
+                        notificationId = currentState().notification!!.id
+                    )
+                )
+            )
         }
     }
 }

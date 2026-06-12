@@ -46,6 +46,7 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationEditScreen(
+    val notificationId: String? = null,
     val selectedTopics: Set<String> = emptySet(),
     val selectedNames: Set<String> = emptySet(),
 ) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction>() {
@@ -56,6 +57,7 @@ internal class PartnerNotificationEditScreen(
         {
             onAction(
                 PartnerNotificationEditViewAction.InitView(
+                    notificationId = notificationId,
                     selectedTopics = selectedTopics,
                     selectedNames = selectedNames,
                 )

@@ -28,6 +28,7 @@ class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
                 )
 
                 is PartnerModuleRoute.PartnerNotificationEdit -> PartnerNotificationEditScreen(
+                    notificationId = it.notificationId,
                     selectedNames = it.selectedNames,
                     selectedTopics = it.selectedTopics,
                 )

@@ -14,6 +14,7 @@ sealed class PartnerModuleRoute : ModuleRoute() {
     ) : PartnerModuleRoute()
 
     data class PartnerNotificationEdit(
+        val notificationId: String? = null,
         val selectedNames: Set<String> = emptySet(),
         val selectedTopics: Set<String> = emptySet(),
     ) : PartnerModuleRoute()

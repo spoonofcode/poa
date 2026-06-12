@@ -5,12 +5,14 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.PartnerSendNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 internal class PartnerNotificationEditViewModel(
     private val sendNotificationUseCase: PartnerSendNotificationUseCase,
+    private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
 ) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction>(
     initialViewState = PartnerNotificationEditViewState(),
     initialScreenState = ScreenState.CONTENT,
@@ -30,6 +32,7 @@ internal class PartnerNotificationEditViewModel(
             is PartnerNotificationEditViewAction.ChangeText -> changeText(action.text)
             is PartnerNotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
             is PartnerNotificationEditViewAction.InitView -> initView(
+                action.notificationId,
                 action.selectedTopics,
                 action.selectedNames
             )
@@ -41,15 +44,40 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun initView(
+        notificationId: String? = null,
         selectedTopics: Set<String>,
         selectedNames: Set<String>
     ) {
-        updateState {
-            PartnerNotificationEditViewState(
-                notificationType = getNotificationType(selectedTopics),
-                selectedTopics = selectedTopics,
-                selectedNames = selectedNames,
-            )
+        showLoadingView()
+        if (notificationId != null) {
+            viewModelScope.launch {
+                getPartnerNotificationUseCase(notificationId = notificationId)
+                    .onSuccess { notification ->
+                        showContentView {
+                            PartnerNotificationEditViewState(
+                                notificationType = getNotificationType(notification.topics.toSet()),
+                                selectedTopics = notification.topics.toSet(),
+                                selectedNames = selectedNames,
+                                title = notification.title,
+                                text = notification.text,
+                                link = notification.link ?: "",
+                                deliveryDateTime = notification.deliveryDateTime,
+                                expirationDateTime = notification.expirationDateTime
+                            )
+                        }
+                    }
+                    .onFailure {
+                        showErrorView()
+                    }
+            }
+        } else {
+            showContentView {
+                PartnerNotificationEditViewState(
+                    notificationType = getNotificationType(selectedTopics),
+                    selectedTopics = selectedTopics,
+                    selectedNames = selectedNames,
+                )
+            }
         }
     }
 
