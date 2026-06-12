@@ -30,7 +30,6 @@ internal class PartnerNotificationEditViewModel(
             is PartnerNotificationEditViewAction.ChangeText -> changeText(action.text)
             is PartnerNotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
             is PartnerNotificationEditViewAction.InitView -> initView(
-                action.notificationType,
                 action.selectedTopics,
                 action.selectedNames
             )
@@ -42,17 +41,22 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun initView(
-        notificationType: PartnerNotificationType,
         selectedTopics: Set<String>,
         selectedNames: Set<String>
     ) {
         updateState {
             PartnerNotificationEditViewState(
-                notificationType = notificationType,
+                notificationType = getNotificationType(selectedTopics),
                 selectedTopics = selectedTopics,
                 selectedNames = selectedNames,
             )
         }
+    }
+
+    private fun getNotificationType(selectedTopics: Set<String>): PartnerNotificationType {
+        val firstTopic = selectedTopics.firstOrNull() ?: return PartnerNotificationType.global
+        val typePrefix = firstTopic.substringBefore("_")
+        return PartnerNotificationType.fromString(typePrefix) ?: PartnerNotificationType.global
     }
 
     private fun changeTitle(title: String) {

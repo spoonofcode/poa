@@ -28,8 +28,6 @@ class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
                 )
 
                 is PartnerModuleRoute.PartnerNotificationEdit -> PartnerNotificationEditScreen(
-                    notificationType = PartnerNotificationType.fromString(it.notificationTypeName)
-                        ?: PartnerNotificationType.global,
                     selectedNames = it.selectedNames,
                     selectedTopics = it.selectedTopics,
                 )

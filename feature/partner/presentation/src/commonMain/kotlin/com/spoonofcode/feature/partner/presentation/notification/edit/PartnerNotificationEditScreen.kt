@@ -46,7 +46,6 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationEditScreen(
-    val notificationType: PartnerNotificationType,
     val selectedTopics: Set<String> = emptySet(),
     val selectedNames: Set<String> = emptySet(),
 ) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction>() {
@@ -57,7 +56,6 @@ internal class PartnerNotificationEditScreen(
         {
             onAction(
                 PartnerNotificationEditViewAction.InitView(
-                    notificationType = notificationType,
                     selectedTopics = selectedTopics,
                     selectedNames = selectedNames,
                 )
@@ -232,9 +230,7 @@ internal class PartnerNotificationEditScreen(
 @Preview
 @Composable
 private fun PartnerNotificationEditScreenContentPreview() {
-    PartnerNotificationEditScreen(
-        notificationType = PartnerNotificationType.global
-    )
+    PartnerNotificationEditScreen()
         .PreviewContent(
             PartnerNotificationEditViewState()
         )

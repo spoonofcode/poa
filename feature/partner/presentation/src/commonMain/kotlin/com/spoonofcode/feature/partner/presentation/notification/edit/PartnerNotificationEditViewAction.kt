@@ -15,7 +15,6 @@ internal sealed interface PartnerNotificationEditViewAction : BaseViewAction {
     data class ChangeText(val text: String) : PartnerNotificationEditViewAction
     data class ChangeTitle(val title: String) : PartnerNotificationEditViewAction
     data class InitView(
-        val notificationType: PartnerNotificationType,
         val selectedTopics: Set<String>,
         val selectedNames: Set<String>,
     ) : PartnerNotificationEditViewAction

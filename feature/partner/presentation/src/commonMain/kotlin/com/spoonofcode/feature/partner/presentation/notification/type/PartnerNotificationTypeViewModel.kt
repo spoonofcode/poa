@@ -31,7 +31,6 @@ internal class PartnerNotificationTypeViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     PartnerModuleRoute.PartnerNotificationEdit(
-                        notificationTypeName = PartnerNotificationType.global.name,
                         selectedTopics = setOf(PartnerNotificationType.global.name),
                     )
                 )
@@ -59,7 +58,6 @@ internal class PartnerNotificationTypeViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     PartnerModuleRoute.PartnerNotificationEdit(
-                        notificationTypeName = PartnerNotificationType.partner.name,
                         selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
                     )
                 )

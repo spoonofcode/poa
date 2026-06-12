@@ -64,7 +64,6 @@ internal class ProductSeriesOverviewViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     PartnerModuleRoute.PartnerNotificationEdit(
-                        notificationTypeName = PartnerNotificationType.serie.name,
                         selectedTopics = currentState().checkedProductSeriesNames.map {
                             PartnerNotificationType.serie.createTopic(it)
                         }.toSet(),
