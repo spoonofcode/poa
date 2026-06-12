@@ -26,10 +26,12 @@ internal class PartnerNotificationsViewModel(
         showLoadingView()
         viewModelScope.launch {
             getPartnerNotificationsUseCase()
-                .onSuccess {
+                .onSuccess { partnerNotifications ->
                     showContentView {
                         PartnerNotificationsViewState(
-                            partnerNotifications = it,
+                            partnerNotifications = partnerNotifications.filterNot { notification ->
+                                notification.state == NOTIFICATION_CANCELED_STATE
+                            },
                         )
                     }
                 }
@@ -49,5 +51,9 @@ internal class PartnerNotificationsViewModel(
                 )
             )
         }
+    }
+
+    companion object {
+        private const val NOTIFICATION_CANCELED_STATE = "canceled"
     }
 }

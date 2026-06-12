@@ -87,7 +87,6 @@ internal class PartnerNotificationDetailsScreen(
         onAction: (PartnerNotificationDetailsViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
-//            Dialogs(viewState, onAction)
             viewState.notification?.let {
                 if (viewState.notification.topics.isNotEmpty()) {
                     val title = when (viewState.notificationType) {
