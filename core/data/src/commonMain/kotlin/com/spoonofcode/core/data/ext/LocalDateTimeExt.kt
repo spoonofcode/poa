@@ -2,15 +2,17 @@ package com.spoonofcode.core.data.ext
 
 import com.spoonofcode.core.data.utils.LocalDateUtils
 import com.spoonofcode.core.data.utils.TimeZoneUtils
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.format
 import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.char
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Duration.Companion.hours
 import kotlin.time.Instant
 
 private val DEFAULT_DATE_TIME_FORMAT = LocalDateTime.Format {
@@ -47,18 +49,18 @@ fun LocalDateTime.isAfterToday(): Boolean {
     return this.date > LocalDateUtils.today()
 }
 
-fun LocalDateTime.plus(hours: Int): LocalDateTime =
+fun LocalDateTime.plus(value: Int, unit: DateTimeUnit): LocalDateTime =
     this.toInstant(TimeZoneUtils.DEFAULT_ZONE)
-        .plus(hours.hours)
+        .plus(value, unit, TimeZoneUtils.DEFAULT_ZONE)
         .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
 
-fun LocalDateTime.minus(hours: Int): LocalDateTime =
+fun LocalDateTime.minus(value: Int, unit: DateTimeUnit): LocalDateTime =
     this.toInstant(TimeZoneUtils.DEFAULT_ZONE)
-        .minus(hours.hours)
+        .minus(value, unit, TimeZoneUtils.DEFAULT_ZONE)
         .toLocalDateTime(TimeZoneUtils.DEFAULT_ZONE)
 
 fun LocalDateTime.roundToNextHour(): LocalDateTime =
-    LocalDateTime(this.year, this.monthNumber, this.dayOfMonth, this.plus(1).hour, 0, 0, 0)
+    LocalDateTime(this.year, this.monthNumber, this.dayOfMonth, this.plus(1, DateTimeUnit.HOUR).hour, 0, 0, 0)
 
 
 fun LocalDateTime.toZonedInstant(): Instant = this.toInstant(TimeZoneUtils.DEFAULT_ZONE)

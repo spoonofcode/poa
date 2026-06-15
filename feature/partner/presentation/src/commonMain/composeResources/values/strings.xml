@@ -1,9 +1,12 @@
 <resources>
     <string name="about_partner">About partner</string>
+    <string name="cancel">Cancel</string>
+    <string name="delivery_date">Delivery date</string>
     <string name="description">Description</string>
     <string name="delete_notification">Delete notification</string>
     <string name="delete_notification_title">Are you sure you want to delete the notification?</string>
     <string name="delete_notification_text">The notification will be removed from the list and will never be sent.</string>
+    <string name="expiration_date">Expiration date</string>
     <string name="facebook">Facebook</string>
     <string name="instagram">Instagram</string>
     <string name="my_customers">My customers</string>
@@ -17,9 +20,6 @@
     <string name="partner_notifications">Partner notifications</string>
     <string name="partners">Partners</string>
     <string name="reports">Reports</string>
-    <string name="cancel">Cancel</string>
-    <string name="delivery_date">Delivery date</string>
-    <string name="expiration_date">Expiration date</string>
     <string name="save_changes">Save changes</string>
     <string name="selected_customers">Selected customers: </string>
     <string name="selected_series">Selected series: </string>
