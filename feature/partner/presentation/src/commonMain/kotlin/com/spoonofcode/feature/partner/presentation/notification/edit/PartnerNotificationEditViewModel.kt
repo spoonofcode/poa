@@ -4,14 +4,14 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
+import com.spoonofcode.feature.partner.domain.usecase.CreatePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
-import com.spoonofcode.feature.partner.domain.usecase.PartnerSendNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerNotificationUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
 internal class PartnerNotificationEditViewModel(
-    private val sendNotificationUseCase: PartnerSendNotificationUseCase,
+    private val createPartnerNotificationUseCase: CreatePartnerNotificationUseCase,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val updatePartnerNotificationUseCase: UpdatePartnerNotificationUseCase,
 ) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction>(
@@ -164,7 +164,7 @@ internal class PartnerNotificationEditViewModel(
                     showErrorSnackbar(error)
                 }
             } else {
-                sendNotificationUseCase(
+                createPartnerNotificationUseCase(
                     title = currentState.title,
                     text = currentState.text,
                     link = currentState.link,
