@@ -4,7 +4,7 @@ import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.feature.partner.domain.repository.PartnerNotificationRepository
 import kotlinx.datetime.LocalDateTime
 
-class PartnerSendNotificationUseCase(
+class CreatePartnerNotificationUseCase(
     private val notificationRepository: PartnerNotificationRepository,
     private val sessionRepository: SessionRepository,
 ) {
