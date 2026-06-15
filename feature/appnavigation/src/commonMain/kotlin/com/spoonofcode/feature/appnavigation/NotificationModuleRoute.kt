@@ -5,17 +5,10 @@ sealed class NotificationModuleRoute : ModuleRoute() {
         val notificationId: String,
     ) : NotificationModuleRoute()
 
-    data class NotificationEdit(
-        val notificationTypeName: String,
-        val selectedNames: Set<String> = emptySet(),
-        val selectedTopics: Set<String> = emptySet(),
-    ) : NotificationModuleRoute()
-
     object NotificationOverview : NotificationModuleRoute()
     data class NotificationSettings(
         val backNavigationEnabled: Boolean = true,
     ) : NotificationModuleRoute()
 
-    object NotificationType : NotificationModuleRoute()
     object NotificationChannel : NotificationModuleRoute()
 }

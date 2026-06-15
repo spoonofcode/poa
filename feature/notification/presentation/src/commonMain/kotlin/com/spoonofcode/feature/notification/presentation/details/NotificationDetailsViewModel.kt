@@ -22,7 +22,6 @@ internal class NotificationDetailsViewModel(
     private fun initView(notificationId: String) {
         showLoadingView()
         viewModelScope.launch {
-            markNotificationAsReadUseCase(notificationId = notificationId)
             getNotificationByIdUseCase(notificationId = notificationId)
                 .onSuccess {
                     showContentView {

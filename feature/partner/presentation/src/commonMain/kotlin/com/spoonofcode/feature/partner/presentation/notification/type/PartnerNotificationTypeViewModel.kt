@@ -1,29 +1,28 @@
-package com.spoonofcode.feature.notification.presentation.type
+package com.spoonofcode.feature.partner.presentation.notification.type
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
-import com.spoonofcode.feature.notification.domain.model.NotificationType
-import com.spoonofcode.feature.notification.domain.usecase.GetPartnerNotificationTopicUseCase
+import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
+import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationTopicUseCase
 import kotlinx.coroutines.launch
 
-internal class NotificationTypeViewModel(
+internal class PartnerNotificationTypeViewModel(
     private val getPartnerNotificationTopicUseCase: GetPartnerNotificationTopicUseCase,
 ) :
-    BaseViewModel<NotificationTypeViewState, NotificationTypeViewAction>(
-        NotificationTypeViewState(),
+    BaseViewModel<PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction>(
+        PartnerNotificationTypeViewState(),
         initialScreenState = ScreenState.CONTENT,
     ) {
 
-    override fun onAction(action: NotificationTypeViewAction) {
+    override fun onAction(action: PartnerNotificationTypeViewAction) {
         when (action) {
-            NotificationTypeViewAction.SendNotificationToAllCustomers -> sendNotificationToAllCustomers()
-            NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers -> sendNotificationToSelectedPartnerCustomers()
-            NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries -> sendNotificationToSelectedPartnerProductSeries()
-            NotificationTypeViewAction.SendNotificationToAllPartnerCustomers -> sendNotificationToAllPartnerCustomers()
+            PartnerNotificationTypeViewAction.SendNotificationToAllCustomers -> sendNotificationToAllCustomers()
+            PartnerNotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers -> sendNotificationToSelectedPartnerCustomers()
+            PartnerNotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries -> sendNotificationToSelectedPartnerProductSeries()
+            PartnerNotificationTypeViewAction.SendNotificationToAllPartnerCustomers -> sendNotificationToAllPartnerCustomers()
         }
     }
 
@@ -31,9 +30,8 @@ internal class NotificationTypeViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 routeResolver.resolve(
-                    NotificationModuleRoute.NotificationEdit(
-                        notificationTypeName = NotificationType.global.name,
-                        selectedTopics = setOf(NotificationType.global.name),
+                    PartnerModuleRoute.PartnerNotificationEdit(
+                        selectedTopics = setOf(PartnerNotificationType.global.name),
                     )
                 )
             )
@@ -59,9 +57,8 @@ internal class NotificationTypeViewModel(
             val partnerId = getPartnerNotificationTopicUseCase()
             viewModelNavigator.push(
                 routeResolver.resolve(
-                    NotificationModuleRoute.NotificationEdit(
-                        notificationTypeName = NotificationType.partner.name,
-                        selectedTopics = setOf(NotificationType.partner.createTopic(partnerId))
+                    PartnerModuleRoute.PartnerNotificationEdit(
+                        selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
                     )
                 )
             )

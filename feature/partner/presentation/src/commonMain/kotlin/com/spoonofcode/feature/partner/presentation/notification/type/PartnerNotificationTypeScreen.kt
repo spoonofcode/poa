@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.notification.presentation.type
+package com.spoonofcode.feature.partner.presentation.notification.type
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
@@ -17,25 +17,25 @@ import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.feature.notification.presentation.Res
-import com.spoonofcode.feature.notification.presentation.notification_type
-import com.spoonofcode.feature.notification.presentation.to_all
-import com.spoonofcode.feature.notification.presentation.to_all_my_customers
-import com.spoonofcode.feature.notification.presentation.to_selected_customers
-import com.spoonofcode.feature.notification.presentation.to_selected_series
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.notification_type
+import com.spoonofcode.feature.partner.presentation.to_all
+import com.spoonofcode.feature.partner.presentation.to_all_my_customers
+import com.spoonofcode.feature.partner.presentation.to_selected_customers
+import com.spoonofcode.feature.partner.presentation.to_selected_series
 
-internal class NotificationTypeScreen :
-    BaseScreen<NotificationTypeViewModel, NotificationTypeViewState, NotificationTypeViewAction>() {
+internal class PartnerNotificationTypeScreen :
+    BaseScreen<PartnerNotificationTypeViewModel, PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction>() {
 
     override fun provideTopAppBarTitle() = Res.string.notification_type
 
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationTypeViewModel>()
+    override fun provideViewModel() = koinViewModel<PartnerNotificationTypeViewModel>()
 
     @Composable
     override fun provideContent(
-        viewState: NotificationTypeViewState,
-        onAction: (NotificationTypeViewAction) -> Unit,
+        viewState: PartnerNotificationTypeViewState,
+        onAction: (PartnerNotificationTypeViewAction) -> Unit,
     ): @Composable (ColumnScope.() -> Unit) {
         return {
             Row(
@@ -45,7 +45,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Groups,
                     text = stringResource(resource = Res.string.to_all),
-                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToAllCustomers) },
+                    onClick = { onAction(PartnerNotificationTypeViewAction.SendNotificationToAllCustomers) },
                     modifier = Modifier.weight(1f),
                     enabled = viewState.buttonToAllEnable,
                 )
@@ -53,7 +53,7 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.Diversity3,
                     text = stringResource(resource = Res.string.to_all_my_customers),
-                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToAllPartnerCustomers) },
+                    onClick = { onAction(PartnerNotificationTypeViewAction.SendNotificationToAllPartnerCustomers) },
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -65,14 +65,14 @@ internal class NotificationTypeScreen :
                 IconTextButton(
                     icon = Icons.Default.PersonSearch,
                     text = stringResource(resource = Res.string.to_selected_customers),
-                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers) },
+                    onClick = { onAction(PartnerNotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers) },
                     modifier = Modifier.weight(1f)
                 )
 
                 IconTextButton(
                     icon = Icons.Default.WebStories,
                     text = stringResource(resource = Res.string.to_selected_series),
-                    onClick = { onAction(NotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries) },
+                    onClick = { onAction(PartnerNotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries) },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -83,10 +83,10 @@ internal class NotificationTypeScreen :
 // region previews
 @Preview
 @Composable
-private fun NotificationTypeScreenContentPreview() {
-    NotificationTypeScreen()
+private fun PartnerNotificationTypeScreenContentPreview() {
+    PartnerNotificationTypeScreen()
         .PreviewContent(
-            NotificationTypeViewState()
+            PartnerNotificationTypeViewState()
         )
 }
 // endregion
