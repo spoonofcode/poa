@@ -19,7 +19,7 @@ googleServices = "4.4.4"
 
 # --- Kotlin / KMP / Compose ---
 kotlin = "2.3.21"
-composeMultiplatform = "1.10.3"
+composeMultiplatform = "1.11.1"
 
 # --- AndroidX ---
 androidxActivityCompose = "1.13.0"
@@ -87,6 +87,7 @@ androidx-credentials-play-service-auth = { module = "androidx.credentials:creden
 androidx-security = { module = "androidx.security:security-crypto", version.ref = "androidxSecurity" }
 androidx-splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplash" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewModelCompose" }
+lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewModelCompose" }
 
 # --- Compose Multiplatform ---
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
@@ -179,11 +180,3 @@ mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
-# --- Your convention plugins (version provided by build-logic) ---
-convention-android-application = { id = "com.spoonofcode.convention.android.application", version = "unspecified" }
-convention-android-application-compose = { id = "com.spoonofcode.convention.android.application.compose", version = "unspecified" }
-convention-cmp-application = { id = "com.spoonofcode.convention.cmp.application", version = "unspecified" }
-convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", version = "unspecified" }
-convention-cmp-library = { id = "com.spoonofcode.convention.cmp.library", version = "unspecified" }
-convention-cmp-feature = { id = "com.spoonofcode.convention.cmp.feature", version = "unspecified" }
-convention-buildkonfig = { id = "com.spoonofcode.convention.buildkonfig", version = "unspecified" }
