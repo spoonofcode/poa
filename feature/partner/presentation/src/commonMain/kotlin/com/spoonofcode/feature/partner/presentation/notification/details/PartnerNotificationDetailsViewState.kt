@@ -10,6 +10,7 @@ import kotlin.time.Clock
 @Immutable
 internal data class PartnerNotificationDetailsViewState(
     val notification: PartnerNotification? = null,
+    val selectedNames: Set<String> = emptySet(),
     val notificationType: PartnerNotificationType = PartnerNotificationType.global,
     val isDeleteNotificationDialogVisible: Boolean = false,
 ) : BaseViewState() {
