@@ -6,8 +6,12 @@ import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingReposito
 import kotlinx.coroutines.tasks.await
 
 actual class FirebaseMessagingRepositoryImpl : FirebaseMessagingRepository {
-    actual override suspend fun getMessageToken(): String {
-        return Firebase.messaging.token.await()
+    actual override suspend fun getMessageToken(): Result<String> {
+        return try {
+            Result.success(Firebase.messaging.token.await())
+        } catch (e: Exception) {
+            Result.failure(Exception("Failed to get FCM token", e))
+        }
     }
 
     actual override suspend fun subscribeToTopic(topic: String): Result<Unit> {
@@ -24,7 +28,7 @@ actual class FirebaseMessagingRepositoryImpl : FirebaseMessagingRepository {
             Firebase.messaging.unsubscribeFromTopic(topic).await()
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("topic=$topic  unsubscription error", e))
+            Result.failure(Exception("topic=$topic unsubscription error", e))
         }
     }
 }
