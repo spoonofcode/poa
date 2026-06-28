@@ -73,6 +73,6 @@ actual class GoogleAuthUiProvider(
     private fun getGoogleIdOption(): GetGoogleIdOption = GetGoogleIdOption.Builder()
         .setFilterByAuthorizedAccounts(false)
         .setAutoSelectEnabled(true)
-        .setServerClientId(BuildKonfig.GOOGLE_ID_SERVER_CLIENT_ID_ANDROID)
+        .setServerClientId(BuildKonfig.GOOGLE_ID_SERVER_CLIENT_ID_WEB)
         .build()
 }
