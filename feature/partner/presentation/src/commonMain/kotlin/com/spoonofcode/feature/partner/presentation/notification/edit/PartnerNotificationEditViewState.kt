@@ -18,9 +18,9 @@ internal data class PartnerNotificationEditViewState(
     val text: String = "",
     val link: String = "",
     val minDeliveryDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(FIFTEEN_MINUTES, DateTimeUnit.MINUTE),
+        .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
     val deliveryDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(FIFTEEN_MINUTES, DateTimeUnit.MINUTE),
+        .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
     val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
         .plus(ONE_DAY, DateTimeUnit.DAY),
     val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
@@ -29,7 +29,7 @@ internal data class PartnerNotificationEditViewState(
     val isExpirationDateTimeEnable: Boolean = false,
 ) : BaseViewState() {
     companion object {
-        private const val FIFTEEN_MINUTES = 15
+        private const val FIVE_MINUTES = 5
         private const val ONE_DAY = 1
     }
 }
