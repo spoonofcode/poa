@@ -93,10 +93,18 @@ class HttpClientFactory(
                                     refreshToken = refreshResponse.refreshToken,
                                 )
                             }.onFailure { error ->
-//                                sessionManager.clearSession()
+                                poaLogger.error(
+                                    message = error.message ?: "refresh token error",
+                                    throwable = error,
+                                )
+                                sessionRepository.clearSession()
                             }
 
                         bearerTokens
+                    }
+                    sendWithoutRequest { request ->
+                        val path = request.url.build().encodedPath
+                        !path.contains("api/login") && !path.contains("api/refresh")
                     }
                 }
             }
