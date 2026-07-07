@@ -31,6 +31,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>GIDClientID</key>
 	<string>$(POA_IOS_CLIENT_ID)</string>
 	<key>GIDServerClientID</key>
@@ -38,7 +40,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NFCReaderUsageDescription</key>
-	<string>The app needs access to NFC to read tags</string>
+	<string>This app needs access to NFC to scan proximity tags.</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Notifications permission is required to show notifications</string>
 	<key>UIApplicationSceneManifest</key>
@@ -58,12 +60,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
-    <key>com.apple.developer.nfc.readersession.formats</key>
-    <array>
-        <string>NDEF</string>
-        <string>TAG</string>
-    </array>
+	<key>com.apple.developer.nfc.readersession.formats</key>
+	<array>
+		<string>NDEF</string>
+		<string>TAG</string>
+	</array>
 </dict>
 </plist>
