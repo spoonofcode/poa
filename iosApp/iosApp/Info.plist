@@ -58,6 +58,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
     <key>com.apple.developer.nfc.readersession.formats</key>
     <array>
         <string>NDEF</string>

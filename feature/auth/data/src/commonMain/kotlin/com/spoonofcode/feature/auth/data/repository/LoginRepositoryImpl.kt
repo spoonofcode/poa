@@ -24,9 +24,10 @@ class LoginRepositoryImpl(
              googleUserToken = googleUserToken,
          ).map { response -> response.toLogin() }
 
-    override suspend fun requestCode(email: String, recaptchaToken: String): Result<Unit> =
+    override suspend fun requestCode(email: String, platform: String, recaptchaToken: String): Result<Unit> =
         remoteLoginRequestCodeDataSource.create(
             email = email,
+            platform = platform,
             recaptchaToken = recaptchaToken,
         )
 }

@@ -9,11 +9,13 @@ class RemoteLoginRequestCodeDataSource : RemoteBaseDataSource(
 ) {
     suspend fun create(
         email: String,
+        platform: String,
         recaptchaToken: String,
     ): Result<Unit> = doRequest(
         method = HttpMethod.Post,
         requestBody = LoginRequestCodeRequest(
             email = email,
+            platform = platform,
             recaptchaToken = recaptchaToken,
         ),
     )
