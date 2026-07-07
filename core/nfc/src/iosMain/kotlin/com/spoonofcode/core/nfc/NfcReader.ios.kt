@@ -35,65 +35,88 @@ internal class IosNfcReader : NfcReader {
 
     private var session: NFCTagReaderSession? = null
 
-    /** Delegate is Obj-C land → separated to avoid the mix-in error */
     private val delegate = object : NSObject(), NFCTagReaderSessionDelegateProtocol {
 
         override fun tagReaderSessionDidBecomeActive(session: NFCTagReaderSession) {
-            println("NFC Session became active")
+            println("NFC: Session active")
         }
 
-        override fun tagReaderSession(
-            session: NFCTagReaderSession,
-            didInvalidateWithError: NSError
-        ) {
-            println("NFC Session invalidated: ${didInvalidateWithError.localizedDescription}")
+        override fun tagReaderSession(session: NFCTagReaderSession, didInvalidateWithError: NSError) {
+            println("NFC: Session invalidated: ${didInvalidateWithError.localizedDescription}")
             this@IosNfcReader.session = null
         }
 
-        @Suppress("UNCHECKED_CAST")
-        override fun tagReaderSession(
-            session: NFCTagReaderSession,
-            didDetectTags: List<*>
-        ) {
+        override fun tagReaderSession(session: NFCTagReaderSession, didDetectTags: List<*>) {
             val tag = (didDetectTags.firstOrNull() as? NFCTagProtocol) ?: return
 
             session.connectToTag(tag) { err ->
                 if (err != null) {
-                    session.invalidateSessionWithErrorMessage(
-                        err.localizedDescription ?: "NFC error"
-                    )
+                    println("NFC: Connect error: ${err.localizedDescription}")
+                    session.invalidateSessionWithErrorMessage(err.localizedDescription)
                     return@connectToTag
                 }
 
                 scope.launch {
-                    /* ------- UID + tech string ------- */
-                    val (uid, tech) = when (tag) {
-                        is NFCMiFareTagProtocol -> tag.identifier.toByteArray().toHex() to "MIFARE"
-                        is NFCISO15693TagProtocol -> tag.identifier.toByteArray()
-                            .toHex() to "ISO15693"
+                    try {
+                        val mifare = tag.asNFCMiFareTag()
+                        val iso7816 = tag.asNFCISO7816Tag()
+                        val iso15693 = tag.asNFCISO15693Tag()
+                        val felica = tag.asNFCFeliCaTag()
 
-                        is NFCISO7816TagProtocol -> tag.identifier.toByteArray()
-                            .toHex() to "ISO7816"
+                        val techList = mutableListOf<String>()
+                        var uid = ""
 
-                        is NFCFeliCaTagProtocol -> tag.currentIDm.toByteArray().toHex() to "FeliCa"
-                        else -> "" to "Unknown"
-                    }
-
-                    /* ------- optional first NDEF record ------- */
-                    var ndef: String? = null
-                    (tag as? NFCNDEFTagProtocol)?.let { ndefTag ->
-                        suspendCancellableCoroutine<Unit> { cont ->
-                            ndefTag.readNDEFWithCompletionHandler { msg, _ ->
-                                val payloadData =
-                                    (msg?.records?.firstOrNull() as? NFCNDEFPayload)?.payload
-                                ndef = payloadData.utf8()
-                                cont.resume(Unit) {}
+                        when {
+                            mifare != null -> {
+                                uid = mifare.identifier.toByteArray().toHex()
+                                techList.add("MIFARE")
+                            }
+                            iso7816 != null -> {
+                                uid = iso7816.identifier.toByteArray().toHex()
+                                techList.add("ISO7816")
+                            }
+                            iso15693 != null -> {
+                                uid = iso15693.identifier.toByteArray().toHex()
+                                techList.add("ISO15693")
+                            }
+                            felica != null -> {
+                                uid = felica.currentIDm.toByteArray().toHex()
+                                techList.add("FeliCa")
                             }
                         }
-                    }
+                        if (techList.isEmpty()) techList.add("Unknown")
 
-                    _tags.emit(NfcTag(id = uid, techList = listOf(tech), ndef = ndef))
-                    session.invalidateSession()          // auto-restart feels nicer
+                        println("NFC: Tag detected: $techList, ID: $uid")
+
+                        var ndef: String? = null
+                        val ndefTag = (tag as? NFCNDEFTagProtocol)
+                            ?: (mifare as? NFCNDEFTagProtocol)
+                            ?: (iso7816 as? NFCNDEFTagProtocol)
+                            ?: (iso15693 as? NFCNDEFTagProtocol)
+                            ?: (felica as? NFCNDEFTagProtocol)
+
+                        if (ndefTag != null) {
+                            suspendCancellableCoroutine<Unit> { cont ->
+                                ndefTag.readNDEFWithCompletionHandler { msg, error ->
+                                    if (error != null) {
+                                        println("NFC: NDEF read error: ${error.localizedDescription}")
+                                    } else {
+                                        val record = msg?.records?.firstOrNull() as? NFCNDEFPayload
+                                        val payload = record?.payload
+                                        ndef = payload.utf8()
+                                        println("NFC: NDEF read success: $ndef")
+                                    }
+                                    cont.resume(Unit) {}
+                                }
+                            }
+                        }
+
+                        _tags.emit(NfcTag(id = uid, techList = techList, ndef = ndef))
+                        session.invalidateSession()
+                    } catch (e: Exception) {
+                        println("NFC: Extraction failed: ${e.message}")
+                        session.invalidateSessionWithErrorMessage("Failed to read tag data")
+                    }
                 }
             }
         }
