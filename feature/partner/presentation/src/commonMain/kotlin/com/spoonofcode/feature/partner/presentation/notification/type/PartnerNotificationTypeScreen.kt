@@ -25,9 +25,10 @@ import com.spoonofcode.feature.partner.presentation.to_selected_customers
 import com.spoonofcode.feature.partner.presentation.to_selected_series
 
 internal class PartnerNotificationTypeScreen :
-    BaseScreen<PartnerNotificationTypeViewModel, PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction>() {
+    BaseScreen<PartnerNotificationTypeViewModel, PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notification_type
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notification_type)
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerNotificationTypeViewModel>()

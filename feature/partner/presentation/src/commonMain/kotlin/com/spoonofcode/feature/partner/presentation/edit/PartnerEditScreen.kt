@@ -21,9 +21,10 @@ import com.spoonofcode.feature.partner.presentation.x
 import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
-internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction>() {
+internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.partner
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.partner)
 
     override fun provideInitAction(onAction: (PartnerEditViewAction) -> Unit): () -> Unit =
         { onAction(PartnerEditViewAction.InitView) }

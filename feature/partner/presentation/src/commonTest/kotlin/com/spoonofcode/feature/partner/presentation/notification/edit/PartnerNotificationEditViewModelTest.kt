@@ -145,7 +145,7 @@ class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
         val text = "New text"
         val link = "New link"
         val expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1)
-        viewModel.updateState {
+        viewModel.updateContentState {
             copy(
                 selectedTopics = selectedTopics,
                 selectedNames = selectedNames,

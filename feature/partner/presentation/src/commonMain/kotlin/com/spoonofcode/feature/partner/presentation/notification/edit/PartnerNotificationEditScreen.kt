@@ -34,9 +34,10 @@ internal class PartnerNotificationEditScreen(
     val notificationId: String? = null,
     val selectedTopics: Set<String> = emptySet(),
     val selectedNames: Set<String> = emptySet(),
-) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction>() {
+) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notification
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
     override fun provideInitAction(onAction: (PartnerNotificationEditViewAction) -> Unit): () -> Unit =
         {

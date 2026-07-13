@@ -30,9 +30,10 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class CustomerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<PartnerCustomerOverviewViewModel, PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction>() {
+) : BaseScreen<PartnerCustomerOverviewViewModel, PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.my_customers
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.my_customers)
 
     override fun provideInitAction(onAction: (PartnerCustomerOverviewViewAction) -> Unit): () -> Unit =
         { onAction(PartnerCustomerOverviewViewAction.InitView) }

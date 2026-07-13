@@ -32,17 +32,19 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationDetailsScreen(
     private val notificationId: String,
-) : BaseScreen<PartnerNotificationDetailsViewModel, PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction>() {
+) : BaseScreen<PartnerNotificationDetailsViewModel, PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notification
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
     override fun provideInitAction(onAction: (PartnerNotificationDetailsViewAction) -> Unit): () -> Unit =
         { onAction(PartnerNotificationDetailsViewAction.InitView(notificationId = notificationId)) }
 
+    @Composable
     override fun provideTopBarActions(
-        viewState: PartnerNotificationDetailsViewState,
         onAction: (PartnerNotificationDetailsViewAction) -> Unit,
-    ) = if (viewState.isNotificationEditable) {
+    ) =
+//        if (viewState.isNotificationEditable) {
         listOf(
             TopBarAction(
                 icon = Icons.Default.Edit,
@@ -57,9 +59,9 @@ internal class PartnerNotificationDetailsScreen(
                 }
             )
         )
-    } else {
-        emptyList()
-    }
+//    } else {
+//        emptyList()
+//    }
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerNotificationDetailsViewModel>()

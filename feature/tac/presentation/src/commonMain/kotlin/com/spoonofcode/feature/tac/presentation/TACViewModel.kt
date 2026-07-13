@@ -2,7 +2,7 @@ package com.spoonofcode.feature.tac.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.tac.domain.model.TACSettings
 import com.spoonofcode.feature.tac.domain.usecase.GetTACSettingsUseCase
 import com.spoonofcode.feature.tac.domain.usecase.UpdateTACSettingsUseCase
@@ -11,9 +11,8 @@ import kotlinx.coroutines.launch
 internal class TACViewModel(
     private val getTACSettingsUseCase: GetTACSettingsUseCase,
     private val updateTACSettingsUseCase: UpdateTACSettingsUseCase,
-) : BaseViewModel<TACViewState, TACViewAction>(
-    initialViewState = TACViewState(),
-    initialScreenState = ScreenState.CONTENT,
+) : BaseViewModel<TACViewState, TACViewAction, Nothing>(
+    initialViewState = ViewState.Content(TACViewState()),
 ) {
 
     override fun onAction(action: TACViewAction) {
@@ -30,20 +29,20 @@ internal class TACViewModel(
         viewModelScope.launch {
             getTACSettingsUseCase()
                 .onSuccess { tacSettings ->
-                    showContentView {
+                    updateContentState {
                         copy(
                             isPrivacyPolicyAccepted = tacSettings.isPrivacyPolicyAccepted,
                             isTermsAndConditionsAccepted = tacSettings.isTermsAndConditionsAccepted,
                         )
                     }
                 }.onFailure {
-                    showErrorSnackbar(it)
+                    it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }
     }
 
     private fun changeTermsAndConditions(accepted: Boolean) {
-        updateState {
+        updateContentState {
             copy(
                 isTermsAndConditionsAccepted = accepted
             )
@@ -51,7 +50,7 @@ internal class TACViewModel(
     }
 
     private fun changePrivacyPolicy(accepted: Boolean) {
-        updateState {
+        updateContentState {
             copy(
                 isPrivacyPolicyAccepted = accepted
             )
@@ -63,13 +62,13 @@ internal class TACViewModel(
             showLoadingView()
             updateTACSettingsUseCase(
                 tacSettings = TACSettings(
-                    isPrivacyPolicyAccepted = currentState().isPrivacyPolicyAccepted,
-                    isTermsAndConditionsAccepted = currentState().isTermsAndConditionsAccepted,
+                    isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
+                    isTermsAndConditionsAccepted = currentContentState().isTermsAndConditionsAccepted,
                 )
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                showErrorSnackbar(it)
+                it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }

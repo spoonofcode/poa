@@ -8,6 +8,7 @@ import com.spoonofcode.core.data.ext.stateInWhileSubscribed
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
+import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
@@ -43,6 +44,9 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     protected val networkManager: NetworkManager by getKoin().inject()
+    protected val routeResolver: VoyagerRouteResolver by getKoin().inject()
+
+    val navigationFlow = viewModelNavigator.navigationEvents
 
     private val _isOnline = MutableStateFlow(false)
 
@@ -90,8 +94,8 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     private val _viewEvent = MutableSharedFlow<VE>()
     val viewEvent = _viewEvent.asSharedFlow()
 
-    private val _snackbarEvent = Channel<SnackbarEvent>(capacity = Channel.BUFFERED)
-    val snackbarEvent = _snackbarEvent.receiveAsFlow()
+    private val _snackbarEvent = MutableSharedFlow<SnackbarEvent>()
+    val snackbarEvent = _snackbarEvent.asSharedFlow()
 
     private var networkStateInitialized = false
 
@@ -145,7 +149,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal fun updateContentState(transformation: VS.() -> VS) {
+    protected fun updateContentState(transformation: VS.() -> VS) {
         if (viewContentState.value != null) {
             _viewContentState.update { currentViewState ->
                 currentViewState?.transformation() ?: currentViewState
@@ -187,14 +191,16 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     protected fun showSnackbar(snackbarEvent: SnackbarEvent) {
-        _snackbarEvent.trySend(snackbarEvent)
+        viewModelScope.launch {
+            _snackbarEvent.emit(snackbarEvent)
+        }
     }
 
-    protected fun showErrorSnackbar(message: UiText) {
+    protected fun showErrorSnackbar(message: String) {
         showSnackbar(SnackbarEvent.Error(message = message))
     }
 
-    protected fun showSuccessSnackbar(message: UiText) {
+    protected fun showSuccessSnackbar(message: String) {
         showSnackbar(SnackbarEvent.Success(message = message))
     }
 

@@ -2,6 +2,7 @@ package com.spoonofcode.feature.notification.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationByIdUseCase
 import com.spoonofcode.feature.notification.domain.usecase.MarkNotificationAsReadUseCase
 import kotlinx.coroutines.launch
@@ -9,8 +10,8 @@ import kotlinx.coroutines.launch
 internal class NotificationDetailsViewModel(
     private val getNotificationByIdUseCase: GetNotificationByIdUseCase,
     private val markNotificationAsReadUseCase: MarkNotificationAsReadUseCase,
-) : BaseViewModel<NotificationDetailsViewState, NotificationDetailsViewAction>(
-    NotificationDetailsViewState()
+) : BaseViewModel<NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>(
+    initialViewState = ViewState.Content(NotificationDetailsViewState()),
 ) {
 
     override fun onAction(action: NotificationDetailsViewAction) {
@@ -24,11 +25,11 @@ internal class NotificationDetailsViewModel(
         viewModelScope.launch {
             getNotificationByIdUseCase(notificationId = notificationId)
                 .onSuccess {
-                    showContentView {
+                    setContentState(
                         NotificationDetailsViewState(
                             notification = it
                         )
-                    }
+                    )
                     markNotificationAsReadUseCase(notificationId = notificationId)
                 }
                 .onFailure {

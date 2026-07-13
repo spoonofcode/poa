@@ -19,7 +19,7 @@ googleServices = "4.4.4"
 
 # --- Kotlin / KMP / Compose ---
 kotlin = "2.3.21"
-composeMultiplatform = "1.11.1"
+composeMultiplatform = "1.10.3"
 
 # --- AndroidX ---
 androidxActivityCompose = "1.13.0"
@@ -180,3 +180,11 @@ mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
+# --- Your convention plugins (version provided by build-logic) ---
+convention-android-application = { id = "com.spoonofcode.convention.android.application", version = "unspecified" }
+convention-android-application-compose = { id = "com.spoonofcode.convention.android.application.compose", version = "unspecified" }
+convention-cmp-application = { id = "com.spoonofcode.convention.cmp.application", version = "unspecified" }
+convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", version = "unspecified" }
+convention-cmp-library = { id = "com.spoonofcode.convention.cmp.library", version = "unspecified" }
+convention-cmp-feature = { id = "com.spoonofcode.convention.cmp.feature", version = "unspecified" }
+convention-buildkonfig = { id = "com.spoonofcode.convention.buildkonfig", version = "unspecified" }

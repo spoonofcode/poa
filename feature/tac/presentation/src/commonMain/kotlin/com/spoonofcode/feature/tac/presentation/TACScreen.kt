@@ -11,13 +11,15 @@ import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class TACScreen(
     override val backNavigationEnable: Boolean = true,
     override val verticalScrollEnable: Boolean = true,
-) : BaseScreen<TACViewModel, TACViewState, TACViewAction>() {
+) : BaseScreen<TACViewModel, TACViewState, TACViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.terms_and_conditions
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.terms_and_conditions)
 
     @Composable
     override fun provideViewModel() = koinViewModel<TACViewModel>()

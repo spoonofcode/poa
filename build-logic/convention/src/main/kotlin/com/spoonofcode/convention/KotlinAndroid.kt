@@ -38,6 +38,7 @@ internal fun Project.configureKotlin() {
             freeCompilerArgs.add(
                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             )
+            freeCompilerArgs.add("-Xcontext-parameters")
         }
     }
 }

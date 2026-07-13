@@ -6,12 +6,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.ExpandableListItem
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
-internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction>() {
+internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.faq
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.faq)
 
     @Composable
     override fun provideViewModel() = koinViewModel<FAQViewModel>()
