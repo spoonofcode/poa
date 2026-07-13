@@ -7,6 +7,7 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun firebaseMessagingRepositoryMock() = mock<FirebaseMessagingRepositoryImpl> {
-    everySuspend { subscribeToTopic(any()) } returns Unit
-    everySuspend { unsubscribeFromTopic(any()) } returns Unit
+    everySuspend { getMessageToken() } returns Result.success("test-token")
+    everySuspend { subscribeToTopic(any()) } returns Result.success(Unit)
+    everySuspend { unsubscribeFromTopic(any()) } returns Result.success(Unit)
 }

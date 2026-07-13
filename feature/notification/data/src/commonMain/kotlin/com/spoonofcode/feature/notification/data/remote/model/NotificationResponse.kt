@@ -25,6 +25,4 @@ data class NotificationResponse(
     val expirationDateTime: Instant,
     val state: String,
     val topics: List<String>,
-    @SerialName("owner_id")
-    val ownerId: String,
 )

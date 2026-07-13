@@ -14,5 +14,4 @@ data class Notification(
     val state: String,
     val topics: List<String>,
     val isRead: Boolean = false,
-    val ownerId: String,
 )

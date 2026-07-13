@@ -31,15 +31,15 @@ class BuildKonfigConventionPlugin: Plugin<Project> {
                         )
 
                     val googleIdServerClientId = gradleLocalProperties(rootDir, rootProject.providers)
-                        .getProperty("GOOGLE_ID_SERVER_CLIENT_ID_ANDROID")
+                        .getProperty("GOOGLE_ID_SERVER_CLIENT_ID_WEB")
                         ?: throw IllegalStateException(
-                            "Missing GOOGLE_ID_SERVER_CLIENT_ID_ANDROID property in local.properties"
+                            "Missing GOOGLE_ID_SERVER_CLIENT_ID_WEB property in local.properties"
                         )
 
                     buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
                     buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
 
-                    buildConfigField(Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_ANDROID", googleIdServerClientId)
+                    buildConfigField(Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_WEB", googleIdServerClientId)
                 }
             }
         }

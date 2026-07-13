@@ -16,6 +16,5 @@ fun NotificationResponse.toNotification(): Notification {
         expirationDateTime = expirationDateTime.toZonedLocalDateTime(),
         state = state,
         topics = topics,
-        ownerId = ownerId,
     )
 }
