@@ -51,34 +51,36 @@ import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
     val productId: String,
-) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction>() {
+) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.product
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.product)
 
     @Composable
     override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
 
+    @Composable
     override fun provideTopBarActions(
-        viewState: ProductDetailsViewState,
         onAction: (ProductDetailsViewAction) -> Unit,
-    ) = if (viewState.productStatus == ProductStatus.OWNED_BY_SELF) {
-        listOf(
-            TopBarAction(
-                icon = Icons.Default.Edit,
-                description = "Edit",
-                onClick = { onAction(ProductDetailsViewAction.EditProduct) },
-            ),
-            TopBarAction(
-                icon = Icons.Default.Delete,
-                description = "Delete",
-                onClick = {
-                    onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-                }
+    ) =
+//        if (viewState.productStatus == ProductStatus.OWNED_BY_SELF) {
+            listOf(
+                TopBarAction(
+                    icon = Icons.Default.Edit,
+                    description = "Edit",
+                    onClick = { onAction(ProductDetailsViewAction.EditProduct) },
+                ),
+                TopBarAction(
+                    icon = Icons.Default.Delete,
+                    description = "Delete",
+                    onClick = {
+                        onAction(ProductDetailsViewAction.DeleteProductFromProfile)
+                    }
+                )
             )
-        )
-    } else {
-        emptyList()
-    }
+//        } else {
+//            emptyList()
+//        }
 
     override fun provideInitAction(onAction: (ProductDetailsViewAction) -> Unit): () -> Unit =
         { onAction(ProductDetailsViewAction.InitView(productId = productId)) }

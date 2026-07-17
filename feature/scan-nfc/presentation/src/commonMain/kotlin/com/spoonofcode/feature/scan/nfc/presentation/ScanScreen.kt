@@ -44,9 +44,10 @@ import org.jetbrains.compose.resources.stringResource
 internal class ScanScreen(
     override val backNavigationEnable: Boolean = false,
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<ScanViewModel, ScanViewState, ScanViewAction>() {
+) : BaseScreen<ScanViewModel, ScanViewState, ScanViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.scan
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.scan)
 
     override fun provideInitAction(onAction: (ScanViewAction) -> Unit): () -> Unit =
         { onAction(ScanViewAction.InitView) }

@@ -26,9 +26,10 @@ import com.spoonofcode.feature.partner.presentation.reports
 import com.spoonofcode.feature.partner.presentation.send_notification
 
 internal class PartnerPanelScreen() :
-    BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction>() {
+    BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.partner_panel
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.partner_panel)
 
     @Composable
     override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()

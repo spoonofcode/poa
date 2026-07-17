@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.notification.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -15,8 +16,8 @@ internal class PartnerNotificationDetailsViewModel(
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val deletePartnerNotificationUseCase: DeletePartnerNotificationUseCase,
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
-) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction>(
-    PartnerNotificationDetailsViewState()
+) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>(
+    initialViewState = ViewState.Content(PartnerNotificationDetailsViewState()),
 ) {
 
     override fun onAction(action: PartnerNotificationDetailsViewAction) {
@@ -43,13 +44,13 @@ internal class PartnerNotificationDetailsViewModel(
                 val notification = notificationResult.getOrThrow()
                 val customers = customersResult.getOrThrow()
 
-                showContentView {
+                setContentState(
                     PartnerNotificationDetailsViewState(
                         notification = notification,
                         notificationType = getNotificationType(notification.topics.toSet()),
                         selectedNames = getSelectedNames(notification.topics, customers)
                     )
-                }
+                )
             } else {
                 showErrorView()
             }
@@ -63,18 +64,18 @@ internal class PartnerNotificationDetailsViewModel(
     }
 
     private fun deleteNotification() {
-        updateState {
+        updateContentState {
             copy(
                 isDeleteNotificationDialogVisible = true,
             )
         }
         viewModelScope.launch {
-            deletePartnerNotificationUseCase.invoke(notificationId = currentState().notification!!.id)
+            deletePartnerNotificationUseCase.invoke(notificationId = currentContentState().notification!!.id)
         }
     }
 
     private fun cancelDeleteNotification() {
-        updateState {
+        updateContentState {
             copy(
                 isDeleteNotificationDialogVisible = false,
             )
@@ -84,26 +85,26 @@ internal class PartnerNotificationDetailsViewModel(
     private fun confirmDeleteNotification() {
         showLoadingView()
         viewModelScope.launch {
-            val notification = requireNotNull(currentState().notification)
+            val notification = requireNotNull(currentContentState().notification)
             deletePartnerNotificationUseCase(
                 notificationId = notification.id,
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                showErrorSnackbar(it)
+                it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
 
     private fun editNotification() {
         viewModelScope.launch {
-            val notification = requireNotNull(currentState().notification)
+            val notification = requireNotNull(currentContentState().notification)
             viewModelNavigator.push(
                 routeResolver.resolve(
                     PartnerModuleRoute.PartnerNotificationEdit(
                         notificationId = notification.id,
                         selectedTopics = notification.topics.toSet(),
-                        selectedNames = currentState().selectedNames,
+                        selectedNames = currentContentState().selectedNames,
                     )
                 )
             )

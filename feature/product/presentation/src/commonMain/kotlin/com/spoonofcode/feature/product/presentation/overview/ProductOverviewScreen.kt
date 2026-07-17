@@ -29,13 +29,15 @@ import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_products
+import org.jetbrains.compose.resources.stringResource
 
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction>() {
+) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.my_products
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.my_products)
 
     override fun provideInitAction(onAction: (ProductOverviewViewAction) -> Unit): () -> Unit =
         { onAction(ProductOverviewViewAction.InitView) }

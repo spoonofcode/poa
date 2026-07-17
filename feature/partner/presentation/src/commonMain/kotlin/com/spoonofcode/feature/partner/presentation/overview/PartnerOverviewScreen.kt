@@ -21,13 +21,15 @@ import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.partners
+import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState, PartnerOverviewViewAction>() {
+) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.partners
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.partners)
 
     override fun provideInitAction(onAction: (PartnerOverviewViewAction) -> Unit): () -> Unit =
         { onAction(PartnerOverviewViewAction.InitView) }

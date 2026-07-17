@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.presentation.series.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -10,8 +11,8 @@ import kotlinx.coroutines.launch
 
 internal class ProductSeriesOverviewViewModel(
     private val getPartnerProductSeriesUseCase: GetPartnerProductSeriesUseCase,
-) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction>(
-    ProductSeriesOverviewViewState()
+) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>(
+    initialViewState = ViewState.Content(ProductSeriesOverviewViewState()),
 ) {
 
     override fun onAction(action: ProductSeriesOverViewViewAction) {
@@ -27,11 +28,11 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             getPartnerProductSeriesUseCase()
                 .onSuccess {
-                    showContentView {
+                    setContentState(
                         ProductSeriesOverviewViewState(
                             productSeries = it,
                         )
-                    }
+                    )
                 }
                 .onFailure {
                     showErrorView()
@@ -40,7 +41,7 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun checkedProductSeries(name: String) {
-        val selected = currentState().checkedProductSeriesNames.toMutableSet()
+        val selected = currentContentState().checkedProductSeriesNames.toMutableSet()
         val wasAdded = selected.contains(name)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
@@ -52,7 +53,7 @@ internal class ProductSeriesOverviewViewModel(
 
         if (wasAdded) selected.remove(name) else selected.add(name)
 
-        updateState {
+        updateContentState {
             copy(
                 checkedProductSeriesNames = selected,
             )
@@ -64,10 +65,10 @@ internal class ProductSeriesOverviewViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = currentState().checkedProductSeriesNames.map {
+                        selectedTopics = currentContentState().checkedProductSeriesNames.map {
                             PartnerNotificationType.serie.createTopic(it)
                         }.toSet(),
-                        selectedNames = currentState().checkedProductSeriesNames,
+                        selectedNames = currentContentState().checkedProductSeriesNames,
                     )
                 )
             )

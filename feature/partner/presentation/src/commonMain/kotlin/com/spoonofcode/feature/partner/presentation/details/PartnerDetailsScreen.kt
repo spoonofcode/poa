@@ -31,9 +31,10 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerDetailsScreen(
     private val partnerId: String,
-) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState, PartnerDetailsViewAction>() {
+) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState, PartnerDetailsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.partner
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.partner)
 
     override fun provideInitAction(onAction: (PartnerDetailsViewAction) -> Unit): () -> Unit =
         { onAction(PartnerDetailsViewAction.InitView(partnerId = partnerId)) }

@@ -13,8 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +36,6 @@ import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
@@ -50,9 +47,10 @@ import kotlin.time.Clock
 
 internal class PartnerNotificationsScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
+) : BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.my_notifications
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.my_notifications)
 
     override fun provideInitAction(onAction: (PartnerNotificationsViewAction) -> Unit): () -> Unit =
         { onAction(PartnerNotificationsViewAction.InitView) }

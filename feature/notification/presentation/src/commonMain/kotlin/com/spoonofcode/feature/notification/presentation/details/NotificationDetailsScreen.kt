@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.data.ext.isAfterToday
 import com.spoonofcode.core.data.ext.toMillis
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
@@ -29,9 +28,10 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,
-) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction>() {
+) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notification
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
     override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
         { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }

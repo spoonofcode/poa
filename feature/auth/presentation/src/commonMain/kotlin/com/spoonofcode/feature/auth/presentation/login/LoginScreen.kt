@@ -39,10 +39,11 @@ import com.spoonofcode.feature.auth.presentation.utils.GoogleAuthProvider
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<LoginViewModel, LoginViewState, LoginViewAction>() {
+) : BaseScreen<LoginViewModel, LoginViewState, LoginViewAction, Nothing>() {
 
     @Composable
     override fun provideViewModel() = koinViewModel<LoginViewModel>()

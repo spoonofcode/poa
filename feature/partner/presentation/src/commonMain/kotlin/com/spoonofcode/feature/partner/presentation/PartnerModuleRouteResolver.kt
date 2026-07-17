@@ -4,7 +4,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.feature.appnavigation.ModuleRoute
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
-import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen

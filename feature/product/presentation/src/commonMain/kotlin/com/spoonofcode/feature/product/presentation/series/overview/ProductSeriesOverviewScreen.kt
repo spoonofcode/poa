@@ -31,9 +31,10 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class ProductSeriesOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction>() {
+) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.my_product_series
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.my_product_series)
 
     override fun provideInitAction(onAction: (ProductSeriesOverViewViewAction) -> Unit): () -> Unit =
         { onAction(ProductSeriesOverViewViewAction.InitView) }

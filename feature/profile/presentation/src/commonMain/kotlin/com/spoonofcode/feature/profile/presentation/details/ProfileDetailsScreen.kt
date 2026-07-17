@@ -52,12 +52,14 @@ import com.spoonofcode.feature.profile.presentation.profile
 import com.spoonofcode.feature.profile.presentation.taggy_go_logo
 import com.spoonofcode.feature.profile.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState, ProfileDetailsViewAction>() {
+) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState, ProfileDetailsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.profile
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.profile)
 
     override fun provideInitAction(onAction: (ProfileDetailsViewAction) -> Unit): () -> Unit =
         { onAction(ProfileDetailsViewAction.InitView) }

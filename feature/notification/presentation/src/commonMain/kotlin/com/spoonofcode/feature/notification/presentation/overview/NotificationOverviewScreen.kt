@@ -45,9 +45,10 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction>() {
+) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notifications
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notifications)
 
     override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
         { onAction(NotificationOverviewViewAction.InitView) }

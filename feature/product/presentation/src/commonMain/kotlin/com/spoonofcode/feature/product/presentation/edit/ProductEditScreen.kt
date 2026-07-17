@@ -26,9 +26,10 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class ProductEditScreen(
     val productId: String,
-) : BaseScreen<ProductEditViewModel, ProductEditViewState, ProductEditViewAction>() {
+) : BaseScreen<ProductEditViewModel, ProductEditViewState, ProductEditViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.edit_product
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.edit_product)
 
     override fun provideInitAction(onAction: (ProductEditViewAction) -> Unit): () -> Unit =
         { onAction(ProductEditViewAction.InitView(productId = productId)) }
