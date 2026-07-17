@@ -19,11 +19,13 @@ import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.name
 import com.spoonofcode.feature.profile.presentation.poa
 import com.spoonofcode.feature.profile.presentation.save_changes
+import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileEditScreen() :
-    BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction>() {
+    BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.edit_profile
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.edit_profile)
 
     override fun provideInitAction(onAction: (ProfileEditViewAction) -> Unit): () -> Unit =
         { onAction(ProfileEditViewAction.InitView) }

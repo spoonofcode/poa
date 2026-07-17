@@ -24,9 +24,10 @@ import com.spoonofcode.feature.notification.presentation.notification_tel_and_sm
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationChannelScreen :
-    BaseScreen<NotificationChannelViewModel, NotificationChannelViewState, NotificationChannelViewAction>() {
+    BaseScreen<NotificationChannelViewModel, NotificationChannelViewState, NotificationChannelViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notification_channels
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notification_channels)
 
     @Composable
     override fun provideViewModel() = koinViewModel<NotificationChannelViewModel>()

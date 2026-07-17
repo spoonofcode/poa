@@ -2,6 +2,7 @@ package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import kotlinx.coroutines.launch
@@ -9,8 +10,8 @@ import kotlinx.coroutines.launch
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
-) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction>(
-    NotificationSettingsViewState()
+) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction, Nothing>(
+    initialViewState = ViewState.Content(NotificationSettingsViewState()),
 ) {
 
     override fun onAction(action: NotificationSettingsViewAction) {
@@ -44,19 +45,19 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             getNotificationSettingsUseCase()
                 .onSuccess { notificationSettings ->
-                    showContentView {
+                    updateContentState {
                         copy(
                             notificationSettings = notificationSettings,
                         )
                     }
                 }.onFailure {
-                    showErrorSnackbar(it)
+                    it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }
     }
 
     private fun switchAllNotification(enable: Boolean) {
-        updateState {
+        updateContentState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsPersonalizedEnabled = enable,
@@ -68,7 +69,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun switchNotificationsPersonalized(enable: Boolean) {
-        updateState {
+        updateContentState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsPersonalizedEnabled = enable,
@@ -78,7 +79,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun switchNotificationsFromPartners(enable: Boolean) {
-        updateState {
+        updateContentState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsFromPartnersEnabled = enable,
@@ -88,7 +89,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun switchNotificationsMyProductSeries(enable: Boolean) {
-        updateState {
+        updateContentState {
             NotificationSettingsViewState(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsMyProductSeriesEnabled = enable,
@@ -101,11 +102,11 @@ internal class NotificationSettingsViewModel(
         viewModelScope.launch {
             showLoadingView()
             updateNotificationSettingsUseCase(
-                notificationSettings = currentState().notificationSettings
+                notificationSettings = currentContentState().notificationSettings
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                showErrorSnackbar(it)
+                it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
@@ -115,7 +116,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun showRationaleNotificationDialog() {
-        updateState {
+        updateContentState {
             copy(
                 isRationaleNotificationDialogVisible = true
             )
@@ -123,7 +124,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun closeRationaleNotificationDialog() {
-        updateState {
+        updateContentState {
             copy(
                 isRationaleNotificationDialogVisible = false
             )

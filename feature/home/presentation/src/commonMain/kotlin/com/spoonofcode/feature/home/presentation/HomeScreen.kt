@@ -39,18 +39,19 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction>() {
+) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.home
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.home)
 
+    @Composable
     override fun provideTopBarActions(
-        viewState: HomeViewState,
         onAction: (HomeViewAction) -> Unit
     ) = listOf(
         TopBarAction(
             icon = Icons.Default.Notifications,
             description = "Notification",
-            badgeCount = viewState.unreadNotificationsCount,
+//            badgeCount = viewState.unreadNotificationsCount,
         ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 

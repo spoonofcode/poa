@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.customer.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -10,8 +11,8 @@ import kotlinx.coroutines.launch
 
 internal class PartnerCustomerOverviewViewModel(
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
-) : BaseViewModel<PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction>(
-    PartnerCustomerOverviewViewState()
+) : BaseViewModel<PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction, Nothing>(
+    initialViewState = ViewState.Content(PartnerCustomerOverviewViewState()),
 ) {
 
     override fun onAction(action: PartnerCustomerOverviewViewAction) {
@@ -27,11 +28,11 @@ internal class PartnerCustomerOverviewViewModel(
         viewModelScope.launch {
             getPartnerCustomersUseCase()
                 .onSuccess {
-                    showContentView {
+                    setContentState(
                         PartnerCustomerOverviewViewState(
                             customers = it,
                         )
-                    }
+                    )
                 }
                 .onFailure {
                     showErrorView()
@@ -40,7 +41,7 @@ internal class PartnerCustomerOverviewViewModel(
     }
 
     private fun checkedCustomer(id: String) {
-        val selected = currentState().checkedUserIds.toMutableSet()
+        val selected = currentContentState().checkedUserIds.toMutableSet()
         val wasAdded = selected.contains(id)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_USERS) {
@@ -52,7 +53,7 @@ internal class PartnerCustomerOverviewViewModel(
 
         if (wasAdded) selected.remove(id) else selected.add(id)
 
-        updateState {
+        updateContentState {
             copy(
                 checkedUserIds = selected
             )
@@ -64,11 +65,11 @@ internal class PartnerCustomerOverviewViewModel(
             viewModelNavigator.push(
                 routeResolver.resolve(
                     PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = currentState().checkedUserIds.map {
+                        selectedTopics = currentContentState().checkedUserIds.map {
                             PartnerNotificationType.user.createTopic(it)
                         }.toSet(),
-                        selectedNames = currentState().customers
-                            .filter { it.id in currentState().checkedUserIds }
+                        selectedNames = currentContentState().customers
+                            .filter { it.id in currentContentState().checkedUserIds }
                             .map { it.name }.toSet()
                     )
                 )

@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
@@ -15,7 +16,9 @@ internal class PartnerOverviewViewModel(
     private val getPartnersFilteredByPartnerCategoryUseCase: GetPartnersFilteredByPartnerCategoryUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
     private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
-) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction>(PartnerOverviewViewState()) {
+) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>(
+    initialViewState = ViewState.Content(PartnerOverviewViewState()),
+) {
 
     override fun onAction(action: PartnerOverviewViewAction) {
         when (action) {
@@ -37,7 +40,7 @@ internal class PartnerOverviewViewModel(
                 val categories = categoriesDeferred.await().getOrThrow()
                 partners to categories
             }.onSuccess { (partners, categories) ->
-                showContentView {
+                updateContentState {
                     copy(
                         initPartners = partners,
                         filteredPartners = partners,
@@ -51,7 +54,7 @@ internal class PartnerOverviewViewModel(
     }
 
     private fun clickCategory(categoryName: String) {
-        updateState {
+        updateContentState {
             val newSelectedCategories = if (selectedPartnerCategories.contains(categoryName)) {
                 selectedPartnerCategories - categoryName
             } else {
@@ -63,12 +66,12 @@ internal class PartnerOverviewViewModel(
     }
 
     private fun changeSearchText(searchText: String) {
-        updateState { copy(searchText = searchText) }
+        updateContentState { copy(searchText = searchText) }
         applyFilters()
     }
 
     private fun applyFilters() {
-        val currentState = currentState()
+        val currentState = currentContentState()
 
         var filtered = currentState.initPartners
 
@@ -82,7 +85,7 @@ internal class PartnerOverviewViewModel(
             partners = filtered
         )
 
-        updateState {
+        updateContentState {
             copy(filteredPartners = filtered)
         }
     }

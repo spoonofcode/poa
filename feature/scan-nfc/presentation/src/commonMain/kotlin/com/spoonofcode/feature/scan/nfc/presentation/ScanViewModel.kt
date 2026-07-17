@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.Platform
 import com.spoonofcode.core.nfc.NfcTag
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.scan.nfc.domain.usecase.GetNFCTagUseCase
@@ -14,9 +14,8 @@ internal class ScanViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val getNFCTagUseCase: GetNFCTagUseCase,
     private val platform: Platform,
-) : BaseViewModel<ScanViewState, ScanViewAction>(
-    initialViewState = ScanViewState(),
-    initialScreenState = ScreenState.CONTENT,
+) : BaseViewModel<ScanViewState, ScanViewAction, Nothing>(
+    initialViewState = ViewState.Content(ScanViewState()),
 ) {
 
     override fun onAction(action: ScanViewAction) {
@@ -28,7 +27,7 @@ internal class ScanViewModel(
     }
 
     private fun initView() {
-        showContentView {
+        updateContentState {
             copy(
                 platformType = platform.platformType
             )
@@ -57,7 +56,7 @@ internal class ScanViewModel(
                                     showErrorView()
                                 }
                         } else {
-                            showContentView {
+                            updateContentState {
                                 copy(
                                     isProductNotFoundViewVisible = true,
                                 )
@@ -69,7 +68,7 @@ internal class ScanViewModel(
 
 
             } else {
-                showContentView {
+                updateContentState {
                     copy(
                         isProductNotFoundViewVisible = true,
                     )
@@ -79,7 +78,7 @@ internal class ScanViewModel(
     }
 
     private fun scanAgain() {
-        updateState {
+        updateContentState {
             copy(
                 isProductNotFoundViewVisible = false,
             )

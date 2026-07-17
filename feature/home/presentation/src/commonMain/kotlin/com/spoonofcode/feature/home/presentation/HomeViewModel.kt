@@ -2,6 +2,7 @@ package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.home.domain.model.RewardType
@@ -19,7 +20,9 @@ internal class HomeViewModel(
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
+) : BaseViewModel<HomeViewState, HomeViewAction, Nothing>(
+    initialViewState = ViewState.Content(HomeViewState())
+) {
 
     override fun onAction(action: HomeViewAction) {
         when (action) {
@@ -54,14 +57,14 @@ internal class HomeViewModel(
             }
 
             result.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks, unreadCount) ->
-                showContentView {
+                setContentState(
                     HomeViewState(
                         dailyCheckInStatus = dailyCheckInStatus,
                         totalPoints = totalPoints,
                         partnerImageLinks = partnerImageLinks,
                         unreadNotificationsCount = unreadCount,
                     )
-                }
+                )
             }.onFailure {
                 showErrorView()
                 showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))

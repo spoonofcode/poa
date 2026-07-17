@@ -46,9 +46,10 @@ internal class NotificationSettingsScreen(
     override val backNavigationEnable: Boolean = true,
     override val verticalScrollEnable: Boolean = false,
 ) :
-    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction>() {
+    BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction, Nothing>() {
 
-    override fun provideTopAppBarTitle() = Res.string.notifications_settings
+    @Composable
+    override fun provideTopAppBarTitle() = stringResource(Res.string.notifications_settings)
 
     override fun provideInitAction(onAction: (NotificationSettingsViewAction) -> Unit): () -> Unit =
         { onAction(NotificationSettingsViewAction.InitView) }

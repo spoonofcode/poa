@@ -2,12 +2,15 @@ package com.spoonofcode.feature.partner.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerDetailsViewModel(
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
-) : BaseViewModel<PartnerDetailsViewState, PartnerDetailsViewAction>(PartnerDetailsViewState()) {
+) : BaseViewModel<PartnerDetailsViewState, PartnerDetailsViewAction, Nothing>(
+    initialViewState = ViewState.Content(PartnerDetailsViewState()),
+) {
 
     override fun onAction(action: PartnerDetailsViewAction) {
         when (action) {
@@ -20,7 +23,7 @@ internal class PartnerDetailsViewModel(
         viewModelScope.launch {
             getPartnerByIdUseCase(partnerId = partnerId)
                 .onSuccess {
-                    showContentView {
+                    updateContentState {
                         copy(
                             partner = it
                         )
