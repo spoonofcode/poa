@@ -21,7 +21,7 @@ import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_description
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_title

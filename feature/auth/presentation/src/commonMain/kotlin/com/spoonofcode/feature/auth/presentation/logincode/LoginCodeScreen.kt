@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.code
 import com.spoonofcode.feature.auth.presentation.one_time_code_info_postfix

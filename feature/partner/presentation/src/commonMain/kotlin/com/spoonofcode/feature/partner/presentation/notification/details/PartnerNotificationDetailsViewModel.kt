@@ -100,12 +100,10 @@ internal class PartnerNotificationDetailsViewModel(
         viewModelScope.launch {
             val notification = requireNotNull(currentContentState().notification)
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        notificationId = notification.id,
-                        selectedTopics = notification.topics.toSet(),
-                        selectedNames = currentContentState().selectedNames,
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    notificationId = notification.id,
+                    selectedTopics = notification.topics.toSet(),
+                    selectedNames = currentContentState().selectedNames,
                 )
             )
         }

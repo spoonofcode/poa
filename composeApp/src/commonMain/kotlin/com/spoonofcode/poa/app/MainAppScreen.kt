@@ -15,9 +15,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.Navigator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -25,11 +23,16 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.spoonofcode.core.presentation.navigation.NavigationHandler
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
+import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
+import com.spoonofcode.feature.appnavigation.FAQModuleRoute
 import com.spoonofcode.feature.appnavigation.HomeModuleRoute
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
 import com.spoonofcode.feature.appnavigation.ScanModuleRoute
+import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.presentation.authModuleRouteResolver
 import com.spoonofcode.feature.faq.presentation.faqModuleRouteResolver
 import com.spoonofcode.feature.home.presentation.homeModuleRouteResolver
@@ -48,32 +51,53 @@ import org.koin.compose.getKoin
 private val navSavedStateConfiguration = SavedStateConfiguration {
     serializersModule = SerializersModule {
         polymorphic(NavKey::class) {
+            subclass(AppModuleRoute.MainHost::class)
+            subclass(AuthModuleRoute.Login::class)
+            subclass(AuthModuleRoute.LoginCode::class)
+            subclass(FAQModuleRoute.FAQ::class)
             subclass(HomeModuleRoute.Home::class)
+            subclass(NotificationModuleRoute.NotificationDetails::class)
+            subclass(NotificationModuleRoute.NotificationOverview::class)
+            subclass(NotificationModuleRoute.NotificationSettings::class)
+            subclass(NotificationModuleRoute.NotificationChannel::class)
+            subclass(PartnerModuleRoute.PartnerDetails::class)
             subclass(PartnerModuleRoute.PartnerOverview::class)
-            subclass(ScanModuleRoute.Scan::class)
+            subclass(PartnerModuleRoute.PartnerEdit::class)
+            subclass(PartnerModuleRoute.CustomerOverview::class)
+            subclass(PartnerModuleRoute.PartnerPanel::class)
+            subclass(PartnerModuleRoute.PartnerNotifications::class)
+            subclass(PartnerModuleRoute.PartnerNotificationDetails::class)
+            subclass(PartnerModuleRoute.PartnerNotificationEdit::class)
+            subclass(PartnerModuleRoute.PartnerNotificationType::class)
+            subclass(ProductModuleRoute.ProductDetails::class)
+            subclass(ProductModuleRoute.ProductEdit::class)
             subclass(ProductModuleRoute.ProductOverview::class)
+            subclass(ProductModuleRoute.ProductSeriesOverview::class)
             subclass(ProfileModuleRoute.ProfileDetails::class)
+            subclass(ProfileModuleRoute.ProfileEdit::class)
+            subclass(ScanModuleRoute.Scan::class)
+            subclass(TACModuleRoute.TAC::class)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainAppScreen() {
+fun MainAppScreen(
+    initialRoutes: List<NavKey>
+) {
     val backStack = rememberNavBackStack(
         configuration = navSavedStateConfiguration,
-        HomeModuleRoute.Home
+        *initialRoutes.toTypedArray()
     )
-
-    val navigator = remember(backStack) { Navigator(backStack) }
 
     val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     NavigationHandler(
         navigationFlow = viewModelNavigator.navigationEvents,
-        navigator = navigator,
+        backStack = backStack,
     )
 
-    val currentScreen = backStack.lastOrNull() ?: HomeModuleRoute.Home
+    val currentScreen = backStack.lastOrNull() ?: initialRoutes.last()
     val showBottomBar = currentScreen is HomeModuleRoute.Home
             || currentScreen is PartnerModuleRoute.PartnerOverview
             || currentScreen is ScanModuleRoute.Scan
@@ -101,7 +125,7 @@ fun MainAppScreen() {
                             backStack.clear()
                             backStack.add(PartnerModuleRoute.PartnerOverview)
                         },
-                        label = { Text("Home") },
+                        label = { Text("Partner") },
                         icon = { Icon(Icons.Default.People, contentDescription = "Partner") }
                     )
 

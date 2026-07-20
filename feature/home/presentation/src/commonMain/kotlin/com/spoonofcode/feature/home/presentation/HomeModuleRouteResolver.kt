@@ -9,6 +9,6 @@ fun EntryProviderScope<NavKey>.homeModuleRouteResolver() {
     entry<HomeModuleRoute.Home> {
         HomeScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 }

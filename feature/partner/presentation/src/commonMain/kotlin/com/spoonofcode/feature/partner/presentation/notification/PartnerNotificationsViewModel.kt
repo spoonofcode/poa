@@ -45,10 +45,8 @@ internal class PartnerNotificationsViewModel(
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationDetails(
-                        notificationId = notificationId
-                    )
+                PartnerModuleRoute.PartnerNotificationDetails(
+                    notificationId = notificationId
                 )
             )
         }

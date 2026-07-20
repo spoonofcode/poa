@@ -63,13 +63,11 @@ internal class ProductSeriesOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = currentContentState().checkedProductSeriesNames.map {
-                            PartnerNotificationType.serie.createTopic(it)
-                        }.toSet(),
-                        selectedNames = currentContentState().checkedProductSeriesNames,
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = currentContentState().checkedProductSeriesNames.map {
+                        PartnerNotificationType.serie.createTopic(it)
+                    }.toSet(),
+                    selectedNames = currentContentState().checkedProductSeriesNames,
                 )
             )
         }

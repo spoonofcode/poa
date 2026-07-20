@@ -63,15 +63,13 @@ internal class PartnerCustomerOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = currentContentState().checkedUserIds.map {
-                            PartnerNotificationType.user.createTopic(it)
-                        }.toSet(),
-                        selectedNames = currentContentState().customers
-                            .filter { it.id in currentContentState().checkedUserIds }
-                            .map { it.name }.toSet()
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = currentContentState().checkedUserIds.map {
+                        PartnerNotificationType.user.createTopic(it)
+                    }.toSet(),
+                    selectedNames = currentContentState().customers
+                        .filter { it.id in currentContentState().checkedUserIds }
+                        .map { it.name }.toSet()
                 )
             )
         }

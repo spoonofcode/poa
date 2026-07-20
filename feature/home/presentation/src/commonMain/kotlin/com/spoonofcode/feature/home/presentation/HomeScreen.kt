@@ -32,7 +32,7 @@ import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.home.domain.model.DailyReward
 import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 import org.jetbrains.compose.resources.stringResource

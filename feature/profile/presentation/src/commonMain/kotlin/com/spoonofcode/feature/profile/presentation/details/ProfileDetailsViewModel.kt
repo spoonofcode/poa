@@ -54,31 +54,31 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToEditProfile() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(ProfileModuleRoute.ProfileEdit))
+            viewModelNavigator.push(screen = ProfileModuleRoute.ProfileEdit)
         }
     }
 
     private fun navigateToPartnerPanel() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(PartnerModuleRoute.PartnerPanel))
+            viewModelNavigator.push(screen = PartnerModuleRoute.PartnerPanel)
         }
     }
 
     private fun navigateToNotificationSettings() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(NotificationModuleRoute.NotificationChannel))
+            viewModelNavigator.push(screen = NotificationModuleRoute.NotificationChannel)
         }
     }
 
     private fun navigateToTAC() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(TACModuleRoute.TAC()))
+            viewModelNavigator.push(screen = TACModuleRoute.TAC())
         }
     }
 
     private fun navigateToFAQ() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(FAQModuleRoute.FAQ))
+            viewModelNavigator.push(screen = FAQModuleRoute.FAQ)
         }
     }
 
@@ -86,7 +86,7 @@ internal class ProfileDetailsViewModel(
         showLoadingView()
         viewModelScope.launch {
             logoutUseCase()
-            viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AuthModuleRoute.Login)))
+            viewModelNavigator.replaceAll(listOf(AuthModuleRoute.Login))
         }
     }
 

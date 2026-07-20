@@ -57,9 +57,7 @@ internal class ProductOverviewViewModel(
     private fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    ProductModuleRoute.ProductDetails(productId = productId)
-                )
+                ProductModuleRoute.ProductDetails(productId = productId)
             )
         }
     }

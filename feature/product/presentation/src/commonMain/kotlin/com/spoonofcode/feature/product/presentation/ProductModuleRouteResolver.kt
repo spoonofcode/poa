@@ -15,25 +15,25 @@ fun EntryProviderScope<NavKey>.productModuleRouteResolver() {
         ProductDetailsScreen(
             productId = it.productId,
             viewModel = koinViewModel(),
-        )
+        ).Content()
     }
 
     entry<ProductModuleRoute.ProductEdit> {
         ProductEditScreen(
             productId = it.productId,
             viewModel = koinViewModel(),
-        )
+        ).Content()
     }
 
     entry<ProductModuleRoute.ProductOverview> {
         ProductOverviewScreen(
             viewModel = koinViewModel(),
-        )
+        ).Content()
     }
 
     entry<ProductModuleRoute.ProductSeriesOverview> {
         ProductSeriesOverviewScreen(
             viewModel = koinViewModel(),
-        )
+        ).Content()
     }
 }

@@ -33,7 +33,7 @@ import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.core.presentation.taggy_go_logo
 import com.spoonofcode.feature.scan.nfc.presentation.product_not_found
 import com.spoonofcode.feature.scan.nfc.presentation.scan_again

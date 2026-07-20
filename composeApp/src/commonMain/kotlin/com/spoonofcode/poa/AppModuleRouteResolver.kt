@@ -2,12 +2,7 @@ package com.spoonofcode.poa
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
-import com.spoonofcode.poa.app.MainHostScreen
 
 fun EntryProviderScope<NavKey>.appModuleRouteResolver() {
-    entry<AppModuleRoute.MainHost> {
-        MainHostScreen(
-        )
-    }
+    // MainHost is no longer used, we use MainAppScreen as host directly in App.kt
 }

@@ -1,6 +1,5 @@
 package com.spoonofcode.core.presentation.navigation
 
-import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,12 +15,12 @@ class ViewModelNavigatorImpl : ViewModelNavigator {
 
     override suspend fun popToRoot() = navigate(NavigationEvent.PopToRoot)
 
-    override suspend fun <T : Screen> popUpTo(screenClass: KClass<T>) =
+    override suspend fun <T : Any> popUpTo(screenClass: KClass<T>) =
         navigate(NavigationEvent.PopUpTo(screenClass))
 
-    override suspend fun push(screen: Screen) = navigate(NavigationEvent.Push(screen))
+    override suspend fun push(screen: Any) = navigate(NavigationEvent.Push(screen))
 
-    override suspend fun replaceAll(screens: List<Screen>) =
+    override suspend fun replaceAll(screens: List<Any>) =
         navigate(NavigationEvent.ReplaceAll(screens))
 
     private suspend fun navigate(event: NavigationEvent) = _navigationEvents.emit(event)

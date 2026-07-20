@@ -19,45 +19,45 @@ fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
     entry<PartnerModuleRoute.CustomerOverview> {
         CustomerOverviewScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerDetails> {
         PartnerDetailsScreen(
             partnerId = it.partnerId,
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerEdit> {
         PartnerEditScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerOverview> {
         PartnerOverviewScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerPanel> {
         PartnerPanelScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerNotifications> {
         PartnerNotificationsScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerNotificationDetails> {
         PartnerNotificationDetailsScreen(
             notificationId = it.notificationId,
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerNotificationEdit> {
@@ -66,13 +66,13 @@ fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
             selectedNames = it.selectedNames,
             selectedTopics = it.selectedTopics,
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerNotificationType> {
         PartnerNotificationTypeScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 
 

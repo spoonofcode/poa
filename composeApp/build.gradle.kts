@@ -81,9 +81,6 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.touchlab.kermit)
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.tab.navigator)
-            implementation(libs.voyager.transitions)
 
             implementation(libs.navigation.compose)
             implementation(libs.navigation3.runtime)

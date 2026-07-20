@@ -22,7 +22,7 @@ import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.SocialIcons
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.about_partner
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel

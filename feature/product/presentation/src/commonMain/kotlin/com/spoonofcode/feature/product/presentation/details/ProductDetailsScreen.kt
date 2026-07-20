@@ -33,7 +33,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.core.presentation.web.getUrlOpener
 import com.spoonofcode.feature.product.domain.model.ProductStatus
 import com.spoonofcode.feature.product.presentation.Res

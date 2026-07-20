@@ -92,7 +92,7 @@ internal class PartnerOverviewViewModel(
 
     private fun selectPartner(partnerId: String) {
         viewModelScope.launch {
-            routeResolver.resolve(
+            viewModelNavigator.push(
                 PartnerModuleRoute.PartnerDetails(partnerId = partnerId),
             )
         }

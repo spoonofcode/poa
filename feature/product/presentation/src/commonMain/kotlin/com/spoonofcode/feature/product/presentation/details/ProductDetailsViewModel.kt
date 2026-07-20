@@ -66,7 +66,7 @@ internal class ProductDetailsViewModel(
     private fun editProduct() {
         val productId = currentContentState().product!!.id
         viewModelScope.launch {
-            routeResolver.resolve(ProductModuleRoute.ProductEdit(productId = productId))
+            viewModelNavigator.push(ProductModuleRoute.ProductEdit(productId = productId))
         }
     }
 

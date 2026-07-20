@@ -9,6 +9,6 @@ fun EntryProviderScope<NavKey>.scanModuleRouteResolver() {
     entry<ScanModuleRoute.Scan> {
         ScanScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 }

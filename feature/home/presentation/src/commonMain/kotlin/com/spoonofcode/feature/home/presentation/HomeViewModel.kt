@@ -88,7 +88,7 @@ internal class HomeViewModel(
 
     private fun navigateToNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationOverview))
+            viewModelNavigator.push(NotificationModuleRoute.NotificationOverview)
         }
     }
 

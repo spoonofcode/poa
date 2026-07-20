@@ -11,12 +11,12 @@ fun EntryProviderScope<NavKey>.authModuleRouteResolver() {
     entry<AuthModuleRoute.Login> {
         LoginScreen(
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
     entry<AuthModuleRoute.LoginCode> {
         LoginCodeScreen(
             email = it.email,
             viewModel = koinViewModel()
-        )
+        ).Content()
     }
 }

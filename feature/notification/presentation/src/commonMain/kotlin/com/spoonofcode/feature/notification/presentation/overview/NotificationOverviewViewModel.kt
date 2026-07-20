@@ -41,7 +41,7 @@ internal class NotificationOverviewViewModel(
 
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
-            routeResolver.resolve(
+            viewModelNavigator.push(
                 NotificationModuleRoute.NotificationDetails(notificationId = notificationId)
             )
         }

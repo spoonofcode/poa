@@ -45,10 +45,8 @@ internal class ScanViewModel(
                             getProductByIdUseCase(productId = nfcTag.publicId)
                                 .onSuccess { product ->
                                     viewModelNavigator.push(
-                                        routeResolver.resolve(
-                                            ProductModuleRoute.ProductDetails(
-                                                productId = product.id,
-                                            )
+                                        ProductModuleRoute.ProductDetails(
+                                            productId = product.id,
                                         )
                                     )
                                 }
