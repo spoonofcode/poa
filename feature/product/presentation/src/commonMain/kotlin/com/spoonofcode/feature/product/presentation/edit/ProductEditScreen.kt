@@ -94,13 +94,13 @@ internal class ProductEditScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductEditScreenContentPreview() {
-    ProductEditScreen(
-        productId = "1",
-    ).PreviewContent(
-        viewState = ProductEditViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun ProductEditScreenContentPreview() {
+//    ProductEditScreen(
+//        productId = "1",
+//    ).PreviewContent(
+//        viewState = ProductEditViewState(),
+//    )
+//}
 // endregion

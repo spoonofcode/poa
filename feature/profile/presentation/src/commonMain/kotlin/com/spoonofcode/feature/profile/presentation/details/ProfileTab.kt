@@ -30,6 +30,6 @@ object ProfileTab : Tab {
 
     @Composable
     override fun Content() {
-        ProfileDetailsScreen().Content()
+//        ProfileDetailsScreen().Content()
     }
 }

@@ -132,12 +132,12 @@ internal class ProductOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductOverviewScreenContentPreview() {
-    ProductOverviewScreen()
-        .PreviewContent(
-            viewState = ProductOverviewViewState(),
-        )
-}
+//@Preview
+//@Composable
+//fun ProductOverviewScreenContentPreview() {
+//    ProductOverviewScreen()
+//        .PreviewContent(
+//            viewState = ProductOverviewViewState(),
+//        )
+//}
 // endregion

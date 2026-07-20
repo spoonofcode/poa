@@ -112,13 +112,13 @@ internal class NotificationDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun NotificationDetailsScreenContentPreview() {
-    NotificationDetailsScreen(
-        notificationId = "1"
-    ).PreviewContent(
-        NotificationDetailsViewState()
-    )
-}
+//@Preview
+//@Composable
+//private fun NotificationDetailsScreenContentPreview() {
+//    NotificationDetailsScreen(
+//        notificationId = "1"
+//    ).PreviewContent(
+//        NotificationDetailsViewState()
+//    )
+//}
 // endregion

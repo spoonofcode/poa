@@ -260,13 +260,13 @@ internal data class ProductDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductDetailsScreenContentPreview() {
-    ProductDetailsScreen(
-        productId = "1"
-    ).PreviewContent(
-        viewState = ProductDetailsViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun ProductDetailsScreenContentPreview() {
+//    ProductDetailsScreen(
+//        productId = "1"
+//    ).PreviewContent(
+//        viewState = ProductDetailsViewState(),
+//    )
+//}
 // endregion

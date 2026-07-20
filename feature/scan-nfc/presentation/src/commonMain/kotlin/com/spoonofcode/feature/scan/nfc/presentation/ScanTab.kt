@@ -28,6 +28,6 @@ object ScanTab : Tab {
 
     @Composable
     override fun Content() {
-        ScanScreen().Content()
+//        ScanScreen().Content()
     }
 }

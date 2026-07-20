@@ -85,11 +85,11 @@ internal class PartnerOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun PartnerOverviewScreenContentPreview() {
-    PartnerOverviewScreen().PreviewContent(
-        viewState = PartnerOverviewViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun PartnerOverviewScreenContentPreview() {
+//    PartnerOverviewScreen().PreviewContent(
+//        viewState = PartnerOverviewViewState(),
+//    )
+//}
 // endregion

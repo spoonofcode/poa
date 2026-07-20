@@ -140,11 +140,11 @@ internal class ScanScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun ScanScreenContentPreview() {
-    ScanScreen().PreviewContent(
-        ScanViewState()
-    )
-}
+//@Preview
+//@Composable
+//private fun ScanScreenContentPreview() {
+//    ScanScreen().PreviewContent(
+//        ScanViewState()
+//    )
+//}
 // endregion

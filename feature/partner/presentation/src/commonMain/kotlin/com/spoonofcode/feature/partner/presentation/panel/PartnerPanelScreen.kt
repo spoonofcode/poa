@@ -85,13 +85,13 @@ internal class PartnerPanelScreen(
     }
 
     // region previews
-    @Preview
-    @Composable
-    fun InitializedPartnerPanelScreenPreview() {
-        PartnerPanelScreen()
-            .PreviewContent(
-            viewState = PartnerPanelViewState()
-        )
-    }
+//    @Preview
+//    @Composable
+//    fun InitializedPartnerPanelScreenPreview() {
+//        PartnerPanelScreen()
+//            .PreviewContent(
+//            viewState = PartnerPanelViewState()
+//        )
+//    }
     // endregion
 }

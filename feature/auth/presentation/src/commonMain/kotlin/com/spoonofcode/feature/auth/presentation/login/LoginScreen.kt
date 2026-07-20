@@ -118,11 +118,11 @@ private fun GoogleSignInButton(
 }
 
 // region previews
-@Preview
-@Composable
-private fun LoginScreenContentPreview() {
-    LoginScreen().PreviewContent(
-        LoginViewState()
-    )
-}
+//@Preview
+//@Composable
+//private fun LoginScreenContentPreview() {
+//    LoginScreen().PreviewContent(
+//        LoginViewState()
+//    )
+//}
 // endregion

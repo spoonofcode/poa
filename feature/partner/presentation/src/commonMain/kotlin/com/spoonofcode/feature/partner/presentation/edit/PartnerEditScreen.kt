@@ -92,14 +92,14 @@ internal class PartnerEditScreen(
         }
     }
 
-    @Preview
-    @Composable
-    private fun InitializedPartnerEditScreenPreview() {
-        PartnerEditScreen().PreviewContent(
-            PartnerEditViewState(
-                // TODO #133 fix previews
-//                partner = PartnerMockData.PARTNER_1
-            )
-        )
-    }
+//    @Preview
+//    @Composable
+//    private fun InitializedPartnerEditScreenPreview() {
+//        PartnerEditScreen().PreviewContent(
+//            PartnerEditViewState(
+//                // TODO #133 fix previews
+////                partner = PartnerMockData.PARTNER_1
+//            )
+//        )
+//    }
 }

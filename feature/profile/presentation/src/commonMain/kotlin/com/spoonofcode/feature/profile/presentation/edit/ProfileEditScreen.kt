@@ -66,11 +66,11 @@ internal class ProfileEditScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProfileEditScreenContentPreview() {
-    ProfileEditScreen().PreviewContent(
-        viewState = ProfileEditViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun ProfileEditScreenContentPreview() {
+//    ProfileEditScreen().PreviewContent(
+//        viewState = ProfileEditViewState(),
+//    )
+//}
 // endregion

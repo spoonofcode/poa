@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
@@ -42,7 +43,7 @@ internal class LoginViewModel(
             loginRequestCodeUseCase(
                 email = currentContentState().email,
             ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = currentContentState().email))
+                routeResolver.resolve(AuthModuleRoute.LoginCode(email = currentContentState().email))
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }
             }

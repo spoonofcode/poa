@@ -77,13 +77,13 @@ internal class LoginCodeScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun LoginCodeScreenContentPreview() {
-    LoginCodeScreen(
-        email = "email@example.com",
-    ).PreviewContent(
-        LoginCodeViewState()
-    )
-}
+//@Preview
+//@Composable
+//private fun LoginCodeScreenContentPreview() {
+//    LoginCodeScreen(
+//        email = "email@example.com",
+//    ).PreviewContent(
+//        LoginCodeViewState()
+//    )
+//}
 // endregion

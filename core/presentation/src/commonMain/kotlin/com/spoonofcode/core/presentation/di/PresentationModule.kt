@@ -3,7 +3,7 @@ package com.spoonofcode.core.presentation.di
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigatorImpl
 import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
-import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolverImpl
+//import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolverImpl
 import com.spoonofcode.core.presentation.network.NetworkManager
 import com.spoonofcode.core.presentation.network.NetworkManagerImpl
 import dev.jordond.connectivity.Connectivity
@@ -18,6 +18,6 @@ val presentationModule = module {
         }
     }
     singleOf(::NetworkManagerImpl).bind(NetworkManager::class)
-    single { VoyagerRouteResolverImpl(getAll()) } bind VoyagerRouteResolver::class
+//    single { VoyagerRouteResolverImpl(getAll()) } bind VoyagerRouteResolver::class
     singleOf(::ViewModelNavigatorImpl).bind(ViewModelNavigator::class)
 }

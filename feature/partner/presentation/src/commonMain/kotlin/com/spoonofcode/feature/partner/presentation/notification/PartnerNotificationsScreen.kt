@@ -186,12 +186,12 @@ internal class PartnerNotificationsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun PartnerNotificationsScreenContentPreview() {
-    PartnerNotificationsScreen()
-        .PreviewContent(
-            PartnerNotificationsViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun PartnerNotificationsScreenContentPreview() {
+//    PartnerNotificationsScreen()
+//        .PreviewContent(
+//            PartnerNotificationsViewState()
+//        )
+//}
 // endregion

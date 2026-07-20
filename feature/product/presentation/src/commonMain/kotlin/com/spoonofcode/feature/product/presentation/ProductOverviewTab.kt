@@ -29,6 +29,6 @@ object ProductOverviewTab : Tab {
 
     @Composable
     override fun Content() {
-        ProductOverviewScreen().Content()
+//        ProductOverviewScreen().Content()
     }
 }

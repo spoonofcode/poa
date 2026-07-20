@@ -187,12 +187,12 @@ internal class NotificationSettingsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun NotificationSettingsScreenContentPreview() {
-    NotificationSettingsScreen()
-        .PreviewContent(
-            NotificationSettingsViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun NotificationSettingsScreenContentPreview() {
+//    NotificationSettingsScreen()
+//        .PreviewContent(
+//            NotificationSettingsViewState()
+//        )
+//}
 // endregion

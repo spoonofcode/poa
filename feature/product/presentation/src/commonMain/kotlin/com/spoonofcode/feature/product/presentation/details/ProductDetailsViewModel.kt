@@ -3,11 +3,11 @@ package com.spoonofcode.feature.product.presentation.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductStatusUseCase
-import com.spoonofcode.feature.product.presentation.edit.ProductEditScreen
 import kotlinx.coroutines.launch
 
 internal class ProductDetailsViewModel(
@@ -66,7 +66,7 @@ internal class ProductDetailsViewModel(
     private fun editProduct() {
         val productId = currentContentState().product!!.id
         viewModelScope.launch {
-            viewModelNavigator.push(ProductEditScreen(productId = productId))
+            routeResolver.resolve(ProductModuleRoute.ProductEdit(productId = productId))
         }
     }
 

@@ -177,12 +177,12 @@ internal class NotificationOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun NotificationOverviewScreenContentPreview() {
-    NotificationOverviewScreen()
-        .PreviewContent(
-            viewState = NotificationOverviewViewState(),
-        )
-}
+//@Preview
+//@Composable
+//fun NotificationOverviewScreenContentPreview() {
+//    NotificationOverviewScreen()
+//        .PreviewContent(
+//            viewState = NotificationOverviewViewState(),
+//        )
+//}
 // endregion

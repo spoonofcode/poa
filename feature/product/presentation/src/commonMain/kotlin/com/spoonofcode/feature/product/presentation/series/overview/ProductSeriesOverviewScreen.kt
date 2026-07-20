@@ -118,14 +118,14 @@ internal class ProductSeriesOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductSeriesOverviewScreenContentPreview() {
-    ProductSeriesOverviewScreen()
-        .PreviewContent(
-            viewState = ProductSeriesOverviewViewState(
-//                productSeries = PRODUCTS,
-            )
-        )
-}
+//@Preview
+//@Composable
+//fun ProductSeriesOverviewScreenContentPreview() {
+//    ProductSeriesOverviewScreen()
+//        .PreviewContent(
+//            viewState = ProductSeriesOverviewViewState(
+////                productSeries = PRODUCTS,
+//            )
+//        )
+//}
 // endregion

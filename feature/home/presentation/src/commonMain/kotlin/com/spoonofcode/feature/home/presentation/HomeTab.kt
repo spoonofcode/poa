@@ -21,6 +21,6 @@ object HomeTab : Tab {
 
     @Composable
     override fun Content() {
-        HomeScreen().Content()
+//        HomeScreen().Content()
     }
 }

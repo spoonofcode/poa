@@ -69,11 +69,11 @@ internal class TACScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun TACScreenContentPreview() {
-    TACScreen().PreviewContent(
-        viewState = TACViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun TACScreenContentPreview() {
+//    TACScreen().PreviewContent(
+//        viewState = TACViewState(),
+//    )
+//}
 // endregion

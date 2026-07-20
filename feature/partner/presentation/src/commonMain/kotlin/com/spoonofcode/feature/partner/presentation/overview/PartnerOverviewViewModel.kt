@@ -3,11 +3,11 @@ package com.spoonofcode.feature.partner.presentation.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersUseCase
-import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -92,10 +92,8 @@ internal class PartnerOverviewViewModel(
 
     private fun selectPartner(partnerId: String) {
         viewModelScope.launch {
-            viewModelNavigator.push(
-                PartnerDetailsScreen(
-                    partnerId = partnerId
-                )
+            routeResolver.resolve(
+                PartnerModuleRoute.PartnerDetails(partnerId = partnerId),
             )
         }
     }

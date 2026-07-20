@@ -116,13 +116,13 @@ internal class PartnerDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun PartnerDetailsScreenContentPreview() {
-    PartnerDetailsScreen(
-        partnerId = "1"
-    ).PreviewContent(
-        viewState = PartnerDetailsViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun PartnerDetailsScreenContentPreview() {
+//    PartnerDetailsScreen(
+//        partnerId = "1"
+//    ).PreviewContent(
+//        viewState = PartnerDetailsViewState(),
+//    )
+//}
 // endregion

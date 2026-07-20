@@ -73,11 +73,11 @@ internal class FAQScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun FAQScreenContentPreview() {
-    FAQScreen().PreviewContent(
-        viewState = FAQViewState(),
-    )
-}
+//@Preview
+//@Composable
+//private fun FAQScreenContentPreview() {
+//    FAQScreen().PreviewContent(
+//        viewState = FAQViewState(),
+//    )
+//}
 // endregion

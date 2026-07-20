@@ -81,12 +81,12 @@ internal class NotificationChannelScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun NotificationChannelScreenContentPreview() {
-    NotificationChannelScreen()
-        .PreviewContent(
-            NotificationChannelViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun NotificationChannelScreenContentPreview() {
+//    NotificationChannelScreen()
+//        .PreviewContent(
+//            NotificationChannelViewState()
+//        )
+//}
 // endregion

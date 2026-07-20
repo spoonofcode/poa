@@ -138,13 +138,13 @@ internal class PartnerNotificationDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun PartnerNotificationDetailsScreenContentPreview() {
-    PartnerNotificationDetailsScreen(
-        notificationId = "1"
-    ).PreviewContent(
-        viewState = PartnerNotificationDetailsViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun PartnerNotificationDetailsScreenContentPreview() {
+//    PartnerNotificationDetailsScreen(
+//        notificationId = "1"
+//    ).PreviewContent(
+//        viewState = PartnerNotificationDetailsViewState(),
+//    )
+//}
 // endregion

@@ -29,6 +29,6 @@ object PartnerOverviewTab : Tab {
 
     @Composable
     override fun Content() {
-        PartnerOverviewScreen().Content()
+//        PartnerOverviewScreen().Content()
     }
 }

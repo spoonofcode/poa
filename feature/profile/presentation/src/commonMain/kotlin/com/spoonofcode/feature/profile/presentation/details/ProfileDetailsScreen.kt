@@ -248,16 +248,16 @@ private fun DividerItem() {
 }
 
 // region previews
-@Preview
-@Composable
-private fun ProfileScreenContentPreview(
-    @PreviewParameter(ProfilePreviewParameterProvider::class)
-    profile: Profile,
-) {
-    ProfileDetailsScreen().PreviewContent(
-        ProfileDetailsViewState(
-            profile = profile,
-        )
-    )
-}
+//@Preview
+//@Composable
+//private fun ProfileScreenContentPreview(
+//    @PreviewParameter(ProfilePreviewParameterProvider::class)
+//    profile: Profile,
+//) {
+//    ProfileDetailsScreen().PreviewContent(
+//        ProfileDetailsViewState(
+//            profile = profile,
+//        )
+//    )
+//}
 // endregion

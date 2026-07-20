@@ -113,11 +113,11 @@ internal class CustomerOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun CustomerOverviewScreenContentPreview() {
-    CustomerOverviewScreen().PreviewContent(
-        viewState = PartnerCustomerOverviewViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun CustomerOverviewScreenContentPreview() {
+//    CustomerOverviewScreen().PreviewContent(
+//        viewState = PartnerCustomerOverviewViewState(),
+//    )
+//}
 // endregion
