@@ -16,7 +16,8 @@ import org.koin.compose.viewmodel.koinViewModel
 internal class TACScreen(
     override val backNavigationEnable: Boolean = true,
     override val verticalScrollEnable: Boolean = true,
-) : BaseScreen<TACViewModel, TACViewState, TACViewAction, Nothing>() {
+    val viewModel: TACViewModel,
+    ) : BaseScreen<TACViewModel, TACViewState, TACViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.terms_and_conditions)

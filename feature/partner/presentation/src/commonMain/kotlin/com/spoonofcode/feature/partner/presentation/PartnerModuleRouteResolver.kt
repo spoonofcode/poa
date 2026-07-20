@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.partner.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
@@ -11,28 +11,69 @@ import com.spoonofcode.feature.partner.presentation.notification.PartnerNotifica
 import com.spoonofcode.feature.partner.presentation.notification.details.PartnerNotificationDetailsScreen
 import com.spoonofcode.feature.partner.presentation.notification.edit.PartnerNotificationEditScreen
 import com.spoonofcode.feature.partner.presentation.notification.type.PartnerNotificationTypeScreen
+import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
+import org.koin.compose.viewmodel.koinViewModel
 
-class PartnerModuleRouteResolver : ModuleRouteResolver<PartnerModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? PartnerModuleRoute)?.let {
-            when (it) {
-                is PartnerModuleRoute.CustomerOverview -> CustomerOverviewScreen()
-                is PartnerModuleRoute.PartnerDetails -> PartnerDetailsScreen(partnerId = it.partnerId)
-                is PartnerModuleRoute.PartnerEdit -> PartnerEditScreen()
-                PartnerModuleRoute.PartnerPanel -> PartnerPanelScreen()
-                PartnerModuleRoute.PartnerNotifications -> PartnerNotificationsScreen()
-                is PartnerModuleRoute.PartnerNotificationDetails -> PartnerNotificationDetailsScreen(
-                    notificationId = it.notificationId
-                )
+fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
+    entry<PartnerModuleRoute.CustomerOverview> {
+        CustomerOverviewScreen(
+            viewModel = koinViewModel()
+        )
+    }
 
-                is PartnerModuleRoute.PartnerNotificationEdit -> PartnerNotificationEditScreen(
-                    notificationId = it.notificationId,
-                    selectedNames = it.selectedNames,
-                    selectedTopics = it.selectedTopics,
-                )
+    entry<PartnerModuleRoute.PartnerDetails> {
+        PartnerDetailsScreen(
+            partnerId = it.partnerId,
+            viewModel = koinViewModel()
+        )
+    }
 
-                PartnerModuleRoute.PartnerNotificationType -> PartnerNotificationTypeScreen()
-            }
-        }
+    entry<PartnerModuleRoute.PartnerEdit> {
+        PartnerEditScreen(
+            viewModel = koinViewModel()
+        )
+    }
+
+    entry<PartnerModuleRoute.PartnerOverview> {
+        PartnerOverviewScreen(
+            viewModel = koinViewModel()
+        )
+    }
+
+    entry<PartnerModuleRoute.PartnerPanel> {
+        PartnerPanelScreen(
+            viewModel = koinViewModel()
+        )
+    }
+
+    entry<PartnerModuleRoute.PartnerNotifications> {
+        PartnerNotificationsScreen(
+            viewModel = koinViewModel()
+        )
+    }
+
+    entry<PartnerModuleRoute.PartnerNotificationDetails> {
+        PartnerNotificationDetailsScreen(
+            notificationId = it.notificationId,
+            viewModel = koinViewModel()
+        )
+    }
+
+    entry<PartnerModuleRoute.PartnerNotificationEdit> {
+        PartnerNotificationEditScreen(
+            notificationId = it.notificationId,
+            selectedNames = it.selectedNames,
+            selectedTopics = it.selectedTopics,
+            viewModel = koinViewModel()
+        )
+    }
+
+    entry<PartnerModuleRoute.PartnerNotificationType> {
+        PartnerNotificationTypeScreen(
+            viewModel = koinViewModel()
+        )
+    }
+
+
 }

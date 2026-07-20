@@ -25,12 +25,14 @@ import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.about_partner
+import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewViewModel
 import com.spoonofcode.feature.partner.presentation.partner
 import org.jetbrains.compose.resources.stringResource
 
 
 internal class PartnerDetailsScreen(
     private val partnerId: String,
+    val viewModel: PartnerDetailsViewModel,
 ) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState, PartnerDetailsViewAction, Nothing>() {
 
     @Composable

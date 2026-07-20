@@ -25,7 +25,9 @@ import com.spoonofcode.feature.partner.presentation.partner_panel
 import com.spoonofcode.feature.partner.presentation.reports
 import com.spoonofcode.feature.partner.presentation.send_notification
 
-internal class PartnerPanelScreen() :
+internal class PartnerPanelScreen(
+    val viewModel: PartnerPanelViewModel,
+) :
     BaseScreen<PartnerPanelViewModel, PartnerPanelViewState, PartnerPanelViewAction, Nothing>() {
 
     @Composable

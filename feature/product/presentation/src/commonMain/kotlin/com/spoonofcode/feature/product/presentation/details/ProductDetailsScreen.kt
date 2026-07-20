@@ -51,6 +51,7 @@ import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
     val productId: String,
+    val viewModel: ProductDetailsViewModel,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
 
     @Composable

@@ -47,6 +47,7 @@ import kotlin.time.Clock
 
 internal class PartnerNotificationsScreen(
     override val verticalScrollEnable: Boolean = false,
+    val viewModel: PartnerNotificationsViewModel,
 ) : BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction, Nothing>() {
 
     @Composable

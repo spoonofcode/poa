@@ -15,13 +15,16 @@ import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.feature.profile.presentation.Res
+import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.name
 import com.spoonofcode.feature.profile.presentation.poa
 import com.spoonofcode.feature.profile.presentation.save_changes
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class ProfileEditScreen() :
+internal class ProfileEditScreen(
+    viewModel: ProfileEditViewModel,
+) :
     BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction, Nothing>() {
 
     @Composable

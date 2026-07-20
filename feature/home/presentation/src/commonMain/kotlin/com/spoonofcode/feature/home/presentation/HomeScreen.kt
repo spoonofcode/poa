@@ -39,6 +39,7 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
+    val viewModel: HomeViewModel
 ) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction, Nothing>() {
 
     @Composable

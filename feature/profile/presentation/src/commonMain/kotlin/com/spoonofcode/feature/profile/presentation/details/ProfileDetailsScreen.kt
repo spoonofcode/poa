@@ -56,6 +56,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
+    viewModel: ProfileDetailsViewModel,
 ) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState, ProfileDetailsViewAction, Nothing>() {
 
     @Composable

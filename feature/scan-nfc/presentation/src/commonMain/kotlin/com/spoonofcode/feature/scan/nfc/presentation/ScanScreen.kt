@@ -44,6 +44,7 @@ import org.jetbrains.compose.resources.stringResource
 internal class ScanScreen(
     override val backNavigationEnable: Boolean = false,
     override val verticalScrollEnable: Boolean = false,
+    viewModel: ScanViewModel,
 ) : BaseScreen<ScanViewModel, ScanViewState, ScanViewAction, Nothing>() {
 
     @Composable

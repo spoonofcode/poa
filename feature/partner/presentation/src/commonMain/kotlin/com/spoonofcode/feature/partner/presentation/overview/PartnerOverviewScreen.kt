@@ -26,6 +26,7 @@ import org.jetbrains.compose.resources.stringResource
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
+    val viewModel: PartnerOverviewViewModel,
 ) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>() {
 
     @Composable

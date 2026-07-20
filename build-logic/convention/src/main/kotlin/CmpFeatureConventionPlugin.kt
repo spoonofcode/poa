@@ -53,6 +53,10 @@ class CmpFeatureConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("voyager-tab-navigator").get())
                         implementation(libs.findLibrary("voyager-transitions").get())
 
+                        implementation(libs.findLibrary("navigation-compose").get())
+                        implementation(libs.findLibrary("navigation3-runtime").get())
+                        implementation(libs.findLibrary("navigation3-ui").get())
+
                         // Dependency Injection (Koin)
                         implementation(libs.findLibrary("koin-core").get())
                         implementation(libs.findLibrary("koin-compose").get())

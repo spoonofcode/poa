@@ -28,7 +28,8 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationDetailsScreen(
     private val notificationId: String,
-) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
+    val viewModel: NotificationDetailsViewModel,
+    ) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification)

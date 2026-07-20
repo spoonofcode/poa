@@ -19,10 +19,10 @@ import com.spoonofcode.feature.auth.presentation.one_time_code_info_postfix
 import com.spoonofcode.feature.auth.presentation.one_time_code_info_prefix
 import com.spoonofcode.feature.auth.presentation.sign_in_with_code
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 
 internal class LoginCodeScreen(
     val email: String,
+    val viewModel: LoginCodeViewModel,
 ) : BaseScreen<LoginCodeViewModel, LoginCodeViewState, LoginCodeViewAction, Nothing>() {
 
     @Composable

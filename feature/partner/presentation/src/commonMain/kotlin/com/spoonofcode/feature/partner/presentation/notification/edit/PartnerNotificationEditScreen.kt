@@ -34,6 +34,7 @@ internal class PartnerNotificationEditScreen(
     val notificationId: String? = null,
     val selectedTopics: Set<String> = emptySet(),
     val selectedNames: Set<String> = emptySet(),
+    val viewModel: PartnerNotificationEditViewModel,
 ) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
 
     @Composable

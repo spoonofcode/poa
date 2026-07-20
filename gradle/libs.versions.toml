@@ -1,8 +1,8 @@
 [versions]
 # --- Android SDK ---
-androidCompileSdk = "36"
+androidCompileSdk = "37"
 androidMinSdk = "30"
-androidTargetSdk = "36"
+androidTargetSdk = "37"
 
 calfPermissions = "0.11.0"
 ksafe = "1.8.1"
@@ -36,6 +36,9 @@ composeIcons = "1.1.1"
 landscapistCoil = "2.9.7"
 media3 = "1.10.0"
 compottie = "2.1.0"
+navigation-compose = "2.9.2"
+navigation3 = "1.2.0-alpha06"
+navigation3-jetbrains = "1.2.0-alpha02"
 
 # --- Google / Firebase ---
 firebaseBom = "34.15.0"
@@ -152,6 +155,10 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-tab-navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3-jetbrains" }
 
 # --- Testing (AndroidX + misc) ---
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }

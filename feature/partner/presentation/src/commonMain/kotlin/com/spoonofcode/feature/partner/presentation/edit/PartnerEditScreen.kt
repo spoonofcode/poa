@@ -21,7 +21,9 @@ import com.spoonofcode.feature.partner.presentation.x
 import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
-internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction, Nothing>() {
+internal class PartnerEditScreen(
+    val viewModel: PartnerEditViewModel,
+): BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.partner)

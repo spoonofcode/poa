@@ -24,7 +24,9 @@ import com.spoonofcode.feature.partner.presentation.to_all_my_customers
 import com.spoonofcode.feature.partner.presentation.to_selected_customers
 import com.spoonofcode.feature.partner.presentation.to_selected_series
 
-internal class PartnerNotificationTypeScreen :
+internal class PartnerNotificationTypeScreen(
+    val viewModel: PartnerNotificationTypeViewModel,
+) :
     BaseScreen<PartnerNotificationTypeViewModel, PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction, Nothing>() {
 
     @Composable

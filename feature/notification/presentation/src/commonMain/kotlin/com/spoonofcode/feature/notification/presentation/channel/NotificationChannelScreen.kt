@@ -23,7 +23,9 @@ import com.spoonofcode.feature.notification.presentation.notification_push
 import com.spoonofcode.feature.notification.presentation.notification_tel_and_sms
 import org.jetbrains.compose.resources.stringResource
 
-internal class NotificationChannelScreen :
+internal class NotificationChannelScreen(
+    val viewModel: NotificationChannelViewModel,
+) :
     BaseScreen<NotificationChannelViewModel, NotificationChannelViewState, NotificationChannelViewAction, Nothing>() {
 
     @Composable

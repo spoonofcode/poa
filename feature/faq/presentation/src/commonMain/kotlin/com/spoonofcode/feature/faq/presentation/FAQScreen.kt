@@ -9,7 +9,9 @@ import com.spoonofcode.core.presentation.compose.Texts
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction, Nothing>() {
+internal class FAQScreen(
+    val viewModel: FAQViewModel,
+    ) : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.faq)

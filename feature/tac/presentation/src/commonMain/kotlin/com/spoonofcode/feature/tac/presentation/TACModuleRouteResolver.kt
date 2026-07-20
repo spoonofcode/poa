@@ -1,17 +1,15 @@
 package com.spoonofcode.feature.tac.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.TACModuleRoute
+import org.koin.compose.viewmodel.koinViewModel
 
-class TACModuleRouteResolver : ModuleRouteResolver<TACModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? TACModuleRoute)?.let {
-            when (it) {
-                is TACModuleRoute.TAC -> TACScreen(
-                    backNavigationEnable = it.backNavigationEnabled
-                )
-            }
-        }
+fun EntryProviderScope<NavKey>.tacModuleRouteResolver() {
+    entry<TACModuleRoute.TAC> {
+        TACScreen(
+            backNavigationEnable = it.backNavigationEnabled,
+            viewModel = koinViewModel(),
+        )
+    }
 }

@@ -1,15 +1,14 @@
 package com.spoonofcode.feature.scan.nfc.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.ScanModuleRoute
+import org.koin.compose.viewmodel.koinViewModel
 
-class ScanModuleRouteResolver : ModuleRouteResolver<ScanModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? ScanModuleRoute)?.let {
-            when (it) {
-                ScanModuleRoute.Scan -> ScanScreen()
-            }
-        }
+fun EntryProviderScope<NavKey>.scanModuleRouteResolver() {
+    entry<ScanModuleRoute.Scan> {
+        ScanScreen(
+            viewModel = koinViewModel()
+        )
+    }
 }

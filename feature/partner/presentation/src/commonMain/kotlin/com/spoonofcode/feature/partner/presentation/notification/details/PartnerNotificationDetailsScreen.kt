@@ -32,6 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationDetailsScreen(
     private val notificationId: String,
+    val viewModel: PartnerNotificationDetailsViewModel,
 ) : BaseScreen<PartnerNotificationDetailsViewModel, PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
 
     @Composable

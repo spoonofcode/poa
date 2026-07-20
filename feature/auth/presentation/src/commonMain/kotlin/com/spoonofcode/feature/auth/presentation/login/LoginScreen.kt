@@ -17,21 +17,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
+import com.spoonofcode.core.presentation.compose.Buttons.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Dividers
+import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.core.presentation.compose.Buttons.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Images
-import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.email
 import com.spoonofcode.feature.auth.presentation.ic_google
 import com.spoonofcode.feature.auth.presentation.let_s_get_started
+import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import com.spoonofcode.feature.auth.presentation.or
-import com.spoonofcode.feature.auth.presentation.poa
 import com.spoonofcode.feature.auth.presentation.sign_in
 import com.spoonofcode.feature.auth.presentation.sign_in_with_google
 import com.spoonofcode.feature.auth.presentation.taggy_go_logo
@@ -39,10 +38,10 @@ import com.spoonofcode.feature.auth.presentation.utils.GoogleAuthProvider
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import org.koin.compose.viewmodel.koinViewModel
 
 internal class LoginScreen(
     override val backNavigationEnable: Boolean = false,
+    val viewModel: LoginViewModel,
 ) : BaseScreen<LoginViewModel, LoginViewState, LoginViewAction, Nothing>() {
 
     @Composable
@@ -79,7 +78,7 @@ internal class LoginScreen(
             )
 
             GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
-                onAction(LoginViewAction.SignInWithGoogle(googleAccount =googleAccount))
+                onAction(LoginViewAction.SignInWithGoogle(googleAccount = googleAccount))
             })
         }
     }
@@ -98,7 +97,7 @@ private fun GoogleSignInButton(
         isVisible = googleAuthUiProvider.isGoogleAccountAvailable()
     }
 
-    if(isVisible){
+    if (isVisible) {
         val coroutineScope = rememberCoroutineScope()
 
         Dividers.LabeledDivider(
