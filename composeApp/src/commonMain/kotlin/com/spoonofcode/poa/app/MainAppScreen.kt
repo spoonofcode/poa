@@ -42,7 +42,6 @@ import com.spoonofcode.feature.product.presentation.productModuleRouteResolver
 import com.spoonofcode.feature.profile.presentation.profileModuleRouteResolver
 import com.spoonofcode.feature.scan.nfc.presentation.scanModuleRouteResolver
 import com.spoonofcode.feature.tac.presentation.tacModuleRouteResolver
-import com.spoonofcode.poa.appModuleRouteResolver
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
@@ -181,7 +180,6 @@ fun MainAppScreen(
             backStack = backStack,
             modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
             entryProvider = entryProvider {
-                appModuleRouteResolver()
                 authModuleRouteResolver()
                 homeModuleRouteResolver()
                 partnerModuleRouteResolver()
