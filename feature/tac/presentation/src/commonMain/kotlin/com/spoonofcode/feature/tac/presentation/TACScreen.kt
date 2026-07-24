@@ -3,30 +3,24 @@ package com.spoonofcode.feature.tac.presentation
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Checkboxes
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import org.koin.compose.viewmodel.koinViewModel
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 
 internal class TACScreen(
     override val backNavigationEnable: Boolean = true,
     override val verticalScrollEnable: Boolean = true,
     val viewModel: TACViewModel,
-    ) : BaseScreen<TACViewModel, TACViewState, TACViewAction, Nothing>() {
+) : BaseScreen<TACViewModel, TACViewState, TACViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.terms_and_conditions)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<TACViewModel>()
-
-    override fun provideInitAction(onAction: (TACViewAction) -> Unit): () -> Unit =
-        { onAction(TACViewAction.InitView) }
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

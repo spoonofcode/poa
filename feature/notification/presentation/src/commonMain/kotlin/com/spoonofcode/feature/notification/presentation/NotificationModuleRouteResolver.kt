@@ -8,12 +8,14 @@ import com.spoonofcode.feature.notification.presentation.details.NotificationDet
 import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewScreen
 import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsScreen
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 fun EntryProviderScope<NavKey>.notificationModuleRouteResolver() {
     entry<NotificationModuleRoute.NotificationDetails> {
         NotificationDetailsScreen(
-            notificationId = it.notificationId,
-            viewModel = koinViewModel(),
+            viewModel = koinViewModel(
+                parameters = { parametersOf(it.notificationId) }
+            ),
         ).Content()
     }
     entry<NotificationModuleRoute.NotificationOverview> {

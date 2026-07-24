@@ -10,14 +10,14 @@ import kotlinx.coroutines.launch
 internal class ProfileEditViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     private val updateProfileUseCase: UpdateProfileUseCase,
-) : BaseViewModel<ProfileEditViewState, ProfileEditViewAction, Nothing>(
-    initialViewState = ViewState.Content(ProfileEditViewState()),
-) {
+) : BaseViewModel<ProfileEditViewState, ProfileEditViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ProfileEditViewAction) {
         when (action) {
             is ProfileEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
-            ProfileEditViewAction.InitView -> initView()
             ProfileEditViewAction.SaveChanges -> saveChanges()
         }
     }
@@ -32,6 +32,7 @@ internal class ProfileEditViewModel(
                             profile = it,
                         )
                     )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

@@ -34,7 +34,7 @@ internal class PartnerPanelScreen(
     override fun provideTopAppBarTitle() = stringResource(Res.string.partner_panel)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerPanelViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

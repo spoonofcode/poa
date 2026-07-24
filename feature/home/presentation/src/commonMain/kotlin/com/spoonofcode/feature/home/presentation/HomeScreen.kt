@@ -56,11 +56,8 @@ internal class HomeScreen(
         ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 
-    override fun provideInitAction(onAction: (HomeViewAction) -> Unit): () -> Unit =
-        { onAction(HomeViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<HomeViewModel>()
+    override fun provideViewModel() = viewModel
 
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable

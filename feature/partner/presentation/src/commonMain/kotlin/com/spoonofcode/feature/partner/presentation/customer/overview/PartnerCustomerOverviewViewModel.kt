@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.presentation.customer.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -11,14 +10,14 @@ import kotlinx.coroutines.launch
 
 internal class PartnerCustomerOverviewViewModel(
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
-) : BaseViewModel<PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction, Nothing>(
-    initialViewState = ViewState.Content(PartnerCustomerOverviewViewState()),
-) {
+) : BaseViewModel<PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: PartnerCustomerOverviewViewAction) {
         when (action) {
             is PartnerCustomerOverviewViewAction.CheckedCustomer -> checkedCustomer(id = action.id)
-            is PartnerCustomerOverviewViewAction.InitView -> initView()
             PartnerCustomerOverviewViewAction.NavigateToNotification -> navigateToNotification()
         }
     }
@@ -33,6 +32,7 @@ internal class PartnerCustomerOverviewViewModel(
                             customers = it,
                         )
                     )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

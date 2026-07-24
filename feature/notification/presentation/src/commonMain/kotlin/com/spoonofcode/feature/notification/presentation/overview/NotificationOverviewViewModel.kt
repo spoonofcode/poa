@@ -12,10 +12,12 @@ internal class NotificationOverviewViewModel(
 ) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction, Nothing>(
     initialViewState = ViewState.Content(NotificationOverviewViewState()),
 ) {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: NotificationOverviewViewAction) {
         when (action) {
-            NotificationOverviewViewAction.InitView -> initView()
             is NotificationOverviewViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
@@ -32,6 +34,7 @@ internal class NotificationOverviewViewModel(
                             notifications = it,
                         )
                     )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

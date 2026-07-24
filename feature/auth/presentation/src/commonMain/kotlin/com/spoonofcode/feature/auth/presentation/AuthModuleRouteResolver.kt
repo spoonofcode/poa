@@ -6,6 +6,7 @@ import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.auth.presentation.login.LoginScreen
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 fun EntryProviderScope<NavKey>.authModuleRouteResolver() {
     entry<AuthModuleRoute.Login> {
@@ -15,8 +16,9 @@ fun EntryProviderScope<NavKey>.authModuleRouteResolver() {
     }
     entry<AuthModuleRoute.LoginCode> {
         LoginCodeScreen(
-            email = it.email,
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(
+                parameters = { parametersOf(it.email) }
+            )
         ).Content()
     }
 }

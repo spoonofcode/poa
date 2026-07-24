@@ -8,33 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons
+import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
-import org.koin.compose.viewmodel.koinViewModel
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.feature.profile.presentation.Res
-import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsViewModel
 import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.name
 import com.spoonofcode.feature.profile.presentation.poa
 import com.spoonofcode.feature.profile.presentation.save_changes
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileEditScreen(
-    viewModel: ProfileEditViewModel,
-) :
-    BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction, Nothing>() {
+    val viewModel: ProfileEditViewModel,
+) : BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.edit_profile)
 
-    override fun provideInitAction(onAction: (ProfileEditViewAction) -> Unit): () -> Unit =
-        { onAction(ProfileEditViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<ProfileEditViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

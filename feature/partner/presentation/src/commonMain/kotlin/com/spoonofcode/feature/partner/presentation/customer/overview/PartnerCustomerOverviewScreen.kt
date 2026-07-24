@@ -36,11 +36,8 @@ internal class CustomerOverviewScreen(
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_customers)
 
-    override fun provideInitAction(onAction: (PartnerCustomerOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerCustomerOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerCustomerOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

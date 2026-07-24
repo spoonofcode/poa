@@ -51,11 +51,8 @@ internal class NotificationOverviewScreen(
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notifications)
 
-    override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,

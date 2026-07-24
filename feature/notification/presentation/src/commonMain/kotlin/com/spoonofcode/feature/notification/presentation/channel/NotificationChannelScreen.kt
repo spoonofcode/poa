@@ -32,7 +32,7 @@ internal class NotificationChannelScreen(
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification_channels)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationChannelViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

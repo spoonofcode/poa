@@ -10,6 +10,5 @@ internal sealed interface PartnerEditViewAction : BaseViewAction {
     data class ChangeFacebookLink(val link: String) : PartnerEditViewAction
     data class ChangeYoutubeLink(val link: String) : PartnerEditViewAction
     data class ChangeXLink(val link: String) : PartnerEditViewAction
-    data object InitView : PartnerEditViewAction
     data object SaveChanges : PartnerEditViewAction
 }

@@ -9,19 +9,18 @@ import com.spoonofcode.feature.product.presentation.edit.ProductEditScreen
 import com.spoonofcode.feature.product.presentation.overview.ProductOverviewScreen
 import com.spoonofcode.feature.product.presentation.series.overview.ProductSeriesOverviewScreen
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 fun EntryProviderScope<NavKey>.productModuleRouteResolver() {
     entry<ProductModuleRoute.ProductDetails> {
         ProductDetailsScreen(
-            productId = it.productId,
-            viewModel = koinViewModel(),
+            viewModel = koinViewModel(parameters = { parametersOf(it.productId) }),
         ).Content()
     }
 
     entry<ProductModuleRoute.ProductEdit> {
         ProductEditScreen(
-            productId = it.productId,
-            viewModel = koinViewModel(),
+            viewModel = koinViewModel(parameters = { parametersOf(it.productId) }),
         ).Content()
     }
 

@@ -40,11 +40,8 @@ internal class ProductOverviewScreen(
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_products)
 
-    override fun provideInitAction(onAction: (ProductOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(ProductOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

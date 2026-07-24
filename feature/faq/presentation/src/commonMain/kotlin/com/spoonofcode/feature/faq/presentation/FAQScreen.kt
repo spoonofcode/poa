@@ -17,7 +17,7 @@ internal class FAQScreen(
     override fun provideTopAppBarTitle() = stringResource(Res.string.faq)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<FAQViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

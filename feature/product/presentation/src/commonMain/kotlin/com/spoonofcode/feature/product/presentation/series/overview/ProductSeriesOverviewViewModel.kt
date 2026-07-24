@@ -2,7 +2,6 @@ package com.spoonofcode.feature.product.presentation.series.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -11,14 +10,14 @@ import kotlinx.coroutines.launch
 
 internal class ProductSeriesOverviewViewModel(
     private val getPartnerProductSeriesUseCase: GetPartnerProductSeriesUseCase,
-) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>(
-    initialViewState = ViewState.Content(ProductSeriesOverviewViewState()),
-) {
+) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ProductSeriesOverViewViewAction) {
         when (action) {
             is ProductSeriesOverViewViewAction.CheckedProductSeries -> checkedProductSeries(action.name)
-            ProductSeriesOverViewViewAction.InitView -> initView()
             ProductSeriesOverViewViewAction.NavigateToNotification -> navigateToNotification()
         }
     }
@@ -33,6 +32,7 @@ internal class ProductSeriesOverviewViewModel(
                             productSeries = it,
                         )
                     )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

@@ -31,28 +31,14 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationEditScreen(
-    val notificationId: String? = null,
-    val selectedTopics: Set<String> = emptySet(),
-    val selectedNames: Set<String> = emptySet(),
     val viewModel: PartnerNotificationEditViewModel,
 ) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
-    override fun provideInitAction(onAction: (PartnerNotificationEditViewAction) -> Unit): () -> Unit =
-        {
-            onAction(
-                PartnerNotificationEditViewAction.InitView(
-                    notificationId = notificationId,
-                    selectedTopics = selectedTopics,
-                    selectedNames = selectedNames,
-                )
-            )
-        }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationEditViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideDialogs(

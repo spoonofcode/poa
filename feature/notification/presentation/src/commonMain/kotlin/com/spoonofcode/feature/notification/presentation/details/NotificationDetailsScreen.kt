@@ -27,18 +27,14 @@ import com.spoonofcode.feature.notification.presentation.open_link
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationDetailsScreen(
-    private val notificationId: String,
     val viewModel: NotificationDetailsViewModel,
     ) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
-    override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

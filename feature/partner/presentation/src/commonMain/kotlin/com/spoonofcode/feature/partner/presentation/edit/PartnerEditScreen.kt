@@ -28,11 +28,8 @@ internal class PartnerEditScreen(
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.partner)
 
-    override fun provideInitAction(onAction: (PartnerEditViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerEditViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -43,7 +40,7 @@ internal class PartnerEditScreen(
             val partner = viewState.partner
 
             if (partner != null) {
-                Images.ImageLink(imageLink = viewState.partner.imageLink!!)
+                viewState.partner.imageLink?.let { Images.ImageLink(imageLink = it) }
 
                 TextFields.Outlined(
                     value = partner.name,

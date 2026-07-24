@@ -21,6 +21,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -157,6 +158,15 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
         provideViewEvents(viewModel.viewEvent, viewModel::onAction)
+
+        LaunchedEffect(true) {
+            provideInitAction(viewModel::onAction).invoke()
+        }
+
+
+        LaunchedEffect(true) {
+            provideInitAction(viewModel::onAction).invoke()
+        }
 
         ContentView(
             snackbarHostState = snackbarHostState,

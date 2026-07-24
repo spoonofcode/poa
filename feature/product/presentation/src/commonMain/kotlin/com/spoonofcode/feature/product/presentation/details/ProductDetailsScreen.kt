@@ -50,7 +50,6 @@ import com.spoonofcode.feature.product.presentation.send_message
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
-    val productId: String,
     val viewModel: ProductDetailsViewModel,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
 
@@ -58,7 +57,7 @@ internal data class ProductDetailsScreen(
     override fun provideTopAppBarTitle() = stringResource(Res.string.product)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideTopBarActions(
@@ -82,9 +81,6 @@ internal data class ProductDetailsScreen(
 //        } else {
 //            emptyList()
 //        }
-
-    override fun provideInitAction(onAction: (ProductDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideDialogs(

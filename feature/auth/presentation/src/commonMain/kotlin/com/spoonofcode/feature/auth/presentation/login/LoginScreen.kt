@@ -45,7 +45,7 @@ internal class LoginScreen(
 ) : BaseScreen<LoginViewModel, LoginViewState, LoginViewAction, Nothing>() {
 
     @Composable
-    override fun provideViewModel() = koinViewModel<LoginViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

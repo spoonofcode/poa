@@ -2,7 +2,6 @@ package com.spoonofcode.feature.profile.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.appnavigation.FAQModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
@@ -16,13 +15,13 @@ import kotlinx.coroutines.launch
 internal class ProfileDetailsViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction, Nothing>(
-    initialViewState = ViewState.Content(ProfileDetailsViewState()),
-) {
+) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ProfileDetailsViewAction) {
         when (action) {
-            ProfileDetailsViewAction.InitView -> initView()
             ProfileDetailsViewAction.Logout -> logout()
             ProfileDetailsViewAction.ConfirmLogout -> confirmLogout()
             ProfileDetailsViewAction.CancelLogout -> cancelLogout()
@@ -45,6 +44,7 @@ internal class ProfileDetailsViewModel(
                             partnerPanelVisible = it.roles.contains(PARTNER_ROLE)
                         )
                     )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

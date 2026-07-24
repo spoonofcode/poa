@@ -32,11 +32,8 @@ internal class PartnerOverviewScreen(
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.partners)
 
-    override fun provideInitAction(onAction: (PartnerOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -79,7 +76,7 @@ internal class PartnerOverviewScreen(
             onClick = onClick,
             modifier = modifier.fillMaxWidth().height(180.dp),
         ) {
-            Images.ImageLink(imageLink = item.imageLink!!)
+            item.imageLink?.let { Images.ImageLink(imageLink = it) }
         }
     }
 }

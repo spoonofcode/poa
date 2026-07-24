@@ -4,6 +4,5 @@ import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface PartnerCustomerOverviewViewAction : BaseViewAction {
     data class CheckedCustomer(val id: String) : PartnerCustomerOverviewViewAction
-    data object InitView : PartnerCustomerOverviewViewAction
     data object NavigateToNotification : PartnerCustomerOverviewViewAction
 }

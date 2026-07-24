@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.presentation.notification.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -13,16 +12,17 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 internal class PartnerNotificationDetailsViewModel(
+    private val notificationId: String,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val deletePartnerNotificationUseCase: DeletePartnerNotificationUseCase,
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
-) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>(
-    initialViewState = ViewState.Content(PartnerNotificationDetailsViewState()),
-) {
+) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView(notificationId = notificationId)
+    }
 
     override fun onAction(action: PartnerNotificationDetailsViewAction) {
         when (action) {
-            is PartnerNotificationDetailsViewAction.InitView -> initView(action.notificationId)
             PartnerNotificationDetailsViewAction.DeleteNotification -> deleteNotification()
             PartnerNotificationDetailsViewAction.EditNotification -> editNotification()
             PartnerNotificationDetailsViewAction.CancelDeleteNotification -> cancelDeleteNotification()
@@ -51,6 +51,7 @@ internal class PartnerNotificationDetailsViewModel(
                         selectedNames = getSelectedNames(notification.topics, customers)
                     )
                 )
+                showContentView()
             } else {
                 showErrorView()
             }

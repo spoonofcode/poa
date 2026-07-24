@@ -33,7 +33,7 @@ internal class PartnerNotificationTypeScreen(
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification_type)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationTypeViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(

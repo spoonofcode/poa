@@ -53,11 +53,8 @@ internal class PartnerNotificationsScreen(
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_notifications)
 
-    override fun provideInitAction(onAction: (PartnerNotificationsViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerNotificationsViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationsViewModel>()
+    override fun provideViewModel() = viewModel
 
     override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,

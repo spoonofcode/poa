@@ -14,6 +14,7 @@ import com.spoonofcode.feature.partner.presentation.notification.type.PartnerNot
 import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.panel.PartnerPanelScreen
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
     entry<PartnerModuleRoute.CustomerOverview> {
@@ -24,8 +25,7 @@ fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
 
     entry<PartnerModuleRoute.PartnerDetails> {
         PartnerDetailsScreen(
-            partnerId = it.partnerId,
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(parameters = { parametersOf(it.partnerId) })
         ).Content()
     }
 
@@ -55,17 +55,21 @@ fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
 
     entry<PartnerModuleRoute.PartnerNotificationDetails> {
         PartnerNotificationDetailsScreen(
-            notificationId = it.notificationId,
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(parameters = { parametersOf(it.notificationId) })
         ).Content()
     }
 
     entry<PartnerModuleRoute.PartnerNotificationEdit> {
         PartnerNotificationEditScreen(
-            notificationId = it.notificationId,
-            selectedNames = it.selectedNames,
-            selectedTopics = it.selectedTopics,
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(
+                parameters = {
+                    parametersOf(
+                        it.notificationId,
+                        it.selectedNames,
+                        it.selectedTopics,
+                    )
+                }
+            )
         ).Content()
     }
 

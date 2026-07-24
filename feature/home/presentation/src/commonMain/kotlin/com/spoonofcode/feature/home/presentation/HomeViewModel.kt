@@ -23,11 +23,13 @@ internal class HomeViewModel(
 ) : BaseViewModel<HomeViewState, HomeViewAction, Nothing>(
     initialViewState = ViewState.Content(HomeViewState())
 ) {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: HomeViewAction) {
         when (action) {
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
-            HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
         }
     }
@@ -65,6 +67,7 @@ internal class HomeViewModel(
                         unreadNotificationsCount = unreadCount,
                     )
                 )
+                showContentView()
             }.onFailure {
                 showErrorView()
                 showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
