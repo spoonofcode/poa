@@ -36,7 +36,7 @@ import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
@@ -47,16 +47,14 @@ import kotlin.time.Clock
 
 internal class PartnerNotificationsScreen(
     override val verticalScrollEnable: Boolean = false,
+    val viewModel: PartnerNotificationsViewModel,
 ) : BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_notifications)
 
-    override fun provideInitAction(onAction: (PartnerNotificationsViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerNotificationsViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationsViewModel>()
+    override fun provideViewModel() = viewModel
 
     override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,
@@ -185,12 +183,12 @@ internal class PartnerNotificationsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun PartnerNotificationsScreenContentPreview() {
-    PartnerNotificationsScreen()
-        .PreviewContent(
-            PartnerNotificationsViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun PartnerNotificationsScreenContentPreview() {
+//    PartnerNotificationsScreen()
+//        .PreviewContent(
+//            PartnerNotificationsViewState()
+//        )
+//}
 // endregion

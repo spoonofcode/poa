@@ -21,7 +21,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_product_series
@@ -31,16 +31,14 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class ProductSeriesOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>() {
+    val viewModel: ProductSeriesOverviewViewModel,
+    ) : BaseScreen<ProductSeriesOverviewViewModel, ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_product_series)
 
-    override fun provideInitAction(onAction: (ProductSeriesOverViewViewAction) -> Unit): () -> Unit =
-        { onAction(ProductSeriesOverViewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<ProductSeriesOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -117,14 +115,14 @@ internal class ProductSeriesOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductSeriesOverviewScreenContentPreview() {
-    ProductSeriesOverviewScreen()
-        .PreviewContent(
-            viewState = ProductSeriesOverviewViewState(
-//                productSeries = PRODUCTS,
-            )
-        )
-}
+//@Preview
+//@Composable
+//fun ProductSeriesOverviewScreenContentPreview() {
+//    ProductSeriesOverviewScreen()
+//        .PreviewContent(
+//            viewState = ProductSeriesOverviewViewState(
+////                productSeries = PRODUCTS,
+//            )
+//        )
+//}
 // endregion

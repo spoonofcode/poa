@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.CreatePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
@@ -10,13 +9,25 @@ import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerNotificationU
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
+data class PartnerNotificationEditArgs(
+    val notificationId: String?,
+    val selectedTopics: Set<String>,
+    val selectedNames: Set<String>,
+)
+
 internal class PartnerNotificationEditViewModel(
     private val createPartnerNotificationUseCase: CreatePartnerNotificationUseCase,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val updatePartnerNotificationUseCase: UpdatePartnerNotificationUseCase,
-) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>(
-    initialViewState = ViewState.Content(PartnerNotificationEditViewState()),
-) {
+    private val args: PartnerNotificationEditArgs
+) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
+    override val startAction = {
+        initView(
+            notificationId = args.notificationId,
+            selectedTopics = args.selectedTopics,
+            selectedNames = args.selectedNames,
+        )
+    }
 
     override fun onAction(action: PartnerNotificationEditViewAction) {
         when (action) {
@@ -31,12 +42,6 @@ internal class PartnerNotificationEditViewModel(
             is PartnerNotificationEditViewAction.ChangeLink -> changeLink(action.link)
             is PartnerNotificationEditViewAction.ChangeText -> changeText(action.text)
             is PartnerNotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
-            is PartnerNotificationEditViewAction.InitView -> initView(
-                action.notificationId,
-                action.selectedTopics,
-                action.selectedNames
-            )
-
             PartnerNotificationEditViewAction.SendNotification -> sendNotification()
             PartnerNotificationEditViewAction.CancelSendNotification -> cancelSendNotification()
             PartnerNotificationEditViewAction.ConfirmSendNotification -> confirmSendNotification()
@@ -66,6 +71,7 @@ internal class PartnerNotificationEditViewModel(
                                 expirationDateTime = notification.expirationDateTime
                             )
                         )
+                        showContentView()
                     }
                     .onFailure {
                         showErrorView()
@@ -79,6 +85,7 @@ internal class PartnerNotificationEditViewModel(
                     selectedNames = selectedNames,
                 )
             )
+            showContentView()
         }
     }
 

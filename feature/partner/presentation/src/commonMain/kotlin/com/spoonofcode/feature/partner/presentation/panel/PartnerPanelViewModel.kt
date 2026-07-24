@@ -22,19 +22,19 @@ internal class PartnerPanelViewModel :
 
     private fun navigateToPartnerEdit() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(PartnerModuleRoute.PartnerEdit))
+            viewModelNavigator.push(PartnerModuleRoute.PartnerEdit)
         }
     }
 
     fun navigateToNotificationType() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(PartnerModuleRoute.PartnerNotificationType))
+            viewModelNavigator.push(PartnerModuleRoute.PartnerNotificationType)
         }
     }
 
     fun navigateToPartnerNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(PartnerModuleRoute.PartnerNotifications))
+            viewModelNavigator.push(PartnerModuleRoute.PartnerNotifications)
         }
     }
 

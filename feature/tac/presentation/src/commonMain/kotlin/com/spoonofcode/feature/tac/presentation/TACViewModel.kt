@@ -2,7 +2,6 @@ package com.spoonofcode.feature.tac.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.tac.domain.model.TACSettings
 import com.spoonofcode.feature.tac.domain.usecase.GetTACSettingsUseCase
 import com.spoonofcode.feature.tac.domain.usecase.UpdateTACSettingsUseCase
@@ -11,13 +10,13 @@ import kotlinx.coroutines.launch
 internal class TACViewModel(
     private val getTACSettingsUseCase: GetTACSettingsUseCase,
     private val updateTACSettingsUseCase: UpdateTACSettingsUseCase,
-) : BaseViewModel<TACViewState, TACViewAction, Nothing>(
-    initialViewState = ViewState.Content(TACViewState()),
-) {
+) : BaseViewModel<TACViewState, TACViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: TACViewAction) {
         when (action) {
-            TACViewAction.InitView -> initView()
             TACViewAction.SaveChanges -> saveChanges()
             is TACViewAction.ChangePrivacyPolicy -> changePrivacyPolicy(action.accepted)
             is TACViewAction.ChangeTermsAndConditions -> changeTermsAndConditions(action.accepted)
@@ -29,12 +28,13 @@ internal class TACViewModel(
         viewModelScope.launch {
             getTACSettingsUseCase()
                 .onSuccess { tacSettings ->
-                    updateContentState {
-                        copy(
+                    setContentState(
+                        TACViewState(
                             isPrivacyPolicyAccepted = tacSettings.isPrivacyPolicyAccepted,
                             isTermsAndConditionsAccepted = tacSettings.isTermsAndConditionsAccepted,
                         )
-                    }
+                    )
+                    showContentView()
                 }.onFailure {
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }

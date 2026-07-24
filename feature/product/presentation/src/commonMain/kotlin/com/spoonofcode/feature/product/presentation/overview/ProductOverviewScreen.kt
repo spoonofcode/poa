@@ -25,7 +25,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_products
@@ -34,16 +34,14 @@ import org.jetbrains.compose.resources.stringResource
 internal class ProductOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
+    val viewModel: ProductOverviewViewModel,
+    ) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_products)
 
-    override fun provideInitAction(onAction: (ProductOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(ProductOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<ProductOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -131,12 +129,12 @@ internal class ProductOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductOverviewScreenContentPreview() {
-    ProductOverviewScreen()
-        .PreviewContent(
-            viewState = ProductOverviewViewState(),
-        )
-}
+//@Preview
+//@Composable
+//fun ProductOverviewScreenContentPreview() {
+//    ProductOverviewScreen()
+//        .PreviewContent(
+//            viewState = ProductOverviewViewState(),
+//        )
+//}
 // endregion

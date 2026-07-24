@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.feature.partner.presentation.Res
@@ -24,14 +24,16 @@ import com.spoonofcode.feature.partner.presentation.to_all_my_customers
 import com.spoonofcode.feature.partner.presentation.to_selected_customers
 import com.spoonofcode.feature.partner.presentation.to_selected_series
 
-internal class PartnerNotificationTypeScreen :
+internal class PartnerNotificationTypeScreen(
+    val viewModel: PartnerNotificationTypeViewModel,
+) :
     BaseScreen<PartnerNotificationTypeViewModel, PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification_type)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationTypeViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -82,12 +84,12 @@ internal class PartnerNotificationTypeScreen :
 }
 
 // region previews
-@Preview
-@Composable
-private fun PartnerNotificationTypeScreenContentPreview() {
-    PartnerNotificationTypeScreen()
-        .PreviewContent(
-            PartnerNotificationTypeViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun PartnerNotificationTypeScreenContentPreview() {
+//    PartnerNotificationTypeScreen()
+//        .PreviewContent(
+//            PartnerNotificationTypeViewState()
+//        )
+//}
 // endregion

@@ -15,32 +15,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.SocialIcons
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.about_partner
 import com.spoonofcode.feature.partner.presentation.partner
 import org.jetbrains.compose.resources.stringResource
 
-
 internal class PartnerDetailsScreen(
-    private val partnerId: String,
+    val viewModel: PartnerDetailsViewModel,
 ) : BaseScreen<PartnerDetailsViewModel, PartnerDetailsViewState, PartnerDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.partner)
 
-    override fun provideInitAction(onAction: (PartnerDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerDetailsViewAction.InitView(partnerId = partnerId)) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -114,13 +108,13 @@ internal class PartnerDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun PartnerDetailsScreenContentPreview() {
-    PartnerDetailsScreen(
-        partnerId = "1"
-    ).PreviewContent(
-        viewState = PartnerDetailsViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun PartnerDetailsScreenContentPreview() {
+//    PartnerDetailsScreen(
+//        partnerId = "1"
+//    ).PreviewContent(
+//        viewState = PartnerDetailsViewState(),
+//    )
+//}
 // endregion

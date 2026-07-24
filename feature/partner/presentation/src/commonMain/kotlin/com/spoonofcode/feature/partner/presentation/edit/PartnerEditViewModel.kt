@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUseCase
 import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
@@ -11,9 +10,10 @@ import kotlinx.coroutines.launch
 internal class PartnerEditViewModel(
     private val getPartnerUseCase: GetPartnerUseCase,
     private val updatePartnerUseCase: UpdatePartnerUseCase
-) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction, Nothing>(
-    initialViewState = ViewState.Content(PartnerEditViewState()),
-) {
+) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: PartnerEditViewAction) {
         when (action) {
@@ -24,7 +24,6 @@ internal class PartnerEditViewModel(
             is PartnerEditViewAction.ChangeWebsiteLink -> changeWebsiteLink(action.link)
             is PartnerEditViewAction.ChangeXLink -> changeXLink(action.link)
             is PartnerEditViewAction.ChangeYoutubeLink -> changeYoutubeLink(action.link)
-            is PartnerEditViewAction.InitView -> initView()
             PartnerEditViewAction.SaveChanges -> saveChanges()
         }
     }
@@ -34,11 +33,12 @@ internal class PartnerEditViewModel(
         viewModelScope.launch {
             getPartnerUseCase()
                 .onSuccess {
-                    updateContentState {
-                        copy(
+                    setContentState(
+                        PartnerEditViewState(
                             partner = it
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

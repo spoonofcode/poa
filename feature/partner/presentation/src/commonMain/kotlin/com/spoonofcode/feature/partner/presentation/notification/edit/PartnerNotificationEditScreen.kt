@@ -10,7 +10,7 @@ import com.spoonofcode.core.presentation.compose.DatePickers
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.cancel
@@ -31,27 +31,14 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationEditScreen(
-    val notificationId: String? = null,
-    val selectedTopics: Set<String> = emptySet(),
-    val selectedNames: Set<String> = emptySet(),
+    val viewModel: PartnerNotificationEditViewModel,
 ) : BaseScreen<PartnerNotificationEditViewModel, PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
-    override fun provideInitAction(onAction: (PartnerNotificationEditViewAction) -> Unit): () -> Unit =
-        {
-            onAction(
-                PartnerNotificationEditViewAction.InitView(
-                    notificationId = notificationId,
-                    selectedTopics = selectedTopics,
-                    selectedNames = selectedNames,
-                )
-            )
-        }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationEditViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideDialogs(
@@ -152,12 +139,12 @@ internal class PartnerNotificationEditScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun PartnerNotificationEditScreenContentPreview() {
-    PartnerNotificationEditScreen()
-        .PreviewContent(
-            PartnerNotificationEditViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun PartnerNotificationEditScreenContentPreview() {
+//    PartnerNotificationEditScreen()
+//        .PreviewContent(
+//            PartnerNotificationEditViewState()
+//        )
+//}
 // endregion

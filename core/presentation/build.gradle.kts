@@ -43,9 +43,9 @@ kotlin {
                 implementation(libs.jetbrains.compose.material3)
                 implementation(libs.jetbrains.compose.ui)
                 implementation(libs.jetbrains.compose.ui.tooling.preview)
-                implementation(libs.voyager.navigator)
-                implementation(libs.voyager.tab.navigator)
-                implementation(libs.voyager.transitions)
+
+                implementation(libs.navigation3.runtime)
+                implementation(libs.navigation3.ui)
 
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose)

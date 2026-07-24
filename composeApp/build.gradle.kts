@@ -75,13 +75,16 @@ kotlin {
             implementation(libs.jetbrains.compose.material3)
             implementation(libs.jetbrains.compose.ui)
 
+            implementation(compose.materialIconsExtended)
+
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.touchlab.kermit)
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.tab.navigator)
-            implementation(libs.voyager.transitions)
+
+            implementation(libs.navigation.compose)
+            implementation(libs.navigation3.runtime)
+            implementation(libs.navigation3.ui)
 
             implementation(libs.ksafe)
             implementation(libs.ksafe.compose)

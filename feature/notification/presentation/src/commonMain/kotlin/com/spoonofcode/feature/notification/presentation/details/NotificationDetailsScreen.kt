@@ -19,7 +19,7 @@ import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
@@ -27,17 +27,14 @@ import com.spoonofcode.feature.notification.presentation.open_link
 import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationDetailsScreen(
-    private val notificationId: String,
-) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
+    val viewModel: NotificationDetailsViewModel,
+    ) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
 
-    override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -111,13 +108,13 @@ internal class NotificationDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun NotificationDetailsScreenContentPreview() {
-    NotificationDetailsScreen(
-        notificationId = "1"
-    ).PreviewContent(
-        NotificationDetailsViewState()
-    )
-}
+//@Preview
+//@Composable
+//private fun NotificationDetailsScreenContentPreview() {
+//    NotificationDetailsScreen(
+//        notificationId = "1"
+//    ).PreviewContent(
+//        NotificationDetailsViewState()
+//    )
+//}
 // endregion

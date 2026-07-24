@@ -2,28 +2,29 @@ package com.spoonofcode.feature.product.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductStatusUseCase
-import com.spoonofcode.feature.product.presentation.edit.ProductEditScreen
 import kotlinx.coroutines.launch
 
 internal class ProductDetailsViewModel(
+    private val productId: String,
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
     private val getProductStatusUseCase: GetProductStatusUseCase,
-) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction, Nothing>(
-    initialViewState = ViewState.Content(ProductDetailsViewState()),
-) {
+) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView(productId = productId)
+    }
+
     override fun onAction(action: ProductDetailsViewAction) {
         when (action) {
             ProductDetailsViewAction.AddProductToProfile -> addProductToProfile()
             ProductDetailsViewAction.DeleteProductFromProfile -> deleteProductFromProfile()
             ProductDetailsViewAction.EditProduct -> editProduct()
-            is ProductDetailsViewAction.InitView -> initView(productId = action.productId)
             ProductDetailsViewAction.CancelDeleteProductFromProfile -> cancelDeleteProductFromProfile()
             ProductDetailsViewAction.ConfirmDeleteProductFromProfile -> confirmDeleteProductFromProfile()
         }
@@ -35,12 +36,13 @@ internal class ProductDetailsViewModel(
             getProductByIdUseCase(productId = productId)
                 .onSuccess { product ->
                     val productStatus = getProductStatusUseCase(ownerEmail = product.ownerEmail)
-                    updateContentState {
-                        copy(
+                    setContentState(
+                        ProductDetailsViewState(
                             product = product,
                             productStatus = productStatus,
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -66,7 +68,7 @@ internal class ProductDetailsViewModel(
     private fun editProduct() {
         val productId = currentContentState().product!!.id
         viewModelScope.launch {
-            viewModelNavigator.push(ProductEditScreen(productId = productId))
+            viewModelNavigator.push(ProductModuleRoute.ProductEdit(productId = productId))
         }
     }
 

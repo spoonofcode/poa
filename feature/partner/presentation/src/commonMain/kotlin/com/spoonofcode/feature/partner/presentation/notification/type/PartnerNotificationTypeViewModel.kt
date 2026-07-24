@@ -28,10 +28,8 @@ internal class PartnerNotificationTypeViewModel(
     private fun sendNotificationToAllCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = setOf(PartnerNotificationType.global.name),
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = setOf(PartnerNotificationType.global.name),
                 )
             )
         }
@@ -40,14 +38,14 @@ internal class PartnerNotificationTypeViewModel(
     private fun sendNotificationToSelectedPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(PartnerModuleRoute.CustomerOverview)
+                PartnerModuleRoute.CustomerOverview
             )
         }
     }
 
     private fun sendNotificationToSelectedPartnerProductSeries() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(ProductModuleRoute.ProductSeriesOverview))
+            viewModelNavigator.push(ProductModuleRoute.ProductSeriesOverview)
         }
     }
 
@@ -55,10 +53,8 @@ internal class PartnerNotificationTypeViewModel(
         viewModelScope.launch {
             val partnerId = getPartnerNotificationTopicUseCase()
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
                 )
             )
         }

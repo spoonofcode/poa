@@ -1,15 +1,14 @@
 package com.spoonofcode.feature.home.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.HomeModuleRoute
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+import org.koin.compose.viewmodel.koinViewModel
 
-class HomeModuleRouteResolver : ModuleRouteResolver<HomeModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? HomeModuleRoute)?.let {
-            when (it) {
-                HomeModuleRoute.Home -> HomeScreen()
-            }
-        }
+fun EntryProviderScope<NavKey>.homeModuleRouteResolver() {
+    entry<HomeModuleRoute.Home> {
+        HomeScreen(
+            viewModel = koinViewModel()
+        ).Content()
+    }
 }
