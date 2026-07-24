@@ -9,6 +9,7 @@ import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationsScreen
 import com.spoonofcode.feature.partner.presentation.notification.details.PartnerNotificationDetailsScreen
+import com.spoonofcode.feature.partner.presentation.notification.edit.PartnerNotificationEditArgs
 import com.spoonofcode.feature.partner.presentation.notification.edit.PartnerNotificationEditScreen
 import com.spoonofcode.feature.partner.presentation.notification.type.PartnerNotificationTypeScreen
 import com.spoonofcode.feature.partner.presentation.overview.PartnerOverviewScreen
@@ -64,9 +65,11 @@ fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
             viewModel = koinViewModel(
                 parameters = {
                     parametersOf(
-                        it.notificationId,
-                        it.selectedNames,
-                        it.selectedTopics,
+                        PartnerNotificationEditArgs(
+                            notificationId = it.notificationId,
+                            selectedTopics = it.selectedTopics,
+                            selectedNames = it.selectedNames,
+                        )
                     )
                 }
             )

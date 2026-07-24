@@ -9,19 +9,23 @@ import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerNotificationU
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
+data class PartnerNotificationEditArgs(
+    val notificationId: String?,
+    val selectedTopics: Set<String>,
+    val selectedNames: Set<String>,
+)
+
 internal class PartnerNotificationEditViewModel(
-    private val notificationId: String? = null,
-    private val selectedTopics: Set<String> = emptySet(),
-    private val selectedNames: Set<String> = emptySet(),
     private val createPartnerNotificationUseCase: CreatePartnerNotificationUseCase,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val updatePartnerNotificationUseCase: UpdatePartnerNotificationUseCase,
+    private val args: PartnerNotificationEditArgs
 ) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
     override val startAction = {
         initView(
-            notificationId = notificationId,
-            selectedTopics = selectedTopics,
-            selectedNames = selectedNames
+            notificationId = args.notificationId,
+            selectedTopics = args.selectedTopics,
+            selectedNames = args.selectedNames,
         )
     }
 
@@ -81,6 +85,7 @@ internal class PartnerNotificationEditViewModel(
                     selectedNames = selectedNames,
                 )
             )
+            showContentView()
         }
     }
 
