@@ -33,7 +33,7 @@ import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.core.presentation.taggy_go_logo
 import com.spoonofcode.feature.scan.nfc.presentation.product_not_found
 import com.spoonofcode.feature.scan.nfc.presentation.scan_again
@@ -44,6 +44,7 @@ import org.jetbrains.compose.resources.stringResource
 internal class ScanScreen(
     override val backNavigationEnable: Boolean = false,
     override val verticalScrollEnable: Boolean = false,
+    val viewModel: ScanViewModel,
 ) : BaseScreen<ScanViewModel, ScanViewState, ScanViewAction, Nothing>() {
 
     @Composable
@@ -53,7 +54,7 @@ internal class ScanScreen(
         { onAction(ScanViewAction.InitView) }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<ScanViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -139,11 +140,11 @@ internal class ScanScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun ScanScreenContentPreview() {
-    ScanScreen().PreviewContent(
-        ScanViewState()
-    )
-}
+//@Preview
+//@Composable
+//private fun ScanScreenContentPreview() {
+//    ScanScreen().PreviewContent(
+//        ScanViewState()
+//    )
+//}
 // endregion

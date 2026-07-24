@@ -17,7 +17,7 @@ import com.spoonofcode.core.presentation.compose.Chips.HorizontalScrollableFilte
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.partners
@@ -26,16 +26,14 @@ import org.jetbrains.compose.resources.stringResource
 internal class PartnerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
     override val backNavigationEnable: Boolean = false,
+    val viewModel: PartnerOverviewViewModel,
 ) : BaseScreen<PartnerOverviewViewModel, PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.partners)
 
-    override fun provideInitAction(onAction: (PartnerOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -78,17 +76,17 @@ internal class PartnerOverviewScreen(
             onClick = onClick,
             modifier = modifier.fillMaxWidth().height(180.dp),
         ) {
-            Images.ImageLink(imageLink = item.imageLink!!)
+            item.imageLink?.let { Images.ImageLink(imageLink = it) }
         }
     }
 }
 
 // region previews
-@Preview
-@Composable
-fun PartnerOverviewScreenContentPreview() {
-    PartnerOverviewScreen().PreviewContent(
-        viewState = PartnerOverviewViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun PartnerOverviewScreenContentPreview() {
+//    PartnerOverviewScreen().PreviewContent(
+//        viewState = PartnerOverviewViewState(),
+//    )
+//}
 // endregion

@@ -32,13 +32,14 @@ import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.home.domain.model.DailyReward
 import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 import org.jetbrains.compose.resources.stringResource
 
 internal class HomeScreen(
     override val backNavigationEnable: Boolean = false,
+    val viewModel: HomeViewModel
 ) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction, Nothing>() {
 
     @Composable
@@ -55,11 +56,8 @@ internal class HomeScreen(
         ) { onAction(HomeViewAction.NavigateToNotifications) },
     )
 
-    override fun provideInitAction(onAction: (HomeViewAction) -> Unit): () -> Unit =
-        { onAction(HomeViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<HomeViewModel>()
+    override fun provideViewModel() = viewModel
 
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
@@ -200,8 +198,8 @@ internal class HomeScreen(
     }
 }
 
-@Preview
-@Composable
-private fun HomeScreenContentPreview() {
-    HomeScreen().PreviewContent(HomeViewState())
-}
+//@Preview
+//@Composable
+//private fun HomeScreenContentPreview() {
+//    HomeScreen().PreviewContent(HomeViewState())
+//}

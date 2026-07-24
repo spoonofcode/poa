@@ -1,18 +1,22 @@
 package com.spoonofcode.feature.profile.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
 import com.spoonofcode.feature.profile.presentation.details.ProfileDetailsScreen
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditScreen
+import org.koin.compose.viewmodel.koinViewModel
 
-class ProfileModuleRouteResolver : ModuleRouteResolver<ProfileModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? ProfileModuleRoute)?.let {
-            when (it) {
-                ProfileModuleRoute.ProfileDetails -> ProfileDetailsScreen()
-                ProfileModuleRoute.ProfileEdit -> ProfileEditScreen()
-            }
-        }
+fun EntryProviderScope<NavKey>.profileModuleRouteResolver() {
+    entry<ProfileModuleRoute.ProfileDetails> {
+        ProfileDetailsScreen(
+            viewModel = koinViewModel()
+        ).Content()
+    }
+
+    entry<ProfileModuleRoute.ProfileEdit> {
+        ProfileEditScreen(
+            viewModel = koinViewModel()
+        ).Content()
+    }
 }

@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Notification
 import com.mohamedrejeb.calf.permissions.Permission
@@ -21,7 +20,6 @@ import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_description
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_title
@@ -45,17 +43,15 @@ import org.jetbrains.compose.resources.stringResource
 internal class NotificationSettingsScreen(
     override val backNavigationEnable: Boolean = true,
     override val verticalScrollEnable: Boolean = false,
+    val viewModel: NotificationSettingsViewModel,
 ) :
     BaseScreen<NotificationSettingsViewModel, NotificationSettingsViewState, NotificationSettingsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notifications_settings)
 
-    override fun provideInitAction(onAction: (NotificationSettingsViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationSettingsViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationSettingsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
@@ -186,12 +182,12 @@ internal class NotificationSettingsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-private fun NotificationSettingsScreenContentPreview() {
-    NotificationSettingsScreen()
-        .PreviewContent(
-            NotificationSettingsViewState()
-        )
-}
+//@Preview
+//@Composable
+//private fun NotificationSettingsScreenContentPreview() {
+//    NotificationSettingsScreen()
+//        .PreviewContent(
+//            NotificationSettingsViewState()
+//        )
+//}
 // endregion

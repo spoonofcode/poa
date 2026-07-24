@@ -28,8 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
@@ -37,9 +35,6 @@ import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
-import com.spoonofcode.feature.profile.domain.model.Profile
-import com.spoonofcode.feature.profile.presentation.ProfilePreviewParameterProvider
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.cancel
 import com.spoonofcode.feature.profile.presentation.faq
@@ -52,20 +47,17 @@ import com.spoonofcode.feature.profile.presentation.profile
 import com.spoonofcode.feature.profile.presentation.taggy_go_logo
 import com.spoonofcode.feature.profile.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 
 internal class ProfileDetailsScreen(
     override val backNavigationEnable: Boolean = false,
+    val viewModel: ProfileDetailsViewModel,
 ) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState, ProfileDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.profile)
 
-    override fun provideInitAction(onAction: (ProfileDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(ProfileDetailsViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<ProfileDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -247,16 +239,16 @@ private fun DividerItem() {
 }
 
 // region previews
-@Preview
-@Composable
-private fun ProfileScreenContentPreview(
-    @PreviewParameter(ProfilePreviewParameterProvider::class)
-    profile: Profile,
-) {
-    ProfileDetailsScreen().PreviewContent(
-        ProfileDetailsViewState(
-            profile = profile,
-        )
-    )
-}
+//@Preview
+//@Composable
+//private fun ProfileScreenContentPreview(
+//    @PreviewParameter(ProfilePreviewParameterProvider::class)
+//    profile: Profile,
+//) {
+//    ProfileDetailsScreen().PreviewContent(
+//        ProfileDetailsViewState(
+//            profile = profile,
+//        )
+//    )
+//}
 // endregion

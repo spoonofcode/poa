@@ -8,7 +8,7 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.description
 import com.spoonofcode.feature.partner.presentation.facebook
@@ -21,16 +21,15 @@ import com.spoonofcode.feature.partner.presentation.x
 import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
-internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction, Nothing>() {
+internal class PartnerEditScreen(
+    val viewModel: PartnerEditViewModel,
+): BaseScreen<PartnerEditViewModel, PartnerEditViewState, PartnerEditViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.partner)
 
-    override fun provideInitAction(onAction: (PartnerEditViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerEditViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerEditViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -41,7 +40,7 @@ internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditVi
             val partner = viewState.partner
 
             if (partner != null) {
-                Images.ImageLink(imageLink = viewState.partner.imageLink!!)
+                viewState.partner.imageLink?.let { Images.ImageLink(imageLink = it) }
 
                 TextFields.Outlined(
                     value = partner.name,
@@ -90,14 +89,14 @@ internal class PartnerEditScreen: BaseScreen<PartnerEditViewModel, PartnerEditVi
         }
     }
 
-    @Preview
-    @Composable
-    private fun InitializedPartnerEditScreenPreview() {
-        PartnerEditScreen().PreviewContent(
-            PartnerEditViewState(
-                // TODO #133 fix previews
-//                partner = PartnerMockData.PARTNER_1
-            )
-        )
-    }
+//    @Preview
+//    @Composable
+//    private fun InitializedPartnerEditScreenPreview() {
+//        PartnerEditScreen().PreviewContent(
+//            PartnerEditViewState(
+//                // TODO #133 fix previews
+////                partner = PartnerMockData.PARTNER_1
+//            )
+//        )
+//    }
 }

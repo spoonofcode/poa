@@ -20,7 +20,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_customers
@@ -30,16 +30,14 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class CustomerOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
+    val viewModel: PartnerCustomerOverviewViewModel,
 ) : BaseScreen<PartnerCustomerOverviewViewModel, PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.my_customers)
 
-    override fun provideInitAction(onAction: (PartnerCustomerOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerCustomerOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerCustomerOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -112,11 +110,11 @@ internal class CustomerOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun CustomerOverviewScreenContentPreview() {
-    CustomerOverviewScreen().PreviewContent(
-        viewState = PartnerCustomerOverviewViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun CustomerOverviewScreenContentPreview() {
+//    CustomerOverviewScreen().PreviewContent(
+//        viewState = PartnerCustomerOverviewViewState(),
+//    )
+//}
 // endregion

@@ -1,28 +1,39 @@
 package com.spoonofcode.feature.notification.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.notification.presentation.channel.NotificationChannelScreen
 import com.spoonofcode.feature.notification.presentation.details.NotificationDetailsScreen
 import com.spoonofcode.feature.notification.presentation.overview.NotificationOverviewScreen
 import com.spoonofcode.feature.notification.presentation.settings.NotificationSettingsScreen
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
-class NotificationModuleRouteResolver : ModuleRouteResolver<NotificationModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? NotificationModuleRoute)?.let {
-            when (it) {
-                is NotificationModuleRoute.NotificationDetails -> NotificationDetailsScreen(
-                    notificationId = it.notificationId
-                )
+fun EntryProviderScope<NavKey>.notificationModuleRouteResolver() {
+    entry<NotificationModuleRoute.NotificationDetails> {
+        NotificationDetailsScreen(
+            viewModel = koinViewModel(
+                parameters = { parametersOf(it.notificationId) }
+            ),
+        ).Content()
+    }
+    entry<NotificationModuleRoute.NotificationOverview> {
+        NotificationOverviewScreen(
+            viewModel = koinViewModel(),
+        ).Content()
+    }
 
-                NotificationModuleRoute.NotificationOverview -> NotificationOverviewScreen()
-                is NotificationModuleRoute.NotificationSettings -> NotificationSettingsScreen(
-                    backNavigationEnable = it.backNavigationEnabled
-                )
+    entry<NotificationModuleRoute.NotificationSettings> {
+        NotificationSettingsScreen(
+            backNavigationEnable = it.backNavigationEnabled,
+            viewModel = koinViewModel(),
+        ).Content()
+    }
 
-                NotificationModuleRoute.NotificationChannel -> NotificationChannelScreen()
-            }
-        }
+    entry<NotificationModuleRoute.NotificationChannel> {
+        NotificationChannelScreen(
+            viewModel = koinViewModel(),
+        ).Content()
+    }
 }

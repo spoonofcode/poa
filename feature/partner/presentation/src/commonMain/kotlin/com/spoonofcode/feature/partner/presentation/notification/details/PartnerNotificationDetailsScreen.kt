@@ -11,7 +11,7 @@ import com.spoonofcode.core.presentation.base.BaseScreen
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.TopBarAction
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.cancel
@@ -31,14 +31,11 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 internal class PartnerNotificationDetailsScreen(
-    private val notificationId: String,
+    val viewModel: PartnerNotificationDetailsViewModel,
 ) : BaseScreen<PartnerNotificationDetailsViewModel, PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
-
-    override fun provideInitAction(onAction: (PartnerNotificationDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerNotificationDetailsViewAction.InitView(notificationId = notificationId)) }
 
     @Composable
     override fun provideTopBarActions(
@@ -64,7 +61,7 @@ internal class PartnerNotificationDetailsScreen(
 //    }
 
     @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideDialogs(
@@ -137,13 +134,13 @@ internal class PartnerNotificationDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun PartnerNotificationDetailsScreenContentPreview() {
-    PartnerNotificationDetailsScreen(
-        notificationId = "1"
-    ).PreviewContent(
-        viewState = PartnerNotificationDetailsViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun PartnerNotificationDetailsScreenContentPreview() {
+//    PartnerNotificationDetailsScreen(
+//        notificationId = "1"
+//    ).PreviewContent(
+//        viewState = PartnerNotificationDetailsViewState(),
+//    )
+//}
 // endregion

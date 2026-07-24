@@ -33,7 +33,7 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.core.presentation.web.getUrlOpener
 import com.spoonofcode.feature.product.domain.model.ProductStatus
 import com.spoonofcode.feature.product.presentation.Res
@@ -50,14 +50,14 @@ import com.spoonofcode.feature.product.presentation.send_message
 import org.jetbrains.compose.resources.stringResource
 
 internal data class ProductDetailsScreen(
-    val productId: String,
+    val viewModel: ProductDetailsViewModel,
 ) : BaseScreen<ProductDetailsViewModel, ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.product)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<ProductDetailsViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideTopBarActions(
@@ -81,9 +81,6 @@ internal data class ProductDetailsScreen(
 //        } else {
 //            emptyList()
 //        }
-
-    override fun provideInitAction(onAction: (ProductDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(ProductDetailsViewAction.InitView(productId = productId)) }
 
     @Composable
     override fun provideDialogs(
@@ -259,13 +256,13 @@ internal data class ProductDetailsScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun ProductDetailsScreenContentPreview() {
-    ProductDetailsScreen(
-        productId = "1"
-    ).PreviewContent(
-        viewState = ProductDetailsViewState(),
-    )
-}
+//@Preview
+//@Composable
+//fun ProductDetailsScreenContentPreview() {
+//    ProductDetailsScreen(
+//        productId = "1"
+//    ).PreviewContent(
+//        viewState = ProductDetailsViewState(),
+//    )
+//}
 // endregion

@@ -9,13 +9,15 @@ import com.spoonofcode.core.presentation.compose.Texts
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
-internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction, Nothing>() {
+internal class FAQScreen(
+    val viewModel: FAQViewModel,
+    ) : BaseScreen<FAQViewModel, FAQViewState, FAQViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.faq)
 
     @Composable
-    override fun provideViewModel() = koinViewModel<FAQViewModel>()
+    override fun provideViewModel() = viewModel
 
     @Composable
     override fun provideContent(
@@ -71,11 +73,11 @@ internal class FAQScreen() : BaseScreen<FAQViewModel, FAQViewState, FAQViewActio
 }
 
 // region previews
-@Preview
-@Composable
-private fun FAQScreenContentPreview() {
-    FAQScreen().PreviewContent(
-        viewState = FAQViewState(),
-    )
-}
+//@Preview
+//@Composable
+//private fun FAQScreenContentPreview() {
+//    FAQScreen().PreviewContent(
+//        viewState = FAQViewState(),
+//    )
+//}
 // endregion

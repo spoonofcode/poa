@@ -35,7 +35,7 @@ import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications
@@ -45,16 +45,14 @@ import org.jetbrains.compose.resources.stringResource
 
 internal class NotificationOverviewScreen(
     override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction, Nothing>() {
+    val viewModel: NotificationOverviewViewModel,
+    ) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction, Nothing>() {
 
     @Composable
     override fun provideTopAppBarTitle() = stringResource(Res.string.notifications)
 
-    override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationOverviewViewAction.InitView) }
-
     @Composable
-    override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
+    override fun provideViewModel() = viewModel
 
     override fun provideContentPadding() = PaddingValues(
         start = Paddings.screenPadding,
@@ -176,12 +174,12 @@ internal class NotificationOverviewScreen(
 }
 
 // region previews
-@Preview
-@Composable
-fun NotificationOverviewScreenContentPreview() {
-    NotificationOverviewScreen()
-        .PreviewContent(
-            viewState = NotificationOverviewViewState(),
-        )
-}
+//@Preview
+//@Composable
+//fun NotificationOverviewScreenContentPreview() {
+//    NotificationOverviewScreen()
+//        .PreviewContent(
+//            viewState = NotificationOverviewViewState(),
+//        )
+//}
 // endregion

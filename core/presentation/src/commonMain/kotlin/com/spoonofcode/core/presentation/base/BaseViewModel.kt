@@ -8,7 +8,6 @@ import com.spoonofcode.core.data.ext.stateInWhileSubscribed
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
-import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
@@ -44,7 +43,6 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     protected val networkManager: NetworkManager by getKoin().inject()
-    protected val routeResolver: VoyagerRouteResolver by getKoin().inject()
 
     val navigationFlow = viewModelNavigator.navigationEvents
 

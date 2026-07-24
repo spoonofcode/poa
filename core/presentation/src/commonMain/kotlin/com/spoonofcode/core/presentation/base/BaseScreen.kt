@@ -21,6 +21,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -30,12 +31,6 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.internal.BackHandler
 import com.spoonofcode.core.presentation.compose.ErrorView
 import com.spoonofcode.core.presentation.compose.LoadingView
 import com.spoonofcode.core.presentation.compose.Paddings
@@ -44,7 +39,6 @@ import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.snackbar.Snackbar
 import com.spoonofcode.core.presentation.compose.snackbar.setSnackbarHostState
 import com.spoonofcode.core.presentation.ext.addIf
-import com.spoonofcode.core.presentation.navigation.NavigationHandler
 import com.spoonofcode.core.presentation.theme.AppTheme
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -56,7 +50,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA
     protected open val defaultTopBarTopPadding: Dp = 20.dp,
     protected open val respectScaffoldImePadding: Boolean = false,
     protected open val customBottomScaffoldInnerPadding: Dp? = null,
-) : Screen {
+) {
     protected open fun provideContentPadding(): PaddingValues = PaddingValues(
         start = Paddings.screenPadding,
         end = Paddings.screenPadding,
@@ -148,11 +142,8 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA
         onAction: (VA) -> Unit,
     ): @Composable ColumnScope.() -> Unit
 
-    @OptIn(InternalVoyagerApi::class)
     @Composable
-    override fun Content() {
-        val navigator: Navigator =
-            LocalNavigator.currentOrThrow.parent ?: LocalNavigator.currentOrThrow
+    fun Content() {
         val snackbarHostState = remember { SnackbarHostState() }
         val viewModel = provideViewModel()
 
@@ -164,16 +155,18 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA
         val customBackAction = provideNavigationBackAction(viewModel::onAction)
         val navigationBackAction = customBackAction ?: { viewModel.navigateBack() }
 
-        NavigationHandler(viewModel.navigationFlow, navigator)
-        setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
-
-        if (backNavigationEnable.not()) {
-            BackHandler(true) { }
-        }
-
         setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
         provideViewEvents(viewModel.viewEvent, viewModel::onAction)
+
+        LaunchedEffect(true) {
+            provideInitAction(viewModel::onAction).invoke()
+        }
+
+
+        LaunchedEffect(true) {
+            provideInitAction(viewModel::onAction).invoke()
+        }
 
         ContentView(
             snackbarHostState = snackbarHostState,
