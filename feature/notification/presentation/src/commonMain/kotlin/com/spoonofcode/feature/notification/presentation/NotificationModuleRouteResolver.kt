@@ -16,24 +16,24 @@ fun EntryProviderScope<NavKey>.notificationModuleRouteResolver() {
             viewModel = koinViewModel(
                 parameters = { parametersOf(it.notificationId) }
             ),
-        ).Content()
+        )
     }
     entry<NotificationModuleRoute.NotificationOverview> {
         NotificationOverviewScreen(
             viewModel = koinViewModel(),
-        ).Content()
+        )
     }
 
     entry<NotificationModuleRoute.NotificationSettings> {
         NotificationSettingsScreen(
             backNavigationEnable = it.backNavigationEnabled,
             viewModel = koinViewModel(),
-        ).Content()
+        )
     }
 
     entry<NotificationModuleRoute.NotificationChannel> {
         NotificationChannelScreen(
             viewModel = koinViewModel(),
-        ).Content()
+        )
     }
 }

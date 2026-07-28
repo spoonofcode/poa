@@ -11,12 +11,12 @@ fun EntryProviderScope<NavKey>.profileModuleRouteResolver() {
     entry<ProfileModuleRoute.ProfileDetails> {
         ProfileDetailsScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 
     entry<ProfileModuleRoute.ProfileEdit> {
         ProfileEditScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 }

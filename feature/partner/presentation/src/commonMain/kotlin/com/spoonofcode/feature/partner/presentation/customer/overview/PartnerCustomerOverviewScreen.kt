@@ -11,16 +11,14 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_customers
@@ -28,83 +26,84 @@ import com.spoonofcode.feature.partner.presentation.send_notification
 import com.spoonofcode.feature.partner.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
-internal class CustomerOverviewScreen(
-    override val verticalScrollEnable: Boolean = false,
-    val viewModel: PartnerCustomerOverviewViewModel,
-) : BaseScreen<PartnerCustomerOverviewViewModel, PartnerCustomerOverviewViewState, PartnerCustomerOverviewViewAction, Nothing>() {
+@Composable
+internal fun PartnerCustomerOverviewScreen(
+    viewModel: PartnerCustomerOverviewViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        topBarTitle = stringResource(Res.string.my_customers),
+        verticalScrollEnable = false,
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 
-    @Composable
-    override fun provideTopAppBarTitle() = stringResource(Res.string.my_customers)
+@Composable
+private fun ColumnScope.Content(
+    viewState: PartnerCustomerOverviewViewState,
+    onAction: (PartnerCustomerOverviewViewAction) -> Unit,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements),
+        modifier = Modifier.weight(1f)
+    ) {
+        items(viewState.customers) { customer ->
+            val checkedCustomer =
+                viewState.checkedUserIds.contains(customer.id)
 
-    @Composable
-    override fun provideViewModel() = viewModel
-
-    @Composable
-    override fun provideContent(
-        viewState: PartnerCustomerOverviewViewState,
-        onAction: (PartnerCustomerOverviewViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
-            ) {
-                items(viewState.customers) { customer ->
-                    val checkedCustomer =
-                        viewState.checkedUserIds.contains(customer.id)
-
-                    CustomerItem(
-                        item = customer,
-                        onClick = {
-                            onAction(
-                                PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id!!)
-                            )
-                        },
-                        checkedCustomer = checkedCustomer,
+            CustomerItem(
+                item = customer,
+                onClick = {
+                    onAction(
+                        PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id!!)
                     )
-                }
-            }
-
-            Spacers.Weight1(this)
-
-            Buttons.PrimaryButton(
-                enabled = viewState.checkedUserIds.isNotEmpty(),
-                text = stringResource(resource = Res.string.send_notification),
-                onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) }
+                },
+                checkedCustomer = checkedCustomer,
             )
         }
     }
 
-    @Composable
-    fun CustomerItem(
-        item: Customer,
-        onClick: () -> Unit,
-        checkedCustomer: Boolean,
+    Buttons.PrimaryButton(
+        enabled = viewState.checkedUserIds.isNotEmpty(),
+        text = stringResource(resource = Res.string.send_notification),
+        onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) }
+    )
+}
+
+@Composable
+private fun CustomerItem(
+    item: Customer,
+    onClick: () -> Unit,
+    checkedCustomer: Boolean,
+) {
+    Cards.ElevatedCard(
+        onClick = onClick
     ) {
-        Cards.ElevatedCard(
-            onClick = onClick
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(8.dp)
-            ) {
-                Images.CircleImage(
-                    imageRes = Res.drawable.taggy_go_logo,
-                    imageSize = 64.dp,
-                )
-                Spacers.HorizontalBetweenFields()
+            Images.CircleImage(
+                imageRes = Res.drawable.taggy_go_logo,
+                imageSize = 64.dp,
+            )
+            Spacers.HorizontalBetweenFields()
 
-                Column {
-                    Texts.BLB(item.name)
-                    Texts.BM(item.email)
-                }
-
-                Spacers.Weight1(this)
-
-                Checkbox(
-                    checked = checkedCustomer,
-                    onCheckedChange = { onClick() }
-                )
+            Column {
+                Texts.BLB(item.name)
+                Texts.BM(item.email)
             }
+
+            Spacers.Weight1(this)
+
+            Checkbox(
+                checked = checkedCustomer,
+                onCheckedChange = { onClick() }
+            )
         }
     }
 }

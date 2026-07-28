@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -17,45 +17,46 @@ import com.spoonofcode.feature.profile.presentation.name
 import com.spoonofcode.feature.profile.presentation.poa
 import com.spoonofcode.feature.profile.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 
-internal class ProfileEditScreen(
-    val viewModel: ProfileEditViewModel,
-) : BaseScreen<ProfileEditViewModel, ProfileEditViewState, ProfileEditViewAction, Nothing>() {
-
-    @Composable
-    override fun provideTopAppBarTitle() = stringResource(Res.string.edit_profile)
-
-    @Composable
-    override fun provideViewModel() = viewModel
-
-    @Composable
-    override fun provideContent(
-        viewState: ProfileEditViewState,
-        onAction: (ProfileEditViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Images.CircleImage(imageRes = Res.drawable.poa)
-            }
-
-            TextFields.Outlined(
-                value = viewState.profile!!.email ?: "",
-                onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
-                label = stringResource(resource = Res.string.name),
-            )
-
-            Spacers.Weight1(this)
-
-            Buttons.PrimaryButton(
-                text = stringResource(Res.string.save_changes),
-                onClick = { onAction(ProfileEditViewAction.SaveChanges) }
-            )
-        }
+@Composable
+internal fun ProfileEditScreen(
+    viewModel: ProfileEditViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        topBarTitle = stringResource(Res.string.edit_profile),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
     }
+}
+
+@Composable
+private fun ColumnScope.Content(
+    viewState: ProfileEditViewState,
+    onAction: (ProfileEditViewAction) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Images.CircleImage(imageRes = Res.drawable.poa)
+    }
+
+    TextFields.Outlined(
+        value = viewState.profile!!.email,
+        onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
+        label = stringResource(resource = Res.string.name),
+    )
+
+    Spacers.Weight1(this)
+
+    Buttons.PrimaryButton(
+        text = stringResource(Res.string.save_changes),
+        onClick = { onAction(ProfileEditViewAction.SaveChanges) }
+    )
 }
 
 // region previews

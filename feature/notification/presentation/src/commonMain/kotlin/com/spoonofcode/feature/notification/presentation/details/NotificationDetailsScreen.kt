@@ -10,99 +10,99 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.toMillis
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
 import com.spoonofcode.feature.notification.presentation.open_link
 import org.jetbrains.compose.resources.stringResource
 
-internal class NotificationDetailsScreen(
-    val viewModel: NotificationDetailsViewModel,
-    ) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
-
-    @Composable
-    override fun provideTopAppBarTitle() = stringResource(Res.string.notification)
-
-    @Composable
-    override fun provideViewModel() = viewModel
-
-    @Composable
-    override fun provideContent(
-        viewState: NotificationDetailsViewState,
-        onAction: (NotificationDetailsViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            val notification = requireNotNull(viewState.notification)
-            val uriHandler = LocalUriHandler.current
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                NotificationCard(
-                    notification = notification,
-                    onOpenLink = { uriHandler.openUri(it) }
-                )
-            }
-        }
+@Composable
+internal fun NotificationDetailsScreen(
+    viewModel: NotificationDetailsViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        topBarTitle = stringResource(Res.string.notification),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
     }
+}
 
-    @Composable
-    fun NotificationCard(
-        notification: Notification,
-        onOpenLink: (String) -> Unit = {}
+@Composable
+private fun ColumnScope.Content(
+    viewState: NotificationDetailsViewState,
+    onAction: (NotificationDetailsViewAction) -> Unit,
+) {
+    val notification = requireNotNull(viewState.notification)
+    val uriHandler = LocalUriHandler.current
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Cards.ElevatedCard {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Texts.TLB(
-                    text = notification.title,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+        NotificationCard(
+            notification = notification,
+            onOpenLink = { uriHandler.openUri(it) }
+        )
+    }
+}
 
+@Composable
+private fun NotificationCard(
+    notification: Notification,
+    onOpenLink: (String) -> Unit = {}
+) {
+    Cards.ElevatedCard {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        ) {
+            Texts.TLB(
+                text = notification.title,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacers.VerticalBetweenFields()
+
+            Texts.BL(
+                text = notification.text,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            notification.expirationDateTime?.let { expiresAt ->
                 Spacers.VerticalBetweenFields()
-
-                Texts.BL(
-                    text = notification.text,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                notification.expirationDateTime?.let { expiresAt ->
-                    Spacers.VerticalBetweenFields()
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CountdownTimer(
-                            targetTimeMillis = expiresAt.toMillis()
-                        )
-                    }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CountdownTimer(
+                        targetTimeMillis = expiresAt.toMillis()
+                    )
                 }
-
-                notification.link
-                    ?.takeIf { it.isNotBlank() }
-                    ?.let { link ->
-                        Spacers.VerticalBetweenFields()
-                        Buttons.PrimaryButton(
-                            text = stringResource(Res.string.open_link),
-                            onClick = { onOpenLink(link) },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
             }
+
+            notification.link
+                ?.takeIf { it.isNotBlank() }
+                ?.let { link ->
+                    Spacers.VerticalBetweenFields()
+                    Buttons.PrimaryButton(
+                        text = stringResource(Res.string.open_link),
+                        onClick = { onOpenLink(link) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
         }
     }
 }
