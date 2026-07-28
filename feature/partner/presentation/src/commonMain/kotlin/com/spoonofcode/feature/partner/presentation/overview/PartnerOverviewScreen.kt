@@ -9,8 +9,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Chips.HorizontalScrollableFilterChipRow
 import com.spoonofcode.core.presentation.compose.Images
@@ -22,14 +26,19 @@ import com.spoonofcode.feature.partner.presentation.partners
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.partners),
+    verticalScrollEnable = false,
+    backNavigationEnable = false,
+)
+
+@Composable
 internal fun PartnerOverviewScreen(
     viewModel: PartnerOverviewViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.partners),
-        verticalScrollEnable = false,
-        backNavigationEnable = false,
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -82,11 +91,17 @@ private fun PartnerItem(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun PartnerOverviewScreenContentPreview() {
-//    PartnerOverviewScreen().PreviewContent(
-//        viewState = PartnerOverviewViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun PartnerOverviewScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerOverviewViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

@@ -8,7 +8,11 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.auth.presentation.Res
@@ -21,12 +25,17 @@ import org.jetbrains.compose.resources.stringResource
 private const val VERIFICATION_CODE_LENGTH = 6
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.sign_in_with_code),
+)
+
+@Composable
 internal fun LoginCodeScreen(
     viewModel: LoginCodeViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.sign_in_with_code),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -71,13 +80,17 @@ private fun ColumnScope.Content(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun LoginCodeScreenContentPreview() {
-//    LoginCodeScreen(
-//        email = "email@example.com",
-//    ).PreviewContent(
-//        LoginCodeViewState()
-//    )
-//}
+@Preview
+@Composable
+private fun LoginCodeScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(LoginCodeViewState(email = "email@example.com")),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

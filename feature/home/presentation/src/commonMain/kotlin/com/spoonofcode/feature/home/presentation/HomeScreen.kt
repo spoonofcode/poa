@@ -21,8 +21,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
@@ -35,13 +39,18 @@ import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.home),
+    backNavigationEnable = false,
+)
+
+@Composable
 internal fun HomeScreen(
     viewModel: HomeViewModel
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.home),
-        backNavigationEnable = false,
+        screenConfig = screenConfig(),
         topBarActions = { _, onAction ->
             listOf(
                 TopBarAction(
@@ -193,8 +202,26 @@ private fun DailyRewardItem(reward: DailyReward) {
     }
 }
 
-//@Preview
-//@Composable
-//private fun HomeScreenContentPreview() {
-//    HomeScreen().PreviewContent(HomeViewState())
-//}
+// region previews
+@Preview
+@Composable
+private fun HomeScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(HomeViewState()),
+        screenConfig = screenConfig(),
+        topBarActions = { _, _ ->
+            listOf(
+                TopBarAction(
+                    icon = Icons.Default.Notifications,
+                    description = "Notification",
+                ) { },
+            )
+        }
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
+// endregion

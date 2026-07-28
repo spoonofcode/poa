@@ -8,12 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Notification
 import com.mohamedrejeb.calf.permissions.Permission
 import com.mohamedrejeb.calf.permissions.isGranted
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.RequestPermission
@@ -41,15 +45,19 @@ import com.spoonofcode.feature.notification.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notifications_settings),
+    verticalScrollEnable = false,
+)
+
+@Composable
 internal fun NotificationSettingsScreen(
     viewModel: NotificationSettingsViewModel,
     backNavigationEnable: Boolean = true,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.notifications_settings),
-        verticalScrollEnable = false,
-        backNavigationEnable = backNavigationEnable,
+        screenConfig = screenConfig().copy(backNavigationEnable = backNavigationEnable),
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
         }
@@ -186,12 +194,17 @@ private fun Dialogs(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun NotificationSettingsScreenContentPreview() {
-//    NotificationSettingsScreen()
-//        .PreviewContent(
-//            NotificationSettingsViewState()
-//        )
-//}
+@Preview
+@Composable
+private fun NotificationSettingsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(NotificationSettingsViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

@@ -27,8 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
@@ -42,19 +46,22 @@ import com.spoonofcode.feature.notification.presentation.tab_new
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notifications),
+    verticalScrollEnable = false,
+    contentPadding = PaddingValues(
+        start = Paddings.screenPadding,
+        end = Paddings.screenPadding,
+    )
+)
+
+@Composable
 internal fun NotificationOverviewScreen(
     viewModel: NotificationOverviewViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.notifications),
-        verticalScrollEnable = false,
-        provideContentPadding = {
-            PaddingValues(
-                start = Paddings.screenPadding,
-                end = Paddings.screenPadding,
-            )
-        }
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -178,12 +185,17 @@ private fun NotificationItem(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun NotificationOverviewScreenContentPreview() {
-//    NotificationOverviewScreen()
-//        .PreviewContent(
-//            viewState = NotificationOverviewViewState(),
-//        )
-//}
+@Preview
+@Composable
+private fun NotificationOverviewScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(NotificationOverviewViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

@@ -2,10 +2,19 @@ package com.spoonofcode.feature.faq.presentation
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.ExpandableListItem
 import com.spoonofcode.core.presentation.compose.Texts
 import org.jetbrains.compose.resources.stringResource
+
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.faq),
+)
 
 @Composable
 internal fun FAQScreen(
@@ -13,7 +22,7 @@ internal fun FAQScreen(
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.faq),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -73,11 +82,17 @@ private fun ColumnScope.Content(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun FAQScreenContentPreview() {
-//    FAQScreen().PreviewContent(
-//        viewState = FAQViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun FAQScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(FAQViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

@@ -10,9 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.toMillis
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
@@ -25,12 +29,17 @@ import com.spoonofcode.feature.notification.presentation.open_link
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notification),
+)
+
+@Composable
 internal fun NotificationDetailsScreen(
     viewModel: NotificationDetailsViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.notification),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -108,13 +117,17 @@ private fun NotificationCard(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun NotificationDetailsScreenContentPreview() {
-//    NotificationDetailsScreen(
-//        notificationId = "1"
-//    ).PreviewContent(
-//        NotificationDetailsViewState()
-//    )
-//}
+@Preview
+@Composable
+private fun NotificationDetailsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(NotificationDetailsViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

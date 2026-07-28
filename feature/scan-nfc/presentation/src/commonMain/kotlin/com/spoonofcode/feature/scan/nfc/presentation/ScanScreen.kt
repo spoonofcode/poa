@@ -22,10 +22,14 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.data.PlatformType
 import com.spoonofcode.core.nfc.NfcReader
 import com.spoonofcode.core.nfc.rememberNfcReader
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Paddings
@@ -39,6 +43,13 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.scan),
+    backNavigationEnable = false,
+    verticalScrollEnable = false,
+)
+
+@Composable
 internal fun ScanScreen(
     viewModel: ScanViewModel,
 ) {
@@ -48,9 +59,7 @@ internal fun ScanScreen(
 
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.scan),
-        backNavigationEnable = false,
-        verticalScrollEnable = false,
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -140,11 +149,17 @@ private fun ProductNotFoundView(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun ScanScreenContentPreview() {
-//    ScanScreen().PreviewContent(
-//        ScanViewState()
-//    )
-//}
+@Preview
+@Composable
+private fun ScanScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(ScanViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion
