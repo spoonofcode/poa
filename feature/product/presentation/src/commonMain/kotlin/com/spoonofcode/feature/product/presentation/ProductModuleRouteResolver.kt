@@ -3,6 +3,7 @@ package com.spoonofcode.feature.product.presentation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
+import com.spoonofcode.core.presentation.navigation.viewModelEntry
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.presentation.details.ProductDetailsScreen
 import com.spoonofcode.feature.product.presentation.edit.ProductEditScreen
@@ -12,25 +13,25 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 fun EntryProviderScope<NavKey>.productModuleRouteResolver() {
-    entry<ProductModuleRoute.ProductDetails> {
+    viewModelEntry<ProductModuleRoute.ProductDetails> {
         ProductDetailsScreen(
             viewModel = koinViewModel(parameters = { parametersOf(it.productId) }),
         )
     }
 
-    entry<ProductModuleRoute.ProductEdit> {
+    viewModelEntry<ProductModuleRoute.ProductEdit> {
         ProductEditScreen(
             viewModel = koinViewModel(parameters = { parametersOf(it.productId) }),
         )
     }
 
-    entry<ProductModuleRoute.ProductOverview> {
+    viewModelEntry<ProductModuleRoute.ProductOverview> {
         ProductOverviewScreen(
             viewModel = koinViewModel(),
         )
     }
 
-    entry<ProductModuleRoute.ProductSeriesOverview> {
+    viewModelEntry<ProductModuleRoute.ProductSeriesOverview> {
         ProductSeriesOverviewScreen(
             viewModel = koinViewModel(),
         )
