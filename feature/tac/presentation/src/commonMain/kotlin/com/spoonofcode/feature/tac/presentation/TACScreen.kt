@@ -3,7 +3,9 @@ package com.spoonofcode.feature.tac.presentation
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Checkboxes
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -65,11 +67,18 @@ private fun ColumnScope.Content(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun TACScreenContentPreview() {
-//    TACScreen().PreviewContent(
-//        viewState = TACViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun TACScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = TACViewState(),
+        title = stringResource(Res.string.terms_and_conditions),
+        backNavigationEnable = false,
+    ) { viewState ->
+        Content(
+            viewState = viewState,
+            onAction = {},
+        )
+    }
+}
 // endregion
