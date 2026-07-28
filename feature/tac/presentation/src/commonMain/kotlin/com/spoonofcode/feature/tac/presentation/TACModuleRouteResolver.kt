@@ -10,6 +10,6 @@ fun EntryProviderScope<NavKey>.tacModuleRouteResolver() {
         TACScreen(
             backNavigationEnable = it.backNavigationEnabled,
             viewModel = koinViewModel(),
-        ).Content()
+        )
     }
 }
