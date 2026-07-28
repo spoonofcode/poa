@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
@@ -48,12 +49,17 @@ import com.spoonofcode.feature.product.presentation.send_message
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.product),
+)
+
+@Composable
 internal fun ProductDetailsScreen(
     viewModel: ProductDetailsViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.product),
+        screenConfig = screenConfig(),
         topBarActions = { viewState, onAction ->
             if (
                 viewState.productStatus == ProductStatus.OWNED_BY_SELF

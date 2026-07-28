@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -35,22 +34,25 @@ import com.spoonofcode.core.presentation.compose.snackbar.setSnackbarHostState
 import com.spoonofcode.core.presentation.ext.addIf
 import com.spoonofcode.core.presentation.theme.AppTheme
 
+data class StandardScreenConfig(
+    val topBarTitle: String? = null,
+    val backNavigationEnable: Boolean = true,
+    val verticalScrollEnable: Boolean = true,
+    val respectScaffoldImePadding: Boolean = false,
+    val customBottomScaffoldInnerPadding: Dp? = null,
+    val contentBackgroundColor: Color = Color.Unspecified,
+    val bottomBarBackgroundColor: Color = Color.Unspecified,
+    val contentPadding: PaddingValues = PaddingValues(
+        start = Paddings.screenPadding,
+        end = Paddings.screenPadding,
+        bottom = Paddings.screenPadding,
+    )
+)
+
 @Composable
 fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent> StandardScreen(
     viewModel: VM,
-    topBarTitle: String? = null,
-    backNavigationEnable: Boolean = true,
-    verticalScrollEnable: Boolean = true,
-    respectScaffoldImePadding: Boolean = false,
-    customBottomScaffoldInnerPadding: Dp? = null,
-    contentBackgroundColor: Color = MaterialTheme.colorScheme.background,
-    provideContentPadding: () -> PaddingValues = {
-        PaddingValues(
-            start = Paddings.screenPadding,
-            end = Paddings.screenPadding,
-            bottom = Paddings.screenPadding,
-        )
-    },
+    screenConfig: StandardScreenConfig = StandardScreenConfig(),
     navigationBackAction: ((onAction: (VA) -> Unit) -> (() -> Unit))? = null,
     topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
     bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
@@ -68,13 +70,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
         onAction = viewModel::onAction,
         onStartAction = viewModel::onStartAction,
         navigateBack = viewModel::navigateBack,
-        topBarTitle = topBarTitle,
-        backNavigationEnable = backNavigationEnable,
-        verticalScrollEnable = verticalScrollEnable,
-        respectScaffoldImePadding = respectScaffoldImePadding,
-        customBottomScaffoldInnerPadding = customBottomScaffoldInnerPadding,
-        contentBackgroundColor = contentBackgroundColor,
-        provideContentPadding = provideContentPadding,
+        screenConfig = screenConfig,
         navigationBackAction = navigationBackAction,
         topBarActions = topBarActions,
         bottomBar = bottomBar,
@@ -95,19 +91,7 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
     onAction: (VA) -> Unit,
     onStartAction: () -> Unit,
     navigateBack: () -> Unit,
-    topBarTitle: String? = null,
-    backNavigationEnable: Boolean = true,
-    verticalScrollEnable: Boolean = true,
-    respectScaffoldImePadding: Boolean = false,
-    customBottomScaffoldInnerPadding: Dp? = null,
-    contentBackgroundColor: Color = MaterialTheme.colorScheme.background,
-    provideContentPadding: () -> PaddingValues = {
-        PaddingValues(
-            start = Paddings.screenPadding,
-            end = Paddings.screenPadding,
-            bottom = Paddings.screenPadding,
-        )
-    },
+    screenConfig: StandardScreenConfig,
     navigationBackAction: ((onAction: (VA) -> Unit) -> (() -> Unit))? = null,
     topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
     bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
@@ -122,14 +106,14 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
 
     Scaffold(
         modifier = Modifier
-            .addIf(respectScaffoldImePadding) { imePadding() }
+            .addIf(screenConfig.respectScaffoldImePadding) { imePadding() }
             .fillMaxSize(),
         topBar = {
             val state = viewState
             if (state is ViewState.Content) {
                 TopBar(
-                    backNavigationEnable = backNavigationEnable,
-                    topAppBarTitle = topBarTitle ?: "",
+                    backNavigationEnable = screenConfig.backNavigationEnable,
+                    topAppBarTitle = screenConfig.topBarTitle ?: "",
                     navigationBackAction = navBackAction,
                     iconBarActions = topBarActions(
                         state.data,
@@ -152,7 +136,7 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
                     start = innerPadding.calculateStartPadding(layoutDirection),
                     top = innerPadding.calculateTopPadding(),
                     end = innerPadding.calculateEndPadding(layoutDirection),
-                    bottom = customBottomScaffoldInnerPadding
+                    bottom = screenConfig.customBottomScaffoldInnerPadding
                         ?: innerPadding.calculateBottomPadding()
                 )
                 .fillMaxSize()
@@ -168,11 +152,11 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(contentBackgroundColor)
-                            .addIf(verticalScrollEnable) {
+                            .background(screenConfig.contentBackgroundColor)
+                            .addIf(screenConfig.verticalScrollEnable) {
                                 verticalScroll(rememberScrollState())
                             }
-                            .padding(provideContentPadding()),
+                            .padding(screenConfig.contentPadding),
                         verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding)
                     ) {
                         content(state.data, onAction)
@@ -184,29 +168,24 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
 }
 
 @Composable
-fun <VS : BaseViewState> StandardScreenPreview(
-    viewState: VS,
-    title: String = "",
-    backNavigationEnable: Boolean = true,
-    provideContentPadding: () -> PaddingValues = {
-        PaddingValues(
-            start = Paddings.screenPadding,
-            end = Paddings.screenPadding,
-            bottom = Paddings.screenPadding,
-        )
-    },
-    content: @Composable ColumnScope.(VS) -> Unit
+fun <VS : BaseViewState, VA : BaseViewAction> StandardScreenPreview(
+    viewState: ViewState<VS>,
+    screenConfig: StandardScreenConfig = StandardScreenConfig(),
+    topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
+    topBar: (@Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit)? = null,
+    bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
+    dialogs: (@Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit)? = null,
+    bottomSheets: (@Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit)? = null,
+    content: @Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit,
 ) {
     AppTheme {
-        StandardScaffold<VS, BaseViewAction>(
-            viewState = ViewState.Content(viewState),
+        StandardScaffold(
+            viewState = viewState,
+            screenConfig = screenConfig,
             onAction = {},
             onStartAction = {},
             navigateBack = {},
-            topBarTitle = title,
-            backNavigationEnable = backNavigationEnable,
-            provideContentPadding = provideContentPadding,
-            content = { vs, _ -> content(vs) }
+            content = content,
         )
     }
 }
