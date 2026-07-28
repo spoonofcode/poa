@@ -63,8 +63,61 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
 
     setSnackbarHostState(snackbarHostState, viewModel.snackbarEvent)
 
-    val navBackAction = remember(navigationBackAction, viewModel) {
-        navigationBackAction?.invoke(viewModel::onAction) ?: { viewModel.navigateBack() }
+    StandardScaffold(
+        viewState = viewState,
+        onAction = viewModel::onAction,
+        onStartAction = viewModel::onStartAction,
+        navigateBack = viewModel::navigateBack,
+        topBarTitle = topBarTitle,
+        backNavigationEnable = backNavigationEnable,
+        verticalScrollEnable = verticalScrollEnable,
+        respectScaffoldImePadding = respectScaffoldImePadding,
+        customBottomScaffoldInnerPadding = customBottomScaffoldInnerPadding,
+        contentBackgroundColor = contentBackgroundColor,
+        provideContentPadding = provideContentPadding,
+        navigationBackAction = navigationBackAction,
+        topBarActions = topBarActions,
+        bottomBar = bottomBar,
+        dialogs = dialogs,
+        bottomSheets = bottomSheets,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) {
+                Snackbar(snackbarData = it)
+            }
+        },
+        content = content
+    )
+}
+
+@Composable
+private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
+    viewState: ViewState<VS>,
+    onAction: (VA) -> Unit,
+    onStartAction: () -> Unit,
+    navigateBack: () -> Unit,
+    topBarTitle: String? = null,
+    backNavigationEnable: Boolean = true,
+    verticalScrollEnable: Boolean = true,
+    respectScaffoldImePadding: Boolean = false,
+    customBottomScaffoldInnerPadding: Dp? = null,
+    contentBackgroundColor: Color = MaterialTheme.colorScheme.background,
+    provideContentPadding: () -> PaddingValues = {
+        PaddingValues(
+            start = Paddings.screenPadding,
+            end = Paddings.screenPadding,
+            bottom = Paddings.screenPadding,
+        )
+    },
+    navigationBackAction: ((onAction: (VA) -> Unit) -> (() -> Unit))? = null,
+    topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
+    bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
+    dialogs: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
+    bottomSheets: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
+    snackbarHost: @Composable () -> Unit = {},
+    content: @Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit
+) {
+    val navBackAction = remember(navigationBackAction, onAction, navigateBack) {
+        navigationBackAction?.invoke(onAction) ?: { navigateBack() }
     }
 
     Scaffold(
@@ -72,30 +125,25 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
             .addIf(respectScaffoldImePadding) { imePadding() }
             .fillMaxSize(),
         topBar = {
-            // TODO FIX THIS CASTING
-            if(viewState is ViewState.Content){
+            val state = viewState
+            if (state is ViewState.Content) {
                 TopBar(
                     backNavigationEnable = backNavigationEnable,
                     topAppBarTitle = topBarTitle ?: "",
                     navigationBackAction = navBackAction,
                     iconBarActions = topBarActions(
-                        // TODO FIX THIS CASTING
-                        (viewState as ViewState.Content).data,
-                        viewModel::onAction
+                        state.data,
+                        onAction
                     )
                 )
             }
         },
         bottomBar = {
             (viewState as? ViewState.Content)?.data?.let {
-                bottomBar(it, viewModel::onAction)
+                bottomBar(it, onAction)
             }
         },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) {
-                Snackbar(snackbarData = it)
-            }
-        }
+        snackbarHost = snackbarHost
     ) { innerPadding ->
         val layoutDirection = LocalLayoutDirection.current
         Box(
@@ -112,10 +160,10 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
             when (val state = viewState) {
                 ViewState.Initial -> {}
                 ViewState.Loading -> LoadingView()
-                ViewState.Error -> ErrorView(reload = { viewModel.onStartAction() })
+                ViewState.Error -> ErrorView(reload = { onStartAction() })
                 is ViewState.Content -> {
-                    dialogs(state.data, viewModel::onAction)
-                    bottomSheets(state.data, viewModel::onAction)
+                    dialogs(state.data, onAction)
+                    bottomSheets(state.data, onAction)
 
                     Column(
                         modifier = Modifier
@@ -127,7 +175,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
                             .padding(provideContentPadding()),
                         verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding)
                     ) {
-                        content(state.data, viewModel::onAction)
+                        content(state.data, onAction)
                     }
                 }
             }
@@ -150,31 +198,15 @@ fun <VS : BaseViewState> StandardScreenPreview(
     content: @Composable ColumnScope.(VS) -> Unit
 ) {
     AppTheme {
-        Scaffold(
-            topBar = {
-                TopBar(
-                    backNavigationEnable = backNavigationEnable,
-                    topAppBarTitle = title,
-                    navigationBackAction = {},
-                    iconBarActions = emptyList()
-                )
-            }
-        ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
-                        .padding(provideContentPadding()),
-                    verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding)
-                ) {
-                    content(viewState)
-                }
-            }
-        }
+        StandardScaffold<VS, BaseViewAction>(
+            viewState = ViewState.Content(viewState),
+            onAction = {},
+            onStartAction = {},
+            navigateBack = {},
+            topBarTitle = title,
+            backNavigationEnable = backNavigationEnable,
+            provideContentPadding = provideContentPadding,
+            content = { vs, _ -> content(vs) }
+        )
     }
 }
