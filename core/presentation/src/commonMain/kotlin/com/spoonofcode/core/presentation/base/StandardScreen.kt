@@ -52,7 +52,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
         )
     },
     navigationBackAction: ((onAction: (VA) -> Unit) -> (() -> Unit))? = null,
-    topBarActions: @Composable (onAction: (VA) -> Unit) -> List<TopBarAction> = { emptyList() },
+    topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
     bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
     dialogs: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
     bottomSheets: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
@@ -72,12 +72,19 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
             .addIf(respectScaffoldImePadding) { imePadding() }
             .fillMaxSize(),
         topBar = {
-            TopBar(
-                backNavigationEnable = backNavigationEnable,
-                topAppBarTitle = topBarTitle ?: "",
-                navigationBackAction = navBackAction,
-                iconBarActions = topBarActions(viewModel::onAction)
-            )
+            // TODO FIX THIS CASTING
+            if(viewState is ViewState.Content){
+                TopBar(
+                    backNavigationEnable = backNavigationEnable,
+                    topAppBarTitle = topBarTitle ?: "",
+                    navigationBackAction = navBackAction,
+                    iconBarActions = topBarActions(
+                        // TODO FIX THIS CASTING
+                        (viewState as ViewState.Content).data,
+                        viewModel::onAction
+                    )
+                )
+            }
         },
         bottomBar = {
             (viewState as? ViewState.Content)?.data?.let {

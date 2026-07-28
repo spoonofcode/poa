@@ -15,7 +15,7 @@ fun EntryProviderScope<NavKey>.productModuleRouteResolver() {
     entry<ProductModuleRoute.ProductDetails> {
         ProductDetailsScreen(
             viewModel = koinViewModel(parameters = { parametersOf(it.productId) }),
-        ).Content()
+        )
     }
 
     entry<ProductModuleRoute.ProductEdit> {
