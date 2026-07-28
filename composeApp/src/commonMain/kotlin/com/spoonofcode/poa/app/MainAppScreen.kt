@@ -20,6 +20,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.togetherWith
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
@@ -192,6 +194,18 @@ fun MainAppScreen(
             NavDisplay(
                 backStack = backStack,
                 modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
+                transitionSpec = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start) togetherWith
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start)
+                },
+                popTransitionSpec = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End) togetherWith
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
+                },
+                predictivePopTransitionSpec = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End) togetherWith
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
+                },
                 entryDecorators = listOf(
                     rememberSaveableStateHolderNavEntryDecorator(),
                 ),
