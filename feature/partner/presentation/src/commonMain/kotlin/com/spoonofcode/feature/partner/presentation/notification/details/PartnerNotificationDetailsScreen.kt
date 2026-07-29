@@ -5,8 +5,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.data.ext.formatedLocalDateTime
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.TopBarAction
@@ -29,12 +33,17 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notification),
+)
+
+@Composable
 internal fun PartnerNotificationDetailsScreen(
     viewModel: PartnerNotificationDetailsViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.notification),
+        screenConfig = screenConfig(),
         topBarActions = { viewState, onAction ->
             if (viewState.isNotificationEditable) {
                 listOf(
@@ -134,13 +143,17 @@ private fun Dialogs(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun PartnerNotificationDetailsScreenContentPreview() {
-//    PartnerNotificationDetailsScreen(
-//        notificationId = "1"
-//    ).PreviewContent(
-//        viewState = PartnerNotificationDetailsViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun PartnerNotificationDetailsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerNotificationDetailsViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

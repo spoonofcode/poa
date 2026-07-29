@@ -2,7 +2,11 @@ package com.spoonofcode.feature.partner.presentation.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -20,12 +24,17 @@ import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.partner),
+)
+
+@Composable
 internal fun PartnerEditScreen(
     viewModel: PartnerEditViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.partner),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -90,13 +99,18 @@ private fun ColumnScope.Content(
     }
 }
 
-//    @Preview
-//    @Composable
-//    private fun InitializedPartnerEditScreenPreview() {
-//        PartnerEditScreen().PreviewContent(
-//            PartnerEditViewState(
-//                // TODO #133 fix previews
-////                partner = PartnerMockData.PARTNER_1
-//            )
-//        )
-//    }
+// region previews
+@Preview
+@Composable
+private fun PartnerEditScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerEditViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
+// endregion

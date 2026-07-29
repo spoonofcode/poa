@@ -11,8 +11,12 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
@@ -23,12 +27,17 @@ import com.spoonofcode.feature.partner.presentation.send_notification
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.partner_panel),
+)
+
+@Composable
 internal fun PartnerPanelScreen(
     viewModel: PartnerPanelViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.partner_panel),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -84,12 +93,17 @@ private fun ColumnScope.Content(
 }
 
 // region previews
-//    @Preview
-//    @Composable
-//    fun InitializedPartnerPanelScreenPreview() {
-//        PartnerPanelScreen()
-//            .PreviewContent(
-//            viewState = PartnerPanelViewState()
-//        )
-//    }
+@Preview
+@Composable
+private fun PartnerPanelScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerPanelViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

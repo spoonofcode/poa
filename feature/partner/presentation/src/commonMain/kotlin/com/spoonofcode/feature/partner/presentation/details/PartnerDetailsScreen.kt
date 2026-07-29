@@ -15,8 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.SocialIcons
@@ -27,12 +31,17 @@ import com.spoonofcode.feature.partner.presentation.partner
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.partner),
+)
+
+@Composable
 internal fun PartnerDetailsScreen(
     viewModel: PartnerDetailsViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.partner),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -110,13 +119,17 @@ private fun ColumnScope.Content(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun PartnerDetailsScreenContentPreview() {
-//    PartnerDetailsScreen(
-//        partnerId = "1"
-//    ).PreviewContent(
-//        viewState = PartnerDetailsViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun PartnerDetailsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerDetailsViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

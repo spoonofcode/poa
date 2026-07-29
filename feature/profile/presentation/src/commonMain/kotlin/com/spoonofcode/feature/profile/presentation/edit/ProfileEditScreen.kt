@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -19,12 +23,17 @@ import com.spoonofcode.feature.profile.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.edit_profile),
+)
+
+@Composable
 internal fun ProfileEditScreen(
     viewModel: ProfileEditViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.edit_profile),
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -60,11 +69,17 @@ private fun ColumnScope.Content(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun ProfileEditScreenContentPreview() {
-//    ProfileEditScreen().PreviewContent(
-//        viewState = ProfileEditViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun ProfileEditScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(ProfileEditViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

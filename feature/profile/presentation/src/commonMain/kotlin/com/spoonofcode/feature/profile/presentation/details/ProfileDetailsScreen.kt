@@ -28,8 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
@@ -49,13 +53,18 @@ import com.spoonofcode.feature.profile.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.profile),
+    backNavigationEnable = false,
+)
+
+@Composable
 internal fun ProfileDetailsScreen(
     viewModel: ProfileDetailsViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.profile),
-        backNavigationEnable = false,
+        screenConfig = screenConfig(),
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
         }
@@ -231,16 +240,17 @@ private fun DividerItem() {
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun ProfileScreenContentPreview(
-//    @PreviewParameter(ProfilePreviewParameterProvider::class)
-//    profile: Profile,
-//) {
-//    ProfileDetailsScreen().PreviewContent(
-//        ProfileDetailsViewState(
-//            profile = profile,
-//        )
-//    )
-//}
+@Preview
+@Composable
+private fun ProfileDetailsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(ProfileDetailsViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

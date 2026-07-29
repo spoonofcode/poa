@@ -11,8 +11,12 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
@@ -27,13 +31,18 @@ import com.spoonofcode.feature.partner.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.my_customers),
+    verticalScrollEnable = false,
+)
+
+@Composable
 internal fun PartnerCustomerOverviewScreen(
     viewModel: PartnerCustomerOverviewViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.my_customers),
-        verticalScrollEnable = false,
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -109,11 +118,17 @@ private fun CustomerItem(
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun CustomerOverviewScreenContentPreview() {
-//    CustomerOverviewScreen().PreviewContent(
-//        viewState = PartnerCustomerOverviewViewState(),
-//    )
-//}
+@Preview
+@Composable
+private fun PartnerCustomerOverviewScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerCustomerOverviewViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

@@ -27,9 +27,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.toMillis
 import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
@@ -44,19 +48,22 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
 @Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.my_notifications),
+    verticalScrollEnable = false,
+    contentPadding = PaddingValues(
+        start = Paddings.screenPadding,
+        end = Paddings.screenPadding,
+    )
+)
+
+@Composable
 internal fun PartnerNotificationsScreen(
     viewModel: PartnerNotificationsViewModel,
 ) {
     StandardScreen(
         viewModel = viewModel,
-        topBarTitle = stringResource(Res.string.my_notifications),
-        verticalScrollEnable = false,
-        provideContentPadding = {
-            PaddingValues(
-                start = Paddings.screenPadding,
-                end = Paddings.screenPadding,
-            )
-        }
+        screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -184,12 +191,17 @@ private fun NotificationItem(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun PartnerNotificationsScreenContentPreview() {
-//    PartnerNotificationsScreen()
-//        .PreviewContent(
-//            PartnerNotificationsViewState()
-//        )
-//}
+@Preview
+@Composable
+private fun PartnerNotificationsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(PartnerNotificationsViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion
