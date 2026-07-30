@@ -193,6 +193,11 @@ fun MainAppScreen(
         ) { innerPadding ->
             NavDisplay(
                 backStack = backStack,
+                onBack = {
+                    if (backStack.size > 1) {
+                        backStack.removeLast()
+                    }
+                },
                 modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
                 transitionSpec = {
                     slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start) togetherWith
