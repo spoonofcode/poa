@@ -16,6 +16,7 @@ internal fun notificationRepositoryMock() = mock<NotificationRepository> {
             any(),
             any(),
             any(),
+            any(),
             any()
         )
     } returns Result.success(

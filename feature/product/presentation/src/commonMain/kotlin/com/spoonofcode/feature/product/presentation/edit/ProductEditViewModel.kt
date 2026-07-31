@@ -2,7 +2,6 @@ package com.spoonofcode.feature.product.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
 import kotlinx.coroutines.launch
@@ -11,9 +10,7 @@ internal class ProductEditViewModel(
     private val productId: String,
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
-) : BaseViewModel<ProductEditViewState, ProductEditViewAction, Nothing>(
-    initialViewState = ViewState.Content(ProductEditViewState()),
-) {
+) : BaseViewModel<ProductEditViewState, ProductEditViewAction, Nothing>() {
     override val startAction = {
         initView(productId)
     }

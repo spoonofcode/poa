@@ -6,6 +6,8 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.androidx.compose.ui.tooling)
+            implementation(libs.jetbrains.compose.ui.tooling)
             implementation(libs.jetbrains.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)

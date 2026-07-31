@@ -3,8 +3,8 @@ package com.spoonofcode.feature.auth.domain.usecase
 import com.spoonofcode.core.recaptcha.RecaptchaClient
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
-private const val RECAPTCHA_LOGIN_ACTION = "login"
-private const val RECAPTCHA_SIGN_UP_ACTION = "signup"
+private const val RECAPTCHA_LOGIN_ACTION = "LOGIN"
+private const val RECAPTCHA_SIGN_UP_ACTION = "SIGNUP"
 
 class LoginRequestCodeUseCase(
     private val loginRepository: LoginRepository,

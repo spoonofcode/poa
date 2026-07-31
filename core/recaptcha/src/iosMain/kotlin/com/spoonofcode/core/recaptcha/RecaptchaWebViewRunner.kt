@@ -4,6 +4,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import platform.Foundation.NSUUID
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
+import platform.UIKit.UIWindow
 import platform.WebKit.*
 import platform.darwin.NSObject
 import kotlin.coroutines.resume
@@ -47,6 +50,11 @@ internal object RecaptchaWebViewRunner {
             }
 
             val webView = WKWebView(frame = CGRectZero.readValue(), configuration = config)
+            
+            val keyWindow = UIApplication.sharedApplication.keyWindow
+                ?: UIApplication.sharedApplication.windows.firstOrNull() as? UIWindow
+            val rootView = keyWindow?.rootViewController?.view
+            rootView?.addSubview(webView)
 
             val html = """
                 <!doctype html>
@@ -70,9 +78,11 @@ internal object RecaptchaWebViewRunner {
                 </html>
             """.trimIndent()
 
-            webView.loadHTMLString(html, baseURL = null)
+            val baseUrl = NSURL(string = "https://testing.proof-of-wear.com")
+            webView.loadHTMLString(html, baseURL = baseUrl)
 
             cont.invokeOnCancellation {
+                webView.removeFromSuperview()
                 contentController.removeScriptMessageHandlerForName(handlerName)
             }
         }

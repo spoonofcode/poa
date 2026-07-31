@@ -3,8 +3,9 @@ package com.spoonofcode.feature.partner.presentation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
+import com.spoonofcode.core.presentation.navigation.viewModelEntry
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
-import com.spoonofcode.feature.partner.presentation.customer.overview.CustomerOverviewScreen
+import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationsScreen
@@ -18,49 +19,49 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
-    entry<PartnerModuleRoute.CustomerOverview> {
-        CustomerOverviewScreen(
+    viewModelEntry<PartnerModuleRoute.CustomerOverview> {
+        PartnerCustomerOverviewScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerDetails> {
+    viewModelEntry<PartnerModuleRoute.PartnerDetails> {
         PartnerDetailsScreen(
             viewModel = koinViewModel(parameters = { parametersOf(it.partnerId) })
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerEdit> {
+    viewModelEntry<PartnerModuleRoute.PartnerEdit> {
         PartnerEditScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerOverview> {
+    viewModelEntry<PartnerModuleRoute.PartnerOverview> {
         PartnerOverviewScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerPanel> {
+    viewModelEntry<PartnerModuleRoute.PartnerPanel> {
         PartnerPanelScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerNotifications> {
+    viewModelEntry<PartnerModuleRoute.PartnerNotifications> {
         PartnerNotificationsScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerNotificationDetails> {
+    viewModelEntry<PartnerModuleRoute.PartnerNotificationDetails> {
         PartnerNotificationDetailsScreen(
             viewModel = koinViewModel(parameters = { parametersOf(it.notificationId) })
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerNotificationEdit> {
+    viewModelEntry<PartnerModuleRoute.PartnerNotificationEdit> {
         PartnerNotificationEditScreen(
             viewModel = koinViewModel(
                 parameters = {
@@ -73,14 +74,12 @@ fun EntryProviderScope<NavKey>.partnerModuleRouteResolver() {
                     )
                 }
             )
-        ).Content()
+        )
     }
 
-    entry<PartnerModuleRoute.PartnerNotificationType> {
+    viewModelEntry<PartnerModuleRoute.PartnerNotificationType> {
         PartnerNotificationTypeScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
-
-
 }

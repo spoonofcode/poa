@@ -9,6 +9,6 @@ fun EntryProviderScope<NavKey>.faqModuleRouteResolver() {
     entry<FAQModuleRoute.FAQ> {
         FAQScreen(
             viewModel = koinViewModel()
-        ).Content()
+        )
     }
 }

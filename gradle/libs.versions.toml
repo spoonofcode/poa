@@ -43,7 +43,7 @@ navigation3-jetbrains = "1.2.0-alpha02"
 # --- Google / Firebase ---
 firebaseBom = "34.15.0"
 googleId = "1.2.0"
-recaptcha = "18.8.0"
+recaptcha = "18.9.2"
 
 # --- Networking / DI / Utils ---
 ktor = "3.4.3"
@@ -95,6 +95,7 @@ lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecyc
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 
 jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version = "1.11.4" }
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 jetbrains-compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
 jetbrains-compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
