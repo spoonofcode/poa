@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.scan.nfc.data.remote.model
+package com.spoonofcode.feature.scan.nfc.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
