@@ -13,8 +13,6 @@ class NotificationRepositoryImpl(
     private val remoteNotificationDataSource: RemoteNotificationDataSource,
     private val localNotificationDataSource: LocalNotificationDataSource,
 ) : NotificationRepository {
-
-
     override suspend fun create(
         title: String,
         text: String,
@@ -91,7 +89,6 @@ class NotificationRepositoryImpl(
             notificationsPersonalizedEnabled = notificationsPersonalizedEnabled,
             notificationsFromPartnersEnabled = notificationsFromPartnersEnabled,
             notificationsMyProductSeriesEnabled = notificationsMyProductSeriesEnabled,
-
-            )
+        )
     }
 }

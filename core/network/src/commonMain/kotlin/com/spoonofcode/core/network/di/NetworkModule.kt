@@ -21,5 +21,5 @@ val networkModule: Module = module {
     single {
         HttpClientFactory(get(), get(), get()).create()
     }
-    factory<LogoutHandler> { HttpLogoutHandler() }
+    factoryOf(::HttpLogoutHandler) bind LogoutHandler::class
 }

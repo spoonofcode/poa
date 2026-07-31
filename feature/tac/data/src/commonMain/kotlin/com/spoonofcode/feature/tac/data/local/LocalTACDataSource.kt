@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.tac.data.local
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.feature.tac.domain.model.TACSettings
 import eu.anifantakis.lib.ksafe.KSafe
 import eu.anifantakis.lib.ksafe.KSafeWriteMode
@@ -8,11 +9,13 @@ import kotlinx.coroutines.withContext
 
 class LocalTACDataSource(
     private val kSafe: KSafe,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    private val poaLogger: POALogger,
 ) {
 
     suspend fun getTACSettings(): TACSettings {
         return withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalTACDataSource: Fetching TAC settings from local storage")
             TACSettings(
                 isPrivacyPolicyAccepted = kSafe.get(
                     key = Keys.Settings.PRIVACY_POLICY_ACCEPTED,
@@ -31,6 +34,7 @@ class LocalTACDataSource(
         isTermsAndConditionsAccepted: Boolean,
     ) {
         withContext(dispatcherProvider.io()) {
+            poaLogger.info("LocalTACDataSource: Saving TAC settings to local storage")
             kSafe.put(
                 key = Keys.Settings.PRIVACY_POLICY_ACCEPTED,
                 value = isPrivacyPolicyAccepted,
