@@ -46,16 +46,19 @@ class LocalSessionDataSource(
 
     suspend fun getSessionAccessToken(): String? =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session access token")
             kSafe.get<String?>(Keys.Session.ACCESS_TOKEN, null)
         }
 
     suspend fun getSessionRefreshToken(): String? =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session refresh token")
             kSafe.get<String?>(Keys.Session.REFRESH_TOKEN, null)
         }
 
     suspend fun getSessionUserId(): String =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session user ID")
             requireNotNull(
                 kSafe.get<String?>(Keys.Session.USER_ID, null)
             ) { "User ID cannot be null" }
@@ -63,6 +66,7 @@ class LocalSessionDataSource(
 
     suspend fun getSessionUserEmail(): String =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session user email")
             requireNotNull(
                 kSafe.get<String?>(Keys.Session.USER_EMAIL, null)
             ) { "User Email cannot be null" }

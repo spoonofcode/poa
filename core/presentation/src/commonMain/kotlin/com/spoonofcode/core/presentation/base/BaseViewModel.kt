@@ -140,10 +140,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     internal fun onStartAction(manualStart: Boolean = false) {
         // Check isUiSubscribed to avoid double start action
         if (autoReloadData && manualStart && !isUiSubscribed) return
+        poaLogger.debug("${this::class.simpleName}: onStartAction(manualStart=$manualStart)")
         startAction?.invoke()
     }
 
     protected fun setContentState(data: VS) {
+        poaLogger.debug("${this::class.simpleName}: setContentState: $data")
         _viewContentState.value = data
     }
 
@@ -151,11 +153,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     protected fun updateContentState(transformation: VS.() -> VS) {
         if (viewContentState.value != null) {
             _viewContentState.update { currentViewState ->
-                currentViewState?.transformation() ?: currentViewState
+                val newState = currentViewState?.transformation()
+                poaLogger.debug("${this::class.simpleName}: updateContentState: $newState")
+                newState ?: currentViewState
             }
         } else {
-            // This should never have happened
-//            Log.e(javaClass.name, "Action skipped: content state is null and can not be updated")
+            poaLogger.warn("${this::class.simpleName}: updateContentState skipped: content state is null")
         }
     }
 
@@ -167,13 +170,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
             action(state)
         } else {
             // This should never have happened
-//            Log.e(javaClass.name, "Action skipped: content state is null and can not be used")
-        }
-    }
-
-    protected open fun navigateToStartingRoute() {
-        viewModelScope.launch {
-            viewModelNavigator.popToRoot()
+            poaLogger.warn("${this::class.simpleName}: Action skipped: content state is null and can not be used")
         }
     }
 
@@ -209,6 +206,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     protected fun emitEvent(event: VE) {
+        poaLogger.debug("${this::class.simpleName}: emitEvent: $event")
         viewModelScope.launch {
             _viewEvent.emit(event)
         }

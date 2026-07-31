@@ -1,6 +1,5 @@
 package com.spoonofcode.core.session.data.repository
 
-import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.session.data.local.LocalSessionDataSource
 import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import com.spoonofcode.core.session.domain.repository.SessionRepository
@@ -8,7 +7,6 @@ import org.koin.core.component.KoinComponent
 
 class SessionRepositoryImpl(
     private val localSessionDataSource: LocalSessionDataSource,
-    private val poaLogger: POALogger,
 ) : SessionRepository, KoinComponent {
     private val logoutHandlers: List<LogoutHandler> by lazy { getKoin().getAll<LogoutHandler>() }
 
@@ -20,7 +18,6 @@ class SessionRepositoryImpl(
         userId: String,
         userEmail: String,
     ) {
-        poaLogger.info("SessionRepository: Initializing session for user: $userEmail")
         clearSession()
         localSessionDataSource.initSession(
             accessToken = accessToken,
@@ -34,7 +31,6 @@ class SessionRepositoryImpl(
         accessToken: String,
         refreshToken: String
     ) {
-        poaLogger.debug("SessionRepository: Updating session tokens")
         localSessionDataSource.updateSessionTokens(
             accessToken = accessToken,
             refreshToken = refreshToken,
@@ -42,13 +38,10 @@ class SessionRepositoryImpl(
     }
 
     override suspend fun clearSession() {
-        poaLogger.info("SessionRepository: Clearing session")
         localSessionDataSource.clearSession()
         logoutHandlers.forEach {
             runCatching {
                 it.onLogout()
-            }.onFailure { error ->
-                poaLogger.error("SessionRepository: Error in logout handler", error)
             }
         }
     }
