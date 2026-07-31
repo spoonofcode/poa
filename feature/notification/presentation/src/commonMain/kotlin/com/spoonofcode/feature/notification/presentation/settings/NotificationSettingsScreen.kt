@@ -24,6 +24,7 @@ import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Switchs
 import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_description
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_title
@@ -198,7 +199,15 @@ private fun Dialogs(
 @Composable
 private fun NotificationSettingsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(NotificationSettingsViewState()),
+        viewState = ViewState.Content(
+            NotificationSettingsViewState(
+                notificationSettings = NotificationSettings(
+                    isNotificationsPersonalizedEnabled = true,
+                    isNotificationsFromPartnersEnabled = true,
+                    isNotificationsMyProductSeriesEnabled = true,
+                )
+            ),
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

@@ -97,7 +97,7 @@ private fun ColumnScope.Content(
 @Composable
 private fun PartnerPanelScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(PartnerPanelViewState()),
+        viewState = ViewState.Content(PartnerPanelViewState),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

@@ -11,6 +11,7 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.description
 import com.spoonofcode.feature.partner.presentation.facebook
@@ -104,7 +105,15 @@ private fun ColumnScope.Content(
 @Composable
 private fun PartnerEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(PartnerEditViewState()),
+        viewState = ViewState.Content(
+            PartnerEditViewState(
+                partner = Partner(
+                    id = "id",
+                    name = "name",
+                    partnerCategory = "partner category",
+                )
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

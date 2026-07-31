@@ -77,7 +77,14 @@ private fun ColumnScope.Content(
 @Composable
 private fun TACScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(TACViewState()),
+        viewState = ViewState.Content(
+            TACViewState(
+                isPrivacyPolicyAccepted = false,
+                isTermsAndConditionsAccepted = false,
+                privacyPolicyLink = "",
+                marketingLink = ""
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

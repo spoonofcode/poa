@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 internal class PartnerPanelViewModel :
     BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction, Nothing>(
-        initialViewState = ViewState.Content(PartnerPanelViewState()),
+        initialViewState = ViewState.Content(PartnerPanelViewState),
     ) {
 
     override fun onAction(action: PartnerPanelViewAction) {

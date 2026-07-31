@@ -15,6 +15,7 @@ import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.edit_profile
 import com.spoonofcode.feature.profile.presentation.name
@@ -55,7 +56,7 @@ private fun ColumnScope.Content(
     }
 
     TextFields.Outlined(
-        value = viewState.profile!!.email,
+        value = viewState.profile.email,
         onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
         label = stringResource(resource = Res.string.name),
     )
@@ -73,7 +74,15 @@ private fun ColumnScope.Content(
 @Composable
 private fun ProfileEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(ProfileEditViewState()),
+        viewState = ViewState.Content(
+            ProfileEditViewState(
+                profile = Profile(
+                    id = "1",
+                    email = "exmaple.mail.1@gmail.com",
+                    roles = listOf("user", "partner"),
+                ),
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

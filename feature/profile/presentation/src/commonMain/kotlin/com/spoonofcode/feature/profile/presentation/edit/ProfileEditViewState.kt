@@ -6,5 +6,5 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 
 @Immutable
 internal data class ProfileEditViewState(
-    val profile: Profile? = null,
+    val profile: Profile,
 ) : BaseViewState()

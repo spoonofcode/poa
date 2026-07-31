@@ -9,11 +9,11 @@ import kotlin.time.Clock
 
 @Immutable
 internal data class PartnerNotificationDetailsViewState(
-    val notification: PartnerNotification? = null,
-    val selectedNames: Set<String> = emptySet(),
-    val notificationType: PartnerNotificationType = PartnerNotificationType.global,
+    val notification: PartnerNotification,
+    val selectedNames: Set<String>,
+    val notificationType: PartnerNotificationType,
     val isDeleteNotificationDialogVisible: Boolean = false,
 ) : BaseViewState() {
     val isNotificationEditable: Boolean
-        get() = (notification?.deliveryDateTime?.toMillis() ?: 0) > Clock.System.now().toEpochMilliseconds()
+        get() = notification.deliveryDateTime.toMillis() > Clock.System.now().toEpochMilliseconds()
 }

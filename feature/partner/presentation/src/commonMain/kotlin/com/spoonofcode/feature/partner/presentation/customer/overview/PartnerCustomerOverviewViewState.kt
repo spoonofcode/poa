@@ -6,6 +6,6 @@ import com.spoonofcode.feature.partner.domain.model.Customer
 
 @Immutable
 internal data class PartnerCustomerOverviewViewState(
-    val customers: List<Customer> = emptyList(),
+    val customers: List<Customer>,
     val checkedUserIds: Set<String> = emptySet(),
 ) : BaseViewState()

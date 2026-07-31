@@ -6,7 +6,7 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 
 @Immutable
 internal data class ProfileDetailsViewState(
-    val profile: Profile? = null,
-    val partnerPanelVisible: Boolean = false,
+    val profile: Profile,
+    val partnerPanelVisible: Boolean,
     val isLogoutDialogVisible: Boolean = false,
 ) : BaseViewState()
