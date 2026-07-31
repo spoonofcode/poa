@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.data.PlatformType
 import com.spoonofcode.core.nfc.NfcReader
 import com.spoonofcode.core.nfc.rememberNfcReader
@@ -36,8 +36,6 @@ import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.taggy_go_logo
-import com.spoonofcode.feature.scan.nfc.presentation.product_not_found
-import com.spoonofcode.feature.scan.nfc.presentation.scan_again
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -53,10 +51,6 @@ private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
 internal fun ScanScreen(
     viewModel: ScanViewModel,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.onAction(ScanViewAction.InitView)
-    }
-
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),

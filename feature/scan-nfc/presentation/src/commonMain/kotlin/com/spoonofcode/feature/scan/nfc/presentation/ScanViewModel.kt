@@ -14,10 +14,12 @@ internal class ScanViewModel(
     private val getNFCTagUseCase: GetNFCTagUseCase,
     private val platform: Platform,
 ) : BaseViewModel<ScanViewState, ScanViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ScanViewAction) {
         when (action) {
-            is ScanViewAction.InitView -> initView()
             is ScanViewAction.CheckProduct -> checkProduct(action.nfcTag)
             ScanViewAction.ScanAgain -> scanAgain()
         }

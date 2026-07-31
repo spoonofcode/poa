@@ -155,7 +155,13 @@ private fun Dialogs(
 @Composable
 private fun PartnerNotificationEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(PartnerNotificationEditViewState()),
+        viewState = ViewState.Content(
+            PartnerNotificationEditViewState(
+                notificationType = PartnerNotificationType.global,
+                selectedTopics = emptySet(),
+                selectedNames = emptySet(),
+            )
+        ),
         screenConfig = screenConfig(),
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
