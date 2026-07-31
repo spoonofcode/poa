@@ -9,9 +9,7 @@ import kotlinx.coroutines.launch
 
 internal class NotificationOverviewViewModel(
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction, Nothing>(
-    initialViewState = ViewState.Content(NotificationOverviewViewState()),
-) {
+) : BaseViewModel<NotificationOverviewViewState, NotificationOverviewViewAction, Nothing>() {
     override val startAction = {
         initView()
     }

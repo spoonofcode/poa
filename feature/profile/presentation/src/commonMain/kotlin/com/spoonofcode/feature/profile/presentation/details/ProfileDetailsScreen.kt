@@ -39,6 +39,7 @@ import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.cancel
 import com.spoonofcode.feature.profile.presentation.faq
@@ -244,7 +245,16 @@ private fun DividerItem() {
 @Composable
 private fun ProfileDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(ProfileDetailsViewState()),
+        viewState = ViewState.Content(
+            ProfileDetailsViewState(
+                profile = Profile(
+                    id = "1",
+                    email = "exmaple.mail.1@gmail.com",
+                    roles = listOf("user", "partner"),
+                ),
+                partnerPanelVisible = true,
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

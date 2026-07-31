@@ -1,15 +1,17 @@
 package com.spoonofcode.feature.tac.domain.usecase
 
-import com.spoonofcode.feature.tac.domain.model.TACSettings
 import com.spoonofcode.feature.tac.domain.repository.TACRepository
 
 class UpdateTACSettingsUseCase(
     private val tacRepository: TACRepository,
 ) {
-    suspend operator fun invoke(tacSettings: TACSettings): Result<Unit> {
+    suspend operator fun invoke(
+        isPrivacyPolicyAccepted: Boolean,
+        isTermsAndConditionsAccepted: Boolean,
+    ): Result<Unit> {
         tacRepository.setTACSettings(
-            isPrivacyPolicyAccepted = tacSettings.isPrivacyPolicyAccepted,
-            isTermsAndConditionsAccepted = tacSettings.isTermsAndConditionsAccepted,
+            isPrivacyPolicyAccepted = isPrivacyPolicyAccepted,
+            isTermsAndConditionsAccepted = isTermsAndConditionsAccepted,
         )
         return Result.success(Unit)
     }

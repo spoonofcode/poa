@@ -7,6 +7,6 @@ import com.spoonofcode.feature.product.domain.model.Product
 @Immutable
 internal data class ProductOverviewViewState(
     val searchText: String = "",
-    val initProducts: List<Product> = emptyList(),
-    val filteredProducts: List<Product> = emptyList(),
+    val initProducts: List<Product>,
+    val filteredProducts: List<Product>,
 ) : BaseViewState()

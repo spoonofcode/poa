@@ -19,11 +19,13 @@ import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
+import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.about_product
 import com.spoonofcode.feature.product.presentation.custom_link
 import com.spoonofcode.feature.product.presentation.edit_product
 import com.spoonofcode.feature.product.presentation.save_changes
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -102,7 +104,21 @@ private fun ColumnScope.Content(
 @Composable
 private fun ProductEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(ProductEditViewState()),
+        viewState = ViewState.Content(
+            ProductEditViewState(
+                product = Product(
+                    id = "1",
+                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                    name = "Product #1",
+                    description = "Przykładowy opis wydarzenia nr 1",
+                    seriesId = "1",
+                    seriesName = "Series 1",
+                    imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
+                    customLink = "https://beautysaute.pl/",
+                    partnerId = "1",
+                )
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

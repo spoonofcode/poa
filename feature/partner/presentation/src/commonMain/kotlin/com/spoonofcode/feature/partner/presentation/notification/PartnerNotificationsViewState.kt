@@ -6,5 +6,5 @@ import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 
 @Immutable
 internal data class PartnerNotificationsViewState(
-    val partnerNotifications: List<PartnerNotification> = emptyList(),
+    val partnerNotifications: List<PartnerNotification>,
 ) : BaseViewState()

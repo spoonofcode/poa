@@ -42,7 +42,7 @@ internal class ProductEditViewModel(
 
     private fun changeCustomLink(link: String) {
         val currentProduct = currentContentState().product
-        updateContentState { copy(product = currentProduct?.copy(customLink = link)) }
+        updateContentState { copy(product = currentProduct.copy(customLink = link)) }
     }
 
     private fun saveChanges() {

@@ -25,6 +25,7 @@ import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.SocialIcons
 import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.about_partner
 import com.spoonofcode.feature.partner.presentation.partner
@@ -123,7 +124,23 @@ private fun ColumnScope.Content(
 @Composable
 private fun PartnerDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(PartnerDetailsViewState()),
+        viewState = ViewState.Content(
+            PartnerDetailsViewState(
+                partner = Partner(
+                    id = "550e8400-e29b-41d4-a716-446655440001",
+                    name = "Beauty Saute",
+                    partnerCategory = "Regular",
+                    email = "beauty.saute@gmail.com",
+                    description = "Beauty Sautè to więcej niż odzież – to filozofia.",
+                    imageLink = "https://beautysaute.pl/environment/cache/images/0_0_storefrontImages_11a16d30-d85a-422f-917d-195c30274147.png",
+                    websiteLink = "https://beautysaute.pl/",
+                    instagramLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                    facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
+                    youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                    xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                )
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(
