@@ -41,7 +41,9 @@
 	<string>The app needs access to NFC to read tags</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Notifications permission is required to show notifications</string>
-	<key>UIApplicationSceneManifest</key>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+    <key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>

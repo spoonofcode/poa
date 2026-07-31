@@ -19,122 +19,136 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
-import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_products
 import org.jetbrains.compose.resources.stringResource
 
-internal class ProductOverviewScreen(
-    override val verticalScrollEnable: Boolean = false,
-    override val backNavigationEnable: Boolean = false,
-    val viewModel: ProductOverviewViewModel,
-    ) : BaseScreen<ProductOverviewViewModel, ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.my_products),
+    verticalScrollEnable = false,
+    backNavigationEnable = false,
+)
 
-    @Composable
-    override fun provideTopAppBarTitle() = stringResource(Res.string.my_products)
+@Composable
+internal fun ProductOverviewScreen(
+    viewModel: ProductOverviewViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 
-    @Composable
-    override fun provideViewModel() = viewModel
+@Composable
+private fun ColumnScope.Content(
+    viewState: ProductOverviewViewState,
+    onAction: (ProductOverviewViewAction) -> Unit,
+) {
+    TextFields.OutlinedSearch(
+        value = viewState.searchText,
+        onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
+    )
 
-    @Composable
-    override fun provideContent(
-        viewState: ProductOverviewViewState,
-        onAction: (ProductOverviewViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            TextFields.OutlinedSearch(
-                value = viewState.searchText,
-                onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
-            )
+    Spacers.VerticalBetweenFields()
 
-            Spacers.VerticalBetweenFields()
+    ProductGrid(
+        products = viewState.filteredProducts,
+        onProductClick = { onAction(ProductOverviewViewAction.SelectProduct(it.id)) }
+    )
+}
 
-            ProductGrid(
-                products = viewState.filteredProducts,
-                onProductClick = { onAction(ProductOverviewViewAction.SelectProduct(it.id)) }
+@Composable
+private fun ProductGrid(
+    products: List<Product>,
+    onProductClick: (Product) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(products, key = { it.id }) { product ->
+            ProductCard(
+                product = product,
+                onClick = { onProductClick(product) },
             )
         }
     }
+}
 
-    @Composable
-    fun ProductGrid(
-        products: List<Product>,
-        onProductClick: (Product) -> Unit,
-        modifier: Modifier = Modifier,
+@Composable
+private fun ProductCard(
+    product: Product,
+    onClick: () -> Unit,
+) {
+    Cards.ElevatedCard(
+        onClick = onClick,
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentAlignment = Alignment.Center
         ) {
-            items(products, key = { it.id }) { product ->
-                ProductCard(
-                    product = product,
-                    onClick = { onProductClick(product) },
+            product.imageLink?.let { Images.ImageLink(imageLink = it) }
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            product.seriesName?.let {
+                Texts.LSB(
+                    text = it.uppercase(),
+                    maxLines = 1,
                 )
             }
-        }
-    }
-
-    @Composable
-    fun ProductCard(
-        product: Product,
-        onClick: () -> Unit,
-    ) {
-        Cards.ElevatedCard(
-            onClick = onClick,
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentAlignment = Alignment.Center
-            ) {
-                product.imageLink?.let { Images.ImageLink(imageLink = it) }
-            }
-
-            Column(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                product.seriesName?.let {
-                    Texts.LSB(
-                        text = it.uppercase(),
-                        maxLines = 1,
-                    )
-                }
-                product.name?.let {
-                    Texts.TMB(
-                        text = it,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 2,
-                        minLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
+            product.name?.let {
+                Texts.TMB(
+                    text = it,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 2,
+                    minLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
         }
     }
 }
 
 // region previews
-//@Preview
-//@Composable
-//fun ProductOverviewScreenContentPreview() {
-//    ProductOverviewScreen()
-//        .PreviewContent(
-//            viewState = ProductOverviewViewState(),
-//        )
-//}
+@Preview
+@Composable
+private fun ProductOverviewScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(ProductOverviewViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

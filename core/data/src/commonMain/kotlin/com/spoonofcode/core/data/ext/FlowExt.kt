@@ -1,6 +1,6 @@
 package com.spoonofcode.core.data.ext
 
-import android.util.Log
+import com.spoonofcode.core.data.logging.KermitLogger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,13 +62,12 @@ fun <T> Flow<T>.stateInWhileSubscribed(
 ): StateFlow<T> = this
     .onStart { onStart() }
     .onEach { state ->
-        Log.d(javaClass.name, "New flow state: $state")
+        KermitLogger.debug("New flow state: $state")
         onStateChanged(state)
     }
     .onCompletion { cause ->
         if (cause != null && cause !is CancellationException) {
-            Log.e(
-                javaClass.name,
+            KermitLogger.error(
                 "Flow completed with an unexpected error: ${cause.message}",
                 cause
             )

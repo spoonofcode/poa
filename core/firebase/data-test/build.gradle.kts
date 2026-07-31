@@ -13,6 +13,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(projects.core.firebase.data)
+                implementation(projects.core.firebase.domain)
             }
         }
 

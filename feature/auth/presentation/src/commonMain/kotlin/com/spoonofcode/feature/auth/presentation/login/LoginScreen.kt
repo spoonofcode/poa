@@ -15,7 +15,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Buttons.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Dividers
@@ -24,7 +27,6 @@ import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
-import org.koin.compose.viewmodel.koinViewModel
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.email
 import com.spoonofcode.feature.auth.presentation.ic_google
@@ -39,49 +41,58 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
-internal class LoginScreen(
-    override val backNavigationEnable: Boolean = false,
-    val viewModel: LoginViewModel,
-) : BaseScreen<LoginViewModel, LoginViewState, LoginViewAction, Nothing>() {
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    backNavigationEnable = false,
+)
 
-    @Composable
-    override fun provideViewModel() = viewModel
-
-    @Composable
-    override fun provideContent(
-        viewState: LoginViewState,
-        onAction: (LoginViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(
-                    top = Paddings.screenPadding,
-                ),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
-                Spacers.VerticalBetweenFields()
-                Texts.HL(stringResource(resource = Res.string.let_s_get_started))
-            }
-
-            TextFields.Outlined(
-                value = viewState.email,
-                onValueChange = { onAction(LoginViewAction.ChangeEmail(email = it)) },
-                label = stringResource(resource = Res.string.email),
-            )
-
-            Buttons.PrimaryButton(
-                text = stringResource(resource = Res.string.sign_in),
-                enabled = viewState.isSignInButtonEnable,
-                onClick = { onAction(LoginViewAction.SignInWithCode) }
-            )
-
-            GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
-                onAction(LoginViewAction.SignInWithGoogle(googleAccount = googleAccount))
-            })
-        }
+@Composable
+internal fun LoginScreen(
+    viewModel: LoginViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
     }
+}
+
+@Composable
+private fun ColumnScope.Content(
+    viewState: LoginViewState,
+    onAction: (LoginViewAction) -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(
+            top = Paddings.screenPadding,
+        ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
+        Spacers.VerticalBetweenFields()
+        Texts.HL(stringResource(resource = Res.string.let_s_get_started))
+    }
+
+    TextFields.Outlined(
+        value = viewState.email,
+        onValueChange = { onAction(LoginViewAction.ChangeEmail(email = it)) },
+        label = stringResource(resource = Res.string.email),
+    )
+
+    Buttons.PrimaryButton(
+        text = stringResource(resource = Res.string.sign_in),
+        enabled = viewState.isSignInButtonEnable,
+        onClick = { onAction(LoginViewAction.SignInWithCode) }
+    )
+
+    GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
+        onAction(LoginViewAction.SignInWithGoogle(googleAccount = googleAccount))
+    })
 }
 
 @Composable
@@ -118,11 +129,17 @@ private fun GoogleSignInButton(
 }
 
 // region previews
-//@Preview
-//@Composable
-//private fun LoginScreenContentPreview() {
-//    LoginScreen().PreviewContent(
-//        LoginViewState()
-//    )
-//}
+@Preview
+@Composable
+private fun LoginScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(LoginViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 // endregion

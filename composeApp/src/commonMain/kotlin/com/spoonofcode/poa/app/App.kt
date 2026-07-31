@@ -18,19 +18,21 @@ fun App(
 ) {
     val state by viewModel.state.collectAsState()
 
-    AppTheme {
-        when (val currentState = state) {
-            is AppViewState.Loading -> {
-                LoadingView()
-            }
+    PlatformBackHandlerSupport {
+        AppTheme {
+            when (val currentState = state) {
+                is AppViewState.Loading -> {
+                    LoadingView()
+                }
 
-            is AppViewState.LoggedIn, is AppViewState.LoggedOut -> {
-                MainAppScreen(
-                    initialRoutes = getStartRoutes(
-                        sessionInitialized = currentState is AppViewState.LoggedIn,
-                        notificationId = notificationId
+                is AppViewState.LoggedIn, is AppViewState.LoggedOut -> {
+                    MainAppScreen(
+                        initialRoutes = getStartRoutes(
+                            sessionInitialized = currentState is AppViewState.LoggedIn,
+                            notificationId = notificationId
+                        )
                     )
-                )
+                }
             }
         }
     }
