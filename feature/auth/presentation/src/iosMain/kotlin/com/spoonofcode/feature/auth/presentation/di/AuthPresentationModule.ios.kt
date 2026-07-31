@@ -9,5 +9,5 @@ import org.koin.dsl.module
 
 actual val platformAuthPresentationModule = module {
     factoryOf(::GoogleAuthProvider) bind GoogleAuthProvider::class
-    factory<LogoutHandler> { GoogleLogoutHandler() }
+    factoryOf(::GoogleLogoutHandler) bind LogoutHandler::class
 }

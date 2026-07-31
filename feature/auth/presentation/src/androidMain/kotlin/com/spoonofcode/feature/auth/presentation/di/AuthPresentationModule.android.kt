@@ -13,5 +13,5 @@ import org.koin.dsl.module
 actual val platformAuthPresentationModule = module {
     factory { create(androidContext()) } bind CredentialManager::class
     factoryOf(::GoogleAuthProvider) bind GoogleAuthProvider::class
-    factory<LogoutHandler> { GoogleLogoutHandler(get()) }
+    factoryOf(::GoogleLogoutHandler) bind LogoutHandler::class
 }
