@@ -7,9 +7,10 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 actual val platformRecaptchaModule = module {
+    // For CMP we need to use WEB Recaptcha
     single {
         IosRecaptchaPlatform(
-            siteKey = BuildKonfig.RECAPTCHA_SITE_KEY_IOS,
+            siteKey = BuildKonfig.RECAPTCHA_SITE_KEY_WEB,
         )
     } bind RecaptchaPlatform::class
 }

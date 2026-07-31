@@ -43,7 +43,7 @@ navigation3-jetbrains = "1.2.0-alpha02"
 # --- Google / Firebase ---
 firebaseBom = "34.15.0"
 googleId = "1.2.0"
-recaptcha = "18.8.0"
+recaptcha = "18.9.2"
 
 # --- Networking / DI / Utils ---
 ktor = "3.4.3"
