@@ -1,5 +1,6 @@
 package com.spoonofcode.core.session.data.repository
 
+import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.session.data.local.LocalSessionDataSource
 import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import com.spoonofcode.core.session.domain.repository.SessionRepository
@@ -7,8 +8,8 @@ import org.koin.core.component.KoinComponent
 
 class SessionRepositoryImpl(
     private val localSessionDataSource: LocalSessionDataSource,
+    private val poaLogger: POALogger,
 ) : SessionRepository, KoinComponent {
-
     private val logoutHandlers: List<LogoutHandler> by lazy { getKoin().getAll<LogoutHandler>() }
 
     override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
@@ -39,8 +40,20 @@ class SessionRepositoryImpl(
     }
 
     override suspend fun clearSession() {
+        poaLogger.info("SessionRepository: Starting session clear")
         localSessionDataSource.clearSession()
-        logoutHandlers.forEach { runCatching { it.onLogout() } }
+        logoutHandlers.forEach { handler ->
+            val handlerName = handler::class.simpleName
+            poaLogger.debug("SessionRepository: Triggering logout handler: $handlerName")
+            runCatching {
+                handler.onLogout()
+            }.onSuccess {
+                poaLogger.debug("SessionRepository: Logout handler $handlerName finished successfully")
+            }.onFailure { e ->
+                poaLogger.error("SessionRepository: Logout handler $handlerName failed", e)
+            }
+        }
+        poaLogger.info("SessionRepository: Session cleared")
     }
 
     override suspend fun getSessionAccessToken(): String? =
@@ -51,5 +64,6 @@ class SessionRepositoryImpl(
 
     override suspend fun getSessionUserId(): String = localSessionDataSource.getSessionUserId()
 
-    override suspend fun getSessionUserEmail(): String = localSessionDataSource.getSessionUserEmail()
+    override suspend fun getSessionUserEmail(): String =
+        localSessionDataSource.getSessionUserEmail()
 }
