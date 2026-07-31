@@ -27,6 +27,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
 
+                implementation(projects.core.data)
                 implementation(projects.core.firebase.domain)
             }
         }

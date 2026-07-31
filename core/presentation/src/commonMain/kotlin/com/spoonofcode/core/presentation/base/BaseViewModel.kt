@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.ext.DEFAULT_STOP_TIMEOUT_MILLIS
 import com.spoonofcode.core.data.ext.stateInWhileSubscribed
+import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
@@ -26,12 +26,12 @@ import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
 /**
- * Base ViewModel implementation for Unidirectional Data Flow.
- *
- * @param VS The type representing the View State.
- * @param VA The type representing User Actions.
- * @param VE The type representing One-off View Events.
- */
+ * Base ViewModel implementation for Unidirectional Data Flow.
+ *
+ * @param VS The type representing the View State.
+ * @param VA The type representing User Actions.
+ * @param VE The type representing One-off View Events.
+ */
 abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent>(
     protected val initialViewState: ViewState<VS> = ViewState.Initial,
     protected val viewStateStopTimeoutMillis: Long = DEFAULT_STOP_TIMEOUT_MILLIS,
@@ -43,6 +43,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     protected val networkManager: NetworkManager by getKoin().inject()
+    protected val poaLogger: POALogger by getKoin().inject()
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
@@ -177,14 +178,17 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     protected fun showLoadingView() {
+        poaLogger.debug("${this::class.simpleName}: Showing Loading View")
         _viewStatus.value = ViewStatus.LOADING
     }
 
     protected fun showErrorView() {
+        poaLogger.debug("${this::class.simpleName}: Showing Error View")
         _viewStatus.value = ViewStatus.ERROR
     }
 
     protected fun showContentView() {
+        poaLogger.debug("${this::class.simpleName}: Showing Content View")
         _viewStatus.value = ViewStatus.CONTENT
     }
 
@@ -195,10 +199,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     protected fun showErrorSnackbar(message: String) {
+        poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
         showSnackbar(SnackbarEvent.Error(message = message))
     }
 
     protected fun showSuccessSnackbar(message: String) {
+        poaLogger.debug("${this::class.simpleName}: Success Snackbar: $message")
         showSnackbar(SnackbarEvent.Success(message = message))
     }
 

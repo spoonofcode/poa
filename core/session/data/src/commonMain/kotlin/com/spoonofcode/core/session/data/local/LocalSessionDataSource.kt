@@ -1,12 +1,14 @@
 package com.spoonofcode.core.session.data.local
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.data.logging.POALogger
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
 class LocalSessionDataSource(
     private val kSafe: KSafe,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    private val poaLogger: POALogger,
 ) {
     suspend fun initSession(
         accessToken: String,
@@ -15,6 +17,7 @@ class LocalSessionDataSource(
         userEmail: String,
     ) {
         withContext(dispatcherProvider.io()) {
+            poaLogger.info("LocalSessionDataSource: Initializing local session for user: $userEmail")
             kSafe.clearAll()
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
@@ -28,6 +31,7 @@ class LocalSessionDataSource(
         refreshToken: String
     ) {
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Updating session tokens in local storage")
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
         }
@@ -35,6 +39,7 @@ class LocalSessionDataSource(
 
     suspend fun clearSession() {
         withContext(dispatcherProvider.io()) {
+            poaLogger.info("LocalSessionDataSource: Clearing local session storage")
             kSafe.clearAll()
         }
     }

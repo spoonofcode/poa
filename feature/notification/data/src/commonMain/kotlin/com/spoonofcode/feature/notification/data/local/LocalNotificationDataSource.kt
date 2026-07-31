@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.notification.data.local
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.data.logging.POALogger
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import eu.anifantakis.lib.ksafe.KSafe
 import eu.anifantakis.lib.ksafe.KSafeWriteMode
@@ -8,12 +9,14 @@ import kotlinx.coroutines.withContext
 
 class LocalNotificationDataSource(
     private val kSafe: KSafe,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    private val poaLogger: POALogger,
 ) {
     suspend fun markAsRead(notificationId: String) {
         val currentRead = kSafe.get<Set<String>>(Keys.READ_IDS, emptySet())
 
         if (!currentRead.contains(notificationId)) {
+            poaLogger.debug("LocalNotificationDataSource: Marking notification $notificationId as read")
             val updatedRead = currentRead + notificationId
 
             kSafe.put(
@@ -31,6 +34,7 @@ class LocalNotificationDataSource(
 
     suspend fun getNotificationSettings(): NotificationSettings {
         return withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalNotificationDataSource: Fetching notification settings from local storage")
             NotificationSettings(
                 isNotificationsPersonalizedEnabled = kSafe.get(
                     key = Keys.Settings.PERSONALIZED_ENABLED,
@@ -54,6 +58,7 @@ class LocalNotificationDataSource(
         notificationsMyProductSeriesEnabled: Boolean
     ) {
         withContext(dispatcherProvider.io()) {
+            poaLogger.info("LocalNotificationDataSource: Saving notification settings to local storage")
             kSafe.put(
                 key = Keys.Settings.PERSONALIZED_ENABLED,
                 value = notificationsPersonalizedEnabled,
