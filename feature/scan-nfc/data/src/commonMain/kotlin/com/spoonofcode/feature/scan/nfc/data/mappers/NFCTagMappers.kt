@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.scan.nfc.data.mapper
+package com.spoonofcode.feature.scan.nfc.data.mappers
 
 import com.spoonofcode.feature.scan.nfc.data.model.NFCTagResponse
 import com.spoonofcode.feature.scan.nfc.domain.model.NFCTag
