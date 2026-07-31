@@ -44,6 +44,7 @@ import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
 import com.spoonofcode.feature.partner.presentation.tab_already_sent
 import com.spoonofcode.feature.partner.presentation.tab_pending
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
@@ -195,7 +196,24 @@ private fun NotificationItem(
 @Composable
 private fun PartnerNotificationsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(PartnerNotificationsViewState()),
+        viewState = ViewState.Content(
+            PartnerNotificationsViewState(
+                partnerNotifications = listOf(
+                    PartnerNotification(
+                        id = "1",
+                        title = "Title",
+                        text = "Text",
+                        deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        state = "pending",
+                        topics = listOf("global"),
+                        ownerId = "owner"
+                    )
+                )
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

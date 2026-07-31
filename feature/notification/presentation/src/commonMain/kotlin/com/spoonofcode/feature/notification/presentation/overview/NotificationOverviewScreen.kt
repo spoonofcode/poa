@@ -43,6 +43,7 @@ import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications
 import com.spoonofcode.feature.notification.presentation.tab_already_read
 import com.spoonofcode.feature.notification.presentation.tab_new
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -189,7 +190,24 @@ private fun NotificationItem(
 @Composable
 private fun NotificationOverviewScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(NotificationOverviewViewState()),
+        viewState = ViewState.Content(
+            NotificationOverviewViewState(
+                notifications = listOf(
+                    Notification(
+                        id = "1",
+                        title = "Notification title 1",
+                        text = "Notification text 1",
+                        link = "Notification link 1",
+                        deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        state = "pending",
+                        topics = listOf("global"),
+                    )
+                )
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

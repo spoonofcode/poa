@@ -25,6 +25,8 @@ class LocalTACDataSource(
                     key = Keys.Settings.TERMS_AND_CONDITIONS_ACCEPTED,
                     defaultValue = false
                 ),
+                privacyPolicyLink = PRIVACY_POLICY_LINK,
+                marketingLink = MARKETING_LINK,
             )
         }
     }
@@ -57,5 +59,10 @@ class LocalTACDataSource(
             const val TERMS_AND_CONDITIONS_ACCEPTED =
                 "$SETTINGS_PREFIX.terms_and_conditions_accepted"
         }
+    }
+
+    companion object {
+        private const val PRIVACY_POLICY_LINK = "https://proof-of-wear.com/privacy-mobile.html"
+        private const val MARKETING_LINK = "https://proof-of-wear.com/marketing-mobile.html"
     }
 }

@@ -34,6 +34,7 @@ import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
+import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.model.DailyReward
 import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 import org.jetbrains.compose.resources.stringResource
@@ -79,7 +80,7 @@ private fun ColumnScope.Content(
 
     Spacers.VerticalBetweenFields()
 
-    viewState.dailyCheckInStatus?.let { status ->
+    viewState.dailyCheckInStatus.let { status ->
         DailyCheckInSection(
             streak = status.streak,
             totalPoints = viewState.totalPoints,
@@ -207,7 +208,19 @@ private fun DailyRewardItem(reward: DailyReward) {
 @Composable
 private fun HomeScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(HomeViewState()),
+        viewState = ViewState.Content(
+            HomeViewState(
+                partnerImageLinks = listOf(),
+                dailyCheckInStatus = DailyCheckInStatus(
+                    streak = 1,
+                    nextCheckInTimeMillis = 1762124400000,
+                    dailyRewards = listOf(),
+                    isAvailableNow = true,
+                ),
+                totalPoints = 0,
+                unreadNotificationsCount = 0,
+            )
+        ),
         screenConfig = screenConfig(),
         topBarActions = { _, _ ->
             listOf(

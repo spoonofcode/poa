@@ -122,7 +122,17 @@ private fun CustomerItem(
 @Composable
 private fun PartnerCustomerOverviewScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(PartnerCustomerOverviewViewState()),
+        viewState = ViewState.Content(
+            PartnerCustomerOverviewViewState(
+                customers = listOf(
+                    Customer(
+                        id = "1",
+                        email = "william.henry.harrison@example-pet-store.com",
+                        name = "Test",
+                    ),
+                ),
+            )
+        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

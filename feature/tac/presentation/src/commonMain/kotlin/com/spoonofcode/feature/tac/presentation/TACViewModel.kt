@@ -2,7 +2,6 @@ package com.spoonofcode.feature.tac.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.feature.tac.domain.model.TACSettings
 import com.spoonofcode.feature.tac.domain.usecase.GetTACSettingsUseCase
 import com.spoonofcode.feature.tac.domain.usecase.UpdateTACSettingsUseCase
 import kotlinx.coroutines.launch
@@ -32,6 +31,8 @@ internal class TACViewModel(
                         TACViewState(
                             isPrivacyPolicyAccepted = tacSettings.isPrivacyPolicyAccepted,
                             isTermsAndConditionsAccepted = tacSettings.isTermsAndConditionsAccepted,
+                            privacyPolicyLink = tacSettings.privacyPolicyLink,
+                            marketingLink = tacSettings.marketingLink,
                         )
                     )
                     showContentView()
@@ -61,10 +62,8 @@ internal class TACViewModel(
         viewModelScope.launch {
             showLoadingView()
             updateTACSettingsUseCase(
-                tacSettings = TACSettings(
-                    isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
-                    isTermsAndConditionsAccepted = currentContentState().isTermsAndConditionsAccepted,
-                )
+                isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
+                isTermsAndConditionsAccepted = currentContentState().isTermsAndConditionsAccepted,
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {

@@ -16,9 +16,7 @@ internal class PartnerOverviewViewModel(
     private val getPartnersFilteredByPartnerCategoryUseCase: GetPartnersFilteredByPartnerCategoryUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
     private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
-) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>(
-    initialViewState = ViewState.Content(PartnerOverviewViewState()),
-) {
+) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>() {
     override val startAction = {
         initView()
     }
@@ -42,13 +40,13 @@ internal class PartnerOverviewViewModel(
                 val categories = categoriesDeferred.await().getOrThrow()
                 partners to categories
             }.onSuccess { (partners, categories) ->
-                updateContentState {
-                    copy(
+                setContentState(
+                    PartnerOverviewViewState(
                         initPartners = partners,
                         filteredPartners = partners,
                         partnerCategories = categories,
                     )
-                }
+                )
                 showContentView()
             }.onFailure {
                 showErrorView()

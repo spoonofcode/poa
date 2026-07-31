@@ -7,9 +7,9 @@ import com.spoonofcode.feature.product.domain.model.ProductStatus
 
 @Immutable
 internal data class ProductDetailsViewState(
-    val product: Product? = null,
-    val productStatus: ProductStatus = ProductStatus.UNASSIGNED,
+    val product: Product,
+    val productStatus: ProductStatus,
     val isDeleteProductDialogVisible: Boolean = false,
 ) : BaseViewState() {
-    val hasOwnerUser: Boolean = product?.ownerEmail != null
+    val hasOwnerUser: Boolean = product.ownerEmail != null
 }

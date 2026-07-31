@@ -2,7 +2,6 @@ package com.spoonofcode.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
@@ -11,9 +10,7 @@ import kotlinx.coroutines.launch
 internal class ProductOverviewViewModel(
     private val getUserProductsUseCase: GetUserProductsUseCase,
     private val getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase,
-) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction, Nothing>(
-    initialViewState = ViewState.Content(ProductOverviewViewState()),
-) {
+) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
     override val startAction = {
         initView()
     }
@@ -30,12 +27,12 @@ internal class ProductOverviewViewModel(
         viewModelScope.launch {
             getUserProductsUseCase()
                 .onSuccess {
-                    updateContentState {
-                        copy(
+                    setContentState(
+                        ProductOverviewViewState(
                             initProducts = it,
                             filteredProducts = it,
                         )
-                    }
+                    )
                     showContentView()
                 }
                 .onFailure {
