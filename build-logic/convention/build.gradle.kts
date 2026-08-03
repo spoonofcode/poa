@@ -34,14 +34,6 @@ tasks {
 
 gradlePlugin {
     plugins {
-        register("androidApplication") {
-            id = libs.plugins.convention.android.application.asProvider().get().pluginId
-            implementationClass = "AndroidApplicationConventionPlugin"
-        }
-        register("androidComposeApplication") {
-            id = libs.plugins.convention.android.application.compose.get().pluginId
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
-        }
         register("cmpApplication") {
             id = libs.plugins.convention.cmp.application.get().pluginId
             implementationClass = "CmpApplicationConventionPlugin"

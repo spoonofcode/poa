@@ -185,8 +185,6 @@ mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 # --- Your convention plugins (version provided by build-logic) ---
-convention-android-application = { id = "com.spoonofcode.convention.android.application", version = "unspecified" }
-convention-android-application-compose = { id = "com.spoonofcode.convention.android.application.compose", version = "unspecified" }
 convention-cmp-application = { id = "com.spoonofcode.convention.cmp.application", version = "unspecified" }
 convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", version = "unspecified" }
 convention-kmp-domain = { id = "com.spoonofcode.convention.kmp.domain", version = "unspecified" }
