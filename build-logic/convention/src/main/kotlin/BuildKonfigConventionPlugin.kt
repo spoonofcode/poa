@@ -5,15 +5,14 @@ import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.pathToPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 
 class BuildKonfigConventionPlugin: Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                applyPlugin("buildkonfig")
-            }
+            applyPlugin("buildkonfig")
 
             extensions.configure<BuildKonfigExtension> {
                 packageName = target.pathToPackageName()
