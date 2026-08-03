@@ -4,6 +4,7 @@ androidCompileSdk = "37"
 androidMinSdk = "30"
 androidTargetSdk = "37"
 
+# NOT UPGRADE - NAVIGATION PROBLEM ON IOS
 calfPermissions = "0.11.0"
 ksafe = "3.0.0"
 ksafeCompose = "3.0.0"
@@ -19,6 +20,7 @@ googleServices = "4.5.0"
 
 # --- Kotlin / KMP / Compose ---
 kotlin = "2.4.10"
+# NOT UPGRADE - NAVIGATION PROBLEM ON IOS
 composeMultiplatform = "1.10.3"
 
 # --- AndroidX ---
@@ -35,9 +37,14 @@ composeBom = "2026.06.01"
 material3 = "1.9.0"
 materialIconsCore = "1.7.3"
 composeIcons = "1.1.1"
+
+# NOT UPGRADE - NAVIGATION PROBLEM ON IOS
 landscapistCoil = "2.9.7"
 media3 = "1.10.1"
+
+# NOT UPGRADE - NAVIGATION PROBLEM ON IOS
 compottie = "2.1.0"
+
 navigation-compose = "2.9.2"
 navigation3 = "1.2.0-alpha07"
 navigation3-jetbrains = "1.2.0-alpha02"
