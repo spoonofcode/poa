@@ -2,7 +2,7 @@ import dev.mokkery.gradle.ApplicationRule
 
 plugins {
     alias(libs.plugins.convention.buildkonfig)
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.cmp.presentation)
     alias(libs.plugins.mokkery)
 }
 
@@ -11,12 +11,8 @@ kotlin {
         commonMain {
             dependencies {
                 api(libs.kotlin.test)
-                implementation(projects.core.data)
-                implementation(projects.core.presentation)
                 implementation(projects.core.session.domain)
-                implementation(projects.feature.appnavigation)
 
-                api(libs.koin.core)
                 api(libs.koin.test)
 
                 api(libs.kotlinx.coroutines.core)
@@ -24,25 +20,6 @@ kotlin {
 
                 // Wystawiamy Mokkery jako api, żeby testy w feature mogły robić verify/every bez dodawania deps.
                 api(libs.mokkery.runtime)
-
-                implementation(libs.connectivity.core)
-                implementation(libs.connectivity.device)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                api(libs.kotlin.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-            }
-        }
-
-        iosMain {
-            dependencies {
             }
         }
     }

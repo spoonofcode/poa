@@ -15,8 +15,7 @@ class KmpDomainConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
-                        implementation(libs.findLibrary("kotlin-stdlib").get())
-                        implementation(libs.findLibrary("koin-core").get())
+                        api(libs.findLibrary("koin-core").get())
                     }
                 }
             }

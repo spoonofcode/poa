@@ -15,12 +15,11 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
-                        implementation(project(":core:presentation"))
+                        api(project(":core:presentation"))
 
-                        implementation(libs.findLibrary("kotlin-stdlib").get())
-                        implementation(libs.findLibrary("koin-core").get())
-                        implementation(libs.findLibrary("koin-compose").get())
-                        implementation(libs.findLibrary("koin-compose-viewmodel").get())
+                        api(libs.findLibrary("koin-core").get())
+                        api(libs.findLibrary("koin-compose").get())
+                        api(libs.findLibrary("koin-compose-viewmodel").get())
                     }
                 }
             }

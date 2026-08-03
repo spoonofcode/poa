@@ -51,6 +51,7 @@ kotlin {
 
                 api(libs.koin.core)
                 api(libs.koin.compose)
+                api(libs.koin.compose.viewmodel)
 
                 // TODO #132 Optimize dependencies
                 api(projects.core.data)

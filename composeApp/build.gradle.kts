@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.kotlin.cocoapods)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
     alias(libs.plugins.convention.cmp.application)
@@ -67,25 +66,7 @@ kotlin {
             implementation(libs.androidx.splash.screen)
         }
         commonMain.dependencies {
-            implementation(libs.jetbrains.compose.components.resources)
-            implementation(libs.jetbrains.compose.ui.tooling.preview)
-            implementation(libs.jetbrains.compose.foundation)
-            implementation(libs.jetbrains.compose.runtime)
-            implementation(libs.jetbrains.compose.material3)
-            implementation(libs.jetbrains.compose.ui)
-
-            implementation(compose.materialIconsExtended)
-
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
             implementation(libs.touchlab.kermit)
-
-            implementation(libs.navigation.compose)
-            implementation(libs.navigation3.runtime)
-            implementation(libs.navigation3.ui)
-
-            implementation(libs.ksafe)
             implementation(libs.ksafe.compose)
 
             implementation(projects.core.data)
@@ -134,12 +115,6 @@ kotlin {
             implementation(projects.feature.tac.presentation)
 
             implementation(projects.feature.appnavigation)
-        }
-        commonTest.dependencies {
-            implementation(libs.koin.test)
-            implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.kotlin.test)
-            implementation(libs.turbine)
         }
     }
 }

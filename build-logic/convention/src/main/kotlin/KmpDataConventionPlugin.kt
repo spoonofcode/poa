@@ -15,12 +15,11 @@ class KmpDataConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
-                        implementation(libs.findLibrary("kotlin-stdlib").get())
-                        implementation(libs.findLibrary("koin-core").get())
-                        implementation(libs.findLibrary("ksafe").get())
+                        api(libs.findLibrary("koin-core").get())
+                        api(libs.findLibrary("ksafe").get())
 
-                        implementation(project(":core:data"))
-                        implementation(project(":core:network"))
+                        api(project(":core:data"))
+                        api(project(":core:network"))
                     }
                 }
             }
