@@ -14,7 +14,6 @@ projectVersionCode = "1"
 
 # --- Android build tools / Gradle ---
 agp = "9.2.1"
-androidTools = "32.3.1"
 desugarJdkLibs = "2.1.5"
 googleServices = "4.5.0"
 
@@ -70,7 +69,6 @@ kotlinxCoroutinesTest = "1.11.0"
 turbine = "1.2.1"
 
 # --- Tooling / Codegen ---
-ksp = "2.3.6"
 buildkonfig = "0.22.0"
 kover = "0.9.9"
 mokkery = "3.4.2"
@@ -78,13 +76,11 @@ mokkery = "3.4.2"
 [libraries]
 # --- Gradle plugins as deps (only if you use them from build-logic / convention plugins) ---
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
-android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
 calf-permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "calfPermissions" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 ksafe-compose = { module = "eu.anifantakis:ksafe-compose", version.ref = "ksafeCompose" }
 ksafe = { module = "eu.anifantakis:ksafe", version.ref = "ksafe" }
-ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 buildkonfig-gradle-plugin = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
 buildkonfig-compiler = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-compiler", version.ref = "buildkonfig" }
 
@@ -173,8 +169,6 @@ mokkery-runtime = { module = "dev.mokkery:mokkery-runtime", version.ref = "mokke
 # --- Android / Kotlin ---
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-android-lint = { id = "com.android.lint", version.ref = "agp" }
-android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
@@ -188,7 +182,6 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 # --- Tooling ---
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 # --- Your convention plugins (version provided by build-logic) ---
