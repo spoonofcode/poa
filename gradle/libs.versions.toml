@@ -18,7 +18,7 @@ desugarJdkLibs = "2.1.5"
 googleServices = "4.5.0"
 
 # --- Kotlin / KMP / Compose ---
-kotlin = "2.3.21"
+kotlin = "2.4.10"
 composeMultiplatform = "1.10.3"
 
 # --- AndroidX ---
@@ -26,6 +26,8 @@ androidxActivityCompose = "1.13.0"
 androidxCredentials = "1.6.0"
 androidxSecurity = "1.1.0"
 androidxSplash = "1.2.0"
+
+# NOT UPGRADE - NAVIGATION PROBLEM ON IOS
 lifecycleViewModelCompose = "2.10.0"
 
 # --- Compose UI extras ---
@@ -49,7 +51,7 @@ recaptcha = "18.9.2"
 ktor = "3.5.1"
 koin = "4.2.2"
 kermit = "2.1.0"
-connectivity = "2.4.1"
+connectivity = "2.5.0"
 
 # --- KotlinX ---
 kotlinxDatetime = "0.8.0"
@@ -64,7 +66,7 @@ turbine = "1.2.1"
 ksp = "2.3.6"
 buildkonfig = "0.22.0"
 kover = "0.9.9"
-mokkery = "3.3.0"
+mokkery = "3.4.2"
 
 [libraries]
 # --- Gradle plugins as deps (only if you use them from build-logic / convention plugins) ---
