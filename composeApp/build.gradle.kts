@@ -63,7 +63,6 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.jetbrains.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.splash.screen)
         }
@@ -146,20 +145,9 @@ kotlin {
 }
 
 android {
-    namespace = "com.spoonofcode.poa"
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
-
     defaultConfig {
-        applicationId = "com.spoonofcode.poa"
-        minSdk = libs.versions.androidMinSdk.get().toInt()
-        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = (System.getenv("ANDROID_RELEASE_VERSION") ?: "1").toInt()
         versionName = System.getenv("ANDROID_RELEASE_VERSION") ?: "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
     signingConfigs {
         create("customDebug") {
@@ -195,14 +183,8 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
     debugImplementation(libs.jetbrains.compose.ui.tooling)
-//    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
 }
