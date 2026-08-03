@@ -7,7 +7,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                // TODO #132 Optimize dependecies
                 api(libs.kotlinx.datetime)
                 api(libs.ktor.client.core)
 
