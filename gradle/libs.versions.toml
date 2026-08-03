@@ -62,7 +62,7 @@ turbine = "1.2.1"
 
 # --- Tooling / Codegen ---
 ksp = "2.3.6"
-buildkonfig = "0.18.0"
+buildkonfig = "0.22.0"
 kover = "0.9.9"
 mokkery = "3.4.2"
 
