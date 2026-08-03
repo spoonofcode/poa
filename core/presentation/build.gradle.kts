@@ -24,39 +24,39 @@ kotlin {
 
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.jetbrains.compose.components.resources)
+                api(libs.kotlin.stdlib)
+                api(libs.jetbrains.compose.components.resources)
 
-                implementation(libs.calf.permissions)
-                implementation(libs.compose.icons.fontawesome)
-                implementation(libs.compottie)
-                implementation(libs.compottie.dot)
-                implementation(libs.compottie.network)
-                implementation(libs.connectivity.core)
-                implementation(libs.connectivity.device)
+                api(libs.calf.permissions)
+                api(libs.compose.icons.fontawesome)
+                api(libs.compottie)
+                api(libs.compottie.dot)
+                api(libs.compottie.network)
+                api(libs.connectivity.core)
+                api(libs.connectivity.device)
 
-                implementation(libs.jetbrains.compose.foundation)
-                implementation(libs.landscapist.coil)
-                implementation(libs.lifecycle.viewmodel.compose)
-                implementation(libs.lifecycle.runtime.compose)
-                implementation(libs.jetbrains.compose.runtime)
-                implementation(libs.jetbrains.compose.material.icons.core)
-                implementation(libs.jetbrains.compose.material.icons.extended)
-                implementation(libs.jetbrains.compose.material3)
-                implementation(libs.jetbrains.compose.ui)
-                implementation(libs.jetbrains.compose.ui.tooling.preview)
+                api(libs.jetbrains.compose.foundation)
+                api(libs.landscapist.coil)
+                api(libs.lifecycle.viewmodel.compose)
+                api(libs.lifecycle.runtime.compose)
+                api(libs.jetbrains.compose.runtime)
+                api(libs.jetbrains.compose.material.icons.core)
+                api(libs.jetbrains.compose.material.icons.extended)
+                api(libs.jetbrains.compose.material3)
+                api(libs.jetbrains.compose.ui)
+                api(libs.jetbrains.compose.ui.tooling.preview)
 
-                implementation(libs.navigation3.runtime)
-                implementation(libs.navigation3.ui)
+                api(libs.navigation3.runtime)
+                api(libs.navigation3.ui)
 
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose)
-
-                // TODO #132 Optimize dependencies
-                implementation(projects.core.data)
+                api(libs.koin.core)
+                api(libs.koin.compose)
 
                 // TODO #132 Optimize dependencies
-                implementation(projects.feature.appnavigation)
+                api(projects.core.data)
+
+                // TODO #132 Optimize dependencies
+                api(projects.feature.appnavigation)
             }
         }
 

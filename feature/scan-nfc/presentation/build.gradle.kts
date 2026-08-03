@@ -1,14 +1,11 @@
 plugins {
-    alias(libs.plugins.convention.cmp.feature)
+    alias(libs.plugins.convention.cmp.presentation)
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.koin.core)
-
                 implementation(projects.core.nfc)
                 implementation(projects.feature.product.domain)
                 implementation(projects.feature.scanNfc.domain)

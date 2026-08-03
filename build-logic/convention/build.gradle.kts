@@ -50,13 +50,21 @@ gradlePlugin {
             id = libs.plugins.convention.kmp.library.get().pluginId
             implementationClass = "KmpLibraryConventionPlugin"
         }
+        register("kmpDomain") {
+            id = libs.plugins.convention.kmp.domain.get().pluginId
+            implementationClass = "KmpDomainConventionPlugin"
+        }
+        register("kmpData") {
+            id = libs.plugins.convention.kmp.data.get().pluginId
+            implementationClass = "KmpDataConventionPlugin"
+        }
         register("cmpLibrary") {
             id = libs.plugins.convention.cmp.library.get().pluginId
             implementationClass = "CmpLibraryConventionPlugin"
         }
-        register("cmpFeature") {
-            id = libs.plugins.convention.cmp.feature.get().pluginId
-            implementationClass = "CmpFeatureConventionPlugin"
+        register("cmpPresentation") {
+            id = libs.plugins.convention.cmp.presentation.get().pluginId
+            implementationClass = "CmpPresentationConventionPlugin"
         }
         register("buildKonfig") {
             id = libs.plugins.convention.buildkonfig.get().pluginId

@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.cmp.feature)
+    alias(libs.plugins.convention.cmp.presentation)
     alias(libs.plugins.mokkery)
 }
 
@@ -7,10 +7,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-
-                implementation(libs.koin.core)
-
                 implementation(projects.feature.product.domain)
                 implementation(projects.feature.partner.domain)
             }
