@@ -50,5 +50,5 @@ kotlin {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.feature.auth.presentation"
-//    generateResClass = always
+    generateResClass = always
 }

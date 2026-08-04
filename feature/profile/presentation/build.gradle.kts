@@ -23,5 +23,5 @@ kotlin {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.feature.profile.presentation"
-//    generateResClass = always
+    generateResClass = always
 }

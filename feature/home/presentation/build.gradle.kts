@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(compose.preview)
                 implementation(projects.feature.home.domain)
                 implementation(projects.feature.partner.domain)
                 implementation(projects.feature.notification.domain)
@@ -27,5 +28,5 @@ kotlin {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.feature.home.presentation"
-//    generateResClass = always
+    generateResClass = always
 }

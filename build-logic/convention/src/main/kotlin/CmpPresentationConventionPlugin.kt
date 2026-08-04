@@ -9,13 +9,16 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                applyPlugin("convention-cmp-library")
+                applyPlugin("convention-kmp-library")
+                applyPlugin("compose-compiler")
+                applyPlugin("compose-multiplatform")
             }
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
                         implementation(project(":core:presentation"))
+                        implementation(libs.findLibrary("jetbrains-compose-preview").get())
 
                         implementation(libs.findLibrary("koin-core").get())
                         implementation(libs.findLibrary("koin-compose").get())

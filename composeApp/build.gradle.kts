@@ -163,5 +163,5 @@ android {
 }
 
 dependencies {
-    debugImplementation(libs.jetbrains.compose.ui.tooling)
+    debugImplementation(compose.uiTooling)
 }

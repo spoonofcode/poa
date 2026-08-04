@@ -9,6 +9,7 @@ group = "com.spoonofcode.convention.buildlogic"
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.jetbrains.compose)
     compileOnly(libs.compose.gradle.plugin)
     implementation(libs.buildkonfig.gradle.plugin)
     implementation(libs.buildkonfig.compiler)
@@ -49,10 +50,6 @@ gradlePlugin {
         register("kmpData") {
             id = libs.plugins.convention.kmp.data.get().pluginId
             implementationClass = "KmpDataConventionPlugin"
-        }
-        register("cmpLibrary") {
-            id = libs.plugins.convention.cmp.library.get().pluginId
-            implementationClass = "CmpLibraryConventionPlugin"
         }
         register("cmpPresentation") {
             id = libs.plugins.convention.cmp.presentation.get().pluginId

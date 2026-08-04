@@ -22,5 +22,5 @@ kotlin {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.feature.tac.presentation"
-//    generateResClass = always
+    generateResClass = always
 }

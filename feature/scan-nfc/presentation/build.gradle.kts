@@ -24,5 +24,5 @@ kotlin {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.feature.scan.nfc.presentation"
-//    generateResClass = always
+    generateResClass = always
 }

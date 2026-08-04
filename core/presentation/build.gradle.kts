@@ -1,21 +1,29 @@
 plugins {
-    alias(libs.plugins.convention.cmp.library)
+    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose.multiplatform)
 }
 
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.androidx.compose.ui.tooling)
-            implementation(libs.jetbrains.compose.ui.tooling)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.media3.ui.compose)
             implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
+            implementation(compose.uiTooling)
         }
 
         commonMain {
             dependencies {
+                api(compose.ui)
+                api(compose.foundation)
+                api(compose.material3)
+                api(compose.runtime)
+                api(compose.components.resources)
+                api(compose.preview)
+                api(compose.materialIconsExtended)
+
                 api(libs.calf.permissions)
                 api(libs.compose.icons.fontawesome)
                 api(libs.compottie)
@@ -27,8 +35,6 @@ kotlin {
                 api(libs.landscapist.coil)
                 api(libs.lifecycle.viewmodel.compose)
                 api(libs.lifecycle.runtime.compose)
-                api(libs.jetbrains.compose.material.icons.core)
-                api(libs.jetbrains.compose.material.icons.extended)
 
                 api(libs.navigation3.runtime)
 
@@ -55,5 +61,5 @@ kotlin {
 compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.core.presentation"
-//    generateResClass = always
+    generateResClass = always
 }
