@@ -1,7 +1,7 @@
 import dev.mokkery.gradle.ApplicationRule
 
 plugins {
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.domain)
     alias(libs.plugins.mokkery)
 }
 
@@ -9,17 +9,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.koin.core)
-
                 implementation(projects.core.firebase.data)
                 implementation(projects.core.firebase.domain)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
             }
         }
     }

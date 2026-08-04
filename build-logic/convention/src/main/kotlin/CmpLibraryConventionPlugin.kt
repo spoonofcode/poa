@@ -15,10 +15,12 @@ class CmpLibraryConventionPlugin: Plugin<Project> {
             }
 
             dependencies {
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-ui").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-foundation").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-material3").get())
-                "commonMainImplementation"(libs.findLibrary("jetbrains-compose-components-resources").get())
+                "commonMainApi"(libs.findLibrary("jetbrains-compose-ui").get())
+                "commonMainApi"(libs.findLibrary("jetbrains-compose-foundation").get())
+                "commonMainApi"(libs.findLibrary("jetbrains-compose-material3").get())
+                "commonMainApi"(libs.findLibrary("jetbrains-compose-runtime").get())
+                "commonMainApi"(libs.findLibrary("jetbrains-compose-components-resources").get())
+                "commonMainApi"(libs.findLibrary("jetbrains-compose-ui-tooling-preview").get())
             }
         }
     }

@@ -18,6 +18,7 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
                         implementation(project(":core:presentation"))
 
                         implementation(libs.findLibrary("koin-core").get())
+                        implementation(libs.findLibrary("koin-compose").get())
                         implementation(libs.findLibrary("koin-compose-viewmodel").get())
                     }
                 }
