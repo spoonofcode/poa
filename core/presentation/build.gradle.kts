@@ -53,20 +53,14 @@ kotlin {
                 api(libs.koin.compose)
                 api(libs.koin.compose.viewmodel)
 
-                // TODO #132 Optimize dependencies
                 api(projects.core.data)
-
-                // TODO #132 Optimize dependencies
                 api(projects.feature.appnavigation)
             }
         }
 
         commonTest {
             dependencies {
-                implementation(libs.koin.test)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.kotlin.test)
-                implementation(libs.turbine)
+                implementation(projects.core.test)
             }
         }
 

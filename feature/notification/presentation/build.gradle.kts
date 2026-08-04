@@ -15,7 +15,6 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(libs.turbine)
                 implementation(projects.core.presentationTest)
                 implementation(projects.feature.notification.dataTest)
             }
