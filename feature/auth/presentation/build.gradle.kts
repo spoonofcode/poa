@@ -12,8 +12,6 @@ kotlin {
         homepage = "Link to a Kotlin/Native module homepage"
         ios.deploymentTarget = "18.0"
 
-//        podfile = project.file("../../../iosApp/Podfile")
-
         pod("GoogleSignIn")
 
         framework {
@@ -44,11 +42,6 @@ kotlin {
                 implementation(libs.androidx.credentials.play.service.auth)
 
                 implementation(libs.google.id)
-                implementation(libs.recaptcha)
-            }
-        }
-        iosMain {
-            dependencies {
             }
         }
     }

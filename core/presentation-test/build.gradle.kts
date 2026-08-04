@@ -1,5 +1,3 @@
-import dev.mokkery.gradle.ApplicationRule
-
 plugins {
     alias(libs.plugins.convention.buildkonfig)
     alias(libs.plugins.convention.kmp.library)
@@ -16,8 +14,4 @@ kotlin {
             }
         }
     }
-}
-
-mokkery {
-    rule.set(ApplicationRule.All)
 }

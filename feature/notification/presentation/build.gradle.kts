@@ -7,8 +7,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.core.firebase.domain)
-                implementation(projects.core.session.domain)
                 implementation(projects.feature.notification.domain)
             }
         }

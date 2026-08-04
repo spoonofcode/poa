@@ -3,27 +3,15 @@ plugins {
 }
 
 kotlin {
-
     sourceSets {
         commonMain {
             dependencies {
                 api(libs.kotlinx.datetime)
                 api(libs.ktor.client.core)
-
-                implementation(libs.kotlin.stdlib)
-
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose)
-
-                implementation(libs.kotlinx.serialization.json)
+                api(libs.koin.core)
+                api(libs.lifecycle.viewmodel)
 
                 implementation(libs.touchlab.kermit)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
             }
         }
 
@@ -33,11 +21,5 @@ kotlin {
                 implementation(libs.ktor.client.okhttp)
             }
         }
-
-        iosMain {
-            dependencies {
-            }
-        }
     }
-
 }

@@ -6,9 +6,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlin.stdlib)
-                implementation(libs.koin.core)
-                implementation(libs.ksafe)
+                api(libs.koin.core)
                 implementation(libs.ktor.client.auth)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.client.logging)
@@ -16,12 +14,6 @@ kotlin {
 
                 implementation(projects.core.data)
                 implementation(projects.core.session.domain)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
             }
         }
     }

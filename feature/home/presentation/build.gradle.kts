@@ -10,7 +10,6 @@ kotlin {
                 implementation(projects.feature.home.domain)
                 implementation(projects.feature.partner.domain)
                 implementation(projects.feature.notification.domain)
-                implementation(projects.core.firebase.domain)
             }
         }
 
