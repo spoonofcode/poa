@@ -21,7 +21,6 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
                         implementation(libs.findLibrary("jetbrains-compose-preview").get())
 
                         implementation(libs.findLibrary("koin-core").get())
-                        implementation(libs.findLibrary("koin-compose").get())
                         implementation(libs.findLibrary("koin-compose-viewmodel").get())
                     }
                 }
