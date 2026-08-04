@@ -21,7 +21,6 @@ kotlin {
 
         commonMain {
             dependencies {
-                api(libs.kotlin.stdlib)
                 api(libs.jetbrains.compose.components.resources)
 
                 api(libs.calf.permissions)
