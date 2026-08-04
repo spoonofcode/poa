@@ -68,6 +68,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.touchlab.kermit)
             implementation(libs.ksafe.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.navigation3.ui)
 
             implementation(projects.core.data)
             implementation(projects.core.firebase.data)

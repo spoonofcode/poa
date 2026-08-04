@@ -21,6 +21,7 @@ kotlin {
 
         commonMain {
             dependencies {
+                api(libs.kotlin.stdlib)
                 api(libs.jetbrains.compose.components.resources)
 
                 api(libs.calf.permissions)
@@ -43,11 +44,8 @@ kotlin {
                 api(libs.jetbrains.compose.ui.tooling.preview)
 
                 api(libs.navigation3.runtime)
-                api(libs.navigation3.ui)
 
                 api(libs.koin.core)
-                api(libs.koin.compose)
-                api(libs.koin.compose.viewmodel)
 
                 api(projects.core.data)
                 api(projects.feature.appnavigation)
