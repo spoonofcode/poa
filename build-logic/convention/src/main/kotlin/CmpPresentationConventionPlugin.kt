@@ -18,9 +18,6 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
                         implementation(project(":core:presentation"))
-                        implementation(libs.findLibrary("jetbrains-compose-preview").get())
-
-                        implementation(libs.findLibrary("koin-core").get())
                         implementation(libs.findLibrary("koin-compose-viewmodel").get())
                     }
                 }
