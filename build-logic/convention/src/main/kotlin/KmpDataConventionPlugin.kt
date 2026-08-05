@@ -10,6 +10,7 @@ class KmpDataConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 applyPlugin("convention-kmp-library")
+                applyPlugin("convention-kmp-serialization")
             }
 
             extensions.configure<KotlinMultiplatformExtension> {

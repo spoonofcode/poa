@@ -172,4 +172,5 @@ convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", versio
 convention-kmp-domain = { id = "com.spoonofcode.convention.kmp.domain", version = "unspecified" }
 convention-kmp-data = { id = "com.spoonofcode.convention.kmp.data", version = "unspecified" }
 convention-cmp-presentation = { id = "com.spoonofcode.convention.cmp.presentation", version = "unspecified" }
+convention-kmp-serialization = { id = "com.spoonofcode.convention.kmp.serialization", version = "unspecified" }
 convention-buildkonfig = { id = "com.spoonofcode.convention.buildkonfig", version = "unspecified" }

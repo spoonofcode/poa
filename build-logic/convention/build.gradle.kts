@@ -55,6 +55,10 @@ gradlePlugin {
             id = libs.plugins.convention.cmp.presentation.get().pluginId
             implementationClass = "CmpPresentationConventionPlugin"
         }
+        register("kmpSerialization") {
+            id = libs.plugins.convention.kmp.serialization.get().pluginId
+            implementationClass = "KmpSerializationConventionPlugin"
+        }
         register("buildKonfig") {
             id = libs.plugins.convention.buildkonfig.get().pluginId
             implementationClass = "BuildKonfigConventionPlugin"
