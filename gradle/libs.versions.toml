@@ -32,9 +32,6 @@ androidxSplash = "1.2.0"
 lifecycleViewModelCompose = "2.10.0"
 
 # --- Compose UI extras ---
-composeBom = "2026.06.01"
-material3 = "1.9.0"
-materialIconsCore = "1.7.3"
 composeIcons = "1.1.1"
 
 # NOT UPGRADE - NAVIGATION PROBLEM ON IOS
@@ -76,13 +73,16 @@ mokkery = "3.4.2"
 [libraries]
 # --- Gradle plugins as deps (only if you use them from build-logic / convention plugins) ---
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
-calf-permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "calfPermissions" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+jetbrains-compose = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "composeMultiplatform" }
 compose-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
-ksafe-compose = { module = "eu.anifantakis:ksafe-compose", version.ref = "ksafeCompose" }
-ksafe = { module = "eu.anifantakis:ksafe", version.ref = "ksafe" }
 buildkonfig-gradle-plugin = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-gradle-plugin", version.ref = "buildkonfig" }
 buildkonfig-compiler = { group = "com.codingfeline.buildkonfig", name = "buildkonfig-compiler", version.ref = "buildkonfig" }
+
+calf-permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "calfPermissions" }
+
+ksafe = { module = "eu.anifantakis:ksafe", version.ref = "ksafe" }
+ksafe-compose = { module = "eu.anifantakis:ksafe-compose", version.ref = "ksafeCompose" }
 
 # --- Android core / desugaring ---
 android-desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
@@ -95,22 +95,9 @@ androidx-security = { module = "androidx.security:security-crypto", version.ref 
 androidx-splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "androidxSplash" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewModelCompose" }
 lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewModelCompose" }
+lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModelCompose" }
 
 # --- Compose Multiplatform ---
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-
-jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
-androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version = "1.11.4" }
-jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
-jetbrains-compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
-jetbrains-compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
-jetbrains-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
-jetbrains-compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
-
-# --- Compose Material / Icons ---
-jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
-jetbrains-compose-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
-jetbrains-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
 compose-icons-fontawesome = { group = "br.com.devsrsouza.compose.icons", name = "font-awesome", version.ref = "composeIcons" }
 
 # --- Media / Images / Animations ---
@@ -118,8 +105,6 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 androidx-media3-ui-compose = { module = "androidx.media3:media3-ui-compose", version.ref = "media3" }
 landscapist-coil = { module = "com.github.skydoves:landscapist-coil3", version.ref = "landscapistCoil" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
-compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
-compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
 
 # --- Google / Firebase ---
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -130,8 +115,6 @@ recaptcha = { module = "com.google.android.recaptcha:recaptcha", version.ref = "
 # --- DI / Settings / Logging / Network ---
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
@@ -149,7 +132,6 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 # --- Kotlin / KotlinX ---
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
@@ -185,10 +167,10 @@ mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 
 # --- Your convention plugins (version provided by build-logic) ---
-convention-android-application = { id = "com.spoonofcode.convention.android.application", version = "unspecified" }
-convention-android-application-compose = { id = "com.spoonofcode.convention.android.application.compose", version = "unspecified" }
 convention-cmp-application = { id = "com.spoonofcode.convention.cmp.application", version = "unspecified" }
 convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", version = "unspecified" }
-convention-cmp-library = { id = "com.spoonofcode.convention.cmp.library", version = "unspecified" }
-convention-cmp-feature = { id = "com.spoonofcode.convention.cmp.feature", version = "unspecified" }
+convention-kmp-domain = { id = "com.spoonofcode.convention.kmp.domain", version = "unspecified" }
+convention-kmp-data = { id = "com.spoonofcode.convention.kmp.data", version = "unspecified" }
+convention-cmp-presentation = { id = "com.spoonofcode.convention.cmp.presentation", version = "unspecified" }
+convention-kmp-serialization = { id = "com.spoonofcode.convention.kmp.serialization", version = "unspecified" }
 convention-buildkonfig = { id = "com.spoonofcode.convention.buildkonfig", version = "unspecified" }

@@ -7,7 +7,7 @@ import com.spoonofcode.convention.pathToResourcePrefix
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class KmpLibraryConventionPlugin: Plugin<Project> {
 
@@ -16,7 +16,6 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             with(pluginManager) {
                 applyPlugin("android-library")
                 applyPlugin("kotlin-multiplatform")
-                applyPlugin("kotlin-serialization")
             }
 
             configureKotlinMultiplatform()
@@ -30,9 +29,10 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
                 experimentalProperties["android.experimental.kmp.enableAndroidResources"] = "true"
             }
 
-            dependencies {
-                "commonMainImplementation"(libs.findLibrary("kotlinx-serialization-json").get())
-                "commonTestImplementation"(libs.findLibrary("kotlin-test").get())
+            extensions.configure<KotlinMultiplatformExtension> {
+                sourceSets.getByName("commonTest").dependencies {
+                    implementation(libs.findLibrary("kotlin-test").get())
+                }
             }
         }
     }
