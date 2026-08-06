@@ -66,14 +66,13 @@ kotlin {
             implementation(libs.androidx.splash.screen)
         }
         commonMain.dependencies {
-            implementation(libs.touchlab.kermit)
-            implementation(libs.ksafe.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation3.ui)
 
             implementation(projects.core.data)
             implementation(projects.core.firebase.data)
             implementation(projects.core.firebase.domain)
+            implementation(projects.core.logging)
             implementation(projects.core.network)
             implementation(projects.core.nfc)
             implementation(projects.core.presentation)
