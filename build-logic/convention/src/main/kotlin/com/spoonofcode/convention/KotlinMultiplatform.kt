@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.configureKotlinMultiplatform() {
+    configureAndroidTarget()
     configureIosTargets(baseName = pathToFrameworkName())
 
     extensions.configure<KotlinMultiplatformExtension> {

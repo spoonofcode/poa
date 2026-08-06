@@ -169,7 +169,6 @@ buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig"
 # --- Your convention plugins (version provided by build-logic) ---
 convention-cmp-application = { id = "com.spoonofcode.convention.cmp.application", version = "unspecified" }
 convention-kmp-library = { id = "com.spoonofcode.convention.kmp.library", version = "unspecified" }
-convention-kmp-android-library = { id = "com.spoonofcode.convention.kmp.android.library", version = "unspecified" }
 convention-kmp-domain = { id = "com.spoonofcode.convention.kmp.domain", version = "unspecified" }
 convention-kmp-data = { id = "com.spoonofcode.convention.kmp.data", version = "unspecified" }
 convention-cmp-presentation = { id = "com.spoonofcode.convention.cmp.presentation", version = "unspecified" }
