@@ -10,7 +10,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.feature.home.domain)
-                implementation(projects.core.data)
             }
         }
     }

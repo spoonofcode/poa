@@ -15,7 +15,6 @@ kotlin {
                 api(libs.kotlinx.coroutines.test)
                 api(libs.mokkery.runtime)
 
-                implementation(projects.core.data)
                 implementation(projects.core.session.domain)
             }
         }

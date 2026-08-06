@@ -10,7 +10,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.feature.product.domain)
-                implementation(projects.core.data)
             }
         }
     }

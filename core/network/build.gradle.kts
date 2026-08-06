@@ -12,6 +12,7 @@ kotlin {
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.serialization.kotlinx.json)
 
+                // ZOBACZ JAK MOŻNA TO USUNAC
                 implementation(projects.core.data)
                 implementation(projects.core.session.domain)
             }
