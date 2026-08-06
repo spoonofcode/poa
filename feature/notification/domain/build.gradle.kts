@@ -6,7 +6,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.core.data)
                 implementation(projects.core.firebase.domain)
                 implementation(projects.core.session.domain)
             }

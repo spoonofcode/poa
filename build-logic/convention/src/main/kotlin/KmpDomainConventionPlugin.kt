@@ -16,6 +16,7 @@ class KmpDomainConventionPlugin : Plugin<Project> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
                         implementation(libs.findLibrary("koin-core").get())
+                        api(libs.findLibrary("kotlinx-datetime").get())
                     }
                 }
             }
