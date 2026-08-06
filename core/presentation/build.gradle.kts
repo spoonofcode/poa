@@ -33,6 +33,7 @@ kotlin {
                 api(libs.lifecycle.runtime.compose)
                 api(libs.navigation3.runtime)
 
+                api(projects.core.logging)
                 api(projects.core.data)
                 api(projects.feature.appnavigation)
             }

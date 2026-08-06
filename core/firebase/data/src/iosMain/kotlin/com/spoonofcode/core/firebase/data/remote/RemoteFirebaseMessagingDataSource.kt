@@ -1,6 +1,6 @@
 package com.spoonofcode.core.firebase.data.remote
 
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 
 actual class RemoteFirebaseMessagingDataSource actual constructor(
     private val poaLogger: POALogger,

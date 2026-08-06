@@ -2,6 +2,7 @@ package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.data.getPlatform
+import com.spoonofcode.core.logging.di.loggingModule
 import com.spoonofcode.core.firebase.data.di.firebaseDataModule
 import com.spoonofcode.core.network.di.networkModule
 import com.spoonofcode.core.presentation.di.presentationModule
@@ -41,6 +42,7 @@ import org.koin.dsl.module
 val appModule = module {
     includes(
         // core
+        loggingModule,
         coroutinesModule,
         firebaseDataModule,
         presentationModule,

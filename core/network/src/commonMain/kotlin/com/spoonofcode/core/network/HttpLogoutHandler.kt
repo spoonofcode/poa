@@ -1,6 +1,6 @@
 package com.spoonofcode.core.network
 
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.auth.clearAuthTokens

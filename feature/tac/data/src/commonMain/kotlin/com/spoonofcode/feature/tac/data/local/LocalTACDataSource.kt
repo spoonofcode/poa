@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.tac.data.local
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.feature.tac.domain.model.TACSettings
 import eu.anifantakis.lib.ksafe.KSafe
 import eu.anifantakis.lib.ksafe.KSafeWriteMode

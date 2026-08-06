@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(projects.core.logging)
                 api(libs.koin.core)
                 api(libs.kotlinx.datetime)
                 api(libs.ksafe)

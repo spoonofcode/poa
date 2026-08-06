@@ -15,6 +15,7 @@ class KmpDataConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
+                        implementation(project(":core:logging"))
                         implementation(project(":core:data"))
                         implementation(project(":core:network"))
                     }
