@@ -7,9 +7,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(libs.kotlinx.datetime)
-                api(libs.ktor.client.core)
                 api(libs.koin.core)
+                api(libs.kotlinx.datetime)
+                api(libs.ksafe)
+                api(libs.ktor.client.core)
                 api(libs.lifecycle.viewmodel)
 
                 implementation(libs.touchlab.kermit)
