@@ -2,7 +2,7 @@ import dev.mokkery.gradle.ApplicationRule
 
 plugins {
     alias(libs.plugins.convention.buildkonfig)
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.android.library)
     alias(libs.plugins.mokkery)
 }
 

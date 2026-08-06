@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.android.library)
     alias(libs.plugins.convention.kmp.serialization)
 }
 

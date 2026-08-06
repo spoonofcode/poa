@@ -9,7 +9,7 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                applyPlugin("convention-kmp-library")
+                applyPlugin("convention-kmp-android-library")
                 applyPlugin("compose-compiler")
                 applyPlugin("compose-multiplatform")
             }

@@ -43,6 +43,10 @@ gradlePlugin {
             id = libs.plugins.convention.kmp.library.get().pluginId
             implementationClass = "KmpLibraryConventionPlugin"
         }
+        register("kmpAndroidLibrary") {
+            id = libs.plugins.convention.kmp.android.library.get().pluginId
+            implementationClass = "KmpAndroidLibraryConventionPlugin"
+        }
         register("kmpDomain") {
             id = libs.plugins.convention.kmp.domain.get().pluginId
             implementationClass = "KmpDomainConventionPlugin"

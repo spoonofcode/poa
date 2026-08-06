@@ -1,9 +1,9 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.spoonofcode.convention.applyPlugin
+import com.spoonofcode.convention.configureAndroidTarget
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
-import com.spoonofcode.convention.pathToResourcePrefix
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -19,14 +19,10 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             }
 
             configureKotlinMultiplatform()
+            configureAndroidTarget()
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-
-                resourcePrefix = this@with.pathToResourcePrefix()
-
-                // Required to make debug build of app run in iOS simulator
-                experimentalProperties["android.experimental.kmp.enableAndroidResources"] = "true"
             }
 
             extensions.configure<KotlinMultiplatformExtension> {
