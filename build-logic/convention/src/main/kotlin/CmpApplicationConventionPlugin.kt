@@ -3,6 +3,7 @@ import com.spoonofcode.convention.androidTargetSdk
 import com.spoonofcode.convention.applicationId
 import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureAndroidCompose
+import com.spoonofcode.convention.configureComposeMultiplatform
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.projectVersionCode
@@ -18,12 +19,11 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 applyPlugin("android-application")
                 applyPlugin("kotlin-multiplatform")
-                applyPlugin("compose-multiplatform")
-                applyPlugin("compose-compiler")
                 applyPlugin("convention-kmp-serialization")
             }
 
             configureKotlinMultiplatform()
+            configureComposeMultiplatform()
 
             extensions.configure<ApplicationExtension> {
                 namespace = "com.spoonofcode.poa"
