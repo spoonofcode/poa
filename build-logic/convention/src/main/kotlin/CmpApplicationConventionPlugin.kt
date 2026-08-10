@@ -1,16 +1,16 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.spoonofcode.convention.applyHierarchyTemplate
+import com.spoonofcode.convention.androidTargetSdk
+import com.spoonofcode.convention.applicationId
 import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureAndroidCompose
 import com.spoonofcode.convention.configureAndroidTarget
-import com.spoonofcode.convention.configureIosTargets
 import com.spoonofcode.convention.configureKotlinAndroid
-import com.spoonofcode.convention.libs
-import com.spoonofcode.convention.pathToFrameworkName
+import com.spoonofcode.convention.configureKotlinMultiplatform
+import com.spoonofcode.convention.projectVersionCode
+import com.spoonofcode.convention.projectVersionName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class CmpApplicationConventionPlugin : Plugin<Project> {
 
@@ -21,17 +21,20 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
                 applyPlugin("kotlin-multiplatform")
                 applyPlugin("compose-multiplatform")
                 applyPlugin("compose-compiler")
-                applyPlugin("kotlin-serialization")
+                applyPlugin("convention-kmp-serialization")
             }
+
+            configureKotlinMultiplatform()
+            configureAndroidTarget()
 
             extensions.configure<ApplicationExtension> {
                 namespace = "com.spoonofcode.poa"
 
                 defaultConfig {
-                    applicationId = libs.findVersion("projectApplicationId").get().toString()
-                    targetSdk = libs.findVersion("androidTargetSdk").get().toString().toInt()
-                    versionCode = libs.findVersion("projectVersionCode").get().toString().toInt()
-                    versionName = libs.findVersion("projectVersionName").get().toString()
+                    applicationId = target.applicationId
+                    targetSdk = target.androidTargetSdk
+                    versionCode = target.projectVersionCode
+                    versionName = target.projectVersionName
                 }
 
                 packaging {
@@ -48,13 +51,6 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
 
                 configureKotlinAndroid(this)
                 configureAndroidCompose(this)
-            }
-
-            configureAndroidTarget()
-            configureIosTargets(baseName = pathToFrameworkName())
-
-            extensions.configure<KotlinMultiplatformExtension> {
-                applyHierarchyTemplate()
             }
         }
     }
