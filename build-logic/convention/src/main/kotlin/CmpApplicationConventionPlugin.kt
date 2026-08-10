@@ -3,7 +3,6 @@ import com.spoonofcode.convention.androidTargetSdk
 import com.spoonofcode.convention.applicationId
 import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureAndroidCompose
-import com.spoonofcode.convention.configureAndroidTarget
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.projectVersionCode
@@ -25,7 +24,6 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
             }
 
             configureKotlinMultiplatform()
-            configureAndroidTarget()
 
             extensions.configure<ApplicationExtension> {
                 namespace = "com.spoonofcode.poa"
