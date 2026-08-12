@@ -8,8 +8,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.bundles.ktor)
-
-                // ZOBACZ JAK MOŻNA TO USUNAC
+                implementation(projects.core.logging)
                 implementation(projects.core.data)
                 implementation(projects.core.session.domain)
             }

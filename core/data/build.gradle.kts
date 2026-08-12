@@ -13,15 +13,6 @@ kotlin {
                 api(libs.ksafe)
                 api(libs.ktor.client.core)
                 api(libs.lifecycle.viewmodel)
-
-                implementation(libs.touchlab.kermit)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.security)
-                implementation(libs.ktor.client.okhttp)
             }
         }
     }
