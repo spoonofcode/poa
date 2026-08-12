@@ -1,6 +1,6 @@
 package com.spoonofcode.core.session.data.repository
 
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.session.data.local.LocalSessionDataSource
 import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import com.spoonofcode.core.session.domain.repository.SessionRepository

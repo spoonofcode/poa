@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.scan.nfc.data.remote
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.network.HttpStatusCodes
 import com.spoonofcode.feature.scan.nfc.data.model.NFCTagResponse
 import io.ktor.client.HttpClient

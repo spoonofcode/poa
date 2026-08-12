@@ -10,7 +10,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.feature.auth.domain)
-                implementation(projects.core.data)
             }
         }
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.ext.DEFAULT_STOP_TIMEOUT_MILLIS
 import com.spoonofcode.core.data.ext.stateInWhileSubscribed
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.network.NetworkManager

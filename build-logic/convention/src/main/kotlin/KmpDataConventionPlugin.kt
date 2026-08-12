@@ -1,5 +1,4 @@
 import com.spoonofcode.convention.applyPlugin
-import com.spoonofcode.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -16,9 +15,7 @@ class KmpDataConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
-                        implementation(libs.findLibrary("koin-core").get())
-                        implementation(libs.findLibrary("ksafe").get())
-
+                        implementation(project(":core:logging"))
                         implementation(project(":core:data"))
                         implementation(project(":core:network"))
                     }

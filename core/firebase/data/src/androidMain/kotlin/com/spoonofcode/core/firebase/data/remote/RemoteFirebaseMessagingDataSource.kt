@@ -2,7 +2,7 @@ package com.spoonofcode.core.firebase.data.remote
 
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import kotlinx.coroutines.tasks.await
 
 actual class RemoteFirebaseMessagingDataSource actual constructor(

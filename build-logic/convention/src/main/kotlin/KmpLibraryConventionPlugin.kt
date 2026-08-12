@@ -3,6 +3,7 @@ import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
+import com.spoonofcode.convention.pathToPackageName
 import com.spoonofcode.convention.pathToResourcePrefix
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -23,6 +24,7 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
 
+                namespace = this@with.pathToPackageName()
                 resourcePrefix = this@with.pathToResourcePrefix()
 
                 // Required to make debug build of app run in iOS simulator

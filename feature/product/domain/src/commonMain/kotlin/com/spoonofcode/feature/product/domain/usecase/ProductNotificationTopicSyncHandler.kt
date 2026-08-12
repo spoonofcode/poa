@@ -1,15 +1,16 @@
 package com.spoonofcode.feature.product.domain.usecase
 
 import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingRepository
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.usecase.NotificationTopicSyncHandler
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
-import com.spoonofcode.core.data.logging.KermitLogger
 
 class ProductNotificationTopicSyncHandler(
     private val productRepository: ProductRepository,
     private val firebaseMessagingRepository: FirebaseMessagingRepository,
+    private val poaLogger: POALogger,
 ) : NotificationTopicSyncHandler {
 
     override suspend fun syncTopics(settings: NotificationSettings): Result<Unit> {
@@ -52,8 +53,4 @@ class ProductNotificationTopicSyncHandler(
 
     private fun getSerieTopic(seriesId: String): String =
         NotificationType.serie.createTopic(seriesId)
-
-    companion object {
-        private val poaLogger = KermitLogger
-    }
 }

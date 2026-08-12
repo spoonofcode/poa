@@ -1,7 +1,7 @@
 package com.spoonofcode.core.session.data.local
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 

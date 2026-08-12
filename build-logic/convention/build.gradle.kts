@@ -11,6 +11,9 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.jetbrains.compose)
     compileOnly(libs.compose.gradle.plugin)
+    
+    implementation(libs.kover.gradle.plugin)
+    
     implementation(libs.buildkonfig.gradle.plugin)
     implementation(libs.buildkonfig.compiler)
 }

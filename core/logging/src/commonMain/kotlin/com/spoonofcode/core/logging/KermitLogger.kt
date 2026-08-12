@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.logging
+package com.spoonofcode.core.logging
 
 import co.touchlab.kermit.Logger
 

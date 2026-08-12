@@ -1,4 +1,4 @@
-package com.spoonofcode.core.data.logging
+package com.spoonofcode.core.logging
 
 interface POALogger {
     fun debug(message: String)

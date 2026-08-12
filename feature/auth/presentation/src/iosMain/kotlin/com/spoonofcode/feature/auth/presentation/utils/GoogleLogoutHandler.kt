@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.auth.presentation.utils
 
 import cocoapods.GoogleSignIn.GIDSignIn
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import kotlinx.cinterop.ExperimentalForeignApi
 

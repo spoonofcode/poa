@@ -1,6 +1,6 @@
 package com.spoonofcode.core.data.ext
 
-import com.spoonofcode.core.data.logging.KermitLogger
+import com.spoonofcode.core.logging.KermitLogger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi

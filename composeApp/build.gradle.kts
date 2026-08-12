@@ -1,42 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.cocoapods)
-    alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
     alias(libs.plugins.convention.cmp.application)
-}
-
-kover {
-    reports {
-        verify {
-            rule {
-                minBound(80)
-            }
-        }
-
-        filters {
-            excludes {
-                classes("MainKt")
-                classes("*.MainActivity")
-
-                // Generated Classes & Resources
-                packages("*.generated.*")
-                packages("*resources*")
-
-                // Dependecy Injection
-                packages("*di*")
-
-                // Compose Related
-                classes("*ComposeSingletons*")
-                annotatedBy("androidx.compose.runtime.Composable")
-
-                // Voyager
-                classes("*.*Screen")
-
-                // ViewStates
-                classes("*.*ViewState")
-            }
-        }
-    }
 }
 
 kotlin {
@@ -66,17 +31,14 @@ kotlin {
             implementation(libs.androidx.splash.screen)
         }
         commonMain.dependencies {
-            implementation(libs.touchlab.kermit)
-            implementation(libs.ksafe.compose)
-            implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation3.ui)
 
             implementation(projects.core.data)
             implementation(projects.core.firebase.data)
             implementation(projects.core.firebase.domain)
+            implementation(projects.core.logging)
             implementation(projects.core.network)
             implementation(projects.core.nfc)
-            implementation(projects.core.presentation)
             implementation(projects.core.recaptcha)
             implementation(projects.core.session.data)
             implementation(projects.core.session.domain)

@@ -25,14 +25,13 @@ kotlin {
                 api(libs.calf.permissions)
                 api(libs.compose.icons.fontawesome)
                 api(libs.compottie)
-                api(libs.connectivity.core)
-                api(libs.connectivity.device)
+                api(libs.bundles.connectivity)
                 api(libs.koin.core)
                 api(libs.landscapist.coil)
-                api(libs.lifecycle.viewmodel.compose)
-                api(libs.lifecycle.runtime.compose)
+                api(libs.bundles.lifecycle)
                 api(libs.navigation3.runtime)
 
+                api(projects.core.logging)
                 api(projects.core.data)
                 api(projects.feature.appnavigation)
             }

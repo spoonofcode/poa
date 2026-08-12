@@ -7,12 +7,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.koin.core)
-                implementation(libs.ktor.client.auth)
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.serialization.kotlinx.json)
-
+                implementation(libs.bundles.ktor)
+                implementation(projects.core.logging)
                 implementation(projects.core.data)
                 implementation(projects.core.session.domain)
             }
