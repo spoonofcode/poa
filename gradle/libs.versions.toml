@@ -141,7 +141,7 @@ mokkery-runtime = { module = "dev.mokkery:mokkery-runtime", version.ref = "mokke
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [bundles]
-koin = ["koin-core", "koin-android", "koin-compose-viewmodel"]
+connectivity = ["connectivity-core", "connectivity-device"]
 ktor = [
     "ktor-client-core",
     "ktor-client-auth",
@@ -150,7 +150,6 @@ ktor = [
     "ktor-serialization-kotlinx-json"
 ]
 lifecycle = ["lifecycle-runtime-compose", "lifecycle-viewmodel", "lifecycle-viewmodel-compose"]
-connectivity = ["connectivity-core", "connectivity-device"]
 navigation = ["navigation-compose", "navigation3-runtime", "navigation3-ui"]
 
 [plugins]
