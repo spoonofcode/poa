@@ -4,6 +4,7 @@ import com.spoonofcode.convention.applicationId
 import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureAndroidCompose
 import com.spoonofcode.convention.configureComposeMultiplatform
+import com.spoonofcode.convention.configureKover
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.projectVersionCode
@@ -24,6 +25,7 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
 
             configureKotlinMultiplatform()
             configureComposeMultiplatform()
+            configureKover()
 
             extensions.configure<ApplicationExtension> {
                 namespace = "com.spoonofcode.poa"

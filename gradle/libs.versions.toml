@@ -144,6 +144,7 @@ navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui",
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 mokkery-runtime = { module = "dev.mokkery:mokkery-runtime", version.ref = "mokkery" }
+kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 
 [plugins]
 # --- Android / Kotlin ---
