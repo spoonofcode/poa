@@ -21,10 +21,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
-import com.spoonofcode.core.presentation.base.BaseScreen
+import androidx.compose.ui.tooling.preview.Preview
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
@@ -32,175 +34,207 @@ import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
-import com.spoonofcode.core.presentation.ext.koinViewModel
+import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.model.DailyReward
 import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 import org.jetbrains.compose.resources.stringResource
 
-internal class HomeScreen(
-    override val backNavigationEnable: Boolean = false,
-) : BaseScreen<HomeViewModel, HomeViewState, HomeViewAction>() {
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.home),
+    backNavigationEnable = false,
+)
 
-    override fun provideTopAppBarTitle() = Res.string.home
+@Composable
+internal fun HomeScreen(
+    viewModel: HomeViewModel
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+        topBarActions = { _, onAction ->
+            listOf(
+                TopBarAction(
+                    icon = Icons.Default.Notifications,
+                    description = "Notification",
+                ) { onAction(HomeViewAction.NavigateToNotifications) },
+            )
+        }
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 
-    override fun provideTopBarActions(
-        viewState: HomeViewState,
-        onAction: (HomeViewAction) -> Unit
-    ) = listOf(
-        TopBarAction(
-            icon = Icons.Default.Notifications,
-            description = "Notification",
-            badgeCount = viewState.unreadNotificationsCount,
-        ) { onAction(HomeViewAction.NavigateToNotifications) },
+@Composable
+private fun ColumnScope.Content(
+    viewState: HomeViewState,
+    onAction: (HomeViewAction) -> Unit,
+) {
+    AutoImageSlider(
+        label = stringResource(Res.string.new_partners),
+        imageLinks = viewState.partnerImageLinks,
     )
 
-    override fun provideInitAction(onAction: (HomeViewAction) -> Unit): () -> Unit =
-        { onAction(HomeViewAction.InitView) }
+    Spacers.VerticalBetweenFields()
 
-    @Composable
-    override fun provideViewModel() = koinViewModel<HomeViewModel>()
+    viewState.dailyCheckInStatus.let { status ->
+        DailyCheckInSection(
+            streak = status.streak,
+            totalPoints = viewState.totalPoints,
+            isActionAvailable = status.isAvailableNow,
+            nextCheckInTimeMillis = status.nextCheckInTimeMillis,
+            rewards = status.dailyRewards,
+            onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
+        )
+    }
+}
 
-    @OptIn(ExperimentalPermissionsApi::class)
-    @Composable
-    override fun provideContent(
-        viewState: HomeViewState,
-        onAction: (HomeViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            AutoImageSlider(
-                label = stringResource(Res.string.new_partners),
-                imageLinks = viewState.partnerImageLinks,
-            )
+@Composable
+private fun DailyCheckInSection(
+    streak: Int,
+    totalPoints: Int,
+    rewards: List<DailyReward>,
+    isActionAvailable: Boolean,
+    nextCheckInTimeMillis: Long?,
+    onCheckInClicked: () -> Unit,
+) {
+    Cards.ElevatedCard {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Texts.TMB(text = stringResource(Res.string.daily_check_in))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                HomeStatItem(
+                    label = stringResource(Res.string.your_streak),
+                    value = "$streak ${stringResource(Res.string.streak_days_count)}"
+                )
+                HomeStatItem(
+                    label = stringResource(Res.string.total_points),
+                    value = "$totalPoints ${stringResource(Res.string.points_short)}"
+                )
+            }
 
             Spacers.VerticalBetweenFields()
 
-            viewState.dailyCheckInStatus?.let { status ->
-                DailyCheckInSection(
-                    streak = status.streak,
-                    totalPoints = viewState.totalPoints,
-                    isActionAvailable = status.isAvailableNow,
-                    nextCheckInTimeMillis = status.nextCheckInTimeMillis,
-                    rewards = status.dailyRewards,
-                    onCheckInClicked = { onAction(HomeViewAction.DailyCheckIn) }
-                )
-            }
-        }
-    }
-
-    @Composable
-    internal fun DailyCheckInSection(
-        streak: Int,
-        totalPoints: Int,
-        rewards: List<DailyReward>,
-        isActionAvailable: Boolean,
-        nextCheckInTimeMillis: Long?,
-        onCheckInClicked: () -> Unit,
-    ) {
-        Cards.ElevatedCard {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                contentPadding = PaddingValues(horizontal = 4.dp)
             ) {
-                Texts.TMB(text = stringResource(Res.string.daily_check_in))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    HomeStatItem(
-                        label = stringResource(Res.string.your_streak),
-                        value = "$streak ${stringResource(Res.string.streak_days_count)}"
-                    )
-                    HomeStatItem(
-                        label = stringResource(Res.string.total_points),
-                        value = "$totalPoints ${stringResource(Res.string.points_short)}"
-                    )
+                items(rewards) { reward ->
+                    DailyRewardItem(reward = reward)
                 }
-
-                Spacers.VerticalBetweenFields()
-
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(horizontal = 4.dp)
-                ) {
-                    items(rewards) { reward ->
-                        DailyRewardItem(reward = reward)
-                    }
-                }
-
-                Spacers.VerticalBetweenFields()
-
-                if (nextCheckInTimeMillis != null && !isActionAvailable) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Texts.LSB(
-                            text = stringResource(Res.string.next_check_in),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
-                    }
-                    Spacers.VerticalBetweenFields()
-                }
-
-                Buttons.PrimaryButton(
-                    text = stringResource(Res.string.daily_check_in),
-                    onClick = onCheckInClicked,
-                    enabled = isActionAvailable,
-                    modifier = Modifier.fillMaxWidth()
-                )
             }
-        }
-    }
 
-    @Composable
-    private fun HomeStatItem(label: String, value: String) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Texts.TMB(text = value)
-            Texts.LS(text = label)
-        }
-    }
+            Spacers.VerticalBetweenFields()
 
-    @Composable
-    private fun DailyRewardItem(reward: DailyReward) {
-        val isClaimed = reward.status == DailyRewardStatus.CLAIMED
-        val isAvailable = reward.status == DailyRewardStatus.AVAILABLE_TO_CLAIM
-
-        val containerColor = if (isAvailable) {
-            MaterialTheme.colorScheme.primaryContainer
-        } else {
-            MaterialTheme.colorScheme.surface
-        }
-
-        Cards.ElevatedCard(
-            modifier = Modifier.size(width = 85.dp, height = 110.dp),
-            colors = CardDefaults.cardColors(containerColor = containerColor),
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize().padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceAround
-            ) {
-                Texts.LSB(text = stringResource(Res.string.day_number, reward.day))
-
-                Icon(
-                    imageVector = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard,
-                    contentDescription = null,
-                    tint = if (isClaimed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(28.dp)
-                )
-
-                Texts.LMB(
-                    text = "${reward.points} ${stringResource(Res.string.points_short)}",
-                    color = if (isAvailable) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
-                )
+            if (nextCheckInTimeMillis != null && !isActionAvailable) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Texts.LSB(
+                        text = stringResource(Res.string.next_check_in),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
+                }
+                Spacers.VerticalBetweenFields()
             }
+
+            Buttons.PrimaryButton(
+                text = stringResource(Res.string.daily_check_in),
+                onClick = onCheckInClicked,
+                enabled = isActionAvailable,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
 
+@Composable
+private fun HomeStatItem(label: String, value: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Texts.TMB(text = value)
+        Texts.LS(text = label)
+    }
+}
+
+@Composable
+private fun DailyRewardItem(reward: DailyReward) {
+    val isClaimed = reward.status == DailyRewardStatus.CLAIMED
+    val isAvailable = reward.status == DailyRewardStatus.AVAILABLE_TO_CLAIM
+
+    val containerColor = if (isAvailable) {
+        MaterialTheme.colorScheme.primaryContainer
+    } else {
+        MaterialTheme.colorScheme.surface
+    }
+
+    Cards.ElevatedCard(
+        modifier = Modifier.size(width = 85.dp, height = 110.dp),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround
+        ) {
+            Texts.LSB(text = stringResource(Res.string.day_number, reward.day))
+
+            Icon(
+                imageVector = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard,
+                contentDescription = null,
+                tint = if (isClaimed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(28.dp)
+            )
+
+            Texts.LMB(
+                text = "${reward.points} ${stringResource(Res.string.points_short)}",
+                color = if (isAvailable) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
+}
+
+// region previews
 @Preview
 @Composable
 private fun HomeScreenContentPreview() {
-    HomeScreen().PreviewContent(HomeViewState())
+    StandardScreenPreview(
+        viewState = ViewState.Content(
+            HomeViewState(
+                partnerImageLinks = listOf(),
+                dailyCheckInStatus = DailyCheckInStatus(
+                    streak = 1,
+                    nextCheckInTimeMillis = 1762124400000,
+                    dailyRewards = listOf(),
+                    isAvailableNow = true,
+                ),
+                totalPoints = 0,
+                unreadNotificationsCount = 0,
+            )
+        ),
+        screenConfig = screenConfig(),
+        topBarActions = { _, _ ->
+            listOf(
+                TopBarAction(
+                    icon = Icons.Default.Notifications,
+                    description = "Notification",
+                ) { },
+            )
+        }
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
 }
+// endregion

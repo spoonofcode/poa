@@ -11,9 +11,9 @@ import kotlinx.datetime.LocalDateTime
 @Immutable
 internal data class PartnerNotificationEditViewState(
     val notificationId: String? = null,
-    val notificationType: PartnerNotificationType = PartnerNotificationType.global,
-    val selectedTopics: Set<String> = emptySet(),
-    val selectedNames: Set<String> = emptySet(),
+    val notificationType: PartnerNotificationType,
+    val selectedTopics: Set<String>,
+    val selectedNames: Set<String>,
     val title: String = "",
     val text: String = "",
     val link: String = "",

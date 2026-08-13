@@ -1,28 +1,56 @@
-import com.spoonofcode.convention.applyHierarchyTemplate
+import com.android.build.api.dsl.ApplicationExtension
+import com.spoonofcode.convention.androidTargetSdk
+import com.spoonofcode.convention.applicationId
 import com.spoonofcode.convention.applyPlugin
-import com.spoonofcode.convention.configureAndroidTarget
-import com.spoonofcode.convention.configureIosTargets
-import com.spoonofcode.convention.pathToFrameworkName
+import com.spoonofcode.convention.configureAndroidCompose
+import com.spoonofcode.convention.configureComposeMultiplatform
+import com.spoonofcode.convention.configureKover
+import com.spoonofcode.convention.configureKotlinAndroid
+import com.spoonofcode.convention.configureKotlinMultiplatform
+import com.spoonofcode.convention.projectVersionCode
+import com.spoonofcode.convention.projectVersionName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class CmpApplicationConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            applyPlugin("convention-android-application-compose")
-            applyPlugin("kotlin-multiplatform")
-            applyPlugin("compose-multiplatform")
-            applyPlugin("compose-compiler")
-            applyPlugin("kotlin-serialization")
+            with(pluginManager) {
+                applyPlugin("android-application")
+                applyPlugin("kotlin-multiplatform")
+                applyPlugin("convention-kmp-serialization")
+            }
 
-            configureAndroidTarget()
-            configureIosTargets(baseName = pathToFrameworkName())
+            configureKotlinMultiplatform()
+            configureComposeMultiplatform()
+            configureKover()
 
-            extensions.configure<KotlinMultiplatformExtension> {
-                applyHierarchyTemplate()
+            extensions.configure<ApplicationExtension> {
+                namespace = "com.spoonofcode.poa"
+
+                defaultConfig {
+                    applicationId = target.applicationId
+                    targetSdk = target.androidTargetSdk
+                    versionCode = target.projectVersionCode
+                    versionName = target.projectVersionName
+                }
+
+                packaging {
+                    resources {
+                        excludes += "/META-INF/{AL2.0,LGPL2.1}"
+                    }
+                }
+
+                buildTypes {
+                    getByName("release") {
+                        isMinifyEnabled = false
+                    }
+                }
+
+                configureKotlinAndroid(this)
+                configureAndroidCompose(this)
             }
         }
     }

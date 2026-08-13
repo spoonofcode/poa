@@ -8,14 +8,13 @@ import kotlinx.coroutines.launch
 
 internal class PartnerNotificationsViewModel(
     private val getPartnerNotificationsUseCase: GetPartnerNotificationsUseCase,
-) :
-    BaseViewModel<PartnerNotificationsViewState, PartnerNotificationsViewAction>(
-        PartnerNotificationsViewState(),
-    ) {
+) : BaseViewModel<PartnerNotificationsViewState, PartnerNotificationsViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: PartnerNotificationsViewAction) {
         when (action) {
-            PartnerNotificationsViewAction.InitView -> initView()
             is PartnerNotificationsViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
@@ -27,13 +26,14 @@ internal class PartnerNotificationsViewModel(
         viewModelScope.launch {
             getPartnerNotificationsUseCase()
                 .onSuccess { partnerNotifications ->
-                    showContentView {
+                    setContentState(
                         PartnerNotificationsViewState(
                             partnerNotifications = partnerNotifications.filterNot { notification ->
                                 notification.state == NOTIFICATION_CANCELED_STATE
                             },
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -44,10 +44,8 @@ internal class PartnerNotificationsViewModel(
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationDetails(
-                        notificationId = notificationId
-                    )
+                PartnerModuleRoute.PartnerNotificationDetails(
+                    notificationId = notificationId
                 )
             )
         }

@@ -6,13 +6,11 @@ import com.spoonofcode.feature.partner.domain.usecase.GetPartnerByIdUseCase
 import kotlinx.coroutines.launch
 
 internal class PartnerDetailsViewModel(
+    private val partnerId: String,
     private val getPartnerByIdUseCase: GetPartnerByIdUseCase,
-) : BaseViewModel<PartnerDetailsViewState, PartnerDetailsViewAction>(PartnerDetailsViewState()) {
-
-    override fun onAction(action: PartnerDetailsViewAction) {
-        when (action) {
-            is PartnerDetailsViewAction.InitView -> initView(action.partnerId)
-        }
+) : BaseViewModel<PartnerDetailsViewState, PartnerDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView(partnerId)
     }
 
     private fun initView(partnerId: String) {
@@ -20,11 +18,12 @@ internal class PartnerDetailsViewModel(
         viewModelScope.launch {
             getPartnerByIdUseCase(partnerId = partnerId)
                 .onSuccess {
-                    showContentView {
-                        copy(
+                    setContentState(
+                        PartnerDetailsViewState(
                             partner = it
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

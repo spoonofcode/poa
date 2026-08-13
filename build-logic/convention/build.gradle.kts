@@ -8,10 +8,12 @@ group = "com.spoonofcode.convention.buildlogic"
 
 dependencies {
     compileOnly(libs.android.gradle.plugin)
-    compileOnly(libs.android.tools.common)
     compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.jetbrains.compose)
     compileOnly(libs.compose.gradle.plugin)
-    compileOnly(libs.ksp.gradle.plugin)
+    
+    implementation(libs.kover.gradle.plugin)
+    
     implementation(libs.buildkonfig.gradle.plugin)
     implementation(libs.buildkonfig.compiler)
 }
@@ -36,14 +38,6 @@ tasks {
 
 gradlePlugin {
     plugins {
-        register("androidApplication") {
-            id = libs.plugins.convention.android.application.asProvider().get().pluginId
-            implementationClass = "AndroidApplicationConventionPlugin"
-        }
-        register("androidComposeApplication") {
-            id = libs.plugins.convention.android.application.compose.get().pluginId
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
-        }
         register("cmpApplication") {
             id = libs.plugins.convention.cmp.application.get().pluginId
             implementationClass = "CmpApplicationConventionPlugin"
@@ -52,13 +46,21 @@ gradlePlugin {
             id = libs.plugins.convention.kmp.library.get().pluginId
             implementationClass = "KmpLibraryConventionPlugin"
         }
-        register("cmpLibrary") {
-            id = libs.plugins.convention.cmp.library.get().pluginId
-            implementationClass = "CmpLibraryConventionPlugin"
+        register("kmpDomain") {
+            id = libs.plugins.convention.kmp.domain.get().pluginId
+            implementationClass = "KmpDomainConventionPlugin"
         }
-        register("cmpFeature") {
-            id = libs.plugins.convention.cmp.feature.get().pluginId
-            implementationClass = "CmpFeatureConventionPlugin"
+        register("kmpData") {
+            id = libs.plugins.convention.kmp.data.get().pluginId
+            implementationClass = "KmpDataConventionPlugin"
+        }
+        register("cmpPresentation") {
+            id = libs.plugins.convention.cmp.presentation.get().pluginId
+            implementationClass = "CmpPresentationConventionPlugin"
+        }
+        register("kmpSerialization") {
+            id = libs.plugins.convention.kmp.serialization.get().pluginId
+            implementationClass = "KmpSerializationConventionPlugin"
         }
         register("buildKonfig") {
             id = libs.plugins.convention.buildkonfig.get().pluginId

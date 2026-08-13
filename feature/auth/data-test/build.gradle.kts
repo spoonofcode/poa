@@ -1,7 +1,7 @@
 import dev.mokkery.gradle.ApplicationRule
 
 plugins {
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.domain)
     alias(libs.plugins.mokkery)
 }
 
@@ -9,18 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.koin.core)
-                implementation(libs.kotlin.stdlib)
-
                 implementation(projects.feature.auth.domain)
-                implementation(projects.core.data)
-                implementation(libs.koin.core)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
             }
         }
     }

@@ -29,17 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.profile.domain.model.Profile
-import com.spoonofcode.feature.profile.presentation.ProfilePreviewParameterProvider
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.cancel
 import com.spoonofcode.feature.profile.presentation.faq
@@ -53,51 +53,60 @@ import com.spoonofcode.feature.profile.presentation.taggy_go_logo
 import com.spoonofcode.feature.profile.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 
-internal class ProfileDetailsScreen(
-    override val backNavigationEnable: Boolean = false,
-) : BaseScreen<ProfileDetailsViewModel, ProfileDetailsViewState, ProfileDetailsViewAction>() {
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.profile),
+    backNavigationEnable = false,
+)
 
-    override fun provideTopAppBarTitle() = Res.string.profile
-
-    override fun provideInitAction(onAction: (ProfileDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(ProfileDetailsViewAction.InitView) }
-
-    @Composable
-    override fun provideViewModel() = koinViewModel<ProfileDetailsViewModel>()
-
-    @Composable
-    override fun provideContent(
-        viewState: ProfileDetailsViewState,
-        onAction: (ProfileDetailsViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
+@Composable
+internal fun ProfileDetailsScreen(
+    viewModel: ProfileDetailsViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+        dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
+        }
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 
-            val profile = requireNotNull(viewState.profile)
+@Composable
+private fun ColumnScope.Content(
+    viewState: ProfileDetailsViewState,
+    onAction: (ProfileDetailsViewAction) -> Unit,
+) {
+    val profile = requireNotNull(viewState.profile)
 
-            // 1. Profile Header
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+    // 1. Profile Header
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
 
-                Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
+        Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
 
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Texts.HSB(
-                        text = profile.email,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Spacers.VerticalBetweenFields()
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Texts.HSB(
+                text = profile.email,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacers.VerticalBetweenFields()
 
-                    // TODO #137-Add edit profile
+            // TODO #137-Add edit profile
 //                    Buttons.PrimaryButton(
 //                        text = stringResource(Res.string.edit_profile),
 //                        fillMaxWidth = false,
 //                        onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
 //                    )
-                }
-            }
+        }
+    }
 
 //            Row(
 //                modifier = Modifier.fillMaxWidth(),
@@ -109,78 +118,65 @@ internal class ProfileDetailsScreen(
 //                )
 //            }
 
-            Spacers.VerticalBetweenFields()
+    Spacers.VerticalBetweenFields()
 
-            if (viewState.partnerPanelVisible) {
-                Cards.ElevatedCard {
-                    ChevronItem(
-                        icon = Icons.Default.Person,
-                        title = stringResource(Res.string.partner_panel),
-                        onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) }
-                    )
-                }
-            }
-
-            Cards.ElevatedCard {
-                ChevronItem(
-                    icon = Icons.Default.Notifications,
-                    title = stringResource(Res.string.notifications),
-                    onClick = { onAction(ProfileDetailsViewAction.NavigateToNotificationSettings) }
-                )
-                DividerItem()
-                ChevronItem(
-                    icon = Icons.Default.Description,
-                    title = stringResource(Res.string.terms_and_conditions),
-                    onClick = { onAction(ProfileDetailsViewAction.NavigateToTAC) }
-                )
-                DividerItem()
-                ChevronItem(
-                    icon = Icons.AutoMirrored.Filled.Help,
-                    title = stringResource(Res.string.faq),
-                    onClick = { onAction(ProfileDetailsViewAction.NavigateToFAQ) }
-                )
-            }
-
-            Cards.ElevatedCard {
-                ChevronItem(
-                    icon = Icons.AutoMirrored.Filled.Logout,
-                    title = stringResource(Res.string.logout),
-                    titleColor = MaterialTheme.colorScheme.error,
-                    iconTint = MaterialTheme.colorScheme.error,
-                    onClick = { onAction(ProfileDetailsViewAction.Logout) }
-                )
-            }
-
-            Spacer(Modifier.height(32.dp))
-        }
-    }
-
-    @Composable
-    private fun Dialogs(
-        viewState: ProfileDetailsViewState,
-        onAction: (ProfileDetailsViewAction) -> Unit
-    ) {
-        if (viewState.isLogoutDialogVisible) {
-            Dialogs.AlertDialog(
-                title = stringResource(Res.string.logout_dialog_title),
-                text = stringResource(Res.string.logout_dialog_text),
-                confirmButtonText = stringResource(Res.string.logout),
-                dismissButtonText = stringResource(Res.string.cancel),
-                confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
-                dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
+    if (viewState.partnerPanelVisible) {
+        Cards.ElevatedCard {
+            ChevronItem(
+                icon = Icons.Default.Person,
+                title = stringResource(Res.string.partner_panel),
+                onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) }
             )
         }
     }
 
-    @Composable
-    private fun ProfileStatItem(label: String, value: String) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Texts.TLB(text = value)
-            Texts.LM(
-                text = label,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+    Cards.ElevatedCard {
+        ChevronItem(
+            icon = Icons.Default.Notifications,
+            title = stringResource(Res.string.notifications),
+            onClick = { onAction(ProfileDetailsViewAction.NavigateToNotificationSettings) }
+        )
+        DividerItem()
+        ChevronItem(
+            icon = Icons.Default.Description,
+            title = stringResource(Res.string.terms_and_conditions),
+            onClick = { onAction(ProfileDetailsViewAction.NavigateToTAC) }
+        )
+        DividerItem()
+        ChevronItem(
+            icon = Icons.AutoMirrored.Filled.Help,
+            title = stringResource(Res.string.faq),
+            onClick = { onAction(ProfileDetailsViewAction.NavigateToFAQ) }
+        )
+    }
+
+    Cards.ElevatedCard {
+        ChevronItem(
+            icon = Icons.AutoMirrored.Filled.Logout,
+            title = stringResource(Res.string.logout),
+            titleColor = MaterialTheme.colorScheme.error,
+            iconTint = MaterialTheme.colorScheme.error,
+            onClick = { onAction(ProfileDetailsViewAction.Logout) }
+        )
+    }
+
+    Spacer(Modifier.height(32.dp))
+}
+
+@Composable
+private fun Dialogs(
+    viewState: ProfileDetailsViewState,
+    onAction: (ProfileDetailsViewAction) -> Unit
+) {
+    if (viewState.isLogoutDialogVisible) {
+        Dialogs.AlertDialog(
+            title = stringResource(Res.string.logout_dialog_title),
+            text = stringResource(Res.string.logout_dialog_text),
+            confirmButtonText = stringResource(Res.string.logout),
+            dismissButtonText = stringResource(Res.string.cancel),
+            confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
+            dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
+        )
     }
 }
 
@@ -247,14 +243,24 @@ private fun DividerItem() {
 // region previews
 @Preview
 @Composable
-private fun ProfileScreenContentPreview(
-    @PreviewParameter(ProfilePreviewParameterProvider::class)
-    profile: Profile,
-) {
-    ProfileDetailsScreen().PreviewContent(
-        ProfileDetailsViewState(
-            profile = profile,
+private fun ProfileDetailsScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(
+            ProfileDetailsViewState(
+                profile = Profile(
+                    id = "1",
+                    email = "exmaple.mail.1@gmail.com",
+                    roles = listOf("user", "partner"),
+                ),
+                partnerPanelVisible = true,
+            )
+        ),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
         )
-    )
+    }
 }
 // endregion

@@ -3,15 +3,12 @@ package com.spoonofcode.poa.app
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.core.presentation.compose.LoadingView
-import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
 import com.spoonofcode.core.presentation.theme.AppTheme
 import com.spoonofcode.feature.appnavigation.AuthModuleRoute
+import com.spoonofcode.feature.appnavigation.HomeModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
-import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -19,51 +16,44 @@ fun App(
     notificationId: String?,
     viewModel: AppViewModel = koinViewModel()
 ) {
-    val routeResolver: VoyagerRouteResolver = getKoin().get()
-
     val state by viewModel.state.collectAsState()
 
-    AppTheme {
-        when (val currentState = state) {
-            is AppViewState.Loading -> {
-                LoadingView()
-            }
+    PlatformBackHandlerSupport {
+        AppTheme {
+            when (val currentState = state) {
+                is AppViewState.Loading -> {
+                    LoadingView()
+                }
 
-            is AppViewState.LoggedIn, is AppViewState.LoggedOut -> {
-                Navigator(
-                    screens = getStartScreens(
-                        sessionInitialized = currentState is AppViewState.LoggedIn,
-                        notificationId = notificationId,
-                        routeResolver = routeResolver
+                is AppViewState.LoggedIn, is AppViewState.LoggedOut -> {
+                    MainAppScreen(
+                        initialRoutes = getStartRoutes(
+                            sessionInitialized = currentState is AppViewState.LoggedIn,
+                            notificationId = notificationId
+                        )
                     )
-                ) { navigator ->
-                    SlideTransition(navigator = navigator)
                 }
             }
         }
     }
 }
 
-@Composable
-private fun getStartScreens(
+private fun getStartRoutes(
     sessionInitialized: Boolean,
-    notificationId: String?,
-    routeResolver: VoyagerRouteResolver
-): List<Screen> =
+    notificationId: String?
+): List<NavKey> =
     if (sessionInitialized) {
         if (notificationId.isNullOrEmpty()) {
-            listOf(MainHostScreen())
+            listOf(HomeModuleRoute.Home)
         } else {
             listOf(
-                MainHostScreen(),
-                routeResolver.resolve(NotificationModuleRoute.NotificationOverview),
-                routeResolver.resolve(
-                    NotificationModuleRoute.NotificationDetails(
-                        notificationId = notificationId
-                    )
+                HomeModuleRoute.Home,
+                NotificationModuleRoute.NotificationOverview,
+                NotificationModuleRoute.NotificationDetails(
+                    notificationId = notificationId
                 ),
             )
         }
     } else {
-        listOf(routeResolver.resolve(AuthModuleRoute.Login))
+        listOf(AuthModuleRoute.Login)
     }

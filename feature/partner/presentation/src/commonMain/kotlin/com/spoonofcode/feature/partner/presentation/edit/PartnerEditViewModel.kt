@@ -10,7 +10,10 @@ import kotlinx.coroutines.launch
 internal class PartnerEditViewModel(
     private val getPartnerUseCase: GetPartnerUseCase,
     private val updatePartnerUseCase: UpdatePartnerUseCase
-) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction>(PartnerEditViewState()) {
+) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: PartnerEditViewAction) {
         when (action) {
@@ -21,7 +24,6 @@ internal class PartnerEditViewModel(
             is PartnerEditViewAction.ChangeWebsiteLink -> changeWebsiteLink(action.link)
             is PartnerEditViewAction.ChangeXLink -> changeXLink(action.link)
             is PartnerEditViewAction.ChangeYoutubeLink -> changeYoutubeLink(action.link)
-            is PartnerEditViewAction.InitView -> initView()
             PartnerEditViewAction.SaveChanges -> saveChanges()
         }
     }
@@ -31,11 +33,12 @@ internal class PartnerEditViewModel(
         viewModelScope.launch {
             getPartnerUseCase()
                 .onSuccess {
-                    showContentView {
-                        copy(
+                    setContentState(
+                        PartnerEditViewState(
                             partner = it
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -44,31 +47,31 @@ internal class PartnerEditViewModel(
     }
 
     private fun changeName(name: String) {
-        updateState { copy(partner = getCurrentPartner().copy(name = name)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(name = name)) }
     }
 
     private fun changeDescription(description: String) {
-        updateState { copy(partner = getCurrentPartner().copy(description = description)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(description = description)) }
     }
 
     private fun changeWebsiteLink(link: String) {
-        updateState { copy(partner = getCurrentPartner().copy(websiteLink = link)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(websiteLink = link)) }
     }
 
     private fun changeInstagramLink(link: String) {
-        updateState { copy(partner = getCurrentPartner().copy(instagramLink = link)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(instagramLink = link)) }
     }
 
     private fun changeFacebookLink(link: String) {
-        updateState { copy(partner = getCurrentPartner().copy(facebookLink = link)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(facebookLink = link)) }
     }
 
     private fun changeYoutubeLink(link: String) {
-        updateState { copy(partner = getCurrentPartner().copy(youtubeLink = link)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(youtubeLink = link)) }
     }
 
     private fun changeXLink(link: String) {
-        updateState { copy(partner = getCurrentPartner().copy(xLink = link)) }
+        updateContentState { copy(partner = getCurrentPartner().copy(xLink = link)) }
     }
 
     private fun saveChanges() {
@@ -84,5 +87,5 @@ internal class PartnerEditViewModel(
         }
     }
 
-    private fun getCurrentPartner(): Partner = requireNotNull(currentState().partner)
+    private fun getCurrentPartner(): Partner = requireNotNull(currentContentState().partner)
 }

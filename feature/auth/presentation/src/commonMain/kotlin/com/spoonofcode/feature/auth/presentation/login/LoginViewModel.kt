@@ -2,22 +2,21 @@ package com.spoonofcode.feature.auth.presentation.login
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.feature.appnavigation.AuthModuleRoute
+import com.spoonofcode.feature.appnavigation.HomeModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.domain.usecase.LoginGoogleUseCase
 import com.spoonofcode.feature.auth.domain.usecase.LoginRequestCodeUseCase
-import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
 import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 import kotlinx.coroutines.launch
 
 internal class LoginViewModel(
     private val loginGoogleUseCase: LoginGoogleUseCase,
     private val loginRequestCodeUseCase: LoginRequestCodeUseCase,
-) : BaseViewModel<LoginViewState, LoginViewAction>(
-    initialViewState = LoginViewState(),
-    initialScreenState = ScreenState.CONTENT,
+) : BaseViewModel<LoginViewState, LoginViewAction, Nothing>(
+    initialViewState = ViewState.Content(LoginViewState()),
 ) {
 
     override fun onAction(action: LoginViewAction) {
@@ -29,7 +28,7 @@ internal class LoginViewModel(
     }
 
     private fun changeEmail(email: String) {
-        updateState {
+        updateContentState {
             LoginViewState(
                 email = email,
                 isSignInButtonEnable = isValidEmail(email),
@@ -41,11 +40,11 @@ internal class LoginViewModel(
         viewModelScope.launch {
             showLoadingView()
             loginRequestCodeUseCase(
-                email = currentState().email,
+                email = currentContentState().email,
             ).onSuccess {
-                viewModelNavigator.push(LoginCodeScreen(email = currentState().email))
+                viewModelNavigator.push(AuthModuleRoute.LoginCode(email = currentContentState().email))
             }.onFailure {
-                showErrorSnackbar(it)
+                it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
@@ -58,21 +57,17 @@ internal class LoginViewModel(
                 .onSuccess {
                     viewModelNavigator.replaceAll(
                         listOf(
-                            routeResolver.resolve(AppModuleRoute.MainHost),
-                            routeResolver.resolve(
-                                NotificationModuleRoute.NotificationSettings(
-                                    backNavigationEnabled = false
-                                )
+                            HomeModuleRoute.Home,
+                            NotificationModuleRoute.NotificationSettings(
+                                backNavigationEnabled = false
                             ),
-                            routeResolver.resolve(
-                                TACModuleRoute.TAC(
-                                    backNavigationEnabled = false
-                                )
+                            TACModuleRoute.TAC(
+                                backNavigationEnabled = false
                             ),
                         )
                     )
                 }.onFailure {
-                    showErrorSnackbar(it)
+                    it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }
     }

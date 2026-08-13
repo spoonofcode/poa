@@ -1,20 +1,25 @@
 package com.spoonofcode.feature.auth.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
+import com.spoonofcode.core.presentation.navigation.viewModelEntry
 import com.spoonofcode.feature.appnavigation.AuthModuleRoute
-import com.spoonofcode.feature.appnavigation.ModuleRoute
 import com.spoonofcode.feature.auth.presentation.login.LoginScreen
 import com.spoonofcode.feature.auth.presentation.logincode.LoginCodeScreen
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
-class AuthModuleRouteResolver : ModuleRouteResolver<AuthModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? AuthModuleRoute)?.let {
-            when (it) {
-                AuthModuleRoute.Login -> LoginScreen()
-                is AuthModuleRoute.LoginCode -> LoginCodeScreen(
-                    email = it.email,
-                )
-            }
-        }
+fun EntryProviderScope<NavKey>.authModuleRouteResolver() {
+    viewModelEntry<AuthModuleRoute.Login> {
+        LoginScreen(
+            viewModel = koinViewModel()
+        )
+    }
+    viewModelEntry<AuthModuleRoute.LoginCode> {
+        LoginCodeScreen(
+            viewModel = koinViewModel(
+                parameters = { parametersOf(it.email) }
+            )
+        )
+    }
 }

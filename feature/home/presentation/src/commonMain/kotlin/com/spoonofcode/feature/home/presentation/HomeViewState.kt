@@ -6,8 +6,8 @@ import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 
 @Immutable
 internal data class HomeViewState(
-    val partnerImageLinks: List<String> = emptyList(),
-    val dailyCheckInStatus: DailyCheckInStatus? = null,
-    val totalPoints: Int = 0,
-    val unreadNotificationsCount: Int = 0,
+    val partnerImageLinks: List<String>,
+    val dailyCheckInStatus: DailyCheckInStatus,
+    val totalPoints: Int,
+    val unreadNotificationsCount: Int,
 ) : BaseViewState()

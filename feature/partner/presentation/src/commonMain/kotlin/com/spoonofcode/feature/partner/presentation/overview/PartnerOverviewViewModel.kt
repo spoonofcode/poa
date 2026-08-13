@@ -2,11 +2,12 @@ package com.spoonofcode.feature.partner.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCategoriesUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByPartnerCategoryUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersFilteredByTextUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnersUseCase
-import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -15,13 +16,15 @@ internal class PartnerOverviewViewModel(
     private val getPartnersFilteredByPartnerCategoryUseCase: GetPartnersFilteredByPartnerCategoryUseCase,
     private val getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase,
     private val getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase,
-) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction>(PartnerOverviewViewState()) {
+) : BaseViewModel<PartnerOverviewViewState, PartnerOverviewViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: PartnerOverviewViewAction) {
         when (action) {
             is PartnerOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
             is PartnerOverviewViewAction.ClickCategory -> clickCategory(action.categoryName)
-            PartnerOverviewViewAction.InitView -> initView()
             is PartnerOverviewViewAction.SelectPartner -> selectPartner(action.partnerId)
         }
     }
@@ -37,13 +40,14 @@ internal class PartnerOverviewViewModel(
                 val categories = categoriesDeferred.await().getOrThrow()
                 partners to categories
             }.onSuccess { (partners, categories) ->
-                showContentView {
-                    copy(
+                setContentState(
+                    PartnerOverviewViewState(
                         initPartners = partners,
                         filteredPartners = partners,
                         partnerCategories = categories,
                     )
-                }
+                )
+                showContentView()
             }.onFailure {
                 showErrorView()
             }
@@ -51,7 +55,7 @@ internal class PartnerOverviewViewModel(
     }
 
     private fun clickCategory(categoryName: String) {
-        updateState {
+        updateContentState {
             val newSelectedCategories = if (selectedPartnerCategories.contains(categoryName)) {
                 selectedPartnerCategories - categoryName
             } else {
@@ -63,12 +67,12 @@ internal class PartnerOverviewViewModel(
     }
 
     private fun changeSearchText(searchText: String) {
-        updateState { copy(searchText = searchText) }
+        updateContentState { copy(searchText = searchText) }
         applyFilters()
     }
 
     private fun applyFilters() {
-        val currentState = currentState()
+        val currentState = currentContentState()
 
         var filtered = currentState.initPartners
 
@@ -82,7 +86,7 @@ internal class PartnerOverviewViewModel(
             partners = filtered
         )
 
-        updateState {
+        updateContentState {
             copy(filteredPartners = filtered)
         }
     }
@@ -90,9 +94,7 @@ internal class PartnerOverviewViewModel(
     private fun selectPartner(partnerId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                PartnerDetailsScreen(
-                    partnerId = partnerId
-                )
+                PartnerModuleRoute.PartnerDetails(partnerId = partnerId),
             )
         }
     }

@@ -1,94 +1,102 @@
 package com.spoonofcode.core.presentation.base
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.spoonofcode.core.presentation.network.NetworkManager
-import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
+import com.spoonofcode.core.data.ext.DEFAULT_STOP_TIMEOUT_MILLIS
+import com.spoonofcode.core.data.ext.stateInWhileSubscribed
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
-import com.spoonofcode.core.presentation.navigation.route.VoyagerRouteResolver
+import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
+import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform.getKoin
 
-abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
-    initialViewState: VS,
-    initialScreenState: ScreenState = ScreenState.LOADING // Start Screen with LoadingView
-) : ViewModel() {
+/**
+ * Base ViewModel implementation for Unidirectional Data Flow.
+ *
+ * @param VS The type representing the View State.
+ * @param VA The type representing User Actions.
+ * @param VE The type representing One-off View Events.
+ */
+abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent>(
+    protected val initialViewState: ViewState<VS> = ViewState.Initial,
+    protected val viewStateStopTimeoutMillis: Long = DEFAULT_STOP_TIMEOUT_MILLIS,
+    protected val autoReloadData: Boolean = false,
+) :
+    ViewModel() {
+
+    private var hasLoadedInitialData = false
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     protected val networkManager: NetworkManager by getKoin().inject()
-    protected val routeResolver: VoyagerRouteResolver by getKoin().inject()
+    protected val poaLogger: POALogger by getKoin().inject()
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
-    private val _viewState = MutableStateFlow(ViewState(initialViewState, initialScreenState))
-    val viewState = _viewState.asStateFlow()
-
     private val _isOnline = MutableStateFlow(false)
+
+    private val _viewContentState = MutableStateFlow(
+        if (initialViewState is ViewState.Content) initialViewState.data else null
+    )
+    protected val viewContentState: StateFlow<VS?> = _viewContentState.asStateFlow()
+
+    private enum class ViewStatus { INITIAL, LOADING, ERROR, CONTENT }
+
+    private val _viewStatus = MutableStateFlow(
+        if (initialViewState is ViewState.Content) ViewStatus.CONTENT else ViewStatus.INITIAL
+    )
+    private val viewStatus = _viewStatus.asStateFlow()
+
+    val viewState: StateFlow<ViewState<VS>> = combine(
+        viewContentState,
+        viewStatus
+    ) { content, status ->
+        when (status) {
+            ViewStatus.INITIAL -> initialViewState
+            ViewStatus.LOADING -> ViewState.Loading
+            ViewStatus.ERROR -> ViewState.Error
+            ViewStatus.CONTENT -> {
+                if (content != null) ViewState.Content(content) else initialViewState
+            }
+        }
+    }.stateInWhileSubscribed(
+        initialValue = initialViewState,
+        onStart = {
+            isUiSubscribed = true
+            if (autoReloadData) {
+                onStartAction()
+            } else if (!hasLoadedInitialData) {
+                onStartAction()
+                hasLoadedInitialData = true
+            }
+        },
+        onCompletion = {
+            isUiSubscribed = false
+        },
+        stopTimeoutMillis = viewStateStopTimeoutMillis,
+    )
+
+    private val _viewEvent = MutableSharedFlow<VE>()
+    val viewEvent = _viewEvent.asSharedFlow()
 
     private val _snackbarEvent = MutableSharedFlow<SnackbarEvent>()
     val snackbarEvent = _snackbarEvent.asSharedFlow()
 
-    init {
-        observeNetworkState()
-    }
-
-    open fun onAction(action: VA) {}
-
-    open fun navigateBack() {
-        viewModelScope.launch {
-            viewModelNavigator.pop()
-        }
-    }
-
-    fun currentState(): VS = viewState.value.data
-
-    fun updateState(
-        transformation: VS.() -> VS,
-    ) {
-        _viewState.update { it.copy(data = it.data.transformation()) }
-    }
-
-    fun showSnackbar(snackbarEvent: SnackbarEvent) {
-        viewModelScope.launch {
-            _snackbarEvent.emit(snackbarEvent)
-        }
-    }
-
-    protected fun showLoadingView() {
-        _viewState.update { it.copy(screenState = ScreenState.LOADING) }
-    }
-
-    protected fun showErrorView() {
-        _viewState.update { it.copy(screenState = ScreenState.ERROR) }
-    }
-
-    protected fun showContentView(
-        transformation: VS.() -> VS,
-    ) {
-        _viewState.update {
-            it.copy(
-                screenState = ScreenState.CONTENT,
-                data = it.data.transformation(),
-            )
-        }
-    }
-
-    protected fun showErrorSnackbar(e: Throwable) {
-        showSnackbar(SnackbarEvent.Error(message = "ERROR: $e"))
-//        showSnackbar(SnackbarEvent.Error(message = "Something went wrong. Please try again later."))
-        _viewState.update {
-            it.copy(screenState = ScreenState.CONTENT)
-        }
-    }
+    private var networkStateInitialized = false
 
     @OptIn(FlowPreview::class)
     private fun observeNetworkState() {
@@ -114,6 +122,93 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction>(
                         }
                     }
                 }
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal var isUiSubscribed = false
+
+    open fun onAction(action: VA) {}
+
+    open fun navigateBack() {
+        viewModelScope.launch {
+            viewModelNavigator.pop()
+        }
+    }
+
+    protected open val startAction: (() -> Unit)? get() = null
+    internal fun onStartAction(manualStart: Boolean = false) {
+        // Check isUiSubscribed to avoid double start action
+        if (autoReloadData && manualStart && !isUiSubscribed) return
+        poaLogger.debug("${this::class.simpleName}: onStartAction(manualStart=$manualStart)")
+        startAction?.invoke()
+    }
+
+    protected fun setContentState(data: VS) {
+        poaLogger.debug("${this::class.simpleName}: setContentState: $data")
+        _viewContentState.value = data
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    protected fun updateContentState(transformation: VS.() -> VS) {
+        if (viewContentState.value != null) {
+            _viewContentState.update { currentViewState ->
+                val newState = currentViewState?.transformation()
+                poaLogger.debug("${this::class.simpleName}: updateContentState: $newState")
+                newState ?: currentViewState
+            }
+        } else {
+            poaLogger.warn("${this::class.simpleName}: updateContentState skipped: content state is null")
+        }
+    }
+
+    protected fun currentContentState(): VS = requireNotNull(viewContentState.value)
+
+    protected fun withContentState(action: VS.() -> Unit) {
+        val state = viewContentState.value
+        if (state != null) {
+            action(state)
+        } else {
+            // This should never have happened
+            poaLogger.warn("${this::class.simpleName}: Action skipped: content state is null and can not be used")
+        }
+    }
+
+    protected fun showLoadingView() {
+        poaLogger.debug("${this::class.simpleName}: Showing Loading View")
+        _viewStatus.value = ViewStatus.LOADING
+    }
+
+    protected fun showErrorView() {
+        poaLogger.debug("${this::class.simpleName}: Showing Error View")
+        _viewStatus.value = ViewStatus.ERROR
+    }
+
+    protected fun showContentView() {
+        poaLogger.debug("${this::class.simpleName}: Showing Content View")
+        _viewStatus.value = ViewStatus.CONTENT
+    }
+
+    protected fun showSnackbar(snackbarEvent: SnackbarEvent) {
+        viewModelScope.launch {
+            _snackbarEvent.emit(snackbarEvent)
+        }
+    }
+
+    protected fun showErrorSnackbar(message: String) {
+        poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
+        showSnackbar(SnackbarEvent.Error(message = message))
+    }
+
+    protected fun showSuccessSnackbar(message: String) {
+        poaLogger.debug("${this::class.simpleName}: Success Snackbar: $message")
+        showSnackbar(SnackbarEvent.Success(message = message))
+    }
+
+    protected fun emitEvent(event: VE) {
+        poaLogger.debug("${this::class.simpleName}: emitEvent: $event")
+        viewModelScope.launch {
+            _viewEvent.emit(event)
         }
     }
 }

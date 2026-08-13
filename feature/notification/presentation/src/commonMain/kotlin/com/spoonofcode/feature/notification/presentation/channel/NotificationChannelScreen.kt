@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification_channels
 import com.spoonofcode.feature.notification.presentation.notification_email
@@ -23,57 +25,66 @@ import com.spoonofcode.feature.notification.presentation.notification_push
 import com.spoonofcode.feature.notification.presentation.notification_tel_and_sms
 import org.jetbrains.compose.resources.stringResource
 
-internal class NotificationChannelScreen :
-    BaseScreen<NotificationChannelViewModel, NotificationChannelViewState, NotificationChannelViewAction>() {
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notification_channels),
+)
 
-    override fun provideTopAppBarTitle() = Res.string.notification_channels
+@Composable
+internal fun NotificationChannelScreen(
+    viewModel: NotificationChannelViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
+}
 
-    @Composable
-    override fun provideViewModel() = koinViewModel<NotificationChannelViewModel>()
+@Composable
+private fun ColumnScope.Content(
+    viewState: NotificationChannelViewState,
+    onAction: (NotificationChannelViewAction) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        IconTextButton(
+            icon = Icons.Default.Notifications,
+            text = stringResource(resource = Res.string.notification_push),
+            onClick = { onAction(NotificationChannelViewAction.SelectNotificationPush) },
+            modifier = Modifier.weight(1f),
+        )
 
-    @Composable
-    override fun provideContent(
-        viewState: NotificationChannelViewState,
-        onAction: (NotificationChannelViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                IconTextButton(
-                    icon = Icons.Default.Notifications,
-                    text = stringResource(resource = Res.string.notification_push),
-                    onClick = { onAction(NotificationChannelViewAction.SelectNotificationPush) },
-                    modifier = Modifier.weight(1f),
-                )
+        IconTextButton(
+            icon = Icons.Default.Email,
+            text = stringResource(resource = Res.string.notification_email),
+            onClick = { },
+            modifier = Modifier.weight(1f),
+            enabled = viewState.buttonEmailEnable,
+        )
+    }
 
-                IconTextButton(
-                    icon = Icons.Default.Email,
-                    text = stringResource(resource = Res.string.notification_email),
-                    onClick = { },
-                    modifier = Modifier.weight(1f),
-                    enabled = viewState.buttonEmailEnable,
-                )
-            }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        IconTextButton(
+            icon = Icons.Default.Sms,
+            text = stringResource(resource = Res.string.notification_tel_and_sms),
+            onClick = { },
+            modifier = Modifier.weight(1f),
+            enabled = viewState.buttonTelAndSmsEnable,
+        )
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                IconTextButton(
-                    icon = Icons.Default.Sms,
-                    text = stringResource(resource = Res.string.notification_tel_and_sms),
-                    onClick = { },
-                    modifier = Modifier.weight(1f),
-                    enabled = viewState.buttonTelAndSmsEnable,
-                )
-
-                Box(
-                    modifier = Modifier.weight(1f),
-                )
-            }
-        }
+        Box(
+            modifier = Modifier.weight(1f),
+        )
     }
 }
 
@@ -81,9 +92,14 @@ internal class NotificationChannelScreen :
 @Preview
 @Composable
 private fun NotificationChannelScreenContentPreview() {
-    NotificationChannelScreen()
-        .PreviewContent(
-            NotificationChannelViewState()
+    StandardScreenPreview(
+        viewState = ViewState.Content(NotificationChannelViewState()),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
         )
+    }
 }
 // endregion

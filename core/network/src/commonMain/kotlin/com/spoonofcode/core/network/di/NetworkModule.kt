@@ -1,7 +1,7 @@
 package com.spoonofcode.core.network.di
 
-import com.spoonofcode.core.data.logging.KermitLogger
-import com.spoonofcode.core.data.logging.POALogger
+import com.spoonofcode.core.logging.KermitLogger
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.network.HttpClientFactory
 import com.spoonofcode.core.network.HttpLogoutHandler
 import com.spoonofcode.core.network.NetworkConfig
@@ -21,5 +21,5 @@ val networkModule: Module = module {
     single {
         HttpClientFactory(get(), get(), get()).create()
     }
-    factory<LogoutHandler> { HttpLogoutHandler() }
+    factoryOf(::HttpLogoutHandler) bind LogoutHandler::class
 }

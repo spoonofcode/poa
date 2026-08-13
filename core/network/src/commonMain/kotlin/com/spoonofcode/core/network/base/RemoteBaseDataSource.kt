@@ -1,6 +1,7 @@
 package com.spoonofcode.core.network.base
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.network.HttpStatusCodes
 import com.spoonofcode.core.network.NetworkConfig
 import io.ktor.client.HttpClient
@@ -25,6 +26,7 @@ abstract class RemoteBaseDataSource(
     val httpClient: HttpClient by getKoin().inject()
     val networkConfig: NetworkConfig by getKoin().inject()
     val dispatcherProvider: DispatcherProvider by getKoin().inject()
+    val poaLogger: POALogger by getKoin().inject()
 
     suspend inline fun <reified T> doRequest(
         urlPostfixPath: String = "",
@@ -33,12 +35,14 @@ abstract class RemoteBaseDataSource(
         requestBody: Any? = null,
         markAsRefreshTokenRequest: Boolean = false,
     ): Result<T> = withContext(dispatcherProvider.io()) {
+        val urlString =
+            if (urlPostfixPath.isNotEmpty())
+                "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
+            else
+                "${networkConfig.baseUrl}/$collectionName"
+
         try {
-            val urlString =
-                if (urlPostfixPath.isNotEmpty())
-                    "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
-                else
-                    "${networkConfig.baseUrl}/$collectionName"
+            poaLogger.debug("RemoteBaseDataSource: Request $method $urlString")
 
             val requestBuilder: HttpRequestBuilder.() -> Unit = {
                 contentType(ContentType.Application.Json)
@@ -57,9 +61,12 @@ abstract class RemoteBaseDataSource(
             }
 
             val response = httpClient.request(requestBuilder)
-
-            Result.success(responseOrException(response).body(typeInfo<T>()))
+            val validatedResponse = responseOrException(response)
+            
+            poaLogger.debug("RemoteBaseDataSource: Success $method $urlString")
+            Result.success(validatedResponse.body(typeInfo<T>()))
         } catch (e: Exception) {
+            poaLogger.error("RemoteBaseDataSource: Error $method $urlString", e)
             Result.failure(e)
         }
     }

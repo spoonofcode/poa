@@ -1,8 +1,9 @@
 package com.spoonofcode.feature.scan.nfc.data.remote
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.network.HttpStatusCodes
-import com.spoonofcode.feature.scan.nfc.data.remote.model.NFCTagResponse
+import com.spoonofcode.feature.scan.nfc.data.model.NFCTagResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -19,6 +20,7 @@ import kotlinx.coroutines.withContext
 class RemoteNFCTagDataSource(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,
+    private val poaLogger: POALogger,
 ) {
     suspend fun readNFCTagPublicId(url: String): Result<NFCTagResponse> {
         val formattedUrl = if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -26,6 +28,8 @@ class RemoteNFCTagDataSource(
         } else {
             url
         }.filterNot { it.isWhitespace() || it.isISOControl() }
+
+        poaLogger.info("RemoteNFCTagDataSource: Reading NFC tag from URL: $formattedUrl")
 
         return doRequest(
             urlString = formattedUrl,
@@ -51,9 +55,12 @@ class RemoteNFCTagDataSource(
             }
 
             val response = httpClient.request(requestBuilder)
-
-            Result.success(responseOrException(response).body(typeInfo<T>()))
+            val resultBody = responseOrException(response).body(typeInfo<T>()) as T
+            
+            poaLogger.debug("RemoteNFCTagDataSource: Request successful for $urlString")
+            Result.success(resultBody)
         } catch (e: Exception) {
+            poaLogger.error("RemoteNFCTagDataSource: Request failed for $urlString", e)
             Result.failure(e)
         }
     }

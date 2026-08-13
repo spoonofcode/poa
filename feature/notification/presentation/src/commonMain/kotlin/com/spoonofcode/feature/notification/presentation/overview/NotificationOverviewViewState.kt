@@ -6,6 +6,6 @@ import com.spoonofcode.feature.notification.domain.model.Notification
 
 @Immutable
 internal data class NotificationOverviewViewState(
-    val notifications: List<Notification> = emptyList(),
+    val notifications: List<Notification>,
 ) : BaseViewState()
 

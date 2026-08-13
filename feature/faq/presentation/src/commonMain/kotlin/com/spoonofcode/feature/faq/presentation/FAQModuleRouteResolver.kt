@@ -1,15 +1,14 @@
 package com.spoonofcode.feature.faq.presentation
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.feature.appnavigation.FAQModuleRoute
-import com.spoonofcode.feature.appnavigation.ModuleRoute
+import org.koin.compose.viewmodel.koinViewModel
 
-class FAQModuleRouteResolver : ModuleRouteResolver<FAQModuleRoute> {
-    override fun resolve(moduleRoute: ModuleRoute): Screen? =
-        (moduleRoute as? FAQModuleRoute)?.let {
-            when (it) {
-                FAQModuleRoute.FAQ -> FAQScreen()
-            }
-        }
+fun EntryProviderScope<NavKey>.faqModuleRouteResolver() {
+    entry<FAQModuleRoute.FAQ> {
+        FAQScreen(
+            viewModel = koinViewModel()
+        )
+    }
 }

@@ -1,43 +1,19 @@
 plugins {
     alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.serialization)
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                // TODO #132 Optimize dependecies
+                api(projects.core.logging)
+                api(libs.koin.core)
                 api(libs.kotlinx.datetime)
+                api(libs.ksafe)
                 api(libs.ktor.client.core)
-
-                implementation(libs.kotlin.stdlib)
-
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose)
-
-                implementation(libs.kotlinx.serialization.json)
-
-                implementation(libs.touchlab.kermit)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                implementation(libs.androidx.security)
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
-
-        iosMain {
-            dependencies {
+                api(libs.lifecycle.viewmodel)
             }
         }
     }
-
 }

@@ -7,16 +7,15 @@ import com.spoonofcode.feature.notification.domain.usecase.MarkNotificationAsRea
 import kotlinx.coroutines.launch
 
 internal class NotificationDetailsViewModel(
+    private val notificationId: String,
     private val getNotificationByIdUseCase: GetNotificationByIdUseCase,
     private val markNotificationAsReadUseCase: MarkNotificationAsReadUseCase,
-) : BaseViewModel<NotificationDetailsViewState, NotificationDetailsViewAction>(
-    NotificationDetailsViewState()
-) {
+) : BaseViewModel<NotificationDetailsViewState, NotificationDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView(notificationId = notificationId)
+    }
 
     override fun onAction(action: NotificationDetailsViewAction) {
-        when (action) {
-            is NotificationDetailsViewAction.InitView -> initView(notificationId = action.notificationId)
-        }
     }
 
     private fun initView(notificationId: String) {
@@ -24,12 +23,13 @@ internal class NotificationDetailsViewModel(
         viewModelScope.launch {
             getNotificationByIdUseCase(notificationId = notificationId)
                 .onSuccess {
-                    showContentView {
+                    setContentState(
                         NotificationDetailsViewState(
                             notification = it
                         )
-                    }
+                    )
                     markNotificationAsReadUseCase(notificationId = notificationId)
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()

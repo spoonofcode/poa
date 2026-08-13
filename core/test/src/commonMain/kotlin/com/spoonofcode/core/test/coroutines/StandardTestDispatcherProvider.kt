@@ -9,7 +9,7 @@ class StandardTestDispatcherProvider(
 ) : DispatcherProvider {
     override fun main(): CoroutineDispatcher = testDispatcher
 
-    override fun  (): CoroutineDispatcher = testDispatcher
+    override fun io(): CoroutineDispatcher = testDispatcher
 
     override fun default(): CoroutineDispatcher = testDispatcher
 }

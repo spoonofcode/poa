@@ -1,22 +1,12 @@
 plugins {
-    alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.convention.kmp.domain)
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.koin.core)
-                implementation(libs.kotlin.stdlib)
-
-                implementation(projects.core.data)
                 implementation(projects.core.session.domain)
-            }
-        }
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.spoonofcode.feature.scan.nfc.data.repository
 
-import com.spoonofcode.feature.scan.nfc.data.mapper.toTag
+import com.spoonofcode.feature.scan.nfc.data.mappers.toTag
 import com.spoonofcode.feature.scan.nfc.data.remote.RemoteNFCTagDataSource
 import com.spoonofcode.feature.scan.nfc.domain.model.NFCTag
 import com.spoonofcode.feature.scan.nfc.domain.repository.NFCTagRepository

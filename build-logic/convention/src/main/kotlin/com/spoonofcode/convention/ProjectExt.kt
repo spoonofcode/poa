@@ -8,6 +8,18 @@ import org.gradle.kotlin.dsl.getByType
 val Project.libs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
+val Project.applicationId: String
+    get() = libs.findVersion("project-applicationId").get().toString()
+
+val Project.androidTargetSdk: Int
+    get() = libs.findVersion("android-targetSdk").get().toString().toInt()
+
+val Project.projectVersionCode: Int
+    get() = libs.findVersion("project-versionCode").get().toString().toInt()
+
+val Project.projectVersionName: String
+    get() = libs.findVersion("project-versionName").get().toString()
+
 fun Project.applyPlugin(alias: String) {
     pluginManager.apply(libs.findPlugin(alias).get().get().pluginId)
 }

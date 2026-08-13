@@ -20,7 +20,8 @@ val notificationDomainModule = module {
             sessionRepository = get(),
             notificationRepository = get(),
             firebaseMessagingRepository = get(),
-            topicSyncHandlers = getAll<NotificationTopicSyncHandler>()
+            topicSyncHandlers = getAll<NotificationTopicSyncHandler>(),
+            poaLogger = get()
         )
     }
     factoryOf(::MarkNotificationAsReadUseCase)

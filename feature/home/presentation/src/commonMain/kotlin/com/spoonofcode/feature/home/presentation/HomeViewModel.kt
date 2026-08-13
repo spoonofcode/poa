@@ -19,12 +19,14 @@ internal class HomeViewModel(
     private val getUserDailyCheckInStatusUseCase: GetUserDailyCheckInStatusUseCase,
     private val getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase,
     private val getNotificationsUseCase: GetNotificationsUseCase,
-) : BaseViewModel<HomeViewState, HomeViewAction>(HomeViewState()) {
+) : BaseViewModel<HomeViewState, HomeViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: HomeViewAction) {
         when (action) {
             HomeViewAction.DailyCheckIn -> dailyCheckIn()
-            HomeViewAction.InitView -> initView()
             HomeViewAction.NavigateToNotifications -> navigateToNotifications()
         }
     }
@@ -54,14 +56,15 @@ internal class HomeViewModel(
             }
 
             result.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks, unreadCount) ->
-                showContentView {
+                setContentState(
                     HomeViewState(
                         dailyCheckInStatus = dailyCheckInStatus,
                         totalPoints = totalPoints,
                         partnerImageLinks = partnerImageLinks,
                         unreadNotificationsCount = unreadCount,
                     )
-                }
+                )
+                showContentView()
             }.onFailure {
                 showErrorView()
                 showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
@@ -85,7 +88,7 @@ internal class HomeViewModel(
 
     private fun navigateToNotifications() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(NotificationModuleRoute.NotificationOverview))
+            viewModelNavigator.push(NotificationModuleRoute.NotificationOverview)
         }
     }
 

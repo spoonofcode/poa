@@ -2,15 +2,14 @@ package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.data.getPlatform
+import com.spoonofcode.core.logging.di.loggingModule
 import com.spoonofcode.core.firebase.data.di.firebaseDataModule
 import com.spoonofcode.core.network.di.networkModule
 import com.spoonofcode.core.presentation.di.presentationModule
-import com.spoonofcode.core.presentation.navigation.route.ModuleRouteResolver
 import com.spoonofcode.core.recaptcha.di.recaptchaModule
 import com.spoonofcode.core.session.data.di.sessionDataModule
 import com.spoonofcode.core.session.domain.di.sessionDomainModule
 import com.spoonofcode.core.storage.data.di.storageDataModule
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
 import com.spoonofcode.feature.auth.data.di.authDataModule
 import com.spoonofcode.feature.auth.domain.di.authDomainModule
 import com.spoonofcode.feature.auth.presentation.di.authPresentationModule
@@ -36,16 +35,14 @@ import com.spoonofcode.feature.scan.nfc.presentation.di.scanPresentationModule
 import com.spoonofcode.feature.tac.data.di.tacDataModule
 import com.spoonofcode.feature.tac.domain.di.tacDomainModule
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationModule
-import com.spoonofcode.poa.AppModuleRouteResolver
 import com.spoonofcode.poa.app.AppViewModel
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val appModule = module {
     includes(
         // core
+        loggingModule,
         coroutinesModule,
         firebaseDataModule,
         presentationModule,
@@ -90,7 +87,6 @@ val appModule = module {
         tacDomainModule,
         tacPresentationModule,
     )
-    factoryOf(::AppModuleRouteResolver) { bind<ModuleRouteResolver<AppModuleRoute>>() }
     single { getPlatform() }
     viewModelOf(::AppViewModel)
 }

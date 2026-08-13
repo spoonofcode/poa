@@ -12,9 +12,9 @@ internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension
 ) {
     with(commonExtension) {
-        compileSdk = libs.findVersion("androidCompileSdk").get().toString().toInt()
+        compileSdk = libs.findVersion("android-compileSdk").get().toString().toInt()
 
-        defaultConfig.minSdk = libs.findVersion("androidMinSdk").get().toString().toInt()
+        defaultConfig.minSdk = libs.findVersion("android-minSdk").get().toString().toInt()
 
         compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_21
@@ -38,6 +38,7 @@ internal fun Project.configureKotlin() {
             freeCompilerArgs.add(
                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             )
+            freeCompilerArgs.add("-Xcontext-parameters")
         }
     }
 }
