@@ -10,12 +10,14 @@ import kotlinx.coroutines.launch
 internal class ProductOverviewViewModel(
     private val getUserProductsUseCase: GetUserProductsUseCase,
     private val getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase,
-) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction>(ProductOverviewViewState()) {
+) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ProductOverviewViewAction) {
         when (action) {
             is ProductOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
-            ProductOverviewViewAction.InitView -> initView()
             is ProductOverviewViewAction.SelectProduct -> selectProduct(action.productId)
         }
     }
@@ -25,12 +27,13 @@ internal class ProductOverviewViewModel(
         viewModelScope.launch {
             getUserProductsUseCase()
                 .onSuccess {
-                    showContentView {
-                        copy(
+                    setContentState(
+                        ProductOverviewViewState(
                             initProducts = it,
                             filteredProducts = it,
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -40,12 +43,12 @@ internal class ProductOverviewViewModel(
 
     private fun changeSearchText(searchText: String) {
         viewModelScope.launch {
-            val products = currentState().initProducts
+            val products = currentContentState().initProducts
             val filteredProducts = getFilteredProductsByTextUseCase(
                 searchText = searchText,
                 products = products,
             )
-            updateState {
+            updateContentState {
                 copy(searchText = searchText, filteredProducts = filteredProducts)
             }
         }
@@ -54,9 +57,7 @@ internal class ProductOverviewViewModel(
     private fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    ProductModuleRoute.ProductDetails(productId = productId)
-                )
+                ProductModuleRoute.ProductDetails(productId = productId)
             )
         }
     }

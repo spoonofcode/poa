@@ -12,16 +12,17 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 internal class PartnerNotificationDetailsViewModel(
+    private val notificationId: String,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val deletePartnerNotificationUseCase: DeletePartnerNotificationUseCase,
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
-) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction>(
-    PartnerNotificationDetailsViewState()
-) {
+) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView(notificationId = notificationId)
+    }
 
     override fun onAction(action: PartnerNotificationDetailsViewAction) {
         when (action) {
-            is PartnerNotificationDetailsViewAction.InitView -> initView(action.notificationId)
             PartnerNotificationDetailsViewAction.DeleteNotification -> deleteNotification()
             PartnerNotificationDetailsViewAction.EditNotification -> editNotification()
             PartnerNotificationDetailsViewAction.CancelDeleteNotification -> cancelDeleteNotification()
@@ -43,13 +44,14 @@ internal class PartnerNotificationDetailsViewModel(
                 val notification = notificationResult.getOrThrow()
                 val customers = customersResult.getOrThrow()
 
-                showContentView {
+                setContentState(
                     PartnerNotificationDetailsViewState(
                         notification = notification,
                         notificationType = getNotificationType(notification.topics.toSet()),
                         selectedNames = getSelectedNames(notification.topics, customers)
                     )
-                }
+                )
+                showContentView()
             } else {
                 showErrorView()
             }
@@ -63,18 +65,18 @@ internal class PartnerNotificationDetailsViewModel(
     }
 
     private fun deleteNotification() {
-        updateState {
+        updateContentState {
             copy(
                 isDeleteNotificationDialogVisible = true,
             )
         }
         viewModelScope.launch {
-            deletePartnerNotificationUseCase.invoke(notificationId = currentState().notification!!.id)
+            deletePartnerNotificationUseCase.invoke(notificationId = currentContentState().notification!!.id)
         }
     }
 
     private fun cancelDeleteNotification() {
-        updateState {
+        updateContentState {
             copy(
                 isDeleteNotificationDialogVisible = false,
             )
@@ -84,27 +86,25 @@ internal class PartnerNotificationDetailsViewModel(
     private fun confirmDeleteNotification() {
         showLoadingView()
         viewModelScope.launch {
-            val notification = requireNotNull(currentState().notification)
+            val notification = requireNotNull(currentContentState().notification)
             deletePartnerNotificationUseCase(
                 notificationId = notification.id,
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                showErrorSnackbar(it)
+                it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
 
     private fun editNotification() {
         viewModelScope.launch {
-            val notification = requireNotNull(currentState().notification)
+            val notification = requireNotNull(currentContentState().notification)
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        notificationId = notification.id,
-                        selectedTopics = notification.topics.toSet(),
-                        selectedNames = currentState().selectedNames,
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    notificationId = notification.id,
+                    selectedTopics = notification.topics.toSet(),
+                    selectedNames = currentContentState().selectedNames,
                 )
             )
         }

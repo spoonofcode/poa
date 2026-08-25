@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.Platform
 import com.spoonofcode.core.nfc.NfcTag
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.scan.nfc.domain.usecase.GetNFCTagUseCase
@@ -14,25 +13,25 @@ internal class ScanViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val getNFCTagUseCase: GetNFCTagUseCase,
     private val platform: Platform,
-) : BaseViewModel<ScanViewState, ScanViewAction>(
-    initialViewState = ScanViewState(),
-    initialScreenState = ScreenState.CONTENT,
-) {
+) : BaseViewModel<ScanViewState, ScanViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ScanViewAction) {
         when (action) {
-            is ScanViewAction.InitView -> initView()
             is ScanViewAction.CheckProduct -> checkProduct(action.nfcTag)
             ScanViewAction.ScanAgain -> scanAgain()
         }
     }
 
     private fun initView() {
-        showContentView {
-            copy(
+        setContentState(
+            ScanViewState(
                 platformType = platform.platformType
             )
-        }
+        )
+        showContentView()
     }
 
     private fun checkProduct(nfcTag: NfcTag) {
@@ -46,10 +45,8 @@ internal class ScanViewModel(
                             getProductByIdUseCase(productId = nfcTag.publicId)
                                 .onSuccess { product ->
                                     viewModelNavigator.push(
-                                        routeResolver.resolve(
-                                            ProductModuleRoute.ProductDetails(
-                                                productId = product.id,
-                                            )
+                                        ProductModuleRoute.ProductDetails(
+                                            productId = product.id,
                                         )
                                     )
                                 }
@@ -57,7 +54,7 @@ internal class ScanViewModel(
                                     showErrorView()
                                 }
                         } else {
-                            showContentView {
+                            updateContentState {
                                 copy(
                                     isProductNotFoundViewVisible = true,
                                 )
@@ -69,7 +66,7 @@ internal class ScanViewModel(
 
 
             } else {
-                showContentView {
+                updateContentState {
                     copy(
                         isProductNotFoundViewVisible = true,
                     )
@@ -79,7 +76,7 @@ internal class ScanViewModel(
     }
 
     private fun scanAgain() {
-        updateState {
+        updateContentState {
             copy(
                 isProductNotFoundViewVisible = false,
             )
@@ -93,7 +90,7 @@ internal class ScanViewModel(
         private val VALID_NFC_TAG_TYPES = setOf("nft", "unique_item")
 
         fun transformUrl(originalUrl: String): String {
-            return if(originalUrl.contains(POA_AUTH_DOMAIN_NAME)){
+            return if (originalUrl.contains(POA_AUTH_DOMAIN_NAME)) {
                 originalUrl.replace(POA_AUTH_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
             } else {
                 originalUrl.replace(POA_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)

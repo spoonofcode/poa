@@ -13,8 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,155 +30,162 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.toMillis
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.compose.TopBarAction
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
 import com.spoonofcode.feature.partner.presentation.tab_already_sent
 import com.spoonofcode.feature.partner.presentation.tab_pending
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
-internal class PartnerNotificationsScreen(
-    override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<PartnerNotificationsViewModel, PartnerNotificationsViewState, PartnerNotificationsViewAction>() {
-
-    override fun provideTopAppBarTitle() = Res.string.my_notifications
-
-    override fun provideInitAction(onAction: (PartnerNotificationsViewAction) -> Unit): () -> Unit =
-        { onAction(PartnerNotificationsViewAction.InitView) }
-
-    @Composable
-    override fun provideViewModel() = koinViewModel<PartnerNotificationsViewModel>()
-
-    override fun provideContentPadding() = PaddingValues(
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.my_notifications),
+    verticalScrollEnable = false,
+    contentPadding = PaddingValues(
         start = Paddings.screenPadding,
         end = Paddings.screenPadding,
     )
+)
 
-    @Composable
-    override fun provideContent(
-        viewState: PartnerNotificationsViewState,
-        onAction: (PartnerNotificationsViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            NotificationTabs(
-                viewState.partnerNotifications,
-                selectNotification = { onAction(PartnerNotificationsViewAction.SelectNotification(it)) },
-            )
-        }
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun NotificationTabs(
-        notifications: List<PartnerNotification>,
-        selectNotification: (String) -> Unit,
-    ) {
-        val tabs = listOf(
-            TabItem(title = stringResource(Res.string.tab_pending)),
-            TabItem(title = stringResource(Res.string.tab_already_sent)),
+@Composable
+internal fun PartnerNotificationsScreen(
+    viewModel: PartnerNotificationsViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
         )
-
-        var selectedTabIndex by remember { mutableStateOf(0) }
-
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SecondaryTabRow(
-                selectedTabIndex = selectedTabIndex,
-            ) {
-                tabs.forEachIndexed { index, tab ->
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        text = { Text(tab.title) },
-                    )
-                }
-            }
-            val notificationsPending = notifications.filterNot {
-                it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
-            }
-            val notificationsAlreadySent = notifications.filter {
-                it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
-            }
-
-            when (selectedTabIndex) {
-                0 -> NotificationTab(notificationsPending, selectNotification)
-                1 -> NotificationTab(notificationsAlreadySent, selectNotification)
-            }
-        }
     }
+}
 
-    data class TabItem(val title: String)
+@Composable
+private fun ColumnScope.Content(
+    viewState: PartnerNotificationsViewState,
+    onAction: (PartnerNotificationsViewAction) -> Unit,
+) {
+    NotificationTabs(
+        viewState.partnerNotifications,
+        selectNotification = { onAction(PartnerNotificationsViewAction.SelectNotification(it)) },
+    )
+}
 
-    @Composable
-    fun NotificationTab(
-        notifications: List<PartnerNotification>,
-        selectNotification: (String) -> Unit
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun NotificationTabs(
+    notifications: List<PartnerNotification>,
+    selectNotification: (String) -> Unit,
+) {
+    val tabs = listOf(
+        TabItem(title = stringResource(Res.string.tab_pending)),
+        TabItem(title = stringResource(Res.string.tab_already_sent)),
+    )
+
+    var selectedTabIndex by remember { mutableStateOf(0) }
+
+    Column(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Spacers.VerticalBetweenFields()
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+        SecondaryTabRow(
+            selectedTabIndex = selectedTabIndex,
         ) {
-            items(notifications) { notification ->
-                NotificationItem(
-                    item = notification,
-                    onClick = { selectNotification(notification.id) }
+            tabs.forEachIndexed { index, tab ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = { selectedTabIndex = index },
+                    text = { Text(tab.title) },
                 )
             }
         }
+        val notificationsPending = notifications.filterNot {
+            it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
+        }
+        val notificationsAlreadySent = notifications.filter {
+            it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
+        }
+
+        when (selectedTabIndex) {
+            0 -> NotificationTab(notificationsPending, selectNotification)
+            1 -> NotificationTab(notificationsAlreadySent, selectNotification)
+        }
     }
+}
 
-    @Composable
-    fun NotificationItem(
-        item: PartnerNotification,
-        onClick: () -> Unit,
+private data class TabItem(val title: String)
+
+@Composable
+private fun NotificationTab(
+    notifications: List<PartnerNotification>,
+    selectNotification: (String) -> Unit
+) {
+    Spacers.VerticalBetweenFields()
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Cards.ElevatedCard(
-                onClick = onClick
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
+        items(notifications) { notification ->
+            NotificationItem(
+                item = notification,
+                onClick = { selectNotification(notification.id) }
+            )
+        }
+    }
+}
 
-                        Texts.TM(
-                            text = item.title,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        Texts.BM(
-                            text = item.text,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.size(24.dp)
+@Composable
+private fun NotificationItem(
+    item: PartnerNotification,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Cards.ElevatedCard(
+            onClick = onClick
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+
+                    Texts.TM(
+                        text = item.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Texts.BM(
+                        text = item.text,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     }
@@ -190,9 +195,31 @@ internal class PartnerNotificationsScreen(
 @Preview
 @Composable
 private fun PartnerNotificationsScreenContentPreview() {
-    PartnerNotificationsScreen()
-        .PreviewContent(
-            PartnerNotificationsViewState()
+    StandardScreenPreview(
+        viewState = ViewState.Content(
+            PartnerNotificationsViewState(
+                partnerNotifications = listOf(
+                    PartnerNotification(
+                        id = "1",
+                        title = "Title",
+                        text = "Text",
+                        deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        state = "pending",
+                        topics = listOf("global"),
+                        ownerId = "owner"
+                    )
+                )
+            )
+        ),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
         )
+    }
 }
 // endregion

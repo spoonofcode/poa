@@ -5,15 +5,14 @@ import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.pathToPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 
 class BuildKonfigConventionPlugin: Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                applyPlugin("buildkonfig")
-            }
+            applyPlugin("buildkonfig")
 
             extensions.configure<BuildKonfigExtension> {
                 packageName = target.pathToPackageName()
@@ -30,6 +29,12 @@ class BuildKonfigConventionPlugin: Plugin<Project> {
                             "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
                         )
 
+                    val recaptchaSiteKeyWeb = gradleLocalProperties(rootDir, rootProject.providers)
+                        .getProperty("RECAPTCHA_SITE_KEY_WEB")
+                        ?: throw IllegalStateException(
+                            "Missing RECAPTCHA_SITE_KEY_WEB property in local.properties"
+                        )
+
                     val googleIdServerClientId = gradleLocalProperties(rootDir, rootProject.providers)
                         .getProperty("GOOGLE_ID_SERVER_CLIENT_ID_WEB")
                         ?: throw IllegalStateException(
@@ -38,6 +43,7 @@ class BuildKonfigConventionPlugin: Plugin<Project> {
 
                     buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
                     buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
+                    buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_WEB", recaptchaSiteKeyWeb)
 
                     buildConfigField(Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_WEB", googleIdServerClientId)
                 }

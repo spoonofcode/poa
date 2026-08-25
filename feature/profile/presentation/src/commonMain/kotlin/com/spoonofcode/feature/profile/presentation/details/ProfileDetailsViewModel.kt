@@ -15,11 +15,13 @@ import kotlinx.coroutines.launch
 internal class ProfileDetailsViewModel(
     private val getProfileUseCase: GetProfileUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction>(ProfileDetailsViewState()) {
+) : BaseViewModel<ProfileDetailsViewState, ProfileDetailsViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ProfileDetailsViewAction) {
         when (action) {
-            ProfileDetailsViewAction.InitView -> initView()
             ProfileDetailsViewAction.Logout -> logout()
             ProfileDetailsViewAction.ConfirmLogout -> confirmLogout()
             ProfileDetailsViewAction.CancelLogout -> cancelLogout()
@@ -36,12 +38,13 @@ internal class ProfileDetailsViewModel(
         viewModelScope.launch {
             getProfileUseCase()
                 .onSuccess {
-                    showContentView {
+                    setContentState(
                         ProfileDetailsViewState(
                             profile = it,
                             partnerPanelVisible = it.roles.contains(PARTNER_ROLE)
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -51,31 +54,31 @@ internal class ProfileDetailsViewModel(
 
     private fun navigateToEditProfile() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(ProfileModuleRoute.ProfileEdit))
+            viewModelNavigator.push(screen = ProfileModuleRoute.ProfileEdit)
         }
     }
 
     private fun navigateToPartnerPanel() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(PartnerModuleRoute.PartnerPanel))
+            viewModelNavigator.push(screen = PartnerModuleRoute.PartnerPanel)
         }
     }
 
     private fun navigateToNotificationSettings() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(NotificationModuleRoute.NotificationChannel))
+            viewModelNavigator.push(screen = NotificationModuleRoute.NotificationChannel)
         }
     }
 
     private fun navigateToTAC() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(TACModuleRoute.TAC()))
+            viewModelNavigator.push(screen = TACModuleRoute.TAC())
         }
     }
 
     private fun navigateToFAQ() {
         viewModelScope.launch {
-            viewModelNavigator.push(screen = routeResolver.resolve(FAQModuleRoute.FAQ))
+            viewModelNavigator.push(screen = FAQModuleRoute.FAQ)
         }
     }
 
@@ -83,12 +86,12 @@ internal class ProfileDetailsViewModel(
         showLoadingView()
         viewModelScope.launch {
             logoutUseCase()
-            viewModelNavigator.replaceAll(listOf(routeResolver.resolve(AuthModuleRoute.Login)))
+            viewModelNavigator.replaceAll(listOf(AuthModuleRoute.Login))
         }
     }
 
     private fun cancelLogout() {
-        updateState {
+        updateContentState {
             copy(
                 isLogoutDialogVisible = false,
             )
@@ -96,7 +99,7 @@ internal class ProfileDetailsViewModel(
     }
 
     private fun logout() {
-        updateState {
+        updateContentState {
             copy(
                 isLogoutDialogVisible = true,
             )

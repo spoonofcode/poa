@@ -14,7 +14,6 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(libs.turbine)
                 implementation(projects.core.test)
             }
         }

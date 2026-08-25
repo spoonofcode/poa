@@ -6,5 +6,5 @@ import com.spoonofcode.feature.partner.domain.model.Partner
 
 @Immutable
 internal data class PartnerDetailsViewState(
-    val partner: Partner? = null,
+    val partner: Partner,
 ) : BaseViewState()

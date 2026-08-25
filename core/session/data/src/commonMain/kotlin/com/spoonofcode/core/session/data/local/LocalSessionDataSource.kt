@@ -1,12 +1,14 @@
 package com.spoonofcode.core.session.data.local
 
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
+import com.spoonofcode.core.logging.POALogger
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
 class LocalSessionDataSource(
     private val kSafe: KSafe,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherProvider: DispatcherProvider,
+    private val poaLogger: POALogger,
 ) {
     suspend fun initSession(
         accessToken: String,
@@ -15,6 +17,7 @@ class LocalSessionDataSource(
         userEmail: String,
     ) {
         withContext(dispatcherProvider.io()) {
+            poaLogger.info("LocalSessionDataSource: Initializing local session for user: $userEmail")
             kSafe.clearAll()
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
@@ -28,6 +31,7 @@ class LocalSessionDataSource(
         refreshToken: String
     ) {
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Updating session tokens in local storage")
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
         }
@@ -35,22 +39,26 @@ class LocalSessionDataSource(
 
     suspend fun clearSession() {
         withContext(dispatcherProvider.io()) {
+            poaLogger.info("LocalSessionDataSource: Clearing local session storage")
             kSafe.clearAll()
         }
     }
 
     suspend fun getSessionAccessToken(): String? =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session access token")
             kSafe.get<String?>(Keys.Session.ACCESS_TOKEN, null)
         }
 
     suspend fun getSessionRefreshToken(): String? =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session refresh token")
             kSafe.get<String?>(Keys.Session.REFRESH_TOKEN, null)
         }
 
     suspend fun getSessionUserId(): String =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session user ID")
             requireNotNull(
                 kSafe.get<String?>(Keys.Session.USER_ID, null)
             ) { "User ID cannot be null" }
@@ -58,6 +66,7 @@ class LocalSessionDataSource(
 
     suspend fun getSessionUserEmail(): String =
         withContext(dispatcherProvider.io()) {
+            poaLogger.debug("LocalSessionDataSource: Getting session user email")
             requireNotNull(
                 kSafe.get<String?>(Keys.Session.USER_EMAIL, null)
             ) { "User Email cannot be null" }

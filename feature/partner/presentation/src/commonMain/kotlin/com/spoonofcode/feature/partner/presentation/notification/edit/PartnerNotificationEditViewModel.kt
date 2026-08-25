@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.CreatePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
@@ -10,14 +9,25 @@ import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerNotificationU
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
+data class PartnerNotificationEditArgs(
+    val notificationId: String?,
+    val selectedTopics: Set<String>,
+    val selectedNames: Set<String>,
+)
+
 internal class PartnerNotificationEditViewModel(
     private val createPartnerNotificationUseCase: CreatePartnerNotificationUseCase,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val updatePartnerNotificationUseCase: UpdatePartnerNotificationUseCase,
-) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction>(
-    initialViewState = PartnerNotificationEditViewState(),
-    initialScreenState = ScreenState.CONTENT,
-) {
+    private val args: PartnerNotificationEditArgs
+) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
+    override val startAction = {
+        initView(
+            notificationId = args.notificationId,
+            selectedTopics = args.selectedTopics,
+            selectedNames = args.selectedNames,
+        )
+    }
 
     override fun onAction(action: PartnerNotificationEditViewAction) {
         when (action) {
@@ -32,12 +42,6 @@ internal class PartnerNotificationEditViewModel(
             is PartnerNotificationEditViewAction.ChangeLink -> changeLink(action.link)
             is PartnerNotificationEditViewAction.ChangeText -> changeText(action.text)
             is PartnerNotificationEditViewAction.ChangeTitle -> changeTitle(action.title)
-            is PartnerNotificationEditViewAction.InitView -> initView(
-                action.notificationId,
-                action.selectedTopics,
-                action.selectedNames
-            )
-
             PartnerNotificationEditViewAction.SendNotification -> sendNotification()
             PartnerNotificationEditViewAction.CancelSendNotification -> cancelSendNotification()
             PartnerNotificationEditViewAction.ConfirmSendNotification -> confirmSendNotification()
@@ -54,7 +58,7 @@ internal class PartnerNotificationEditViewModel(
             viewModelScope.launch {
                 getPartnerNotificationUseCase(notificationId = notificationId)
                     .onSuccess { notification ->
-                        showContentView {
+                        setContentState(
                             PartnerNotificationEditViewState(
                                 notificationId = notificationId,
                                 notificationType = getNotificationType(notification.topics.toSet()),
@@ -66,20 +70,22 @@ internal class PartnerNotificationEditViewModel(
                                 deliveryDateTime = notification.deliveryDateTime,
                                 expirationDateTime = notification.expirationDateTime
                             )
-                        }
+                        )
+                        showContentView()
                     }
                     .onFailure {
                         showErrorView()
                     }
             }
         } else {
-            showContentView {
+            setContentState(
                 PartnerNotificationEditViewState(
                     notificationType = getNotificationType(selectedTopics),
                     selectedTopics = selectedTopics,
                     selectedNames = selectedNames,
                 )
-            }
+            )
+            showContentView()
         }
     }
 
@@ -90,7 +96,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeTitle(title: String) {
-        updateState {
+        updateContentState {
             copy(
                 title = title
             )
@@ -98,7 +104,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeText(text: String) {
-        updateState {
+        updateContentState {
             copy(
                 text = text
             )
@@ -106,7 +112,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeDeliveryDateTime(selectedDateTime: LocalDateTime) {
-        updateState {
+        updateContentState {
             copy(
                 deliveryDateTime = selectedDateTime
             )
@@ -114,7 +120,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeExpirationDateTime(selectedDateTime: LocalDateTime) {
-        updateState {
+        updateContentState {
             copy(
                 expirationDateTime = selectedDateTime
             )
@@ -122,7 +128,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeLink(link: String) {
-        updateState {
+        updateContentState {
             copy(
                 link = link
             )
@@ -130,7 +136,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun sendNotification() {
-        updateState {
+        updateContentState {
             copy(
                 isSendNotificationDialogVisible = true
             )
@@ -138,7 +144,7 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun cancelSendNotification() {
-        updateState {
+        updateContentState {
             copy(
                 isSendNotificationDialogVisible = false
             )
@@ -148,7 +154,7 @@ internal class PartnerNotificationEditViewModel(
     private fun confirmSendNotification() {
         viewModelScope.launch {
             showLoadingView()
-            val currentState = currentState()
+            val currentState = currentContentState()
             if (currentState.notificationId != null) {
                 updatePartnerNotificationUseCase(
                     notificationId = currentState.notificationId,
@@ -161,7 +167,7 @@ internal class PartnerNotificationEditViewModel(
                 ).onSuccess {
                     viewModelNavigator.pop()
                 }.onFailure { error ->
-                    showErrorSnackbar(error)
+                    error.message?.let { showErrorSnackbar(it) }
                 }
             } else {
                 createPartnerNotificationUseCase(
@@ -174,7 +180,7 @@ internal class PartnerNotificationEditViewModel(
                 ).onSuccess {
                     viewModelNavigator.pop()
                 }.onFailure { error ->
-                    showErrorSnackbar(error)
+                    error.message?.let { showErrorSnackbar(it) }
                 }
             }
         }

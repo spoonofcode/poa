@@ -2,7 +2,7 @@ package com.spoonofcode.feature.partner.presentation.notification.type
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -12,9 +12,8 @@ import kotlinx.coroutines.launch
 internal class PartnerNotificationTypeViewModel(
     private val getPartnerNotificationTopicUseCase: GetPartnerNotificationTopicUseCase,
 ) :
-    BaseViewModel<PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction>(
-        PartnerNotificationTypeViewState(),
-        initialScreenState = ScreenState.CONTENT,
+    BaseViewModel<PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction, Nothing>(
+        initialViewState = ViewState.Content(PartnerNotificationTypeViewState()),
     ) {
 
     override fun onAction(action: PartnerNotificationTypeViewAction) {
@@ -29,10 +28,8 @@ internal class PartnerNotificationTypeViewModel(
     private fun sendNotificationToAllCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = setOf(PartnerNotificationType.global.name),
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = setOf(PartnerNotificationType.global.name),
                 )
             )
         }
@@ -41,14 +38,14 @@ internal class PartnerNotificationTypeViewModel(
     private fun sendNotificationToSelectedPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(PartnerModuleRoute.CustomerOverview)
+                PartnerModuleRoute.CustomerOverview
             )
         }
     }
 
     private fun sendNotificationToSelectedPartnerProductSeries() {
         viewModelScope.launch {
-            viewModelNavigator.push(routeResolver.resolve(ProductModuleRoute.ProductSeriesOverview))
+            viewModelNavigator.push(ProductModuleRoute.ProductSeriesOverview)
         }
     }
 
@@ -56,10 +53,8 @@ internal class PartnerNotificationTypeViewModel(
         viewModelScope.launch {
             val partnerId = getPartnerNotificationTopicUseCase()
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
                 )
             )
         }

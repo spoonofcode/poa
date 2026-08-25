@@ -11,3 +11,10 @@ enum class PlatformType {
     Android,
     iOS,
 }
+
+val PlatformType.recaptchaName: String
+    get() = when (this) {
+        PlatformType.Android -> "android"
+        // In CMP we use Web for iOS
+        PlatformType.iOS -> "web"
+    }

@@ -3,11 +3,12 @@ import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
+import com.spoonofcode.convention.pathToPackageName
 import com.spoonofcode.convention.pathToResourcePrefix
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class KmpLibraryConventionPlugin: Plugin<Project> {
 
@@ -16,7 +17,6 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             with(pluginManager) {
                 applyPlugin("android-library")
                 applyPlugin("kotlin-multiplatform")
-                applyPlugin("kotlin-serialization")
             }
 
             configureKotlinMultiplatform()
@@ -24,15 +24,17 @@ class KmpLibraryConventionPlugin: Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
 
+                namespace = this@with.pathToPackageName()
                 resourcePrefix = this@with.pathToResourcePrefix()
 
                 // Required to make debug build of app run in iOS simulator
                 experimentalProperties["android.experimental.kmp.enableAndroidResources"] = "true"
             }
 
-            dependencies {
-                "commonMainImplementation"(libs.findLibrary("kotlinx-serialization-json").get())
-                "commonTestImplementation"(libs.findLibrary("kotlin-test").get())
+            extensions.configure<KotlinMultiplatformExtension> {
+                sourceSets.getByName("commonTest").dependencies {
+                    implementation(libs.findLibrary("kotlin-test").get())
+                }
             }
         }
     }

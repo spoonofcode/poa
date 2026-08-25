@@ -1,43 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.cocoapods)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kover)
     alias(libs.plugins.google.services)
     alias(libs.plugins.convention.cmp.application)
-}
-
-kover {
-    reports {
-        verify {
-            rule {
-                minBound(80)
-            }
-        }
-
-        filters {
-            excludes {
-                classes("MainKt")
-                classes("*.MainActivity")
-
-                // Generated Classes & Resources
-                packages("*.generated.*")
-                packages("*resources*")
-
-                // Dependecy Injection
-                packages("*di*")
-
-                // Compose Related
-                classes("*ComposeSingletons*")
-                annotatedBy("androidx.compose.runtime.Composable")
-
-                // Voyager
-                classes("*.*Screen")
-
-                // ViewStates
-                classes("*.*ViewState")
-            }
-        }
-    }
 }
 
 kotlin {
@@ -63,35 +27,18 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.jetbrains.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.splash.screen)
         }
         commonMain.dependencies {
-            implementation(libs.jetbrains.compose.components.resources)
-            implementation(libs.jetbrains.compose.ui.tooling.preview)
-            implementation(libs.jetbrains.compose.foundation)
-            implementation(libs.jetbrains.compose.runtime)
-            implementation(libs.jetbrains.compose.material3)
-            implementation(libs.jetbrains.compose.ui)
-
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-            implementation(libs.touchlab.kermit)
-            implementation(libs.voyager.navigator)
-            implementation(libs.voyager.tab.navigator)
-            implementation(libs.voyager.transitions)
-
-            implementation(libs.ksafe)
-            implementation(libs.ksafe.compose)
+            implementation(libs.navigation3.ui)
 
             implementation(projects.core.data)
             implementation(projects.core.firebase.data)
             implementation(projects.core.firebase.domain)
+            implementation(projects.core.logging)
             implementation(projects.core.network)
             implementation(projects.core.nfc)
-            implementation(projects.core.presentation)
             implementation(projects.core.recaptcha)
             implementation(projects.core.session.data)
             implementation(projects.core.session.domain)
@@ -133,30 +80,13 @@ kotlin {
 
             implementation(projects.feature.appnavigation)
         }
-        commonTest.dependencies {
-            implementation(libs.koin.test)
-            implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.kotlin.test)
-            implementation(libs.turbine)
-        }
     }
 }
 
 android {
-    namespace = "com.spoonofcode.poa"
-    compileSdk = libs.versions.androidCompileSdk.get().toInt()
-
     defaultConfig {
-        applicationId = "com.spoonofcode.poa"
-        minSdk = libs.versions.androidMinSdk.get().toInt()
-        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = (System.getenv("ANDROID_RELEASE_VERSION") ?: "1").toInt()
         versionName = System.getenv("ANDROID_RELEASE_VERSION") ?: "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
     signingConfigs {
         create("customDebug") {
@@ -192,14 +122,8 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
-    debugImplementation(libs.jetbrains.compose.ui.tooling)
-//    coreLibraryDesugaring(libs.android.desugar.jdk.libs)
+    debugImplementation(compose.uiTooling)
 }

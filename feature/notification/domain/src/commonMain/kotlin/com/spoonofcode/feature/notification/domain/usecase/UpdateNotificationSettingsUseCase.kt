@@ -2,16 +2,17 @@ package com.spoonofcode.feature.notification.domain.usecase
 
 import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingRepository
 import com.spoonofcode.core.session.domain.repository.SessionRepository
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.model.NotificationType
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
-import com.spoonofcode.core.data.logging.KermitLogger
 
 class UpdateNotificationSettingsUseCase(
     private val sessionRepository: SessionRepository,
     private val notificationRepository: NotificationRepository,
     private val firebaseMessagingRepository: FirebaseMessagingRepository,
     private val topicSyncHandlers: List<NotificationTopicSyncHandler>,
+    private val poaLogger: POALogger,
 ) {
     suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
         handleTopicSubscription(
@@ -47,8 +48,4 @@ class UpdateNotificationSettingsUseCase(
 
     private suspend fun getUserTopic(): String =
         NotificationType.user.createTopic(sessionRepository.getSessionUserId())
-
-    companion object {
-        private val poaLogger = KermitLogger
-    }
 }

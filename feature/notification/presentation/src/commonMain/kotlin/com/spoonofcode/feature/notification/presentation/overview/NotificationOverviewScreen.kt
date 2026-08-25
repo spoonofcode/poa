@@ -29,146 +29,157 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications
 import com.spoonofcode.feature.notification.presentation.tab_already_read
 import com.spoonofcode.feature.notification.presentation.tab_new
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
-internal class NotificationOverviewScreen(
-    override val verticalScrollEnable: Boolean = false,
-) : BaseScreen<NotificationOverviewViewModel, NotificationOverviewViewState, NotificationOverviewViewAction>() {
-
-    override fun provideTopAppBarTitle() = Res.string.notifications
-
-    override fun provideInitAction(onAction: (NotificationOverviewViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationOverviewViewAction.InitView) }
-
-    @Composable
-    override fun provideViewModel() = koinViewModel<NotificationOverviewViewModel>()
-
-    override fun provideContentPadding() = PaddingValues(
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notifications),
+    verticalScrollEnable = false,
+    contentPadding = PaddingValues(
         start = Paddings.screenPadding,
         end = Paddings.screenPadding,
     )
+)
 
-    @Composable
-    override fun provideContent(
-        viewState: NotificationOverviewViewState,
-        onAction: (NotificationOverviewViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            NotificationTabs(
-                viewState.notifications,
-                selectNotification = { onAction(NotificationOverviewViewAction.SelectNotification(it)) },
-            )
-        }
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun NotificationTabs(
-        notifications: List<Notification>,
-        selectNotification: (String) -> Unit,
-    ) {
-        val tabs = listOf(
-            TabItem(title = stringResource(Res.string.tab_new)),
-            TabItem(title = stringResource(Res.string.tab_already_read)),
+@Composable
+internal fun NotificationOverviewScreen(
+    viewModel: NotificationOverviewViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
         )
-
-        var selectedTabIndex by remember { mutableStateOf(0) }
-
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SecondaryTabRow(
-                selectedTabIndex = selectedTabIndex,
-            ) {
-                tabs.forEachIndexed { index, tab ->
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        text = { Text(tab.title) },
-                    )
-                }
-            }
-            val notificationsAlreadyReaded = notifications.filter { it.isRead }
-            val notificationsNotReaded = notifications.filter { !(it.isRead) }
-
-            when (selectedTabIndex) {
-                0 -> NotificationTab(notificationsNotReaded, selectNotification)
-                1 -> NotificationTab(notificationsAlreadyReaded, selectNotification)
-            }
-        }
     }
+}
 
-    data class TabItem(val title: String)
+@Composable
+private fun ColumnScope.Content(
+    viewState: NotificationOverviewViewState,
+    onAction: (NotificationOverviewViewAction) -> Unit,
+) {
+    NotificationTabs(
+        viewState.notifications,
+        selectNotification = { onAction(NotificationOverviewViewAction.SelectNotification(it)) },
+    )
+}
 
-    @Composable
-    fun NotificationTab(notifications: List<Notification>, selectNotification: (String) -> Unit) {
-        Spacers.VerticalBetweenFields()
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun NotificationTabs(
+    notifications: List<Notification>,
+    selectNotification: (String) -> Unit,
+) {
+    val tabs = listOf(
+        TabItem(title = stringResource(Res.string.tab_new)),
+        TabItem(title = stringResource(Res.string.tab_already_read)),
+    )
+
+    var selectedTabIndex by remember { mutableStateOf(0) }
+
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        SecondaryTabRow(
+            selectedTabIndex = selectedTabIndex,
         ) {
-            items(notifications) { notification ->
-                NotificationItem(
-                    item = notification,
-                    onClick = { selectNotification(notification.id) }
+            tabs.forEachIndexed { index, tab ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = { selectedTabIndex = index },
+                    text = { Text(tab.title) },
                 )
             }
         }
+        val notificationsAlreadyReaded = notifications.filter { it.isRead }
+        val notificationsNotReaded = notifications.filter { !(it.isRead) }
+
+        when (selectedTabIndex) {
+            0 -> NotificationTab(notificationsNotReaded, selectNotification)
+            1 -> NotificationTab(notificationsAlreadyReaded, selectNotification)
+        }
     }
+}
 
-    @Composable
-    fun NotificationItem(
-        item: Notification,
-        onClick: () -> Unit,
+private data class TabItem(val title: String)
+
+@Composable
+private fun NotificationTab(
+    notifications: List<Notification>,
+    selectNotification: (String) -> Unit
+) {
+    Spacers.VerticalBetweenFields()
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Cards.ElevatedCard(
-                onClick = onClick
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
+        items(notifications) { notification ->
+            NotificationItem(
+                item = notification,
+                onClick = { selectNotification(notification.id) }
+            )
+        }
+    }
+}
 
-                        Texts.TM(
-                            text = item.title,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                        Texts.BM(
-                            text = item.text,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.outline,
-                        modifier = Modifier.size(24.dp)
+@Composable
+private fun NotificationItem(
+    item: Notification,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Cards.ElevatedCard(
+            onClick = onClick
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+
+                    Texts.TM(
+                        text = item.title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Texts.BM(
+                        text = item.text,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     }
@@ -177,10 +188,32 @@ internal class NotificationOverviewScreen(
 // region previews
 @Preview
 @Composable
-fun NotificationOverviewScreenContentPreview() {
-    NotificationOverviewScreen()
-        .PreviewContent(
-            viewState = NotificationOverviewViewState(),
+private fun NotificationOverviewScreenContentPreview() {
+    StandardScreenPreview(
+        viewState = ViewState.Content(
+            NotificationOverviewViewState(
+                notifications = listOf(
+                    Notification(
+                        id = "1",
+                        title = "Notification title 1",
+                        text = "Notification text 1",
+                        link = "Notification link 1",
+                        deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                        state = "pending",
+                        topics = listOf("global"),
+                    )
+                )
+            )
+        ),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
         )
+    }
 }
 // endregion

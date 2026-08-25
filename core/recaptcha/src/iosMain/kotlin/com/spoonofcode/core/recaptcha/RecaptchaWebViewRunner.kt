@@ -28,9 +28,9 @@ internal object RecaptchaWebViewRunner {
                         didReceiveScriptMessage: WKScriptMessage
                     ) {
                         val body = didReceiveScriptMessage.body?.toString()
-                        
+
                         userContentController.removeScriptMessageHandlerForName(handlerName)
-                        
+
                         if (body.isNullOrBlank() || body.startsWith("ERROR:")) {
                             println("reCAPTCHA Error: $body")
                             if (cont.isActive) cont.resumeWithException(IllegalStateException(body ?: "Empty token"))

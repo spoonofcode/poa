@@ -2,30 +2,29 @@ package com.spoonofcode.feature.auth.presentation.logincode
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.feature.appnavigation.HomeModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.domain.usecase.LoginCodeUseCase
 import kotlinx.coroutines.launch
 
 internal class LoginCodeViewModel(
+    private val email: String,
     private val loginCodeUseCase: LoginCodeUseCase,
-) : BaseViewModel<LoginCodeViewState, LoginCodeViewAction>(
-    LoginCodeViewState(),
-    initialScreenState = ScreenState.CONTENT,
-) {
+) : BaseViewModel<LoginCodeViewState, LoginCodeViewAction, Nothing>() {
+    override val startAction = {
+        initView(email = email)
+    }
 
     override fun onAction(action: LoginCodeViewAction) {
         when (action) {
             is LoginCodeViewAction.ChangeCode -> changeCode(code = action.code)
             is LoginCodeViewAction.SignInWithCode -> signInWithCode()
-            is LoginCodeViewAction.InitView -> initView(email = action.email)
         }
     }
 
     private fun changeCode(code: String) {
-        updateState {
+        updateContentState {
             copy(
                 code = code,
                 isSignInWithCodeButtonEnable = code.length == VERIFICATION_CODE_LENGTH
@@ -35,7 +34,7 @@ internal class LoginCodeViewModel(
 
     private fun signInWithCode() {
         showLoadingView()
-        val currentState = currentState()
+        val currentState = currentContentState()
         viewModelScope.launch {
             loginCodeUseCase(
                 email = currentState.email,
@@ -43,31 +42,28 @@ internal class LoginCodeViewModel(
             ).onSuccess {
                 viewModelNavigator.replaceAll(
                     listOf(
-                        routeResolver.resolve(AppModuleRoute.MainHost),
-                        routeResolver.resolve(
-                            NotificationModuleRoute.NotificationSettings(
-                                backNavigationEnabled = false
-                            ),
+                        HomeModuleRoute.Home,
+                        NotificationModuleRoute.NotificationSettings(
+                            backNavigationEnabled = false
                         ),
-                        routeResolver.resolve(
-                            TACModuleRoute.TAC(
-                                backNavigationEnabled = false
-                            )
+                        TACModuleRoute.TAC(
+                            backNavigationEnabled = false
                         ),
                     )
                 )
             }.onFailure {
-                showErrorSnackbar(it)
+                it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
 
     private fun initView(email: String) {
-        showContentView {
+        setContentState(
             LoginCodeViewState(
                 email = email,
             )
-        }
+        )
+        showContentView()
     }
 
     companion object {

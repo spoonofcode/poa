@@ -9,7 +9,6 @@ internal fun Project.configureIosTargets(
 ) {
     extensions.configure<KotlinMultiplatformExtension> {
         val targets = listOf(
-            iosX64(),
             iosArm64(),
             iosSimulatorArm64()
         )

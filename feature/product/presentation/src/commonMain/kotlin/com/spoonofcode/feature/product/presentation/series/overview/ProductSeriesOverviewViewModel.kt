@@ -10,14 +10,14 @@ import kotlinx.coroutines.launch
 
 internal class ProductSeriesOverviewViewModel(
     private val getPartnerProductSeriesUseCase: GetPartnerProductSeriesUseCase,
-) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction>(
-    ProductSeriesOverviewViewState()
-) {
+) : BaseViewModel<ProductSeriesOverviewViewState, ProductSeriesOverViewViewAction, Nothing>() {
+    override val startAction = {
+        initView()
+    }
 
     override fun onAction(action: ProductSeriesOverViewViewAction) {
         when (action) {
             is ProductSeriesOverViewViewAction.CheckedProductSeries -> checkedProductSeries(action.name)
-            ProductSeriesOverViewViewAction.InitView -> initView()
             ProductSeriesOverViewViewAction.NavigateToNotification -> navigateToNotification()
         }
     }
@@ -27,11 +27,12 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             getPartnerProductSeriesUseCase()
                 .onSuccess {
-                    showContentView {
+                    setContentState(
                         ProductSeriesOverviewViewState(
                             productSeries = it,
                         )
-                    }
+                    )
+                    showContentView()
                 }
                 .onFailure {
                     showErrorView()
@@ -40,7 +41,7 @@ internal class ProductSeriesOverviewViewModel(
     }
 
     private fun checkedProductSeries(name: String) {
-        val selected = currentState().checkedProductSeriesNames.toMutableSet()
+        val selected = currentContentState().checkedProductSeriesNames.toMutableSet()
         val wasAdded = selected.contains(name)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
@@ -52,7 +53,7 @@ internal class ProductSeriesOverviewViewModel(
 
         if (wasAdded) selected.remove(name) else selected.add(name)
 
-        updateState {
+        updateContentState {
             copy(
                 checkedProductSeriesNames = selected,
             )
@@ -62,13 +63,11 @@ internal class ProductSeriesOverviewViewModel(
     private fun navigateToNotification() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                routeResolver.resolve(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = currentState().checkedProductSeriesNames.map {
-                            PartnerNotificationType.serie.createTopic(it)
-                        }.toSet(),
-                        selectedNames = currentState().checkedProductSeriesNames,
-                    )
+                PartnerModuleRoute.PartnerNotificationEdit(
+                    selectedTopics = currentContentState().checkedProductSeriesNames.map {
+                        PartnerNotificationType.serie.createTopic(it)
+                    }.toSet(),
+                    selectedNames = currentContentState().checkedProductSeriesNames,
                 )
             )
         }

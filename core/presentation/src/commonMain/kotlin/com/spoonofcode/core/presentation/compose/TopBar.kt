@@ -14,20 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.compose.CustomIcons.IconWithBadge
-import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopBar(
     backNavigationEnable: Boolean,
-    topAppBarTitle: StringResource,
+    topAppBarTitle: String?,
     navigationBackAction: () -> Unit,
     iconBarActions: List<TopBarAction>,
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-        title = { Texts.TLB(stringResource(resource = topAppBarTitle)) },
+        title = { topAppBarTitle?.let { Texts.TLB(it) } },
         navigationIcon = if (backNavigationEnable) {
             {
                 IconButton(onClick = navigationBackAction) {

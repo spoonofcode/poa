@@ -12,100 +12,107 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.data.ext.isAfterToday
 import com.spoonofcode.core.data.ext.toMillis
-import com.spoonofcode.core.presentation.base.BaseScreen
+import com.spoonofcode.core.presentation.base.StandardScreen
+import com.spoonofcode.core.presentation.base.StandardScreenConfig
+import com.spoonofcode.core.presentation.base.StandardScreenPreview
+import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
-import com.spoonofcode.core.presentation.ext.koinViewModel
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
 import com.spoonofcode.feature.notification.presentation.open_link
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
-internal class NotificationDetailsScreen(
-    private val notificationId: String,
-) : BaseScreen<NotificationDetailsViewModel, NotificationDetailsViewState, NotificationDetailsViewAction>() {
+@Composable
+private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
+    topBarTitle = stringResource(Res.string.notification),
+)
 
-    override fun provideTopAppBarTitle() = Res.string.notification
-
-    override fun provideInitAction(onAction: (NotificationDetailsViewAction) -> Unit): () -> Unit =
-        { onAction(NotificationDetailsViewAction.InitView(notificationId = notificationId)) }
-
-    @Composable
-    override fun provideViewModel() = koinViewModel<NotificationDetailsViewModel>()
-
-    @Composable
-    override fun provideContent(
-        viewState: NotificationDetailsViewState,
-        onAction: (NotificationDetailsViewAction) -> Unit,
-    ): @Composable (ColumnScope.() -> Unit) {
-        return {
-            val notification = requireNotNull(viewState.notification)
-            val uriHandler = LocalUriHandler.current
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                NotificationCard(
-                    notification = notification,
-                    onOpenLink = { uriHandler.openUri(it) }
-                )
-            }
-        }
+@Composable
+internal fun NotificationDetailsScreen(
+    viewModel: NotificationDetailsViewModel,
+) {
+    StandardScreen(
+        viewModel = viewModel,
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
     }
+}
 
-    @Composable
-    fun NotificationCard(
-        notification: Notification,
-        onOpenLink: (String) -> Unit = {}
+@Composable
+private fun ColumnScope.Content(
+    viewState: NotificationDetailsViewState,
+    onAction: (NotificationDetailsViewAction) -> Unit,
+) {
+    val notification = requireNotNull(viewState.notification)
+    val uriHandler = LocalUriHandler.current
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Cards.ElevatedCard {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Texts.TLB(
-                    text = notification.title,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+        NotificationCard(
+            notification = notification,
+            onOpenLink = { uriHandler.openUri(it) }
+        )
+    }
+}
 
+@Composable
+private fun NotificationCard(
+    notification: Notification,
+    onOpenLink: (String) -> Unit = {}
+) {
+    Cards.ElevatedCard {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        ) {
+            Texts.TLB(
+                text = notification.title,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacers.VerticalBetweenFields()
+
+            Texts.BL(
+                text = notification.text,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            notification.expirationDateTime.let { expiresAt ->
                 Spacers.VerticalBetweenFields()
-
-                Texts.BL(
-                    text = notification.text,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                notification.expirationDateTime?.let { expiresAt ->
-                    Spacers.VerticalBetweenFields()
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CountdownTimer(
-                            targetTimeMillis = expiresAt.toMillis()
-                        )
-                    }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CountdownTimer(
+                        targetTimeMillis = expiresAt.toMillis()
+                    )
                 }
-
-                notification.link
-                    ?.takeIf { it.isNotBlank() }
-                    ?.let { link ->
-                        Spacers.VerticalBetweenFields()
-                        Buttons.PrimaryButton(
-                            text = stringResource(Res.string.open_link),
-                            onClick = { onOpenLink(link) },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
             }
+
+            notification.link
+                ?.takeIf { it.isNotBlank() }
+                ?.let { link ->
+                    Spacers.VerticalBetweenFields()
+                    Buttons.PrimaryButton(
+                        text = stringResource(Res.string.open_link),
+                        onClick = { onOpenLink(link) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
         }
     }
 }
@@ -114,10 +121,29 @@ internal class NotificationDetailsScreen(
 @Preview
 @Composable
 private fun NotificationDetailsScreenContentPreview() {
-    NotificationDetailsScreen(
-        notificationId = "1"
-    ).PreviewContent(
-        NotificationDetailsViewState()
-    )
+    StandardScreenPreview(
+        viewState = ViewState.Content(
+            NotificationDetailsViewState(
+                notification = Notification(
+                    id = "1",
+                    title = "Notification title 1",
+                    text = "Notification text 1",
+                    link = "Notification link 1",
+                    deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                    createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                    modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                    expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                    state = "pending",
+                    topics = listOf("global"),
+                )
+            )
+        ),
+        screenConfig = screenConfig(),
+    ) { viewState, onAction ->
+        Content(
+            viewState = viewState,
+            onAction = onAction,
+        )
+    }
 }
 // endregion
