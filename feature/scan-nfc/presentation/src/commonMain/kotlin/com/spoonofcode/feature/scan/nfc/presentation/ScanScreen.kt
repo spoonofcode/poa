@@ -79,12 +79,12 @@ private fun ColumnScope.Content(
         LaunchedEffect(Unit) { reader.start() }
         DisposableEffect(Unit) { onDispose { reader.stop() } }
 
-        if (isScanning) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            if (isScanning) {
                 val scanInfoText = when (viewState.platformType) {
                     PlatformType.Android -> stringResource(Res.string.scan_info_android)
                     PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
@@ -101,12 +101,13 @@ private fun ColumnScope.Content(
                 )
 
                 Texts.BM(stringResource(Res.string.scanning_in_progress))
+            } else {
+                Buttons.PrimaryButton(
+                    text = stringResource(Res.string.start_scanning),
+                    onClick = { reader.start() }
+                )
             }
-        } else {
-            Buttons.SecondaryButton(
-                text = "Uruchom czytnik",
-                onClick = { reader.start() }
-            )
+
         }
     }
 }
