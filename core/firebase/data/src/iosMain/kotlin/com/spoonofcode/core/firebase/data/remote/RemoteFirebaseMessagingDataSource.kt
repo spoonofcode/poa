@@ -10,10 +10,12 @@ actual class RemoteFirebaseMessagingDataSource actual constructor(
     }
 
     actual suspend fun subscribeToTopic(topic: String): Result<Unit> {
-        return Result.failure(Exception("Not yet implemented for iOS"))
+        return Result.success(Unit)
+//        return Result.failure(Exception("Not yet implemented for iOS"))
     }
 
     actual suspend fun unsubscribeFromTopic(topic: String): Result<Unit> {
-        return Result.failure(Exception("Not yet implemented for iOS"))
+        return Result.success(Unit)
+//        return Result.failure(Exception("Not yet implemented for iOS"))
     }
 }
