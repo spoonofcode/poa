@@ -49,6 +49,7 @@ internal class ScanViewModel(
                                             productId = product.id,
                                         )
                                     )
+                                    showContentView()
                                 }
                                 .onFailure {
                                     showErrorView()

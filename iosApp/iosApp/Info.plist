@@ -31,6 +31,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>GIDClientID</key>
 	<string>$(POA_IOS_CLIENT_ID)</string>
 	<key>GIDServerClientID</key>
@@ -41,9 +43,7 @@
 	<string>The app needs access to NFC to read tags</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Notifications permission is required to show notifications</string>
-    <key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
-    <key>UIApplicationSceneManifest</key>
+	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
