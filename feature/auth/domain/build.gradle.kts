@@ -8,6 +8,7 @@ kotlin {
             dependencies {
                 implementation(projects.core.recaptcha)
                 implementation(projects.core.session.domain)
+                implementation(projects.core.data)
             }
         }
     }
