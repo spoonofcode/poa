@@ -33,17 +33,22 @@ internal class IosNfcReader : NfcReader {
     private val _tags = MutableSharedFlow<NfcTag>(extraBufferCapacity = 1)
     override val tags: Flow<NfcTag> = _tags.asSharedFlow()
 
+    private val _isScanning = MutableStateFlow(false)
+    override val isScanning: StateFlow<Boolean> = _isScanning.asStateFlow()
+
     private var session: NFCNDEFReaderSession? = null
 
     private val delegate = object : NSObject(), NFCNDEFReaderSessionDelegateProtocol {
 
         override fun readerSessionDidBecomeActive(session: NFCNDEFReaderSession) {
             println("NFC: NDEF Session active")
+            _isScanning.value = true
         }
 
         override fun readerSession(session: NFCNDEFReaderSession, didInvalidateWithError: NSError) {
             println("NFC: NDEF Session invalidated: ${didInvalidateWithError.localizedDescription}")
             this@IosNfcReader.session = null
+            _isScanning.value = false
         }
 
         override fun readerSession(session: NFCNDEFReaderSession, didDetectNDEFs: List<*>) {
@@ -76,6 +81,7 @@ internal class IosNfcReader : NfcReader {
     override fun stop() {
         session?.invalidateSession()
         session = null
+        _isScanning.value = false
     }
 }
 

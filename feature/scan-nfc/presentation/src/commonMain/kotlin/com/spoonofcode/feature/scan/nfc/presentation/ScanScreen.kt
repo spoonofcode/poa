@@ -74,31 +74,39 @@ private fun ColumnScope.Content(
     } else {
         val reader: NfcReader = rememberNfcReader()
         val tag by reader.tags.collectAsState(initial = null)
+        val isScanning by reader.isScanning.collectAsState()
 
         LaunchedEffect(Unit) { reader.start() }
         DisposableEffect(Unit) { onDispose { reader.stop() } }
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            val scanInfoText = when (viewState.platformType) {
-                PlatformType.Android -> stringResource(Res.string.scan_info_android)
-                PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
-            }
-            Texts.BL(
-                text = scanInfoText,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-            )
-            tag?.let {
-                onAction(ScanViewAction.CheckProduct(it))
-            } ?: LottieAnimation(
-                animationFilePath = viewState.animationFilePath,
-                contentDescription = viewState.contentDescription,
-            )
+        if (isScanning) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                val scanInfoText = when (viewState.platformType) {
+                    PlatformType.Android -> stringResource(Res.string.scan_info_android)
+                    PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
+                }
+                Texts.BL(
+                    text = scanInfoText,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                )
+                tag?.let {
+                    onAction(ScanViewAction.CheckProduct(it))
+                } ?: LottieAnimation(
+                    animationFilePath = viewState.animationFilePath,
+                    contentDescription = viewState.contentDescription,
+                )
 
-            Texts.BM(stringResource(Res.string.scanning_in_progress))
+                Texts.BM(stringResource(Res.string.scanning_in_progress))
+            }
+        } else {
+            Buttons.SecondaryButton(
+                text = "Uruchom czytnik",
+                onClick = { reader.start() }
+            )
         }
     }
 }

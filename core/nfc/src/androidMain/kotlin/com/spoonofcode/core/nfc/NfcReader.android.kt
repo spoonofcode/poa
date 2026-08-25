@@ -9,14 +9,21 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.shareIn
 
 internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
 
+    private val _isScanning = MutableStateFlow(false)
+    override val isScanning: StateFlow<Boolean> = _isScanning.asStateFlow()
+
     @OptIn(DelicateCoroutinesApi::class)
     private val _tags = callbackFlow {
+        _isScanning.value = true
         val adapter = NfcAdapter.getDefaultAdapter(activity) ?: run {
             // no NFC hardware
             close()
@@ -42,7 +49,10 @@ internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
             )
         }
         adapter.enableReaderMode(activity, readerCallback, flags, null)
-        awaitClose { adapter.disableReaderMode(activity) }
+        awaitClose {
+            adapter.disableReaderMode(activity)
+            _isScanning.value = false
+        }
     }.shareIn(GlobalScope, SharingStarted.Eagerly, replay = 0)
 
     override val tags: Flow<NfcTag> = _tags
