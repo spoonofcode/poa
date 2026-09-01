@@ -1,5 +1,6 @@
 package com.spoonofcode.feature.product.presentation.di
 
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.details.ProductDetailsViewModel
 import com.spoonofcode.feature.product.presentation.edit.ProductEditViewModel
 import com.spoonofcode.feature.product.presentation.overview.ProductOverviewViewModel
@@ -8,6 +9,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val productPresentationModule = module {
+    single { ProductEventBus() }
     viewModelOf(::ProductDetailsViewModel)
     viewModelOf(::ProductEditViewModel)
     viewModelOf(::ProductOverviewViewModel)

@@ -3,6 +3,8 @@ package com.spoonofcode.feature.product.presentation.details
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
@@ -15,6 +17,7 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
     private val getProductStatusUseCase: GetProductStatusUseCase,
+    private val productEventBus: ProductEventBus,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
     override val startAction = {
         initView(productId = productId)
@@ -97,6 +100,7 @@ internal class ProductDetailsViewModel(
                 productSerieId = product.seriesId,
             )
                 .onSuccess {
+                    productEventBus.tryEmit(ProductEvent.ProductDeleted)
                     viewModelNavigator.pop()
                 }
                 .onFailure {

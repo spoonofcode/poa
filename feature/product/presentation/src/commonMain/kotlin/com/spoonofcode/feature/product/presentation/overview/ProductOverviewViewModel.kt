@@ -3,16 +3,25 @@ package com.spoonofcode.feature.product.presentation.overview
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
+import com.spoonofcode.feature.product.presentation.Res
+import com.spoonofcode.feature.product.presentation.product_deleted
 import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
 internal class ProductOverviewViewModel(
     private val getUserProductsUseCase: GetUserProductsUseCase,
     private val getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase,
-) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction, Nothing>() {
+    private val productEventBus: ProductEventBus,
+) : BaseViewModel<ProductOverviewViewState, ProductOverviewViewAction, Nothing>(
+//    autoReloadData = true,
+) {
     override val startAction = {
         initView()
+        observeProductEvents()
     }
 
     override fun onAction(action: ProductOverviewViewAction) {
@@ -59,6 +68,18 @@ internal class ProductOverviewViewModel(
             viewModelNavigator.push(
                 ProductModuleRoute.ProductDetails(productId = productId)
             )
+        }
+    }
+
+    private fun observeProductEvents() {
+        viewModelScope.launch {
+            productEventBus.events.collect { event ->
+                when (event) {
+                    ProductEvent.ProductDeleted -> {
+                        showSuccessSnackbar(getString(Res.string.product_deleted))
+                    }
+                }
+            }
         }
     }
 }

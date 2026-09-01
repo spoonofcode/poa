@@ -19,4 +19,5 @@
     <string name="visit_product_page">Odwiedź stronę produktu</string>
     <string name="product_already_assigned">Product jest już przypisany do innego użytkownika!</string>
     <string name="send_message">Wyślij wiadomość</string>
+    <string name="product_deleted">Produkt został usunięty</string>
 </resources>
