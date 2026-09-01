@@ -8,6 +8,8 @@ import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.DeletePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEvent
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -16,6 +18,7 @@ internal class PartnerNotificationDetailsViewModel(
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val deletePartnerNotificationUseCase: DeletePartnerNotificationUseCase,
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
+    private val partnerNotificationEventBus: PartnerNotificationEventBus,
 ) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
     override val startAction = {
         initView(notificationId = notificationId)
@@ -90,6 +93,7 @@ internal class PartnerNotificationDetailsViewModel(
             deletePartnerNotificationUseCase(
                 notificationId = notification.id,
             ).onSuccess {
+                partnerNotificationEventBus.tryEmit(PartnerNotificationEvent.PartnerNotificationDeleted)
                 viewModelNavigator.pop()
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }

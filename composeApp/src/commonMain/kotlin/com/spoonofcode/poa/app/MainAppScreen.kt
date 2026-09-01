@@ -53,6 +53,7 @@ import com.spoonofcode.feature.tac.presentation.tacModuleRouteResolver
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
+import org.jetbrains.compose.resources.getString
 import org.koin.compose.getKoin
 
 private val navSavedStateConfiguration = SavedStateConfiguration {
