@@ -21,4 +21,5 @@
     <string name="send_message">Wyślij wiadomość</string>
     <string name="product_added">Product został dodany</string>
     <string name="product_deleted">Produkt został usunięty</string>
+    <string name="product_updated">Product został zaktualizowany</string>
 </resources>

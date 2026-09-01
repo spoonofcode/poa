@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 sealed class ProductEvent {
     data object ProductAdded : ProductEvent()
     data object ProductDeleted : ProductEvent()
+    data object ProductUpdated : ProductEvent()
 }
 
 internal class ProductEventBus {
