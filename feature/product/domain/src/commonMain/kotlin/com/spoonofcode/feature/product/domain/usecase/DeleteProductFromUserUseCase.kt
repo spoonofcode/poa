@@ -12,17 +12,18 @@ class DeleteProductFromUserUseCase(
         productId: String,
         productSerieId: String? = null,
     ): Result<Unit> {
-        val deleteProductResult = productRepository.deleteProductFromUser(productId = productId)
-
-        if (deleteProductResult.isFailure) {
-            return deleteProductResult
-        }
-        return if (productSerieId != null)
-            firebaseMessagingRepository.unsubscribeFromTopic(
-                topic = getSerieTopic(seriesId = productSerieId)
-            ) else {
-            Result.success(Unit)
-        }
+//        val deleteProductResult = productRepository.deleteProductFromUser(productId = productId)
+//
+//        if (deleteProductResult.isFailure) {
+//            return deleteProductResult
+//        }
+//        return if (productSerieId != null)
+//            firebaseMessagingRepository.unsubscribeFromTopic(
+//                topic = getSerieTopic(seriesId = productSerieId)
+//            ) else {
+//            Result.success(Unit)
+//        }
+        return Result.success(Unit)
     }
 
     private fun getSerieTopic(seriesId: String): String =

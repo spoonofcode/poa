@@ -90,11 +90,11 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         stopTimeoutMillis = viewStateStopTimeoutMillis,
     )
 
-    private val _viewEvent = MutableSharedFlow<VE>()
-    val viewEvent = _viewEvent.asSharedFlow()
+    private val _viewEvent = Channel<VE>(Channel.BUFFERED)
+    val viewEvent = _viewEvent.receiveAsFlow()
 
-    private val _snackbarEvent = MutableSharedFlow<SnackbarEvent>()
-    val snackbarEvent = _snackbarEvent.asSharedFlow()
+    private val _snackbarEvent = Channel<SnackbarEvent>(Channel.BUFFERED)
+    val snackbarEvent = _snackbarEvent.receiveAsFlow()
 
     private var networkStateInitialized = false
 
@@ -191,7 +191,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     protected fun showSnackbar(snackbarEvent: SnackbarEvent) {
         viewModelScope.launch {
-            _snackbarEvent.emit(snackbarEvent)
+            _snackbarEvent.send(snackbarEvent)
         }
     }
 
@@ -208,7 +208,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     protected fun emitEvent(event: VE) {
         poaLogger.debug("${this::class.simpleName}: emitEvent: $event")
         viewModelScope.launch {
-            _viewEvent.emit(event)
+            _viewEvent.send(event)
         }
     }
 }
