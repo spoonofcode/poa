@@ -8,6 +8,7 @@ import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
 import com.spoonofcode.feature.product.presentation.ProductEvent
 import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.Res
+import com.spoonofcode.feature.product.presentation.product_added
 import com.spoonofcode.feature.product.presentation.product_deleted
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -76,6 +77,11 @@ internal class ProductOverviewViewModel(
         viewModelScope.launch {
             productEventBus.events.collect { event ->
                 when (event) {
+                    ProductEvent.ProductAdded -> {
+                        loadProducts()
+                        showSuccessSnackbar(getString(Res.string.product_added))
+                    }
+
                     ProductEvent.ProductDeleted -> {
                         loadProducts()
                         showSuccessSnackbar(getString(Res.string.product_deleted))

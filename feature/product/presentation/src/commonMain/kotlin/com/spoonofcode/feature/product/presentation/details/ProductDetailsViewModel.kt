@@ -61,6 +61,7 @@ internal class ProductDetailsViewModel(
                 productId = product.id,
                 productSerieId = product.seriesId,
             ).onSuccess {
+                productEventBus.tryEmit(ProductEvent.ProductAdded)
                 viewModelNavigator.pop()
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }

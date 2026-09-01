@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 sealed class ProductEvent {
+    data object ProductAdded : ProductEvent()
     data object ProductDeleted : ProductEvent()
 }
 
