@@ -2,6 +2,8 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.CreatePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
@@ -183,7 +185,12 @@ internal class PartnerNotificationEditViewModel(
                     expirationDateTime = currentState.expirationDateTime
                 ).onSuccess {
                     partnerNotificationEventBus.tryEmit(PartnerNotificationEvent.PartnerNotificationAdded)
-                    viewModelNavigator.pop()
+                    viewModelNavigator.replaceAll(
+                        listOf(
+                            ProfileModuleRoute.ProfileDetails,
+                            PartnerModuleRoute.PartnerPanel, PartnerModuleRoute.PartnerNotifications
+                        )
+                    )
                 }.onFailure { error ->
                     error.message?.let { showErrorSnackbar(it) }
                 }

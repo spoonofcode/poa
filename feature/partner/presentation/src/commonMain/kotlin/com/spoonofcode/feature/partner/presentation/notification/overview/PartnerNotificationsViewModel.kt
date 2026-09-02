@@ -17,6 +17,10 @@ internal class PartnerNotificationsViewModel(
     private val getPartnerNotificationsUseCase: GetPartnerNotificationsUseCase,
     private val partnerNotificationEventBus: PartnerNotificationEventBus,
 ) : BaseViewModel<PartnerNotificationsViewState, PartnerNotificationsViewAction, Nothing>() {
+    init {
+        observePartnerNotificationsEvents()
+    }
+
     override val startAction = {
         initView()
     }
@@ -63,6 +67,7 @@ internal class PartnerNotificationsViewModel(
         viewModelScope.launch {
             partnerNotificationEventBus.events.collect { event ->
                 initView()
+                println("BARTEK event = $event")
                 when (event) {
                     PartnerNotificationEvent.PartnerNotificationAdded -> {
                         showSuccessSnackbar(getString(Res.string.partner_notificaiton_added))
