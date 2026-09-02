@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.partner.presentation.notification
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
 sealed class PartnerNotificationEvent {
     data object PartnerNotificationAdded : PartnerNotificationEvent()
@@ -10,10 +10,10 @@ sealed class PartnerNotificationEvent {
 }
 
 internal class PartnerNotificationEventBus {
-    private val _events = MutableSharedFlow<PartnerNotificationEvent>(extraBufferCapacity = 1)
-    val events = _events.asSharedFlow()
+    private val _events = Channel<PartnerNotificationEvent>(Channel.BUFFERED)
+    val events = _events.receiveAsFlow()
 
     fun tryEmit(event: PartnerNotificationEvent) {
-        _events.tryEmit(event)
+        _events.trySend(event)
     }
 }

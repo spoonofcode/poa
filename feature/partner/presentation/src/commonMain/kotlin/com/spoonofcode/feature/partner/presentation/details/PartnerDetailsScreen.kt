@@ -67,7 +67,8 @@ private fun ColumnScope.Content(
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
-            Images.ImageLink(imageLink = partner.imageLink!!)
+
+            partner.imageLink?.let { Images.ImageLink(imageLink = it) }
         }
     }
 

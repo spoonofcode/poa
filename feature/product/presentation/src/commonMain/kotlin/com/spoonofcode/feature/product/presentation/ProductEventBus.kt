@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.product.presentation
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
 sealed class ProductEvent {
     data object ProductAdded : ProductEvent()
@@ -10,10 +10,10 @@ sealed class ProductEvent {
 }
 
 internal class ProductEventBus {
-    private val _events = MutableSharedFlow<ProductEvent>(extraBufferCapacity = 1)
-    val events = _events.asSharedFlow()
+    private val _events = Channel<ProductEvent>(Channel.BUFFERED)
+    val events = _events.receiveAsFlow()
 
     fun tryEmit(event: ProductEvent) {
-        _events.tryEmit(event)
+        _events.trySend(event)
     }
 }

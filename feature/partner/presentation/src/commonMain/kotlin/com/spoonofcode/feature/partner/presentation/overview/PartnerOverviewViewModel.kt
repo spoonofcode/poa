@@ -42,8 +42,8 @@ internal class PartnerOverviewViewModel(
             }.onSuccess { (partners, categories) ->
                 setContentState(
                     PartnerOverviewViewState(
-                        initPartners = partners,
-                        filteredPartners = partners,
+                        initPartners = partners.filterNot { it.imageLink.isNullOrEmpty() },
+                        filteredPartners = partners.filterNot { it.imageLink.isNullOrEmpty() },
                         partnerCategories = categories,
                     )
                 )
