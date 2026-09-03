@@ -20,10 +20,11 @@ actual fun LoopingVideo(
     modifier: Modifier,
     autoPlay: Boolean,
     mute: Boolean,
+    onLoadingChanged: (Boolean) -> Unit,
     onError: (Exception) -> Unit
 ) {
     val ctx = LocalContext.current
-    val player = remember { buildPlayer(ctx, url, autoPlay, mute, onError) }
+    val player = remember { buildPlayer(ctx, url, autoPlay, mute, onLoadingChanged, onError) }
 
     DisposableEffect(Unit) { onDispose { player.release() } }
 
@@ -36,6 +37,7 @@ private fun buildPlayer(
     url: String,
     autoPlay: Boolean,
     mute: Boolean,
+    onLoadingChanged: (Boolean) -> Unit,
     onError: (Exception) -> Unit
 ): ExoPlayer {
     val httpDataSourceFactory = DefaultHttpDataSource.Factory()
@@ -52,6 +54,11 @@ private fun buildPlayer(
             addListener(object : Player.Listener {
                 override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
                     onError(error)
+                    onLoadingChanged(false)
+                }
+
+                override fun onPlaybackStateChanged(playbackState: Int) {
+                    onLoadingChanged(playbackState == Player.STATE_BUFFERING)
                 }
             })
             setMediaItem(MediaItem.fromUri(url))

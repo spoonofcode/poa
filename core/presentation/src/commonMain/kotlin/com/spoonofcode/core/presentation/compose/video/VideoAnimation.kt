@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -23,8 +25,9 @@ fun VideoAnimation(
     imageLink: String? = null
 ) {
     var isError by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(true) }
 
-    Box {
+    Box(contentAlignment = Alignment.Center) {
         if (!isError) {
             LoopingVideo(
                 url = videoLink,
@@ -38,8 +41,12 @@ fun VideoAnimation(
                     .shadow(4.dp, RoundedCornerShape(16.dp))
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 mute = true,
+                onLoadingChanged = {
+                    isLoading = it
+                },
                 onError = {
                     isError = true
+                    isLoading = false
                 }
             )
         } else {
@@ -53,6 +60,10 @@ fun VideoAnimation(
                         .shadow(4.dp, RoundedCornerShape(16.dp))
                 )
             }
+        }
+
+        if (isLoading && !isError) {
+            CircularProgressIndicator()
         }
     }
 }
