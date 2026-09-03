@@ -13,7 +13,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.compose.CustomIcons.IconWithBadge
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

@@ -34,13 +34,13 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Colors
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.CircleImage
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.TextBLB
 import com.spoonofcode.core.presentation.compose.TextHSB
+import com.spoonofcode.core.presentation.theme.metalGold
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.cancel
@@ -95,7 +95,7 @@ private fun ColumnScope.Content(
         CircleImage(
             imageRes = Res.drawable.taggy_go_logo,
             backgroundColor = if (viewState.partnerPanelVisible) {
-                Colors.Metal_Gold
+                metalGold
             } else {
                 MaterialTheme.colorScheme.surfaceVariant
             }
