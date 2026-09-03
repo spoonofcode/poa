@@ -21,7 +21,8 @@ import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextTLB
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
@@ -79,14 +80,14 @@ private fun NotificationCard(
                 .fillMaxWidth()
                 .padding(16.dp),
         ) {
-            Texts.TLB(
+            TextTLB(
                 text = notification.title,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             SpacerVerticalBetweenFields()
 
-            Texts.BL(
+            TextBL(
                 text = notification.text,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

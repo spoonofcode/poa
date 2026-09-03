@@ -21,7 +21,7 @@ fun StandardSlider(
 ) {
     var sliderPosition by remember { mutableStateOf(selectedPosition) }
     Column {
-        Texts.BLB(text = "$labelPrefix ${sliderPosition.toInt()} $labelPostfix")
+        TextBLB(text = "$labelPrefix ${sliderPosition.toInt()} $labelPostfix")
 
         Slider(
             value = sliderPosition,
@@ -49,7 +49,7 @@ fun StandardRangeSlider(
 ) {
     var sliderPosition by remember { mutableStateOf(selectedStartPosition..selectedEndPosition) }
     Column {
-        Texts.BLB(text = label + " ${sliderPosition.start.toInt()} - ${sliderPosition.endInclusive.toInt()}")
+        TextBLB(text = label + " ${sliderPosition.start.toInt()} - ${sliderPosition.endInclusive.toInt()}")
 
         RangeSlider(
             value = sliderPosition,

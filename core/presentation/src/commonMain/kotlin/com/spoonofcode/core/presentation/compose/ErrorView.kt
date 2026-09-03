@@ -53,7 +53,7 @@ fun ErrorView(
         }
         SpacerVerticalBetweenFields()
 
-        Texts.BLB(stringResource(Res.string.data_could_not_be_loaded))
+        TextBLB(stringResource(Res.string.data_could_not_be_loaded))
 
         SpacerVerticalBetweenFields()
 

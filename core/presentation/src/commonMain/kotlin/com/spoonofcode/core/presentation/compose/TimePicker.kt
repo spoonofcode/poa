@@ -45,7 +45,7 @@ fun StandardTimePicker(
     Box(
         modifier = modifier
     ) {
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = value.formatedTime(),
             readOnly = true,
             label = label,

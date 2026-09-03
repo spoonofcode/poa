@@ -12,9 +12,9 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.CircleImage
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
-import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.edit_profile
@@ -55,7 +55,7 @@ private fun ColumnScope.Content(
         CircleImage(imageRes = Res.drawable.poa)
     }
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.profile.email,
         onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
         label = stringResource(resource = Res.string.name),

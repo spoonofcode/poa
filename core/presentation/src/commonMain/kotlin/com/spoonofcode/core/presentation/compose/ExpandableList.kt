@@ -60,7 +60,7 @@ fun ExpandableListItem(title: String, description: String) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Texts.TM(
+                TextTM(
                     text = title,
                     modifier = Modifier.weight(1f)
                 )
@@ -72,7 +72,7 @@ fun ExpandableListItem(title: String, description: String) {
 
             if (expanded) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Texts.BM(description)
+                TextBM(description)
             }
         }
     }

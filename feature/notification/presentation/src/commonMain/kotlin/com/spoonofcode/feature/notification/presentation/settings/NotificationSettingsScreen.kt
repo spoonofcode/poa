@@ -24,7 +24,8 @@ import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
 import com.spoonofcode.core.presentation.compose.LabelSwitch
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextTM
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_description
@@ -88,7 +89,7 @@ private fun ColumnScope.Content(
     )
 
     if (notificationPermissionState.status.isGranted) {
-        Texts.TM(stringResource(Res.string.notifications_settings_text))
+        TextTM(stringResource(Res.string.notifications_settings_text))
 
         LabelSwitch(
             title = stringResource(Res.string.notifications_all_push_title),
@@ -155,7 +156,7 @@ private fun ColumnScope.Content(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Texts.BL(
+            TextBL(
                 text = stringResource(resource = Res.string.open_app_settings_info),
                 textAlign = TextAlign.Center,
             )

@@ -16,8 +16,8 @@ fun StandardAlertDialog(
 ) {
     AlertDialog(
         onDismissRequest = dismissAction,
-        title = { Texts.TLB(title) },
-        text = { Texts.BM(text) },
+        title = { TextTLB(title) },
+        text = { TextBM(text) },
         confirmButton = {
             PrimaryButton(
                 text = confirmButtonText,

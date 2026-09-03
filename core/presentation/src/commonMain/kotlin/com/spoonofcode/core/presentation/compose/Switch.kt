@@ -30,8 +30,8 @@ fun LabelSwitch(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Texts.BL(text = title)
-            Texts.BS(text = description)
+            TextBL(text = title)
+            TextBS(text = description)
         }
 
         SpacerHorizontalBetweenFields()

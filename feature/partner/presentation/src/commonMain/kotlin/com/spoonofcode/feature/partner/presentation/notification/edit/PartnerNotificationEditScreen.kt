@@ -12,7 +12,7 @@ import com.spoonofcode.core.presentation.compose.StandardDatePickerWithTimer
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
-import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.cancel
@@ -74,13 +74,13 @@ private fun ColumnScope.Content(
         )
     }
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.title,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeTitle(it)) },
         label = stringResource(resource = Res.string.title),
     )
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.text,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeText(it)) },
         label = stringResource(resource = Res.string.text),
@@ -115,7 +115,7 @@ private fun ColumnScope.Content(
         modifier = Modifier,
     )
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.link,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeLink(it)) },
         label = stringResource(resource = Res.string.link),

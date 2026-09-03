@@ -20,7 +20,7 @@ fun LabeledDivider(
             modifier = Modifier.weight(1f),
         )
 
-        Texts.BM(text = text)
+        TextBM(text = text)
 
         HorizontalDivider(
             modifier = Modifier.weight(1f),

@@ -34,7 +34,7 @@ fun StandardDropdownMenu(
             expanded = !expanded
         },
     ) {
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = value,
             onValueChange = {},
             readOnly = true,

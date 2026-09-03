@@ -25,7 +25,7 @@ fun TopBar(
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-        title = { topAppBarTitle?.let { Texts.TLB(it) } },
+        title = { topAppBarTitle?.let { TextTLB(it) } },
         navigationIcon = if (backNavigationEnable) {
             {
                 IconButton(onClick = navigationBackAction) {

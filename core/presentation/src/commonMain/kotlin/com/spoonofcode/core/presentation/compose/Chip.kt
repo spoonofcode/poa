@@ -45,7 +45,7 @@ fun SelectableChipsGroup(
                 FilterChip(
                     selected = isSelected,
                     onClick = { onOptionClick(option) },
-                    label = { Texts.LM(option) },
+                    label = { TextLM(option) },
                     leadingIcon = if (isSelected) {
                         {
                             Icon(
@@ -79,7 +79,7 @@ fun HorizontalScrollableFilterChipRow(
                 selected = isSelected,
                 onClick = { onCategorySelected(category) },
                 label = {
-                    Texts.LLB(text = category)
+                    TextLLB(text = category)
                 },
                 shape = MaterialTheme.shapes.medium,
                 border = if (isSelected) null else FilterChipDefaults.filterChipBorder(

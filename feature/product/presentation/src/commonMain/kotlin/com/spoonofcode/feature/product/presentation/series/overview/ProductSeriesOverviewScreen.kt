@@ -22,7 +22,7 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerHorizontalBetweenFields
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBLB
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_product_series
@@ -104,7 +104,7 @@ private fun ProductSeriesItem(
             )
             SpacerHorizontalBetweenFields()
 
-            Texts.BLB(item.name)
+            TextBLB(item.name)
 
             SpacerWeight1(this)
 

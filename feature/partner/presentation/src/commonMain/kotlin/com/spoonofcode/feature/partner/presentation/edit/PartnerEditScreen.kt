@@ -10,7 +10,7 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.description
@@ -54,38 +54,38 @@ private fun ColumnScope.Content(
     if (partner != null) {
         partner.imageLink?.let { ImageLink(imageLink = it) }
 
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.name,
             onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },
             label = stringResource(resource = Res.string.partner_name),
         )
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.description.orEmpty(),
             onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
             label = stringResource(resource = Res.string.description),
             minLines = 8,
         )
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.websiteLink.orEmpty(),
             onValueChange = { onAction(PartnerEditViewAction.ChangeWebsiteLink(it)) },
             label = stringResource(resource = Res.string.website),
         )
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.instagramLink.orEmpty(),
             onValueChange = { onAction(PartnerEditViewAction.ChangeInstagramLink(it)) },
             label = stringResource(resource = Res.string.instagram),
         )
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.facebookLink.orEmpty(),
             onValueChange = { onAction(PartnerEditViewAction.ChangeFacebookLink(it)) },
             label = stringResource(resource = Res.string.facebook),
         )
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.youtubeLink.orEmpty(),
             onValueChange = { onAction(PartnerEditViewAction.ChangeYoutubeLink(it)) },
             label = stringResource(resource = Res.string.youtube),
         )
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = partner.xLink.orEmpty(),
             onValueChange = { onAction(PartnerEditViewAction.ChangeXLink(it)) },
             label = stringResource(resource = Res.string.x),

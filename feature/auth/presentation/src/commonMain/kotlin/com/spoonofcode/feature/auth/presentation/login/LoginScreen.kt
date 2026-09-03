@@ -24,8 +24,8 @@ import com.spoonofcode.core.presentation.compose.LabeledDivider
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
+import com.spoonofcode.core.presentation.compose.TextHL
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.email
 import com.spoonofcode.feature.auth.presentation.ic_google
@@ -74,10 +74,10 @@ private fun ColumnScope.Content(
     ) {
         CircleImage(imageRes = Res.drawable.taggy_go_logo)
         SpacerVerticalBetweenFields()
-        Texts.HL(stringResource(resource = Res.string.let_s_get_started))
+        TextHL(stringResource(resource = Res.string.let_s_get_started))
     }
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.email,
         onValueChange = { onAction(LoginViewAction.ChangeEmail(email = it)) },
         label = stringResource(resource = Res.string.email),

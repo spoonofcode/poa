@@ -61,7 +61,7 @@ fun CheckboxTextLinkRow(
         )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Texts.BM(text = text)
+            TextBM(text = text)
             if (isMandatory) {
                 Text(
                     text = " *",

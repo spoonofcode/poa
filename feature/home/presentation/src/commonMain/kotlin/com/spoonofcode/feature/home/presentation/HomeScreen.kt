@@ -32,7 +32,10 @@ import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextLMB
+import com.spoonofcode.core.presentation.compose.TextLS
+import com.spoonofcode.core.presentation.compose.TextLSB
+import com.spoonofcode.core.presentation.compose.TextTMB
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.model.DailyReward
@@ -106,7 +109,7 @@ private fun DailyCheckInSection(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Texts.TMB(text = stringResource(Res.string.daily_check_in))
+            TextTMB(text = stringResource(Res.string.daily_check_in))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -139,7 +142,7 @@ private fun DailyCheckInSection(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Texts.LSB(
+                    TextLSB(
                         text = stringResource(Res.string.next_check_in),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -161,8 +164,8 @@ private fun DailyCheckInSection(
 @Composable
 private fun HomeStatItem(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Texts.TMB(text = value)
-        Texts.LS(text = label)
+        TextTMB(text = value)
+        TextLS(text = label)
     }
 }
 
@@ -186,7 +189,7 @@ private fun DailyRewardItem(reward: DailyReward) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Texts.LSB(text = stringResource(Res.string.day_number, reward.day))
+            TextLSB(text = stringResource(Res.string.day_number, reward.day))
 
             Icon(
                 imageVector = if (isClaimed) Icons.Default.CheckCircle else Icons.Default.CardGiftcard,
@@ -195,7 +198,7 @@ private fun DailyRewardItem(reward: DailyReward) {
                 modifier = Modifier.size(28.dp)
             )
 
-            Texts.LMB(
+            TextLMB(
                 text = "${reward.points} ${stringResource(Res.string.points_short)}",
                 color = if (isAvailable) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
             )

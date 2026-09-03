@@ -23,7 +23,8 @@ import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElemen
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerHorizontalBetweenFields
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBLB
+import com.spoonofcode.core.presentation.compose.TextBM
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_customers
@@ -104,8 +105,8 @@ private fun CustomerItem(
             SpacerHorizontalBetweenFields()
 
             Column {
-                Texts.BLB(item.name)
-                Texts.BM(item.email)
+                TextBLB(item.name)
+                TextBM(item.email)
             }
 
             SpacerWeight1(this)

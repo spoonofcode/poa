@@ -15,9 +15,10 @@ import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
 import com.spoonofcode.core.presentation.compose.ImageLink
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextHSB
+import com.spoonofcode.core.presentation.compose.TextLLB
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.presentation.Res
@@ -69,13 +70,13 @@ private fun ColumnScope.Content(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         product.seriesName?.let {
-            Texts.LLB(
+            TextLLB(
                 text = it.uppercase(),
             )
         }
 
         product.name?.let {
-            Texts.HSB(
+            TextHSB(
                 text = it,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -88,7 +89,7 @@ private fun ColumnScope.Content(
             )
         }
 
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = product.customLink ?: "",
             onValueChange = { onAction(ProductEditViewAction.ChangeCustomLink(it)) },
             innerLabel = stringResource(resource = Res.string.custom_link),

@@ -25,7 +25,7 @@ import com.spoonofcode.core.presentation.compose.DescriptionCard
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.SocialIcons
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBM
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.about_partner
@@ -86,7 +86,7 @@ private fun ColumnScope.Content(
                 color = MaterialTheme.colorScheme.onSurface
             )
             partner.email?.let {
-                Texts.BM(
+                TextBM(
                     text = it,
                 )
             }

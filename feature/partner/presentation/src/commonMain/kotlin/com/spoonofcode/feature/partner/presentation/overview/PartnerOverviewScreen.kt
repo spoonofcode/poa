@@ -19,7 +19,7 @@ import com.spoonofcode.core.presentation.compose.HorizontalScrollableFilterChipR
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
-import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldSearch
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.feature.partner.presentation.Res
@@ -53,7 +53,7 @@ private fun ColumnScope.Content(
     viewState: PartnerOverviewViewState,
     onAction: (PartnerOverviewViewAction) -> Unit,
 ) {
-    TextFields.OutlinedSearch(
+    OutlinedTextFieldSearch(
         value = viewState.searchText,
         onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
     )

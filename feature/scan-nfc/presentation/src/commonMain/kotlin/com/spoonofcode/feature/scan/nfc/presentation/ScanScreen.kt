@@ -35,7 +35,9 @@ import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SecondaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextBLB
+import com.spoonofcode.core.presentation.compose.TextBM
 import com.spoonofcode.core.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -90,7 +92,7 @@ private fun ColumnScope.Content(
                     PlatformType.Android -> stringResource(Res.string.scan_info_android)
                     PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
                 }
-                Texts.BL(
+                TextBL(
                     text = scanInfoText,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 )
@@ -101,7 +103,7 @@ private fun ColumnScope.Content(
                     contentDescription = viewState.contentDescription,
                 )
 
-                Texts.BM(stringResource(Res.string.scanning_in_progress))
+                TextBM(stringResource(Res.string.scanning_in_progress))
             } else {
                 PrimaryButton(
                     text = stringResource(Res.string.start_scanning),
@@ -141,7 +143,7 @@ private fun ProductNotFoundView(
         }
         SpacerVerticalBetweenFields()
 
-        Texts.BLB(stringResource(Res.string.product_not_found))
+        TextBLB(stringResource(Res.string.product_not_found))
 
         SpacerVerticalBetweenFields()
 

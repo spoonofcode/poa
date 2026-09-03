@@ -11,7 +11,8 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.CheckboxTextLinkRow
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextHSB
+import com.spoonofcode.core.presentation.compose.TextLS
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -40,9 +41,9 @@ private fun ColumnScope.Content(
     viewState: TACViewState,
     onAction: (TACViewAction) -> Unit
 ) {
-    Texts.HSB(stringResource(Res.string.terms_and_conditions_description))
+    TextHSB(stringResource(Res.string.terms_and_conditions_description))
 
-    Texts.LS(
+    TextLS(
         text = stringResource(Res.string.star_mandatory),
         color = MaterialTheme.colorScheme.error,
     )

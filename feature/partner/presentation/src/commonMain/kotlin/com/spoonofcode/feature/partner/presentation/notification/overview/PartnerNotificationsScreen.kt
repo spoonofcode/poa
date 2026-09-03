@@ -38,7 +38,8 @@ import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBM
+import com.spoonofcode.core.presentation.compose.TextTM
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
@@ -168,12 +169,12 @@ private fun NotificationItem(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
 
-                    Texts.TM(
+                    TextTM(
                         text = item.title,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    Texts.BM(
+                    TextBM(
                         text = item.text,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 2,

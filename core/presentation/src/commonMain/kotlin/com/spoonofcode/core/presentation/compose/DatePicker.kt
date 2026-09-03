@@ -50,7 +50,7 @@ fun StandardDatePicker(
     Box(
         modifier = modifier
     ) {
-        TextFields.Outlined(
+        OutlinedTextFieldStandard(
             value = date.value.formatedLocalDate(),
             onValueChange = {},
             readOnly = true,
@@ -106,7 +106,7 @@ fun StandardDatePickerWithTimer(
         modifier = modifier,
     ) {
         label?.let {
-            Texts.BLB(text = it)
+            TextBLB(text = it)
         }
         Row {
             StandardDatePicker(

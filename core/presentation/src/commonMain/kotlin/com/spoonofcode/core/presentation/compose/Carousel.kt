@@ -33,7 +33,7 @@ fun CustomCarousel(
     onItemClick: (sportEventId: Int) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Texts.HSB(
+        TextHSB(
             text = title,
         )
         SpacerVerticalBetweenFields()
@@ -66,11 +66,11 @@ fun CustomCarousel(
                     Column(
                         modifier = Modifier.padding(8.dp)
                     ) {
-                        Texts.BLB(
+                        TextBLB(
                             text = item.title,
                         )
                         SpacerVerticalBetweenFields()
-                        Texts.BM(
+                        TextBM(
                             text = item.rangeDateTime,
                         )
                     }
