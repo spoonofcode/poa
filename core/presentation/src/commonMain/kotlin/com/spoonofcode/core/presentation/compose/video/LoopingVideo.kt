@@ -8,5 +8,6 @@ expect fun LoopingVideo(
     url: String,
     modifier: Modifier = Modifier,
     autoPlay: Boolean = true,
-    mute: Boolean = true
+    mute: Boolean = true,
+    onError: (Exception) -> Unit = {}
 )

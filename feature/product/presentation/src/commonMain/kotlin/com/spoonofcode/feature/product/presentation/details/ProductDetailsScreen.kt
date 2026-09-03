@@ -106,7 +106,10 @@ private fun ColumnScope.Content(
     val product = requireNotNull(viewState.product)
 
     if (!product.videoLink.isNullOrEmpty()) {
-        VideoAnimation(product.videoLink!!)
+        VideoAnimation(
+            videoLink = product.videoLink!!,
+            imageLink = product.imageLink
+        )
     } else {
         product.imageLink?.let { Images.ImageLink(imageLink = it) }
     }
