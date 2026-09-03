@@ -8,7 +8,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.DatePickers
+import com.spoonofcode.core.presentation.compose.StandardDatePickerWithTimer
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -87,7 +87,7 @@ private fun ColumnScope.Content(
         minLines = 8,
     )
 
-    DatePickers.DatePickerWithTimer(
+    StandardDatePickerWithTimer(
         label = stringResource(resource = Res.string.delivery_date),
         value = viewState.deliveryDateTime,
         minDateTime = viewState.minDeliveryDateTime,
@@ -101,7 +101,7 @@ private fun ColumnScope.Content(
         modifier = Modifier,
     )
 
-    DatePickers.DatePickerWithTimer(
+    StandardDatePickerWithTimer(
         label = stringResource(resource = Res.string.expiration_date),
         value = viewState.expirationDateTime,
         minDateTime = viewState.minExpirationDateTime,
