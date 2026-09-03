@@ -16,7 +16,6 @@ internal class NotificationChannelViewModel(
 ) :
     BaseViewModel<NotificationChannelViewState, NotificationChannelViewAction, Nothing>(
         initialViewState = ViewState.Content(NotificationChannelViewState()),
-        autoReloadData = true,
     ) {
 
     init {

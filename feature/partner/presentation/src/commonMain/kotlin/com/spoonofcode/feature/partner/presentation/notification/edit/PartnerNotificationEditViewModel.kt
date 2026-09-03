@@ -170,10 +170,9 @@ internal class PartnerNotificationEditViewModel(
                     deliveryDateTime = currentState.deliveryDateTime,
                     expirationDateTime = currentState.expirationDateTime
                 ).onSuccess {
-                    partnerNotificationEventBus.emitOverview(PartnerNotificationEvent.PartnerNotificationUpdated)
                     partnerNotificationEventBus.emitDetails(PartnerNotificationEvent.PartnerNotificationUpdated)
                     viewModelScope.launch {
-                        viewModelNavigator.popUpTo(PartnerModuleRoute.PartnerPanel::class)
+                        viewModelNavigator.pop()
                     }
                 }.onFailure { error ->
                     error.message?.let { showErrorSnackbar(it) }
@@ -191,7 +190,8 @@ internal class PartnerNotificationEditViewModel(
                     viewModelNavigator.replaceAll(
                         listOf(
                             ProfileModuleRoute.ProfileDetails,
-                            PartnerModuleRoute.PartnerPanel
+                            PartnerModuleRoute.PartnerPanel,
+                            PartnerModuleRoute.PartnerNotifications,
                         )
                     )
                 }.onFailure { error ->

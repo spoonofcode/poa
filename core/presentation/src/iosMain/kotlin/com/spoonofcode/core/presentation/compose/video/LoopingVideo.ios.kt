@@ -21,7 +21,9 @@ actual fun LoopingVideo(
     url: String,
     modifier: Modifier,
     autoPlay: Boolean,
-    mute: Boolean
+    mute: Boolean,
+    onLoadingChanged: (Boolean) -> Unit,
+    onError: (Exception) -> Unit
 ) = UIKitView(
     modifier = modifier,
     factory = {

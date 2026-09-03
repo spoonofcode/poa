@@ -4,11 +4,22 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationsUseCase
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEvent
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
+import com.spoonofcode.feature.partner.presentation.partner_notification_added
+import com.spoonofcode.feature.partner.presentation.partner_notification_deleted
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
 internal class PartnerNotificationsViewModel(
     private val getPartnerNotificationsUseCase: GetPartnerNotificationsUseCase,
+    private val partnerNotificationEventBus: PartnerNotificationEventBus,
 ) : BaseViewModel<PartnerNotificationsViewState, PartnerNotificationsViewAction, Nothing>() {
+    init {
+        observeNotificationEvents()
+    }
+
     override val startAction = {
         initView()
     }
@@ -18,6 +29,24 @@ internal class PartnerNotificationsViewModel(
             is PartnerNotificationsViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
+        }
+    }
+
+    private fun observeNotificationEvents() {
+        viewModelScope.launch {
+            partnerNotificationEventBus.overviewEvents.collect { event ->
+                when (event) {
+                    PartnerNotificationEvent.PartnerNotificationAdded -> {
+                        showSuccessSnackbar(getString(Res.string.partner_notification_added))
+                    }
+
+                    PartnerNotificationEvent.PartnerNotificationDeleted -> {
+                        showSuccessSnackbar(getString(Res.string.partner_notification_deleted))
+                    }
+
+                    else -> {}
+                }
+            }
         }
     }
 
