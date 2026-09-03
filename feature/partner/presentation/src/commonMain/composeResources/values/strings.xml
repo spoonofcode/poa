@@ -40,7 +40,8 @@
     <string name="website">Website</string>
     <string name="x">X</string>
     <string name="youtube">Youtube</string>
-    <string name="partner_notificaiton_added">Partner notification added</string>
-    <string name="partner_notificaiton_delted">Partner notification deleted</string>
-    <string name="partner_notificaiton_updated">Partner notification updated</string>
+    <string name="partner_notification_added">Partner notification added</string>
+    <string name="partner_notification_deleted">Partner notification deleted</string>
+    <string name="partner_notification_updated">Partner notification updated</string>
+    <string name="partner_data_updated">Partner data updated</string>
 </resources>

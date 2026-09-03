@@ -11,7 +11,7 @@ import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseC
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEvent
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
-import com.spoonofcode.feature.partner.presentation.partner_notificaiton_updated
+import com.spoonofcode.feature.partner.presentation.partner_notification_updated
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -45,7 +45,7 @@ internal class PartnerNotificationDetailsViewModel(
             partnerNotificationEventBus.detailsEvents.collect { event ->
                 if (event is PartnerNotificationEvent.PartnerNotificationUpdated) {
                     initView(notificationId)
-                    showSuccessSnackbar(getString(Res.string.partner_notificaiton_updated))
+                    showSuccessSnackbar(getString(Res.string.partner_notification_updated))
                 }
             }
         }
@@ -112,7 +112,9 @@ internal class PartnerNotificationDetailsViewModel(
                 notificationId = notification.id,
             ).onSuccess {
                 partnerNotificationEventBus.emitOverview(PartnerNotificationEvent.PartnerNotificationDeleted)
-                viewModelNavigator.pop()
+                viewModelScope.launch {
+                    viewModelNavigator.popUpTo(PartnerModuleRoute.PartnerPanel::class)
+                }
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
