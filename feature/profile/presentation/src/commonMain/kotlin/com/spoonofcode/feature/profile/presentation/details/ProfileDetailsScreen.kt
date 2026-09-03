@@ -35,7 +35,7 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Colors
-import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -177,7 +177,7 @@ private fun Dialogs(
     onAction: (ProfileDetailsViewAction) -> Unit
 ) {
     if (viewState.isLogoutDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.logout_dialog_title),
             text = stringResource(Res.string.logout_dialog_text),
             confirmButtonText = stringResource(Res.string.logout),

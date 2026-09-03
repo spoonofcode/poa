@@ -30,7 +30,7 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
-import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.PrimaryButton
@@ -185,7 +185,7 @@ private fun Dialogs(
     onAction: (ProductDetailsViewAction) -> Unit
 ) {
     if (viewState.isDeleteProductDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.delete_product_from_profile_title),
             text = stringResource(Res.string.delete_product_from_profile_text),
             confirmButtonText = stringResource(Res.string.delete_product),

@@ -12,7 +12,7 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
-import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -133,7 +133,7 @@ private fun Dialogs(
     onAction: (PartnerNotificationDetailsViewAction) -> Unit
 ) {
     if (viewState.isDeleteNotificationDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.delete_notification_title),
             text = stringResource(Res.string.delete_notification_text),
             confirmButtonText = stringResource(Res.string.delete_notification),
