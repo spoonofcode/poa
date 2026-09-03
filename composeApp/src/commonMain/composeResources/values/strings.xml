@@ -1,0 +1,7 @@
+<resources>
+    <string name="tab_start">Start</string>
+    <string name="tab_partners">Partners</string>
+    <string name="tab_products">Products</string>
+    <string name="tab_profile">Profile</string>
+    <string name="tab_scanner">Scanner</string>
+</resources>

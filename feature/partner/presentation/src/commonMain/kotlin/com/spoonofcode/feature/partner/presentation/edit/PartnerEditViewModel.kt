@@ -5,11 +5,13 @@ import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUseCase
 import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
+import com.spoonofcode.feature.partner.presentation.PartnerEventBus
 import kotlinx.coroutines.launch
 
 internal class PartnerEditViewModel(
     private val getPartnerUseCase: GetPartnerUseCase,
-    private val updatePartnerUseCase: UpdatePartnerUseCase
+    private val updatePartnerUseCase: UpdatePartnerUseCase,
+    private val partnerEventBus: PartnerEventBus,
 ) : BaseViewModel<PartnerEditViewState, PartnerEditViewAction, Nothing>() {
     override val startAction = {
         initView()
@@ -79,6 +81,7 @@ internal class PartnerEditViewModel(
             showLoadingView()
             updatePartnerUseCase(getCurrentPartner())
                 .onSuccess {
+                    partnerEventBus.emitPartnerUpdated()
                     viewModelNavigator.pop()
                 }
                 .onFailure {

@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
@@ -32,12 +33,13 @@ object Images {
     fun CircleImage(
         imageRes: DrawableResource,
         imageSize: Dp = 100.dp,
+        backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     ) {
         Box(
             modifier = Modifier
                 .size(imageSize)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant),
+                .background(color = backgroundColor),
             contentAlignment = Alignment.Center
         ) {
             Surface(

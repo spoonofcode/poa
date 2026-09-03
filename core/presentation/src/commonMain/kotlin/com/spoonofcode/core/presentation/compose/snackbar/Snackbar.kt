@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.snackbar.ext.showSnackbar
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 data class CustomSnackbarVisuals(
@@ -59,7 +59,7 @@ fun Snackbar(
 @Composable
 fun setSnackbarHostState(
     snackbarHostState: SnackbarHostState,
-    snackbarEvent: SharedFlow<SnackbarEvent>
+    snackbarEvent: Flow<SnackbarEvent>
 ) {
     val coroutineScope = rememberCoroutineScope()
 

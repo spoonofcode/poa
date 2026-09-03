@@ -35,6 +35,7 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.Colors
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -90,7 +91,14 @@ private fun ColumnScope.Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
+        Images.CircleImage(
+            imageRes = Res.drawable.taggy_go_logo,
+            backgroundColor = if (viewState.partnerPanelVisible) {
+                Colors.Metal_Gold
+            } else {
+                MaterialTheme.colorScheme.surfaceVariant
+            }
+        )
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Texts.HSB(

@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.partner.presentation.notification
+package com.spoonofcode.feature.partner.presentation.notification.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel

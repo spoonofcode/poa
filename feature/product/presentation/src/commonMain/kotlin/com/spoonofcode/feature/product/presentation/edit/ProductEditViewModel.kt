@@ -4,12 +4,15 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import kotlinx.coroutines.launch
 
 internal class ProductEditViewModel(
     private val productId: String,
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
+    private val productEventBus: ProductEventBus,
 ) : BaseViewModel<ProductEditViewState, ProductEditViewAction, Nothing>() {
     override val startAction = {
         initView(productId)
@@ -54,6 +57,7 @@ internal class ProductEditViewModel(
                 customLink = product.customLink,
             )
                 .onSuccess {
+                    productEventBus.emitDetails(ProductEvent.ProductUpdated)
                     viewModelNavigator.pop()
                 }
                 .onFailure {

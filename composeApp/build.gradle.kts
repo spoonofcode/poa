@@ -127,3 +127,9 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.spoonofcode.composeApp"
+    generateResClass = always
+}

@@ -29,4 +29,5 @@
     <string name="save_changes">Save changes</string>
     <string name="tab_already_read">Already read</string>
     <string name="tab_new">New</string>
+    <string name="notification_settings_updated">Notification settings updated</string>
 </resources>

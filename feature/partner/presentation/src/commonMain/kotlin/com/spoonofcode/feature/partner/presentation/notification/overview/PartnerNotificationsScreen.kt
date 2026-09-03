@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.partner.presentation.notification
+package com.spoonofcode.feature.partner.presentation.notification.overview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
