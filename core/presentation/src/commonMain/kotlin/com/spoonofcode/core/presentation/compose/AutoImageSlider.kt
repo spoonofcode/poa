@@ -78,7 +78,7 @@ fun AutoImageSlider(
             HorizontalPager(
                 state = pagerState,
             ) { page ->
-                Images.ImageLink(imageLink = imageLinks[page])
+                ImageLink(imageLink = imageLinks[page])
             }
         }
 

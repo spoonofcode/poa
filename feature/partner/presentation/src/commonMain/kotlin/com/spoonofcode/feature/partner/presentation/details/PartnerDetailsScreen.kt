@@ -23,7 +23,7 @@ import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
 import com.spoonofcode.core.presentation.compose.ElevatedCard
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.SocialIcons
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.partner.domain.model.Partner
@@ -69,7 +69,7 @@ private fun ColumnScope.Content(
             contentAlignment = Alignment.Center
         ) {
 
-            partner.imageLink?.let { Images.ImageLink(imageLink = it) }
+            partner.imageLink?.let { ImageLink(imageLink = it) }
         }
     }
 

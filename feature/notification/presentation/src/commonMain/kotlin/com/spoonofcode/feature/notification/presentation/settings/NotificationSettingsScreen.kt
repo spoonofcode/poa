@@ -21,7 +21,8 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.RequestPermission
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
 import com.spoonofcode.core.presentation.compose.LabelSwitch
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
@@ -142,7 +143,7 @@ private fun ColumnScope.Content(
         )
 
 
-        Spacers.Weight1(this)
+        SpacerWeight1(this)
 
         PrimaryButton(
             text = stringResource(Res.string.save_changes),
@@ -158,7 +159,7 @@ private fun ColumnScope.Content(
                 text = stringResource(resource = Res.string.open_app_settings_info),
                 textAlign = TextAlign.Center,
             )
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
             PrimaryButton(
                 text = stringResource(resource = Res.string.open_app_settings),
                 onClick = {

@@ -52,7 +52,7 @@ fun DescriptionCard(title: String, description: String) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,

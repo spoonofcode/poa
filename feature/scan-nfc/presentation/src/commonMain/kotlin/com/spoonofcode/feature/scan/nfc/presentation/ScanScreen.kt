@@ -34,7 +34,7 @@ import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SecondaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.DrawableResource
@@ -139,11 +139,11 @@ private fun ProductNotFoundView(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
             )
         }
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
         Texts.BLB(stringResource(Res.string.product_not_found))
 
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
         SecondaryButton(
             text = stringResource(resource = Res.string.scan_again),

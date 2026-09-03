@@ -7,9 +7,9 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
@@ -52,7 +52,7 @@ private fun ColumnScope.Content(
     val partner = viewState.partner
 
     if (partner != null) {
-        partner.imageLink?.let { Images.ImageLink(imageLink = it) }
+        partner.imageLink?.let { ImageLink(imageLink = it) }
 
         TextFields.Outlined(
             value = partner.name,
@@ -91,7 +91,7 @@ private fun ColumnScope.Content(
             label = stringResource(resource = Res.string.x),
         )
 
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
         PrimaryButton(
             text = stringResource(resource = Res.string.save_changes),

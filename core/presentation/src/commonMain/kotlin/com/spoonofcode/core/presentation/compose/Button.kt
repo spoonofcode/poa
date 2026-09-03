@@ -50,7 +50,7 @@ fun PrimaryButton(
             painter = painterResource(resource = Res.drawable.ic_google),
             contentDescription = null,
         )
-        Spacers.HorizontalBetweenFields()
+        SpacerHorizontalBetweenFields()
     }
 
     Text(text)
@@ -73,7 +73,7 @@ fun SecondaryButton(
                 painter = painterResource(resource = Res.drawable.ic_google),
                 contentDescription = null,
             )
-            Spacers.HorizontalBetweenFields()
+            SpacerHorizontalBetweenFields()
         }
 
         Text(text)

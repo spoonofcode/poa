@@ -11,9 +11,9 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.CircleImage
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
@@ -52,7 +52,7 @@ private fun ColumnScope.Content(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
     ) {
-        Images.CircleImage(imageRes = Res.drawable.poa)
+        CircleImage(imageRes = Res.drawable.poa)
     }
 
     TextFields.Outlined(
@@ -61,7 +61,7 @@ private fun ColumnScope.Content(
         label = stringResource(resource = Res.string.name),
     )
 
-    Spacers.Weight1(this)
+    SpacerWeight1(this)
 
     PrimaryButton(
         text = stringResource(Res.string.save_changes),

@@ -20,7 +20,7 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
@@ -84,7 +84,7 @@ private fun NotificationCard(
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
 
             Texts.BL(
                 text = notification.text,
@@ -92,7 +92,7 @@ private fun NotificationCard(
             )
 
             notification.expirationDateTime.let { expiresAt ->
-                Spacers.VerticalBetweenFields()
+                SpacerVerticalBetweenFields()
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -106,7 +106,7 @@ private fun NotificationCard(
             notification.link
                 ?.takeIf { it.isNotBlank() }
                 ?.let { link ->
-                    Spacers.VerticalBetweenFields()
+                    SpacerVerticalBetweenFields()
                     PrimaryButton(
                         text = stringResource(Res.string.open_link),
                         onClick = { onOpenLink(link) },

@@ -71,7 +71,7 @@ fun CheckboxTextLinkRow(
             }
         }
 
-        Spacers.HorizontalBetweenFields()
+        SpacerHorizontalBetweenFields()
 
         val urlOpener = remember { getUrlOpener() }
 

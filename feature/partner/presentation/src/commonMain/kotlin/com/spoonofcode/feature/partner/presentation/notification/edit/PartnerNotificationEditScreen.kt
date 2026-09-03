@@ -11,7 +11,7 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.StandardDatePickerWithTimer
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.Res
@@ -121,7 +121,7 @@ private fun ColumnScope.Content(
         label = stringResource(resource = Res.string.link),
     )
 
-    Spacers.Weight1(this)
+    SpacerWeight1(this)
 
     PrimaryButton(
         text = if (viewState.notificationId == null) {

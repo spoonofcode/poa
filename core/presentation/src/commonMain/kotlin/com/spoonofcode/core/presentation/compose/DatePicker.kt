@@ -122,7 +122,7 @@ fun StandardDatePickerWithTimer(
                 minDate = minDateTime?.date,
                 modifier = Modifier.weight(1f)
             )
-            Spacers.HorizontalBetweenFields()
+            SpacerHorizontalBetweenFields()
             StandardTimePicker(
                 value = value,
                 onValueChange = {

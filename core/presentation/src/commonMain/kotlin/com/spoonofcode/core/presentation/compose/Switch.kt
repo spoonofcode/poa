@@ -34,7 +34,7 @@ fun LabelSwitch(
             Texts.BS(text = description)
         }
 
-        Spacers.HorizontalBetweenFields()
+        SpacerHorizontalBetweenFields()
 
         Switch(
             checked = checked,

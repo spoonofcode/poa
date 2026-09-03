@@ -32,7 +32,7 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
@@ -112,7 +112,7 @@ private fun ColumnScope.Content(
             imageLink = product.imageLink
         )
     } else {
-        product.imageLink?.let { Images.ImageLink(imageLink = it) }
+        product.imageLink?.let { ImageLink(imageLink = it) }
     }
 
     Column(

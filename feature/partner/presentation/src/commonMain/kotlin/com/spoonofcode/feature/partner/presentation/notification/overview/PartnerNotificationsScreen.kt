@@ -37,7 +37,7 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
@@ -132,7 +132,7 @@ private fun NotificationTab(
     notifications: List<PartnerNotification>,
     selectNotification: (String) -> Unit
 ) {
-    Spacers.VerticalBetweenFields()
+    SpacerVerticalBetweenFields()
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
     ) {

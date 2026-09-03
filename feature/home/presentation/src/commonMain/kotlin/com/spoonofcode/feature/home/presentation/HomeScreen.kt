@@ -31,7 +31,7 @@ import com.spoonofcode.core.presentation.compose.AutoImageSlider
 import com.spoonofcode.core.presentation.compose.CountdownTimer
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
@@ -78,7 +78,7 @@ private fun ColumnScope.Content(
         imageLinks = viewState.partnerImageLinks,
     )
 
-    Spacers.VerticalBetweenFields()
+    SpacerVerticalBetweenFields()
 
     viewState.dailyCheckInStatus.let { status ->
         DailyCheckInSection(
@@ -122,7 +122,7 @@ private fun DailyCheckInSection(
                 )
             }
 
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -133,7 +133,7 @@ private fun DailyCheckInSection(
                 }
             }
 
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
 
             if (nextCheckInTimeMillis != null && !isActionAvailable) {
                 Column(
@@ -145,7 +145,7 @@ private fun DailyCheckInSection(
                     )
                     CountdownTimer(targetTimeMillis = nextCheckInTimeMillis)
                 }
-                Spacers.VerticalBetweenFields()
+                SpacerVerticalBetweenFields()
             }
 
             PrimaryButton(

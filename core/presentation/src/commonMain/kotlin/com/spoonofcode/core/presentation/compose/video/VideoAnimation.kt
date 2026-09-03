@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.ImageLink
 
 @Composable
 fun VideoAnimation(
@@ -51,7 +51,7 @@ fun VideoAnimation(
             )
         } else {
             imageLink?.let {
-                Images.ImageLink(
+                ImageLink(
                     imageLink = it,
                     modifier = Modifier
                         .fillMaxWidth()

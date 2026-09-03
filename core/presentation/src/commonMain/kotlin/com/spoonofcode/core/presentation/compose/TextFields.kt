@@ -95,7 +95,7 @@ object TextFields {
             minLines = 4,
             maxLines = 4,
         )
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
     }
 
     @Composable

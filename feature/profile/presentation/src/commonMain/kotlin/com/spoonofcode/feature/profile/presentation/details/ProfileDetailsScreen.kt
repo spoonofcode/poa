@@ -37,8 +37,8 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.Colors
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
-import com.spoonofcode.core.presentation.compose.Images
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.CircleImage
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
@@ -91,7 +91,7 @@ private fun ColumnScope.Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Images.CircleImage(
+        CircleImage(
             imageRes = Res.drawable.taggy_go_logo,
             backgroundColor = if (viewState.partnerPanelVisible) {
                 Colors.Metal_Gold
@@ -105,7 +105,7 @@ private fun ColumnScope.Content(
                 text = profile.email,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
 
             // TODO #137-Add edit profile
 //                    PrimaryButton(
@@ -126,7 +126,7 @@ private fun ColumnScope.Content(
 //                )
 //            }
 
-    Spacers.VerticalBetweenFields()
+    SpacerVerticalBetweenFields()
 
     if (viewState.partnerPanelVisible) {
         ElevatedCard {

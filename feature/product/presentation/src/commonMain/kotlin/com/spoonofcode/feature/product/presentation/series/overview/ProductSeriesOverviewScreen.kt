@@ -16,11 +16,12 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.compose.CircleImage
 import com.spoonofcode.core.presentation.compose.ElevatedCard
-import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Spacers
+import com.spoonofcode.core.presentation.compose.SpacerHorizontalBetweenFields
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.product.presentation.Res
@@ -97,15 +98,15 @@ private fun ProductSeriesItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(8.dp)
         ) {
-            Images.CircleImage(
+            CircleImage(
                 imageRes = Res.drawable.taggy_go_logo,
                 imageSize = 64.dp,
             )
-            Spacers.HorizontalBetweenFields()
+            SpacerHorizontalBetweenFields()
 
             Texts.BLB(item.name)
 
-            Spacers.Weight1(this)
+            SpacerWeight1(this)
 
             Checkbox(
                 checked = checkedProductSeries,

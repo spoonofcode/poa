@@ -32,7 +32,7 @@ fun StandardSlider(
             valueRange = minValue..maxValue,
             steps = steps,
         )
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
     }
 }
 
@@ -62,6 +62,6 @@ fun StandardRangeSlider(
             valueRange = minValue..maxValue
         )
 
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
     }
 }

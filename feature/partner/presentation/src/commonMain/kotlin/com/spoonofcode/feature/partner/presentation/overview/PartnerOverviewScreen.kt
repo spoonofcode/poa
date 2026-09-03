@@ -17,7 +17,7 @@ import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.HorizontalScrollableFilterChipRow
 import com.spoonofcode.core.presentation.compose.ElevatedCard
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.partner.domain.model.Partner
@@ -87,7 +87,7 @@ private fun PartnerItem(
         onClick = onClick,
         modifier = modifier.fillMaxWidth().height(180.dp),
     ) {
-        item.imageLink?.let { Images.ImageLink(imageLink = it) }
+        item.imageLink?.let { ImageLink(imageLink = it) }
     }
 }
 

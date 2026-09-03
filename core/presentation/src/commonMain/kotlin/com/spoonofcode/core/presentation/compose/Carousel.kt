@@ -36,7 +36,7 @@ fun CustomCarousel(
         Texts.HSB(
             text = title,
         )
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
         HorizontalUncontainedCarousel(
             state = rememberCarouselState { items.count() },
             modifier = Modifier.fillMaxWidth(),
@@ -69,7 +69,7 @@ fun CustomCarousel(
                         Texts.BLB(
                             text = item.title,
                         )
-                        Spacers.VerticalBetweenFields()
+                        SpacerVerticalBetweenFields()
                         Texts.BM(
                             text = item.rangeDateTime,
                         )
@@ -77,6 +77,6 @@ fun CustomCarousel(
                 }
             }
         }
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
     }
 }
