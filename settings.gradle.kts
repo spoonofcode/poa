@@ -24,7 +24,6 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":core:data")
-include(":core:designsystem")
 include(":core:logging")
 include(":core:firebase:data")
 include(":core:firebase:data-test")
