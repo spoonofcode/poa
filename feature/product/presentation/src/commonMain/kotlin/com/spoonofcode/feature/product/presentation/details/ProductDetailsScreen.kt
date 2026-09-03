@@ -29,10 +29,10 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Dialogs
 import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
@@ -203,7 +203,7 @@ private fun ProductBottomButton(
 ) {
     when (productStatus) {
         ProductStatus.UNASSIGNED -> {
-            Buttons.PrimaryButton(
+            PrimaryButton(
                 text = stringResource(Res.string.add_product),
                 onClick = addProductToProfile,
                 modifier = Modifier.padding(top = 8.dp)
@@ -215,7 +215,7 @@ private fun ProductBottomButton(
                 text = stringResource(Res.string.product_already_assigned),
                 color = MaterialTheme.colorScheme.error
             )
-            Buttons.PrimaryButton(
+            PrimaryButton(
                 text = stringResource(Res.string.send_message),
                 onClick = onSendMessageClick,
                 modifier = Modifier.padding(top = 8.dp)

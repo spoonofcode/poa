@@ -16,10 +16,10 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
@@ -77,7 +77,7 @@ private fun ColumnScope.Content(
         }
     }
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         enabled = viewState.checkedProductSeriesNames.isNotEmpty(),
         text = stringResource(resource = Res.string.send_notification),
         onClick = { onAction(ProductSeriesOverViewViewAction.NavigateToNotification) }

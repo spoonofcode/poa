@@ -18,8 +18,8 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Switchs
@@ -144,7 +144,7 @@ private fun ColumnScope.Content(
 
         Spacers.Weight1(this)
 
-        Buttons.PrimaryButton(
+        PrimaryButton(
             text = stringResource(Res.string.save_changes),
             onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
         )
@@ -159,7 +159,7 @@ private fun ColumnScope.Content(
                 textAlign = TextAlign.Center,
             )
             Spacers.VerticalBetweenFields()
-            Buttons.PrimaryButton(
+            PrimaryButton(
                 text = stringResource(resource = Res.string.open_app_settings),
                 onClick = {
                     notificationPermissionState.openAppSettings()

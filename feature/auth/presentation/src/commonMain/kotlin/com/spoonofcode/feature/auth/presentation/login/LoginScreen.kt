@@ -19,11 +19,10 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.Buttons.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Dividers
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
@@ -84,7 +83,7 @@ private fun ColumnScope.Content(
         label = stringResource(resource = Res.string.email),
     )
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = stringResource(resource = Res.string.sign_in),
         enabled = viewState.isSignInButtonEnable,
         onClick = { onAction(LoginViewAction.SignInWithCode) }

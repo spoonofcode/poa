@@ -17,9 +17,9 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.notification.domain.model.Notification
@@ -107,7 +107,7 @@ private fun NotificationCard(
                 ?.takeIf { it.isNotBlank() }
                 ?.let { link ->
                     Spacers.VerticalBetweenFields()
-                    Buttons.PrimaryButton(
+                    PrimaryButton(
                         text = stringResource(Res.string.open_link),
                         onClick = { onOpenLink(link) },
                         modifier = Modifier.fillMaxWidth()

@@ -8,8 +8,8 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Checkboxes
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import org.jetbrains.compose.resources.stringResource
@@ -65,7 +65,7 @@ private fun ColumnScope.Content(
 
     Spacers.Weight1(this)
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = stringResource(resource = Res.string.save_changes),
         enabled = viewState.isSaveChangesButtonEnable,
         onClick = { onAction(TACViewAction.SaveChanges) }

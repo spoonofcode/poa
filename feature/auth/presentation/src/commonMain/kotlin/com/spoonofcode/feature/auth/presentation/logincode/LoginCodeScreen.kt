@@ -13,7 +13,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.code
@@ -72,7 +72,7 @@ private fun ColumnScope.Content(
         label = stringResource(resource = Res.string.code),
     )
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = stringResource(resource = Res.string.sign_in_with_code),
         enabled = viewState.isSignInWithCodeButtonEnable,
         onClick = { onAction(LoginCodeViewAction.SignInWithCode) }

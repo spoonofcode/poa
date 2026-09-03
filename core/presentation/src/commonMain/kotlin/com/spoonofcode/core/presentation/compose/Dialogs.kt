@@ -21,13 +21,13 @@ object Dialogs {
             title = { Texts.TLB(title) },
             text = { Texts.BM(text) },
             confirmButton = {
-                Buttons.PrimaryButton(
+                PrimaryButton(
                     text = confirmButtonText,
                     onClick = confirmAction
                 )
             },
             dismissButton = {
-                Buttons.SecondaryButton(
+                SecondaryButton(
                     text = dismissButtonText,
                     onClick = dismissAction
                 )

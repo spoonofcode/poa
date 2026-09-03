@@ -108,7 +108,7 @@ private fun ColumnScope.Content(
             Spacers.VerticalBetweenFields()
 
             // TODO #137-Add edit profile
-//                    Buttons.PrimaryButton(
+//                    PrimaryButton(
 //                        text = stringResource(Res.string.edit_profile),
 //                        fillMaxWidth = false,
 //                        onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },

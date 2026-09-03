@@ -13,9 +13,9 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.TextFields
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
@@ -94,7 +94,7 @@ private fun ColumnScope.Content(
             innerLabel = stringResource(resource = Res.string.custom_link),
         )
 
-        Buttons.PrimaryButton(
+        PrimaryButton(
             text = stringResource(Res.string.save_changes),
             onClick = { onAction(ProductEditViewAction.SaveChanges) },
             modifier = Modifier.padding(top = 8.dp)

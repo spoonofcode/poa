@@ -57,7 +57,7 @@ fun ErrorView(
 
         Spacers.VerticalBetweenFields()
 
-        Buttons.SecondaryButton(
+        SecondaryButton(
             text = stringResource(resource = Res.string.reload),
             onClick = reload
         )

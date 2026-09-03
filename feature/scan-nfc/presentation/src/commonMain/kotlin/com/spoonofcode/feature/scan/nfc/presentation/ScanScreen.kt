@@ -30,9 +30,10 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Paddings
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.SecondaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.core.presentation.taggy_go_logo
@@ -102,7 +103,7 @@ private fun ColumnScope.Content(
 
                 Texts.BM(stringResource(Res.string.scanning_in_progress))
             } else {
-                Buttons.PrimaryButton(
+                PrimaryButton(
                     text = stringResource(Res.string.start_scanning),
                     onClick = { reader.start() }
                 )
@@ -144,7 +145,7 @@ private fun ProductNotFoundView(
 
         Spacers.VerticalBetweenFields()
 
-        Buttons.SecondaryButton(
+        SecondaryButton(
             text = stringResource(resource = Res.string.scan_again),
             onClick = reload
         )
