@@ -17,7 +17,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons.IconTextButton
+import com.spoonofcode.core.presentation.compose.IconTextButton
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification_channels
 import com.spoonofcode.feature.notification.presentation.notification_email

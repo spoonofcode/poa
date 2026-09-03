@@ -18,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextLL
+import com.spoonofcode.core.presentation.compose.TextLM
+import com.spoonofcode.core.presentation.compose.TextTM
 
 @Composable
 fun StaticSelectedItemsPanel(
@@ -38,7 +40,7 @@ fun StaticSelectedItemsPanel(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Texts.TM(text = title)
+            TextTM(text = title)
 
             Box(
                 modifier = Modifier
@@ -46,7 +48,7 @@ fun StaticSelectedItemsPanel(
                     .background(MaterialTheme.colorScheme.secondaryContainer)
                     .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
-                Texts.LM(text = items.size.toString())
+                TextLM(text = items.size.toString())
             }
         }
 
@@ -80,7 +82,7 @@ private fun StaticChip(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
         ) {
-            Texts.LL(text = text)
+            TextLL(text = text)
         }
     }
 }

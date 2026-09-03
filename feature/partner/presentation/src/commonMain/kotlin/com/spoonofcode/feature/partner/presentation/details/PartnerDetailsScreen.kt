@@ -21,10 +21,11 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.DescriptionCard
+import com.spoonofcode.core.presentation.compose.ElevatedCard
+import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.SocialIcons
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextBM
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.about_partner
@@ -59,7 +60,7 @@ private fun ColumnScope.Content(
     val partner = requireNotNull(viewState.partner)
 
     // 1. Hero Image Card
-    Cards.ElevatedCard {
+    ElevatedCard {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -68,7 +69,7 @@ private fun ColumnScope.Content(
             contentAlignment = Alignment.Center
         ) {
 
-            partner.imageLink?.let { Images.ImageLink(imageLink = it) }
+            partner.imageLink?.let { ImageLink(imageLink = it) }
         }
     }
 
@@ -85,7 +86,7 @@ private fun ColumnScope.Content(
                 color = MaterialTheme.colorScheme.onSurface
             )
             partner.email?.let {
-                Texts.BM(
+                TextBM(
                     text = it,
                 )
             }
@@ -93,14 +94,14 @@ private fun ColumnScope.Content(
 
         // 3. Description Card
         partner.description?.let { desc ->
-            Cards.DescriptionCard(
+            DescriptionCard(
                 title = stringResource(Res.string.about_partner),
                 description = desc
             )
         }
 
         // 4. Social Icons Section
-        Cards.ElevatedCard {
+        ElevatedCard {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

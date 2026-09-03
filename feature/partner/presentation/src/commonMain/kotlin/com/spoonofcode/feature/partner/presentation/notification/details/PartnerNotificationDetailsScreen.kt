@@ -11,8 +11,8 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.DescriptionCard
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -97,29 +97,29 @@ private fun ColumnScope.Content(
             )
         }
 
-        Cards.DescriptionCard(
+        DescriptionCard(
             title = stringResource(Res.string.title),
             description = it.title
         )
 
 
-        Cards.DescriptionCard(
+        DescriptionCard(
             title = stringResource(Res.string.text),
             description = viewState.notification.text
         )
 
-        Cards.DescriptionCard(
+        DescriptionCard(
             title = stringResource(Res.string.delivery_date),
             description = viewState.notification.deliveryDateTime.formatedLocalDateTime()
         )
 
-        Cards.DescriptionCard(
+        DescriptionCard(
             title = stringResource(Res.string.expiration_date),
             description = viewState.notification.expirationDateTime.formatedLocalDateTime()
         )
 
         viewState.notification.link?.let { description ->
-            Cards.DescriptionCard(
+            DescriptionCard(
                 title = stringResource(Res.string.link),
                 description = description
             )
@@ -133,7 +133,7 @@ private fun Dialogs(
     onAction: (PartnerNotificationDetailsViewAction) -> Unit
 ) {
     if (viewState.isDeleteNotificationDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.delete_notification_title),
             text = stringResource(Res.string.delete_notification_text),
             confirmButtonText = stringResource(Res.string.delete_notification),

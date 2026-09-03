@@ -34,12 +34,13 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Colors
-import com.spoonofcode.core.presentation.compose.Dialogs
-import com.spoonofcode.core.presentation.compose.Images
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
+import com.spoonofcode.core.presentation.compose.ElevatedCard
+import com.spoonofcode.core.presentation.compose.CircleImage
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.TextBLB
+import com.spoonofcode.core.presentation.compose.TextHSB
+import com.spoonofcode.core.presentation.theme.metalGold
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.cancel
@@ -91,24 +92,24 @@ private fun ColumnScope.Content(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Images.CircleImage(
+        CircleImage(
             imageRes = Res.drawable.taggy_go_logo,
             backgroundColor = if (viewState.partnerPanelVisible) {
-                Colors.Metal_Gold
+                metalGold
             } else {
                 MaterialTheme.colorScheme.surfaceVariant
             }
         )
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Texts.HSB(
+            TextHSB(
                 text = profile.email,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
 
             // TODO #137-Add edit profile
-//                    Buttons.PrimaryButton(
+//                    PrimaryButton(
 //                        text = stringResource(Res.string.edit_profile),
 //                        fillMaxWidth = false,
 //                        onClick = { onAction(ProfileDetailsViewAction.NavigateToEditProfile) },
@@ -126,10 +127,10 @@ private fun ColumnScope.Content(
 //                )
 //            }
 
-    Spacers.VerticalBetweenFields()
+    SpacerVerticalBetweenFields()
 
     if (viewState.partnerPanelVisible) {
-        Cards.ElevatedCard {
+        ElevatedCard {
             ChevronItem(
                 icon = Icons.Default.Person,
                 title = stringResource(Res.string.partner_panel),
@@ -138,7 +139,7 @@ private fun ColumnScope.Content(
         }
     }
 
-    Cards.ElevatedCard {
+    ElevatedCard {
         ChevronItem(
             icon = Icons.Default.Notifications,
             title = stringResource(Res.string.notifications),
@@ -158,7 +159,7 @@ private fun ColumnScope.Content(
         )
     }
 
-    Cards.ElevatedCard {
+    ElevatedCard {
         ChevronItem(
             icon = Icons.AutoMirrored.Filled.Logout,
             title = stringResource(Res.string.logout),
@@ -177,7 +178,7 @@ private fun Dialogs(
     onAction: (ProfileDetailsViewAction) -> Unit
 ) {
     if (viewState.isLogoutDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.logout_dialog_title),
             text = stringResource(Res.string.logout_dialog_text),
             confirmButtonText = stringResource(Res.string.logout),
@@ -224,7 +225,7 @@ private fun ChevronItem(
                 .weight(1f)
                 .padding(start = 16.dp, end = 8.dp)
         ) {
-            Texts.BLB(
+            TextBLB(
                 text = title,
                 color = titleColor,
             )

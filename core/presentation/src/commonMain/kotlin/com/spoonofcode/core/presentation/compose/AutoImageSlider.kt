@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -65,20 +64,20 @@ fun AutoImageSlider(
     }
 
     if (!label.isNullOrBlank()) {
-        Texts.HS(label)
+        TextHS(label)
     }
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Cards.ElevatedCard(
+        ElevatedCard(
             modifier = modifier.fillMaxWidth().height(180.dp),
         ) {
             HorizontalPager(
                 state = pagerState,
             ) { page ->
-                Images.ImageLink(imageLink = imageLinks[page])
+                ImageLink(imageLink = imageLinks[page])
             }
         }
 

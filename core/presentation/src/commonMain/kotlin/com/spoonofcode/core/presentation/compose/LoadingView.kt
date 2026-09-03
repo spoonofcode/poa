@@ -20,6 +20,6 @@ fun LoadingView(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CustomIcons.PulsatingIcon(iconRes = iconRes)
+        PulsatingIcon(iconRes = iconRes)
     }
 }

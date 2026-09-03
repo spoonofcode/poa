@@ -13,8 +13,8 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldPassword
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.code
 import com.spoonofcode.feature.auth.presentation.one_time_code_info_postfix
@@ -60,7 +60,7 @@ private fun ColumnScope.Content(
         style = MaterialTheme.typography.bodyLarge,
     )
 
-    TextFields.OutlinedPassword(
+    OutlinedTextFieldPassword(
         value = viewState.code,
         onValueChange = { newValue ->
             if (newValue.length <= VERIFICATION_CODE_LENGTH) {
@@ -72,7 +72,7 @@ private fun ColumnScope.Content(
         label = stringResource(resource = Res.string.code),
     )
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = stringResource(resource = Res.string.sign_in_with_code),
         enabled = viewState.isSignInWithCodeButtonEnable,
         onClick = { onAction(LoginCodeViewAction.SignInWithCode) }

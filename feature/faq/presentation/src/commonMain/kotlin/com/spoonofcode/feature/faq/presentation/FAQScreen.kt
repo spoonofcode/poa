@@ -3,13 +3,12 @@ package com.spoonofcode.feature.faq.presentation
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.spoonofcode.feature.faq.presentation.Res
 import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.ExpandableListItem
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.TextTL
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -37,7 +36,7 @@ private fun ColumnScope.Content(
     viewState: FAQViewState,
     onAction: (FAQViewAction) -> Unit,
 ) {
-    Texts.TL(text = stringResource(Res.string.faq_setion_1))
+    TextTL(text = stringResource(Res.string.faq_setion_1))
     ExpandableListItem(
         title = stringResource(Res.string.faq_question_1),
         description = stringResource(Res.string.faq_answer_1),
@@ -54,7 +53,7 @@ private fun ColumnScope.Content(
         title = stringResource(Res.string.faq_question_4),
         description = stringResource(Res.string.faq_answer_4),
     )
-    Texts.TL(text = stringResource(Res.string.faq_setion_2))
+    TextTL(text = stringResource(Res.string.faq_setion_2))
     ExpandableListItem(
         title = stringResource(Res.string.faq_question_5),
         description = stringResource(Res.string.faq_answer_5),
@@ -67,7 +66,7 @@ private fun ColumnScope.Content(
         title = stringResource(Res.string.faq_question_7),
         description = stringResource(Res.string.faq_answer_7),
     )
-    Texts.TL(text = stringResource(Res.string.faq_setion_3))
+    TextTL(text = stringResource(Res.string.faq_setion_3))
     ExpandableListItem(
         title = stringResource(Res.string.faq_question_8),
         description = stringResource(Res.string.faq_answer_8),

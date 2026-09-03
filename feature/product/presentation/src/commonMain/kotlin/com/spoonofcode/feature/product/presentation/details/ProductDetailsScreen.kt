@@ -29,11 +29,16 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Dialogs
-import com.spoonofcode.core.presentation.compose.Images
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.DescriptionCard
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
+import com.spoonofcode.core.presentation.compose.ElevatedCard
+import com.spoonofcode.core.presentation.compose.ImageLink
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.TextBMB
+import com.spoonofcode.core.presentation.compose.TextHSB
+import com.spoonofcode.core.presentation.compose.TextLLB
+import com.spoonofcode.core.presentation.compose.TextLS
+import com.spoonofcode.core.presentation.compose.TextLSB
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.web.getUrlOpener
@@ -111,17 +116,17 @@ private fun ColumnScope.Content(
             imageLink = product.imageLink
         )
     } else {
-        product.imageLink?.let { Images.ImageLink(imageLink = it) }
+        product.imageLink?.let { ImageLink(imageLink = it) }
     }
 
     Column(
         modifier = Modifier.padding(top = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        product.seriesName?.let { Texts.LLB(text = it.uppercase()) }
+        product.seriesName?.let { TextLLB(text = it.uppercase()) }
 
         product.name?.let {
-            Texts.HSB(
+            TextHSB(
                 text = it,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -144,7 +149,7 @@ private fun ColumnScope.Content(
                         modifier = Modifier.size(14.dp),
                         tint = MaterialTheme.colorScheme.onSecondaryContainer
                     )
-                    Texts.LSB(
+                    TextLSB(
                         text = "TAG: $tag",
                         color = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -153,14 +158,14 @@ private fun ColumnScope.Content(
         }
 
         product.description?.let {
-            Cards.DescriptionCard(
+            DescriptionCard(
                 title = stringResource(Res.string.about_product),
                 description = it
             )
         }
 
         if (!product.customLink.isNullOrBlank()) {
-            Cards.ElevatedCard {
+            ElevatedCard {
                 Column {
                     ClickableInfoRow(
                         text = stringResource(Res.string.learn_more),
@@ -184,7 +189,7 @@ private fun Dialogs(
     onAction: (ProductDetailsViewAction) -> Unit
 ) {
     if (viewState.isDeleteProductDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.delete_product_from_profile_title),
             text = stringResource(Res.string.delete_product_from_profile_text),
             confirmButtonText = stringResource(Res.string.delete_product),
@@ -203,7 +208,7 @@ private fun ProductBottomButton(
 ) {
     when (productStatus) {
         ProductStatus.UNASSIGNED -> {
-            Buttons.PrimaryButton(
+            PrimaryButton(
                 text = stringResource(Res.string.add_product),
                 onClick = addProductToProfile,
                 modifier = Modifier.padding(top = 8.dp)
@@ -211,11 +216,11 @@ private fun ProductBottomButton(
         }
 
         ProductStatus.OWNED_BY_OTHER -> {
-            Texts.BMB(
+            TextBMB(
                 text = stringResource(Res.string.product_already_assigned),
                 color = MaterialTheme.colorScheme.error
             )
-            Buttons.PrimaryButton(
+            PrimaryButton(
                 text = stringResource(Res.string.send_message),
                 onClick = onSendMessageClick,
                 modifier = Modifier.padding(top = 8.dp)
@@ -251,12 +256,12 @@ private fun ClickableInfoRow(
         )
 
         Column(modifier = Modifier.weight(1f)) {
-            Texts.BMB(
+            TextBMB(
                 text = text,
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
-            Texts.LS(
+            TextLS(
                 text = url,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

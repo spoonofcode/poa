@@ -15,11 +15,11 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Chips.HorizontalScrollableFilterChipRow
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.HorizontalScrollableFilterChipRow
+import com.spoonofcode.core.presentation.compose.ElevatedCard
+import com.spoonofcode.core.presentation.compose.ImageLink
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
-import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldSearch
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.feature.partner.presentation.Res
@@ -53,7 +53,7 @@ private fun ColumnScope.Content(
     viewState: PartnerOverviewViewState,
     onAction: (PartnerOverviewViewAction) -> Unit,
 ) {
-    TextFields.OutlinedSearch(
+    OutlinedTextFieldSearch(
         value = viewState.searchText,
         onValueChange = { onAction(PartnerOverviewViewAction.ChangeSearchText(it)) },
     )
@@ -83,11 +83,11 @@ private fun PartnerItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Cards.ElevatedCard(
+    ElevatedCard(
         onClick = onClick,
         modifier = modifier.fillMaxWidth().height(180.dp),
     ) {
-        item.imageLink?.let { Images.ImageLink(imageLink = it) }
+        item.imageLink?.let { ImageLink(imageLink = it) }
     }
 }
 

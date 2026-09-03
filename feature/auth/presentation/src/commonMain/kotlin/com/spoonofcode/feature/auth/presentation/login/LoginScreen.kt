@@ -19,14 +19,13 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.Buttons.PrimaryButton
-import com.spoonofcode.core.presentation.compose.Dividers
-import com.spoonofcode.core.presentation.compose.Images
+import com.spoonofcode.core.presentation.compose.CircleImage
+import com.spoonofcode.core.presentation.compose.LabeledDivider
 import com.spoonofcode.core.presentation.compose.Paddings
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
+import com.spoonofcode.core.presentation.compose.TextHL
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.email
 import com.spoonofcode.feature.auth.presentation.ic_google
@@ -73,18 +72,18 @@ private fun ColumnScope.Content(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Images.CircleImage(imageRes = Res.drawable.taggy_go_logo)
-        Spacers.VerticalBetweenFields()
-        Texts.HL(stringResource(resource = Res.string.let_s_get_started))
+        CircleImage(imageRes = Res.drawable.taggy_go_logo)
+        SpacerVerticalBetweenFields()
+        TextHL(stringResource(resource = Res.string.let_s_get_started))
     }
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.email,
         onValueChange = { onAction(LoginViewAction.ChangeEmail(email = it)) },
         label = stringResource(resource = Res.string.email),
     )
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = stringResource(resource = Res.string.sign_in),
         enabled = viewState.isSignInButtonEnable,
         onClick = { onAction(LoginViewAction.SignInWithCode) }
@@ -111,7 +110,7 @@ private fun GoogleSignInButton(
     if (isVisible) {
         val coroutineScope = rememberCoroutineScope()
 
-        Dividers.LabeledDivider(
+        LabeledDivider(
             text = stringResource(resource = Res.string.or)
         )
 

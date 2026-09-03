@@ -8,10 +8,11 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.Checkboxes
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.CheckboxTextLinkRow
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
+import com.spoonofcode.core.presentation.compose.TextHSB
+import com.spoonofcode.core.presentation.compose.TextLS
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -40,14 +41,14 @@ private fun ColumnScope.Content(
     viewState: TACViewState,
     onAction: (TACViewAction) -> Unit
 ) {
-    Texts.HSB(stringResource(Res.string.terms_and_conditions_description))
+    TextHSB(stringResource(Res.string.terms_and_conditions_description))
 
-    Texts.LS(
+    TextLS(
         text = stringResource(Res.string.star_mandatory),
         color = MaterialTheme.colorScheme.error,
     )
 
-    Checkboxes.CheckboxTextLinkRow(
+    CheckboxTextLinkRow(
         checked = viewState.isPrivacyPolicyAccepted,
         onCheckedChange = { onAction(TACViewAction.ChangePrivacyPolicy(it)) },
         text = stringResource(Res.string.privacy_policy),
@@ -55,7 +56,7 @@ private fun ColumnScope.Content(
         linkUrl = viewState.privacyPolicyLink,
     )
 
-    Checkboxes.CheckboxTextLinkRow(
+    CheckboxTextLinkRow(
         checked = viewState.isTermsAndConditionsAccepted,
         onCheckedChange = { onAction(TACViewAction.ChangeTermsAndConditions(it)) },
         text = stringResource(Res.string.terms_and_conditions),
@@ -63,9 +64,9 @@ private fun ColumnScope.Content(
         linkUrl = viewState.marketingLink,
     )
 
-    Spacers.Weight1(this)
+    SpacerWeight1(this)
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = stringResource(resource = Res.string.save_changes),
         enabled = viewState.isSaveChangesButtonEnable,
         onClick = { onAction(TACViewAction.SaveChanges) }
