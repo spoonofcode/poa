@@ -9,10 +9,9 @@ import com.spoonofcode.feature.partner.presentation.PartnerEventBus
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEvent
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
+import com.spoonofcode.feature.partner.presentation.partner_data_updated
 import com.spoonofcode.feature.partner.presentation.partner_notification_added
 import com.spoonofcode.feature.partner.presentation.partner_notification_deleted
-import com.spoonofcode.feature.partner.presentation.partner_notification_updated
-import com.spoonofcode.feature.partner.presentation.partner_data_updated
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -83,9 +82,7 @@ internal class PartnerPanelViewModel(
                         showSuccessSnackbar(getString(Res.string.partner_notification_deleted))
                     }
 
-                    PartnerNotificationEvent.PartnerNotificationUpdated -> {
-                        showSuccessSnackbar(getString(Res.string.partner_notification_updated))
-                    }
+                    else -> {}
                 }
             }
         }

@@ -11,7 +11,7 @@ fun NotificationResponse.toNotification(): Notification {
         text = text,
         link = link,
         deliveryDateTime = deliveryDateTime.toZonedLocalDateTime(),
-        createdDataTime = createdDataTime.toZonedLocalDateTime(),
+        createdDataTime = createdDateTime.toZonedLocalDateTime(),
         modificationDateTime = modificationDateTime.toZonedLocalDateTime(),
         expirationDateTime = expirationDateTime.toZonedLocalDateTime(),
         state = state,

@@ -9,7 +9,7 @@ fun ProductSeriesResponse.toProductSeries(): ProductSeries {
         banner = banner,
         bannerIsOn = bannerIsOn,
         blockchain = blockchain,
-        contactAddress = contactAddress,
+        contactAddress = contractAddress,
         description = description,
         enabled = enabled,
         facebook = facebook,
