@@ -123,7 +123,7 @@ fun StandardDatePickerWithTimer(
                 modifier = Modifier.weight(1f)
             )
             Spacers.HorizontalBetweenFields()
-            TimePickers.TimePicker(
+            StandardTimePicker(
                 value = value,
                 onValueChange = {
                     onValueChange(it)

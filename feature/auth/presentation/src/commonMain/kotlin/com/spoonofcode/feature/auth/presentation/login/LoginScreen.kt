@@ -19,7 +19,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Dividers
+import com.spoonofcode.core.presentation.compose.LabeledDivider
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.PrimaryButton
@@ -110,7 +110,7 @@ private fun GoogleSignInButton(
     if (isVisible) {
         val coroutineScope = rememberCoroutineScope()
 
-        Dividers.LabeledDivider(
+        LabeledDivider(
             text = stringResource(resource = Res.string.or)
         )
 

@@ -22,7 +22,7 @@ import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Switchs
+import com.spoonofcode.core.presentation.compose.LabelSwitch
 import com.spoonofcode.core.presentation.compose.Texts
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.presentation.Res
@@ -89,7 +89,7 @@ private fun ColumnScope.Content(
     if (notificationPermissionState.status.isGranted) {
         Texts.TM(stringResource(Res.string.notifications_settings_text))
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_all_push_title),
             description = stringResource(Res.string.notifications_all_push_description),
             checked = viewState.isAllPushNotificationsSettingsEnable,
@@ -102,7 +102,7 @@ private fun ColumnScope.Content(
             },
         )
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_personalized_title),
             description = stringResource(Res.string.notifications_personalized_description),
             checked = viewState.notificationSettings.isNotificationsPersonalizedEnabled,
@@ -115,7 +115,7 @@ private fun ColumnScope.Content(
             },
         )
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_from_partners_title),
             description = stringResource(Res.string.notifications_from_partners_description),
             checked = viewState.notificationSettings.isNotificationsFromPartnersEnabled,
@@ -128,7 +128,7 @@ private fun ColumnScope.Content(
             },
         )
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_my_product_series_title),
             description = stringResource(Res.string.notifications_my_product_series_description),
             checked = viewState.notificationSettings.isNotificationsMyProductSeriesEnabled,
