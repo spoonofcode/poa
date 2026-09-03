@@ -2,6 +2,8 @@ package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.notification.presentation.NotificationEvent
+import com.spoonofcode.feature.notification.presentation.NotificationEventBus
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import kotlinx.coroutines.launch
@@ -9,6 +11,7 @@ import kotlinx.coroutines.launch
 internal class NotificationSettingsViewModel(
     private val getNotificationSettingsUseCase: GetNotificationSettingsUseCase,
     private val updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase,
+    private val notificationEventBus: NotificationEventBus,
 ) : BaseViewModel<NotificationSettingsViewState, NotificationSettingsViewAction, Nothing>() {
     override val startAction = {
         initView()
@@ -104,6 +107,7 @@ internal class NotificationSettingsViewModel(
             updateNotificationSettingsUseCase(
                 notificationSettings = currentContentState().notificationSettings
             ).onSuccess {
+                notificationEventBus.emitOverview(NotificationEvent.SettingsUpdated)
                 viewModelNavigator.pop()
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }

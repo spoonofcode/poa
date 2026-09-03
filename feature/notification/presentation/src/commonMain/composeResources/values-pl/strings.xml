@@ -29,4 +29,5 @@
     <string name="save_changes">Zapisz zmiany</string>
     <string name="tab_already_read">Przeczytane</string>
     <string name="tab_new">Nowe</string>
+    <string name="notification_settings_updated">Ustawienia powiadomień zostały zaktualizowane</string>
 </resources>
