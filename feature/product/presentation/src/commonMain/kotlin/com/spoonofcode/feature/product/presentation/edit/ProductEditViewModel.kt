@@ -57,7 +57,7 @@ internal class ProductEditViewModel(
                 customLink = product.customLink,
             )
                 .onSuccess {
-                    productEventBus.tryEmit(ProductEvent.ProductUpdated)
+                    productEventBus.emitDetails(ProductEvent.ProductUpdated)
                     viewModelNavigator.pop()
                 }
                 .onFailure {

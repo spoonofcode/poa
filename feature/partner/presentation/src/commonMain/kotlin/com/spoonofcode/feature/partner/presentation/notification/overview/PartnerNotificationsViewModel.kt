@@ -9,7 +9,6 @@ import com.spoonofcode.feature.partner.presentation.notification.PartnerNotifica
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
 import com.spoonofcode.feature.partner.presentation.partner_notificaiton_added
 import com.spoonofcode.feature.partner.presentation.partner_notificaiton_delted
-import com.spoonofcode.feature.partner.presentation.partner_notificaiton_updated
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -30,6 +29,25 @@ internal class PartnerNotificationsViewModel(
             is PartnerNotificationsViewAction.SelectNotification -> selectNotification(
                 notificationId = action.notificationId
             )
+        }
+    }
+
+    private fun observePartnerNotificationsEvents() {
+        viewModelScope.launch {
+            partnerNotificationEventBus.overviewEvents.collect { event ->
+                initView()
+                when (event) {
+                    PartnerNotificationEvent.PartnerNotificationAdded -> {
+                        showSuccessSnackbar(getString(Res.string.partner_notificaiton_added))
+                    }
+
+                    PartnerNotificationEvent.PartnerNotificationDeleted -> {
+                        showSuccessSnackbar(getString(Res.string.partner_notificaiton_delted))
+                    }
+
+                    else -> {}
+                }
+            }
         }
     }
 
@@ -60,28 +78,6 @@ internal class PartnerNotificationsViewModel(
                     notificationId = notificationId
                 )
             )
-        }
-    }
-
-    private fun observePartnerNotificationsEvents() {
-        viewModelScope.launch {
-            partnerNotificationEventBus.events.collect { event ->
-                initView()
-                println("BARTEK event = $event")
-                when (event) {
-                    PartnerNotificationEvent.PartnerNotificationAdded -> {
-                        showSuccessSnackbar(getString(Res.string.partner_notificaiton_added))
-                    }
-
-                    PartnerNotificationEvent.PartnerNotificationDeleted -> {
-                        showSuccessSnackbar(getString(Res.string.partner_notificaiton_delted))
-                    }
-
-                    PartnerNotificationEvent.PartnerNotificationUpdated -> {
-                        showSuccessSnackbar(getString(Res.string.partner_notificaiton_updated))
-                    }
-                }
-            }
         }
     }
 

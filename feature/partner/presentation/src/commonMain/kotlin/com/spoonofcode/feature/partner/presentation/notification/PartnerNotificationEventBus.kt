@@ -10,10 +10,17 @@ sealed class PartnerNotificationEvent {
 }
 
 internal class PartnerNotificationEventBus {
-    private val _events = Channel<PartnerNotificationEvent>(Channel.BUFFERED)
-    val events = _events.receiveAsFlow()
+    private val _overviewEvents = Channel<PartnerNotificationEvent>(Channel.BUFFERED)
+    val overviewEvents = _overviewEvents.receiveAsFlow()
 
-    fun tryEmit(event: PartnerNotificationEvent) {
-        _events.trySend(event)
+    private val _detailsEvents = Channel<PartnerNotificationEvent>(Channel.BUFFERED)
+    val detailsEvents = _detailsEvents.receiveAsFlow()
+
+    fun emitOverview(event: PartnerNotificationEvent) {
+        _overviewEvents.trySend(event)
+    }
+
+    fun emitDetails(event: PartnerNotificationEvent) {
+        _detailsEvents.trySend(event)
     }
 }

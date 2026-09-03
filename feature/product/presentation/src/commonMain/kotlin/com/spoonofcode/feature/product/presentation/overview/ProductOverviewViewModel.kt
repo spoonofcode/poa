@@ -10,7 +10,6 @@ import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.product_added
 import com.spoonofcode.feature.product.presentation.product_deleted
-import com.spoonofcode.feature.product.presentation.product_updated
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -31,6 +30,25 @@ internal class ProductOverviewViewModel(
         when (action) {
             is ProductOverviewViewAction.ChangeSearchText -> changeSearchText(action.searchText)
             is ProductOverviewViewAction.SelectProduct -> selectProduct(action.productId)
+        }
+    }
+
+    private fun observeProductEvents() {
+        viewModelScope.launch {
+            productEventBus.overviewEvents.collect { event ->
+                initView()
+                when (event) {
+                    ProductEvent.ProductAdded -> {
+                        showSuccessSnackbar(getString(Res.string.product_added))
+                    }
+
+                    ProductEvent.ProductDeleted -> {
+                        showSuccessSnackbar(getString(Res.string.product_deleted))
+                    }
+
+                    else -> {}
+                }
+            }
         }
     }
 
@@ -71,27 +89,6 @@ internal class ProductOverviewViewModel(
             viewModelNavigator.push(
                 ProductModuleRoute.ProductDetails(productId = productId)
             )
-        }
-    }
-
-    private fun observeProductEvents() {
-        viewModelScope.launch {
-            productEventBus.events.collect { event ->
-                initView()
-                when (event) {
-                    ProductEvent.ProductAdded -> {
-                        showSuccessSnackbar(getString(Res.string.product_added))
-                    }
-
-                    ProductEvent.ProductDeleted -> {
-                        showSuccessSnackbar(getString(Res.string.product_deleted))
-                    }
-
-                    ProductEvent.ProductUpdated -> {
-                        showSuccessSnackbar(getString(Res.string.product_updated))
-                    }
-                }
-            }
         }
     }
 }

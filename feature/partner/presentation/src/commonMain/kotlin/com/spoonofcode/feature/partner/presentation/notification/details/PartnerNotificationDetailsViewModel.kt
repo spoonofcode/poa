@@ -8,10 +8,13 @@ import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.DeletePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
+import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEvent
 import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
+import com.spoonofcode.feature.partner.presentation.partner_notificaiton_updated
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
 internal class PartnerNotificationDetailsViewModel(
     private val notificationId: String,
@@ -20,6 +23,10 @@ internal class PartnerNotificationDetailsViewModel(
     private val getPartnerCustomersUseCase: GetPartnerCustomersUseCase,
     private val partnerNotificationEventBus: PartnerNotificationEventBus,
 ) : BaseViewModel<PartnerNotificationDetailsViewState, PartnerNotificationDetailsViewAction, Nothing>() {
+    init {
+        observePartnerNotificationsEvents()
+    }
+
     override val startAction = {
         initView(notificationId = notificationId)
     }
@@ -30,6 +37,17 @@ internal class PartnerNotificationDetailsViewModel(
             PartnerNotificationDetailsViewAction.EditNotification -> editNotification()
             PartnerNotificationDetailsViewAction.CancelDeleteNotification -> cancelDeleteNotification()
             PartnerNotificationDetailsViewAction.ConfirmDeleteNotification -> confirmDeleteNotification()
+        }
+    }
+
+    private fun observePartnerNotificationsEvents() {
+        viewModelScope.launch {
+            partnerNotificationEventBus.detailsEvents.collect { event ->
+                if (event is PartnerNotificationEvent.PartnerNotificationUpdated) {
+                    initView(notificationId)
+                    showSuccessSnackbar(getString(Res.string.partner_notificaiton_updated))
+                }
+            }
         }
     }
 
@@ -93,7 +111,7 @@ internal class PartnerNotificationDetailsViewModel(
             deletePartnerNotificationUseCase(
                 notificationId = notification.id,
             ).onSuccess {
-                partnerNotificationEventBus.tryEmit(PartnerNotificationEvent.PartnerNotificationDeleted)
+                partnerNotificationEventBus.emitOverview(PartnerNotificationEvent.PartnerNotificationDeleted)
                 viewModelNavigator.pop()
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }

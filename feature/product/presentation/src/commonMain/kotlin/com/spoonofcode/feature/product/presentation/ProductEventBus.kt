@@ -10,10 +10,17 @@ sealed class ProductEvent {
 }
 
 internal class ProductEventBus {
-    private val _events = Channel<ProductEvent>(Channel.BUFFERED)
-    val events = _events.receiveAsFlow()
+    private val _overviewEvents = Channel<ProductEvent>(Channel.BUFFERED)
+    val overviewEvents = _overviewEvents.receiveAsFlow()
 
-    fun tryEmit(event: ProductEvent) {
-        _events.trySend(event)
+    private val _detailsEvents = Channel<ProductEvent>(Channel.BUFFERED)
+    val detailsEvents = _detailsEvents.receiveAsFlow()
+
+    fun emitOverview(event: ProductEvent) {
+        _overviewEvents.trySend(event)
+    }
+
+    fun emitDetails(event: ProductEvent) {
+        _detailsEvents.trySend(event)
     }
 }
