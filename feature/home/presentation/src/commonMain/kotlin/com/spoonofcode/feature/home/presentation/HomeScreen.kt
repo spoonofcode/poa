@@ -28,8 +28,8 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.AutoImageSlider
-import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
@@ -101,7 +101,7 @@ private fun DailyCheckInSection(
     nextCheckInTimeMillis: Long?,
     onCheckInClicked: () -> Unit,
 ) {
-    Cards.ElevatedCard {
+    ElevatedCard {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -177,7 +177,7 @@ private fun DailyRewardItem(reward: DailyReward) {
         MaterialTheme.colorScheme.surface
     }
 
-    Cards.ElevatedCard(
+    ElevatedCard(
         modifier = Modifier.size(width = 85.dp, height = 110.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor),
     ) {

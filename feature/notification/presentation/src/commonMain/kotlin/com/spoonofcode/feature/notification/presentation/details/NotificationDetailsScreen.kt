@@ -17,8 +17,8 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
@@ -73,7 +73,7 @@ private fun NotificationCard(
     notification: Notification,
     onOpenLink: (String) -> Unit = {}
 ) {
-    Cards.ElevatedCard {
+    ElevatedCard {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

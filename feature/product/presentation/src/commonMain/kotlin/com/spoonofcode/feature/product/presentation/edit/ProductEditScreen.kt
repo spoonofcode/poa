@@ -13,7 +13,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.DescriptionCard
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.TextFields
@@ -82,7 +82,7 @@ private fun ColumnScope.Content(
         }
 
         product.description?.let {
-            Cards.DescriptionCard(
+            DescriptionCard(
                 title = stringResource(Res.string.about_product),
                 description = it
             )

@@ -72,7 +72,7 @@ fun AutoImageSlider(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Cards.ElevatedCard(
+        ElevatedCard(
             modifier = modifier.fillMaxWidth().height(180.dp),
         ) {
             HorizontalPager(

@@ -23,7 +23,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.TextFields
@@ -100,7 +100,7 @@ private fun ProductCard(
     product: Product,
     onClick: () -> Unit,
 ) {
-    Cards.ElevatedCard(
+    ElevatedCard(
         onClick = onClick,
     ) {
         Box(

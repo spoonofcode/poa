@@ -29,8 +29,9 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.DescriptionCard
 import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.Texts
@@ -153,14 +154,14 @@ private fun ColumnScope.Content(
         }
 
         product.description?.let {
-            Cards.DescriptionCard(
+            DescriptionCard(
                 title = stringResource(Res.string.about_product),
                 description = it
             )
         }
 
         if (!product.customLink.isNullOrBlank()) {
-            Cards.ElevatedCard {
+            ElevatedCard {
                 Column {
                     ClickableInfoRow(
                         text = stringResource(Res.string.learn_more),

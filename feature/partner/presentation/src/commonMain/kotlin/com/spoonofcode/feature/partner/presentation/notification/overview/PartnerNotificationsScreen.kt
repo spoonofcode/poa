@@ -34,7 +34,7 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
 import com.spoonofcode.core.presentation.compose.Spacers
@@ -154,7 +154,7 @@ private fun NotificationItem(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Cards.ElevatedCard(
+        ElevatedCard(
             onClick = onClick
         ) {
             Row(

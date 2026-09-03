@@ -34,9 +34,9 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.Colors
 import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Images
 import com.spoonofcode.core.presentation.compose.Spacers
 import com.spoonofcode.core.presentation.compose.Texts
@@ -129,7 +129,7 @@ private fun ColumnScope.Content(
     Spacers.VerticalBetweenFields()
 
     if (viewState.partnerPanelVisible) {
-        Cards.ElevatedCard {
+        ElevatedCard {
             ChevronItem(
                 icon = Icons.Default.Person,
                 title = stringResource(Res.string.partner_panel),
@@ -138,7 +138,7 @@ private fun ColumnScope.Content(
         }
     }
 
-    Cards.ElevatedCard {
+    ElevatedCard {
         ChevronItem(
             icon = Icons.Default.Notifications,
             title = stringResource(Res.string.notifications),
@@ -158,7 +158,7 @@ private fun ColumnScope.Content(
         )
     }
 
-    Cards.ElevatedCard {
+    ElevatedCard {
         ChevronItem(
             icon = Icons.AutoMirrored.Filled.Logout,
             title = stringResource(Res.string.logout),
