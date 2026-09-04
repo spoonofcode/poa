@@ -89,9 +89,10 @@ private fun ColumnScope.Content(
         onClick = { onAction(LoginViewAction.SignInWithCode) }
     )
 
-    GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
-        onAction(LoginViewAction.SignInWithGoogle(googleAccount = googleAccount))
-    })
+    // TODO #275 Fix login with google account
+//    GoogleSignInButton(onGoogleSignInResult = { googleAccount ->
+//        onAction(LoginViewAction.SignInWithGoogle(googleAccount = googleAccount))
+//    })
 }
 
 @Composable
