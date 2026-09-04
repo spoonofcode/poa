@@ -51,13 +51,13 @@ fun ErrorView(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
             )
         }
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
-        Texts.BLB(stringResource(Res.string.data_could_not_be_loaded))
+        TextBLB(stringResource(Res.string.data_could_not_be_loaded))
 
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
-        Buttons.SecondaryButton(
+        SecondaryButton(
             text = stringResource(resource = Res.string.reload),
             onClick = reload
         )

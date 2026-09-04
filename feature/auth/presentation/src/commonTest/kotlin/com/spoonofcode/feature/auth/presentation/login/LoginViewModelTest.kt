@@ -167,7 +167,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         }
         advanceUntilIdle()
 
-        verifySuspend { loginRepository.requestCode(email = email, recaptchaToken = any()) }
+        verifySuspend { loginRepository.requestCode(email = email, platform = any(), recaptchaToken = any()) }
         verifySuspend { routeResolver.resolve(AuthModuleRoute.LoginCode(email)) }
         verifySuspend { viewModelNavigator.push(any()) }
     }
@@ -178,7 +178,7 @@ class LoginViewModelTest : BaseViewModelTest() {
         viewModel.onAction(LoginViewAction.ChangeEmail(email))
 
         everySuspend {
-            loginRepository.requestCode(any(), any())
+            loginRepository.requestCode(any(), any(), any())
         } returns Result.failure(Exception("error"))
 
         viewModel.viewState.test {
@@ -203,7 +203,7 @@ class LoginViewModelTest : BaseViewModelTest() {
             )
         }
 
-        verifySuspend { loginRepository.requestCode(any(), any()) }
+        verifySuspend { loginRepository.requestCode(any(), any(), any()) }
         verifySuspend(mode = exactly(0)) { routeResolver.resolve(AuthModuleRoute.LoginCode(email)) }
         verifySuspend(mode = exactly(0)) { viewModelNavigator.push(any()) }
     }

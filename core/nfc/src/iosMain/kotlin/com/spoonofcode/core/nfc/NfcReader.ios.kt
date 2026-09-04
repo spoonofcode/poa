@@ -33,68 +33,34 @@ internal class IosNfcReader : NfcReader {
     private val _tags = MutableSharedFlow<NfcTag>(extraBufferCapacity = 1)
     override val tags: Flow<NfcTag> = _tags.asSharedFlow()
 
-    private var session: NFCTagReaderSession? = null
+    private val _isScanning = MutableStateFlow(false)
+    override val isScanning: StateFlow<Boolean> = _isScanning.asStateFlow()
 
-    /** Delegate is Obj-C land → separated to avoid the mix-in error */
-    private val delegate = object : NSObject(), NFCTagReaderSessionDelegateProtocol {
+    private var session: NFCNDEFReaderSession? = null
 
-        override fun tagReaderSessionDidBecomeActive(session: NFCTagReaderSession) {
-            println("NFC Session became active")
+    private val delegate = object : NSObject(), NFCNDEFReaderSessionDelegateProtocol {
+
+        override fun readerSessionDidBecomeActive(session: NFCNDEFReaderSession) {
+            println("NFC: NDEF Session active")
+            _isScanning.value = true
         }
 
-        override fun tagReaderSession(
-            session: NFCTagReaderSession,
-            didInvalidateWithError: NSError
-        ) {
-            println("NFC Session invalidated: ${didInvalidateWithError.localizedDescription}")
+        override fun readerSession(session: NFCNDEFReaderSession, didInvalidateWithError: NSError) {
+            println("NFC: NDEF Session invalidated: ${didInvalidateWithError.localizedDescription}")
             this@IosNfcReader.session = null
+            _isScanning.value = false
         }
 
-        @Suppress("UNCHECKED_CAST")
-        override fun tagReaderSession(
-            session: NFCTagReaderSession,
-            didDetectTags: List<*>
-        ) {
-            val tag = (didDetectTags.firstOrNull() as? NFCTagProtocol) ?: return
+        override fun readerSession(session: NFCNDEFReaderSession, didDetectNDEFs: List<*>) {
+            val message = didDetectNDEFs.firstOrNull() as? NFCNDEFMessage ?: return
+            val record = message.records.firstOrNull() as? NFCNDEFPayload
+            val payload = record?.payload
+            val ndef = payload.utf8()
 
-            session.connectToTag(tag) { err ->
-                if (err != null) {
-                    session.invalidateSessionWithErrorMessage(
-                        err.localizedDescription ?: "NFC error"
-                    )
-                    return@connectToTag
-                }
+            println("NFC: NDEF read success: $ndef")
 
-                scope.launch {
-                    /* ------- UID + tech string ------- */
-                    val (uid, tech) = when (tag) {
-                        is NFCMiFareTagProtocol -> tag.identifier.toByteArray().toHex() to "MIFARE"
-                        is NFCISO15693TagProtocol -> tag.identifier.toByteArray()
-                            .toHex() to "ISO15693"
-
-                        is NFCISO7816TagProtocol -> tag.identifier.toByteArray()
-                            .toHex() to "ISO7816"
-
-                        is NFCFeliCaTagProtocol -> tag.currentIDm.toByteArray().toHex() to "FeliCa"
-                        else -> "" to "Unknown"
-                    }
-
-                    /* ------- optional first NDEF record ------- */
-                    var ndef: String? = null
-                    (tag as? NFCNDEFTagProtocol)?.let { ndefTag ->
-                        suspendCancellableCoroutine<Unit> { cont ->
-                            ndefTag.readNDEFWithCompletionHandler { msg, _ ->
-                                val payloadData =
-                                    (msg?.records?.firstOrNull() as? NFCNDEFPayload)?.payload
-                                ndef = payloadData.utf8()
-                                cont.resume(Unit) {}
-                            }
-                        }
-                    }
-
-                    _tags.emit(NfcTag(id = uid, techList = listOf(tech), ndef = ndef))
-                    session.invalidateSession()          // auto-restart feels nicer
-                }
+            scope.launch {
+                _tags.emit(NfcTag(id = "NDEF-ONLY", techList = listOf("NDEF"), ndef = ndef))
             }
         }
     }
@@ -102,12 +68,10 @@ internal class IosNfcReader : NfcReader {
     /* ------------- NfcReader interface ------------- */
     override fun start() {
         if (session != null) return        // already active
-        session = NFCTagReaderSession(
-            pollingOption = NFCPollingISO14443 or
-                    NFCPollingISO15693 or
-                    NFCPollingISO18092,
+        session = NFCNDEFReaderSession(
             delegate = delegate,
-            queue = null           // main thread
+            queue = null,          // main thread
+            invalidateAfterFirstRead = false
         ).apply {
             alertMessage = "Hold your iPhone near the NFC tag."
             beginSession()
@@ -117,6 +81,7 @@ internal class IosNfcReader : NfcReader {
     override fun stop() {
         session?.invalidateSession()
         session = null
+        _isScanning.value = false
     }
 }
 

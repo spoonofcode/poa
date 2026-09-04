@@ -18,12 +18,14 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.Dialogs
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.RequestPermission
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Switchs
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
+import com.spoonofcode.core.presentation.compose.LabelSwitch
+import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextTM
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notifications_all_push_description
@@ -87,9 +89,9 @@ private fun ColumnScope.Content(
     )
 
     if (notificationPermissionState.status.isGranted) {
-        Texts.TM(stringResource(Res.string.notifications_settings_text))
+        TextTM(stringResource(Res.string.notifications_settings_text))
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_all_push_title),
             description = stringResource(Res.string.notifications_all_push_description),
             checked = viewState.isAllPushNotificationsSettingsEnable,
@@ -102,7 +104,7 @@ private fun ColumnScope.Content(
             },
         )
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_personalized_title),
             description = stringResource(Res.string.notifications_personalized_description),
             checked = viewState.notificationSettings.isNotificationsPersonalizedEnabled,
@@ -115,7 +117,7 @@ private fun ColumnScope.Content(
             },
         )
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_from_partners_title),
             description = stringResource(Res.string.notifications_from_partners_description),
             checked = viewState.notificationSettings.isNotificationsFromPartnersEnabled,
@@ -128,7 +130,7 @@ private fun ColumnScope.Content(
             },
         )
 
-        Switchs.LabelSwitch(
+        LabelSwitch(
             title = stringResource(Res.string.notifications_my_product_series_title),
             description = stringResource(Res.string.notifications_my_product_series_description),
             checked = viewState.notificationSettings.isNotificationsMyProductSeriesEnabled,
@@ -142,9 +144,9 @@ private fun ColumnScope.Content(
         )
 
 
-        Spacers.Weight1(this)
+        SpacerWeight1(this)
 
-        Buttons.PrimaryButton(
+        PrimaryButton(
             text = stringResource(Res.string.save_changes),
             onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
         )
@@ -154,12 +156,12 @@ private fun ColumnScope.Content(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Texts.BL(
+            TextBL(
                 text = stringResource(resource = Res.string.open_app_settings_info),
                 textAlign = TextAlign.Center,
             )
-            Spacers.VerticalBetweenFields()
-            Buttons.PrimaryButton(
+            SpacerVerticalBetweenFields()
+            PrimaryButton(
                 text = stringResource(resource = Res.string.open_app_settings),
                 onClick = {
                     notificationPermissionState.openAppSettings()
@@ -180,7 +182,7 @@ private fun Dialogs(
     )
 
     if (viewState.isRationaleNotificationDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.rational_notification_dialog_title),
             text = stringResource(Res.string.rational_notification_dialog_text),
             confirmButtonText = stringResource(Res.string.rational_notification_dialog_confirm_button_text),

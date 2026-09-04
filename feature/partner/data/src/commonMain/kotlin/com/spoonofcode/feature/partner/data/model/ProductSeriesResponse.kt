@@ -12,7 +12,7 @@ data class ProductSeriesResponse(
     val bannerIsOn: Boolean,
     val blockchain: String,
     @SerialName("contract_address")
-    val contactAddress: String,
+    val contractAddress: String,
     val description: String,
     val enabled: Boolean,
     val facebook: String,

@@ -8,7 +8,7 @@ import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.presentation.customer.overview.PartnerCustomerOverviewScreen
 import com.spoonofcode.feature.partner.presentation.details.PartnerDetailsScreen
 import com.spoonofcode.feature.partner.presentation.edit.PartnerEditScreen
-import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationsScreen
+import com.spoonofcode.feature.partner.presentation.notification.overview.PartnerNotificationsScreen
 import com.spoonofcode.feature.partner.presentation.notification.details.PartnerNotificationDetailsScreen
 import com.spoonofcode.feature.partner.presentation.notification.edit.PartnerNotificationEditArgs
 import com.spoonofcode.feature.partner.presentation.notification.edit.PartnerNotificationEditScreen

@@ -13,7 +13,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.spoonofcode.core.presentation.compose.CustomIcons.IconWithBadge
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +24,7 @@ fun TopBar(
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-        title = { topAppBarTitle?.let { Texts.TLB(it) } },
+        title = { topAppBarTitle?.let { TextTLB(it) } },
         navigationIcon = if (backNavigationEnable) {
             {
                 IconButton(onClick = navigationBackAction) {

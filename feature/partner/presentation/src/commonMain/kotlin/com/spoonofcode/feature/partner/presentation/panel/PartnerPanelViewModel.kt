@@ -4,12 +4,23 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.partner.presentation.PartnerEvent
+import com.spoonofcode.feature.partner.presentation.PartnerEventBus
+import com.spoonofcode.feature.partner.presentation.Res
+import com.spoonofcode.feature.partner.presentation.partner_data_updated
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
-internal class PartnerPanelViewModel :
+internal class PartnerPanelViewModel(
+    private val partnerEventBus: PartnerEventBus,
+) :
     BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction, Nothing>(
         initialViewState = ViewState.Content(PartnerPanelViewState),
     ) {
+
+    init {
+        observePartnerEvents()
+    }
 
     override fun onAction(action: PartnerPanelViewAction) {
         when (action) {
@@ -40,5 +51,15 @@ internal class PartnerPanelViewModel :
 
     private fun navigateToReports() {
         // TODO
+    }
+
+    private fun observePartnerEvents() {
+        viewModelScope.launch {
+            partnerEventBus.partnerUpdatedEvents.collect { event ->
+                if (event is PartnerEvent.PartnerUpdated) {
+                    showSuccessSnackbar(getString(Res.string.partner_data_updated))
+                }
+            }
+        }
     }
 }

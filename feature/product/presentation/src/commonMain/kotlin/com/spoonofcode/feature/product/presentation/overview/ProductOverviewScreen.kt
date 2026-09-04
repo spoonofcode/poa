@@ -23,11 +23,12 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
-import com.spoonofcode.core.presentation.compose.Images
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.TextFields
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.ElevatedCard
+import com.spoonofcode.core.presentation.compose.ImageLink
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldSearch
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.TextLSB
+import com.spoonofcode.core.presentation.compose.TextTMB
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_products
@@ -61,12 +62,12 @@ private fun ColumnScope.Content(
     viewState: ProductOverviewViewState,
     onAction: (ProductOverviewViewAction) -> Unit,
 ) {
-    TextFields.OutlinedSearch(
+    OutlinedTextFieldSearch(
         value = viewState.searchText,
         onValueChange = { onAction(ProductOverviewViewAction.ChangeSearchText(it)) },
     )
 
-    Spacers.VerticalBetweenFields()
+    SpacerVerticalBetweenFields()
 
     ProductGrid(
         products = viewState.filteredProducts,
@@ -100,7 +101,7 @@ private fun ProductCard(
     product: Product,
     onClick: () -> Unit,
 ) {
-    Cards.ElevatedCard(
+    ElevatedCard(
         onClick = onClick,
     ) {
         Box(
@@ -110,7 +111,7 @@ private fun ProductCard(
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
-            product.imageLink?.let { Images.ImageLink(imageLink = it) }
+            product.imageLink?.let { ImageLink(imageLink = it) }
         }
 
         Column(
@@ -120,13 +121,13 @@ private fun ProductCard(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             product.seriesName?.let {
-                Texts.LSB(
+                TextLSB(
                     text = it.uppercase(),
                     maxLines = 1,
                 )
             }
             product.name?.let {
-                Texts.TMB(
+                TextTMB(
                     text = it,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 2,

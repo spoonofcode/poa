@@ -2,10 +2,14 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.CreatePartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationUseCase
 import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerNotificationUseCase
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEvent
+import com.spoonofcode.feature.partner.presentation.notification.PartnerNotificationEventBus
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 
@@ -16,10 +20,11 @@ data class PartnerNotificationEditArgs(
 )
 
 internal class PartnerNotificationEditViewModel(
+    private val args: PartnerNotificationEditArgs,
     private val createPartnerNotificationUseCase: CreatePartnerNotificationUseCase,
     private val getPartnerNotificationUseCase: GetPartnerNotificationUseCase,
     private val updatePartnerNotificationUseCase: UpdatePartnerNotificationUseCase,
-    private val args: PartnerNotificationEditArgs
+    private val partnerNotificationEventBus: PartnerNotificationEventBus,
 ) : BaseViewModel<PartnerNotificationEditViewState, PartnerNotificationEditViewAction, Nothing>() {
     override val startAction = {
         initView(
@@ -165,7 +170,10 @@ internal class PartnerNotificationEditViewModel(
                     deliveryDateTime = currentState.deliveryDateTime,
                     expirationDateTime = currentState.expirationDateTime
                 ).onSuccess {
-                    viewModelNavigator.pop()
+                    partnerNotificationEventBus.emitDetails(PartnerNotificationEvent.PartnerNotificationUpdated)
+                    viewModelScope.launch {
+                        viewModelNavigator.pop()
+                    }
                 }.onFailure { error ->
                     error.message?.let { showErrorSnackbar(it) }
                 }
@@ -178,7 +186,14 @@ internal class PartnerNotificationEditViewModel(
                     deliveryDateTime = currentState.deliveryDateTime,
                     expirationDateTime = currentState.expirationDateTime
                 ).onSuccess {
-                    viewModelNavigator.pop()
+                    partnerNotificationEventBus.emitOverview(PartnerNotificationEvent.PartnerNotificationAdded)
+                    viewModelNavigator.replaceAll(
+                        listOf(
+                            ProfileModuleRoute.ProfileDetails,
+                            PartnerModuleRoute.PartnerPanel,
+                            PartnerModuleRoute.PartnerNotifications,
+                        )
+                    )
                 }.onFailure { error ->
                     error.message?.let { showErrorSnackbar(it) }
                 }

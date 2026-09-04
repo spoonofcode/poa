@@ -1,49 +1,128 @@
 package com.spoonofcode.core.presentation.compose.video
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.UIKitView
 import kotlinx.cinterop.ExperimentalForeignApi
-import platform.AVFoundation.AVPlayer
-import platform.AVFoundation.AVPlayerActionAtItemEndNone
-import platform.AVFoundation.AVPlayerItemDidPlayToEndTimeNotification
-import platform.AVFoundation.actionAtItemEnd
-import platform.AVFoundation.currentItem
-import platform.AVFoundation.muted
-import platform.AVFoundation.play
+import kotlinx.cinterop.cValue
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import platform.AVFoundation.*
 import platform.AVKit.AVPlayerViewController
+import platform.CoreMedia.CMTime
 import platform.Foundation.NSNotificationCenter
+import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSURL
+import kotlin.time.Duration.Companion.milliseconds
 
-@OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun LoopingVideo(
     url: String,
     modifier: Modifier,
     autoPlay: Boolean,
-    mute: Boolean
-) = UIKitView(
-    modifier = modifier,
-    factory = {
-        val player = AVPlayer(NSURL(string = url))
-        player.actionAtItemEnd = AVPlayerActionAtItemEndNone
-        player.muted = mute
+    mute: Boolean,
+    onLoadingChanged: (Boolean) -> Unit,
+    onError: (Exception) -> Unit
+) {
+    if (url.isEmpty()) return
+    val nsUrl = remember(url) { NSURL.URLWithString(url) } ?: return
 
-        // restart when the clip ends
-        NSNotificationCenter.defaultCenter.addObserverForName(
+    // We use a key so that when the URL changes, everything is recreated
+    key(nsUrl) {
+        LoopingVideoInternal(
+            nsUrl = nsUrl,
+            modifier = modifier,
+            autoPlay = autoPlay,
+            mute = mute,
+            onLoadingChanged = onLoadingChanged,
+            onError = onError
+        )
+    }
+}
+
+@OptIn(ExperimentalForeignApi::class)
+@Composable
+private fun LoopingVideoInternal(
+    nsUrl: NSURL,
+    modifier: Modifier,
+    autoPlay: Boolean,
+    mute: Boolean,
+    onLoadingChanged: (Boolean) -> Unit,
+    onError: (Exception) -> Unit
+) {
+    val player = remember(nsUrl) {
+        AVPlayer(uRL = nsUrl).apply {
+            actionAtItemEnd = AVPlayerActionAtItemEndNone
+        }
+    }
+
+    val controller = remember(player) {
+        AVPlayerViewController().apply {
+            this.player = player
+            this.showsPlaybackControls = false
+            this.videoGravity = AVLayerVideoGravityResizeAspectFill
+        }
+    }
+
+    // Loading monitoring
+    LaunchedEffect(player) {
+        onLoadingChanged(true)
+        while (isActive) {
+            val currentItem = player.currentItem
+            if (currentItem != null) {
+                val status = currentItem.status
+                if (status == AVPlayerItemStatusReadyToPlay) {
+                    onLoadingChanged(false)
+                    if (autoPlay) player.play()
+                    break
+                } else if (status == AVPlayerItemStatusFailed) {
+                    val errorMsg = currentItem.error?.localizedDescription ?: "Load failed"
+                    onError(Exception(errorMsg))
+                    onLoadingChanged(false)
+                    break
+                }
+            }
+            delay(100.milliseconds)
+        }
+    }
+
+    // Looping and Cleanup
+    DisposableEffect(player) {
+        val notificationCenter = NSNotificationCenter.defaultCenter
+        val observer = notificationCenter.addObserverForName(
             name = AVPlayerItemDidPlayToEndTimeNotification,
             `object` = player.currentItem,
-            queue = null
+            queue = NSOperationQueue.mainQueue
         ) { _ ->
-            // TODO Fix player for iOS
-//            player.seekToTime(kCMTimeZero)
+            player.seekToTime(
+                time = cValue<CMTime> {
+                    value = 0
+                    timescale = 1
+                    flags = 1u
+                    epoch = 0
+                }
+            )
+            player.play()
         }
 
-        val controller = AVPlayerViewController().apply {
-            this.player = player
-            showsPlaybackControls = false
+        onDispose {
+            notificationCenter.removeObserver(observer)
+            player.pause()
+            // Critical to avoid PlayerRemoteXPC err=-12860:
+            controller.player = null
+            player.replaceCurrentItemWithPlayerItem(null)
         }
-        if (autoPlay) player.play()
-        controller.view
     }
-)
+
+    // Reaction to parameter changes
+    LaunchedEffect(player, mute) { player.muted = mute }
+    LaunchedEffect(player, autoPlay) {
+        if (autoPlay) player.play() else player.pause()
+    }
+
+    UIKitView(
+        modifier = modifier,
+        factory = { controller.view },
+        update = { /* Parameters supported by effects */ }
+    )
+}

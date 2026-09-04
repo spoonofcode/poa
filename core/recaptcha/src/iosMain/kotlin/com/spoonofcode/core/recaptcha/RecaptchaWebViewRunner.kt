@@ -4,86 +4,104 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import platform.Foundation.NSUUID
-import platform.Foundation.NSURL
-import platform.UIKit.UIApplication
-import platform.UIKit.UIWindow
 import platform.WebKit.*
 import platform.darwin.NSObject
+import platform.UIKit.UIApplication
+import platform.UIKit.UIWindow
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.readValue
-import platform.CoreGraphics.CGRectZero
+import kotlinx.coroutines.withTimeout
 
 internal object RecaptchaWebViewRunner {
 
     @OptIn(ExperimentalForeignApi::class)
     suspend fun run(siteKey: String, action: String): String = withContext(Dispatchers.Main) {
-        suspendCancellableCoroutine { cont ->
-            val handlerName = "recaptchaHandler_${NSUUID().UUIDString}"
-            val contentController = WKUserContentController()
+        withTimeout(20000) {
+            suspendCancellableCoroutine { cont ->
+                val handlerName = "recaptchaHandler_${NSUUID().UUIDString}"
+                val contentController = WKUserContentController()
 
-            val handler = object : NSObject(), WKScriptMessageHandlerProtocol {
-                override fun userContentController(
-                    userContentController: WKUserContentController,
-                    didReceiveScriptMessage: WKScriptMessage
-                ) {
-                    val token = didReceiveScriptMessage.body?.toString()
-                    if (token.isNullOrBlank() || token.startsWith("ERROR:")) {
-                        cont.resumeWithException(IllegalStateException(token ?: "Empty token"))
-                    } else {
-                        cont.resume(token)
+                val handler = object : NSObject(), WKScriptMessageHandlerProtocol {
+                    override fun userContentController(
+                        userContentController: WKUserContentController,
+                        didReceiveScriptMessage: WKScriptMessage
+                    ) {
+                        val body = didReceiveScriptMessage.body?.toString()
+
+                        userContentController.removeScriptMessageHandlerForName(handlerName)
+
+                        if (body.isNullOrBlank() || body.startsWith("ERROR:")) {
+                            println("reCAPTCHA Error: $body")
+                            if (cont.isActive) cont.resumeWithException(IllegalStateException(body ?: "Empty token"))
+                        } else {
+                            println("reCAPTCHA Token obtained (length: ${body.length}): ${body.take(10)}...")
+                            if (cont.isActive) cont.resume(body)
+                        }
                     }
-                    
-                    // Cleanup
-                    userContentController.removeScriptMessageHandlerForName(handlerName)
                 }
-            }
 
-            // WKUserContentController holds a weak reference to the handler, 
-            // but the closure of suspendCancellableCoroutine and the handler itself 
-            // will keep everything alive until resume/cancellation.
-            contentController.addScriptMessageHandler(handler, name = handlerName)
+                println("reCAPTCHA Running for siteKey: $siteKey, action: $action")
 
-            val config = WKWebViewConfiguration().apply {
-                userContentController = contentController
-            }
+                contentController.addScriptMessageHandler(handler, name = handlerName)
 
-            val webView = WKWebView(frame = CGRectZero.readValue(), configuration = config)
-            
-            val keyWindow = UIApplication.sharedApplication.keyWindow
-                ?: UIApplication.sharedApplication.windows.firstOrNull() as? UIWindow
-            val rootView = keyWindow?.rootViewController?.view
-            rootView?.addSubview(webView)
+                val config = WKWebViewConfiguration().apply {
+                    userContentController = contentController
+                }
 
-            val html = """
+                val frame = platform.CoreGraphics.CGRectMake(0.0, 0.0, 1.0, 1.0)
+                val webView = WKWebView(frame = frame, configuration = config)
+                webView.alpha = 0.01
+                webView.hidden = false
+
+                val window = UIApplication.sharedApplication.windows.firstOrNull() as? UIWindow
+                if (window != null) {
+                    window.addSubview(webView)
+                }
+
+                val html = """
                 <!doctype html>
                 <html>
                   <head>
+                    <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <script src="https://www.google.com/recaptcha/api.js?render=$siteKey"></script>
+                    <script src="https://www.google.com/recaptcha/enterprise.js?render=$siteKey" 
+                            onerror="window.webkit.messageHandlers['$handlerName'].postMessage('ERROR:Script failed to load')"></script>
                     <script>
                       function run() {
-                        grecaptcha.ready(function() {
-                          grecaptcha.execute('$siteKey', {action: '$action'}).then(function(token) {
-                            window.webkit.messageHandlers['$handlerName'].postMessage(token);
-                          }).catch(function(err) {
-                            window.webkit.messageHandlers['$handlerName'].postMessage('ERROR:' + err);
+                        try {
+                          if (typeof grecaptcha === 'undefined' || typeof grecaptcha.enterprise === 'undefined') {
+                            window.webkit.messageHandlers['$handlerName'].postMessage('ERROR:grecaptcha.enterprise is undefined');
+                            return;
+                          }
+                          grecaptcha.enterprise.ready(function() {
+                            try {
+                              grecaptcha.enterprise.execute('$siteKey', {action: '$action'}).then(function(token) {
+                                window.webkit.messageHandlers['$handlerName'].postMessage(token);
+                              }).catch(function(err) {
+                                window.webkit.messageHandlers['$handlerName'].postMessage('ERROR:Execution failed: ' + err);
+                              });
+                            } catch (e) {
+                              window.webkit.messageHandlers['$handlerName'].postMessage('ERROR:Execution crash: ' + e.message);
+                            }
                           });
-                        });
+                        } catch (e) {
+                          window.webkit.messageHandlers['$handlerName'].postMessage('ERROR:Ready crash: ' + e.message);
+                        }
                       }
                     </script>
                   </head>
                   <body onload="run()"></body>
                 </html>
-            """.trimIndent()
+                """.trimIndent()
 
-            val baseUrl = NSURL(string = "https://testing.proof-of-wear.com")
-            webView.loadHTMLString(html, baseURL = baseUrl)
+                val baseURL = platform.Foundation.NSURL.URLWithString("https://www.google.com")
+                webView.loadHTMLString(html, baseURL = baseURL)
 
-            cont.invokeOnCancellation {
-                webView.removeFromSuperview()
-                contentController.removeScriptMessageHandlerForName(handlerName)
+                cont.invokeOnCancellation {
+                    contentController.removeScriptMessageHandlerForName(handlerName)
+                    webView.removeFromSuperview()
+                }
             }
         }
     }

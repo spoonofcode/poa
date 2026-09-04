@@ -7,7 +7,12 @@ import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetProductStatusUseCase
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
+import com.spoonofcode.feature.product.presentation.Res
+import com.spoonofcode.feature.product.presentation.product_updated
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
 internal class ProductDetailsViewModel(
     private val productId: String,
@@ -15,7 +20,12 @@ internal class ProductDetailsViewModel(
     private val addProductToUserUseCase: AddProductToUserUseCase,
     private val deleteProductFromUserUseCase: DeleteProductFromUserUseCase,
     private val getProductStatusUseCase: GetProductStatusUseCase,
+    private val productEventBus: ProductEventBus,
 ) : BaseViewModel<ProductDetailsViewState, ProductDetailsViewAction, Nothing>() {
+    init {
+        observeProductEvents()
+    }
+
     override val startAction = {
         initView(productId = productId)
     }
@@ -27,6 +37,17 @@ internal class ProductDetailsViewModel(
             ProductDetailsViewAction.EditProduct -> editProduct()
             ProductDetailsViewAction.CancelDeleteProductFromProfile -> cancelDeleteProductFromProfile()
             ProductDetailsViewAction.ConfirmDeleteProductFromProfile -> confirmDeleteProductFromProfile()
+        }
+    }
+
+    private fun observeProductEvents() {
+        viewModelScope.launch {
+            productEventBus.detailsEvents.collect { event ->
+                if (event is ProductEvent.ProductUpdated) {
+                    initView(productId)
+                    showSuccessSnackbar(getString(Res.string.product_updated))
+                }
+            }
         }
     }
 
@@ -58,6 +79,7 @@ internal class ProductDetailsViewModel(
                 productId = product.id,
                 productSerieId = product.seriesId,
             ).onSuccess {
+                productEventBus.emitOverview(ProductEvent.ProductAdded)
                 viewModelNavigator.pop()
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }
@@ -66,7 +88,7 @@ internal class ProductDetailsViewModel(
     }
 
     private fun editProduct() {
-        val productId = currentContentState().product!!.id
+        val productId = currentContentState().product.id
         viewModelScope.launch {
             viewModelNavigator.push(ProductModuleRoute.ProductEdit(productId = productId))
         }
@@ -97,6 +119,7 @@ internal class ProductDetailsViewModel(
                 productSerieId = product.seriesId,
             )
                 .onSuccess {
+                    productEventBus.emitOverview(ProductEvent.ProductDeleted)
                     viewModelNavigator.pop()
                 }
                 .onFailure {

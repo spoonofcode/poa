@@ -1,4 +1,4 @@
-package com.spoonofcode.feature.partner.presentation.notification
+package com.spoonofcode.feature.partner.presentation.notification.overview
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,11 +34,12 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Cards
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.Paddings.spaceBetweenListElements
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.TextBM
+import com.spoonofcode.core.presentation.compose.TextTM
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.my_notifications
@@ -132,7 +133,7 @@ private fun NotificationTab(
     notifications: List<PartnerNotification>,
     selectNotification: (String) -> Unit
 ) {
-    Spacers.VerticalBetweenFields()
+    SpacerVerticalBetweenFields()
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
     ) {
@@ -154,7 +155,7 @@ private fun NotificationItem(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Cards.ElevatedCard(
+        ElevatedCard(
             onClick = onClick
         ) {
             Row(
@@ -168,12 +169,12 @@ private fun NotificationItem(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
 
-                    Texts.TM(
+                    TextTM(
                         text = item.title,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    Texts.BM(
+                    TextBM(
                         text = item.text,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 2,

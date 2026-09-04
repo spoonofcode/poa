@@ -30,11 +30,14 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
 import com.spoonofcode.core.presentation.compose.LottieAnimation
 import com.spoonofcode.core.presentation.compose.Paddings
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.SecondaryButton
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextBLB
+import com.spoonofcode.core.presentation.compose.TextBM
 import com.spoonofcode.core.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -74,6 +77,7 @@ private fun ColumnScope.Content(
     } else {
         val reader: NfcReader = rememberNfcReader()
         val tag by reader.tags.collectAsState(initial = null)
+        val isScanning by reader.isScanning.collectAsState()
 
         LaunchedEffect(Unit) { reader.start() }
         DisposableEffect(Unit) { onDispose { reader.stop() } }
@@ -83,22 +87,30 @@ private fun ColumnScope.Content(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val scanInfoText = when (viewState.platformType) {
-                PlatformType.Android -> stringResource(Res.string.scan_info_android)
-                PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
-            }
-            Texts.BL(
-                text = scanInfoText,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-            )
-            tag?.let {
-                onAction(ScanViewAction.CheckProduct(it))
-            } ?: LottieAnimation(
-                animationFilePath = viewState.animationFilePath,
-                contentDescription = viewState.contentDescription,
-            )
+            if (isScanning) {
+                val scanInfoText = when (viewState.platformType) {
+                    PlatformType.Android -> stringResource(Res.string.scan_info_android)
+                    PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
+                }
+                TextBL(
+                    text = scanInfoText,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                )
+                tag?.let {
+                    onAction(ScanViewAction.CheckProduct(it))
+                } ?: LottieAnimation(
+                    animationFilePath = viewState.animationFilePath,
+                    contentDescription = viewState.contentDescription,
+                )
 
-            Texts.BM(stringResource(Res.string.scanning_in_progress))
+                TextBM(stringResource(Res.string.scanning_in_progress))
+            } else {
+                PrimaryButton(
+                    text = stringResource(Res.string.start_scanning),
+                    onClick = { reader.start() }
+                )
+            }
+
         }
     }
 }
@@ -129,13 +141,13 @@ private fun ProductNotFoundView(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
             )
         }
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
-        Texts.BLB(stringResource(Res.string.product_not_found))
+        TextBLB(stringResource(Res.string.product_not_found))
 
-        Spacers.VerticalBetweenFields()
+        SpacerVerticalBetweenFields()
 
-        Buttons.SecondaryButton(
+        SecondaryButton(
             text = stringResource(resource = Res.string.scan_again),
             onClick = reload
         )

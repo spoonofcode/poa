@@ -19,4 +19,7 @@
     <string name="visit_product_page">Visit product page</string>
     <string name="product_already_assigned">Product already assigned to another user!</string>
     <string name="send_message">Send message</string>
+    <string name="product_added">Product added</string>
+    <string name="product_deleted">Product deleted</string>
+    <string name="product_updated">Product updated</string>
 </resources>

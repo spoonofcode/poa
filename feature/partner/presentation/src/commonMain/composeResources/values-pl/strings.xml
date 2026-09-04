@@ -40,4 +40,8 @@
     <string name="website">Strona</string>
     <string name="x">X</string>
     <string name="youtube">Youtube</string>
+    <string name="partner_notification_added">Powiadomienia partnera zostało dodane</string>
+    <string name="partner_notification_deleted">Powiadomienia partnera zostało usunięte</string>
+    <string name="partner_notification_updated">Powiadomienia partnera zostało zaktualizowane</string>
+    <string name="partner_data_updated">Dane partnera zostały zaktualizowane</string>
 </resources>

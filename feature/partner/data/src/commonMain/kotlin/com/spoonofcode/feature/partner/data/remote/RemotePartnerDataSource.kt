@@ -4,7 +4,6 @@ import com.spoonofcode.core.network.base.RemoteBaseDataSource
 import com.spoonofcode.feature.partner.data.model.CustomerResponse
 import com.spoonofcode.feature.partner.data.model.PartnerRequest
 import com.spoonofcode.feature.partner.data.model.PartnerResponse
-import com.spoonofcode.feature.partner.data.model.PartnerUserResponse
 import com.spoonofcode.feature.partner.data.model.ProductSeriesResponse
 import io.ktor.http.HttpMethod
 
@@ -46,11 +45,6 @@ class RemotePartnerDataSource : RemoteBaseDataSource(
     )
 
     suspend fun readAll(): Result<List<PartnerResponse>> = doRequest(
-        method = HttpMethod.Get,
-    )
-
-    suspend fun readPartnerUsers(partnerId: String): Result<List<PartnerUserResponse>> = doRequest(
-        urlPostfixPath = "$partnerId/users",
         method = HttpMethod.Get,
     )
 

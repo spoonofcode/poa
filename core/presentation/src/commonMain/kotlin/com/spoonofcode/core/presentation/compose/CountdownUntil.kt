@@ -23,11 +23,11 @@ import kotlin.time.ExperimentalTime
 fun Countdown(expirationDate: LocalDateTime) {
     CountdownUntil(expirationDate) { formatted, _, finished ->
         if (finished) {
-            Texts.BLB(text = stringResource(Res.string.time_is_up))
+            TextBLB(text = stringResource(Res.string.time_is_up))
         } else {
             Column {
-                Texts.BLB(text = stringResource(Res.string.time_remaining))
-                Texts.BLB(text = formatted)
+                TextBLB(text = stringResource(Res.string.time_remaining))
+                TextBLB(text = formatted)
             }
         }
     }

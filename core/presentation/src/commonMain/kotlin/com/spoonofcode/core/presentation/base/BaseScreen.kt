@@ -40,7 +40,7 @@ import com.spoonofcode.core.presentation.compose.snackbar.Snackbar
 import com.spoonofcode.core.presentation.compose.snackbar.setSnackbarHostState
 import com.spoonofcode.core.presentation.ext.addIf
 import com.spoonofcode.core.presentation.theme.AppTheme
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 
 abstract class BaseScreen<VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent>(
     protected open val backNavigationEnable: Boolean = true,
@@ -128,7 +128,7 @@ abstract class BaseScreen<VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA
 
     @Composable
     protected open fun provideViewEvents(
-        viewEvent: SharedFlow<VE>,
+        viewEvent: Flow<VE>,
         onAction: (VA) -> Unit,
     ) {
     }

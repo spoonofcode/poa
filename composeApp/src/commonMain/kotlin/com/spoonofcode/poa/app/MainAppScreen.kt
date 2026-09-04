@@ -1,5 +1,7 @@
 package com.spoonofcode.poa.app
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,13 +22,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.togetherWith
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.spoonofcode.composeApp.Res
+import com.spoonofcode.composeApp.tab_partners
+import com.spoonofcode.composeApp.tab_products
+import com.spoonofcode.composeApp.tab_profile
+import com.spoonofcode.composeApp.tab_scanner
+import com.spoonofcode.composeApp.tab_start
 import com.spoonofcode.core.presentation.navigation.LocalNavViewModelStoreProvider
 import com.spoonofcode.core.presentation.navigation.NavViewModelStoreProvider
 import com.spoonofcode.core.presentation.navigation.NavigationHandler
@@ -53,6 +59,7 @@ import com.spoonofcode.feature.tac.presentation.tacModuleRouteResolver
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.getKoin
 
 private val navSavedStateConfiguration = SavedStateConfiguration {
@@ -129,7 +136,7 @@ fun MainAppScreen(
                                 backStack.clear()
                                 backStack.add(HomeModuleRoute.Home)
                             },
-                            label = { Text("Home") },
+                            label = { Text(stringResource(Res.string.tab_start)) },
                             icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
                         )
 
@@ -139,7 +146,7 @@ fun MainAppScreen(
                                 backStack.clear()
                                 backStack.add(PartnerModuleRoute.PartnerOverview)
                             },
-                            label = { Text("Partner") },
+                            label = { Text(stringResource(Res.string.tab_partners)) },
                             icon = { Icon(Icons.Default.People, contentDescription = "Partner") }
                         )
 
@@ -149,7 +156,7 @@ fun MainAppScreen(
                                 backStack.clear()
                                 backStack.add(ScanModuleRoute.Scan)
                             },
-                            label = { Text("Scan") },
+                            label = { Text(stringResource(Res.string.tab_scanner)) },
                             icon = {
                                 Icon(
                                     Icons.Default.QrCodeScanner,
@@ -164,7 +171,7 @@ fun MainAppScreen(
                                 backStack.clear()
                                 backStack.add(ProductModuleRoute.ProductOverview)
                             },
-                            label = { Text("Products") },
+                            label = { Text(stringResource(Res.string.tab_products)) },
                             icon = {
                                 Icon(
                                     Icons.Default.CollectionsBookmark,
@@ -179,7 +186,7 @@ fun MainAppScreen(
                                 backStack.clear()
                                 backStack.add(ProfileModuleRoute.ProfileDetails)
                             },
-                            label = { Text("Profile") },
+                            label = { Text(stringResource(Res.string.tab_profile)) },
                             icon = {
                                 Icon(
                                     Icons.Default.Person,

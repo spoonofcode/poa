@@ -17,11 +17,12 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.Cards
 import com.spoonofcode.core.presentation.compose.CountdownTimer
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.Texts
+import com.spoonofcode.core.presentation.compose.ElevatedCard
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextTLB
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
@@ -73,26 +74,26 @@ private fun NotificationCard(
     notification: Notification,
     onOpenLink: (String) -> Unit = {}
 ) {
-    Cards.ElevatedCard {
+    ElevatedCard {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
         ) {
-            Texts.TLB(
+            TextTLB(
                 text = notification.title,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacers.VerticalBetweenFields()
+            SpacerVerticalBetweenFields()
 
-            Texts.BL(
+            TextBL(
                 text = notification.text,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             notification.expirationDateTime.let { expiresAt ->
-                Spacers.VerticalBetweenFields()
+                SpacerVerticalBetweenFields()
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -106,8 +107,8 @@ private fun NotificationCard(
             notification.link
                 ?.takeIf { it.isNotBlank() }
                 ?.let { link ->
-                    Spacers.VerticalBetweenFields()
-                    Buttons.PrimaryButton(
+                    SpacerVerticalBetweenFields()
+                    PrimaryButton(
                         text = stringResource(Res.string.open_link),
                         onClick = { onOpenLink(link) },
                         modifier = Modifier.fillMaxWidth()

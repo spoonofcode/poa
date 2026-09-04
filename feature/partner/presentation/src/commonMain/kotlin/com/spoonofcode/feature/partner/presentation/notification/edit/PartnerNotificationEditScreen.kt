@@ -8,11 +8,11 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.Buttons
-import com.spoonofcode.core.presentation.compose.DatePickers
-import com.spoonofcode.core.presentation.compose.Dialogs
-import com.spoonofcode.core.presentation.compose.Spacers
-import com.spoonofcode.core.presentation.compose.TextFields
+import com.spoonofcode.core.presentation.compose.StandardDatePickerWithTimer
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
+import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.SpacerWeight1
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.cancel
@@ -74,20 +74,20 @@ private fun ColumnScope.Content(
         )
     }
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.title,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeTitle(it)) },
         label = stringResource(resource = Res.string.title),
     )
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.text,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeText(it)) },
         label = stringResource(resource = Res.string.text),
         minLines = 8,
     )
 
-    DatePickers.DatePickerWithTimer(
+    StandardDatePickerWithTimer(
         label = stringResource(resource = Res.string.delivery_date),
         value = viewState.deliveryDateTime,
         minDateTime = viewState.minDeliveryDateTime,
@@ -101,7 +101,7 @@ private fun ColumnScope.Content(
         modifier = Modifier,
     )
 
-    DatePickers.DatePickerWithTimer(
+    StandardDatePickerWithTimer(
         label = stringResource(resource = Res.string.expiration_date),
         value = viewState.expirationDateTime,
         minDateTime = viewState.minExpirationDateTime,
@@ -115,15 +115,15 @@ private fun ColumnScope.Content(
         modifier = Modifier,
     )
 
-    TextFields.Outlined(
+    OutlinedTextFieldStandard(
         value = viewState.link,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeLink(it)) },
         label = stringResource(resource = Res.string.link),
     )
 
-    Spacers.Weight1(this)
+    SpacerWeight1(this)
 
-    Buttons.PrimaryButton(
+    PrimaryButton(
         text = if (viewState.notificationId == null) {
             stringResource(resource = Res.string.send_notification)
         } else {
@@ -139,7 +139,7 @@ private fun Dialogs(
     onAction: (PartnerNotificationEditViewAction) -> Unit
 ) {
     if (viewState.isSendNotificationDialogVisible) {
-        Dialogs.AlertDialog(
+        StandardAlertDialog(
             title = stringResource(Res.string.send_notification_dialog_title),
             text = stringResource(Res.string.send_notification_dialog_text),
             confirmButtonText = stringResource(Res.string.send_notification),
