@@ -1,19 +1,14 @@
 package com.spoonofcode.core.presentation.compose.video
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.UIKitView
 import kotlinx.cinterop.ExperimentalForeignApi
-import platform.AVFoundation.AVPlayer
-import platform.AVFoundation.AVPlayerActionAtItemEndNone
-import platform.AVFoundation.AVPlayerItemDidPlayToEndTimeNotification
-import platform.AVFoundation.actionAtItemEnd
-import platform.AVFoundation.currentItem
-import platform.AVFoundation.muted
-import platform.AVFoundation.play
+import kotlinx.coroutines.delay
+import platform.AVFoundation.*
 import platform.AVKit.AVPlayerViewController
-import platform.Foundation.NSNotificationCenter
 import platform.Foundation.NSURL
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -24,28 +19,66 @@ actual fun LoopingVideo(
     mute: Boolean,
     onLoadingChanged: (Boolean) -> Unit,
     onError: (Exception) -> Unit
-) = UIKitView(
-    modifier = modifier,
-    factory = {
-        val player = AVPlayer(NSURL(string = url))
-        player.actionAtItemEnd = AVPlayerActionAtItemEndNone
-        player.muted = mute
-
-        // restart when the clip ends
-        NSNotificationCenter.defaultCenter.addObserverForName(
-            name = AVPlayerItemDidPlayToEndTimeNotification,
-            `object` = player.currentItem,
-            queue = null
-        ) { _ ->
-            // TODO Fix player for iOS
-//            player.seekToTime(kCMTimeZero)
-        }
-
-        val controller = AVPlayerViewController().apply {
-            this.player = player
-            showsPlaybackControls = false
-        }
-        if (autoPlay) player.play()
-        controller.view
+) {
+    val nsUrl = remember(url) { NSURL.URLWithString(url) }
+    if (nsUrl == null) {
+        LaunchedEffect(url) { onError(Exception("Invalid URL")) }
+        return
     }
-)
+
+    // We store the player and looper together in a remember block.
+    // This is CRITICAL: if 'looper' is not held by a strong reference,
+    // it will be GCed and the video won't loop.
+    val playerPair = remember(nsUrl) {
+        val player = AVQueuePlayer()
+        val item = AVPlayerItem(uRL = nsUrl)
+        val looper = AVPlayerLooper.playerLooperWithPlayer(player, item)
+        player to looper
+    }
+
+    val player = playerPair.first
+
+    // Track loading status
+    LaunchedEffect(player) {
+        onLoadingChanged(true)
+        // Wait for the first item to be ready
+        while (player.currentItem?.status != AVPlayerItemStatusReadyToPlay) {
+            if (player.currentItem?.status == AVPlayerItemStatusFailed) {
+                onError(Exception(player.currentItem?.error?.localizedDescription ?: "Playback failed"))
+                break
+            }
+            delay(50.milliseconds)
+        }
+        onLoadingChanged(false)
+    }
+
+    // Handle property changes
+    LaunchedEffect(mute) {
+        player.muted = mute
+    }
+
+    LaunchedEffect(autoPlay) {
+        if (autoPlay) player.play() else player.pause()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            player.pause()
+            player.removeAllItems()
+        }
+    }
+
+    UIKitView(
+        modifier = modifier,
+        factory = {
+            val controller = AVPlayerViewController()
+            controller.player = player
+            controller.showsPlaybackControls = false
+            controller.videoGravity = AVLayerVideoGravityResizeAspectFill
+            controller.view
+        },
+        update = {
+            // Properties handled by LaunchedEffects
+        }
+    )
+}
