@@ -27,7 +27,7 @@ actual fun LoopingVideo(
     if (url.isEmpty()) return
     val nsUrl = remember(url) { NSURL.URLWithString(url) } ?: return
 
-    // Używamy klucza, aby przy zmianie URL wszystko zostało stworzone od nowa
+    // We use a key so that when the URL changes, everything is recreated
     key(nsUrl) {
         LoopingVideoInternal(
             nsUrl = nsUrl,
@@ -64,7 +64,7 @@ private fun LoopingVideoInternal(
         }
     }
 
-    // Monitorowanie ładowania
+    // Loading monitoring
     LaunchedEffect(player) {
         onLoadingChanged(true)
         while (isActive) {
@@ -86,7 +86,7 @@ private fun LoopingVideoInternal(
         }
     }
 
-    // Zapętlanie i Cleanup
+    // Looping and Cleanup
     DisposableEffect(player) {
         val notificationCenter = NSNotificationCenter.defaultCenter
         val observer = notificationCenter.addObserverForName(
@@ -108,13 +108,13 @@ private fun LoopingVideoInternal(
         onDispose {
             notificationCenter.removeObserver(observer)
             player.pause()
-            // Krytyczne dla uniknięcia PlayerRemoteXPC err=-12860:
-            controller.player = null 
+            // Critical to avoid PlayerRemoteXPC err=-12860:
+            controller.player = null
             player.replaceCurrentItemWithPlayerItem(null)
         }
     }
 
-    // Reakcja na zmiany parametrów
+    // Reaction to parameter changes
     LaunchedEffect(player, mute) { player.muted = mute }
     LaunchedEffect(player, autoPlay) {
         if (autoPlay) player.play() else player.pause()
@@ -123,6 +123,6 @@ private fun LoopingVideoInternal(
     UIKitView(
         modifier = modifier,
         factory = { controller.view },
-        update = { /* Parametry obsługiwane przez efekty */ }
+        update = { /* Parameters supported by effects */ }
     )
 }
