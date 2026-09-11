@@ -1,9 +1,9 @@
 package com.spoonofcode.feature.tac.presentation
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.runVmTest
+import com.spoonofcode.feature.tac.data.test.TACMockData
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationTestModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -30,14 +30,18 @@ class TACViewModelest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = true) {
             assertEquals(
-                expected = ViewState(
-                    data = TACViewState(),
-                    screenState = ScreenState.CONTENT,
+                expected = ViewState.Content(
+                    data = TACViewState(
+                        isPrivacyPolicyAccepted = TACMockData.SETTINGS_1.isPrivacyPolicyAccepted,
+                        isTermsAndConditionsAccepted = TACMockData.SETTINGS_1.isTermsAndConditionsAccepted,
+                        privacyPolicyLink = TACMockData.SETTINGS_1.privacyPolicyLink,
+                        marketingLink = TACMockData.SETTINGS_1.marketingLink,
+                    )
                 ),
-                actual = awaitItem()
+                actual = viewState.awaitItem()
             )
         }
     }

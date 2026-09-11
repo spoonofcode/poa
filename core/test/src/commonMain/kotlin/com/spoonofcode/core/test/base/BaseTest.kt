@@ -24,9 +24,8 @@ abstract class BaseTest : KoinTest {
 
     open fun beforeTest() {
         startKoin {
+            allowOverride(true)
             modules(
-                module {
-                },
                 *modules,
                 testModule,
                 module {
