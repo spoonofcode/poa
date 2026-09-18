@@ -1,7 +1,9 @@
 package com.spoonofcode.feature.tac.presentation
 
+import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
 import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.tac.data.test.TACMockData
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationTestModule
@@ -11,6 +13,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TACViewModelest : BaseViewModelTest() {
@@ -43,6 +46,18 @@ class TACViewModelest : BaseViewModelTest() {
                 ),
                 actual = viewState.awaitItem()
             )
+        }
+    }
+
+    @Test
+    fun `change privacy policy`() = runTest {
+        runVmTest(viewModel) {
+            onAction(TACViewAction.ChangePrivacyPolicy(accepted = true))
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isPrivacyPolicyAccepted)
+            }
+
         }
     }
 }
