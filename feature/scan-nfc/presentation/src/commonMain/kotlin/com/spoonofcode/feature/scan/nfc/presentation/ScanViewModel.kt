@@ -55,6 +55,7 @@ internal class ScanViewModel(
                                     showErrorView()
                                 }
                         } else {
+                            showContentView()
                             updateContentState {
                                 copy(
                                     isProductNotFoundViewVisible = true,
@@ -64,9 +65,8 @@ internal class ScanViewModel(
                     }.onFailure {
                         showErrorView()
                     }
-
-
             } else {
+                showContentView()
                 updateContentState {
                     copy(
                         isProductNotFoundViewVisible = true,
