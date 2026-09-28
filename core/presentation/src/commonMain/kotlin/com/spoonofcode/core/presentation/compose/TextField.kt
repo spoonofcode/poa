@@ -2,6 +2,8 @@ package com.spoonofcode.core.presentation.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Visibility
@@ -17,8 +19,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.search
 import org.jetbrains.compose.resources.stringResource
@@ -30,10 +36,13 @@ fun OutlinedTextFieldStandard(
     modifier: Modifier = Modifier.fillMaxWidth(),
     enabled: Boolean = true,
     readOnly: Boolean = false,
+    isRequired: Boolean = false,
     label: String? = null,
     innerLabel: String? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     isError: Boolean = false,
     minLines: Int = 1,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -41,8 +50,19 @@ fun OutlinedTextFieldStandard(
     Column(
         modifier = modifier
     ) {
-        label?.let {
-            TextBLB(text = it)
+        label?.let { labelText ->
+            Text(
+                text = buildAnnotatedString {
+                    append(labelText)
+                    if (isRequired) {
+                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                            append(" *")
+                        }
+                    }
+                },
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+            )
         }
         OutlinedTextField(
             value = value,
@@ -50,7 +70,18 @@ fun OutlinedTextFieldStandard(
             modifier = modifier,
             enabled = enabled,
             readOnly = readOnly,
-            label = { innerLabel?.let { Text(text = it) } },
+            label = innerLabel?.let { labelText ->
+                {
+                    Text(text = buildAnnotatedString {
+                        append(labelText)
+                        if (isRequired) {
+                            withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                                append(" *")
+                            }
+                        }
+                    })
+                }
+            },
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             isError = isError,
@@ -59,6 +90,8 @@ fun OutlinedTextFieldStandard(
             shape = MaterialTheme.shapes.large,
             singleLine = minLines == 1,
             textStyle = MaterialTheme.typography.bodyLarge,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
         )
     }
 }

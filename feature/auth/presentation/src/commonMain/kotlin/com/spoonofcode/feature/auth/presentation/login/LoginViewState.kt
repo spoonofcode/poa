@@ -7,5 +7,7 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 internal data class LoginViewState(
     val email: String = "",
     val password: String = "",
-    val isSignInButtonEnable: Boolean = false,
-) : BaseViewState()
+) : BaseViewState(){
+    val isSignInButtonEnable: Boolean
+        get() = email.isNotEmpty() && password.isNotEmpty()
+}
