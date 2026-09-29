@@ -97,44 +97,11 @@ fun OutlinedTextFieldStandard(
 }
 
 @Composable
-fun OutlinedTextFieldLong(
-    value: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier.fillMaxWidth(),
-    enabled: Boolean = true,
-    readOnly: Boolean = false,
-    label: String? = null,
-    innerLabel: String? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    isError: Boolean = false,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-) {
-    label?.let {
-        TextBLB(text = it)
-    }
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier,
-        enabled = enabled,
-        readOnly = readOnly,
-        label = { innerLabel?.let { Text(text = it) } },
-        trailingIcon = trailingIcon,
-        isError = isError,
-        visualTransformation = visualTransformation,
-        shape = MaterialTheme.shapes.large,
-        singleLine = false,
-        minLines = 4,
-        maxLines = 4,
-    )
-    SpacerVerticalBetweenFields()
-}
-
-@Composable
 fun OutlinedTextFieldPassword(
     value: String,
     onValueChange: (String) -> Unit,
     label: String? = null,
+    isRequired: Boolean = false,
 ) {
     // Tracks if the password is currently visible
     var passwordVisible by remember { mutableStateOf(false) }
@@ -143,6 +110,7 @@ fun OutlinedTextFieldPassword(
         value = value,
         onValueChange = onValueChange,
         label = label,
+        isRequired = isRequired,
         trailingIcon = {
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(

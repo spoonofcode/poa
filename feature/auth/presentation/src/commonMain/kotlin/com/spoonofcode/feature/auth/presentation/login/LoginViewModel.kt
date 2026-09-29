@@ -31,7 +31,6 @@ internal class LoginViewModel(
         updateContentState {
             LoginViewState(
                 email = email,
-                isSignInButtonEnable = isValidEmail(email),
             )
         }
     }
@@ -72,14 +71,5 @@ internal class LoginViewModel(
         }
     }
 
-    fun isValidEmail(email: String): Boolean {
-        val email = email.trim()
-        return email.isNotEmpty() && email.length <= 254 && EMAIL_REGEX.matches(email)
-    }
 
-    companion object {
-        private val EMAIL_REGEX = Regex(
-            pattern = "^[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$"
-        )
-    }
 }

@@ -27,7 +27,6 @@ internal class LoginCodeViewModel(
         updateContentState {
             copy(
                 code = code,
-                isSignInWithCodeButtonEnable = code.length == VERIFICATION_CODE_LENGTH
             )
         }
     }
@@ -64,9 +63,5 @@ internal class LoginCodeViewModel(
             )
         )
         showContentView()
-    }
-
-    companion object {
-        private const val VERIFICATION_CODE_LENGTH = 6
     }
 }

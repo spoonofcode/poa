@@ -98,7 +98,8 @@ private fun ColumnScope.Content(
         PrimaryButton(
             text = stringResource(Res.string.save_changes),
             onClick = { onAction(ProductEditViewAction.SaveChanges) },
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp),
+            enabled = viewState.isSaveChangesButtonEnabled,
         )
     }
 }

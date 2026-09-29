@@ -13,8 +13,8 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.OutlinedTextFieldPassword
+import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.code
 import com.spoonofcode.feature.auth.presentation.one_time_code_info_postfix
@@ -69,6 +69,7 @@ private fun ColumnScope.Content(
                 // ignore
             }
         },
+        isRequired = true,
         label = stringResource(resource = Res.string.code),
     )
 

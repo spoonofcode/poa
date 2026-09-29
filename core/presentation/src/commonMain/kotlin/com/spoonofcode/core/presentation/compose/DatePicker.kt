@@ -2,7 +2,6 @@ package com.spoonofcode.core.presentation.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -43,6 +42,7 @@ fun StandardDatePicker(
     label: String? = null,
     minDate: LocalDate? = null,
     modifier: Modifier = Modifier.fillMaxWidth(),
+    isRequired: Boolean = false,
 ) {
     val date = remember { mutableStateOf(value) }
     val isOpen = remember { mutableStateOf(false) }
@@ -55,6 +55,7 @@ fun StandardDatePicker(
             onValueChange = {},
             readOnly = true,
             label = label,
+            isRequired = isRequired,
             trailingIcon = {
                 IconButton(
                     onClick = {}
@@ -100,40 +101,36 @@ fun StandardDatePickerWithTimer(
     onValueChange: (LocalDateTime) -> Unit,
     label: String? = null,
     minDateTime: LocalDateTime? = null,
-    modifier: Modifier = Modifier
+    isRequired: Boolean = false,
 ) {
-    Column(
-        modifier = modifier,
-    ) {
-        label?.let {
-            TextBLB(text = it)
-        }
-        Row {
-            StandardDatePicker(
-                value = value.date,
-                onValueChange = {
-                    onValueChange(
-                        LocalDateTime(
-                            date = it,
-                            time = value.time
-                        )
+    Row {
+        StandardDatePicker(
+            value = value.date,
+            onValueChange = {
+                onValueChange(
+                    LocalDateTime(
+                        date = it,
+                        time = value.time
                     )
-                },
-                minDate = minDateTime?.date,
-                modifier = Modifier.weight(1f)
-            )
-            SpacerHorizontalBetweenFields()
-            StandardTimePicker(
-                value = value,
-                onValueChange = {
-                    onValueChange(it)
-                },
-                onConfirm = {},
-                onDismiss = {},
-                modifier = Modifier.weight(.5f),
-                minTime = if (value.isAfterToday()) null else minDateTime?.time,
-            )
-        }
+                )
+            },
+            label = label,
+            minDate = minDateTime?.date,
+            modifier = Modifier.weight(1f),
+            isRequired = isRequired,
+        )
+        SpacerHorizontalBetweenFields()
+        StandardTimePicker(
+            label = "",
+            value = value,
+            onValueChange = {
+                onValueChange(it)
+            },
+            onConfirm = {},
+            onDismiss = {},
+            modifier = Modifier.weight(.5f),
+            minTime = if (value.isAfterToday()) null else minDateTime?.time,
+        )
     }
 }
 

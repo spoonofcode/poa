@@ -97,7 +97,7 @@ private fun ColumnScope.Content(
         PrimaryButton(
             text = stringResource(resource = Res.string.save_changes),
             onClick = { onAction(PartnerEditViewAction.SaveChanges) },
-            enabled = viewState.isSaveButtonEnabled,
+            enabled = viewState.isSaveChangesButtonEnabled,
         )
     }
 }

@@ -101,6 +101,7 @@ private fun ColumnScope.Content(
             )
         },
         modifier = Modifier,
+        isRequired = true,
     )
 
     StandardDatePickerWithTimer(
@@ -115,6 +116,7 @@ private fun ColumnScope.Content(
             )
         },
         modifier = Modifier,
+        isRequired = true,
     )
 
     OutlinedTextFieldStandard(
