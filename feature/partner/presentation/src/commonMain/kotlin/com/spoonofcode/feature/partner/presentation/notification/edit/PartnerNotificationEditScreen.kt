@@ -100,7 +100,6 @@ private fun ColumnScope.Content(
                 )
             )
         },
-        modifier = Modifier,
         isRequired = true,
     )
 
@@ -115,7 +114,6 @@ private fun ColumnScope.Content(
                 )
             )
         },
-        modifier = Modifier,
         isRequired = true,
     )
 
