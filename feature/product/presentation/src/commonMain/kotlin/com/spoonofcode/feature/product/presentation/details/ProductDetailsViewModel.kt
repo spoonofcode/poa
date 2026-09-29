@@ -80,7 +80,9 @@ internal class ProductDetailsViewModel(
                 productSerieId = product.seriesId,
             ).onSuccess {
                 productEventBus.emitOverview(ProductEvent.ProductAdded)
-                viewModelNavigator.pop()
+                viewModelNavigator.replaceAll(
+                    listOf(ProductModuleRoute.ProductOverview)
+                )
             }.onFailure {
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
