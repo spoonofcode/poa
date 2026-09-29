@@ -15,14 +15,18 @@ import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.spoonofcode.core.data.ext.formatedTime
 import com.spoonofcode.core.data.utils.LocalDateTimeUtils
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.confirm
+import com.spoonofcode.core.presentation.dismiss
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,11 +39,6 @@ fun StandardTimePicker(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
-    val timePickerState = rememberTimePickerState(
-        initialHour = value.hour,
-        initialMinute = value.minute,
-        is24Hour = true,
-    )
     val isOpen = remember { mutableStateOf(false) }
 
     Box(
@@ -59,7 +58,6 @@ fun StandardTimePicker(
             }
         )
 
-        // Transparent overlay to capture clicks
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -68,35 +66,48 @@ fun StandardTimePicker(
     }
 
     if (isOpen.value) {
-        InternalTimePickerDialog(
-            onDismiss = {
-                isOpen.value = false // close dialog
-                onDismiss()
-            },
-            onConfirm = {
-                onValueChange(
-                    LocalDateTime(
-                        value.date,
-                        LocalTime(
-                            hour = timePickerState.hour,
-                            minute = timePickerState.minute,
-                            second = 0,
-                            nanosecond = 0
+        val initialTime = remember(value.time, minTime) {
+            if (minTime != null && value.time < minTime) minTime else value.time
+        }
+
+        key(isOpen.value) {
+            val timePickerState = rememberTimePickerState(
+                initialHour = initialTime.hour,
+                initialMinute = initialTime.minute,
+                is24Hour = true,
+            )
+
+            val selectedTotalMinutes = timePickerState.hour * 60 + timePickerState.minute
+            val minTotalMinutes = minTime?.let { it.hour * 60 + it.minute }
+            val isTimeValid = minTotalMinutes == null || selectedTotalMinutes >= minTotalMinutes
+
+            InternalTimePickerDialog(
+                confirmEnabled = isTimeValid,
+                onDismiss = {
+                    isOpen.value = false
+                    onDismiss()
+                },
+                onConfirm = {
+                    val selectedTime = LocalTime(
+                        hour = timePickerState.hour,
+                        minute = timePickerState.minute,
+                        second = 0,
+                        nanosecond = 0
+                    )
+                    val finalTime =
+                        if (minTime != null && selectedTime < minTime) minTime else selectedTime
+
+                    onValueChange(
+                        LocalDateTime(
+                            value.date,
+                            finalTime
                         )
                     )
-                )
 
-                isOpen.value = false //close dialog
-                onConfirm(timePickerState)
-            }
-        ) {
-            if (minTime != null) {
-                StandardMinTimePicker(
-                    state = timePickerState,
-                    minHour = minTime.hour,
-                    minMinute = minTime.minute
-                )
-            } else {
+                    isOpen.value = false
+                    onConfirm(timePickerState)
+                }
+            ) {
                 TimePicker(
                     state = timePickerState,
                 )
@@ -109,40 +120,24 @@ fun StandardTimePicker(
 private fun InternalTimePickerDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
+    confirmEnabled: Boolean = true,
     content: @Composable () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         dismissButton = {
             TextButton(onClick = { onDismiss() }) {
-                Text("Dismiss")
+                Text(stringResource(Res.string.dismiss))
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm() }) {
-                Text("OK")
+            TextButton(
+                onClick = { onConfirm() },
+                enabled = confirmEnabled
+            ) {
+                Text(stringResource(Res.string.confirm))
             }
         },
         text = { content() }
     )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun StandardMinTimePicker(
-    state: TimePickerState,
-    minHour: Int,
-    minMinute: Int,
-) {
-    val minTotal = minHour * 60 + minMinute
-
-    LaunchedEffect(state.hour, state.minute) {
-        val pickedTotal = state.hour * 60 + state.minute
-        if (pickedTotal < minTotal) {
-            state.hour = minHour
-            state.minute = minMinute
-        }
-    }
-
-    TimePicker(state = state)
 }
