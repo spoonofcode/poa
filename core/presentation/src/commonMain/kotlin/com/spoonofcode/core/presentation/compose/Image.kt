@@ -76,7 +76,8 @@ fun ImageLink(imageLink: String, modifier: Modifier = Modifier) {
                 CircularProgressIndicator()
             }
         },
-        failure = {
+        failure = { message->
+            print("BARTEK $message")
             Box(
                 Modifier
                     .fillMaxSize()
