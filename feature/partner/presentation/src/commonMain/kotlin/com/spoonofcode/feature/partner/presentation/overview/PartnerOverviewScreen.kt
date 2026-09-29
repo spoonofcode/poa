@@ -87,7 +87,11 @@ private fun PartnerItem(
         onClick = onClick,
         modifier = modifier.fillMaxWidth().height(180.dp),
     ) {
-        item.imageLink?.let { ImageLink(imageLink = it) }
+        ImageLink(
+            imageLink = item.imageLink,
+            textOnFailure = item.name,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 

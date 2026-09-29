@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -61,35 +62,67 @@ fun CircleImage(
 }
 
 @Composable
-fun ImageLink(imageLink: String, modifier: Modifier = Modifier) {
-    CoilImage(
-        imageModel = { imageLink },
-        imageOptions = ImageOptions(
-            contentScale = ContentScale.Crop,
-            alignment = Alignment.Center
-        ),
+fun ImageLink(
+    imageLink: String?,
+    modifier: Modifier = Modifier,
+    textOnFailure: String? = null,
+) {
+    if (imageLink.isNullOrBlank()) {
+        ImageFallback(
+            textOnFailure = textOnFailure,
+            modifier = modifier
+        )
+    } else {
+        CoilImage(
+            imageModel = { imageLink },
+            imageOptions = ImageOptions(
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center
+            ),
+            modifier = modifier.clip(MaterialTheme.shapes.large),
+            loading = {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            },
+            failure = {
+                ImageFallback(textOnFailure = textOnFailure)
+            }
+        )
+    }
+}
+
+@Composable
+private fun ImageFallback(
+    textOnFailure: String?,
+    modifier: Modifier = Modifier,
+) {
+    val hasText = !textOnFailure.isNullOrEmpty()
+
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .clip(MaterialTheme.shapes.large),
-        loading = {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        },
-        failure = { message->
-            print("BARTEK $message")
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.BrokenImage,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            .background(
+                if (hasText) MaterialTheme.colorScheme.onBackground
+                else MaterialTheme.colorScheme.surfaceVariant
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        if (hasText) {
+            TextTLB(
+                text = textOnFailure,
+                color = MaterialTheme.colorScheme.background,
+                modifier = Modifier.padding(16.dp)
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Default.BrokenImage,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
-    )
+    }
 }
