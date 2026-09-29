@@ -10,6 +10,7 @@
     <string name="hours">Godziny</string>
     <string name="loading">Ładowanie...</string>
     <string name="minutes">Minuty</string>
+    <string name="minimum_time">Minimalny czas to %1$s</string>
     <string name="reload">Odśwież</string>
     <string name="search">Szukaj</string>
     <string name="seconds">Sekundy</string>

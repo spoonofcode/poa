@@ -2,28 +2,35 @@ package com.spoonofcode.core.presentation.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.formatedTime
 import com.spoonofcode.core.data.utils.LocalDateTimeUtils
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.confirm
 import com.spoonofcode.core.presentation.dismiss
+import com.spoonofcode.core.presentation.minimum_time
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import org.jetbrains.compose.resources.stringResource
@@ -77,9 +84,13 @@ fun StandardTimePicker(
                 is24Hour = true,
             )
 
-            val selectedTotalMinutes = timePickerState.hour * 60 + timePickerState.minute
-            val minTotalMinutes = minTime?.let { it.hour * 60 + it.minute }
-            val isTimeValid = minTotalMinutes == null || selectedTotalMinutes >= minTotalMinutes
+            val isTimeValid by remember(minTime) {
+                derivedStateOf {
+                    val selectedTotalMinutes = timePickerState.hour * 60 + timePickerState.minute
+                    val minTotalMinutes = minTime?.let { it.hour * 60 + it.minute }
+                    minTotalMinutes == null || selectedTotalMinutes >= minTotalMinutes
+                }
+            }
 
             InternalTimePickerDialog(
                 confirmEnabled = isTimeValid,
@@ -88,19 +99,19 @@ fun StandardTimePicker(
                     onDismiss()
                 },
                 onConfirm = {
+                    if (!isTimeValid) return@InternalTimePickerDialog
+
                     val selectedTime = LocalTime(
                         hour = timePickerState.hour,
                         minute = timePickerState.minute,
                         second = 0,
                         nanosecond = 0
                     )
-                    val finalTime =
-                        if (minTime != null && selectedTime < minTime) minTime else selectedTime
 
                     onValueChange(
                         LocalDateTime(
                             value.date,
-                            finalTime
+                            selectedTime
                         )
                     )
 
@@ -108,9 +119,19 @@ fun StandardTimePicker(
                     onConfirm(timePickerState)
                 }
             ) {
-                TimePicker(
-                    state = timePickerState,
-                )
+                Column {
+                    TimePicker(
+                        state = timePickerState,
+                    )
+                    if (!isTimeValid && minTime != null) {
+                        Text(
+                            text = stringResource(Res.string.minimum_time, minTime.formatedTime()),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
             }
         }
     }

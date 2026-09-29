@@ -45,6 +45,12 @@ fun LocalDateTime.formatedLocalDateTime(): String = this.format(DEFAULT_DATE_TIM
 
 fun LocalDateTime.formatedTime(): String = this.format(DEFAULT_TIME_FORMAT)
 
+fun LocalTime.formatedTime(): String = this.format(
+    LocalTime.Format {
+        hour(); char(':'); minute()
+    }
+)
+
 fun LocalDateTime.isAfterToday(): Boolean {
     return this.date > LocalDateUtils.today()
 }
