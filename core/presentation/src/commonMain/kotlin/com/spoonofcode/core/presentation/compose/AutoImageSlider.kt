@@ -80,7 +80,6 @@ fun AutoImageSlider(
             ) { page ->
                 ImageLink(
                     imageLink = imageLinks[page],
-                    modifier = Modifier.fillMaxSize()
                 )
             }
         }

@@ -90,7 +90,6 @@ private fun PartnerItem(
         ImageLink(
             imageLink = item.imageLink,
             textOnFailure = item.name,
-            modifier = Modifier.fillMaxSize()
         )
     }
 }

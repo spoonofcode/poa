@@ -64,7 +64,7 @@ fun CircleImage(
 @Composable
 fun ImageLink(
     imageLink: String?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxSize(),
     textOnFailure: String? = null,
 ) {
     if (imageLink.isNullOrBlank()) {
