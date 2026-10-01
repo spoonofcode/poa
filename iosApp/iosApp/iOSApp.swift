@@ -50,8 +50,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
 
     static func extractNotificationId(from userInfo: [AnyHashable: Any]) -> String? {
         return userInfo["notification_id"] as? String
-            ?? userInfo["notificationId"] as? String
-            ?? userInfo["gcm.notification.notification_id"] as? String
     }
 }
 
