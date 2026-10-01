@@ -7,4 +7,7 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 @Immutable
 internal data class PartnerEditViewState(
     val partner: Partner,
-) : BaseViewState()
+) : BaseViewState(){
+    val isSaveChangesButtonEnabled: Boolean
+        get() = partner.name.isNotEmpty()
+}

@@ -2,27 +2,38 @@ package com.spoonofcode.core.presentation.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.formatedTime
 import com.spoonofcode.core.data.utils.LocalDateTimeUtils
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.confirm
+import com.spoonofcode.core.presentation.dismiss
+import com.spoonofcode.core.presentation.minimum_time
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,11 +46,6 @@ fun StandardTimePicker(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
-    val timePickerState = rememberTimePickerState(
-        initialHour = value.hour,
-        initialMinute = value.minute,
-        is24Hour = true,
-    )
     val isOpen = remember { mutableStateOf(false) }
 
     Box(
@@ -59,7 +65,6 @@ fun StandardTimePicker(
             }
         )
 
-        // Transparent overlay to capture clicks
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -68,38 +73,65 @@ fun StandardTimePicker(
     }
 
     if (isOpen.value) {
-        InternalTimePickerDialog(
-            onDismiss = {
-                isOpen.value = false // close dialog
-                onDismiss()
-            },
-            onConfirm = {
-                onValueChange(
-                    LocalDateTime(
-                        value.date,
-                        LocalTime(
-                            hour = timePickerState.hour,
-                            minute = timePickerState.minute,
-                            second = 0,
-                            nanosecond = 0
+        val initialTime = remember(value.time, minTime) {
+            if (minTime != null && value.time < minTime) minTime else value.time
+        }
+
+        key(isOpen.value) {
+            val timePickerState = rememberTimePickerState(
+                initialHour = initialTime.hour,
+                initialMinute = initialTime.minute,
+                is24Hour = true,
+            )
+
+            val isTimeValid by remember(minTime) {
+                derivedStateOf {
+                    val selectedTotalMinutes = timePickerState.hour * 60 + timePickerState.minute
+                    val minTotalMinutes = minTime?.let { it.hour * 60 + it.minute }
+                    minTotalMinutes == null || selectedTotalMinutes >= minTotalMinutes
+                }
+            }
+
+            InternalTimePickerDialog(
+                confirmEnabled = isTimeValid,
+                onDismiss = {
+                    isOpen.value = false
+                    onDismiss()
+                },
+                onConfirm = {
+                    if (!isTimeValid) return@InternalTimePickerDialog
+
+                    val selectedTime = LocalTime(
+                        hour = timePickerState.hour,
+                        minute = timePickerState.minute,
+                        second = 0,
+                        nanosecond = 0
+                    )
+
+                    onValueChange(
+                        LocalDateTime(
+                            value.date,
+                            selectedTime
                         )
                     )
-                )
 
-                isOpen.value = false //close dialog
-                onConfirm(timePickerState)
-            }
-        ) {
-            if (minTime != null) {
-                StandardMinTimePicker(
-                    state = timePickerState,
-                    minHour = minTime.hour,
-                    minMinute = minTime.minute
-                )
-            } else {
-                TimePicker(
-                    state = timePickerState,
-                )
+                    isOpen.value = false
+                    onConfirm(timePickerState)
+                }
+            ) {
+                Column {
+                    TimePicker(
+                        state = timePickerState,
+                    )
+                    if (!isTimeValid && minTime != null) {
+                        Text(
+                            text = stringResource(Res.string.minimum_time, minTime.formatedTime()),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
             }
         }
     }
@@ -109,40 +141,24 @@ fun StandardTimePicker(
 private fun InternalTimePickerDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
+    confirmEnabled: Boolean = true,
     content: @Composable () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         dismissButton = {
             TextButton(onClick = { onDismiss() }) {
-                Text("Dismiss")
+                Text(stringResource(Res.string.dismiss))
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm() }) {
-                Text("OK")
+            TextButton(
+                onClick = { onConfirm() },
+                enabled = confirmEnabled
+            ) {
+                Text(stringResource(Res.string.confirm))
             }
         },
         text = { content() }
     )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun StandardMinTimePicker(
-    state: TimePickerState,
-    minHour: Int,
-    minMinute: Int,
-) {
-    val minTotal = minHour * 60 + minMinute
-
-    LaunchedEffect(state.hour, state.minute) {
-        val pickedTotal = state.hour * 60 + state.minute
-        if (pickedTotal < minTotal) {
-            state.hour = minHour
-            state.minute = minMinute
-        }
-    }
-
-    TimePicker(state = state)
 }

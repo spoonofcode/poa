@@ -1,6 +1,7 @@
 <resources>
     <string name="cancel">Anuluj</string>
     <string name="edit_profile">Edytuj profil</string>
+    <string name="email">Email</string>
     <string name="faq">FAQ</string>
     <string name="logout">Wyloguj</string>
     <string name="logout_dialog_title">Czy na pewno chcesz się wylogować?</string>

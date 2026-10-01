@@ -39,10 +39,8 @@ internal class NotificationChannelViewModel(
     private fun observeNotificationEvents() {
         viewModelScope.launch {
             notificationEventBus.overviewEvents.collect { event ->
-                when (event) {
-                    NotificationEvent.SettingsUpdated -> {
-                        showSuccessSnackbar(getString(Res.string.notification_settings_updated))
-                    }
+                if (event is NotificationEvent.SettingsUpdated) {
+                    showSuccessSnackbar(getString(Res.string.notification_settings_updated))
                 }
             }
         }

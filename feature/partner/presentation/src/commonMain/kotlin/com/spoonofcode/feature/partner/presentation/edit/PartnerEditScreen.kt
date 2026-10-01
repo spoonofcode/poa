@@ -8,9 +8,9 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.ImageLink
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.description
@@ -58,6 +58,7 @@ private fun ColumnScope.Content(
             value = partner.name,
             onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },
             label = stringResource(resource = Res.string.partner_name),
+            isRequired = true,
         )
         OutlinedTextFieldStandard(
             value = partner.description.orEmpty(),
@@ -96,6 +97,7 @@ private fun ColumnScope.Content(
         PrimaryButton(
             text = stringResource(resource = Res.string.save_changes),
             onClick = { onAction(PartnerEditViewAction.SaveChanges) },
+            enabled = viewState.isSaveChangesButtonEnabled,
         )
     }
 }

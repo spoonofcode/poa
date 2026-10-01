@@ -15,6 +15,7 @@ class KmpDomainConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets.apply {
                     getByName("commonMain").dependencies {
+                        api(project(":core:domain"))
                         implementation(project(":core:logging"))
                         implementation(libs.findLibrary("koin-core").get())
                         api(libs.findLibrary("kotlinx-datetime").get())

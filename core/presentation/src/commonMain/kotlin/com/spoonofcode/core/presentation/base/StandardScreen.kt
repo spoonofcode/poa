@@ -18,10 +18,12 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -149,12 +151,21 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
                     dialogs(state.data, onAction)
                     bottomSheets(state.data, onAction)
 
+                    val scrollState = rememberScrollState()
+                    val focusManager = LocalFocusManager.current
+
+                    LaunchedEffect(scrollState.isScrollInProgress) {
+                        if (scrollState.isScrollInProgress) {
+                            focusManager.clearFocus()
+                        }
+                    }
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(screenConfig.contentBackgroundColor)
                             .addIf(screenConfig.verticalScrollEnable) {
-                                verticalScroll(rememberScrollState())
+                                verticalScroll(scrollState)
                             }
                             .padding(screenConfig.contentPadding),
                         verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding)

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ElevatedCard(
     onClick: () -> Unit = {},
+    enabled: Boolean = true,
     modifier: Modifier = Modifier,
     colors: CardColors = CardDefaults.cardColors(
         containerColor = MaterialTheme.colorScheme.surface
@@ -27,6 +28,7 @@ fun ElevatedCard(
 ) {
     Card(
         onClick = onClick,
+        enabled = enabled,
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
         colors = colors,
