@@ -21,8 +21,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
@@ -104,7 +104,9 @@ private fun DailyCheckInSection(
     nextCheckInTimeMillis: Long?,
     onCheckInClicked: () -> Unit,
 ) {
-    ElevatedCard {
+    ElevatedCard(
+        enabled = false,
+    ) {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -154,7 +156,8 @@ private fun DailyCheckInSection(
             PrimaryButton(
                 text = stringResource(Res.string.daily_check_in),
                 onClick = onCheckInClicked,
-                enabled = isActionAvailable,
+//                enabled = isActionAvailable,
+                enabled = false,
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -183,6 +186,7 @@ private fun DailyRewardItem(reward: DailyReward) {
     ElevatedCard(
         modifier = Modifier.size(width = 85.dp, height = 110.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor),
+        enabled = false,
     ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(8.dp),

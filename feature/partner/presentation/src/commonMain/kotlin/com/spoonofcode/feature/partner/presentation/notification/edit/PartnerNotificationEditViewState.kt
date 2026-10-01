@@ -28,6 +28,9 @@ internal data class PartnerNotificationEditViewState(
     val isSendNotificationDialogVisible: Boolean = false,
     val isExpirationDateTimeEnable: Boolean = false,
 ) : BaseViewState() {
+    val isSendNotificationEnabled: Boolean
+        get() = title.isNotEmpty() && text.isNotEmpty()
+
     companion object {
         private const val FIVE_MINUTES = 5
         private const val ONE_DAY = 1

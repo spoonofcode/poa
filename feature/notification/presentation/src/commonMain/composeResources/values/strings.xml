@@ -16,6 +16,7 @@
     <string name="notification_channels">Notification channels</string>
     <string name="notification_push">Push notifications</string>
     <string name="notification_email">Email messages</string>
+    <string name="notification_settings_updated">Notification settings updated</string>
     <string name="notification_tel_and_sms">Tel. and SMS</string>
     <string name="notification_title">Notification title</string>
     <string name="notification_type">Notification type</string>
@@ -29,5 +30,5 @@
     <string name="save_changes">Save changes</string>
     <string name="tab_already_read">Already read</string>
     <string name="tab_new">New</string>
-    <string name="notification_settings_updated">Notification settings updated</string>
+    <string name="will_expire_in">WILL EXPIRE IN:</string>
 </resources>

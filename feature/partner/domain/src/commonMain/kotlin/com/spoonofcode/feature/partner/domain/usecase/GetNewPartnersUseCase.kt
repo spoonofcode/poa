@@ -10,7 +10,7 @@ class GetNewPartnersUseCase(
     suspend operator fun invoke(limit: Int = 3): Result<List<Partner>> {
         return partnerRepository.getPartners().map { partners ->
             partners
-                .filter { !it.imageLink.isNullOrBlank() }
+                .filterNot { it.imageLink.isNullOrEmpty() }
                 .shuffled()
                 .take(limit)
         }
