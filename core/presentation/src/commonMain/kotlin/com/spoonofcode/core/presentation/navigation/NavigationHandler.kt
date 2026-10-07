@@ -16,7 +16,7 @@ fun NavigationHandler(
             when (navigationEvent) {
                 NavigationEvent.Pop -> {
                     if (backStack.size > 1) {
-                        backStack.removeLast()
+                        backStack.removeAt(backStack.lastIndex)
                     }
                 }
                 NavigationEvent.PopToRoot -> {
@@ -29,7 +29,7 @@ fun NavigationHandler(
                     val index = backStack.indexOfLast { navigationEvent.screenClass.isInstance(it) }
                     if (index != -1) {
                         while (backStack.size > index + 1) {
-                            backStack.removeLast()
+                            backStack.removeAt(backStack.lastIndex)
                         }
                     }
                 }
