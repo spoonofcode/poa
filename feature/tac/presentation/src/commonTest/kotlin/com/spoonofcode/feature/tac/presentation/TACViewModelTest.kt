@@ -1,6 +1,5 @@
 package com.spoonofcode.feature.tac.presentation
 
-import app.cash.turbine.test
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.test.ext.awaitContentState
