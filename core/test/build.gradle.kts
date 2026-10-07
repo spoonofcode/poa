@@ -16,6 +16,7 @@ kotlin {
                 api(libs.mokkery.runtime)
 
                 implementation(projects.core.session.domain)
+                api(projects.core.data)
             }
         }
     }
