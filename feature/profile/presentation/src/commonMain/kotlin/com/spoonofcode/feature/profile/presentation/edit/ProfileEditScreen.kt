@@ -18,7 +18,7 @@ import com.spoonofcode.core.presentation.compose.SpacerWeight1
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.presentation.Res
 import com.spoonofcode.feature.profile.presentation.edit_profile
-import com.spoonofcode.feature.profile.presentation.name
+import com.spoonofcode.feature.profile.presentation.email
 import com.spoonofcode.feature.profile.presentation.poa
 import com.spoonofcode.feature.profile.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
@@ -58,14 +58,16 @@ private fun ColumnScope.Content(
     OutlinedTextFieldStandard(
         value = viewState.profile.email,
         onValueChange = { onAction(ProfileEditViewAction.ChangeCustomLink(it)) },
-        label = stringResource(resource = Res.string.name),
+        label = stringResource(resource = Res.string.email),
+        isRequired = true,
     )
 
     SpacerWeight1(this)
 
     PrimaryButton(
         text = stringResource(Res.string.save_changes),
-        onClick = { onAction(ProfileEditViewAction.SaveChanges) }
+        onClick = { onAction(ProfileEditViewAction.SaveChanges) },
+        enabled = viewState.isSaveChangesButtonEnable,
     )
 }
 

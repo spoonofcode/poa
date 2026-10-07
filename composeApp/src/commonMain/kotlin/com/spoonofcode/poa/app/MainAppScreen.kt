@@ -111,6 +111,18 @@ fun MainAppScreen(
         viewModelStoreProvider.cleanUp(currentKeys)
     }
 
+    LaunchedEffect(Unit) {
+        NotificationNavigationManager.notificationClicks.collect { notificationId ->
+            if (notificationId.isNotBlank()) {
+                backStack.add(
+                    NotificationModuleRoute.NotificationDetails(
+                        notificationId = notificationId
+                    )
+                )
+            }
+        }
+    }
+
     val viewModelNavigator: ViewModelNavigator by getKoin().inject()
     NavigationHandler(
         navigationFlow = viewModelNavigator.navigationEvents,
@@ -202,7 +214,7 @@ fun MainAppScreen(
                 backStack = backStack,
                 onBack = {
                     if (backStack.size > 1) {
-                        backStack.removeLast()
+                        backStack.removeAt(backStack.lastIndex)
                     }
                 },
                 modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),

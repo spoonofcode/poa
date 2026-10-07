@@ -7,4 +7,7 @@ import com.spoonofcode.feature.product.domain.model.Product
 @Immutable
 internal data class ProductEditViewState(
     val product: Product,
-) : BaseViewState()
+) : BaseViewState() {
+    val isSaveChangesButtonEnabled: Boolean
+        get() = product.customLink?.isNotEmpty() ?: false
+}

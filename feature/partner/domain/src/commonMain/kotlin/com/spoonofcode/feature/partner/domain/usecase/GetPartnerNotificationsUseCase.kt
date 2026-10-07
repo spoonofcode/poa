@@ -8,4 +8,7 @@ class GetPartnerNotificationsUseCase(
 ) {
     suspend operator fun invoke(): Result<List<PartnerNotification>> =
         notificationRepository.getNotifications()
+            .map { partnerNotifications ->
+                partnerNotifications.sortedByDescending { it.deliveryDateTime }
+            }
 }

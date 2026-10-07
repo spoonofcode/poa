@@ -13,3 +13,29 @@ plugins {
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.kotlin.serialization) apply false
 }
+
+subprojects {
+    tasks.matching {
+        it.name.startsWith("podGen") || it.name.startsWith("podSetupBuild") || it.name.startsWith("podInstall")
+    }.configureEach {
+        doLast {
+            val syntheticPodfile = file("build/cocoapods/synthetic/ios/Podfile")
+            if (syntheticPodfile.exists()) {
+                val content = syntheticPodfile.readText()
+                if (content.contains("version = \"#{12}.#{0}\"") || content.contains("deployment_target_major < 12")) {
+                    val newContent = content
+                        .replace("version = \"#{12}.#{0}\"", "version = \"#{15}.#{0}\"")
+                        .replace("deployment_target_major < 12", "deployment_target_major < 15")
+                        .replace("deployment_target_major == 12", "deployment_target_major == 15")
+                    syntheticPodfile.writeText(newContent)
+
+                    ProcessBuilder("pod", "install")
+                        .directory(file("build/cocoapods/synthetic/ios"))
+                        .inheritIO()
+                        .start()
+                        .waitFor()
+                }
+            }
+        }
+    }
+}

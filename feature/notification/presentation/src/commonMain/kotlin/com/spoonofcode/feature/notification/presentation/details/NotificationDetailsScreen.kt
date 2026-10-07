@@ -22,11 +22,13 @@ import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.TextBL
+import com.spoonofcode.core.presentation.compose.TextBMB
 import com.spoonofcode.core.presentation.compose.TextTLB
 import com.spoonofcode.feature.notification.domain.model.Notification
 import com.spoonofcode.feature.notification.presentation.Res
 import com.spoonofcode.feature.notification.presentation.notification
 import com.spoonofcode.feature.notification.presentation.open_link
+import com.spoonofcode.feature.notification.presentation.will_expire_in
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
@@ -98,6 +100,10 @@ private fun NotificationCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    TextBMB(
+                        text = stringResource(Res.string.will_expire_in),
+                        color = MaterialTheme.colorScheme.error,
+                    )
                     CountdownTimer(
                         targetTimeMillis = expiresAt.toMillis()
                     )

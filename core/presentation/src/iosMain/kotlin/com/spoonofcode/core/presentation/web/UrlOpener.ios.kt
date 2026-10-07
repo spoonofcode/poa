@@ -8,7 +8,7 @@ class IosUrlOpener : UrlOpener {
         val nsUrl = NSURL.URLWithString(url)
         nsUrl?.let {
             if (UIApplication.sharedApplication.canOpenURL(it)) {
-                UIApplication.sharedApplication.openURL(it)
+                UIApplication.sharedApplication.openURL(it, options = emptyMap<Any?, Any?>(), completionHandler = null)
             }
         }
     }

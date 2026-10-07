@@ -12,6 +12,7 @@ kotlin {
 
 //        podfile = project.file("../../../iosApp/Podfile")
 
+        pod("FirebaseCore")
         pod("FirebaseMessaging")
 
         framework {

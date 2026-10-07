@@ -222,6 +222,7 @@ private fun ProductBottomButton(
             )
             PrimaryButton(
                 text = stringResource(Res.string.send_message),
+                enabled = false,
                 onClick = onSendMessageClick,
                 modifier = Modifier.padding(top = 8.dp)
             )
