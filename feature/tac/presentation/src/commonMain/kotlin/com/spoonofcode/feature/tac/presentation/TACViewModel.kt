@@ -29,7 +29,7 @@ internal class TACViewModel(
                 .onSuccess { tacSettings ->
                     setContentState(
                         TACViewState(
-                            isPrivacyPolicyAccepted = tacSettings.isPrivacyPolicyAccepted,
+                                isPrivacyPolicyAccepted = tacSettings.isPrivacyPolicyAccepted,
                             isTermsAndConditionsAccepted = tacSettings.isTermsAndConditionsAccepted,
                             privacyPolicyLink = tacSettings.privacyPolicyLink,
                             marketingLink = tacSettings.marketingLink,
@@ -60,7 +60,6 @@ internal class TACViewModel(
 
     private fun saveChanges() {
         viewModelScope.launch {
-            showLoadingView()
             updateTACSettingsUseCase(
                 isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
                 isTermsAndConditionsAccepted = currentContentState().isTermsAndConditionsAccepted,

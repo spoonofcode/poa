@@ -6,7 +6,7 @@ import com.spoonofcode.core.presentation.test.ext.awaitContentState
 import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.tac.data.test.TACMockData
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationTestModule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -14,7 +14,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class TACViewModelest : BaseViewModelTest() {
 
     private lateinit var viewModel: TACViewModel
@@ -57,6 +56,35 @@ class TACViewModelest : BaseViewModelTest() {
                 assertTrue(isPrivacyPolicyAccepted)
             }
 
+        }
+    }
+
+    @Test
+    fun `change terms and conditions`() = runTest {
+        runVmTest(viewModel) {
+            onAction(TACViewAction.ChangeTermsAndConditions(accepted = true))
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isTermsAndConditionsAccepted)
+            }
+        }
+    }
+
+    @Test
+    fun `save changes`() = runTest {
+        runVmTest(viewModel) {
+            updateContentState {
+                copy(
+                    isPrivacyPolicyAccepted = true,
+                    isTermsAndConditionsAccepted = true,
+                )
+            }
+
+            onAction(TACViewAction.SaveChanges)
+
+//            viewState.awaitLoadingState()
+
+            verifySuspend { viewModelNavigator.pop() }
         }
     }
 }
