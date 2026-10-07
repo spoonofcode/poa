@@ -214,7 +214,7 @@ fun MainAppScreen(
                 backStack = backStack,
                 onBack = {
                     if (backStack.size > 1) {
-                        backStack.removeLast()
+                        backStack.removeAt(backStack.lastIndex)
                     }
                 },
                 modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
