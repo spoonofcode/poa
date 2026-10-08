@@ -2,10 +2,10 @@ package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.feature.notification.presentation.NotificationEvent
-import com.spoonofcode.feature.notification.presentation.NotificationEventBus
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
+import com.spoonofcode.feature.notification.presentation.NotificationEvent
+import com.spoonofcode.feature.notification.presentation.NotificationEventBus
 import kotlinx.coroutines.launch
 
 internal class NotificationSettingsViewModel(
@@ -102,11 +102,7 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun saveChanges() {
-        updateContentState {
-            copy(
-                isSaveChangesButtonLoading = true
-            )
-        }
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             updateNotificationSettingsUseCase(
                 notificationSettings = currentContentState().notificationSettings
@@ -114,11 +110,7 @@ internal class NotificationSettingsViewModel(
                 notificationEventBus.emitOverview(NotificationEvent.SettingsUpdated)
                 viewModelNavigator.pop()
             }.onFailure {
-                updateContentState {
-                    copy(
-                        isSaveChangesButtonLoading = false
-                    )
-                }
+                updateContentState { copy(isSaveChangesButtonLoading = false) }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
@@ -129,18 +121,10 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun showRationaleNotificationDialog() {
-        updateContentState {
-            copy(
-                isRationaleNotificationDialogVisible = true
-            )
-        }
+        updateContentState { copy(isRationaleNotificationDialogVisible = true) }
     }
 
     private fun closeRationaleNotificationDialog() {
-        updateContentState {
-            copy(
-                isRationaleNotificationDialogVisible = false
-            )
-        }
+        updateContentState { copy(isRationaleNotificationDialogVisible = false) }
     }
 }

@@ -24,11 +24,7 @@ internal class LoginCodeViewModel(
     }
 
     private fun changeCode(code: String) {
-        updateContentState {
-            copy(
-                code = code,
-            )
-        }
+        updateContentState { copy(code = code) }
     }
 
     private fun signInWithCode() {

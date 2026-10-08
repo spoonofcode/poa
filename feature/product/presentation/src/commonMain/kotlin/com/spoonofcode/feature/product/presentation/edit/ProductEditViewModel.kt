@@ -49,11 +49,7 @@ internal class ProductEditViewModel(
     }
 
     private fun saveChanges() {
-        updateContentState {
-            copy(
-                isSaveChangesButtonLoading = true
-            )
-        }
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             val product = requireNotNull(currentContentState().product)
             updateProductUseCase(
@@ -65,11 +61,7 @@ internal class ProductEditViewModel(
                     viewModelNavigator.pop()
                 }
                 .onFailure {
-                    updateContentState {
-                        copy(
-                            isSaveChangesButtonLoading = false
-                        )
-                    }
+                    updateContentState { copy(isSaveChangesButtonLoading = false) }
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }

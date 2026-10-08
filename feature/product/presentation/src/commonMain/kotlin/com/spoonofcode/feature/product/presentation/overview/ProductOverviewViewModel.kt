@@ -79,7 +79,10 @@ internal class ProductOverviewViewModel(
                 products = products,
             )
             updateContentState {
-                copy(searchText = searchText, filteredProducts = filteredProducts)
+                copy(
+                    searchText = searchText,
+                    filteredProducts = filteredProducts,
+                )
             }
         }
     }

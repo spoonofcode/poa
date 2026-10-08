@@ -43,11 +43,7 @@ internal class LoginViewModel(
             ).onSuccess {
                 viewModelNavigator.push(AuthModuleRoute.LoginCode(email = currentContentState().email))
             }.onFailure {
-                updateContentState {
-                    copy(
-                        isSignInButtonLoading = false,
-                    )
-                }
+                updateContentState { copy(isSignInButtonLoading = false) }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }

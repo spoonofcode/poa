@@ -86,22 +86,14 @@ internal class PartnerNotificationDetailsViewModel(
     }
 
     private fun deleteNotification() {
-        updateContentState {
-            copy(
-                isDeleteNotificationDialogVisible = true,
-            )
-        }
+        updateContentState { copy(isDeleteNotificationDialogVisible = true) }
         viewModelScope.launch {
             deletePartnerNotificationUseCase.invoke(notificationId = currentContentState().notification!!.id)
         }
     }
 
     private fun cancelDeleteNotification() {
-        updateContentState {
-            copy(
-                isDeleteNotificationDialogVisible = false,
-            )
-        }
+        updateContentState { copy(isDeleteNotificationDialogVisible = false) }
     }
 
     private fun confirmDeleteNotification() {

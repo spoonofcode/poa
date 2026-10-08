@@ -74,7 +74,7 @@ internal class ProductDetailsViewModel(
     private fun addProductToProfile() {
         updateContentState { copy(isAddProductToProfileButtonLoading = true) }
         viewModelScope.launch {
-            val product = requireNotNull(currentContentState().product)
+            val product = currentContentState().product
             addProductToUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,
@@ -91,32 +91,24 @@ internal class ProductDetailsViewModel(
     }
 
     private fun editProduct() {
-        val productId = requireNotNull(currentContentState().product).id
+        val productId = currentContentState().product.id
         viewModelScope.launch {
             viewModelNavigator.push(ProductModuleRoute.ProductEdit(productId = productId))
         }
     }
 
     private fun deleteProductFromProfile() {
-        updateContentState {
-            copy(
-                isDeleteProductDialogVisible = true,
-            )
-        }
+        updateContentState { copy(isDeleteProductDialogVisible = true) }
     }
 
     private fun cancelDeleteProductFromProfile() {
-        updateContentState {
-            copy(
-                isDeleteProductDialogVisible = false,
-            )
-        }
+        updateContentState { copy(isDeleteProductDialogVisible = false) }
     }
 
     private fun confirmDeleteProductFromProfile() {
         showLoadingView()
         viewModelScope.launch {
-            val product = requireNotNull(currentContentState().product)
+            val product = currentContentState().product
             deleteProductFromUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,

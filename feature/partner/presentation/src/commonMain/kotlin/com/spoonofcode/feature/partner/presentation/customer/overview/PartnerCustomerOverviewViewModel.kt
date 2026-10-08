@@ -53,11 +53,7 @@ internal class PartnerCustomerOverviewViewModel(
 
         if (wasAdded) selected.remove(id) else selected.add(id)
 
-        updateContentState {
-            copy(
-                checkedUserIds = selected
-            )
-        }
+        updateContentState { copy(checkedUserIds = selected) }
     }
 
     private fun navigateToNotification() {

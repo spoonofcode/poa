@@ -101,59 +101,31 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeTitle(title: String) {
-        updateContentState {
-            copy(
-                title = title
-            )
-        }
+        updateContentState { copy(title = title) }
     }
 
     private fun changeText(text: String) {
-        updateContentState {
-            copy(
-                text = text
-            )
-        }
+        updateContentState { copy(text = text) }
     }
 
     private fun changeDeliveryDateTime(selectedDateTime: LocalDateTime) {
-        updateContentState {
-            copy(
-                deliveryDateTime = selectedDateTime
-            )
-        }
+        updateContentState { copy(deliveryDateTime = selectedDateTime) }
     }
 
     private fun changeExpirationDateTime(selectedDateTime: LocalDateTime) {
-        updateContentState {
-            copy(
-                expirationDateTime = selectedDateTime
-            )
-        }
+        updateContentState { copy(expirationDateTime = selectedDateTime) }
     }
 
     private fun changeLink(link: String) {
-        updateContentState {
-            copy(
-                link = link
-            )
-        }
+        updateContentState { copy(link = link) }
     }
 
     private fun sendNotification() {
-        updateContentState {
-            copy(
-                isSendNotificationDialogVisible = true
-            )
-        }
+        updateContentState { copy(isSendNotificationDialogVisible = true) }
     }
 
     private fun cancelSendNotification() {
-        updateContentState {
-            copy(
-                isSendNotificationDialogVisible = false
-            )
-        }
+        updateContentState { copy(isSendNotificationDialogVisible = false) }
     }
 
     private fun confirmSendNotification() {

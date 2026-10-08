@@ -77,11 +77,7 @@ internal class PartnerEditViewModel(
     }
 
     private fun saveChanges() {
-        updateContentState {
-            copy(
-                isSaveChangesButtonLoading = true
-            )
-        }
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             updatePartnerUseCase(getCurrentPartner())
                 .onSuccess {
@@ -89,11 +85,7 @@ internal class PartnerEditViewModel(
                     viewModelNavigator.pop()
                 }
                 .onFailure {
-                    updateContentState {
-                        copy(
-                            isSaveChangesButtonLoading = false
-                        )
-                    }
+                    updateContentState { copy(isSaveChangesButtonLoading = false) }
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }
