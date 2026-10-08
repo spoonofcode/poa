@@ -70,6 +70,7 @@ internal fun ProductDetailsScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { !it.isAddProductToProfileButtonLoading },
         topBarActions = { viewState, onAction ->
             if (
                 viewState.productStatus == ProductStatus.OWNED_BY_SELF
@@ -177,6 +178,7 @@ private fun ColumnScope.Content(
         }
         ProductBottomButton(
             productStatus = viewState.productStatus,
+            isAddProductToProfileButtonLoading = viewState.isAddProductToProfileButtonLoading,
             addProductToProfile = { onAction(ProductDetailsViewAction.AddProductToProfile) },
             onSendMessageClick = {},
         )
@@ -202,7 +204,8 @@ private fun Dialogs(
 
 @Composable
 private fun ProductBottomButton(
-    productStatus: ProductStatus,
+    productStatus: ProductStatus?,
+    isAddProductToProfileButtonLoading: Boolean,
     addProductToProfile: () -> Unit,
     onSendMessageClick: () -> Unit,
 ) {
@@ -211,6 +214,7 @@ private fun ProductBottomButton(
             PrimaryButton(
                 text = stringResource(Res.string.add_product),
                 onClick = addProductToProfile,
+                isLoading = isAddProductToProfileButtonLoading,
                 modifier = Modifier.padding(top = 8.dp)
             )
         }

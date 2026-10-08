@@ -43,27 +43,15 @@ internal class TACViewModel(
     }
 
     private fun changeTermsAndConditions(accepted: Boolean) {
-        updateContentState {
-            copy(
-                isTermsAndConditionsAccepted = accepted
-            )
-        }
+        updateContentState { copy(isTermsAndConditionsAccepted = accepted) }
     }
 
     private fun changePrivacyPolicy(accepted: Boolean) {
-        updateContentState {
-            copy(
-                isPrivacyPolicyAccepted = accepted
-            )
-        }
+        updateContentState { copy(isPrivacyPolicyAccepted = accepted) }
     }
 
     private fun saveChanges() {
-        updateContentState {
-            copy(
-                isSaveChangesButtonLoading = true
-            )
-        }
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             updateTACSettingsUseCase(
                 isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
@@ -71,11 +59,7 @@ internal class TACViewModel(
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                updateContentState {
-                    copy(
-                        isSaveChangesButtonLoading = false
-                    )
-                }
+                updateContentState { copy(isSaveChangesButtonLoading = false) }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }

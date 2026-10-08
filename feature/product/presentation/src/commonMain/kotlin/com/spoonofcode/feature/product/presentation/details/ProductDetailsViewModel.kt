@@ -72,7 +72,7 @@ internal class ProductDetailsViewModel(
     }
 
     private fun addProductToProfile() {
-        showLoadingView()
+        updateContentState { copy(isAddProductToProfileButtonLoading = true) }
         viewModelScope.launch {
             val product = requireNotNull(currentContentState().product)
             addProductToUserUseCase(
@@ -84,13 +84,14 @@ internal class ProductDetailsViewModel(
                     listOf(ProductModuleRoute.ProductOverview)
                 )
             }.onFailure {
+                updateContentState { copy(isAddProductToProfileButtonLoading = false) }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
 
     private fun editProduct() {
-        val productId = currentContentState().product.id
+        val productId = requireNotNull(currentContentState().product).id
         viewModelScope.launch {
             viewModelNavigator.push(ProductModuleRoute.ProductEdit(productId = productId))
         }

@@ -10,6 +10,5 @@ internal data class ProductDetailsViewState(
     val product: Product,
     val productStatus: ProductStatus,
     val isDeleteProductDialogVisible: Boolean = false,
-) : BaseViewState() {
-    val hasOwnerUser: Boolean = product.ownerEmail != null
-}
+    val isAddProductToProfileButtonLoading: Boolean = false,
+) : BaseViewState()
