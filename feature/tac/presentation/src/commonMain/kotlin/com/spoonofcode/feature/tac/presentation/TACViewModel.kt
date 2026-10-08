@@ -59,14 +59,23 @@ internal class TACViewModel(
     }
 
     private fun saveChanges() {
+        updateContentState {
+            copy(
+                isSaveChangesButtonLoading = true
+            )
+        }
         viewModelScope.launch {
-            showLoadingView()
             updateTACSettingsUseCase(
                 isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
                 isTermsAndConditionsAccepted = currentContentState().isTermsAndConditionsAccepted,
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
+                updateContentState {
+                    copy(
+                        isSaveChangesButtonLoading = false
+                    )
+                }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
