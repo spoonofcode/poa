@@ -118,8 +118,11 @@ class ProductEditViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = ProductEditViewState(product = PRODUCT_1),
-                    screenState = ScreenState.LOADING,
+                    data = ProductEditViewState(
+                        product = PRODUCT_1,
+                        isSaveChangesButtonLoading = true,
+                    ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )

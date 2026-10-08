@@ -44,12 +44,16 @@ internal class ProductEditViewModel(
     }
 
     private fun changeCustomLink(link: String) {
-        val currentProduct = currentContentState().product
+        val currentProduct = currentContentState().product ?: return
         updateContentState { copy(product = currentProduct.copy(customLink = link)) }
     }
 
     private fun saveChanges() {
-        showLoadingView()
+        updateContentState {
+            copy(
+                isSaveChangesButtonLoading = true
+            )
+        }
         viewModelScope.launch {
             val product = requireNotNull(currentContentState().product)
             updateProductUseCase(
@@ -61,6 +65,11 @@ internal class ProductEditViewModel(
                     viewModelNavigator.pop()
                 }
                 .onFailure {
+                    updateContentState {
+                        copy(
+                            isSaveChangesButtonLoading = false
+                        )
+                    }
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }

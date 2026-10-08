@@ -41,6 +41,7 @@ internal fun ProductEditScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { !it.isSaveChangesButtonLoading },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -100,6 +101,7 @@ private fun ColumnScope.Content(
             onClick = { onAction(ProductEditViewAction.SaveChanges) },
             modifier = Modifier.padding(top = 8.dp),
             enabled = viewState.isSaveChangesButtonEnabled,
+            isLoading = viewState.isSaveChangesButtonLoading,
         )
     }
 }
