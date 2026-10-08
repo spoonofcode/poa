@@ -36,21 +36,34 @@ internal class LoginViewModel(
     }
 
     private fun signInWithCode() {
+        updateContentState {
+            copy(
+                isSignInButtonLoading = true,
+            )
+        }
         viewModelScope.launch {
-            showLoadingView()
             loginRequestCodeUseCase(
                 email = currentContentState().email,
             ).onSuccess {
                 viewModelNavigator.push(AuthModuleRoute.LoginCode(email = currentContentState().email))
             }.onFailure {
+                updateContentState {
+                    copy(
+                        isSignInButtonLoading = false,
+                    )
+                }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
     }
 
     private fun signInWithGoogle(googleAccount: GoogleAccount?) {
+        updateContentState {
+            copy(
+                isSignInGoogleButtonLoading = true,
+            )
+        }
         viewModelScope.launch {
-            showLoadingView()
             val googleIdToken = requireNotNull(googleAccount?.idToken)
             loginGoogleUseCase(googleIdToken)
                 .onSuccess {
@@ -66,6 +79,11 @@ internal class LoginViewModel(
                         )
                     )
                 }.onFailure {
+                    updateContentState {
+                        copy(
+                            isSignInGoogleButtonLoading = false,
+                        )
+                    }
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }
