@@ -61,7 +61,7 @@ internal class NotificationSettingsViewModel(
 
     private fun switchAllNotification(enable: Boolean) {
         updateContentState {
-            NotificationSettingsViewState(
+            copy(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsPersonalizedEnabled = enable,
                     isNotificationsFromPartnersEnabled = enable,
@@ -73,7 +73,7 @@ internal class NotificationSettingsViewModel(
 
     private fun switchNotificationsPersonalized(enable: Boolean) {
         updateContentState {
-            NotificationSettingsViewState(
+            copy(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsPersonalizedEnabled = enable,
                 )
@@ -83,7 +83,7 @@ internal class NotificationSettingsViewModel(
 
     private fun switchNotificationsFromPartners(enable: Boolean) {
         updateContentState {
-            NotificationSettingsViewState(
+            copy(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsFromPartnersEnabled = enable,
                 )
@@ -93,7 +93,7 @@ internal class NotificationSettingsViewModel(
 
     private fun switchNotificationsMyProductSeries(enable: Boolean) {
         updateContentState {
-            NotificationSettingsViewState(
+            copy(
                 notificationSettings = notificationSettings.copy(
                     isNotificationsMyProductSeriesEnabled = enable,
                 )
@@ -102,14 +102,23 @@ internal class NotificationSettingsViewModel(
     }
 
     private fun saveChanges() {
+        updateContentState {
+            copy(
+                isSaveChangesButtonLoading = true
+            )
+        }
         viewModelScope.launch {
-            showLoadingView()
             updateNotificationSettingsUseCase(
                 notificationSettings = currentContentState().notificationSettings
             ).onSuccess {
                 notificationEventBus.emitOverview(NotificationEvent.SettingsUpdated)
                 viewModelNavigator.pop()
             }.onFailure {
+                updateContentState {
+                    copy(
+                        isSaveChangesButtonLoading = false
+                    )
+                }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }

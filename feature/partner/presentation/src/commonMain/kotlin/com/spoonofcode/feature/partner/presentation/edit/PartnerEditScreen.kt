@@ -36,6 +36,7 @@ internal fun PartnerEditScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { !it.isSaveChangesButtonLoading },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -96,8 +97,9 @@ private fun ColumnScope.Content(
 
         PrimaryButton(
             text = stringResource(resource = Res.string.save_changes),
-            onClick = { onAction(PartnerEditViewAction.SaveChanges) },
             enabled = viewState.isSaveChangesButtonEnabled,
+            isLoading = viewState.isSaveChangesButtonLoading,
+            onClick = { onAction(PartnerEditViewAction.SaveChanges) },
         )
     }
 }

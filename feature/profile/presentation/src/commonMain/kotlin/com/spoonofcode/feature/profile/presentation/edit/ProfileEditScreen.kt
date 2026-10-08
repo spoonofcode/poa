@@ -35,6 +35,7 @@ internal fun ProfileEditScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { !it.isSaveChangesButtonLoading },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -66,8 +67,9 @@ private fun ColumnScope.Content(
 
     PrimaryButton(
         text = stringResource(Res.string.save_changes),
-        onClick = { onAction(ProfileEditViewAction.SaveChanges) },
         enabled = viewState.isSaveChangesButtonEnable,
+        isLoading = viewState.isSaveChangesButtonLoading,
+        onClick = { onAction(ProfileEditViewAction.SaveChanges) },
     )
 }
 

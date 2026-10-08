@@ -61,6 +61,7 @@ internal fun NotificationSettingsScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig().copy(backNavigationEnable = backNavigationEnable),
+        isViewEnable = { !it.isSaveChangesButtonLoading },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
         }
@@ -148,6 +149,7 @@ private fun ColumnScope.Content(
 
         PrimaryButton(
             text = stringResource(Res.string.save_changes),
+            isLoading = viewState.isSaveChangesButtonLoading,
             onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
         )
     } else {
