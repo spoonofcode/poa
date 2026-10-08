@@ -7,6 +7,7 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 internal data class LoginCodeViewState(
     val email: String,
     val code: String = "",
+    val isSignInWithCodeButtonLoading: Boolean = false,
 ) : BaseViewState() {
     val isSignInWithCodeButtonEnable: Boolean
         get() = code.length == VERIFICATION_CODE_LENGTH

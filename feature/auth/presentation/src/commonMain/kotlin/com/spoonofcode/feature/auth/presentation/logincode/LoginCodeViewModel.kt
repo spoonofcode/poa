@@ -32,7 +32,7 @@ internal class LoginCodeViewModel(
     }
 
     private fun signInWithCode() {
-        showLoadingView()
+        updateContentState { copy(isSignInWithCodeButtonLoading = true) }
         val currentState = currentContentState()
         viewModelScope.launch {
             loginCodeUseCase(
@@ -51,6 +51,7 @@ internal class LoginCodeViewModel(
                     )
                 )
             }.onFailure {
+                updateContentState { copy(isSignInWithCodeButtonLoading = false) }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }
