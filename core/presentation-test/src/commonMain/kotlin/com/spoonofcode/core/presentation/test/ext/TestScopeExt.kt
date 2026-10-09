@@ -44,8 +44,8 @@ suspend fun <VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, VM : B
         val viewEventTurbine = viewModel.viewEvent.testIn(backgroundScope)
         val snackBarEventTurbine = viewModel.snackbarEvent.testIn(backgroundScope)
 
-
         if (expectMostRecentItem) {
+            testScheduler.advanceUntilIdle()
             viewStateTurbine.expectMostRecentItem()
         }
 

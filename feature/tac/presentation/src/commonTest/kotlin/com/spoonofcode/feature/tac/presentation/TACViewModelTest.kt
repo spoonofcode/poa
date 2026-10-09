@@ -12,9 +12,10 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class TACViewModelest : BaseViewModelTest() {
+class TACViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: TACViewModel
 
@@ -32,7 +33,9 @@ class TACViewModelest : BaseViewModelTest() {
 
     @Test
     fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = true) {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            assertEquals(ViewState.Initial, viewState.awaitItem())
+            assertEquals(ViewState.Loading, viewState.awaitItem())
             assertEquals(
                 expected = ViewState.Content(
                     data = TACViewState(
@@ -50,10 +53,10 @@ class TACViewModelest : BaseViewModelTest() {
     @Test
     fun `change privacy policy`() = runTest {
         runVmTest(viewModel) {
-            onAction(TACViewAction.ChangePrivacyPolicy(accepted = true))
+            onAction(TACViewAction.ChangePrivacyPolicy(accepted = false))
 
             with(viewState.awaitContentState()) {
-                assertTrue(isPrivacyPolicyAccepted)
+                assertFalse(isPrivacyPolicyAccepted)
             }
 
         }
@@ -62,10 +65,10 @@ class TACViewModelest : BaseViewModelTest() {
     @Test
     fun `change terms and conditions`() = runTest {
         runVmTest(viewModel) {
-            onAction(TACViewAction.ChangeTermsAndConditions(accepted = true))
+            onAction(TACViewAction.ChangeTermsAndConditions(accepted = false))
 
             with(viewState.awaitContentState()) {
-                assertTrue(isTermsAndConditionsAccepted)
+                assertFalse(isTermsAndConditionsAccepted)
             }
         }
     }
@@ -73,16 +76,10 @@ class TACViewModelest : BaseViewModelTest() {
     @Test
     fun `save changes`() = runTest {
         runVmTest(viewModel) {
-            updateContentState {
-                copy(
-                    isPrivacyPolicyAccepted = true,
-                    isTermsAndConditionsAccepted = true,
-                )
-            }
-
             onAction(TACViewAction.SaveChanges)
-
-//            viewState.awaitLoadingState()
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+            }
 
             verifySuspend { viewModelNavigator.pop() }
         }

@@ -37,6 +37,7 @@ internal class TACViewModel(
                     )
                     showContentView()
                 }.onFailure {
+                    showErrorView()
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }
