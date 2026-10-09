@@ -1,8 +1,8 @@
 package com.spoonofcode.feature.tac.presentation
 
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
 import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.tac.data.test.TACMockData
 import com.spoonofcode.feature.tac.presentation.di.tacPresentationTestModule
@@ -34,18 +34,15 @@ class TACViewModelTest : BaseViewModelTest() {
     @Test
     fun `initial view`() = runTest {
         runVmTest(viewModel, expectMostRecentItem = false) {
-            assertEquals(ViewState.Initial, viewState.awaitItem())
-            assertEquals(ViewState.Loading, viewState.awaitItem())
+            viewState.awaitInitialState()
             assertEquals(
-                expected = ViewState.Content(
-                    data = TACViewState(
-                        isPrivacyPolicyAccepted = TACMockData.SETTINGS_1.isPrivacyPolicyAccepted,
-                        isTermsAndConditionsAccepted = TACMockData.SETTINGS_1.isTermsAndConditionsAccepted,
-                        privacyPolicyLink = TACMockData.SETTINGS_1.privacyPolicyLink,
-                        marketingLink = TACMockData.SETTINGS_1.marketingLink,
-                    )
+                expected = TACViewState(
+                    isPrivacyPolicyAccepted = TACMockData.SETTINGS_1.isPrivacyPolicyAccepted,
+                    isTermsAndConditionsAccepted = TACMockData.SETTINGS_1.isTermsAndConditionsAccepted,
+                    privacyPolicyLink = TACMockData.SETTINGS_1.privacyPolicyLink,
+                    marketingLink = TACMockData.SETTINGS_1.marketingLink,
                 ),
-                actual = viewState.awaitItem()
+                actual = viewState.awaitContentState()
             )
         }
     }
