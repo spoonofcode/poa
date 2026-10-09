@@ -2,7 +2,6 @@ package com.spoonofcode.feature.profile.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.feature.profile.domain.usecase.UpdateProfileUseCase
 import kotlinx.coroutines.launch
@@ -46,7 +45,7 @@ internal class ProfileEditViewModel(
     }
 
     private fun saveChanges() {
-        showLoadingView()
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             val profile = requireNotNull(currentContentState().profile)
             // TODO Fix this usecase

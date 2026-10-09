@@ -8,7 +8,11 @@ import com.spoonofcode.feature.profile.domain.model.Profile
 @Immutable
 internal data class ProfileEditViewState(
     val profile: Profile,
+    val isSaveChangesButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSaveChangesButtonLoading
+
     val isSaveChangesButtonEnable: Boolean
         get() = profile.email.isValidEmail()
 }

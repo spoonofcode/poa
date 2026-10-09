@@ -68,19 +68,11 @@ internal class ScanViewModel(
 
     private fun showProductNotFound() {
         showContentView()
-        updateContentState {
-            copy(
-                isProductNotFoundViewVisible = true,
-            )
-        }
+        updateContentState { copy(isProductNotFoundViewVisible = true) }
     }
 
     private fun scanAgain() {
-        updateContentState {
-            copy(
-                isProductNotFoundViewVisible = false,
-            )
-        }
+        updateContentState { copy(isProductNotFoundViewVisible = false) }
     }
 
     companion object {

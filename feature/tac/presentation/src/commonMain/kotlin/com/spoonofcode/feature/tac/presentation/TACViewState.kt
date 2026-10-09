@@ -9,7 +9,11 @@ internal data class TACViewState(
     val isTermsAndConditionsAccepted: Boolean,
     val privacyPolicyLink: String,
     val marketingLink: String,
+    val isSaveChangesButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSaveChangesButtonLoading
+
     val isSaveChangesButtonEnable: Boolean
         get() = isPrivacyPolicyAccepted && isTermsAndConditionsAccepted
 }

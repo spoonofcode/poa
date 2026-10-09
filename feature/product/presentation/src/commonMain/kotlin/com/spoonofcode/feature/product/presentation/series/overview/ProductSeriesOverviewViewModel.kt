@@ -53,11 +53,7 @@ internal class ProductSeriesOverviewViewModel(
 
         if (wasAdded) selected.remove(name) else selected.add(name)
 
-        updateContentState {
-            copy(
-                checkedProductSeriesNames = selected,
-            )
-        }
+        updateContentState { copy(checkedProductSeriesNames = selected) }
     }
 
     private fun navigateToNotification() {

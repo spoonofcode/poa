@@ -91,19 +91,11 @@ internal class ProfileDetailsViewModel(
     }
 
     private fun cancelLogout() {
-        updateContentState {
-            copy(
-                isLogoutDialogVisible = false,
-            )
-        }
+        updateContentState { copy(isLogoutDialogVisible = false) }
     }
 
     private fun logout() {
-        updateContentState {
-            copy(
-                isLogoutDialogVisible = true,
-            )
-        }
+        updateContentState { copy(isLogoutDialogVisible = true) }
     }
 
     companion object {
