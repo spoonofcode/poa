@@ -129,8 +129,13 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun confirmSendNotification() {
+        updateContentState {
+            copy(
+                isSendNotificationButtonLoading = true,
+                isSendNotificationDialogVisible = false,
+            )
+        }
         viewModelScope.launch {
-            showLoadingView()
             val currentState = currentContentState()
             if (currentState.notificationId != null) {
                 updatePartnerNotificationUseCase(
@@ -143,10 +148,9 @@ internal class PartnerNotificationEditViewModel(
                     expirationDateTime = currentState.expirationDateTime
                 ).onSuccess {
                     partnerNotificationEventBus.emitDetails(PartnerNotificationEvent.PartnerNotificationUpdated)
-                    viewModelScope.launch {
-                        viewModelNavigator.pop()
-                    }
+                    viewModelNavigator.pop()
                 }.onFailure { error ->
+                    updateContentState { copy(isSendNotificationButtonLoading = false) }
                     error.message?.let { showErrorSnackbar(it) }
                 }
             } else {
@@ -167,6 +171,7 @@ internal class PartnerNotificationEditViewModel(
                         )
                     )
                 }.onFailure { error ->
+                    updateContentState { copy(isSendNotificationButtonLoading = false) }
                     error.message?.let { showErrorSnackbar(it) }
                 }
             }

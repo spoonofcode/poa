@@ -188,9 +188,10 @@ class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
                         text = text,
                         link = link,
                         expirationDateTime = expirationDateTime,
-                        isSendNotificationDialogVisible = true
+                        isSendNotificationDialogVisible = false,
+                        isSendNotificationButtonLoading = true,
                     ),
-                    screenState = ScreenState.LOADING,
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
