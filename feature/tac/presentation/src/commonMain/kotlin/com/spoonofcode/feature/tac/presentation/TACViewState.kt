@@ -11,6 +11,9 @@ internal data class TACViewState(
     val marketingLink: String,
     val isSaveChangesButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSaveChangesButtonLoading
+
     val isSaveChangesButtonEnable: Boolean
         get() = isPrivacyPolicyAccepted && isTermsAndConditionsAccepted
 }

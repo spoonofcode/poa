@@ -36,7 +36,7 @@ internal fun LoginCodeScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
-        isViewEnable = { !it.isSignInWithCodeButtonLoading },
+        isViewEnable = { it.isViewEnable },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,

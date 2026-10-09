@@ -10,6 +10,8 @@ internal data class NotificationSettingsViewState(
     val isRationaleNotificationDialogVisible: Boolean = false,
     val isSaveChangesButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSaveChangesButtonLoading
     val isAllPushNotificationsSettingsEnable: Boolean
         get() = notificationSettings.isNotificationsPersonalizedEnabled &&
                 notificationSettings.isNotificationsFromPartnersEnabled &&

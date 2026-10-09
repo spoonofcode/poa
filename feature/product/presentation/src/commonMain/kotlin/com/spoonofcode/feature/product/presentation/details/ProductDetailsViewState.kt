@@ -11,4 +11,8 @@ internal data class ProductDetailsViewState(
     val productStatus: ProductStatus,
     val isDeleteProductDialogVisible: Boolean = false,
     val isAddProductToProfileButtonLoading: Boolean = false,
-) : BaseViewState()
+    val isDeleteProductFromProfileButtonLoading: Boolean = false,
+) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isAddProductToProfileButtonLoading && !isDeleteProductFromProfileButtonLoading
+}

@@ -10,6 +10,9 @@ internal data class LoginViewState(
     val isSignInButtonLoading: Boolean = false,
     val isSignInGoogleButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSignInGoogleButtonLoading
+
     val isSignInButtonEnable: Boolean
         get() = email.isValidEmail()
 }

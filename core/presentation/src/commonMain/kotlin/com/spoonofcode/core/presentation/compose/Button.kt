@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -39,8 +41,8 @@ fun PrimaryButton(
     leftIcon: DrawableResource? = null,
     enabled: Boolean = true,
     fillMaxWidth: Boolean = true,
-    onClick: () -> Unit,
     isLoading: Boolean = false,
+    onClick: () -> Unit,
 ): Unit = Button(
     modifier = modifier
         .addIf(condition = fillMaxWidth) { fillMaxWidth() }
@@ -76,25 +78,84 @@ fun PrimaryButton(
 
 @Composable
 fun SecondaryButton(
+    modifier: Modifier = Modifier,
     text: String,
     leftIcon: DrawableResource? = null,
+    colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(),
+    isLoading: Boolean = false,
     onClick: () -> Unit,
 ): Unit =
     FilledTonalButton(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
             .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,
+        colors = colors,
         onClick = onClick,
     ) {
-        if (leftIcon != null) {
-            Image(
-                painter = painterResource(resource = leftIcon),
-                contentDescription = null,
-            )
-            SpacerHorizontalBetweenFields()
-        }
+        AnimatedContent(
+            targetState = isLoading,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            label = "ButtonLoadingTransition"
+        ) { loading ->
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    strokeWidth = 2.5.dp
+                )
+            } else {
+                if (leftIcon != null) {
+                    Image(
+                        painter = painterResource(resource = leftIcon),
+                        contentDescription = null,
+                    )
+                    SpacerHorizontalBetweenFields()
+                }
 
-        Text(text)
+                Text(text)
+            }
+        }
+    }
+
+@Composable
+fun OutlinedButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    leftIcon: DrawableResource? = null,
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
+    isLoading: Boolean = false,
+    onClick: () -> Unit,
+): Unit =
+    androidx.compose.material3.OutlinedButton(
+        modifier = modifier.fillMaxWidth()
+            .heightIn(min = 48.dp),
+        shape = MaterialTheme.shapes.medium,
+        colors = colors,
+        onClick = onClick,
+    ) {
+        AnimatedContent(
+            targetState = isLoading,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            label = "ButtonLoadingTransition"
+        ) { loading ->
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    strokeWidth = 2.5.dp
+                )
+            } else {
+                if (leftIcon != null) {
+                    Image(
+                        painter = painterResource(resource = leftIcon),
+                        contentDescription = null,
+                    )
+                    SpacerHorizontalBetweenFields()
+                }
+
+                Text(text)
+            }
+        }
     }
 
 @Composable

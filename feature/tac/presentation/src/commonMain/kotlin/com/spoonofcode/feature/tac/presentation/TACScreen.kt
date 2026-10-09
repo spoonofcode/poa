@@ -28,7 +28,7 @@ internal fun TACScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig().copy(backNavigationEnable = backNavigationEnable),
-        isViewEnable = { !it.isSaveChangesButtonLoading },
+        isViewEnable = { it.isViewEnable },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,

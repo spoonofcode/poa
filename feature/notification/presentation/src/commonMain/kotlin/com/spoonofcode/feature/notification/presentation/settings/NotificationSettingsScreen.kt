@@ -61,7 +61,7 @@ internal fun NotificationSettingsScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig().copy(backNavigationEnable = backNavigationEnable),
-        isViewEnable = { !it.isSaveChangesButtonLoading },
+        isViewEnable = { it.isViewEnable },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
         }

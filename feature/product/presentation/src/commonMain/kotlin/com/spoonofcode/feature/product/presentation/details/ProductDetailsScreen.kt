@@ -11,10 +11,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -30,10 +30,11 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
-import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.ImageLink
+import com.spoonofcode.core.presentation.compose.OutlinedButton
 import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TextBMB
 import com.spoonofcode.core.presentation.compose.TextHSB
 import com.spoonofcode.core.presentation.compose.TextLLB
@@ -70,7 +71,7 @@ internal fun ProductDetailsScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
-        isViewEnable = { !it.isAddProductToProfileButtonLoading },
+        isViewEnable = { it.isViewEnable },
         topBarActions = { viewState, onAction ->
             if (
                 viewState.productStatus == ProductStatus.OWNED_BY_SELF
@@ -81,13 +82,6 @@ internal fun ProductDetailsScreen(
                         description = "Edit",
                         onClick = { onAction(ProductDetailsViewAction.EditProduct) },
                     ),
-                    TopBarAction(
-                        icon = Icons.Default.Delete,
-                        description = "Delete",
-                        onClick = {
-                            onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-                        }
-                    )
                 )
             } else {
                 emptyList()
@@ -179,7 +173,9 @@ private fun ColumnScope.Content(
         ProductBottomButton(
             productStatus = viewState.productStatus,
             isAddProductToProfileButtonLoading = viewState.isAddProductToProfileButtonLoading,
+            isDeleteProductFromProfileButtonLoading = viewState.isDeleteProductFromProfileButtonLoading,
             addProductToProfile = { onAction(ProductDetailsViewAction.AddProductToProfile) },
+            deleteProductFromProfile = { onAction(ProductDetailsViewAction.DeleteProductFromProfile) },
             onSendMessageClick = {},
         )
     }
@@ -206,7 +202,9 @@ private fun Dialogs(
 private fun ProductBottomButton(
     productStatus: ProductStatus?,
     isAddProductToProfileButtonLoading: Boolean,
+    isDeleteProductFromProfileButtonLoading: Boolean,
     addProductToProfile: () -> Unit,
+    deleteProductFromProfile: () -> Unit,
     onSendMessageClick: () -> Unit,
 ) {
     when (productStatus) {
@@ -215,6 +213,18 @@ private fun ProductBottomButton(
                 text = stringResource(Res.string.add_product),
                 onClick = addProductToProfile,
                 isLoading = isAddProductToProfileButtonLoading,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
+        ProductStatus.OWNED_BY_SELF -> {
+            OutlinedButton(
+                text = stringResource(Res.string.delete_product),
+                onClick = deleteProductFromProfile,
+                isLoading = isDeleteProductFromProfileButtonLoading,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                ),
                 modifier = Modifier.padding(top = 8.dp)
             )
         }

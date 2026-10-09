@@ -36,7 +36,7 @@ internal fun PartnerEditScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
-        isViewEnable = { !it.isSaveChangesButtonLoading },
+        isViewEnable = { it.isViewEnable },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,

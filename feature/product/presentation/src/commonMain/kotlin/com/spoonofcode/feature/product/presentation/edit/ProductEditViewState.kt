@@ -9,6 +9,9 @@ internal data class ProductEditViewState(
     val product: Product? = null,
     val isSaveChangesButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSaveChangesButtonLoading
+
     val isSaveChangesButtonEnabled: Boolean
         get() = product?.customLink?.isNotEmpty() ?: false
 }

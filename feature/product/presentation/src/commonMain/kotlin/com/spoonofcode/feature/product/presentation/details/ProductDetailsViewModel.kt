@@ -11,6 +11,7 @@ import com.spoonofcode.feature.product.presentation.ProductEvent
 import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.product_updated
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -106,7 +107,12 @@ internal class ProductDetailsViewModel(
     }
 
     private fun confirmDeleteProductFromProfile() {
-        showLoadingView()
+        updateContentState {
+            copy(
+                isDeleteProductFromProfileButtonLoading = true,
+                isDeleteProductDialogVisible = false,
+            )
+        }
         viewModelScope.launch {
             val product = currentContentState().product
             deleteProductFromUserUseCase(
@@ -118,6 +124,7 @@ internal class ProductDetailsViewModel(
                     viewModelNavigator.pop()
                 }
                 .onFailure {
+                    updateContentState { copy(isDeleteProductFromProfileButtonLoading = false) }
                     it.message?.let { message -> showErrorSnackbar(message) }
                 }
         }

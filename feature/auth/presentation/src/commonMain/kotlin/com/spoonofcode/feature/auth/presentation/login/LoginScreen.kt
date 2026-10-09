@@ -52,7 +52,7 @@ internal fun LoginScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
-        isViewEnable = { !it.isSignInButtonLoading && !it.isSignInGoogleButtonLoading },
+        isViewEnable = { it.isViewEnable },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
