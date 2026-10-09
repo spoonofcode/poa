@@ -87,9 +87,6 @@ internal class PartnerNotificationDetailsViewModel(
 
     private fun deleteNotification() {
         updateContentState { copy(isDeleteNotificationDialogVisible = true) }
-        viewModelScope.launch {
-            deletePartnerNotificationUseCase.invoke(notificationId = currentContentState().notification!!.id)
-        }
     }
 
     private fun cancelDeleteNotification() {
@@ -97,9 +94,14 @@ internal class PartnerNotificationDetailsViewModel(
     }
 
     private fun confirmDeleteNotification() {
-        showLoadingView()
+        updateContentState {
+            copy(
+                isDeleteNotificationButtonLoading = true,
+                isDeleteNotificationDialogVisible = false,
+            )
+        }
         viewModelScope.launch {
-            val notification = requireNotNull(currentContentState().notification)
+            val notification = currentContentState().notification
             deletePartnerNotificationUseCase(
                 notificationId = notification.id,
             ).onSuccess {
@@ -108,6 +110,7 @@ internal class PartnerNotificationDetailsViewModel(
                     viewModelNavigator.popUpTo(PartnerModuleRoute.PartnerPanel::class)
                 }
             }.onFailure {
+                updateContentState { copy(isDeleteNotificationButtonLoading = false) }
                 it.message?.let { message -> showErrorSnackbar(message) }
             }
         }

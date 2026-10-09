@@ -13,7 +13,11 @@ internal data class PartnerNotificationDetailsViewState(
     val selectedNames: Set<String>,
     val notificationType: PartnerNotificationType,
     val isDeleteNotificationDialogVisible: Boolean = false,
+    val isDeleteNotificationButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isDeleteNotificationButtonLoading
+
     val isNotificationEditable: Boolean
         get() = notification.deliveryDateTime.toMillis() > Clock.System.now().toEpochMilliseconds()
 }
