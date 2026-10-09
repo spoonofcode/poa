@@ -17,7 +17,10 @@ class LocalSessionDataSource(
         userEmail: String,
     ) {
         withContext(dispatcherProvider.io()) {
-            poaLogger.info("LocalSessionDataSource: Initializing local session for user: $userEmail")
+            poaLogger.debug(
+                "LocalSessionDataSource: Initializing local session for userId: $userId " +
+                    "(accessToken present=${accessToken.isNotBlank()}, refreshToken present=${refreshToken.isNotBlank()})"
+            )
             kSafe.clearAll()
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
@@ -28,10 +31,13 @@ class LocalSessionDataSource(
 
     suspend fun updateSessionTokens(
         accessToken: String,
-        refreshToken: String
+        refreshToken: String,
     ) {
         withContext(dispatcherProvider.io()) {
-            poaLogger.debug("LocalSessionDataSource: Updating session tokens in local storage")
+            poaLogger.debug(
+                "LocalSessionDataSource: Updating session tokens in local storage " +
+                    "(accessToken present=${accessToken.isNotBlank()}, refreshToken present=${refreshToken.isNotBlank()})"
+            )
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
         }

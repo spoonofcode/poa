@@ -101,64 +101,41 @@ internal class PartnerNotificationEditViewModel(
     }
 
     private fun changeTitle(title: String) {
-        updateContentState {
-            copy(
-                title = title
-            )
-        }
+        updateContentState { copy(title = title) }
     }
 
     private fun changeText(text: String) {
-        updateContentState {
-            copy(
-                text = text
-            )
-        }
+        updateContentState { copy(text = text) }
     }
 
     private fun changeDeliveryDateTime(selectedDateTime: LocalDateTime) {
-        updateContentState {
-            copy(
-                deliveryDateTime = selectedDateTime
-            )
-        }
+        updateContentState { copy(deliveryDateTime = selectedDateTime) }
     }
 
     private fun changeExpirationDateTime(selectedDateTime: LocalDateTime) {
-        updateContentState {
-            copy(
-                expirationDateTime = selectedDateTime
-            )
-        }
+        updateContentState { copy(expirationDateTime = selectedDateTime) }
     }
 
     private fun changeLink(link: String) {
-        updateContentState {
-            copy(
-                link = link
-            )
-        }
+        updateContentState { copy(link = link) }
     }
 
     private fun sendNotification() {
-        updateContentState {
-            copy(
-                isSendNotificationDialogVisible = true
-            )
-        }
+        updateContentState { copy(isSendNotificationDialogVisible = true) }
     }
 
     private fun cancelSendNotification() {
-        updateContentState {
-            copy(
-                isSendNotificationDialogVisible = false
-            )
-        }
+        updateContentState { copy(isSendNotificationDialogVisible = false) }
     }
 
     private fun confirmSendNotification() {
+        updateContentState {
+            copy(
+                isSendNotificationButtonLoading = true,
+                isSendNotificationDialogVisible = false,
+            )
+        }
         viewModelScope.launch {
-            showLoadingView()
             val currentState = currentContentState()
             if (currentState.notificationId != null) {
                 updatePartnerNotificationUseCase(
@@ -171,10 +148,9 @@ internal class PartnerNotificationEditViewModel(
                     expirationDateTime = currentState.expirationDateTime
                 ).onSuccess {
                     partnerNotificationEventBus.emitDetails(PartnerNotificationEvent.PartnerNotificationUpdated)
-                    viewModelScope.launch {
-                        viewModelNavigator.pop()
-                    }
+                    viewModelNavigator.pop()
                 }.onFailure { error ->
+                    updateContentState { copy(isSendNotificationButtonLoading = false) }
                     error.message?.let { showErrorSnackbar(it) }
                 }
             } else {
@@ -195,6 +171,7 @@ internal class PartnerNotificationEditViewModel(
                         )
                     )
                 }.onFailure { error ->
+                    updateContentState { copy(isSendNotificationButtonLoading = false) }
                     error.message?.let { showErrorSnackbar(it) }
                 }
             }

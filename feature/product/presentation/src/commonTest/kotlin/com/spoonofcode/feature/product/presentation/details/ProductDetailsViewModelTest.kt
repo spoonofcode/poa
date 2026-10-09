@@ -112,8 +112,9 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = ProductDetailsViewState(
                         product = PRODUCT_1,
+                        isAddProductToProfileButtonLoading = true,
                     ),
-                    screenState = ScreenState.LOADING,
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -148,8 +149,9 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = ProductDetailsViewState(
                         product = PRODUCT_1,
+                        isAddProductToProfileButtonLoading = true,
                     ),
-                    screenState = ScreenState.LOADING,
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -158,6 +160,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
                 expected = ViewState(
                     data = ProductDetailsViewState(
                         product = PRODUCT_1,
+                        isAddProductToProfileButtonLoading = false,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

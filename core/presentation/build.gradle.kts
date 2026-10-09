@@ -7,6 +7,7 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.media3.ui.compose)
             implementation(compose.uiTooling)
@@ -29,7 +30,7 @@ kotlin {
                 api(libs.koin.core)
                 api(libs.landscapist.coil)
                 api(libs.bundles.lifecycle)
-                api(libs.navigation3.runtime)
+                api(libs.bundles.navigation)
 
                 api(projects.core.logging)
                 api(projects.core.data)

@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.spoonofcode.core.presentation.compose.BackHandler
 import com.spoonofcode.core.presentation.compose.ErrorView
 import com.spoonofcode.core.presentation.compose.LoadingView
 import com.spoonofcode.core.presentation.compose.Paddings
@@ -34,6 +35,7 @@ import com.spoonofcode.core.presentation.compose.TopBar
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.core.presentation.compose.snackbar.setSnackbarHostState
 import com.spoonofcode.core.presentation.ext.addIf
+import com.spoonofcode.core.presentation.ext.viewEnable
 import com.spoonofcode.core.presentation.theme.AppTheme
 
 data class StandardScreenConfig(
@@ -55,6 +57,7 @@ data class StandardScreenConfig(
 fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent> StandardScreen(
     viewModel: VM,
     screenConfig: StandardScreenConfig = StandardScreenConfig(),
+    isViewEnable: (VS) -> Boolean = { true },
     navigationBackAction: ((onAction: (VA) -> Unit) -> (() -> Unit))? = null,
     topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
     bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
@@ -69,6 +72,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
 
     StandardScaffold(
         viewState = viewState,
+        isViewEnable = isViewEnable,
         onAction = viewModel::onAction,
         onStartAction = viewModel::onStartAction,
         navigateBack = viewModel::navigateBack,
@@ -90,6 +94,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
 @Composable
 private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
     viewState: ViewState<VS>,
+    isViewEnable: (VS) -> Boolean = { true },
     onAction: (VA) -> Unit,
     onStartAction: () -> Unit,
     navigateBack: () -> Unit,
@@ -106,15 +111,22 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
         navigationBackAction?.invoke(onAction) ?: { navigateBack() }
     }
 
+    val viewEnabled = (viewState as? ViewState.Content)?.data?.let(isViewEnable) ?: true
+
+    BackHandler(enabled = !viewEnabled) {
+        // Block system back navigation when screen view is disabled
+    }
+
     Scaffold(
         modifier = Modifier
+            .viewEnable(viewEnabled)
             .addIf(screenConfig.respectScaffoldImePadding) { imePadding() }
             .fillMaxSize(),
         topBar = {
             val state = viewState
             if (state is ViewState.Content) {
                 TopBar(
-                    backNavigationEnable = screenConfig.backNavigationEnable,
+                    backNavigationEnable = screenConfig.backNavigationEnable && viewEnabled,
                     topAppBarTitle = screenConfig.topBarTitle ?: "",
                     navigationBackAction = navBackAction,
                     iconBarActions = topBarActions(
@@ -182,6 +194,7 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
 fun <VS : BaseViewState, VA : BaseViewAction> StandardScreenPreview(
     viewState: ViewState<VS>,
     screenConfig: StandardScreenConfig = StandardScreenConfig(),
+    isViewEnable: (VS) -> Boolean = { true },
     topBarActions: @Composable (viewState: VS, onAction: (VA) -> Unit) -> List<TopBarAction> = { _, _ -> emptyList() },
     topBar: (@Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit)? = null,
     bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
@@ -192,6 +205,7 @@ fun <VS : BaseViewState, VA : BaseViewAction> StandardScreenPreview(
     AppTheme {
         StandardScaffold(
             viewState = viewState,
+            isViewEnable = isViewEnable,
             screenConfig = screenConfig,
             onAction = {},
             onStartAction = {},

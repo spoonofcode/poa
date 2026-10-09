@@ -36,6 +36,7 @@ internal fun LoginCodeScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { it.isViewEnable },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -76,6 +77,7 @@ private fun ColumnScope.Content(
     PrimaryButton(
         text = stringResource(resource = Res.string.sign_in_with_code),
         enabled = viewState.isSignInWithCodeButtonEnable,
+        isLoading = viewState.isSignInWithCodeButtonLoading,
         onClick = { onAction(LoginCodeViewAction.SignInWithCode) }
     )
 }

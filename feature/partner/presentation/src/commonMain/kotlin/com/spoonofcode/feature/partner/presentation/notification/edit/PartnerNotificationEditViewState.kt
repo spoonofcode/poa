@@ -26,8 +26,12 @@ internal data class PartnerNotificationEditViewState(
     val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
         .plus(ONE_DAY, DateTimeUnit.DAY),
     val isSendNotificationDialogVisible: Boolean = false,
+    val isSendNotificationButtonLoading: Boolean = false,
     val isExpirationDateTimeEnable: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSendNotificationButtonLoading
+
     val isSendNotificationEnabled: Boolean
         get() = title.isNotEmpty() && text.isNotEmpty()
 

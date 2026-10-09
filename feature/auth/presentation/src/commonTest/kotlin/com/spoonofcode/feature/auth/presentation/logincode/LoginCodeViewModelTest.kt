@@ -122,9 +122,9 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
                     data = LoginCodeViewState(
                         email = email,
                         code = code,
-                        isSignInWithCodeButtonEnable = true,
+                        isSignInWithCodeButtonLoading = true,
                     ),
-                    screenState = ScreenState.LOADING,
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -159,9 +159,9 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
                     data = LoginCodeViewState(
                         email = email,
                         code = code,
-                        isSignInWithCodeButtonEnable = true,
+                        isSignInWithCodeButtonLoading = true,
                     ),
-                    screenState = ScreenState.LOADING,
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -171,7 +171,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
                     data = LoginCodeViewState(
                         email = email,
                         code = code,
-                        isSignInWithCodeButtonEnable = true,
+                        isSignInWithCodeButtonLoading = false,
                     ),
                     screenState = ScreenState.CONTENT,
                 ),

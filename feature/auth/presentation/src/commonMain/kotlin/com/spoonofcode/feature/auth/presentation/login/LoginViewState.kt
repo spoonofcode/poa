@@ -7,7 +7,12 @@ import com.spoonofcode.core.presentation.base.BaseViewState
 @Immutable
 internal data class LoginViewState(
     val email: String = "",
+    val isSignInButtonLoading: Boolean = false,
+    val isSignInGoogleButtonLoading: Boolean = false,
 ) : BaseViewState() {
+    val isViewEnable: Boolean
+        get() = !isSignInGoogleButtonLoading
+
     val isSignInButtonEnable: Boolean
         get() = email.isValidEmail()
 }

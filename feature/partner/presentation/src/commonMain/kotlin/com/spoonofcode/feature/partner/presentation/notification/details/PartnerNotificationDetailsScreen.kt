@@ -1,17 +1,22 @@
 package com.spoonofcode.feature.partner.presentation.notification.details
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.spoonofcode.core.data.ext.formatedLocalDateTime
 import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
+import com.spoonofcode.core.presentation.compose.OutlinedButton
 import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TopBarAction
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
@@ -46,6 +51,7 @@ internal fun PartnerNotificationDetailsScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { it.isViewEnable },
         topBarActions = { viewState, onAction ->
             if (viewState.isNotificationEditable) {
                 listOf(
@@ -54,13 +60,6 @@ internal fun PartnerNotificationDetailsScreen(
                         description = "Edit",
                         onClick = { onAction(PartnerNotificationDetailsViewAction.EditNotification) },
                     ),
-                    TopBarAction(
-                        icon = Icons.Default.Delete,
-                        description = "Delete",
-                        onClick = {
-                            onAction(PartnerNotificationDetailsViewAction.DeleteNotification)
-                        }
-                    )
                 )
             } else {
                 emptyList()
@@ -122,6 +121,18 @@ private fun ColumnScope.Content(
             DescriptionCard(
                 title = stringResource(Res.string.link),
                 description = description
+            )
+        }
+
+        if (viewState.isNotificationEditable) {
+            OutlinedButton(
+                text = stringResource(Res.string.delete_notification),
+                onClick = { onAction(PartnerNotificationDetailsViewAction.DeleteNotification) },
+                isLoading = viewState.isDeleteNotificationButtonLoading,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                ),
+                modifier = Modifier.padding(top = 8.dp)
             )
         }
     }

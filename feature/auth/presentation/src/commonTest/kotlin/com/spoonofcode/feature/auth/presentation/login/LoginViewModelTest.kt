@@ -90,8 +90,10 @@ class LoginViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginViewState(),
-                    screenState = ScreenState.LOADING,
+                    data = LoginViewState(
+                        isSignInButtonLoading = true,
+                    ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -123,15 +125,19 @@ class LoginViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginViewState(),
-                    screenState = ScreenState.LOADING,
+                    data = LoginViewState(
+                        isSignInButtonLoading = true,
+                    ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginViewState(),
+                    data = LoginViewState(
+                        isSignInButtonLoading = false,
+                    ),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
@@ -159,8 +165,11 @@ class LoginViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginViewState(email = email),
-                    screenState = ScreenState.LOADING,
+                    data = LoginViewState(
+                        email = email,
+                        isSignInButtonLoading = true,
+                    ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
@@ -188,15 +197,21 @@ class LoginViewModelTest : BaseViewModelTest() {
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginViewState(email = email),
-                    screenState = ScreenState.LOADING,
+                    data = LoginViewState(
+                        email = email,
+                        isSignInButtonLoading = true,
+                    ),
+                    screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
             )
 
             assertEquals(
                 expected = ViewState(
-                    data = LoginViewState(email = email),
+                    data = LoginViewState(
+                        email = email,
+                        isSignInButtonLoading = false,
+                    ),
                     screenState = ScreenState.CONTENT,
                 ),
                 actual = awaitItem()
