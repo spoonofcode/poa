@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.ext.DEFAULT_STOP_TIMEOUT_MILLIS
 import com.spoonofcode.core.data.ext.stateInWhileSubscribed
 import com.spoonofcode.core.logging.POALogger
+import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.core.presentation.default_error
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import org.koin.mp.KoinPlatform.getKoin
 
 /**
@@ -193,9 +196,11 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         }
     }
 
-    protected fun showErrorSnackbar(message: String) {
+    protected suspend fun showErrorSnackbar(message: String) {
         poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
-        showSnackbar(SnackbarEvent.Error(message = message))
+        // WE DON"T HAVE ERROR MAPPING YET
+        val generalErrorSnackbar = getString(Res.string.default_error)
+        showSnackbar(SnackbarEvent.Error(message = generalErrorSnackbar))
     }
 
     protected fun showSuccessSnackbar(message: String) {
