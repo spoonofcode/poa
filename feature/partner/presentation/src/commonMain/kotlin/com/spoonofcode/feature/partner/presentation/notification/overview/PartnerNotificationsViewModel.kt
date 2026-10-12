@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.notification.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerNotificationsUseCase
 import com.spoonofcode.feature.partner.presentation.Res
@@ -10,7 +11,6 @@ import com.spoonofcode.feature.partner.presentation.notification.PartnerNotifica
 import com.spoonofcode.feature.partner.presentation.partner_notification_added
 import com.spoonofcode.feature.partner.presentation.partner_notification_deleted
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 internal class PartnerNotificationsViewModel(
     private val getPartnerNotificationsUseCase: GetPartnerNotificationsUseCase,
@@ -37,11 +37,11 @@ internal class PartnerNotificationsViewModel(
             partnerNotificationEventBus.overviewEvents.collect { event ->
                 when (event) {
                     PartnerNotificationEvent.PartnerNotificationAdded -> {
-                        showSuccessSnackbar(getString(Res.string.partner_notification_added))
+                        showSuccessSnackbar(UiText.Resource(Res.string.partner_notification_added))
                     }
 
                     PartnerNotificationEvent.PartnerNotificationDeleted -> {
-                        showSuccessSnackbar(getString(Res.string.partner_notification_deleted))
+                        showSuccessSnackbar(UiText.Resource(Res.string.partner_notification_deleted))
                     }
 
                     else -> {}

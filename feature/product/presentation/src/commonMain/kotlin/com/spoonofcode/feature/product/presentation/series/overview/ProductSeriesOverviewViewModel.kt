@@ -45,9 +45,7 @@ internal class ProductSeriesOverviewViewModel(
         val wasAdded = selected.contains(name)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_PRODUCT_SERIES) {
-            showSnackbar(
-                SnackbarEvent.Error("You can select a maximum of $MAX_SELECTED_PRODUCT_SERIES items.")
-            )
+            showErrorSnackbar("You can select a maximum of $MAX_SELECTED_PRODUCT_SERIES items.")
             return
         }
 

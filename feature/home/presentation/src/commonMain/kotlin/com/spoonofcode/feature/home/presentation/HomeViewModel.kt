@@ -2,7 +2,7 @@ package com.spoonofcode.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.usecase.AddRewardToUserUseCase
@@ -67,7 +67,7 @@ internal class HomeViewModel(
                 showContentView()
             }.onFailure {
                 showErrorView()
-                showSnackbar(SnackbarEvent.Error(message = "ERROR: $it"))
+                showErrorSnackbar(message = "ERROR: $it")
             }
         }
     }
@@ -77,11 +77,11 @@ internal class HomeViewModel(
             showLoadingView()
             addRewardToUserUseCase(rewardType = RewardType.DAILY_CHECK_IN)
                 .onSuccess {
-                    showSnackbar(SnackbarEvent.Success(message = "Reward collected!"))
+//                    showSuccessSnackbar(UiText.Resource("Reward collected!"))
                     initView()
                 }
                 .onFailure {
-                    showSnackbar(SnackbarEvent.Error(message = "Error collecting reward: ${it.message}"))
+                    showErrorSnackbar(message = "Error collecting reward: ${it.message}")
                 }
         }
     }

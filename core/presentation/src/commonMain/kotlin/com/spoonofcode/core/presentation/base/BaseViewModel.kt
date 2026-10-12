@@ -9,6 +9,7 @@ import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
@@ -23,7 +24,6 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import org.koin.mp.KoinPlatform.getKoin
 
 /**
@@ -196,14 +196,14 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         }
     }
 
-    protected suspend fun showErrorSnackbar(message: String) {
+    protected fun showErrorSnackbar(message: UiText) {
         poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
         // WE DON"T HAVE ERROR MAPPING YET
-        val generalErrorSnackbar = getString(Res.string.default_error)
-        showSnackbar(SnackbarEvent.Error(message = generalErrorSnackbar))
+        val generalErrorSnackbar = UiText.Resource(Res.string.default_error)
+        showSnackbar(SnackbarEvent.Error(message = message))
     }
 
-    protected fun showSuccessSnackbar(message: String) {
+    protected fun showSuccessSnackbar(message: UiText) {
         poaLogger.debug("${this::class.simpleName}: Success Snackbar: $message")
         showSnackbar(SnackbarEvent.Success(message = message))
     }

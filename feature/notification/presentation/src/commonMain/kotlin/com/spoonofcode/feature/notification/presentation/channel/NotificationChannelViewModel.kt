@@ -3,6 +3,7 @@ package com.spoonofcode.feature.notification.presentation.channel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.notification.presentation.NotificationEvent
 import com.spoonofcode.feature.notification.presentation.NotificationEventBus
@@ -40,7 +41,7 @@ internal class NotificationChannelViewModel(
         viewModelScope.launch {
             notificationEventBus.overviewEvents.collect { event ->
                 if (event is NotificationEvent.SettingsUpdated) {
-                    showSuccessSnackbar(getString(Res.string.notification_settings_updated))
+                    showSuccessSnackbar(UiText.Resource(Res.string.notification_settings_updated))
                 }
             }
         }
