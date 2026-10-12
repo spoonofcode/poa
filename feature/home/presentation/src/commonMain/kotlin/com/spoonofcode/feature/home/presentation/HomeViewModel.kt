@@ -67,7 +67,7 @@ internal class HomeViewModel(
                 showContentView()
             }.onFailure {
                 showErrorView()
-                showErrorSnackbar(message = "ERROR: $it")
+                showErrorSnackbar(UiText.DynamicString("ERROR: $it"))
             }
         }
     }
@@ -81,7 +81,7 @@ internal class HomeViewModel(
                     initView()
                 }
                 .onFailure {
-                    showErrorSnackbar(message = "Error collecting reward: ${it.message}")
+                    showErrorSnackbar(UiText.DynamicString( "Error collecting reward: ${it.message}"))
                 }
         }
     }

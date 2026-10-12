@@ -190,12 +190,6 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         _viewStatus.value = ViewStatus.CONTENT
     }
 
-    protected fun showSnackbar(snackbarEvent: SnackbarEvent) {
-        viewModelScope.launch {
-            _snackbarEvent.send(snackbarEvent)
-        }
-    }
-
     protected fun showErrorSnackbar(message: UiText) {
         poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
         // WE DON"T HAVE ERROR MAPPING YET
@@ -212,6 +206,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         poaLogger.debug("${this::class.simpleName}: emitEvent: $event")
         viewModelScope.launch {
             _viewEvent.send(event)
+        }
+    }
+
+    private fun showSnackbar(snackbarEvent: SnackbarEvent) {
+        viewModelScope.launch {
+            _snackbarEvent.send(snackbarEvent)
         }
     }
 }

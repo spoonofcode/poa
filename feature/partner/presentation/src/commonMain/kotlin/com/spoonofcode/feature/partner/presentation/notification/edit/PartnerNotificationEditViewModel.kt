@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -151,7 +152,7 @@ internal class PartnerNotificationEditViewModel(
                     viewModelNavigator.pop()
                 }.onFailure { error ->
                     updateContentState { copy(isSendNotificationButtonLoading = false) }
-                    error.message?.let { showErrorSnackbar(it) }
+                    error.message?.let { showErrorSnackbar(UiText.DynamicString(it)) }
                 }
             } else {
                 createPartnerNotificationUseCase(
@@ -172,7 +173,7 @@ internal class PartnerNotificationEditViewModel(
                     )
                 }.onFailure { error ->
                     updateContentState { copy(isSendNotificationButtonLoading = false) }
-                    error.message?.let { showErrorSnackbar(it) }
+                    error.message?.let { showErrorSnackbar(UiText.DynamicString(it)) }
                 }
             }
         }

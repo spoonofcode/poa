@@ -88,7 +88,7 @@ internal class ProductDetailsViewModel(
                 )
             }.onFailure {
                 updateContentState { copy(isAddProductToProfileButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }
@@ -127,7 +127,7 @@ internal class ProductDetailsViewModel(
                 }
                 .onFailure {
                     updateContentState { copy(isDeleteProductFromProfileButtonLoading = false) }
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

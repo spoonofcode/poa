@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerUseCase
 import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
@@ -86,7 +87,7 @@ internal class PartnerEditViewModel(
                 }
                 .onFailure {
                     updateContentState { copy(isSaveChangesButtonLoading = false) }
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

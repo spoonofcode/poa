@@ -111,7 +111,7 @@ internal class PartnerNotificationDetailsViewModel(
                 }
             }.onFailure {
                 updateContentState { copy(isDeleteNotificationButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }
