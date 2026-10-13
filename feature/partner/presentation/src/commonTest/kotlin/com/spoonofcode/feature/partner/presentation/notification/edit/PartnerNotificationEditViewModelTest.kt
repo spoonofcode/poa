@@ -1,27 +1,34 @@
 package com.spoonofcode.feature.partner.presentation.notification.edit
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.core.presentation.test.ext.containsTypes
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
+import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
+import com.spoonofcode.feature.appnavigation.ProfileModuleRoute
+import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.repository.PartnerNotificationRepository
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDateTime
+import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import com.spoonofcode.core.presentation.Res as CoreRes
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: PartnerNotificationEditViewModel
     private lateinit var notificationRepository: PartnerNotificationRepository
 
     @BeforeTest
@@ -29,7 +36,6 @@ class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
         modules = arrayOf(partnerPresentationTestModule)
         super.beforeTest()
         notificationRepository = getKoin().get()
-        viewModel = getSut()
     }
 
     @AfterTest
@@ -38,174 +44,284 @@ class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
+    fun `initial view create new notification`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = null,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(PartnerNotificationType.global, notificationType)
+                assertEquals(setOf("global"), selectedTopics)
+                assertEquals(setOf("Global"), selectedNames)
+            }
+        }
+    }
+
+    @Test
+    fun `initial view edit existing notification`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = "1",
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals("1", notificationId)
+                assertEquals("Title", title)
+                assertEquals("Text", text)
+            }
+        }
+    }
+
+    @Test
+    fun `initial view edit existing notification - error`() = runTest {
+        val notificationId = "1"
+        everySuspend { notificationRepository.getNotification(notificationId) } returns Result.failure(
+            Exception("Test error")
+        )
+
+        val args = PartnerNotificationEditArgs(
+            notificationId = notificationId,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
+        }
+    }
+
+    @Test
+    fun `change title text and link`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = null,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.ChangeTitle("New Title"))
+            with(viewState.awaitContentState()) {
+                assertEquals("New Title", title)
+            }
+
+            onAction(PartnerNotificationEditViewAction.ChangeText("New Text"))
+            with(viewState.awaitContentState()) {
+                assertEquals("New Text", text)
+            }
+
+            onAction(PartnerNotificationEditViewAction.ChangeLink("https://example.com"))
+            with(viewState.awaitContentState()) {
+                assertEquals("https://example.com", link)
+            }
+        }
+    }
+
+    @Test
+    fun `change delivery and expiration date time`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = null,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        val newDelivery = LocalDateTime(2025, 1, 1, 12, 0)
+        val newExpiration = LocalDateTime(2025, 1, 2, 12, 0)
+
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.ChangeDeliveryDateTime(newDelivery))
+            with(viewState.awaitContentState()) {
+                assertEquals(newDelivery, deliveryDateTime)
+            }
+
+            onAction(PartnerNotificationEditViewAction.ChangeExpirationDateTime(newExpiration))
+            with(viewState.awaitContentState()) {
+                assertEquals(newExpiration, expirationDateTime)
+            }
+        }
+    }
+
+    @Test
+    fun `send notification dialog visibility`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = null,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.SendNotification)
+            with(viewState.awaitContentState()) {
+                assertTrue(isSendNotificationDialogVisible)
+            }
+
+            onAction(PartnerNotificationEditViewAction.CancelSendNotification)
+            with(viewState.awaitContentState()) {
+                assertFalse(isSendNotificationDialogVisible)
+            }
+        }
+    }
+
+    @Test
+    fun `confirm send new notification success`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = null,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.ConfirmSendNotification)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSendNotificationButtonLoading)
+                assertFalse(isSendNotificationDialogVisible)
+            }
+
+            verifySuspend {
+                notificationRepository.createNotification(
+                    title = any(),
+                    text = any(),
+                    link = any(),
+                    topics = any(),
+                    deliveryDateTime = any(),
+                    expirationDateTime = any(),
+                    ownerId = any(),
+                )
+            }
+            verifySuspend {
+                viewModelNavigator.replaceAll(
+                    listOf(
+                        ProfileModuleRoute.ProfileDetails,
+                        PartnerModuleRoute.PartnerPanel,
+                        PartnerModuleRoute.PartnerNotifications,
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `confirm send new notification error`() = runTest {
+        everySuspend {
+            notificationRepository.createNotification(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+            )
+        } returns Result.failure(Exception("Error creating notification"))
+
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+        val args = PartnerNotificationEditArgs(
+            notificationId = null,
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.ConfirmSendNotification)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSendNotificationButtonLoading)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isSendNotificationButtonLoading)
+            }
             assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
             )
         }
     }
 
     @Test
-    fun `init view`() = runTest {
-        val selectedTopics = setOf("test1@gmail.com", "test2@gmail.com")
-        val selectedNames = setOf("Test name 1", "Test name 2")
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `confirm update notification success`() = runTest {
+        val args = PartnerNotificationEditArgs(
+            notificationId = "1",
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
 
-            viewModel.onAction(PartnerNotificationEditViewAction.InitView(
-                notificationType = com.spoonofcode.feature.partner.domain.model.PartnerNotificationType.global,
-                selectedTopics = selectedTopics,
-                selectedNames = selectedNames,
-            ))
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.ConfirmSendNotification)
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(
-                        notificationType = com.spoonofcode.feature.partner.domain.model.PartnerNotificationType.global,
-                        selectedTopics = selectedTopics,
-                        selectedNames = selectedNames,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertTrue(isSendNotificationButtonLoading)
+                assertFalse(isSendNotificationDialogVisible)
+            }
+
+            verifySuspend {
+                notificationRepository.updateNotification(
+                    notificationId = any(),
+                    title = any(),
+                    text = any(),
+                    link = any(),
+                    topics = any(),
+                    deliveryDateTime = any(),
+                    expirationDateTime = any(),
+                    ownerId = any(),
+                )
+            }
+            verifySuspend { viewModelNavigator.pop() }
         }
     }
 
     @Test
-    fun `change link`() = runTest {
-        val link = "https://example.com"
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `confirm update notification error`() = runTest {
+        everySuspend {
+            notificationRepository.updateNotification(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+            )
+        } returns Result.failure(Exception("Error updating notification"))
 
-            viewModel.onAction(PartnerNotificationEditViewAction.ChangeLink(link))
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+        val args = PartnerNotificationEditArgs(
+            notificationId = "1",
+            selectedTopics = setOf("global"),
+            selectedNames = setOf("Global"),
+        )
+        val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
 
+        runVmTest(viewModel) {
+            onAction(PartnerNotificationEditViewAction.ConfirmSendNotification)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSendNotificationButtonLoading)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isSendNotificationButtonLoading)
+            }
             assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(
-                        link = link,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
             )
-        }
-    }
-
-    @Test
-    fun `change text`() = runTest {
-        val text = "New text"
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(PartnerNotificationEditViewAction.ChangeText(text))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(
-                        text = text,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-    }
-
-    @Test
-    fun `change title`() = runTest {
-        val title = "New title"
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(PartnerNotificationEditViewAction.ChangeTitle(title))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(
-                        title = title,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-    }
-
-    @Test
-    fun `send notification success`() = runTest {
-        val selectedTopics = setOf("test1@gmail.com", "test2@gmail.com")
-        val selectedNames = setOf("Test name 1", "Test name 2")
-        val title = "New title"
-        val text = "New text"
-        val link = "New link"
-        val expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1)
-        viewModel.updateContentState {
-            copy(
-                selectedTopics = selectedTopics,
-                selectedNames = selectedNames,
-                title = title,
-                text = text,
-                link = link,
-                expirationDateTime = expirationDateTime
-            )
-        }
-
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(PartnerNotificationEditViewAction.SendNotification)
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(
-                        selectedTopics = selectedTopics,
-                        selectedNames = selectedNames,
-                        title = title,
-                        text = text,
-                        link = link,
-                        expirationDateTime = expirationDateTime,
-                        isSendNotificationDialogVisible = true
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerNotificationEditViewAction.ConfirmSendNotification)
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerNotificationEditViewState(
-                        selectedTopics = selectedTopics,
-                        selectedNames = selectedNames,
-                        title = title,
-                        text = text,
-                        link = link,
-                        expirationDateTime = expirationDateTime,
-                        isSendNotificationDialogVisible = false,
-                        isSendNotificationButtonLoading = true,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            notificationRepository.createNotification(any(), any(), any(), any(), any(), any(), any())
-        }
-
-        verifySuspend { routeResolver.resolve(AppModuleRoute.MainHost) }
-        verifySuspend { viewModelNavigator.replaceAll(any()) }
-
-        verifySuspend {
-            viewModelNavigator.replaceAll(containsTypes(AppModuleRoute.MainHost::class))
         }
     }
 }

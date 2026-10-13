@@ -1,6 +1,7 @@
 package com.spoonofcode.feature.partner.data.test
 
 import com.spoonofcode.feature.partner.data.test.PartnerCategoriesMockData.PARTNER_CATEGORIES
+import com.spoonofcode.feature.partner.data.test.PartnerMockData.CUSTOMERS
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNERS
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PRODUCT_SERIES_LIST
@@ -20,9 +21,15 @@ internal fun partnerRepositoryMock() = mock<PartnerRepository> {
             any(),
             any(),
             any(),
+            any(),
+            any(),
+            any(),
+            any(),
+            any(),
         )
     } returns Result.success(Unit)
     everySuspend { getPartners() } returns Result.success(PARTNERS)
     everySuspend { getCategories() } returns Result.success(PARTNER_CATEGORIES)
     everySuspend { getPartnerSeries() } returns Result.success(PRODUCT_SERIES_LIST)
+    everySuspend { getPartnerCustomers() } returns Result.success(CUSTOMERS)
 }

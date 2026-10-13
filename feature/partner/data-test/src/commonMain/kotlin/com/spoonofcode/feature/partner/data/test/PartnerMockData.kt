@@ -1,5 +1,6 @@
 package com.spoonofcode.feature.partner.data.test
 
+import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.Partner
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 
@@ -77,4 +78,16 @@ object PartnerMockData {
     )
 
     val PRODUCT_SERIES_LIST = listOf(PRODUCT_SERIES_1, PRODUCT_SERIES_2)
+
+    val CUSTOMER_1 = Customer(
+        id = "c1",
+        email = "customer1@example.com",
+        name = "Customer 1",
+    )
+    val CUSTOMER_2 = Customer(
+        id = "c2",
+        email = "customer2@example.com",
+        name = "Customer 2",
+    )
+    val CUSTOMERS = listOf(CUSTOMER_1, CUSTOMER_2)
 }
