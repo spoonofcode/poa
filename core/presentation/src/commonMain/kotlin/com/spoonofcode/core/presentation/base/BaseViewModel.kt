@@ -194,7 +194,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
         // WE DON"T HAVE ERROR MAPPING YET
         val generalErrorSnackbar = UiText.Resource(Res.string.default_error)
-        showSnackbar(SnackbarEvent.Error(message = message))
+        showSnackbar(SnackbarEvent.Error(message = generalErrorSnackbar))
     }
 
     protected fun showSuccessSnackbar(message: UiText) {

@@ -11,7 +11,9 @@ import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
 
 class VmTestScope<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, VM : BaseViewModel<VS, VA, VE>>(
     val viewModel: VM,
@@ -20,6 +22,7 @@ class VmTestScope<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, V
     val snackbarEvent: ReceiveTurbine<SnackbarEvent>,
     private val turbineContext: TurbineContext,
     private val backgroundScope: CoroutineScope,
+    private val testScheduler: TestCoroutineScheduler,
 ) {
     fun <T> Flow<T>.test(): ReceiveTurbine<T> = with(turbineContext) {
         testIn(backgroundScope)
@@ -27,6 +30,7 @@ class VmTestScope<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, V
 
     fun onAction(action: VA) {
         viewModel.onAction(action)
+        testScheduler.advanceUntilIdle()
     }
 
     fun updateContentState(reducer: VS.() -> VS) {
@@ -56,6 +60,7 @@ suspend fun <VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, VM : B
             snackbarEvent = snackBarEventTurbine,
             turbineContext = this,
             backgroundScope = backgroundScope,
+            testScheduler = testScheduler,
         )
 
         scope.block()

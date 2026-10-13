@@ -3,6 +3,7 @@ package com.spoonofcode.feature.profile.presentation
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.core.presentation.test.ext.awaitContentState
 import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.awaitLoadingState
 import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.appnavigation.FAQModuleRoute
@@ -53,10 +54,11 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `logout success`() = runTest {
+    fun `confirm logout success`() = runTest {
         runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.Logout)
-            verifySuspend { viewModelNavigator.push(screen = AuthModuleRoute.Login) }
+            onAction(ProfileDetailsViewAction.ConfirmLogout)
+            viewState.awaitLoadingState()
+            verifySuspend { viewModelNavigator.replaceAll(listOf(AuthModuleRoute.Login)) }
         }
     }
 
@@ -80,7 +82,9 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
     fun `navigates to notification screen`() = runTest {
         runVmTest(viewModel) {
             onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
-            verifySuspend { viewModelNavigator.push(screen = NotificationModuleRoute.NotificationSettings) }
+            verifySuspend {
+                viewModelNavigator.push(screen = NotificationModuleRoute.NotificationChannel)
+            }
         }
     }
 
