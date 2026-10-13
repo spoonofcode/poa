@@ -1,27 +1,31 @@
 package com.spoonofcode.feature.notification.presentation.settings
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
+import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.mokkery.matcher.any
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class NotificationSettingsViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: NotificationSettingsViewModel
+    private lateinit var notificationRepository: NotificationRepository
 
     @BeforeTest
     override fun beforeTest() {
         modules = arrayOf(notificationPresentationTestModule)
         super.beforeTest()
+        notificationRepository = getKoin().get()
         viewModel = getSut()
     }
 
@@ -31,33 +35,39 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = NotificationSettingsViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(NotificationSettings(), notificationSettings)
+            }
         }
     }
 
-    // TODO Fix this test
-    @Ignore
     @Test
-    fun `init view`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `switch all notifications`() = runTest {
+        runVmTest(viewModel) {
+            onAction(NotificationSettingsViewAction.SwitchAllNotification(enable = true))
 
-            viewModel.onAction(NotificationSettingsViewAction.InitView)
+            with(viewState.awaitContentState()) {
+                assertTrue(notificationSettings.isNotificationsPersonalizedEnabled)
+                assertTrue(notificationSettings.isNotificationsFromPartnersEnabled)
+                assertTrue(notificationSettings.isNotificationsMyProductSeriesEnabled)
+            }
+        }
+    }
 
-            assertEquals(
-                expected = ViewState(
-                    data = NotificationSettingsViewState(),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+    @Test
+    fun `save changes success`() = runTest {
+        runVmTest(viewModel) {
+            onAction(NotificationSettingsViewAction.SaveChanges)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+            }
+
+            verifySuspend { notificationRepository.setNotificationSettings(any(), any(), any()) }
+            verifySuspend { viewModelNavigator.pop() }
         }
     }
 }
