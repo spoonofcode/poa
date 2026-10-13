@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.home.presentation.di
 
-//import com.spoonofcode.core.firebase.data.di.firebaseDataModule
-//import com.spoonofcode.core.firebase.domain.di.firebaseDomainModule
+import com.spoonofcode.core.firebase.data.test.di.firebaseDataTestModule
+import com.spoonofcode.core.logging.di.loggingModule
 import com.spoonofcode.feature.home.data.test.di.homeDataTestModule
 import com.spoonofcode.feature.home.domain.di.homeDomainModule
 import com.spoonofcode.feature.notification.data.test.di.notificationDataTestModule
@@ -12,17 +12,14 @@ import org.koin.dsl.module
 
 val homePresentationTestModule = module {
     includes(
+        loggingModule,
         homeDataTestModule,
         homeDomainModule,
         homePresentationModule,
-
-//        firebaseDataModule,
-//        firebaseDomainModule,
-
         notificationDomainModule,
         notificationDataTestModule,
-
         partnerDomainModule,
         partnerDataTestModule,
+        firebaseDataTestModule,
     )
 }
