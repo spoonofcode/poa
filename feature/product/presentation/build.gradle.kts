@@ -15,7 +15,9 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(projects.core.presentationTest)
+                implementation(projects.core.firebase.dataTest)
                 implementation(projects.feature.product.dataTest)
+                implementation(projects.feature.notification.dataTest)
             }
         }
     }

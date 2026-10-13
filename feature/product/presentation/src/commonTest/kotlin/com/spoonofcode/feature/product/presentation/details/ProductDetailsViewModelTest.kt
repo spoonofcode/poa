@@ -1,28 +1,23 @@
 package com.spoonofcode.feature.product.presentation.details
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.ProductModuleRoute
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.domain.model.ProductStatus
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
-import dev.mokkery.answering.returns
-import dev.mokkery.everySuspend
-import dev.mokkery.matcher.any
-import dev.mokkery.verify.VerifyMode.Companion.exactly
-import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ProductDetailsViewModelTest : BaseViewModelTest() {
+
+    private val navigationParamProductId = "1"
 
     private lateinit var viewModel: ProductDetailsViewModel
     private lateinit var productRepository: ProductRepository
@@ -32,7 +27,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         modules = arrayOf(productPresentationTestModule)
         super.beforeTest()
         productRepository = getKoin().get()
-        viewModel = getSut()
+        viewModel = getKoin().get(parameters = { parametersOf(navigationParamProductId) })
     }
 
     @AfterTest
@@ -41,227 +36,17 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
             assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(),
+                expected = ProductDetailsViewState(
+                    product = PRODUCT_1,
+                    productStatus = ProductStatus.UNASSIGNED,
                 ),
-                actual = awaitItem()
+                actual = viewState.awaitContentState()
             )
         }
     }
 
-    @Test
-    fun `init view success`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getProduct(PRODUCT_1.id)
-        }
-    }
-
-    @Test
-    fun `init view error`() = runTest {
-        everySuspend { productRepository.getProduct(any()) } returns
-                Result.failure(Exception("not found"))
-
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(),
-                    screenState = ScreenState.ERROR,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getProduct(PRODUCT_1.id)
-        }
-    }
-
-    @Test
-    fun `add product to user success`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                        isAddProductToProfileButtonLoading = true,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.addProductToUser(PRODUCT_1.id)
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
-        }
-    }
-
-    @Test
-    fun `add product to user error`() = runTest {
-        everySuspend { productRepository.addProductToUser(any()) } returns
-                Result.failure(Exception("add product to user error"))
-
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                        isAddProductToProfileButtonLoading = true,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                        isAddProductToProfileButtonLoading = false,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.addProductToUser(PRODUCT_1.id)
-        }
-
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.pop()
-        }
-    }
-
-    @Test
-    fun `edit product success`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        advanceUntilIdle()
-
-        viewModel.onAction(ProductDetailsViewAction.EditProduct)
-
-        advanceUntilIdle()
-
-        verifySuspend { routeResolver.resolve(ProductModuleRoute.ProductEdit(productId = PRODUCT_1.id)) }
-        verifySuspend { viewModelNavigator.push(any()) }
-    }
-
-    @Test
-    fun `delete product from user success`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
-        }
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.deleteProductFromUser(any())
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
-        }
-    }
-
-    @Test
-    fun `delete product from user error`() = runTest {
-        everySuspend { productRepository.deleteProductFromUser(any()) } returns
-                Result.failure(Exception("delete product error"))
-
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.deleteProductFromUser(any())
-        }
-
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.pop()
-        }
-    }
 }
