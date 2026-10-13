@@ -26,6 +26,8 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import com.spoonofcode.core.presentation.Res as CoreRes
 import com.spoonofcode.feature.product.presentation.Res as ProductRes
 
@@ -53,13 +55,10 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     fun `initial view`() = runTest {
         runVmTest(viewModel, expectMostRecentItem = false) {
             viewState.awaitInitialState()
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    product = PRODUCT_1,
-                    productStatus = ProductStatus.UNASSIGNED,
-                ),
-                actual = viewState.awaitContentState(),
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(PRODUCT_1, product)
+                assertEquals(ProductStatus.UNASSIGNED, productStatus)
+            }
         }
     }
 
@@ -80,10 +79,9 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         runVmTest(viewModel) {
             onAction(ProductDetailsViewAction.AddProductToProfile)
 
-            assertEquals(
-                expected = true,
-                actual = viewState.awaitContentState().isAddProductToProfileButtonLoading
-            )
+            with(viewState.awaitContentState()) {
+                assertTrue(isAddProductToProfileButtonLoading)
+            }
 
             verifySuspend { productRepository.addProductToUser(PRODUCT_1.id) }
             verifySuspend {
@@ -105,14 +103,12 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         runVmTest(viewModel) {
             onAction(ProductDetailsViewAction.AddProductToProfile)
 
-            assertEquals(
-                expected = true,
-                actual = viewState.awaitContentState().isAddProductToProfileButtonLoading
-            )
-            assertEquals(
-                expected = false,
-                actual = viewState.awaitContentState().isAddProductToProfileButtonLoading
-            )
+            with(viewState.awaitContentState()) {
+                assertTrue(isAddProductToProfileButtonLoading)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isAddProductToProfileButtonLoading)
+            }
             assertEquals(
                 expected = expectedErrorMessage,
                 actual = snackbarEvent.awaitItem().message
@@ -138,10 +134,9 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         runVmTest(viewModel) {
             onAction(ProductDetailsViewAction.DeleteProductFromProfile)
 
-            assertEquals(
-                expected = true,
-                actual = viewState.awaitContentState().isDeleteProductDialogVisible
-            )
+            with(viewState.awaitContentState()) {
+                assertTrue(isDeleteProductDialogVisible)
+            }
         }
     }
 
@@ -149,16 +144,14 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     fun `cancel delete product from profile`() = runTest {
         runVmTest(viewModel) {
             onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-            assertEquals(
-                expected = true,
-                actual = viewState.awaitContentState().isDeleteProductDialogVisible
-            )
+            with(viewState.awaitContentState()) {
+                assertTrue(isDeleteProductDialogVisible)
+            }
 
             onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile)
-            assertEquals(
-                expected = false,
-                actual = viewState.awaitContentState().isDeleteProductDialogVisible
-            )
+            with(viewState.awaitContentState()) {
+                assertFalse(isDeleteProductDialogVisible)
+            }
         }
     }
 
@@ -168,8 +161,8 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
             onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile)
 
             with(viewState.awaitContentState()) {
-                assertEquals(expected = true, actual = isDeleteProductFromProfileButtonLoading)
-                assertEquals(expected = false, actual = isDeleteProductDialogVisible)
+                assertTrue(isDeleteProductFromProfileButtonLoading)
+                assertFalse(isDeleteProductDialogVisible)
             }
 
             verifySuspend { productRepository.deleteProductFromUser(PRODUCT_1.id) }
@@ -189,13 +182,12 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
             onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile)
 
             with(viewState.awaitContentState()) {
-                assertEquals(expected = true, actual = isDeleteProductFromProfileButtonLoading)
-                assertEquals(expected = false, actual = isDeleteProductDialogVisible)
+                assertTrue(isDeleteProductFromProfileButtonLoading)
+                assertFalse(isDeleteProductDialogVisible)
             }
-            assertEquals(
-                expected = false,
-                actual = viewState.awaitContentState().isDeleteProductFromProfileButtonLoading
-            )
+            with(viewState.awaitContentState()) {
+                assertFalse(isDeleteProductFromProfileButtonLoading)
+            }
             assertEquals(
                 expected = expectedErrorMessage,
                 actual = snackbarEvent.awaitItem().message
@@ -213,13 +205,10 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
             productEventBus.emitDetails(ProductEvent.ProductUpdated)
 
             viewState.awaitLoadingState()
-            assertEquals(
-                expected = ProductDetailsViewState(
-                    product = PRODUCT_1,
-                    productStatus = ProductStatus.UNASSIGNED,
-                ),
-                actual = viewState.awaitContentState()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(PRODUCT_1, product)
+                assertEquals(ProductStatus.UNASSIGNED, productStatus)
+            }
             assertEquals(
                 expected = UiText.Resource(ProductRes.string.product_updated),
                 actual = snackbarEvent.awaitItem().message
