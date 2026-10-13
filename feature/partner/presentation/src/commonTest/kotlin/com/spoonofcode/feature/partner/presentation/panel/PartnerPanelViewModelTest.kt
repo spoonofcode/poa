@@ -1,21 +1,16 @@
 package com.spoonofcode.feature.partner.presentation.panel
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
-import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class PartnerPanelViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerPanelViewModel
@@ -27,34 +22,42 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
         viewModel = getSut()
     }
 
+    @AfterTest
+    override fun afterTest() {
+        super.afterTest()
+    }
+
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerPanelViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitContentState()
         }
     }
 
     @Test
     fun `navigate to partner edit screen`() = runTest {
-        viewModel.onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
-        advanceUntilIdle()
+        runVmTest(viewModel) {
+            onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
 
-        verifySuspend { routeResolver.resolve(PartnerModuleRoute.PartnerEdit(partnerId = any())) }
-        verifySuspend { viewModelNavigator.push(any()) }
-
+            verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerEdit) }
+        }
     }
 
     @Test
     fun `navigate to notification type screen`() = runTest {
-        viewModel.onAction(PartnerPanelViewAction.NavigateToNotificationType)
-        advanceUntilIdle()
+        runVmTest(viewModel) {
+            onAction(PartnerPanelViewAction.NavigateToNotificationType)
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationType) }
-        verifySuspend { viewModelNavigator.push(any()) }
+            verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerNotificationType) }
+        }
+    }
+
+    @Test
+    fun `navigate to partner notifications screen`() = runTest {
+        runVmTest(viewModel) {
+            onAction(PartnerPanelViewAction.NavigateToPartnerNotifications)
+
+            verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerNotifications) }
+        }
     }
 }
