@@ -3,6 +3,7 @@ package com.spoonofcode.core.test.base
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.core.test.coroutines.StandardTestDispatcherProvider
 import com.spoonofcode.core.test.di.testModule
+import com.spoonofcode.core.test.network.sessionRepositoryMock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -30,6 +31,7 @@ abstract class BaseTest : KoinTest {
                 testModule,
                 module {
                     single<DispatcherProvider> { StandardTestDispatcherProvider(testDispatcher) }
+                    single { sessionRepositoryMock() }
                 }
             )
         }
