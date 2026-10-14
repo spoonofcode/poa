@@ -31,13 +31,13 @@ interface NotificationRepository {
     suspend fun read(notificationId: String): Result<Notification>
     suspend fun readAll(): Result<List<Notification>>
 
-    suspend fun markAsRead(notificationId: String)
-    suspend fun isRead(notificationId: String): Boolean
+    suspend fun markAsRead(notificationId: String): Result<Unit>
+    suspend fun isRead(notificationId: String): Result<Boolean>
 
-    suspend fun getNotificationSettings(): NotificationSettings
+    suspend fun getNotificationSettings(): Result<NotificationSettings>
     suspend fun setNotificationSettings(
         notificationsPersonalizedEnabled: Boolean,
         notificationsFromPartnersEnabled: Boolean,
         notificationsMyProductSeriesEnabled: Boolean
-    )
+    ): Result<Unit>
 }

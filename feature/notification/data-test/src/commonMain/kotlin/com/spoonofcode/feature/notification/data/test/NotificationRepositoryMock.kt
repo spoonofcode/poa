@@ -25,7 +25,8 @@ internal fun notificationRepositoryMock() = mock<NotificationRepository> {
     )
     everySuspend { read(any()) } returns Result.success(NOTIFICATION_1)
     everySuspend { readAll() } returns Result.success(NOTIFICATIONS)
-    everySuspend { getNotificationSettings() } returns NotificationSettings()
-    everySuspend { markAsRead(any()) } returns Unit
-    everySuspend { setNotificationSettings(any(), any(), any()) } returns Unit
+    everySuspend { getNotificationSettings() } returns Result.success(NotificationSettings())
+    everySuspend { markAsRead(any()) } returns Result.success(Unit)
+    everySuspend { isRead(any()) } returns Result.success(false)
+    everySuspend { setNotificationSettings(any(), any(), any()) } returns Result.success(Unit)
 }
