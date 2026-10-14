@@ -1,4 +1,5 @@
 import com.spoonofcode.convention.applyPlugin
+import com.spoonofcode.convention.configureKover
 import com.spoonofcode.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,6 +23,8 @@ class KmpDomainConventionPlugin : Plugin<Project> {
                     }
                 }
             }
+
+            configureKover()
         }
     }
 }

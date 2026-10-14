@@ -24,6 +24,7 @@ internal fun Project.configureKover() {
                         // Generated Classes & Resources
                         packages("*.generated.*")
                         packages("*resources*")
+                        classes("*BuildKonfig*")
 
                         // Dependency Injection
                         packages("*di*")
@@ -53,6 +54,9 @@ internal fun Project.configureKover() {
                         // Navigation & Routes
                         classes("*.*Route")
                         classes("*Route*")
+
+                        // Models
+                        packages("*.model.*")
 
                         // Network DTOs (Requests & Responses)
                         classes("*.*Response")
