@@ -70,7 +70,7 @@ private fun ColumnScope.Content(
                 item = customer,
                 onClick = {
                     onAction(
-                        PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id!!)
+                        PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id)
                     )
                 },
                 checkedCustomer = checkedCustomer,

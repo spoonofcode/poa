@@ -81,7 +81,7 @@ private fun ColumnScope.Content(
     viewState: PartnerNotificationDetailsViewState,
     onAction: (PartnerNotificationDetailsViewAction) -> Unit,
 ) {
-    viewState.notification?.let {
+    viewState.notification.let {
         if (viewState.notification.topics.isNotEmpty()) {
             val title = when (viewState.notificationType) {
                 PartnerNotificationType.user -> stringResource(Res.string.selected_customers)

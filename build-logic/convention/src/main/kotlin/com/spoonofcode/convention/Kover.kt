@@ -55,8 +55,12 @@ internal fun Project.configureKover() {
                         classes("*.*Route")
                         classes("*Route*")
 
-                        // Models
-                        packages("*.model.*")
+                        // Models & Repositories
+                        packages("*model*")
+                        packages("*repository*")
+                        classes("*Model*")
+                        classes("*Settings*")
+                        classes("*Repository*")
 
                         // Network DTOs (Requests & Responses)
                         classes("*.*Response")
