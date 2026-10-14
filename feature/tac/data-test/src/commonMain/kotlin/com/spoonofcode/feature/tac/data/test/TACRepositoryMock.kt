@@ -7,11 +7,11 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
 internal fun tacRepositoryMock() = mock<TACRepository> {
-    everySuspend { getTACSettings() } returns TACMockData.SETTINGS_1
+    everySuspend { getTACSettings() } returns Result.success(TACMockData.SETTINGS_1)
     everySuspend {
         setTACSettings(
             any(),
             any(),
         )
-    } returns Unit
+    } returns Result.success(Unit)
 }

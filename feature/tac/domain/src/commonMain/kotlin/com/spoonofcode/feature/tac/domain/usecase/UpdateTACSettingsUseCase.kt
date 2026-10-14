@@ -8,11 +8,8 @@ class UpdateTACSettingsUseCase(
     suspend operator fun invoke(
         isPrivacyPolicyAccepted: Boolean,
         isTermsAndConditionsAccepted: Boolean,
-    ): Result<Unit> {
-        tacRepository.setTACSettings(
-            isPrivacyPolicyAccepted = isPrivacyPolicyAccepted,
-            isTermsAndConditionsAccepted = isTermsAndConditionsAccepted,
-        )
-        return Result.success(Unit)
-    }
+    ): Result<Unit> = tacRepository.setTACSettings(
+        isPrivacyPolicyAccepted = isPrivacyPolicyAccepted,
+        isTermsAndConditionsAccepted = isTermsAndConditionsAccepted,
+    )
 }
