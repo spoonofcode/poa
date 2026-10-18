@@ -25,4 +25,5 @@ data class NotificationResponse(
     val expirationDateTime: Instant,
     val state: String,
     val topics: List<String>,
+    val ownerId: String? = null,
 )

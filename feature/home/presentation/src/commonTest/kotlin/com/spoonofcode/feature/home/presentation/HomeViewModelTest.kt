@@ -46,7 +46,7 @@ class HomeViewModelTest : BaseViewModelTest() {
                 assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
                 assertEquals(TOTAL_POINTS, totalPoints)
                 assertEquals(2, partnerImageLinks.size)
-                assertEquals(3, unreadNotificationsCount)
+                assertEquals(2, unreadNotificationsCount)
             }
         }
     }

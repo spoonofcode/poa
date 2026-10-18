@@ -5,30 +5,30 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProductSeriesResponse(
-    @SerialName("ask_contact_message")
-    val askContactMessage: String,
-    val banner: String,
-    @SerialName("banner_is_on")
-    val bannerIsOn: Boolean,
-    val blockchain: String,
-    @SerialName("contract_address")
-    val contractAddress: String,
-    val description: String,
-    val enabled: Boolean,
-    val facebook: String,
+    val name: String,
     @SerialName("full_name")
     val fullName: String,
-    val instagram: String,
-    val message: String,
-    val name: String,
-    val owner: String,
+    val enabled: Boolean,
+    val description: String,
     @SerialName("owner_email")
     val ownerEmail: String,
+    val owner: String,
+    @SerialName("redirect_link")
+    val redirectLink: String,
+    @SerialName("ask_contact_message")
+    val askContactMessage: String,
+    val blockchain: String,
+    @SerialName("banner_is_on")
+    val bannerIsOn: Boolean,
+    val banner: String,
+    val message: String,
     @SerialName("partner_link")
     val partnerLink: String,
     @SerialName("partner_link_text")
     val partnerLinkText: String,
-    val tiktok: String,
     val x: String,
+    val instagram: String,
     val youtube: String,
+    val facebook: String,
+    val tiktok: String,
 )

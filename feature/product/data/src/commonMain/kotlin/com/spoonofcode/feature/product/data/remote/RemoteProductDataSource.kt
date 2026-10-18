@@ -29,10 +29,14 @@ class RemoteProductDataSource : RemoteBaseDataSource(
 
     suspend fun update(
         productId: String,
-        customLink: String? = null
+        customLink: String? = null,
+        redirectLink: String? = null,
     ): Result<Unit> = doRequest(
         urlPostfixPath = productId,
         method = HttpMethod.Put,
-        requestBody = UpdateUserProductRequest(customLink = customLink),
+        requestBody = UpdateUserProductRequest(
+            customLink = customLink,
+            redirectLink = redirectLink,
+        ),
     )
 }

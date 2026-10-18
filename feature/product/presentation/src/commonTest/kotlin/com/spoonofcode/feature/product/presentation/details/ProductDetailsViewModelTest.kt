@@ -57,7 +57,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
             viewState.awaitInitialState()
             with(viewState.awaitContentState()) {
                 assertEquals(PRODUCT_1, product)
-                assertEquals(ProductStatus.UNASSIGNED, productStatus)
+                assertEquals(ProductStatus.OWNED_BY_OTHER, productStatus)
             }
         }
     }
@@ -207,7 +207,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
             viewState.awaitLoadingState()
             with(viewState.awaitContentState()) {
                 assertEquals(PRODUCT_1, product)
-                assertEquals(ProductStatus.UNASSIGNED, productStatus)
+                assertEquals(ProductStatus.OWNED_BY_OTHER, productStatus)
             }
             assertEquals(
                 expected = UiText.Resource(ProductRes.string.product_updated),

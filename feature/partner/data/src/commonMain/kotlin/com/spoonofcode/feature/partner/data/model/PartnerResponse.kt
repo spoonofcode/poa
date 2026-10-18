@@ -7,7 +7,6 @@ import kotlinx.serialization.Serializable
 data class PartnerResponse(
     val id: String,
     val name: String,
-    val partnerCategory: String,
     @SerialName("public_email")
     val email: String? = null,
     val description: String? = null,
@@ -16,5 +15,7 @@ data class PartnerResponse(
     val instagramLink: String? = null,
     val facebookLink: String? = null,
     val youtubeLink: String? = null,
+    val tiktokLink: String? = null,
     val xLink: String? = null,
+    val partnerCategory: String,
 )

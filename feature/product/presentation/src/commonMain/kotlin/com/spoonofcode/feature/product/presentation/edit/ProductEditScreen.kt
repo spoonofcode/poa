@@ -115,14 +115,16 @@ private fun ProductEditScreenContentPreview() {
             ProductEditViewState(
                 product = Product(
                     id = "1",
-                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                    productType = "item",
+                    ownerEmail = "user1@exmaple.com",
+                    partnerId = "1",
                     name = "Product #1",
                     description = "Przykładowy opis wydarzenia nr 1",
                     seriesId = "1",
                     seriesName = "Series 1",
+                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
                     imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
                     customLink = "https://beautysaute.pl/",
-                    partnerId = "1",
                 )
             )
         ),

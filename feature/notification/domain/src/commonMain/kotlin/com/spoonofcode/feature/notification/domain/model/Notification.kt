@@ -13,5 +13,6 @@ data class Notification(
     val expirationDateTime: LocalDateTime,
     val state: String,
     val topics: List<String>,
+    val ownerId: String? = null,
     val isRead: Boolean = false,
 )
