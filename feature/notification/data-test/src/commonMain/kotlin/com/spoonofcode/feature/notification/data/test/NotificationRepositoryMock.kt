@@ -2,6 +2,7 @@ package com.spoonofcode.feature.notification.data.test
 
 import com.spoonofcode.feature.notification.data.test.NotificationMockData.NOTIFICATIONS
 import com.spoonofcode.feature.notification.data.test.NotificationMockData.NOTIFICATION_1
+import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -24,4 +25,8 @@ internal fun notificationRepositoryMock() = mock<NotificationRepository> {
     )
     everySuspend { read(any()) } returns Result.success(NOTIFICATION_1)
     everySuspend { readAll() } returns Result.success(NOTIFICATIONS)
+    everySuspend { getNotificationSettings() } returns Result.success(NotificationSettings())
+    everySuspend { markAsRead(any()) } returns Result.success(Unit)
+    everySuspend { isRead(any()) } returns Result.success(false)
+    everySuspend { setNotificationSettings(any(), any(), any()) } returns Result.success(Unit)
 }

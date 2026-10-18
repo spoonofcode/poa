@@ -1,25 +1,31 @@
 package com.spoonofcode.feature.product.presentation.overview
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.awaitLoadingState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCTS
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
-import dev.mokkery.matcher.any
+import com.spoonofcode.feature.product.presentation.product_added
+import com.spoonofcode.feature.product.presentation.product_deleted
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import com.spoonofcode.feature.product.presentation.Res as ProductRes
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ProductOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: ProductOverviewViewModel
@@ -39,82 +45,94 @@ class ProductOverviewViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = ProductOverviewViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals("", searchText)
+                assertEquals(PRODUCTS, initProducts)
+                assertEquals(PRODUCTS, filteredProducts)
+            }
         }
     }
 
     @Test
-    fun `init view success`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        everySuspend { productRepository.getUserProducts() } returns Result.failure(
+            Exception("Test error")
+        )
 
-            viewModel.onAction(ProductOverviewViewAction.InitView)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductOverviewViewState(
-                        initProducts = PRODUCTS,
-                        filteredProducts = PRODUCTS,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getUserProducts()
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
         }
     }
 
     @Test
     fun `change search text`() = runTest {
-        val searchText = "New search text"
-        viewModel.viewState.test {
-            skipItems(1)
+        val searchText = "Product #1"
 
-            viewModel.onAction(ProductOverviewViewAction.InitView)
+        runVmTest(viewModel) {
+            onAction(ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
 
-            assertEquals(
-                expected = ViewState(
-                    data = ProductOverviewViewState(
-                        initProducts = PRODUCTS,
-                        filteredProducts = PRODUCTS,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(ProductOverviewViewAction.ChangeSearchText(searchText = searchText))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductOverviewViewState(
-                        searchText = searchText,
-                        initProducts = PRODUCTS,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(searchText, this.searchText)
+                assertEquals(PRODUCTS, initProducts)
+                assertEquals(listOf(PRODUCT_1), filteredProducts)
+            }
         }
     }
 
     @Test
     fun `select product`() = runTest {
-        viewModel.onAction(ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
-        advanceUntilIdle()
+        runVmTest(viewModel) {
+            onAction(ProductOverviewViewAction.SelectProduct(productId = PRODUCT_1.id))
 
-        verifySuspend { routeResolver.resolve(ProductModuleRoute.ProductDetails(productId = PRODUCT_1.id)) }
-        verifySuspend { viewModelNavigator.push(any()) }
+            verifySuspend {
+                viewModelNavigator.push(
+                    ProductModuleRoute.ProductDetails(productId = PRODUCT_1.id)
+                )
+            }
+        }
+    }
 
+    @Test
+    fun `observe product added event`() = runTest {
+        val productEventBus: ProductEventBus = getKoin().get()
+
+        runVmTest(viewModel) {
+            productEventBus.emitOverview(ProductEvent.ProductAdded)
+
+            viewState.awaitLoadingState()
+            with(viewState.awaitContentState()) {
+                assertEquals("", searchText)
+                assertEquals(PRODUCTS, initProducts)
+                assertEquals(PRODUCTS, filteredProducts)
+            }
+            assertEquals(
+                expected = UiText.Resource(ProductRes.string.product_added),
+                actual = snackbarEvent.awaitItem().message
+            )
+        }
+    }
+
+    @Test
+    fun `observe product deleted event`() = runTest {
+        val productEventBus: ProductEventBus = getKoin().get()
+
+        runVmTest(viewModel) {
+            productEventBus.emitOverview(ProductEvent.ProductDeleted)
+
+            viewState.awaitLoadingState()
+            with(viewState.awaitContentState()) {
+                assertEquals("", searchText)
+                assertEquals(PRODUCTS, initProducts)
+                assertEquals(PRODUCTS, filteredProducts)
+            }
+            assertEquals(
+                expected = UiText.Resource(ProductRes.string.product_deleted),
+                actual = snackbarEvent.awaitItem().message
+            )
+        }
     }
 }

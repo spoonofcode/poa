@@ -1,28 +1,35 @@
 package com.spoonofcode.feature.partner.presentation.details
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
+import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import kotlinx.coroutines.test.runTest
+import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class PartnerDetailsViewModelTest : BaseViewModelTest() {
 
+    private val navigationParamPartnerId = PARTNER_1.id
+
     private lateinit var viewModel: PartnerDetailsViewModel
+    private lateinit var partnerRepository: PartnerRepository
 
     @BeforeTest
     override fun beforeTest() {
         modules = arrayOf(partnerPresentationTestModule)
         super.beforeTest()
-        viewModel = getSut()
+        partnerRepository = getKoin().get()
+        viewModel = getKoin().get { parametersOf(navigationParamPartnerId) }
     }
 
     @AfterTest
@@ -31,32 +38,24 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerDetailsViewState(),
-
-                    ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(PARTNER_1, partner)
+            }
         }
     }
 
     @Test
-    fun `init view`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        everySuspend { partnerRepository.getPartner(navigationParamPartnerId) } returns Result.failure(
+            Exception("Test error"),
+        )
 
-            viewModel.onAction(PartnerDetailsViewAction.InitView(partnerId = PARTNER_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerDetailsViewState(partner = PARTNER_1),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
         }
     }
 }

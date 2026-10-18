@@ -1,6 +1,8 @@
 package com.spoonofcode.feature.partner.data.test
 
+import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.Partner
+import com.spoonofcode.feature.partner.domain.model.ProductSeries
 
 object PartnerMockData {
     val PARTNER_1 = Partner(
@@ -30,4 +32,62 @@ object PartnerMockData {
         xLink = "https://x.com/ProofOfWearPOW?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
     )
     val PARTNERS = listOf(PARTNER_1, PARTNER_2)
+
+    val PRODUCT_SERIES_1 = ProductSeries(
+        askContactMessage = "Ask contact message 1",
+        banner = "https://example.com/banner1.jpg",
+        bannerIsOn = true,
+        blockchain = "Ethereum",
+        contactAddress = "0x123",
+        description = "Description 1",
+        enabled = true,
+        facebook = "https://facebook.com",
+        fullName = "Full Name 1",
+        instagram = "https://instagram.com",
+        message = "Message 1",
+        name = "Series 1",
+        owner = "Owner 1",
+        ownerEmail = "owner1@example.com",
+        partnerLink = "https://partner1.com",
+        partnerLinkText = "Partner Link Text 1",
+        tiktok = "https://tiktok.com",
+        x = "https://x.com",
+        youtube = "https://youtube.com",
+    )
+
+    val PRODUCT_SERIES_2 = ProductSeries(
+        askContactMessage = "Ask contact message 2",
+        banner = "https://example.com/banner2.jpg",
+        bannerIsOn = true,
+        blockchain = "Ethereum",
+        contactAddress = "0x456",
+        description = "Description 2",
+        enabled = true,
+        facebook = "https://facebook.com",
+        fullName = "Full Name 2",
+        instagram = "https://instagram.com",
+        message = "Message 2",
+        name = "Series 2",
+        owner = "Owner 2",
+        ownerEmail = "owner2@example.com",
+        partnerLink = "https://partner2.com",
+        partnerLinkText = "Partner Link Text 2",
+        tiktok = "https://tiktok.com",
+        x = "https://x.com",
+        youtube = "https://youtube.com",
+    )
+
+    val PRODUCT_SERIES_LIST = listOf(PRODUCT_SERIES_1, PRODUCT_SERIES_2)
+
+    val CUSTOMER_1 = Customer(
+        id = "c1",
+        email = "customer1@example.com",
+        name = "Customer 1",
+    )
+    val CUSTOMER_2 = Customer(
+        id = "c2",
+        email = "customer2@example.com",
+        name = "Customer 2",
+    )
+    val CUSTOMERS = listOf(CUSTOMER_1, CUSTOMER_2)
 }

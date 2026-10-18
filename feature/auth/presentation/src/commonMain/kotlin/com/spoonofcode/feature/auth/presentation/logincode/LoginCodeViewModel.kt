@@ -2,6 +2,7 @@ package com.spoonofcode.feature.auth.presentation.logincode
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.HomeModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.TACModuleRoute
@@ -48,7 +49,7 @@ internal class LoginCodeViewModel(
                 )
             }.onFailure {
                 updateContentState { copy(isSignInWithCodeButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }

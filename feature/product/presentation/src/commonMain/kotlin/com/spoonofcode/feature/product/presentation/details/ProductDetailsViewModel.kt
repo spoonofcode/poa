@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
@@ -46,7 +47,8 @@ internal class ProductDetailsViewModel(
             productEventBus.detailsEvents.collect { event ->
                 if (event is ProductEvent.ProductUpdated) {
                     initView(productId)
-                    showSuccessSnackbar(getString(Res.string.product_updated))
+                    showSuccessSnackbar(UiText.Resource(Res.string.product_updated))
+
                 }
             }
         }
@@ -86,7 +88,7 @@ internal class ProductDetailsViewModel(
                 )
             }.onFailure {
                 updateContentState { copy(isAddProductToProfileButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }
@@ -125,7 +127,7 @@ internal class ProductDetailsViewModel(
                 }
                 .onFailure {
                     updateContentState { copy(isDeleteProductFromProfileButtonLoading = false) }
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

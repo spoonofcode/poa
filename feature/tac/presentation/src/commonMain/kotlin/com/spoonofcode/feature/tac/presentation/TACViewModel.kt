@@ -2,6 +2,7 @@ package com.spoonofcode.feature.tac.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.tac.domain.usecase.GetTACSettingsUseCase
 import com.spoonofcode.feature.tac.domain.usecase.UpdateTACSettingsUseCase
 import kotlinx.coroutines.launch
@@ -37,7 +38,8 @@ internal class TACViewModel(
                     )
                     showContentView()
                 }.onFailure {
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    showErrorView()
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }
@@ -60,7 +62,7 @@ internal class TACViewModel(
                 viewModelNavigator.pop()
             }.onFailure {
                 updateContentState { copy(isSaveChangesButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }

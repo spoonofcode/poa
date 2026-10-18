@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
 import com.spoonofcode.feature.product.presentation.ProductEvent
@@ -62,7 +63,7 @@ internal class ProductEditViewModel(
                 }
                 .onFailure {
                     updateContentState { copy(isSaveChangesButtonLoading = false) }
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

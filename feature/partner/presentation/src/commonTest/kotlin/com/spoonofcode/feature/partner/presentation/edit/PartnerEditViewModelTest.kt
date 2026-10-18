@@ -1,22 +1,28 @@
 package com.spoonofcode.feature.partner.presentation.edit
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import com.spoonofcode.core.presentation.Res as CoreRes
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class PartnerEditViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: PartnerEditViewModel
@@ -36,289 +42,149 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(PARTNER_1, partner)
+            }
         }
     }
 
     @Test
-    fun `init view`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        everySuspend { partnerRepository.getPartner(any()) } returns Result.failure(
+            Exception("Test error")
+        )
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(partner = PARTNER_1),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
         }
     }
 
     @Test
     fun `change name`() = runTest {
-        val name = "New name"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newName = "New Partner Name"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeName(name = newName))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1,
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeName(name))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(name = name),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newName, partner.name)
+            }
         }
     }
 
     @Test
     fun `change description`() = runTest {
-        val description = "New description"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newDescription = "New Description"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeDescription(description = newDescription))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeDescription(description))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(description = description),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newDescription, partner.description)
+            }
         }
     }
 
     @Test
     fun `change website link`() = runTest {
-        val websiteLink = "New website link"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newLink = "https://newwebsite.com"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeWebsiteLink(link = newLink))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeWebsiteLink(websiteLink))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(websiteLink = websiteLink),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, partner.websiteLink)
+            }
         }
     }
 
     @Test
     fun `change instagram link`() = runTest {
-        val instagramLink = "New instagram link"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newLink = "https://instagram.com/new"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeInstagramLink(link = newLink))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeInstagramLink(instagramLink))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(instagramLink = instagramLink),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, partner.instagramLink)
+            }
         }
     }
 
     @Test
     fun `change facebook link`() = runTest {
-        val facebookLink = "New facebook link"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newLink = "https://facebook.com/new"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeFacebookLink(link = newLink))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeFacebookLink(facebookLink))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(facebookLink = facebookLink),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, partner.facebookLink)
+            }
         }
     }
 
     @Test
     fun `change youtube link`() = runTest {
-        val youtubeLink = "New youtube link"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newLink = "https://youtube.com/new"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeYoutubeLink(link = newLink))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeYoutubeLink(youtubeLink))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(youtubeLink = youtubeLink),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, partner.youtubeLink)
+            }
         }
     }
 
     @Test
     fun `change x link`() = runTest {
-        val xLink = "New x link"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newLink = "https://x.com/new"
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeXLink(link = newLink))
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.ChangeXLink(xLink))
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1.copy(xLink = xLink),
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, partner.xLink)
+            }
         }
     }
 
     @Test
-    fun `save changes`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `save changes success`() = runTest {
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.SaveChanges)
 
-            viewModel.onAction(PartnerEditViewAction.InitView(partnerId = PARTNER_1.id))
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+            }
 
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(PartnerEditViewAction.SaveChanges)
-
-            assertEquals(
-                expected = ViewState(
-                    data = PartnerEditViewState(
-                        partner = PARTNER_1
-                    ),
-                    screenState = ScreenState.LOADING
-                ),
-                actual = awaitItem()
-            )
+            verifySuspend {
+                partnerRepository.updatePartner(
+                    partnerId = PARTNER_1.id,
+                    name = PARTNER_1.name,
+                    partnerCategory = PARTNER_1.partnerCategory,
+                    email = PARTNER_1.email,
+                    description = PARTNER_1.description,
+                    imageLink = PARTNER_1.imageLink,
+                    websiteLink = PARTNER_1.websiteLink,
+                    instagramLink = PARTNER_1.instagramLink,
+                    facebookLink = PARTNER_1.facebookLink,
+                    youtubeLink = PARTNER_1.youtubeLink,
+                    xLink = PARTNER_1.xLink,
+                )
+            }
+            verifySuspend { viewModelNavigator.pop() }
         }
+    }
 
-        verifySuspend {
+    @Test
+    fun `save changes error`() = runTest {
+        everySuspend {
             partnerRepository.updatePartner(
                 any(),
                 any(),
@@ -328,11 +194,43 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
                 any(),
                 any(),
                 any(),
+                any(),
+                any(),
+                any(),
             )
-        }
+        } returns Result.failure(Exception("Error updating partner"))
 
-        verifySuspend {
-            viewModelNavigator.pop()
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.SaveChanges)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isSaveChangesButtonLoading)
+            }
+            assertEquals(
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
+            )
+
+            verifySuspend {
+                partnerRepository.updatePartner(
+                    partnerId = PARTNER_1.id,
+                    name = PARTNER_1.name,
+                    partnerCategory = PARTNER_1.partnerCategory,
+                    email = PARTNER_1.email,
+                    description = PARTNER_1.description,
+                    imageLink = PARTNER_1.imageLink,
+                    websiteLink = PARTNER_1.websiteLink,
+                    instagramLink = PARTNER_1.instagramLink,
+                    facebookLink = PARTNER_1.facebookLink,
+                    youtubeLink = PARTNER_1.youtubeLink,
+                    xLink = PARTNER_1.xLink,
+                )
+            }
         }
     }
 }

@@ -1,26 +1,27 @@
 package com.spoonofcode.feature.home.presentation
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.awaitLoadingState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.home.data.test.DailyCheckInStatusMockData.DAILY_CHECK_IN_STATUS_1
 import com.spoonofcode.feature.home.data.test.TOTAL_POINTS
+import com.spoonofcode.feature.home.domain.model.RewardType
+import com.spoonofcode.feature.home.domain.repository.RewardRepository
 import com.spoonofcode.feature.home.presentation.di.homePresentationTestModule
-import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNERS
-import dev.mokkery.matcher.any
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class HomeViewModelest : BaseViewModelTest() {
+class HomeViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: HomeViewModel
 
@@ -37,67 +38,58 @@ class HomeViewModelest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = HomeViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitLoadingState()
+            with(viewState.awaitContentState()) {
+                assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
+                assertEquals(TOTAL_POINTS, totalPoints)
+                assertEquals(2, partnerImageLinks.size)
+                assertEquals(3, unreadNotificationsCount)
+            }
         }
     }
 
     @Test
-    fun `Daily check in success`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        val rewardRepository: RewardRepository = getKoin().get()
+        everySuspend { rewardRepository.getUserDailyCheckInStatus() } returns Result.failure(
+            Exception("Test error"),
+        )
 
-            viewModel.onAction(HomeViewAction.DailyCheckIn)
-
-            assertEquals(
-                expected = ViewState(
-                    data = HomeViewState(
-                        dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
-                        totalPoints = TOTAL_POINTS,
-                        partnerImageLinks = PARTNERS.map { partner -> partner.imageLink } as List<String>,
-                        unreadNotificationsCount = 3,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitLoadingState()
+            viewState.awaitErrorState()
+            snackbarEvent.awaitItem()
         }
     }
 
     @Test
-    fun `initial view success`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `daily check in`() = runTest {
+        val rewardRepository: RewardRepository = getKoin().get()
 
-            viewModel.onAction(HomeViewAction.InitView)
+        runVmTest(viewModel) {
+            onAction(HomeViewAction.DailyCheckIn)
 
-            assertEquals(
-                expected = ViewState(
-                    data = HomeViewState(
-                        dailyCheckInStatus = DAILY_CHECK_IN_STATUS_1,
-                        totalPoints = TOTAL_POINTS,
-                        partnerImageLinks = PARTNERS.map { partner -> partner.imageLink } as List<String>,
-                        unreadNotificationsCount = 3,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            viewState.awaitLoadingState()
+            with(viewState.awaitContentState()) {
+                assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
+            }
+
+            verifySuspend { rewardRepository.addRewardToUser(RewardType.DAILY_CHECK_IN) }
         }
     }
 
     @Test
-    fun `navigates to notifications screen`() = runTest {
-        viewModel.onAction(HomeViewAction.NavigateToNotifications)
-        advanceUntilIdle()
+    fun `navigate to notifications`() = runTest {
+        runVmTest(viewModel) {
+            onAction(HomeViewAction.NavigateToNotifications)
 
-        verifySuspend { routeResolver.resolve(NotificationModuleRoute.NotificationOverview) }
-        verifySuspend { viewModelNavigator.push(any()) }
+            verifySuspend {
+                viewModelNavigator.push(NotificationModuleRoute.NotificationOverview)
+            }
+        }
     }
 }

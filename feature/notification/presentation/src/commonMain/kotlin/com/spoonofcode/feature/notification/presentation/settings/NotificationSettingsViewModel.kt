@@ -2,6 +2,7 @@ package com.spoonofcode.feature.notification.presentation.settings
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.notification.domain.usecase.GetNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSettingsUseCase
 import com.spoonofcode.feature.notification.presentation.NotificationEvent
@@ -54,7 +55,7 @@ internal class NotificationSettingsViewModel(
                     )
                     showContentView()
                 }.onFailure {
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }
@@ -111,7 +112,7 @@ internal class NotificationSettingsViewModel(
                 viewModelNavigator.pop()
             }.onFailure {
                 updateContentState { copy(isSaveChangesButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }

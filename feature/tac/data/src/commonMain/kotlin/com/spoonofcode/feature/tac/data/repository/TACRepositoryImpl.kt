@@ -8,14 +8,14 @@ class TACRepositoryImpl(
     private val localTACDataSource: LocalTACDataSource,
 ) : TACRepository {
 
-    override suspend fun getTACSettings(): TACSettings {
-        return localTACDataSource.getTACSettings()
+    override suspend fun getTACSettings(): Result<TACSettings> = runCatching {
+        localTACDataSource.getTACSettings()
     }
 
     override suspend fun setTACSettings(
         isPrivacyPolicyAccepted: Boolean,
         isTermsAndConditionsAccepted: Boolean,
-    ) {
+    ): Result<Unit> = runCatching {
         localTACDataSource.setTACSettings(
             isPrivacyPolicyAccepted = isPrivacyPolicyAccepted,
             isTermsAndConditionsAccepted = isTermsAndConditionsAccepted,

@@ -2,6 +2,7 @@ package com.spoonofcode.feature.partner.presentation.notification.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.Customer
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -14,7 +15,6 @@ import com.spoonofcode.feature.partner.presentation.notification.PartnerNotifica
 import com.spoonofcode.feature.partner.presentation.partner_notification_updated
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 internal class PartnerNotificationDetailsViewModel(
     private val notificationId: String,
@@ -45,7 +45,7 @@ internal class PartnerNotificationDetailsViewModel(
             partnerNotificationEventBus.detailsEvents.collect { event ->
                 if (event is PartnerNotificationEvent.PartnerNotificationUpdated) {
                     initView(notificationId)
-                    showSuccessSnackbar(getString(Res.string.partner_notification_updated))
+                    showSuccessSnackbar(UiText.Resource(Res.string.partner_notification_updated))
                 }
             }
         }
@@ -111,7 +111,7 @@ internal class PartnerNotificationDetailsViewModel(
                 }
             }.onFailure {
                 updateContentState { copy(isDeleteNotificationButtonLoading = false) }
-                it.message?.let { message -> showErrorSnackbar(message) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }
