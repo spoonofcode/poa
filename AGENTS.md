@@ -1,16 +1,19 @@
 # AGENTS.md - Root Instructions
 
-> **Note:** This file provides general guidance for AI agents working on this project. For specialized agents (testing, documentation, security), see `.github/agents/` directory.
+> **Note:** This file provides general guidance for AI agents working on this project. For
+> specialized agents (testing, documentation, security), see `.github/agents/` directory.
 
 ## Your Role
 
-You are an expert developer assistant for the "Taggy Go" Compose Multiplatform application. You understand Kotlin, Jetpack Compose, Clean Architecture, and Compose Multiplatform best practies.
+You are an expert developer assistant for the "Taggy Go" Compose Multiplatform application. You
+understand Kotlin, Jetpack Compose, Clean Architecture, and Compose Multiplatform best practices.
 
 ### Quick Reference
 
 - **Tech Stack:** Kotlin 2.x + Jetpack Compose + Clean Architecture + MVVM/MVI
 - **Build Tool:** Gradle with Kotlin DSL
-- **Main Directories:** `poa/` (app), `core/` (core business logic), `feature/` (features), `docs/` (documentation)
+- **Main Directories:** `poa/` (app), `core/` (core business logic), `feature/` (features), `docs/`
+  (documentation)
 - **Key Commands:** `./gradlew ktlintFormat detekt`, `./gradlew testDebugUnitTest`
 - **Primary Branch:** `develop` (all PRs target this branch)
 
@@ -18,11 +21,11 @@ You are an expert developer assistant for the "Taggy Go" Compose Multiplatform a
 
 | Context         | Language | Example                            |
 |-----------------|----------|------------------------------------|
-| Github Tickets  | English | Titel, description, comments       |
-| Code            | English | Variables, functions, comments     |
-| Commit Messages | English | `POA-123 - Implement login screen` |
-| Documentation   | English | ADRs, README, code docs            |
-| Pull Requests   | English | Title, description, Reviews        |
+| Github Tickets  | English  | Titel, description, comments       |
+| Code            | English  | Variables, functions, comments     |
+| Commit Messages | English  | `POA-123 - Implement login screen` |
+| Documentation   | English  | ADRs, README, code docs            |
+| Pull Requests   | English  | Title, description, Reviews        |
 
 <!-- 
 TODO THIS LATER:
@@ -52,11 +55,11 @@ TODO THIS LATER:
 
 Take does values as defaults when creating (when not specified explicitly) new tickets:
 
-| Field | Value   | Description |
-|-------|---------|-------------|
-| Project | `POA`   | Projekt-Key |
-| Issue Type ID | `10202` | Tech Story |
-| Component ID | `11204` | Android |
+| Field         | Value   | Description |
+|---------------|---------|-------------|
+| Project       | `POA`   | Projekt-Key |
+| Issue Type ID | `10202` | Tech Story  |
+| Component ID  | `11204` | Android     |
 
 ### Ticket Structure (English)
 
@@ -112,21 +115,22 @@ docs/ # Documentation, ADRs
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Language | Kotlin 2.x |
-| UI | Jetpack Compose |
-| Architecture | Clean Architecture + MVVM |
-| DI | Koin |
-| Networking | Retrofit + Moshi + OkHttp |
-| Async | Coroutines + Flow |
-| Navigation | Voyager |
-| Testing | JUnit 5 + MockK/Mockito + Robolectric |
-| CI/CD | Jenkins |
+| Category     | Technology                    |
+|--------------|-------------------------------|
+| Language     | Kotlin 2.x                    |
+| UI           | Jetpack Compose               |
+| Architecture | Clean Architecture + MVVM/MVI |
+| DI           | Koin                          |
+| Networking   | Ktor                          |
+| Async        | Coroutines + Flow             |
+| Navigation   | Navigation Compose 3          |
+| Testing      | JUnit 5 + Mokkery + Turbine   |
+| CI/CD        | Jenkins                       |
 
 ## Code Style
 
 **Naming conventions:**
+
 - Classes: PascalCase (`UserRepository`, `LoginViewModel`)
 - Functions: camelCase (`fetchUserData`, `validateInput`)
 - Constants: UPPER_SNAKE_CASE (`MAX_RETRY_COUNT`, `API_TIMEOUT`)
@@ -205,14 +209,13 @@ TODO THIS LATER:
 
 ### Versioning Convention
 
-| Environment | Pattern | Example |
-|-------------|---------|---------|
-| Development | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-develop-SNAPSHOT` |
-| Feature | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-feature-login-SNAPSHOT` |
-| Staging (RC) | `X.Y.Z-rc#` | `5.20.0-rc1` |
-| Production | `X.Y.Z` | `5.20.0` |
-| Hotfix | `X.Y.Z` | `5.20.1` |
-
+| Environment  | Pattern                       | Example                             |
+|--------------|-------------------------------|-------------------------------------|
+| Development  | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-develop-SNAPSHOT`       |
+| Feature      | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-feature-login-SNAPSHOT` |
+| Staging (RC) | `X.Y.Z-rc#`                   | `5.20.0-rc1`                        |
+| Production   | `X.Y.Z`                       | `5.20.0`                            |
+| Hotfix       | `X.Y.Z`                       | `5.20.1`                            |
 
 <!-- 
 TODO THIS LATER:

@@ -45,7 +45,7 @@ Add to the main file of your feature/fix:
  * - [ ] Analyze requirements / root cause
  * - [ ] Design solution (ADR if needed)
  * - [ ] Implement changes
- * - [ ] Write unit tests (80% coverage)
+ * - [ ] Write unit tests (Kotlin Test + Mokkery + Turbine, 80% coverage)
  * - [ ] Update documentation
  * - [ ] Review permissions / manifest
  * - [ ] Self-review & cleanup
@@ -58,7 +58,7 @@ Add to the main file of your feature/fix:
 2. **Identify affected modules** - Check dependencies
 3. **Plan the implementation** - Create TODO checklist
 4. **Check for existing patterns** - Reuse, don't reinvent
-5. **Consider testability** - How will this be tested?
+5. **Consider testability** - How will this be tested (Kotlin Test / Mokkery / Turbine)?
 
 ### Before Starting Bugfix
 
@@ -79,21 +79,6 @@ Before every commit, verify:
 - [ ] Unit tests pass and cover 80%+
 - [ ] No new detekt baseline entries
 
-## Quick Commands
-<!-- 
-TODO THIS LATER:
-```bash
-# Dependency analysis
-./gradlew dependencies --configuration developmentDebugRuntimeClasspath
-
-# Module dependency graph
-./gradlew :app:dependencies | head -100
-
-# Check for dependency conflicts
-./gradlew dependencyInsight --dependency --configuration developmentDebugRuntimeClasspath
-```
--->
-
 ### Permission Review Checklist
 
 - [ ] No unnecessary permissions from libraries
@@ -102,41 +87,49 @@ TODO THIS LATER:
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────┐
-│ poa/app │
-│ (Application) │
-└─────────────────────┬───────────────────────────────┘
- │
-┌─────────────────────▼───────────────────────────────┐
-│ poa/feature/* │
-│ (Feature Modules) │
-│ ┌─────────┐ ┌─────────┐ ┌─────────┐ │
-│ │ feature1│ │ feature2│ │ feature3│ │
-│ └────┬────┘ └────┬────┘ └────┬────┘ │
-└───────┼───────────┼───────────┼─────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│                        composeApp                      │
+│        (Application Entry Point, DI Root, Navigation)  │
+└───────────────────────────┬────────────────────────────┘
+                            │
+         ┌──────────────────┴──────────────────┐
+         ▼                                     ▼
+┌──────────────────┐                 ┌──────────────────────────────────┐
+│      core:*      │                 │         feature:<name>:*         │
+│  (Shared Core    │                 │    (Multi-Module Features:       │
+│  Modules: data,  │                 │     presentation, domain, data)  │
+│ network, nfc, etc│                 │                                  │
+└──────────────────┘                 └──────────────────────────────────┘
 ```
 
-## Clean Architecture Layers
+## Clean Architecture Layers (Per Feature & Core)
 
 ```
 ┌─────────────────────────┐
-│ Presentation │ ← Compose UI, ViewModels
+│       Presentation      │ ← Compose UI, ViewModels, Navigation 3 Screens
 ├─────────────────────────┤
-│ Domain │ ← UseCases, Repository interfaces
+│         Domain          │ ← UseCases, Repository Interfaces, Domain Models
 ├─────────────────────────┤
-│ Data │ ← Repository impl, API, Database
+│          Data           │ ← Repository Impl, Ktor Client, Local DB Sources
 └─────────────────────────┘
 ```
 
-## Module Guidelines
+## Module Guidelines & Technical Standards
 
-| Module Type            | Depends On              | Contains                                          |
-|------------------------|-------------------------|---------------------------------------------------|
-| `app`                  | features, libraries     | DI setup, navigation root                         |
-| `feature/presentation` | libraries, common, core | UI, ViewModels                                    |
-| `feature/domain`       | libraries, common, core | UseCases, Repository interfaces                   |
-| `feature/data`         | libraries, common, core | RemoteDataSource, LocalDataSource, RepositoryImpl |
-| `core`                 | -                       | core modules                                      |
+| Module Path / Type | Depends On | Contains |
+|-------------------|------------|----------|
+| `:composeApp` | `:feature:*`, `:core:*`, libraries | Application entry point, Koin root configuration, Navigation 3 host |
+| `:feature:<name>:presentation` | `:feature:<name>:domain`, `:core:presentation`, core/libraries | Compose UI, ViewModels, Navigation 3 screens |
+| `:feature:<name>:domain` | `:feature:<name>:data` (or core domain), core | UseCases, Domain models, Repository interfaces |
+| `:feature:<name>:data` | `:feature:<name>:domain`, `:core:data`, `:core:network` | Repository implementations, Ktor data sources, local storage |
+| `:core:*` | Independent / Libraries | Shared core logic (`:core:network`, `:core:nfc`, `:core:storage`, `:core:logging`, `:core:firebase`, etc.) |
+
+### Architectural Best Practices (Taggy Go Stack)
+- **Dependency Injection (Koin):** Each feature module must define its own Koin `featureModule`. The `app` (`composeApp`) module aggregates them. Avoid global state.
+- **Navigation (Navigation 3 / Compose):** Use Navigation 3 (`navigation3-runtime`, `navigation3-ui`) and Navigation Compose for screen flows. Cross-feature navigation must use abstract router contracts, preventing direct module coupling.
+- **Networking (Ktor & Serialization):** Use Ktor HTTP client (`ktor-client-core`, `ktor-client-okhttp`, `ktor-client-ios`) with `kotlinx.serialization` for API communication.
+- **State & Coroutines:** Use Unidirectional Data Flow (UDF) with `StateFlow` and `SharingStarted.WhileSubscribed(5000)` in ViewModels. Injected `CoroutineDispatcher` is required for testability.
+- **Testing (Kotlin Test + Mokkery + Turbine):** Domain logic and ViewModels must be tested using Kotlin Test, Mokkery for mocking, and Turbine for verifying Flow emissions.
 
 ## ADR Process
 
@@ -148,7 +141,7 @@ TODO THIS LATER:
 
 ## When to Write ADR
 
-- New library introduction
+- New library introduction (e.g., adding new networking or UI frameworks)
 - Architecture pattern change
 - Security-related decisions
 - Breaking API changes
@@ -160,8 +153,9 @@ TODO THIS LATER:
 - [ ] No circular dependencies
 - [ ] Feature module doesn't depend on other features
 - [ ] Public API is minimal
-- [ ] Thread safety considered
-- [ ] Error handling with `Result`
+- [ ] Thread safety considered (injected Dispatchers)
+- [ ] Error handling with `Result` pattern
+- [ ] Koin modules correctly configured per feature
 
 ## Boundaries
 
