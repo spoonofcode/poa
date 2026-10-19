@@ -5,7 +5,7 @@ import com.spoonofcode.feature.profile.data.remote.RemoteProfileDataSource
 import com.spoonofcode.feature.profile.domain.model.Profile
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 
-class ProfileRepositoryImpl(
+internal class ProfileRepositoryImpl(
     private val remoteProfileDataSource: RemoteProfileDataSource,
 ) : ProfileRepository {
 

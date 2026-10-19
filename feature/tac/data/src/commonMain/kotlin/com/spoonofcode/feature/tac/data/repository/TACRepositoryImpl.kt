@@ -4,7 +4,7 @@ import com.spoonofcode.feature.tac.data.local.LocalTACDataSource
 import com.spoonofcode.feature.tac.domain.model.TACSettings
 import com.spoonofcode.feature.tac.domain.repository.TACRepository
 
-class TACRepositoryImpl(
+internal class TACRepositoryImpl(
     private val localTACDataSource: LocalTACDataSource,
 ) : TACRepository {
 

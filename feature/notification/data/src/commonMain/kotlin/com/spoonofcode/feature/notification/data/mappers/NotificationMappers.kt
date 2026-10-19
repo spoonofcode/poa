@@ -4,7 +4,7 @@ import com.spoonofcode.core.data.ext.toZonedLocalDateTime
 import com.spoonofcode.feature.notification.data.remote.model.NotificationResponse
 import com.spoonofcode.feature.notification.domain.model.Notification
 
-fun NotificationResponse.toNotification(): Notification = Notification(
+internal fun NotificationResponse.toNotification(): Notification = Notification(
     id = id,
     title = title,
     text = text,

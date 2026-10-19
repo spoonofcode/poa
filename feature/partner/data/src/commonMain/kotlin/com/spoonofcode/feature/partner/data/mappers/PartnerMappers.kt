@@ -3,7 +3,7 @@ package com.spoonofcode.feature.partner.data.mappers
 import com.spoonofcode.feature.partner.data.model.PartnerResponse
 import com.spoonofcode.feature.partner.domain.model.Partner
 
-fun PartnerResponse.toPartner(): Partner = Partner(
+internal fun PartnerResponse.toPartner(): Partner = Partner(
     id = id,
     name = name,
     email = email,

@@ -1,12 +1,13 @@
 package com.spoonofcode.feature.product.data.test
 
 import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.ProductType
 import kotlinx.datetime.LocalDateTime
 
 object ProductMockData {
     val PRODUCT_1 = Product(
         id = "1",
-        productType = "item",
+        productType = ProductType.ITEM,
         ownerEmail = "user1@example.com",
         partnerId = "1",
         name = "Product #1",
@@ -19,7 +20,7 @@ object ProductMockData {
     )
     val PRODUCT_2 = Product(
         id = "2",
-        productType = "redirect",
+        productType = ProductType.REDIRECT,
         ownerEmail = "user2@example.com",
         partnerId = "2",
         name = "Product #2",

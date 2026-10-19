@@ -5,7 +5,7 @@ import com.spoonofcode.feature.product.data.remote.RemoteProductDataSource
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 
-class ProductRepositoryImpl(
+internal class ProductRepositoryImpl(
     private val remoteProductDataSource: RemoteProductDataSource,
 ) : ProductRepository {
 

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
 @Serializable
-data class ProductResponse(
+internal data class ProductResponse(
     val id: String,
     @SerialName("product_type")
     val productType: ProductTypeResponse,

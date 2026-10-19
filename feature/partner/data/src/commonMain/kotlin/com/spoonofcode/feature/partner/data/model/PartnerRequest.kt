@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PartnerRequest(
+internal data class PartnerRequest(
     val name: String,
     val partnerCategory: String,
     @SerialName("public_email")

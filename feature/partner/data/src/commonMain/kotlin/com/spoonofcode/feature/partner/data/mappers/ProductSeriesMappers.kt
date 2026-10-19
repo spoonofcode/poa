@@ -3,7 +3,7 @@ package com.spoonofcode.feature.partner.data.mappers
 import com.spoonofcode.feature.partner.data.model.ProductSeriesResponse
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 
-fun ProductSeriesResponse.toProductSeries(): ProductSeries = ProductSeries(
+internal fun ProductSeriesResponse.toProductSeries(): ProductSeries = ProductSeries(
     name = name,
     fullName = fullName,
     enabled = enabled,

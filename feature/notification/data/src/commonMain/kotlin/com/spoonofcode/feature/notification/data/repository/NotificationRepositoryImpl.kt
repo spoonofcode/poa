@@ -9,7 +9,7 @@ import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
 
-class NotificationRepositoryImpl(
+internal class NotificationRepositoryImpl(
     private val remoteNotificationDataSource: RemoteNotificationDataSource,
     private val localNotificationDataSource: LocalNotificationDataSource,
 ) : NotificationRepository {

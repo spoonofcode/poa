@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProductSeriesResponse(
+internal data class ProductSeriesResponse(
     val name: String,
     @SerialName("full_name")
     val fullName: String,

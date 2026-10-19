@@ -5,7 +5,7 @@ import com.spoonofcode.feature.product.data.remote.model.ProductResponse
 import com.spoonofcode.feature.product.data.remote.model.UpdateUserProductRequest
 import io.ktor.http.HttpMethod
 
-class RemoteProductDataSource : RemoteBaseDataSource(
+internal class RemoteProductDataSource : RemoteBaseDataSource(
     collectionName = "api/products",
 ) {
     suspend fun readProduct(productId: String): Result<ProductResponse> = doRequest(

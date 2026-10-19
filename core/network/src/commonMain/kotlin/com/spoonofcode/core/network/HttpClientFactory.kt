@@ -20,7 +20,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class HttpClientFactory(
+internal class HttpClientFactory(
     private val poaLogger: POALogger,
     private val sessionRepository: SessionRepository,
     private val remoteRefreshTokenDataSource: RemoteRefreshTokenDataSource,

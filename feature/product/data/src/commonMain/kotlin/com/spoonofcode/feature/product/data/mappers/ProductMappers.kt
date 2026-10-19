@@ -4,7 +4,7 @@ import com.spoonofcode.core.data.ext.toZonedLocalDateTime
 import com.spoonofcode.feature.product.data.remote.model.ProductResponse
 import com.spoonofcode.feature.product.domain.model.Product
 
-fun ProductResponse.toProduct(): Product = Product(
+internal fun ProductResponse.toProduct(): Product = Product(
     id = id,
     productType = productType.toProductType(),
     ownerEmail = ownerEmail,

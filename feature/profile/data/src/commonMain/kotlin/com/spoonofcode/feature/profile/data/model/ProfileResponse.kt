@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
 @Serializable
-data class ProfileResponse(
+internal data class ProfileResponse(
     val id: String,
     val email: String,
     val roles: List<String>,

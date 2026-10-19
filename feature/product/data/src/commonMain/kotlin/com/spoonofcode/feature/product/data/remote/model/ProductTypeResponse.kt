@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class ProductTypeResponse {
+internal enum class ProductTypeResponse {
     @SerialName("item")
     ITEM,
 
