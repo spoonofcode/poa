@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginCodeRequest(
+internal data class LoginCodeRequest(
     val email: String,
     @SerialName("login_code")
     val loginCode: String,

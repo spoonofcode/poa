@@ -7,8 +7,13 @@ interface ProductRepository {
     suspend fun getUserProducts(): Result<List<Product>>
     suspend fun addProductToUser(productId: String): Result<Unit>
     suspend fun deleteProductFromUser(productId: String): Result<Unit>
-    suspend fun update(
+    suspend fun updateProductItem(
         productId: String,
-        customLink: String? = null
+        customLink: String? = null,
+    ): Result<Unit>
+
+    suspend fun updateProductRedirect(
+        productId: String,
+        redirectLink: String? = null,
     ): Result<Unit>
 }

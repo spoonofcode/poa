@@ -2,7 +2,7 @@ package com.spoonofcode.feature.partner.data.mock
 
 import com.spoonofcode.feature.partner.domain.model.Partner
 
-object PartnerMockData {
+internal object PartnerMockData {
     val PARTNER_1 = Partner(
         id = "550e8400-e29b-41d4-a716-446655440001",
         name = "Beauty Saute",

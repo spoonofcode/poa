@@ -15,6 +15,8 @@ object NotificationMockData {
         expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
         state = "pending",
         topics = listOf("global"),
+        ownerId = "1",
+        isRead = false,
     )
 
     val NOTIFICATION_2 = Notification(
@@ -28,6 +30,8 @@ object NotificationMockData {
         expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
         state = "pending",
         topics = listOf("global"),
+        ownerId = "2",
+        isRead = false,
     )
 
     val NOTIFICATION_3 = Notification(
@@ -41,6 +45,8 @@ object NotificationMockData {
         expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
         state = "pending",
         topics = listOf("global"),
+        ownerId = "3",
+        isRead = true,
     )
 
     val NOTIFICATIONS = listOf(NOTIFICATION_1, NOTIFICATION_2, NOTIFICATION_3)

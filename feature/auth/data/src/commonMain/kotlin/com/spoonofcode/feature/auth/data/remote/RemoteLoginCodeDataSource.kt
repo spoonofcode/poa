@@ -5,7 +5,7 @@ import com.spoonofcode.feature.auth.data.remote.model.LoginCodeRequest
 import com.spoonofcode.feature.auth.data.remote.model.LoginCodeResponse
 import io.ktor.http.HttpMethod
 
-class RemoteLoginCodeDataSource : RemoteBaseDataSource(
+internal class RemoteLoginCodeDataSource : RemoteBaseDataSource(
     collectionName = "api/login/code",
 ) {
     suspend fun create(

@@ -4,6 +4,6 @@ import com.spoonofcode.feature.home.domain.model.RewardType
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AddRewardToUserRequest(
+internal data class AddRewardToUserRequest(
     val rewardType: RewardType,
 )

@@ -5,7 +5,7 @@ import com.google.firebase.messaging.messaging
 import com.spoonofcode.core.logging.POALogger
 import kotlinx.coroutines.tasks.await
 
-actual class RemoteFirebaseMessagingDataSource actual constructor(
+internal actual class RemoteFirebaseMessagingDataSource actual constructor(
     private val poaLogger: POALogger,
 ) {
     actual suspend fun getMessageToken(): Result<String> {

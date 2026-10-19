@@ -35,12 +35,12 @@ class UpdateProductUseCaseTest : BaseTest() {
     fun `invoke returns success when productRepository updates successfully`() = runTest {
         val productId = "1"
         val customLink = "https://custom.link"
-        everySuspend { productRepository.update(productId, customLink) } returns Result.success(Unit)
+        everySuspend { productRepository.updateProductItem(productId, customLink) } returns Result.success(Unit)
 
         val result = updateProductUseCase(productId, customLink)
 
         assertTrue(result.isSuccess)
-        verifySuspend { productRepository.update(productId, customLink) }
+        verifySuspend { productRepository.updateProductItem(productId, customLink) }
     }
 
     @Test
@@ -48,12 +48,12 @@ class UpdateProductUseCaseTest : BaseTest() {
         val productId = "1"
         val customLink = "https://custom.link"
         val exception = Exception("Update failed")
-        everySuspend { productRepository.update(productId, customLink) } returns Result.failure(exception)
+        everySuspend { productRepository.updateProductItem(productId, customLink) } returns Result.failure(exception)
 
         val result = updateProductUseCase(productId, customLink)
 
         assertTrue(result.isFailure)
         assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { productRepository.update(productId, customLink) }
+        verifySuspend { productRepository.updateProductItem(productId, customLink) }
     }
 }

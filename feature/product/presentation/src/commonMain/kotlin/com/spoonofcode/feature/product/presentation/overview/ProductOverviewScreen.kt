@@ -30,6 +30,7 @@ import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.TextLSB
 import com.spoonofcode.core.presentation.compose.TextTMB
 import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.ProductType
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_products
 import kotlinx.datetime.LocalDateTime
@@ -149,28 +150,32 @@ private fun ProductOverviewScreenContentPreview() {
                 initProducts = listOf(
                     Product(
                         id = "1",
-                        createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                        productType = ProductType.ITEM,
+                        ownerEmail = "user1@example.com",
+                        partnerId = "1",
                         name = "Product #1",
                         description = "Przykładowy opis wydarzenia nr 1",
                         seriesId = "1",
                         seriesName = "Series 1",
+                        createdAt = LocalDateTime(2023, 1, 1, 1, 1),
                         imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
                         customLink = "https://beautysaute.pl/",
-                        partnerId = "1",
-                    )
+                    ),
                 ),
                 filteredProducts = listOf(
                     Product(
                         id = "1",
-                        createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                        productType = ProductType.ITEM,
+                        ownerEmail = "user1@example.com",
+                        partnerId = "1",
                         name = "Product #1",
                         description = "Przykładowy opis wydarzenia nr 1",
                         seriesId = "1",
                         seriesName = "Series 1",
+                        createdAt = LocalDateTime(2023, 1, 1, 1, 1),
                         imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
                         customLink = "https://beautysaute.pl/",
-                        partnerId = "1",
-                    )
+                    ),
                 ),
             )
         ),

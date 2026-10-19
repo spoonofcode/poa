@@ -17,7 +17,7 @@ import io.ktor.http.contentType
 import io.ktor.util.reflect.typeInfo
 import kotlinx.coroutines.withContext
 
-class RemoteNFCTagDataSource(
+internal class RemoteNFCTagDataSource(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,
     private val poaLogger: POALogger,

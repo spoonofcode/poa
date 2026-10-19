@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
 @Serializable
-data class PartnerNotificationResponse(
+internal data class PartnerNotificationResponse(
     val id: String,
     val title: String,
     val text: String,

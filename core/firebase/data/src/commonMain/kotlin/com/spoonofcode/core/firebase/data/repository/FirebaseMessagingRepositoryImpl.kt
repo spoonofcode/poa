@@ -3,7 +3,7 @@ package com.spoonofcode.core.firebase.data.repository
 import com.spoonofcode.core.firebase.data.remote.RemoteFirebaseMessagingDataSource
 import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingRepository
 
-class FirebaseMessagingRepositoryImpl(
+internal class FirebaseMessagingRepositoryImpl(
     private val remoteFirebaseMessagingDataSource: RemoteFirebaseMessagingDataSource,
 ) : FirebaseMessagingRepository {
     override suspend fun getMessageToken(): Result<String> =

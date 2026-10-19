@@ -5,7 +5,7 @@ import com.spoonofcode.feature.auth.data.remote.model.LoginGoogleRequest
 import com.spoonofcode.feature.auth.data.remote.model.LoginGoogleResponse
 import io.ktor.http.HttpMethod
 
-class RemoteLoginGoogleDataSource : RemoteBaseDataSource(
+internal class RemoteLoginGoogleDataSource : RemoteBaseDataSource(
     collectionName = "api/login/google",
 ) {
     suspend fun create(

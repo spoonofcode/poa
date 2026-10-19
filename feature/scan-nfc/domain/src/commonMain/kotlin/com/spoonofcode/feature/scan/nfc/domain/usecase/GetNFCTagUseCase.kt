@@ -4,9 +4,9 @@ import com.spoonofcode.feature.scan.nfc.domain.model.NFCTag
 import com.spoonofcode.feature.scan.nfc.domain.repository.NFCTagRepository
 
 class GetNFCTagUseCase(
-    private val NFCTagRepository: NFCTagRepository,
+    private val nfcTagRepository: NFCTagRepository,
 ) {
     suspend operator fun invoke(
         url: String
-    ): Result<NFCTag> = NFCTagRepository.getNFCTAg(url = url)
+    ): Result<NFCTag> = nfcTagRepository.getNFCTAg(url = url)
 }
