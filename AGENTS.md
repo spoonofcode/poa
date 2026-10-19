@@ -240,6 +240,5 @@ TODO THIS LATER:
 - Modify files in `build/`, `node_modules/`, or `vendor/`
 - Edit generated files or third-party SDK code
 - Remove failing tests without fixing the underlying issue
-- Disable accessibility features
 - Commit directly to `develop` branch (use PRs)
 -->
