@@ -61,7 +61,9 @@ internal class ProductEditViewModel(
             val product = requireNotNull(currentContentState().product)
             updateProductUseCase(
                 id = product.id,
+                productType = product.productType,
                 customLink = product.customLink,
+                redirectLink = product.redirectLink,
             )
                 .onSuccess {
                     productEventBus.emitDetails(ProductEvent.ProductUpdated)

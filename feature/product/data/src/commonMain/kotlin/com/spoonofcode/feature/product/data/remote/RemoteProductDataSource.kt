@@ -1,8 +1,9 @@
 package com.spoonofcode.feature.product.data.remote
 
 import com.spoonofcode.core.network.base.RemoteBaseDataSource
+import com.spoonofcode.feature.product.data.remote.model.ItemProductUpdateRequest
 import com.spoonofcode.feature.product.data.remote.model.ProductResponse
-import com.spoonofcode.feature.product.data.remote.model.UpdateUserProductRequest
+import com.spoonofcode.feature.product.data.remote.model.RedirectProductUpdateRequest
 import io.ktor.http.HttpMethod
 
 internal class RemoteProductDataSource : RemoteBaseDataSource(
@@ -27,15 +28,24 @@ internal class RemoteProductDataSource : RemoteBaseDataSource(
         method = HttpMethod.Post,
     )
 
-    suspend fun update(
+    suspend fun updateProductItem(
         productId: String,
         customLink: String? = null,
+    ): Result<Unit> = doRequest(
+        urlPostfixPath = productId,
+        method = HttpMethod.Put,
+        requestBody = ItemProductUpdateRequest(
+            customLink = customLink,
+        ),
+    )
+
+    suspend fun updateProductRedirect(
+        productId: String,
         redirectLink: String? = null,
     ): Result<Unit> = doRequest(
         urlPostfixPath = productId,
         method = HttpMethod.Put,
-        requestBody = UpdateUserProductRequest(
-            customLink = customLink,
+        requestBody = RedirectProductUpdateRequest(
             redirectLink = redirectLink,
         ),
     )

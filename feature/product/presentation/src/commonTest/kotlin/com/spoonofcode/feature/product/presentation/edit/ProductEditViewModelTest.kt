@@ -89,7 +89,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             }
 
             verifySuspend {
-                productRepository.update(
+                productRepository.updateProductItem(
                     productId = PRODUCT_1.id,
                     customLink = PRODUCT_1.customLink,
                 )
@@ -101,7 +101,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
     @Test
     fun `save changes error`() = runTest {
         everySuspend {
-            productRepository.update(
+            productRepository.updateProductItem(
                 any(),
                 any(),
             )
@@ -124,7 +124,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             )
 
             verifySuspend {
-                productRepository.update(
+                productRepository.updateProductItem(
                     productId = PRODUCT_1.id,
                     customLink = PRODUCT_1.customLink,
                 )

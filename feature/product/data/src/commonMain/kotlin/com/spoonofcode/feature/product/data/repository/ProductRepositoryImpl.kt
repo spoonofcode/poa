@@ -21,12 +21,21 @@ internal class ProductRepositoryImpl(
     override suspend fun deleteProductFromUser(productId: String): Result<Unit> =
         remoteProductDataSource.deleteProductFromUser(productId)
 
-    override suspend fun update(
+    override suspend fun updateProductItem(
         productId: String,
         customLink: String?,
     ): Result<Unit> =
-        remoteProductDataSource.update(
+        remoteProductDataSource.updateProductItem(
             productId = productId,
             customLink = customLink,
+        )
+
+    override suspend fun updateProductRedirect(
+        productId: String,
+        redirectLink: String?,
+    ): Result<Unit> =
+        remoteProductDataSource.updateProductRedirect(
+            productId = productId,
+            redirectLink = redirectLink,
         )
 }

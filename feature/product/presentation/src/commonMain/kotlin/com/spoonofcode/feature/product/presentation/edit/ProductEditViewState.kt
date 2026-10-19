@@ -13,5 +13,5 @@ internal data class ProductEditViewState(
         get() = !isSaveChangesButtonLoading
 
     val isSaveChangesButtonEnabled: Boolean
-        get() = product.customLink?.isNotEmpty() ?: false
+        get() = product.customLink?.isNotEmpty() == true || product.redirectLink?.isNotEmpty() == true
 }
