@@ -2,7 +2,7 @@ package com.spoonofcode.core.firebase.data.remote
 
 import com.spoonofcode.core.logging.POALogger
 
-expect class RemoteFirebaseMessagingDataSource(
+internal expect class RemoteFirebaseMessagingDataSource(
     poaLogger: POALogger
 ) {
     suspend fun getMessageToken(): Result<String>

@@ -7,7 +7,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 @OptIn(ExperimentalForeignApi::class)
-actual class RemoteFirebaseMessagingDataSource actual constructor(
+internal actual class RemoteFirebaseMessagingDataSource actual constructor(
     private val poaLogger: POALogger,
 ) {
     actual suspend fun getMessageToken(): Result<String> =

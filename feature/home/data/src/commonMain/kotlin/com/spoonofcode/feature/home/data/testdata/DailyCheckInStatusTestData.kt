@@ -4,7 +4,7 @@ import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.model.DailyReward
 import com.spoonofcode.feature.home.domain.model.DailyRewardStatus
 
-val DAILY_CHECK_IN_STATUS = DailyCheckInStatus(
+internal val DAILY_CHECK_IN_STATUS = DailyCheckInStatus(
     streak = 0,
     nextCheckInTimeMillis = 0L,
     isAvailableNow = true,
