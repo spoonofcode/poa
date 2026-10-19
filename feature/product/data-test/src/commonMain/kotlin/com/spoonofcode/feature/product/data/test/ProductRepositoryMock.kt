@@ -17,4 +17,10 @@ internal fun productRepositoryMock() = mock<ProductRepository> {
             any(),
         )
     } returns Result.success(Unit)
+    everySuspend {
+        updateProductRedirect(
+            any(),
+            any(),
+        )
+    } returns Result.success(Unit)
 }

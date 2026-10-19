@@ -9,6 +9,8 @@ import com.spoonofcode.core.presentation.test.ext.awaitInitialState
 import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.partner.data.test.PartnerMockData.PARTNER_1
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
+import com.spoonofcode.feature.partner.presentation.PartnerEvent
+import com.spoonofcode.feature.partner.presentation.PartnerEventBus
 import com.spoonofcode.feature.partner.presentation.di.partnerPresentationTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -72,6 +74,19 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
 
             with(viewState.awaitContentState()) {
                 assertEquals(newName, partner.name)
+                assertTrue(isSaveChangesButtonEnabled)
+            }
+        }
+    }
+
+    @Test
+    fun `change name to empty - save changes button disabled`() = runTest {
+        runVmTest(viewModel) {
+            onAction(PartnerEditViewAction.ChangeName(name = ""))
+
+            with(viewState.awaitContentState()) {
+                assertEquals("", partner.name)
+                assertFalse(isSaveChangesButtonEnabled)
             }
         }
     }
@@ -156,12 +171,19 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `save changes success`() = runTest {
+        val partnerEventBus: PartnerEventBus = getKoin().get()
+
         runVmTest(viewModel) {
+            val partnerUpdatedEvents = partnerEventBus.partnerUpdatedEvents.test()
+
             onAction(PartnerEditViewAction.SaveChanges)
 
             with(viewState.awaitContentState()) {
                 assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
             }
+
+            assertEquals(PartnerEvent.PartnerUpdated, partnerUpdatedEvents.awaitItem())
 
             verifySuspend {
                 partnerRepository.updatePartner(
@@ -176,6 +198,82 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
                     facebookLink = PARTNER_1.facebookLink,
                     youtubeLink = PARTNER_1.youtubeLink,
                     xLink = PARTNER_1.xLink,
+                )
+            }
+            verifySuspend { viewModelNavigator.pop() }
+        }
+    }
+
+    @Test
+    fun `save changes with updated fields success`() = runTest {
+        val partnerEventBus: PartnerEventBus = getKoin().get()
+        val newName = "Updated Name"
+        val newDescription = "Updated Description"
+        val newWebsiteLink = "https://updated-website.com"
+        val newInstagramLink = "https://instagram.com/updated"
+        val newFacebookLink = "https://facebook.com/updated"
+        val newYoutubeLink = "https://youtube.com/updated"
+        val newXLink = "https://x.com/updated"
+
+        runVmTest(viewModel) {
+            val partnerUpdatedEvents = partnerEventBus.partnerUpdatedEvents.test()
+
+            onAction(PartnerEditViewAction.ChangeName(name = newName))
+            with(viewState.awaitContentState()) {
+                assertEquals(newName, partner.name)
+            }
+
+            onAction(PartnerEditViewAction.ChangeDescription(description = newDescription))
+            with(viewState.awaitContentState()) {
+                assertEquals(newDescription, partner.description)
+            }
+
+            onAction(PartnerEditViewAction.ChangeWebsiteLink(link = newWebsiteLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newWebsiteLink, partner.websiteLink)
+            }
+
+            onAction(PartnerEditViewAction.ChangeInstagramLink(link = newInstagramLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newInstagramLink, partner.instagramLink)
+            }
+
+            onAction(PartnerEditViewAction.ChangeFacebookLink(link = newFacebookLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newFacebookLink, partner.facebookLink)
+            }
+
+            onAction(PartnerEditViewAction.ChangeYoutubeLink(link = newYoutubeLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newYoutubeLink, partner.youtubeLink)
+            }
+
+            onAction(PartnerEditViewAction.ChangeXLink(link = newXLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newXLink, partner.xLink)
+            }
+
+            onAction(PartnerEditViewAction.SaveChanges)
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
+            }
+
+            assertEquals(PartnerEvent.PartnerUpdated, partnerUpdatedEvents.awaitItem())
+
+            verifySuspend {
+                partnerRepository.updatePartner(
+                    partnerId = PARTNER_1.id,
+                    name = newName,
+                    partnerCategory = PARTNER_1.partnerCategory,
+                    email = PARTNER_1.email,
+                    description = newDescription,
+                    imageLink = PARTNER_1.imageLink,
+                    websiteLink = newWebsiteLink,
+                    instagramLink = newInstagramLink,
+                    facebookLink = newFacebookLink,
+                    youtubeLink = newYoutubeLink,
+                    xLink = newXLink,
                 )
             }
             verifySuspend { viewModelNavigator.pop() }
@@ -207,9 +305,11 @@ class PartnerEditViewModelTest : BaseViewModelTest() {
 
             with(viewState.awaitContentState()) {
                 assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
             }
             with(viewState.awaitContentState()) {
                 assertFalse(isSaveChangesButtonLoading)
+                assertTrue(isViewEnable)
             }
             assertEquals(
                 expected = expectedErrorMessage,
