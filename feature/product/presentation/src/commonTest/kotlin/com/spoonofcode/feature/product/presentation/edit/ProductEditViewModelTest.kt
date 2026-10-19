@@ -145,9 +145,12 @@ class ProductEditViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `save changes success - REDIRECT product`() = runTest {
-        everySuspend { productRepository.getProduct(navigationParamProductId) } returns Result.success(PRODUCT_2)
+        everySuspend { productRepository.getProduct(navigationParamProductId) } returns Result.success(
+            PRODUCT_2
+        )
 
-        val redirectViewModel: ProductEditViewModel = getKoin().get { parametersOf(navigationParamProductId) }
+        val redirectViewModel: ProductEditViewModel =
+            getKoin().get { parametersOf(navigationParamProductId) }
         val productEventBus: ProductEventBus = getKoin().get()
         val newLink = "https://newredirectlink.com"
 
