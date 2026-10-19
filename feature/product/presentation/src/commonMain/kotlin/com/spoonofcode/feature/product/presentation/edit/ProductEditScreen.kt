@@ -21,10 +21,12 @@ import com.spoonofcode.core.presentation.compose.TextHSB
 import com.spoonofcode.core.presentation.compose.TextLLB
 import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.ProductType
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.about_product
 import com.spoonofcode.feature.product.presentation.custom_link
 import com.spoonofcode.feature.product.presentation.edit_product
+import com.spoonofcode.feature.product.presentation.redirect_link
 import com.spoonofcode.feature.product.presentation.save_changes
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
@@ -90,11 +92,23 @@ private fun ColumnScope.Content(
             )
         }
 
-        OutlinedTextFieldStandard(
-            value = product.customLink ?: "",
-            onValueChange = { onAction(ProductEditViewAction.ChangeCustomLink(it)) },
-            innerLabel = stringResource(resource = Res.string.custom_link),
-        )
+        when (product.productType) {
+            ProductType.ITEM -> {
+                OutlinedTextFieldStandard(
+                    value = product.customLink ?: "",
+                    onValueChange = { onAction(ProductEditViewAction.ChangeCustomLink(it)) },
+                    innerLabel = stringResource(resource = Res.string.custom_link),
+                )
+            }
+
+            ProductType.REDIRECT -> {
+                OutlinedTextFieldStandard(
+                    value = product.redirectLink ?: "",
+                    onValueChange = { onAction(ProductEditViewAction.ChangeRedirectLink(it)) },
+                    innerLabel = stringResource(resource = Res.string.redirect_link),
+                )
+            }
+        }
 
         PrimaryButton(
             text = stringResource(Res.string.save_changes),
@@ -115,14 +129,16 @@ private fun ProductEditScreenContentPreview() {
             ProductEditViewState(
                 product = Product(
                     id = "1",
-                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                    productType = ProductType.ITEM,
+                    ownerEmail = "user1@exmaple.com",
+                    partnerId = "1",
                     name = "Product #1",
                     description = "Przykładowy opis wydarzenia nr 1",
                     seriesId = "1",
                     seriesName = "Series 1",
+                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
                     imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
                     customLink = "https://beautysaute.pl/",
-                    partnerId = "1",
                 )
             )
         ),

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
 @Serializable
-data class NotificationResponse(
+internal data class NotificationResponse(
     val id: String,
     val title: String,
     val text: String,
@@ -25,4 +25,5 @@ data class NotificationResponse(
     val expirationDateTime: Instant,
     val state: String,
     val topics: List<String>,
+    val ownerId: String? = null,
 )

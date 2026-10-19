@@ -8,7 +8,10 @@ import com.spoonofcode.core.presentation.test.ext.awaitErrorState
 import com.spoonofcode.core.presentation.test.ext.awaitInitialState
 import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_2
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -50,6 +53,8 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             viewState.awaitInitialState()
             with(viewState.awaitContentState()) {
                 assertEquals(PRODUCT_1, product)
+                assertTrue(isSaveChangesButtonEnabled)
+                assertTrue(isViewEnable)
             }
         }
     }
@@ -74,24 +79,102 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             onAction(ProductEditViewAction.ChangeCustomLink(link = newLink))
 
             with(viewState.awaitContentState()) {
-                assertEquals(newLink, product?.customLink)
+                assertEquals(newLink, product.customLink)
+                assertTrue(isSaveChangesButtonEnabled)
             }
         }
     }
 
     @Test
-    fun `save changes success`() = runTest {
+    fun `change custom link to empty - save changes button disabled`() = runTest {
         runVmTest(viewModel) {
+            onAction(ProductEditViewAction.ChangeCustomLink(link = ""))
+
+            with(viewState.awaitContentState()) {
+                assertEquals("", product.customLink)
+                assertFalse(isSaveChangesButtonEnabled)
+            }
+        }
+    }
+
+    @Test
+    fun `change redirect link`() = runTest {
+        val newLink = "https://newredirectlink.com"
+
+        runVmTest(viewModel) {
+            onAction(ProductEditViewAction.ChangeRedirectLink(link = newLink))
+
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.redirectLink)
+                assertTrue(isSaveChangesButtonEnabled)
+            }
+        }
+    }
+
+    @Test
+    fun `save changes success - ITEM product`() = runTest {
+        val productEventBus: ProductEventBus = getKoin().get()
+        val newLink = "https://newcustomlink.com"
+
+        runVmTest(viewModel) {
+            val detailsEvents = productEventBus.detailsEvents.test()
+
+            onAction(ProductEditViewAction.ChangeCustomLink(link = newLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.customLink)
+            }
+
             onAction(ProductEditViewAction.SaveChanges)
 
             with(viewState.awaitContentState()) {
                 assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
             }
 
+            assertEquals(ProductEvent.ProductUpdated, detailsEvents.awaitItem())
+
             verifySuspend {
-                productRepository.update(
+                productRepository.updateProductItem(
                     productId = PRODUCT_1.id,
-                    customLink = PRODUCT_1.customLink,
+                    customLink = newLink,
+                )
+            }
+            verifySuspend { viewModelNavigator.pop() }
+        }
+    }
+
+    @Test
+    fun `save changes success - REDIRECT product`() = runTest {
+        everySuspend { productRepository.getProduct(navigationParamProductId) } returns Result.success(
+            PRODUCT_2
+        )
+
+        val redirectViewModel: ProductEditViewModel =
+            getKoin().get { parametersOf(navigationParamProductId) }
+        val productEventBus: ProductEventBus = getKoin().get()
+        val newLink = "https://newredirectlink.com"
+
+        runVmTest(redirectViewModel) {
+            val detailsEvents = productEventBus.detailsEvents.test()
+
+            onAction(ProductEditViewAction.ChangeRedirectLink(link = newLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.redirectLink)
+            }
+
+            onAction(ProductEditViewAction.SaveChanges)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
+            }
+
+            assertEquals(ProductEvent.ProductUpdated, detailsEvents.awaitItem())
+
+            verifySuspend {
+                productRepository.updateProductRedirect(
+                    productId = PRODUCT_2.id,
+                    redirectLink = newLink,
                 )
             }
             verifySuspend { viewModelNavigator.pop() }
@@ -101,7 +184,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
     @Test
     fun `save changes error`() = runTest {
         everySuspend {
-            productRepository.update(
+            productRepository.updateProductItem(
                 any(),
                 any(),
             )
@@ -114,9 +197,11 @@ class ProductEditViewModelTest : BaseViewModelTest() {
 
             with(viewState.awaitContentState()) {
                 assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
             }
             with(viewState.awaitContentState()) {
                 assertFalse(isSaveChangesButtonLoading)
+                assertTrue(isViewEnable)
             }
             assertEquals(
                 expected = expectedErrorMessage,
@@ -124,7 +209,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
             )
 
             verifySuspend {
-                productRepository.update(
+                productRepository.updateProductItem(
                     productId = PRODUCT_1.id,
                     customLink = PRODUCT_1.customLink,
                 )

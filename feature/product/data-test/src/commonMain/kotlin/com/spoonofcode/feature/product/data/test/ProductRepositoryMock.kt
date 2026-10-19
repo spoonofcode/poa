@@ -12,7 +12,13 @@ internal fun productRepositoryMock() = mock<ProductRepository> {
     everySuspend { addProductToUser(any()) } returns Result.success(Unit)
     everySuspend { deleteProductFromUser(any()) } returns Result.success(Unit)
     everySuspend {
-        update(
+        updateProductItem(
+            any(),
+            any(),
+        )
+    } returns Result.success(Unit)
+    everySuspend {
+        updateProductRedirect(
             any(),
             any(),
         )

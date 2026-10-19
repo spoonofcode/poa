@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginRequestCodeRequest(
+internal data class LoginRequestCodeRequest(
     val email: String,
     val platform: String = getPlatform().platformType.recaptchaName,
     @SerialName("recaptcha_token")

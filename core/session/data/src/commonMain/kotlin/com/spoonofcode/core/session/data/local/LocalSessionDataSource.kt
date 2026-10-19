@@ -5,7 +5,7 @@ import com.spoonofcode.core.logging.POALogger
 import eu.anifantakis.lib.ksafe.KSafe
 import kotlinx.coroutines.withContext
 
-class LocalSessionDataSource(
+internal class LocalSessionDataSource(
     private val kSafe: KSafe,
     private val dispatcherProvider: DispatcherProvider,
     private val poaLogger: POALogger,

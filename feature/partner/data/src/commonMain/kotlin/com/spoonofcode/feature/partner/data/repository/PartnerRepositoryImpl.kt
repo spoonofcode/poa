@@ -11,7 +11,7 @@ import com.spoonofcode.feature.partner.domain.model.PartnerCategory
 import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 
-class PartnerRepositoryImpl(
+internal class PartnerRepositoryImpl(
     private val remotePartnerDataSource: RemotePartnerDataSource,
     private val remotePartnerCategoryDataSource: RemotePartnerCategoryDataSource,
 ) : PartnerRepository {

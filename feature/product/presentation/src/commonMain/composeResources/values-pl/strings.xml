@@ -22,4 +22,5 @@
     <string name="product_added">Product został dodany</string>
     <string name="product_deleted">Produkt został usunięty</string>
     <string name="product_updated">Product został zaktualizowany</string>
+    <string name="redirect_link">Link przekierowujący</string>
 </resources>

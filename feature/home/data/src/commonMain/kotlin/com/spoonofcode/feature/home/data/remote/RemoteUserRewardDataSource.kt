@@ -6,7 +6,7 @@ import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.model.RewardType
 import io.ktor.http.HttpMethod
 
-class RemoteUserRewardDataSource : RemoteBaseDataSource(
+internal class RemoteUserRewardDataSource : RemoteBaseDataSource(
     collectionName = "users",
 ) {
     suspend fun addRewardToUser(rewardType: RewardType): Result<Unit> = doRequest(

@@ -7,7 +7,7 @@ import eu.anifantakis.lib.ksafe.KSafe
 import eu.anifantakis.lib.ksafe.KSafeWriteMode
 import kotlinx.coroutines.withContext
 
-class LocalTACDataSource(
+internal class LocalTACDataSource(
     private val kSafe: KSafe,
     private val dispatcherProvider: DispatcherProvider,
     private val poaLogger: POALogger,
