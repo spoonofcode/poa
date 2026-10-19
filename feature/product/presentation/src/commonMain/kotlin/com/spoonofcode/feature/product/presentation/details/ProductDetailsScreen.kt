@@ -45,6 +45,7 @@ import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.web.getUrlOpener
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.domain.model.ProductStatus
+import com.spoonofcode.feature.product.domain.model.ProductType
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.about_product
 import com.spoonofcode.feature.product.presentation.add_product
@@ -170,6 +171,19 @@ private fun ColumnScope.Content(
                 }
             }
         }
+
+        if (!product.redirectLink.isNullOrBlank()) {
+            ElevatedCard {
+                Column {
+                    ClickableInfoRow(
+                        text = stringResource(Res.string.learn_more),
+                        url = product.redirectLink,
+                        icon = Icons.Default.Link
+                    )
+                }
+            }
+        }
+
         ProductBottomButton(
             productStatus = viewState.productStatus,
             isAddProductToProfileButtonLoading = viewState.isAddProductToProfileButtonLoading,
@@ -300,7 +314,7 @@ private fun ProductDetailsScreenContentPreview() {
             ProductDetailsViewState(
                 product = Product(
                     id = "1",
-                    productType = "item",
+                    productType = ProductType.ITEM,
                     ownerEmail = "user1@example.com",
                     partnerId = "1",
                     name = "Product #1",

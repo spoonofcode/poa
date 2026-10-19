@@ -30,6 +30,7 @@ import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.TextLSB
 import com.spoonofcode.core.presentation.compose.TextTMB
 import com.spoonofcode.feature.product.domain.model.Product
+import com.spoonofcode.feature.product.domain.model.ProductType
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.my_products
 import kotlinx.datetime.LocalDateTime
@@ -149,7 +150,7 @@ private fun ProductOverviewScreenContentPreview() {
                 initProducts = listOf(
                     Product(
                         id = "1",
-                        productType = "item",
+                        productType = ProductType.ITEM,
                         ownerEmail = "user1@example.com",
                         partnerId = "1",
                         name = "Product #1",
@@ -164,7 +165,7 @@ private fun ProductOverviewScreenContentPreview() {
                 filteredProducts = listOf(
                     Product(
                         id = "1",
-                        productType = "item",
+                        productType = ProductType.ITEM,
                         ownerEmail = "user1@example.com",
                         partnerId = "1",
                         name = "Product #1",

@@ -22,6 +22,7 @@ internal class ProductEditViewModel(
     override fun onAction(action: ProductEditViewAction) {
         when (action) {
             is ProductEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
+            is ProductEditViewAction.ChangeRedirectLink -> changeRedirectLink(action.link)
             ProductEditViewAction.SaveChanges -> saveChanges()
         }
     }
@@ -45,8 +46,13 @@ internal class ProductEditViewModel(
     }
 
     private fun changeCustomLink(link: String) {
-        val currentProduct = currentContentState().product ?: return
+        val currentProduct = currentContentState().product
         updateContentState { copy(product = currentProduct.copy(customLink = link)) }
+    }
+
+    private fun changeRedirectLink(link: String) {
+        val currentProduct = currentContentState().product
+        updateContentState { copy(product = currentProduct.copy(redirectLink = link)) }
     }
 
     private fun saveChanges() {

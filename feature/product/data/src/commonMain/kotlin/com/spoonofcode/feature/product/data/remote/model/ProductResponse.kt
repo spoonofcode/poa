@@ -9,7 +9,7 @@ import kotlin.time.Instant
 data class ProductResponse(
     val id: String,
     @SerialName("product_type")
-    val productType: String,
+    val productType: ProductTypeResponse,
     @SerialName("owner_email")
     val ownerEmail: String? = null,
     @SerialName("partner_id")
@@ -29,4 +29,6 @@ data class ProductResponse(
     val videoLink: String? =null,
     @SerialName("custom_link")
     val customLink: String? = null,
-)
+    @SerialName("redirect_link")
+    val redirectLink: String? = null,
+    )

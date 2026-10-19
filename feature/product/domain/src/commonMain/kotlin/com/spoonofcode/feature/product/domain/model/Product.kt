@@ -4,7 +4,7 @@ import kotlinx.datetime.LocalDateTime
 
 data class Product(
     val id: String,
-    val productType: String,
+    val productType: ProductType,
     val ownerEmail: String? = null,
     val partnerId: String? = null,
     val name: String? = null,
@@ -15,4 +15,5 @@ data class Product(
     val imageLink: String? = null,
     val videoLink: String? = null,
     val customLink: String? = null,
+    val redirectLink: String? = null,
 )

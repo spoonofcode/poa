@@ -6,7 +6,7 @@ import com.spoonofcode.feature.product.domain.model.Product
 
 fun ProductResponse.toProduct(): Product = Product(
     id = id,
-    productType = productType,
+    productType = productType.toProductType(),
     ownerEmail = ownerEmail,
     partnerId = partnerId,
     name = name,
@@ -17,4 +17,5 @@ fun ProductResponse.toProduct(): Product = Product(
     imageLink = imageLink,
     videoLink = videoLink,
     customLink = customLink,
+    redirectLink = redirectLink,
 )
