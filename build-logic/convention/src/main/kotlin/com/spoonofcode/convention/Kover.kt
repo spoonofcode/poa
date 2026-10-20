@@ -24,19 +24,47 @@ internal fun Project.configureKover() {
                         // Generated Classes & Resources
                         packages("*.generated.*")
                         packages("*resources*")
+                        classes("*BuildKonfig*")
 
                         // Dependency Injection
                         packages("*di*")
 
                         // Compose Related
-                        classes("*ComposeSingletons*")
+                        classes("*ComposableSingletons*")
+                        classes("*.ComposableSingletons*")
                         annotatedBy("androidx.compose.runtime.Composable")
+
+                        // CMP Generated Resources & Accessors
+                        classes("*Res")
+                        classes("*Res$*")
+                        classes("*ResourceCollectors*")
+                        classes("*String0*")
+                        classes("*Drawable0*")
+                        classes("*Font0*")
+                        classes("*Color0*")
 
                         // Voyager
                         classes("*.*Screen")
 
-                        // ViewStates
+                        // ViewStates & ViewActions
                         classes("*.*ViewState")
+                        classes("*.*ViewAction")
+                        classes("*ViewAction*")
+
+                        // Navigation & Routes
+                        classes("*.*Route")
+                        classes("*Route*")
+
+                        // Models & Repositories
+                        packages("*model*")
+                        packages("*repository*")
+                        classes("*Model*")
+                        classes("*Settings*")
+                        classes("*Repository*")
+
+                        // Network DTOs (Requests & Responses)
+                        classes("*.*Response")
+                        classes("*.*Request")
                     }
                 }
             }

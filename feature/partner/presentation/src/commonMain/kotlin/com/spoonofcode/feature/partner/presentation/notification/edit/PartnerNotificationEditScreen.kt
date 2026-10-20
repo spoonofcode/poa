@@ -44,6 +44,7 @@ internal fun PartnerNotificationEditScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { it.isViewEnable },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
         }
@@ -133,6 +134,7 @@ private fun ColumnScope.Content(
         },
         onClick = { onAction(PartnerNotificationEditViewAction.SendNotification) },
         enabled = viewState.isSendNotificationEnabled,
+        isLoading = viewState.isSendNotificationButtonLoading,
     )
 }
 

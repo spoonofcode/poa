@@ -6,7 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.data.ext.DEFAULT_STOP_TIMEOUT_MILLIS
 import com.spoonofcode.core.data.ext.stateInWhileSubscribed
 import com.spoonofcode.core.logging.POALogger
+import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.navigation.ViewModelNavigator
 import com.spoonofcode.core.presentation.network.NetworkManager
 import dev.jordond.connectivity.Connectivity
@@ -148,7 +151,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    protected fun updateContentState(transformation: VS.() -> VS) {
+    fun updateContentState(transformation: VS.() -> VS) {
         if (viewContentState.value != null) {
             _viewContentState.update { currentViewState ->
                 val newState = currentViewState?.transformation()
@@ -187,18 +190,14 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         _viewStatus.value = ViewStatus.CONTENT
     }
 
-    protected fun showSnackbar(snackbarEvent: SnackbarEvent) {
-        viewModelScope.launch {
-            _snackbarEvent.send(snackbarEvent)
-        }
-    }
-
-    protected fun showErrorSnackbar(message: String) {
+    protected fun showErrorSnackbar(message: UiText) {
         poaLogger.error("${this::class.simpleName}: Error Snackbar: $message")
-        showSnackbar(SnackbarEvent.Error(message = message))
+        // WE DON"T HAVE ERROR MAPPING YET
+        val generalErrorSnackbar = UiText.Resource(Res.string.default_error)
+        showSnackbar(SnackbarEvent.Error(message = generalErrorSnackbar))
     }
 
-    protected fun showSuccessSnackbar(message: String) {
+    protected fun showSuccessSnackbar(message: UiText) {
         poaLogger.debug("${this::class.simpleName}: Success Snackbar: $message")
         showSnackbar(SnackbarEvent.Success(message = message))
     }
@@ -207,6 +206,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
         poaLogger.debug("${this::class.simpleName}: emitEvent: $event")
         viewModelScope.launch {
             _viewEvent.send(event)
+        }
+    }
+
+    private fun showSnackbar(snackbarEvent: SnackbarEvent) {
+        viewModelScope.launch {
+            _snackbarEvent.send(snackbarEvent)
         }
     }
 }

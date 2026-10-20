@@ -6,7 +6,7 @@ import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import com.spoonofcode.core.session.domain.repository.SessionRepository
 import org.koin.core.component.KoinComponent
 
-class SessionRepositoryImpl(
+internal class SessionRepositoryImpl(
     private val localSessionDataSource: LocalSessionDataSource,
     private val poaLogger: POALogger,
 ) : SessionRepository, KoinComponent {

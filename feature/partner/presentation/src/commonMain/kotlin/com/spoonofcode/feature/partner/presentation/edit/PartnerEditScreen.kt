@@ -36,6 +36,7 @@ internal fun PartnerEditScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { it.isViewEnable },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -51,55 +52,54 @@ private fun ColumnScope.Content(
 ) {
     val partner = viewState.partner
 
-    if (partner != null) {
-        partner.imageLink?.let { ImageLink(imageLink = it) }
+    partner.imageLink?.let { ImageLink(imageLink = it) }
 
-        OutlinedTextFieldStandard(
-            value = partner.name,
-            onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },
-            label = stringResource(resource = Res.string.partner_name),
-            isRequired = true,
-        )
-        OutlinedTextFieldStandard(
-            value = partner.description.orEmpty(),
-            onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
-            label = stringResource(resource = Res.string.description),
-            minLines = 8,
-        )
-        OutlinedTextFieldStandard(
-            value = partner.websiteLink.orEmpty(),
-            onValueChange = { onAction(PartnerEditViewAction.ChangeWebsiteLink(it)) },
-            label = stringResource(resource = Res.string.website),
-        )
-        OutlinedTextFieldStandard(
-            value = partner.instagramLink.orEmpty(),
-            onValueChange = { onAction(PartnerEditViewAction.ChangeInstagramLink(it)) },
-            label = stringResource(resource = Res.string.instagram),
-        )
-        OutlinedTextFieldStandard(
-            value = partner.facebookLink.orEmpty(),
-            onValueChange = { onAction(PartnerEditViewAction.ChangeFacebookLink(it)) },
-            label = stringResource(resource = Res.string.facebook),
-        )
-        OutlinedTextFieldStandard(
-            value = partner.youtubeLink.orEmpty(),
-            onValueChange = { onAction(PartnerEditViewAction.ChangeYoutubeLink(it)) },
-            label = stringResource(resource = Res.string.youtube),
-        )
-        OutlinedTextFieldStandard(
-            value = partner.xLink.orEmpty(),
-            onValueChange = { onAction(PartnerEditViewAction.ChangeXLink(it)) },
-            label = stringResource(resource = Res.string.x),
-        )
+    OutlinedTextFieldStandard(
+        value = partner.name,
+        onValueChange = { onAction(PartnerEditViewAction.ChangeName(it)) },
+        label = stringResource(resource = Res.string.partner_name),
+        isRequired = true,
+    )
+    OutlinedTextFieldStandard(
+        value = partner.description.orEmpty(),
+        onValueChange = { onAction(PartnerEditViewAction.ChangeDescription(it)) },
+        label = stringResource(resource = Res.string.description),
+        minLines = 8,
+    )
+    OutlinedTextFieldStandard(
+        value = partner.websiteLink.orEmpty(),
+        onValueChange = { onAction(PartnerEditViewAction.ChangeWebsiteLink(it)) },
+        label = stringResource(resource = Res.string.website),
+    )
+    OutlinedTextFieldStandard(
+        value = partner.instagramLink.orEmpty(),
+        onValueChange = { onAction(PartnerEditViewAction.ChangeInstagramLink(it)) },
+        label = stringResource(resource = Res.string.instagram),
+    )
+    OutlinedTextFieldStandard(
+        value = partner.facebookLink.orEmpty(),
+        onValueChange = { onAction(PartnerEditViewAction.ChangeFacebookLink(it)) },
+        label = stringResource(resource = Res.string.facebook),
+    )
+    OutlinedTextFieldStandard(
+        value = partner.youtubeLink.orEmpty(),
+        onValueChange = { onAction(PartnerEditViewAction.ChangeYoutubeLink(it)) },
+        label = stringResource(resource = Res.string.youtube),
+    )
+    OutlinedTextFieldStandard(
+        value = partner.xLink.orEmpty(),
+        onValueChange = { onAction(PartnerEditViewAction.ChangeXLink(it)) },
+        label = stringResource(resource = Res.string.x),
+    )
 
-        SpacerVerticalBetweenFields()
+    SpacerVerticalBetweenFields()
 
-        PrimaryButton(
-            text = stringResource(resource = Res.string.save_changes),
-            onClick = { onAction(PartnerEditViewAction.SaveChanges) },
-            enabled = viewState.isSaveChangesButtonEnabled,
-        )
-    }
+    PrimaryButton(
+        text = stringResource(resource = Res.string.save_changes),
+        enabled = viewState.isSaveChangesButtonEnabled,
+        isLoading = viewState.isSaveChangesButtonLoading,
+        onClick = { onAction(PartnerEditViewAction.SaveChanges) },
+    )
 }
 
 // region previews

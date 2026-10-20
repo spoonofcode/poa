@@ -1,21 +1,24 @@
 package com.spoonofcode.feature.notification.presentation.overview
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.notification.data.test.NotificationMockData.NOTIFICATIONS
+import com.spoonofcode.feature.notification.data.test.NotificationMockData.NOTIFICATION_1
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import com.spoonofcode.feature.notification.presentation.di.notificationPresentationTestModule
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class NotificationOverviewViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: NotificationOverviewViewModel
@@ -35,37 +38,37 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = NotificationOverviewViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(NOTIFICATIONS, notifications)
+            }
         }
     }
 
     @Test
-    fun `init view`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        everySuspend { notificationRepository.readAll() } returns Result.failure(
+            Exception("Test error"),
+        )
 
-            viewModel.onAction(NotificationOverviewViewAction.InitView)
-
-            assertEquals(
-                expected = ViewState(
-                    data = NotificationOverviewViewState(
-                        notifications = NOTIFICATIONS,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
         }
+    }
 
-        verifySuspend {
-            notificationRepository.readAll()
+    @Test
+    fun `select notification`() = runTest {
+        runVmTest(viewModel) {
+            onAction(NotificationOverviewViewAction.SelectNotification(notificationId = NOTIFICATION_1.id))
+
+            verifySuspend {
+                viewModelNavigator.push(
+                    NotificationModuleRoute.NotificationDetails(notificationId = NOTIFICATION_1.id),
+                )
+            }
         }
     }
 }

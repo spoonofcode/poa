@@ -3,6 +3,7 @@ package com.spoonofcode.feature.auth.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.AuthModuleRoute
 import com.spoonofcode.feature.appnavigation.HomeModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
@@ -36,21 +37,22 @@ internal class LoginViewModel(
     }
 
     private fun signInWithCode() {
+        updateContentState { copy(isSignInButtonLoading = true) }
         viewModelScope.launch {
-            showLoadingView()
             loginRequestCodeUseCase(
                 email = currentContentState().email,
             ).onSuccess {
                 viewModelNavigator.push(AuthModuleRoute.LoginCode(email = currentContentState().email))
             }.onFailure {
-                it.message?.let { message -> showErrorSnackbar(message) }
+                updateContentState { copy(isSignInButtonLoading = false) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }
 
     private fun signInWithGoogle(googleAccount: GoogleAccount?) {
+        updateContentState { copy(isSignInGoogleButtonLoading = true) }
         viewModelScope.launch {
-            showLoadingView()
             val googleIdToken = requireNotNull(googleAccount?.idToken)
             loginGoogleUseCase(googleIdToken)
                 .onSuccess {
@@ -66,7 +68,8 @@ internal class LoginViewModel(
                         )
                     )
                 }.onFailure {
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    updateContentState { copy(isSignInGoogleButtonLoading = false) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

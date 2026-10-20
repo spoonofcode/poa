@@ -6,7 +6,7 @@ import com.spoonofcode.feature.notification.data.remote.model.NotificationRespon
 import io.ktor.http.HttpMethod
 import kotlin.time.Instant
 
-class RemoteNotificationDataSource : RemoteBaseDataSource(
+internal class RemoteNotificationDataSource : RemoteBaseDataSource(
     collectionName = "api/notifications",
 ) {
     suspend fun create(

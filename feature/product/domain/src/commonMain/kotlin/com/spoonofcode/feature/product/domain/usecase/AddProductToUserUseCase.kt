@@ -21,7 +21,7 @@ class AddProductToUserUseCase(
         }
 
         return if (productSerieId != null &&
-            notificationRepository.getNotificationSettings().isNotificationsMyProductSeriesEnabled
+            (notificationRepository.getNotificationSettings().getOrNull()?.isNotificationsMyProductSeriesEnabled == true)
         ) {
             firebaseMessagingRepository.subscribeToTopic(
                 topic = getSerieTopic(seriesId = productSerieId)

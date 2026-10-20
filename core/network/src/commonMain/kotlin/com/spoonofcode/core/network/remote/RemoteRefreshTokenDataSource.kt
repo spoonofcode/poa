@@ -5,7 +5,7 @@ import com.spoonofcode.core.network.model.RefreshRequest
 import com.spoonofcode.core.network.model.RefreshResponse
 import io.ktor.http.HttpMethod
 
-class RemoteRefreshTokenDataSource : RemoteBaseDataSource(
+internal class RemoteRefreshTokenDataSource : RemoteBaseDataSource(
     collectionName = "api/refresh",
 ) {
     suspend fun create(

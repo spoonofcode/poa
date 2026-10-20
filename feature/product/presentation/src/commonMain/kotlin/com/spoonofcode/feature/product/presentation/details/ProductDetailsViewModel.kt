@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.presentation.details
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.AddProductToUserUseCase
 import com.spoonofcode.feature.product.domain.usecase.DeleteProductFromUserUseCase
@@ -11,6 +12,7 @@ import com.spoonofcode.feature.product.presentation.ProductEvent
 import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.product_updated
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -45,7 +47,8 @@ internal class ProductDetailsViewModel(
             productEventBus.detailsEvents.collect { event ->
                 if (event is ProductEvent.ProductUpdated) {
                     initView(productId)
-                    showSuccessSnackbar(getString(Res.string.product_updated))
+                    showSuccessSnackbar(UiText.Resource(Res.string.product_updated))
+
                 }
             }
         }
@@ -72,9 +75,9 @@ internal class ProductDetailsViewModel(
     }
 
     private fun addProductToProfile() {
-        showLoadingView()
+        updateContentState { copy(isAddProductToProfileButtonLoading = true) }
         viewModelScope.launch {
-            val product = requireNotNull(currentContentState().product)
+            val product = currentContentState().product
             addProductToUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,
@@ -84,7 +87,8 @@ internal class ProductDetailsViewModel(
                     listOf(ProductModuleRoute.ProductOverview)
                 )
             }.onFailure {
-                it.message?.let { message -> showErrorSnackbar(message) }
+                updateContentState { copy(isAddProductToProfileButtonLoading = false) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }
@@ -97,25 +101,22 @@ internal class ProductDetailsViewModel(
     }
 
     private fun deleteProductFromProfile() {
-        updateContentState {
-            copy(
-                isDeleteProductDialogVisible = true,
-            )
-        }
+        updateContentState { copy(isDeleteProductDialogVisible = true) }
     }
 
     private fun cancelDeleteProductFromProfile() {
-        updateContentState {
-            copy(
-                isDeleteProductDialogVisible = false,
-            )
-        }
+        updateContentState { copy(isDeleteProductDialogVisible = false) }
     }
 
     private fun confirmDeleteProductFromProfile() {
-        showLoadingView()
+        updateContentState {
+            copy(
+                isDeleteProductFromProfileButtonLoading = true,
+                isDeleteProductDialogVisible = false,
+            )
+        }
         viewModelScope.launch {
-            val product = requireNotNull(currentContentState().product)
+            val product = currentContentState().product
             deleteProductFromUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,
@@ -125,7 +126,8 @@ internal class ProductDetailsViewModel(
                     viewModelNavigator.pop()
                 }
                 .onFailure {
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    updateContentState { copy(isDeleteProductFromProfileButtonLoading = false) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

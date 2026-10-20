@@ -6,7 +6,7 @@ import com.spoonofcode.feature.home.domain.model.DailyCheckInStatus
 import com.spoonofcode.feature.home.domain.model.RewardType
 import com.spoonofcode.feature.home.domain.repository.RewardRepository
 
-class RewardRepositoryImpl(
+internal class RewardRepositoryImpl(
     private val remoteUserRewardDataSource: RemoteUserRewardDataSource,
 ) : RewardRepository {
 

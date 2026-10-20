@@ -9,7 +9,7 @@ import com.spoonofcode.feature.notification.domain.model.NotificationSettings
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
 import kotlinx.datetime.LocalDateTime
 
-class NotificationRepositoryImpl(
+internal class NotificationRepositoryImpl(
     private val remoteNotificationDataSource: RemoteNotificationDataSource,
     private val localNotificationDataSource: LocalNotificationDataSource,
 ) : NotificationRepository {
@@ -58,33 +58,34 @@ class NotificationRepositoryImpl(
 
     override suspend fun read(notificationId: String): Result<Notification> =
         remoteNotificationDataSource.read(notificationId).map {
-            it.toNotification().copy(isRead = isRead(notificationId))
+            it.toNotification().copy(isRead = isRead(notificationId).getOrDefault(false))
         }
 
     override suspend fun readAll(): Result<List<Notification>> =
         remoteNotificationDataSource.readAll()
             .map { response ->
                 response.map {
-                    it.toNotification().copy(isRead = isRead(it.id))
+                    it.toNotification().copy(isRead = isRead(it.id).getOrDefault(false))
                 }
             }
 
-    override suspend fun markAsRead(notificationId: String) {
+    override suspend fun markAsRead(notificationId: String): Result<Unit> = runCatching {
         localNotificationDataSource.markAsRead(notificationId = notificationId)
     }
 
-    override suspend fun isRead(notificationId: String): Boolean =
+    override suspend fun isRead(notificationId: String): Result<Boolean> = runCatching {
         localNotificationDataSource.isRead(notificationId = notificationId)
+    }
 
-    override suspend fun getNotificationSettings(): NotificationSettings {
-        return localNotificationDataSource.getNotificationSettings()
+    override suspend fun getNotificationSettings(): Result<NotificationSettings> = runCatching {
+        localNotificationDataSource.getNotificationSettings()
     }
 
     override suspend fun setNotificationSettings(
         notificationsPersonalizedEnabled: Boolean,
         notificationsFromPartnersEnabled: Boolean,
         notificationsMyProductSeriesEnabled: Boolean
-    ) {
+    ): Result<Unit> = runCatching {
         localNotificationDataSource.setNotificationSettings(
             notificationsPersonalizedEnabled = notificationsPersonalizedEnabled,
             notificationsFromPartnersEnabled = notificationsFromPartnersEnabled,

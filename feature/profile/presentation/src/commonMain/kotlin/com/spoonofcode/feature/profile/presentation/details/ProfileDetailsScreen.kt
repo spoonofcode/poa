@@ -101,6 +101,8 @@ private fun ColumnScope.Content(
             }
         )
 
+        SpacerVerticalBetweenFields()
+
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             TextHSB(
                 text = profile.email,

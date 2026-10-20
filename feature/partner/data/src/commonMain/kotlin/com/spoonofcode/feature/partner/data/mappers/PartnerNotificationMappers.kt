@@ -4,8 +4,8 @@ import com.spoonofcode.core.data.ext.toZonedLocalDateTime
 import com.spoonofcode.feature.partner.data.model.PartnerNotificationResponse
 import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 
-fun PartnerNotificationResponse.toPartnerNotification(): PartnerNotification {
-    return PartnerNotification(
+internal fun PartnerNotificationResponse.toPartnerNotification(): PartnerNotification =
+    PartnerNotification(
         id = id,
         title = title,
         text = text,
@@ -18,4 +18,3 @@ fun PartnerNotificationResponse.toPartnerNotification(): PartnerNotification {
         topics = topics,
         ownerId = ownerId,
     )
-}

@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.product.domain.usecase.GetProductByIdUseCase
 import com.spoonofcode.feature.product.domain.usecase.UpdateProductUseCase
 import com.spoonofcode.feature.product.presentation.ProductEvent
@@ -21,6 +22,7 @@ internal class ProductEditViewModel(
     override fun onAction(action: ProductEditViewAction) {
         when (action) {
             is ProductEditViewAction.ChangeCustomLink -> changeCustomLink(action.link)
+            is ProductEditViewAction.ChangeRedirectLink -> changeRedirectLink(action.link)
             ProductEditViewAction.SaveChanges -> saveChanges()
         }
     }
@@ -48,20 +50,28 @@ internal class ProductEditViewModel(
         updateContentState { copy(product = currentProduct.copy(customLink = link)) }
     }
 
+    private fun changeRedirectLink(link: String) {
+        val currentProduct = currentContentState().product
+        updateContentState { copy(product = currentProduct.copy(redirectLink = link)) }
+    }
+
     private fun saveChanges() {
-        showLoadingView()
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             val product = requireNotNull(currentContentState().product)
             updateProductUseCase(
                 id = product.id,
+                productType = product.productType,
                 customLink = product.customLink,
+                redirectLink = product.redirectLink,
             )
                 .onSuccess {
                     productEventBus.emitDetails(ProductEvent.ProductUpdated)
                     viewModelNavigator.pop()
                 }
                 .onFailure {
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    updateContentState { copy(isSaveChangesButtonLoading = false) }
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }

@@ -6,6 +6,7 @@
     <string name="confirm">Potwierdź</string>
     <string name="data_could_not_be_loaded">Nie udało się wczytać danych</string>
     <string name="data_has_been_loaded">Dane zostały załadowane</string>
+    <string name="default_error">Coś poszło nie tak. Spróbuj ponownie.</string>
     <string name="dismiss">Odrzuć</string>
     <string name="hours">Godziny</string>
     <string name="loading">Ładowanie...</string>

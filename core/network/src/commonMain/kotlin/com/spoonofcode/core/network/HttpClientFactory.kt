@@ -20,7 +20,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class HttpClientFactory(
+internal class HttpClientFactory(
     private val poaLogger: POALogger,
     private val sessionRepository: SessionRepository,
     private val remoteRefreshTokenDataSource: RemoteRefreshTokenDataSource,
@@ -32,7 +32,7 @@ class HttpClientFactory(
                     json = Json {
                         encodeDefaults = true
                         ignoreUnknownKeys = true
-                    }
+                    },
                 )
             }
             install(HttpTimeout) {
@@ -61,40 +61,51 @@ class HttpClientFactory(
                     loadTokens {
                         val accessToken = sessionRepository.getSessionAccessToken()
                         val refreshToken = sessionRepository.getSessionRefreshToken()
-                        accessToken?.let {
+                        if (!accessToken.isNullOrBlank()) {
                             BearerTokens(
-                                accessToken = it,
-                                refreshToken = refreshToken
+                                accessToken = accessToken,
+                                refreshToken = refreshToken ?: "",
                             )
+                        } else {
+                            null
                         }
                     }
                     refreshTokens {
+                        poaLogger.debug("HttpClientFactory: refreshTokens triggered for URL: ${response.request.url}")
+
                         if (response.request.url.encodedPath.contains("api/login") ||
                             response.request.url.encodedPath.contains("api/refresh")
                         ) {
+                            poaLogger.debug("HttpClientFactory: Skipping refresh tokens for auth endpoint: ${response.request.url.encodedPath}")
                             return@refreshTokens null
                         }
 
                         val refreshToken = sessionRepository.getSessionRefreshToken()
+                            ?.takeIf { it.isNotBlank() }
+                            ?: oldTokens?.refreshToken?.takeIf { it.isNotBlank() }
+
                         if (refreshToken.isNullOrBlank()) {
+                            poaLogger.warn("HttpClientFactory: Refresh token is null or blank. Clearing session.")
                             sessionRepository.clearSession()
                             return@refreshTokens null
                         }
 
+                        poaLogger.debug("HttpClientFactory: Refreshing tokens using RemoteRefreshTokenDataSource...")
                         var bearerTokens: BearerTokens? = null
                         remoteRefreshTokenDataSource.create(refreshToken)
-                            .onSuccess { refreshResponse ->
+                            .onSuccess { (newAccessToken, newRefreshToken) ->
+                                poaLogger.debug("HttpClientFactory: Token refresh successful. Updating session tokens.")
                                 sessionRepository.updateSessionTokens(
-                                    accessToken = refreshResponse.accessToken,
-                                    refreshToken = refreshResponse.refreshToken,
+                                    accessToken = newAccessToken,
+                                    refreshToken = newRefreshToken,
                                 )
                                 bearerTokens = BearerTokens(
-                                    accessToken = refreshResponse.accessToken,
-                                    refreshToken = refreshResponse.refreshToken,
+                                    accessToken = newAccessToken,
+                                    refreshToken = newRefreshToken,
                                 )
                             }.onFailure { error ->
                                 poaLogger.error(
-                                    message = error.message ?: "refresh token error",
+                                    message = "HttpClientFactory: Token refresh failed: ${error.message}",
                                     throwable = error,
                                 )
                                 sessionRepository.clearSession()

@@ -11,10 +11,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -30,10 +30,11 @@ import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.DescriptionCard
-import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.ImageLink
+import com.spoonofcode.core.presentation.compose.OutlinedButton
 import com.spoonofcode.core.presentation.compose.PrimaryButton
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TextBMB
 import com.spoonofcode.core.presentation.compose.TextHSB
 import com.spoonofcode.core.presentation.compose.TextLLB
@@ -44,6 +45,7 @@ import com.spoonofcode.core.presentation.compose.video.VideoAnimation
 import com.spoonofcode.core.presentation.web.getUrlOpener
 import com.spoonofcode.feature.product.domain.model.Product
 import com.spoonofcode.feature.product.domain.model.ProductStatus
+import com.spoonofcode.feature.product.domain.model.ProductType
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.about_product
 import com.spoonofcode.feature.product.presentation.add_product
@@ -70,6 +72,7 @@ internal fun ProductDetailsScreen(
     StandardScreen(
         viewModel = viewModel,
         screenConfig = screenConfig(),
+        isViewEnable = { it.isViewEnable },
         topBarActions = { viewState, onAction ->
             if (
                 viewState.productStatus == ProductStatus.OWNED_BY_SELF
@@ -80,13 +83,6 @@ internal fun ProductDetailsScreen(
                         description = "Edit",
                         onClick = { onAction(ProductDetailsViewAction.EditProduct) },
                     ),
-                    TopBarAction(
-                        icon = Icons.Default.Delete,
-                        description = "Delete",
-                        onClick = {
-                            onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-                        }
-                    )
                 )
             } else {
                 emptyList()
@@ -175,9 +171,25 @@ private fun ColumnScope.Content(
                 }
             }
         }
+
+        if (!product.redirectLink.isNullOrBlank()) {
+            ElevatedCard {
+                Column {
+                    ClickableInfoRow(
+                        text = stringResource(Res.string.learn_more),
+                        url = product.redirectLink,
+                        icon = Icons.Default.Link
+                    )
+                }
+            }
+        }
+
         ProductBottomButton(
             productStatus = viewState.productStatus,
+            isAddProductToProfileButtonLoading = viewState.isAddProductToProfileButtonLoading,
+            isDeleteProductFromProfileButtonLoading = viewState.isDeleteProductFromProfileButtonLoading,
             addProductToProfile = { onAction(ProductDetailsViewAction.AddProductToProfile) },
+            deleteProductFromProfile = { onAction(ProductDetailsViewAction.DeleteProductFromProfile) },
             onSendMessageClick = {},
         )
     }
@@ -202,8 +214,11 @@ private fun Dialogs(
 
 @Composable
 private fun ProductBottomButton(
-    productStatus: ProductStatus,
+    productStatus: ProductStatus?,
+    isAddProductToProfileButtonLoading: Boolean,
+    isDeleteProductFromProfileButtonLoading: Boolean,
     addProductToProfile: () -> Unit,
+    deleteProductFromProfile: () -> Unit,
     onSendMessageClick: () -> Unit,
 ) {
     when (productStatus) {
@@ -211,6 +226,19 @@ private fun ProductBottomButton(
             PrimaryButton(
                 text = stringResource(Res.string.add_product),
                 onClick = addProductToProfile,
+                isLoading = isAddProductToProfileButtonLoading,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
+        ProductStatus.OWNED_BY_SELF -> {
+            OutlinedButton(
+                text = stringResource(Res.string.delete_product),
+                onClick = deleteProductFromProfile,
+                isLoading = isDeleteProductFromProfileButtonLoading,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                ),
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
@@ -286,14 +314,16 @@ private fun ProductDetailsScreenContentPreview() {
             ProductDetailsViewState(
                 product = Product(
                     id = "1",
-                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                    productType = ProductType.ITEM,
+                    ownerEmail = "user1@example.com",
+                    partnerId = "1",
                     name = "Product #1",
                     description = "Przykładowy opis wydarzenia nr 1",
                     seriesId = "1",
                     seriesName = "Series 1",
+                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
                     imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
                     customLink = "https://beautysaute.pl/",
-                    partnerId = "1",
                 ),
                 productStatus = ProductStatus.OWNED_BY_SELF,
             )

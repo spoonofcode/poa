@@ -1,28 +1,39 @@
 package com.spoonofcode.feature.product.presentation.details
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.awaitLoadingState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.domain.model.ProductStatus
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
+import com.spoonofcode.feature.product.presentation.product_updated
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
-import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import com.spoonofcode.core.presentation.Res as CoreRes
+import com.spoonofcode.feature.product.presentation.Res as ProductRes
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ProductDetailsViewModelTest : BaseViewModelTest() {
+
+    private val navigationParamProductId = "1"
 
     private lateinit var viewModel: ProductDetailsViewModel
     private lateinit var productRepository: ProductRepository
@@ -32,7 +43,7 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
         modules = arrayOf(productPresentationTestModule)
         super.beforeTest()
         productRepository = getKoin().get()
-        viewModel = getSut()
+        viewModel = getKoin().get { parametersOf(navigationParamProductId) }
     }
 
     @AfterTest
@@ -41,224 +52,167 @@ class ProductDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(PRODUCT_1, product)
+                assertEquals(ProductStatus.OWNED_BY_OTHER, productStatus)
+            }
         }
     }
 
     @Test
-    fun `init view success`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        everySuspend { productRepository.getProduct(navigationParamProductId) } returns Result.failure(
+            Exception("Test error")
+        )
 
-            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getProduct(PRODUCT_1.id)
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
         }
     }
 
     @Test
-    fun `init view error`() = runTest {
-        everySuspend { productRepository.getProduct(any()) } returns
-                Result.failure(Exception("not found"))
+    fun `add product to profile success`() = runTest {
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.AddProductToProfile)
 
-        viewModel.viewState.test {
-            skipItems(1)
+            with(viewState.awaitContentState()) {
+                assertTrue(isAddProductToProfileButtonLoading)
+            }
 
-            viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(),
-                    screenState = ScreenState.ERROR,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getProduct(PRODUCT_1.id)
+            verifySuspend { productRepository.addProductToUser(PRODUCT_1.id) }
+            verifySuspend {
+                viewModelNavigator.replaceAll(
+                    listOf(ProductModuleRoute.ProductOverview)
+                )
+            }
         }
     }
 
     @Test
-    fun `add product to user success`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+    fun `add product to profile error`() = runTest {
+        everySuspend { productRepository.addProductToUser(any()) } returns Result.failure(
+            Exception("Error adding product")
+        )
 
-        viewModel.viewState.test {
-            skipItems(2)
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
 
-            viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.AddProductToProfile)
 
+            with(viewState.awaitContentState()) {
+                assertTrue(isAddProductToProfileButtonLoading)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isAddProductToProfileButtonLoading)
+            }
             assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
             )
-        }
 
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.addProductToUser(PRODUCT_1.id)
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
+            verifySuspend { productRepository.addProductToUser(PRODUCT_1.id) }
         }
     }
 
     @Test
-    fun `add product to user error`() = runTest {
-        everySuspend { productRepository.addProductToUser(any()) } returns
-                Result.failure(Exception("add product to user error"))
+    fun `edit product`() = runTest {
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.EditProduct)
 
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.AddProductToProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.addProductToUser(PRODUCT_1.id)
-        }
-
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.pop()
+            verifySuspend {
+                viewModelNavigator.push(ProductModuleRoute.ProductEdit(productId = PRODUCT_1.id))
+            }
         }
     }
 
     @Test
-    fun `edit product success`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
+    fun `delete product from profile`() = runTest {
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.DeleteProductFromProfile)
 
-        advanceUntilIdle()
-
-        viewModel.onAction(ProductDetailsViewAction.EditProduct)
-
-        advanceUntilIdle()
-
-        verifySuspend { routeResolver.resolve(ProductModuleRoute.ProductEdit(productId = PRODUCT_1.id)) }
-        verifySuspend { viewModelNavigator.push(any()) }
-    }
-
-    @Test
-    fun `delete product from user success`() = runTest {
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
-        }
-        advanceUntilIdle()
-
-        verifySuspend {
-            productRepository.deleteProductFromUser(any())
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
+            with(viewState.awaitContentState()) {
+                assertTrue(isDeleteProductDialogVisible)
+            }
         }
     }
 
     @Test
-    fun `delete product from user error`() = runTest {
-        everySuspend { productRepository.deleteProductFromUser(any()) } returns
-                Result.failure(Exception("delete product error"))
+    fun `cancel delete product from profile`() = runTest {
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.DeleteProductFromProfile)
+            with(viewState.awaitContentState()) {
+                assertTrue(isDeleteProductDialogVisible)
+            }
 
-        viewModel.onAction(ProductDetailsViewAction.InitView(PRODUCT_1.id))
-
-        viewModel.viewState.test {
-            skipItems(2)
-
-            viewModel.onAction(ProductDetailsViewAction.DeleteProductFromProfile)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
-            assertEquals(
-                expected = ViewState(
-                    data = ProductDetailsViewState(
-                        product = PRODUCT_1,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile)
+            with(viewState.awaitContentState()) {
+                assertFalse(isDeleteProductDialogVisible)
+            }
         }
-        advanceUntilIdle()
+    }
 
-        verifySuspend {
-            productRepository.deleteProductFromUser(any())
+    @Test
+    fun `confirm delete product from profile success`() = runTest {
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isDeleteProductFromProfileButtonLoading)
+                assertFalse(isDeleteProductDialogVisible)
+            }
+
+            verifySuspend { productRepository.deleteProductFromUser(PRODUCT_1.id) }
+            verifySuspend { viewModelNavigator.pop() }
         }
+    }
 
-        verifySuspend(mode = exactly(0)) {
-            viewModelNavigator.pop()
+    @Test
+    fun `confirm delete product from profile error`() = runTest {
+        everySuspend { productRepository.deleteProductFromUser(any()) } returns Result.failure(
+            Exception("Error deleting product")
+        )
+
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+
+        runVmTest(viewModel) {
+            onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isDeleteProductFromProfileButtonLoading)
+                assertFalse(isDeleteProductDialogVisible)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isDeleteProductFromProfileButtonLoading)
+            }
+            assertEquals(
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
+            )
+
+            verifySuspend { productRepository.deleteProductFromUser(PRODUCT_1.id) }
+        }
+    }
+
+    @Test
+    fun `observe product updated event`() = runTest {
+        val productEventBus: ProductEventBus = getKoin().get()
+
+        runVmTest(viewModel) {
+            productEventBus.emitDetails(ProductEvent.ProductUpdated)
+
+            viewState.awaitLoadingState()
+            with(viewState.awaitContentState()) {
+                assertEquals(PRODUCT_1, product)
+                assertEquals(ProductStatus.OWNED_BY_OTHER, productStatus)
+            }
+            assertEquals(
+                expected = UiText.Resource(ProductRes.string.product_updated),
+                actual = snackbarEvent.awaitItem().message
+            )
         }
     }
 }

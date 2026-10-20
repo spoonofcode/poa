@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.convention.kmp.domain)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -7,6 +8,12 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core.session.domain)
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(projects.core.test)
+                implementation(projects.feature.partner.dataTest)
             }
         }
     }

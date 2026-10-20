@@ -7,7 +7,7 @@ import com.spoonofcode.feature.partner.domain.model.PartnerNotification
 import com.spoonofcode.feature.partner.domain.repository.PartnerNotificationRepository
 import kotlinx.datetime.LocalDateTime
 
-class PartnerNotificationRepositoryImpl(
+internal class PartnerNotificationRepositoryImpl(
     private val remoteDataSource: RemotePartnerNotificationDataSource,
 ) : PartnerNotificationRepository {
 

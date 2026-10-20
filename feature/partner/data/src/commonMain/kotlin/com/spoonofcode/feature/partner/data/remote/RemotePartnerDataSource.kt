@@ -7,7 +7,7 @@ import com.spoonofcode.feature.partner.data.model.PartnerResponse
 import com.spoonofcode.feature.partner.data.model.ProductSeriesResponse
 import io.ktor.http.HttpMethod
 
-class RemotePartnerDataSource : RemoteBaseDataSource(
+internal class RemotePartnerDataSource : RemoteBaseDataSource(
     collectionName = "api/partners",
 ) {
     suspend fun read(partnerId: String): Result<PartnerResponse> = doRequest(

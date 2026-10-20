@@ -14,6 +14,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(projects.core.presentationTest)
+                implementation(projects.feature.tac.dataTest)
             }
         }
     }

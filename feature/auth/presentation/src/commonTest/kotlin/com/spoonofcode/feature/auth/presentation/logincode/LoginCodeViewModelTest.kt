@@ -1,27 +1,33 @@
 package com.spoonofcode.feature.auth.presentation.logincode
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
-import com.spoonofcode.feature.appnavigation.AppModuleRoute
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
+import com.spoonofcode.feature.appnavigation.HomeModuleRoute
+import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
+import com.spoonofcode.feature.appnavigation.TACModuleRoute
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 import com.spoonofcode.feature.auth.presentation.di.authPresentationTestModule
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
-import dev.mokkery.verify.VerifyMode.Companion.exactly
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import com.spoonofcode.core.presentation.Res as CoreRes
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class LoginCodeViewModelTest : BaseViewModelTest() {
+
+    private val navigationParamEmail = "test@example.com"
 
     private lateinit var viewModel: LoginCodeViewModel
     private lateinit var loginRepository: LoginRepository
@@ -31,7 +37,7 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
         modules = arrayOf(authPresentationTestModule)
         super.beforeTest()
         loginRepository = getKoin().get()
-        viewModel = getSut()
+        viewModel = getKoin().get { parametersOf(navigationParamEmail) }
     }
 
     @AfterTest
@@ -40,151 +46,84 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-    }
-
-    @Test
-    fun `init view`() = runTest {
-        val email = "john@doe.com"
-        viewModel.viewState.test {
-            skipItems(1)
-
-            viewModel.onAction(LoginCodeViewAction.InitView(email = email))
-
-            assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(email = email),
-                    screenState = ScreenState.CONTENT
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(navigationParamEmail, email)
+                assertEquals("", code)
+                assertFalse(isSignInWithCodeButtonLoading)
+            }
         }
     }
 
     @Test
     fun `change code`() = runTest {
         val code = "123456"
-        val incomplete_code = "12345"
-        viewModel.viewState.test {
-            skipItems(1)
+        runVmTest(viewModel) {
+            onAction(LoginCodeViewAction.ChangeCode(code))
 
-            viewModel.onAction(LoginCodeViewAction.ChangeCode(code))
-
-            assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(
-                        code = code,
-                        isSignInWithCodeButtonEnable = true,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(LoginCodeViewAction.ChangeCode(incomplete_code))
-
-            assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(
-                        code = incomplete_code,
-                        isSignInWithCodeButtonEnable = false,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(code, this.code)
+            }
         }
     }
 
     @Test
     fun `sign in with code success`() = runTest {
-        val email = "john@doe.com"
         val code = "123456"
-        viewModel.onAction(LoginCodeViewAction.InitView(email))
-        viewModel.onAction(LoginCodeViewAction.ChangeCode(code))
+        runVmTest(viewModel) {
+            onAction(LoginCodeViewAction.ChangeCode(code))
+            onAction(LoginCodeViewAction.SignInWithCode)
 
-        viewModel.viewState.test {
-            skipItems(1)
+            with(viewState.awaitContentState()) {
+                assertEquals(code, this.code)
+            }
+            with(viewState.awaitContentState()) {
+                assertTrue(isSignInWithCodeButtonLoading)
+            }
 
-            viewModel.onAction(LoginCodeViewAction.SignInWithCode)
-
-            assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(
-                        email = email,
-                        code = code,
-                        isSignInWithCodeButtonEnable = true,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
+            verifySuspend { loginRepository.loginWithCode(email = navigationParamEmail, loginCode = code) }
+            verifySuspend {
+                viewModelNavigator.replaceAll(
+                    listOf(
+                        HomeModuleRoute.Home,
+                        NotificationModuleRoute.NotificationSettings(backNavigationEnabled = false),
+                        TACModuleRoute.TAC(backNavigationEnabled = false),
+                    )
+                )
+            }
         }
-        advanceUntilIdle()
-
-        verifySuspend {
-            loginRepository.loginWithCode(email = email, loginCode = any())
-        }
-        verifySuspend { routeResolver.resolve(AppModuleRoute.MainHost) }
-        verifySuspend { viewModelNavigator.replaceAll(any()) }
     }
 
     @Test
     fun `sign in with code error`() = runTest {
-        everySuspend {
-            loginRepository.loginWithCode(any(), any())
-        } returns Result.failure(Exception("error"))
+        everySuspend { loginRepository.loginWithCode(any(), any()) } returns Result.failure(
+            Exception("Login code error")
+        )
 
-        val email = "john@doe.com"
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
         val code = "123456"
-        viewModel.onAction(LoginCodeViewAction.InitView(email))
-        viewModel.onAction(LoginCodeViewAction.ChangeCode(code))
 
-        viewModel.viewState.test {
-            skipItems(1)
+        runVmTest(viewModel) {
+            onAction(LoginCodeViewAction.ChangeCode(code))
+            onAction(LoginCodeViewAction.SignInWithCode)
 
-            viewModel.onAction(LoginCodeViewAction.SignInWithCode)
-
+            with(viewState.awaitContentState()) {
+                assertEquals(code, this.code)
+            }
+            with(viewState.awaitContentState()) {
+                assertTrue(isSignInWithCodeButtonLoading)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isSignInWithCodeButtonLoading)
+            }
             assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(
-                        email = email,
-                        code = code,
-                        isSignInWithCodeButtonEnable = true,
-                    ),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
             )
 
-            assertEquals(
-                expected = ViewState(
-                    data = LoginCodeViewState(
-                        email = email,
-                        code = code,
-                        isSignInWithCodeButtonEnable = true,
-                    ),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            verifySuspend { loginRepository.loginWithCode(any(), any()) }
         }
-        advanceUntilIdle()
-
-        verifySuspend {
-            loginRepository.loginWithCode(any(), any())
-        }
-
-        verifySuspend(mode = exactly(0)) { routeResolver.resolve(AppModuleRoute.MainHost) }
-        verifySuspend(mode = exactly(0)) { viewModelNavigator.replaceAll(any()) }
     }
 }

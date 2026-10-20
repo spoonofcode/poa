@@ -6,7 +6,5 @@ import com.spoonofcode.feature.notification.domain.repository.NotificationReposi
 class GetNotificationSettingsUseCase(
     private val notificationRepository: NotificationRepository,
 ) {
-    suspend operator fun invoke(): Result<NotificationSettings> = runCatching {
-        notificationRepository.getNotificationSettings()
-    }
+    suspend operator fun invoke(): Result<NotificationSettings> = notificationRepository.getNotificationSettings()
 }

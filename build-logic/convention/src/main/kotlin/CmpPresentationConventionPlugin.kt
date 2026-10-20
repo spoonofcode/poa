@@ -1,5 +1,6 @@
 import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureComposeMultiplatform
+import com.spoonofcode.convention.configureKover
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -11,6 +12,7 @@ class CmpPresentationConventionPlugin : Plugin<Project> {
             }
 
             configureComposeMultiplatform()
+            configureKover()
         }
     }
 }

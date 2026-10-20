@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.presentation.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.ProductModuleRoute
 import com.spoonofcode.feature.product.domain.usecase.GetFilteredProductsByTextUseCase
 import com.spoonofcode.feature.product.domain.usecase.GetUserProductsUseCase
@@ -11,7 +12,6 @@ import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.product_added
 import com.spoonofcode.feature.product.presentation.product_deleted
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 internal class ProductOverviewViewModel(
     private val getUserProductsUseCase: GetUserProductsUseCase,
@@ -39,11 +39,11 @@ internal class ProductOverviewViewModel(
                 initView()
                 when (event) {
                     ProductEvent.ProductAdded -> {
-                        showSuccessSnackbar(getString(Res.string.product_added))
+                        showSuccessSnackbar(UiText.Resource(Res.string.product_added))
                     }
 
                     ProductEvent.ProductDeleted -> {
-                        showSuccessSnackbar(getString(Res.string.product_deleted))
+                        showSuccessSnackbar(UiText.Resource(Res.string.product_deleted))
                     }
 
                     else -> {}
@@ -79,7 +79,10 @@ internal class ProductOverviewViewModel(
                 products = products,
             )
             updateContentState {
-                copy(searchText = searchText, filteredProducts = filteredProducts)
+                copy(
+                    searchText = searchText,
+                    filteredProducts = filteredProducts,
+                )
             }
         }
     }

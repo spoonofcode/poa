@@ -125,25 +125,25 @@ private fun ProductSeriesOverviewScreenContentPreview() {
             ProductSeriesOverviewViewState(
                 productSeries = listOf(
                     ProductSeries(
-                        askContactMessage = "Skontaktuj się z nami, aby dowiedzieć się więcej o tej serii.",
-                        banner = "https://example.com/assets/banner-cyberpunk.jpg",
-                        bannerIsOn = true,
-                        blockchain = "Ethereum",
-                        contactAddress = "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-                        description = "Limitowana seria cyfrowych kart kolekcjonerskich inspirowana motywami cyberpunkowymi.",
-                        enabled = true,
-                        facebook = "https://facebook.com/CyberPunkSeries",
-                        fullName = "Cyberpunk Genesis Collectibles Series 2026",
-                        instagram = "https://instagram.com/cyberpunk_series",
-                        message = "Dziękujemy za zainteresowanie naszą serią produktów!",
                         name = "Cyberpunk Genesis",
-                        owner = "0x324123456789abcdef0123456789abcdef012345",
+                        fullName = "Cyberpunk Genesis Collectibles Series 2026",
+                        enabled = true,
+                        description = "Limitowana seria cyfrowych kart kolekcjonerskich inspirowana motywami cyberpunkowymi.",
                         ownerEmail = "kontakt@cyberpunkseries.io",
+                        owner = "0x324123456789abcdef0123456789abcdef012345",
+                        redirectLink = "https://example.com/redirect",
+                        askContactMessage = "Skontaktuj się z nami, aby dowiedzieć się więcej o tej serii.",
+                        blockchain = "Ethereum",
+                        bannerIsOn = true,
+                        banner = "https://example.com/assets/banner-cyberpunk.jpg",
+                        message = "Dziękujemy za zainteresowanie naszą serią produktów!",
                         partnerLink = "https://partner-store.com/cyberpunk",
                         partnerLinkText = "Kup u oficjalnego partnera",
-                        tiktok = "https://tiktok.com/@cyberpunk_series",
                         x = "https://x.com/cyberpunk_series",
-                        youtube = "https://youtube.com/@CyberpunkSeriesOfficial"
+                        instagram = "https://instagram.com/cyberpunk_series",
+                        youtube = "https://youtube.com/@CyberpunkSeriesOfficial",
+                        facebook = "https://facebook.com/CyberPunkSeries",
+                        tiktok = "https://tiktok.com/@cyberpunk_series",
                     )
                 )
             )

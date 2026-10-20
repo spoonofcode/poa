@@ -3,6 +3,7 @@ package com.spoonofcode.feature.partner.presentation.panel
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
 import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.presentation.PartnerEvent
 import com.spoonofcode.feature.partner.presentation.PartnerEventBus
@@ -57,7 +58,7 @@ internal class PartnerPanelViewModel(
         viewModelScope.launch {
             partnerEventBus.partnerUpdatedEvents.collect { event ->
                 if (event is PartnerEvent.PartnerUpdated) {
-                    showSuccessSnackbar(getString(Res.string.partner_data_updated))
+                    showSuccessSnackbar(UiText.Resource(Res.string.partner_data_updated))
                 }
             }
         }

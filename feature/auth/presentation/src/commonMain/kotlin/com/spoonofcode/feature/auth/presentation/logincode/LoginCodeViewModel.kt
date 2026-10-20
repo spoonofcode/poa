@@ -2,6 +2,7 @@ package com.spoonofcode.feature.auth.presentation.logincode
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.HomeModuleRoute
 import com.spoonofcode.feature.appnavigation.NotificationModuleRoute
 import com.spoonofcode.feature.appnavigation.TACModuleRoute
@@ -24,15 +25,11 @@ internal class LoginCodeViewModel(
     }
 
     private fun changeCode(code: String) {
-        updateContentState {
-            copy(
-                code = code,
-            )
-        }
+        updateContentState { copy(code = code) }
     }
 
     private fun signInWithCode() {
-        showLoadingView()
+        updateContentState { copy(isSignInWithCodeButtonLoading = true) }
         val currentState = currentContentState()
         viewModelScope.launch {
             loginCodeUseCase(
@@ -51,7 +48,8 @@ internal class LoginCodeViewModel(
                     )
                 )
             }.onFailure {
-                it.message?.let { message -> showErrorSnackbar(message) }
+                updateContentState { copy(isSignInWithCodeButtonLoading = false) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }

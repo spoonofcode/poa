@@ -7,7 +7,7 @@ import com.spoonofcode.feature.auth.data.remote.RemoteLoginRequestCodeDataSource
 import com.spoonofcode.feature.auth.domain.model.Login
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
-class LoginRepositoryImpl(
+internal class LoginRepositoryImpl(
     private val remoteLoginCodeDataSource: RemoteLoginCodeDataSource,
     private val remoteLoginGoogleDataSource: RemoteLoginGoogleDataSource,
     private val remoteLoginRequestCodeDataSource: RemoteLoginRequestCodeDataSource,

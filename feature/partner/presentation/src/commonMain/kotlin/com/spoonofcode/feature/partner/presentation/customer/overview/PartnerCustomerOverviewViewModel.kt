@@ -2,7 +2,7 @@ package com.spoonofcode.feature.partner.presentation.customer.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import com.spoonofcode.feature.partner.domain.usecase.GetPartnerCustomersUseCase
@@ -45,19 +45,13 @@ internal class PartnerCustomerOverviewViewModel(
         val wasAdded = selected.contains(id)
 
         if (!wasAdded && selected.size >= MAX_SELECTED_USERS) {
-            showSnackbar(
-                SnackbarEvent.Error("You can select a maximum of $MAX_SELECTED_USERS items.")
-            )
+            showErrorSnackbar(UiText.DynamicString("You can select a maximum of $MAX_SELECTED_USERS items."))
             return
         }
 
         if (wasAdded) selected.remove(id) else selected.add(id)
 
-        updateContentState {
-            copy(
-                checkedUserIds = selected
-            )
-        }
+        updateContentState { copy(checkedUserIds = selected) }
     }
 
     private fun navigateToNotification() {

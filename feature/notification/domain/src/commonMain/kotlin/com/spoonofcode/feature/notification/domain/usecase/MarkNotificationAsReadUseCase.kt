@@ -5,7 +5,7 @@ import com.spoonofcode.feature.notification.domain.repository.NotificationReposi
 class MarkNotificationAsReadUseCase(
     private val notificationRepository: NotificationRepository,
 ) {
-    suspend operator fun invoke(notificationId: String) {
-        notificationRepository.markAsRead(notificationId)
+    suspend operator fun invoke(notificationId: String): Result<Unit> {
+        return notificationRepository.markAsRead(notificationId)
     }
 }

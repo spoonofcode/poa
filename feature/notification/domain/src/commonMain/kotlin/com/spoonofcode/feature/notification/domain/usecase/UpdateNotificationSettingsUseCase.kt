@@ -14,7 +14,7 @@ class UpdateNotificationSettingsUseCase(
     private val topicSyncHandlers: List<NotificationTopicSyncHandler>,
     private val poaLogger: POALogger,
 ) {
-    suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> {
+    suspend operator fun invoke(notificationSettings: NotificationSettings): Result<Unit> = runCatching {
         handleTopicSubscription(
             isEnabled = notificationSettings.isNotificationsPersonalizedEnabled,
             topic = getUserTopic()
@@ -24,8 +24,11 @@ class UpdateNotificationSettingsUseCase(
             handler.syncTopics(notificationSettings).getOrThrow()
         }
 
-        saveLocalSettings(notificationSettings)
-        return Result.success(Unit)
+        notificationRepository.setNotificationSettings(
+            notificationsPersonalizedEnabled = notificationSettings.isNotificationsPersonalizedEnabled,
+            notificationsFromPartnersEnabled = notificationSettings.isNotificationsFromPartnersEnabled,
+            notificationsMyProductSeriesEnabled = notificationSettings.isNotificationsMyProductSeriesEnabled,
+        ).getOrThrow()
     }
 
     private suspend fun handleTopicSubscription(isEnabled: Boolean, topic: String): Result<Unit> {
@@ -36,14 +39,6 @@ class UpdateNotificationSettingsUseCase(
             poaLogger.debug("Unsubscribing from topic: $topic")
             firebaseMessagingRepository.unsubscribeFromTopic(topic)
         }
-    }
-
-    private suspend fun saveLocalSettings(settings: NotificationSettings) {
-        notificationRepository.setNotificationSettings(
-            notificationsPersonalizedEnabled = settings.isNotificationsPersonalizedEnabled,
-            notificationsFromPartnersEnabled = settings.isNotificationsFromPartnersEnabled,
-            notificationsMyProductSeriesEnabled = settings.isNotificationsMyProductSeriesEnabled,
-        )
     }
 
     private suspend fun getUserTopic(): String =

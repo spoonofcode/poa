@@ -2,6 +2,7 @@ package com.spoonofcode.feature.tac.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.tac.domain.usecase.GetTACSettingsUseCase
 import com.spoonofcode.feature.tac.domain.usecase.UpdateTACSettingsUseCase
 import kotlinx.coroutines.launch
@@ -37,37 +38,31 @@ internal class TACViewModel(
                     )
                     showContentView()
                 }.onFailure {
-                    it.message?.let { message -> showErrorSnackbar(message) }
+                    showErrorView()
+                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }
         }
     }
 
     private fun changeTermsAndConditions(accepted: Boolean) {
-        updateContentState {
-            copy(
-                isTermsAndConditionsAccepted = accepted
-            )
-        }
+        updateContentState { copy(isTermsAndConditionsAccepted = accepted) }
     }
 
     private fun changePrivacyPolicy(accepted: Boolean) {
-        updateContentState {
-            copy(
-                isPrivacyPolicyAccepted = accepted
-            )
-        }
+        updateContentState { copy(isPrivacyPolicyAccepted = accepted) }
     }
 
     private fun saveChanges() {
+        updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
-            showLoadingView()
             updateTACSettingsUseCase(
                 isPrivacyPolicyAccepted = currentContentState().isPrivacyPolicyAccepted,
                 isTermsAndConditionsAccepted = currentContentState().isTermsAndConditionsAccepted,
             ).onSuccess {
                 viewModelNavigator.pop()
             }.onFailure {
-                it.message?.let { message -> showErrorSnackbar(message) }
+                updateContentState { copy(isSaveChangesButtonLoading = false) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
             }
         }
     }

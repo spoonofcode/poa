@@ -1,24 +1,35 @@
 package com.spoonofcode.feature.product.presentation.edit
 
-import app.cash.turbine.test
-import com.spoonofcode.core.presentation.base.ScreenState
-import com.spoonofcode.core.presentation.base.ViewState
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
+import com.spoonofcode.core.presentation.test.ext.awaitContentState
+import com.spoonofcode.core.presentation.test.ext.awaitErrorState
+import com.spoonofcode.core.presentation.test.ext.awaitInitialState
+import com.spoonofcode.core.presentation.test.ext.runVmTest
 import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1
+import com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_2
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
+import com.spoonofcode.feature.product.presentation.ProductEvent
+import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.di.productPresentationTestModule
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import com.spoonofcode.core.presentation.Res as CoreRes
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ProductEditViewModelTest : BaseViewModelTest() {
+
+    private val navigationParamProductId = "1"
 
     private lateinit var viewModel: ProductEditViewModel
     private lateinit var productRepository: ProductRepository
@@ -28,7 +39,7 @@ class ProductEditViewModelTest : BaseViewModelTest() {
         modules = arrayOf(productPresentationTestModule)
         super.beforeTest()
         productRepository = getKoin().get()
-        viewModel = getSut()
+        viewModel = getKoin().get { parametersOf(navigationParamProductId) }
     }
 
     @AfterTest
@@ -37,113 +48,172 @@ class ProductEditViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial state is default`() = runTest {
-        viewModel.viewState.test {
-            assertEquals(
-                expected = ViewState(
-                    data = ProductEditViewState(),
-                ),
-                actual = awaitItem()
-            )
+    fun `initial view`() = runTest {
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            with(viewState.awaitContentState()) {
+                assertEquals(PRODUCT_1, product)
+                assertTrue(isSaveChangesButtonEnabled)
+                assertTrue(isViewEnable)
+            }
         }
     }
 
     @Test
-    fun `init view success`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `initial view - error`() = runTest {
+        everySuspend { productRepository.getProduct(navigationParamProductId) } returns Result.failure(
+            Exception("Test error")
+        )
 
-            viewModel.onAction(ProductEditViewAction.InitView(PRODUCT_1.id))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductEditViewState(product = PRODUCT_1),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getProduct(PRODUCT_1.id)
+        runVmTest(viewModel, expectMostRecentItem = false) {
+            viewState.awaitInitialState()
+            viewState.awaitErrorState()
         }
     }
 
     @Test
     fun `change custom link`() = runTest {
-        val customLink = "New custom link"
-        viewModel.viewState.test {
-            skipItems(1)
+        val newLink = "https://newlink.com"
 
-            viewModel.onAction(ProductEditViewAction.InitView(productId = PRODUCT_1.id))
+        runVmTest(viewModel) {
+            onAction(ProductEditViewAction.ChangeCustomLink(link = newLink))
 
-            assertEquals(
-                expected = ViewState(
-                    data = ProductEditViewState(product = PRODUCT_1),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
-
-            viewModel.onAction(ProductEditViewAction.ChangeCustomLink(customLink))
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductEditViewState(product = PRODUCT_1.copy(customLink = customLink)),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
-            )
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.customLink)
+                assertTrue(isSaveChangesButtonEnabled)
+            }
         }
     }
 
-    // TODO Fix this test
-    @Ignore
     @Test
-    fun `save changes`() = runTest {
-        viewModel.viewState.test {
-            skipItems(1)
+    fun `change custom link to empty - save changes button disabled`() = runTest {
+        runVmTest(viewModel) {
+            onAction(ProductEditViewAction.ChangeCustomLink(link = ""))
 
-            viewModel.onAction(ProductEditViewAction.InitView(productId = PRODUCT_1.id))
+            with(viewState.awaitContentState()) {
+                assertEquals("", product.customLink)
+                assertFalse(isSaveChangesButtonEnabled)
+            }
+        }
+    }
 
+    @Test
+    fun `change redirect link`() = runTest {
+        val newLink = "https://newredirectlink.com"
+
+        runVmTest(viewModel) {
+            onAction(ProductEditViewAction.ChangeRedirectLink(link = newLink))
+
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.redirectLink)
+                assertTrue(isSaveChangesButtonEnabled)
+            }
+        }
+    }
+
+    @Test
+    fun `save changes success - ITEM product`() = runTest {
+        val productEventBus: ProductEventBus = getKoin().get()
+        val newLink = "https://newcustomlink.com"
+
+        runVmTest(viewModel) {
+            val detailsEvents = productEventBus.detailsEvents.test()
+
+            onAction(ProductEditViewAction.ChangeCustomLink(link = newLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.customLink)
+            }
+
+            onAction(ProductEditViewAction.SaveChanges)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
+            }
+
+            assertEquals(ProductEvent.ProductUpdated, detailsEvents.awaitItem())
+
+            verifySuspend {
+                productRepository.updateProductItem(
+                    productId = PRODUCT_1.id,
+                    customLink = newLink,
+                )
+            }
+            verifySuspend { viewModelNavigator.pop() }
+        }
+    }
+
+    @Test
+    fun `save changes success - REDIRECT product`() = runTest {
+        everySuspend { productRepository.getProduct(navigationParamProductId) } returns Result.success(
+            PRODUCT_2
+        )
+
+        val redirectViewModel: ProductEditViewModel =
+            getKoin().get { parametersOf(navigationParamProductId) }
+        val productEventBus: ProductEventBus = getKoin().get()
+        val newLink = "https://newredirectlink.com"
+
+        runVmTest(redirectViewModel) {
+            val detailsEvents = productEventBus.detailsEvents.test()
+
+            onAction(ProductEditViewAction.ChangeRedirectLink(link = newLink))
+            with(viewState.awaitContentState()) {
+                assertEquals(newLink, product.redirectLink)
+            }
+
+            onAction(ProductEditViewAction.SaveChanges)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
+            }
+
+            assertEquals(ProductEvent.ProductUpdated, detailsEvents.awaitItem())
+
+            verifySuspend {
+                productRepository.updateProductRedirect(
+                    productId = PRODUCT_2.id,
+                    redirectLink = newLink,
+                )
+            }
+            verifySuspend { viewModelNavigator.pop() }
+        }
+    }
+
+    @Test
+    fun `save changes error`() = runTest {
+        everySuspend {
+            productRepository.updateProductItem(
+                any(),
+                any(),
+            )
+        } returns Result.failure(Exception("Error updating product"))
+
+        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+
+        runVmTest(viewModel) {
+            onAction(ProductEditViewAction.SaveChanges)
+
+            with(viewState.awaitContentState()) {
+                assertTrue(isSaveChangesButtonLoading)
+                assertFalse(isViewEnable)
+            }
+            with(viewState.awaitContentState()) {
+                assertFalse(isSaveChangesButtonLoading)
+                assertTrue(isViewEnable)
+            }
             assertEquals(
-                expected = ViewState(
-                    data = ProductEditViewState(product = PRODUCT_1),
-                    screenState = ScreenState.CONTENT,
-                ),
-                actual = awaitItem()
+                expected = expectedErrorMessage,
+                actual = snackbarEvent.awaitItem().message
             )
 
-            viewModel.onAction(ProductEditViewAction.SaveChanges)
-
-            assertEquals(
-                expected = ViewState(
-                    data = ProductEditViewState(product = PRODUCT_1),
-                    screenState = ScreenState.LOADING,
-                ),
-                actual = awaitItem()
-            )
-        }
-
-        verifySuspend {
-            productRepository.getProduct(PRODUCT_1.id)
-        }
-
-        verifySuspend {
-            productRepository.update(
-                productId = any(),
-                ownerUserId = any(),
-                partnerId = any(),
-                name = any(),
-                description = any(),
-                seriesId = any(),
-                collectionName = any(),
-                imageLink = any()
-            )
-        }
-
-        verifySuspend {
-            viewModelNavigator.pop()
+            verifySuspend {
+                productRepository.updateProductItem(
+                    productId = PRODUCT_1.id,
+                    customLink = PRODUCT_1.customLink,
+                )
+            }
         }
     }
 }
