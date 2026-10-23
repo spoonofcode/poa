@@ -2,6 +2,7 @@ package com.spoonofcode.feature.product.domain.usecase
 
 import com.spoonofcode.core.test.base.BaseTest
 import com.spoonofcode.feature.product.domain.di.productDomainTestModule
+import com.spoonofcode.feature.product.domain.model.ProductType
 import com.spoonofcode.feature.product.domain.repository.ProductRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
@@ -34,10 +35,20 @@ class UpdateProductUseCaseTest : BaseTest() {
     @Test
     fun `invoke returns success when productRepository updates successfully`() = runTest {
         val productId = "1"
+        val productType = ProductType.ITEM
         val customLink = "https://custom.link"
-        everySuspend { productRepository.updateProductItem(productId, customLink) } returns Result.success(Unit)
+        everySuspend {
+            productRepository.updateProductItem(
+                productId,
+                customLink
+            )
+        } returns Result.success(Unit)
 
-        val result = updateProductUseCase(productId, customLink)
+        val result = updateProductUseCase(
+            id = productId,
+            productType = productType,
+            customLink = customLink
+        )
 
         assertTrue(result.isSuccess)
         verifySuspend { productRepository.updateProductItem(productId, customLink) }
@@ -46,11 +57,21 @@ class UpdateProductUseCaseTest : BaseTest() {
     @Test
     fun `invoke returns failure when productRepository fails`() = runTest {
         val productId = "1"
+        val productType = ProductType.ITEM
         val customLink = "https://custom.link"
         val exception = Exception("Update failed")
-        everySuspend { productRepository.updateProductItem(productId, customLink) } returns Result.failure(exception)
+        everySuspend {
+            productRepository.updateProductItem(
+                productId,
+                customLink,
+            )
+        } returns Result.failure(exception)
 
-        val result = updateProductUseCase(productId, customLink)
+        val result = updateProductUseCase(
+            id = productId,
+            productType = productType,
+            customLink = customLink
+        )
 
         assertTrue(result.isFailure)
         assertEquals(exception, result.exceptionOrNull())

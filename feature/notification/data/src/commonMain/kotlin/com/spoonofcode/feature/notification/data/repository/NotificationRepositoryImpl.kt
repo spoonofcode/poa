@@ -29,7 +29,7 @@ internal class NotificationRepositoryImpl(
         deliveryDateTime = deliveryDateTime.toZonedInstant(),
         expirationDateTime = expirationDateTime.toZonedInstant(),
         ownerId = ownerId,
-    ).map { Unit }
+    ).map { }
 
     override suspend fun update(
         notificationId: String,
@@ -49,7 +49,7 @@ internal class NotificationRepositoryImpl(
         deliveryDateTime = deliveryDateTime.toZonedInstant(),
         expirationDateTime = expirationDateTime.toZonedInstant(),
         ownerId = ownerId,
-    ).map { Unit }
+    )
 
     override suspend fun delete(notificationId: String): Result<Unit> =
         remoteNotificationDataSource.delete(

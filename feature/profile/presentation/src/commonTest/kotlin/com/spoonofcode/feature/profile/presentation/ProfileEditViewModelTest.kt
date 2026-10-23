@@ -4,11 +4,9 @@ import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
 import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 import com.spoonofcode.feature.profile.presentation.di.profilePresentationTestModule
 import com.spoonofcode.feature.profile.presentation.edit.ProfileEditViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ProfileEditViewModelest : BaseViewModelTest() {
 
     private lateinit var viewModel: ProfileEditViewModel
