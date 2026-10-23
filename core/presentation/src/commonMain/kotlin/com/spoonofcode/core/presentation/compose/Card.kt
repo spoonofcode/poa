@@ -21,10 +21,11 @@ fun ElevatedCard(
     onClick: () -> Unit = {},
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
-    colors: CardColors = CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.surface
-    ),
-    content: @Composable ColumnScope.() -> Unit
+    colors: CardColors =
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
         onClick = onClick,
@@ -33,10 +34,11 @@ fun ElevatedCard(
         shape = MaterialTheme.shapes.large,
         colors = colors,
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-        border = BorderStroke(
-            1.dp,
-            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-        )
+        border =
+            BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+            ),
     ) {
         Column {
             content()
@@ -45,21 +47,24 @@ fun ElevatedCard(
 }
 
 @Composable
-fun DescriptionCard(title: String, description: String) {
+fun DescriptionCard(
+    title: String,
+    description: String,
+) {
     ElevatedCard {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpacerVerticalBetweenFields()
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                lineHeight = 22.sp
+                lineHeight = 22.sp,
             )
         }
     }

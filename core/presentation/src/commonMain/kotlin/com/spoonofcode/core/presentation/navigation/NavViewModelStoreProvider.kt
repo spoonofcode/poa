@@ -10,16 +10,15 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 
-val LocalNavViewModelStoreProvider = staticCompositionLocalOf<NavViewModelStoreProvider> {
-    error("No NavViewModelStoreProvider provided")
-}
+val LocalNavViewModelStoreProvider =
+    staticCompositionLocalOf<NavViewModelStoreProvider> {
+        error("No NavViewModelStoreProvider provided")
+    }
 
 class NavViewModelStoreProvider {
     private val stores = mutableMapOf<Any, ViewModelStore>()
 
-    fun getStore(key: Any): ViewModelStore {
-        return stores.getOrPut(key) { ViewModelStore() }
-    }
+    fun getStore(key: Any): ViewModelStore = stores.getOrPut(key) { ViewModelStore() }
 
     fun cleanUp(currentKeys: Set<Any>) {
         val iterator = stores.iterator()
@@ -33,17 +32,16 @@ class NavViewModelStoreProvider {
     }
 }
 
-inline fun <reified T : NavKey> EntryProviderScope<NavKey>.viewModelEntry(
-    crossinline content: @Composable (T) -> Unit
-) {
+inline fun <reified T : NavKey> EntryProviderScope<NavKey>.viewModelEntry(crossinline content: @Composable (T) -> Unit) {
     entry<T> { route ->
         val provider = LocalNavViewModelStoreProvider.current
         val store = provider.getStore(route)
-        val owner = remember(store) {
-            object : ViewModelStoreOwner {
-                override val viewModelStore: ViewModelStore = store
+        val owner =
+            remember(store) {
+                object : ViewModelStoreOwner {
+                    override val viewModelStore: ViewModelStore = store
+                }
             }
-        }
         CompositionLocalProvider(LocalViewModelStoreOwner provides owner) {
             content(route)
         }

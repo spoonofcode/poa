@@ -10,5 +10,5 @@ expect fun LoopingVideo(
     autoPlay: Boolean = true,
     mute: Boolean = true,
     onLoadingChanged: (Boolean) -> Unit = {},
-    onError: (Exception) -> Unit = {}
+    onError: (Exception) -> Unit = {},
 )

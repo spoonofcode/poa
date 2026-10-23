@@ -19,39 +19,45 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.shareIn
 
-internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
-
+internal class AndroidNfcReader(
+    private val activity: Activity,
+) : NfcReader {
     private val _isScanning = MutableStateFlow(false)
     override val isScanning: StateFlow<Boolean> = _isScanning.asStateFlow()
 
     @OptIn(DelicateCoroutinesApi::class)
-    private val _tags = callbackFlow {
-        _isScanning.value = true
-        val adapter = NfcAdapter.getDefaultAdapter(activity) ?: run {
-            close()
-            return@callbackFlow
-        }
+    private val _tags =
+        callbackFlow {
+            _isScanning.value = true
+            val adapter =
+                NfcAdapter.getDefaultAdapter(activity) ?: run {
+                    close()
+                    return@callbackFlow
+                }
 
-        val flags = NfcAdapter.FLAG_READER_NFC_A or
-                NfcAdapter.FLAG_READER_NFC_B or
-                NfcAdapter.FLAG_READER_NFC_F or
-                NfcAdapter.FLAG_READER_NFC_V
+            val flags =
+                NfcAdapter.FLAG_READER_NFC_A or
+                    NfcAdapter.FLAG_READER_NFC_B or
+                    NfcAdapter.FLAG_READER_NFC_F or
+                    NfcAdapter.FLAG_READER_NFC_V
 
-        adapter.enableReaderMode(activity, { tag ->
-            val id = tag.id.joinToString("") { "%02X".format(it) }
-            val ndefPayload = readNdef(tag)
+            adapter.enableReaderMode(activity, { tag ->
+                val id = tag.id.joinToString("") { "%02X".format(it) }
+                val ndefPayload = readNdef(tag)
 
-            trySend(NfcTag(id = id, techList = tag.techList.toList(), ndef = ndefPayload))
-        }, flags, null)
+                trySend(NfcTag(id = id, techList = tag.techList.toList(), ndef = ndefPayload))
+            }, flags, null)
 
-        awaitClose {
-            adapter.disableReaderMode(activity)
-            _isScanning.value = false
-        }
-    }.shareIn(GlobalScope, SharingStarted.Eagerly, replay = 0)
+            awaitClose {
+                adapter.disableReaderMode(activity)
+                _isScanning.value = false
+            }
+        }.shareIn(GlobalScope, SharingStarted.Eagerly, replay = 0)
 
     override val tags: Flow<NfcTag> = _tags
+
     override fun start() {}
+
     override fun stop() {}
 
     private fun readNdef(tag: Tag): String? {
@@ -72,21 +78,22 @@ internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
             return try {
                 iso.connect()
                 // Select NDEF Application APDU
-                val selectApp = byteArrayOf(
-                    0.toByte(),
-                    0xA4.toByte(),
-                    4.toByte(),
-                    0.toByte(),
-                    7.toByte(),
-                    0xD2.toByte(),
-                    0x76.toByte(),
-                    0.toByte(),
-                    0.toByte(),
-                    0x85.toByte(),
-                    1.toByte(),
-                    1.toByte(),
-                    0.toByte()
-                )
+                val selectApp =
+                    byteArrayOf(
+                        0.toByte(),
+                        0xA4.toByte(),
+                        4.toByte(),
+                        0.toByte(),
+                        7.toByte(),
+                        0xD2.toByte(),
+                        0x76.toByte(),
+                        0.toByte(),
+                        0.toByte(),
+                        0x85.toByte(),
+                        1.toByte(),
+                        1.toByte(),
+                        0.toByte(),
+                    )
                 val res = iso.transceive(selectApp)
                 if (res.size >= 2 && res[res.size - 2] == 0x90.toByte()) {
                     iso.transceive(
@@ -97,23 +104,26 @@ internal class AndroidNfcReader(private val activity: Activity) : NfcReader {
                             0xC,
                             2,
                             0xE1.toByte(),
-                            4.toByte()
-                        )
+                            4.toByte(),
+                        ),
                     ) // Select NDEF File
                     val readLen =
                         iso.transceive(byteArrayOf(0, 0xB0.toByte(), 0, 0, 2)) // Read length
                     val len = ((readLen[0].toInt() and 0xFF) shl 8) or (readLen[1].toInt() and 0xFF)
-                    val data = iso.transceive(
-                        byteArrayOf(
-                            0,
-                            0xB0.toByte(),
-                            0,
-                            2,
-                            len.toByte()
-                        )
-                    ) // Read actual data
+                    val data =
+                        iso.transceive(
+                            byteArrayOf(
+                                0,
+                                0xB0.toByte(),
+                                0,
+                                2,
+                                len.toByte(),
+                            ),
+                        ) // Read actual data
                     parseNdefMessage(NdefMessage(data.copyOfRange(0, len)))
-                } else null
+                } else {
+                    null
+                }
             } catch (e: Exception) {
                 null
             } finally {

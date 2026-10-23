@@ -29,9 +29,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ExpandableList(items: List<Pair<String, String>>) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier =
+            Modifier
+                .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(items) { item ->
             ExpandableListItem(title = item.first, description = item.second)
@@ -40,33 +41,38 @@ fun ExpandableList(items: List<Pair<String, String>>) {
 }
 
 @Composable
-fun ExpandableListItem(title: String, description: String) {
+fun ExpandableListItem(
+    title: String,
+    description: String,
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .animateContentSize(),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .animateContentSize(),
         shape = RoundedCornerShape(12.dp),
         tonalElevation = 1.dp,
         onClick = { expanded = !expanded },
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 TextTM(
                     text = title,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 )
                 Icon(
                     imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                    contentDescription = if (expanded) "Collapse" else "Expand"
+                    contentDescription = if (expanded) "Collapse" else "Expand",
                 )
             }
 

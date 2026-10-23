@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AppViewModel(
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
 ) : ViewModel() {
-
     private val _state = MutableStateFlow<AppViewState>(AppViewState.Loading)
     val state: StateFlow<AppViewState> = _state.asStateFlow()
 
@@ -22,11 +21,12 @@ class AppViewModel(
     private fun checkSession() {
         viewModelScope.launch {
             val isInitialized = sessionRepository.isSessionInitialized()
-            _state.value = if (isInitialized) {
-                AppViewState.LoggedIn
-            } else {
-                AppViewState.LoggedOut
-            }
+            _state.value =
+                if (isInitialized) {
+                    AppViewState.LoggedIn
+                } else {
+                    AppViewState.LoggedOut
+                }
         }
     }
 }

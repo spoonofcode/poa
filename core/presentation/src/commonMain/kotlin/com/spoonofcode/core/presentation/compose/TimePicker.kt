@@ -49,7 +49,7 @@ fun StandardTimePicker(
     val isOpen = remember { mutableStateOf(false) }
 
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         OutlinedTextFieldStandard(
             value = value.formatedTime(),
@@ -58,31 +58,34 @@ fun StandardTimePicker(
             onValueChange = {},
             trailingIcon = {
                 IconButton(
-                    onClick = { }
+                    onClick = { },
                 ) {
                     Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
                 }
-            }
+            },
         )
 
         Box(
-            modifier = Modifier
-                .matchParentSize()
-                .clickable(onClick = { isOpen.value = true })
+            modifier =
+                Modifier
+                    .matchParentSize()
+                    .clickable(onClick = { isOpen.value = true }),
         )
     }
 
     if (isOpen.value) {
-        val initialTime = remember(value.time, minTime) {
-            if (minTime != null && value.time < minTime) minTime else value.time
-        }
+        val initialTime =
+            remember(value.time, minTime) {
+                if (minTime != null && value.time < minTime) minTime else value.time
+            }
 
         key(isOpen.value) {
-            val timePickerState = rememberTimePickerState(
-                initialHour = initialTime.hour,
-                initialMinute = initialTime.minute,
-                is24Hour = true,
-            )
+            val timePickerState =
+                rememberTimePickerState(
+                    initialHour = initialTime.hour,
+                    initialMinute = initialTime.minute,
+                    is24Hour = true,
+                )
 
             val isTimeValid by remember(minTime) {
                 derivedStateOf {
@@ -101,23 +104,24 @@ fun StandardTimePicker(
                 onConfirm = {
                     if (!isTimeValid) return@InternalTimePickerDialog
 
-                    val selectedTime = LocalTime(
-                        hour = timePickerState.hour,
-                        minute = timePickerState.minute,
-                        second = 0,
-                        nanosecond = 0
-                    )
+                    val selectedTime =
+                        LocalTime(
+                            hour = timePickerState.hour,
+                            minute = timePickerState.minute,
+                            second = 0,
+                            nanosecond = 0,
+                        )
 
                     onValueChange(
                         LocalDateTime(
                             value.date,
-                            selectedTime
-                        )
+                            selectedTime,
+                        ),
                     )
 
                     isOpen.value = false
                     onConfirm(timePickerState)
-                }
+                },
             ) {
                 Column {
                     TimePicker(
@@ -128,7 +132,7 @@ fun StandardTimePicker(
                             text = stringResource(Res.string.minimum_time, minTime.formatedTime()),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(top = 8.dp)
+                            modifier = Modifier.padding(top = 8.dp),
                         )
                     }
                 }
@@ -142,7 +146,7 @@ private fun InternalTimePickerDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     confirmEnabled: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -154,11 +158,11 @@ private fun InternalTimePickerDialog(
         confirmButton = {
             TextButton(
                 onClick = { onConfirm() },
-                enabled = confirmEnabled
+                enabled = confirmEnabled,
             ) {
                 Text(stringResource(Res.string.confirm))
             }
         },
-        text = { content() }
+        text = { content() },
     )
 }

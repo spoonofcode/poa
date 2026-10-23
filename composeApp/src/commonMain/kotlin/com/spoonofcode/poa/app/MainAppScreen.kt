@@ -62,48 +62,49 @@ import kotlinx.serialization.modules.subclass
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.getKoin
 
-private val navSavedStateConfiguration = SavedStateConfiguration {
-    serializersModule = SerializersModule {
-        polymorphic(NavKey::class) {
-            subclass(AppModuleRoute.MainHost::class)
-            subclass(AuthModuleRoute.Login::class)
-            subclass(AuthModuleRoute.LoginCode::class)
-            subclass(FAQModuleRoute.FAQ::class)
-            subclass(HomeModuleRoute.Home::class)
-            subclass(NotificationModuleRoute.NotificationDetails::class)
-            subclass(NotificationModuleRoute.NotificationOverview::class)
-            subclass(NotificationModuleRoute.NotificationSettings::class)
-            subclass(NotificationModuleRoute.NotificationChannel::class)
-            subclass(PartnerModuleRoute.PartnerDetails::class)
-            subclass(PartnerModuleRoute.PartnerOverview::class)
-            subclass(PartnerModuleRoute.PartnerEdit::class)
-            subclass(PartnerModuleRoute.CustomerOverview::class)
-            subclass(PartnerModuleRoute.PartnerPanel::class)
-            subclass(PartnerModuleRoute.PartnerNotifications::class)
-            subclass(PartnerModuleRoute.PartnerNotificationDetails::class)
-            subclass(PartnerModuleRoute.PartnerNotificationEdit::class)
-            subclass(PartnerModuleRoute.PartnerNotificationType::class)
-            subclass(ProductModuleRoute.ProductDetails::class)
-            subclass(ProductModuleRoute.ProductEdit::class)
-            subclass(ProductModuleRoute.ProductOverview::class)
-            subclass(ProductModuleRoute.ProductSeriesOverview::class)
-            subclass(ProfileModuleRoute.ProfileDetails::class)
-            subclass(ProfileModuleRoute.ProfileEdit::class)
-            subclass(ScanModuleRoute.Scan::class)
-            subclass(TACModuleRoute.TAC::class)
-        }
+private val navSavedStateConfiguration =
+    SavedStateConfiguration {
+        serializersModule =
+            SerializersModule {
+                polymorphic(NavKey::class) {
+                    subclass(AppModuleRoute.MainHost::class)
+                    subclass(AuthModuleRoute.Login::class)
+                    subclass(AuthModuleRoute.LoginCode::class)
+                    subclass(FAQModuleRoute.FAQ::class)
+                    subclass(HomeModuleRoute.Home::class)
+                    subclass(NotificationModuleRoute.NotificationDetails::class)
+                    subclass(NotificationModuleRoute.NotificationOverview::class)
+                    subclass(NotificationModuleRoute.NotificationSettings::class)
+                    subclass(NotificationModuleRoute.NotificationChannel::class)
+                    subclass(PartnerModuleRoute.PartnerDetails::class)
+                    subclass(PartnerModuleRoute.PartnerOverview::class)
+                    subclass(PartnerModuleRoute.PartnerEdit::class)
+                    subclass(PartnerModuleRoute.CustomerOverview::class)
+                    subclass(PartnerModuleRoute.PartnerPanel::class)
+                    subclass(PartnerModuleRoute.PartnerNotifications::class)
+                    subclass(PartnerModuleRoute.PartnerNotificationDetails::class)
+                    subclass(PartnerModuleRoute.PartnerNotificationEdit::class)
+                    subclass(PartnerModuleRoute.PartnerNotificationType::class)
+                    subclass(ProductModuleRoute.ProductDetails::class)
+                    subclass(ProductModuleRoute.ProductEdit::class)
+                    subclass(ProductModuleRoute.ProductOverview::class)
+                    subclass(ProductModuleRoute.ProductSeriesOverview::class)
+                    subclass(ProfileModuleRoute.ProfileDetails::class)
+                    subclass(ProfileModuleRoute.ProfileEdit::class)
+                    subclass(ScanModuleRoute.Scan::class)
+                    subclass(TACModuleRoute.TAC::class)
+                }
+            }
     }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainAppScreen(
-    initialRoutes: List<NavKey>
-) {
-    val backStack = rememberNavBackStack(
-        configuration = navSavedStateConfiguration,
-        *initialRoutes.toTypedArray()
-    )
+fun MainAppScreen(initialRoutes: List<NavKey>) {
+    val backStack =
+        rememberNavBackStack(
+            configuration = navSavedStateConfiguration,
+            *initialRoutes.toTypedArray(),
+        )
 
     val viewModelStoreProvider = remember { NavViewModelStoreProvider() }
     val currentKeys = backStack.toSet()
@@ -116,8 +117,8 @@ fun MainAppScreen(
             if (notificationId.isNotBlank()) {
                 backStack.add(
                     NotificationModuleRoute.NotificationDetails(
-                        notificationId = notificationId
-                    )
+                        notificationId = notificationId,
+                    ),
                 )
             }
         }
@@ -130,11 +131,12 @@ fun MainAppScreen(
     )
 
     val currentScreen = backStack.lastOrNull() ?: initialRoutes.last()
-    val showBottomBar = currentScreen is HomeModuleRoute.Home
-            || currentScreen is PartnerModuleRoute.PartnerOverview
-            || currentScreen is ScanModuleRoute.Scan
-            || currentScreen is ProductModuleRoute.ProductOverview
-            || currentScreen is ProfileModuleRoute.ProfileDetails
+    val showBottomBar =
+        currentScreen is HomeModuleRoute.Home ||
+            currentScreen is PartnerModuleRoute.PartnerOverview ||
+            currentScreen is ScanModuleRoute.Scan ||
+            currentScreen is ProductModuleRoute.ProductOverview ||
+            currentScreen is ProfileModuleRoute.ProfileDetails
 
     CompositionLocalProvider(LocalNavViewModelStoreProvider provides viewModelStoreProvider) {
         Scaffold(
@@ -149,7 +151,7 @@ fun MainAppScreen(
                                 backStack.add(HomeModuleRoute.Home)
                             },
                             label = { Text(stringResource(Res.string.tab_start)) },
-                            icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
+                            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
                         )
 
                         NavigationBarItem(
@@ -159,7 +161,7 @@ fun MainAppScreen(
                                 backStack.add(PartnerModuleRoute.PartnerOverview)
                             },
                             label = { Text(stringResource(Res.string.tab_partners)) },
-                            icon = { Icon(Icons.Default.People, contentDescription = "Partner") }
+                            icon = { Icon(Icons.Default.People, contentDescription = "Partner") },
                         )
 
                         NavigationBarItem(
@@ -172,9 +174,9 @@ fun MainAppScreen(
                             icon = {
                                 Icon(
                                     Icons.Default.QrCodeScanner,
-                                    contentDescription = "Scan"
+                                    contentDescription = "Scan",
                                 )
-                            }
+                            },
                         )
 
                         NavigationBarItem(
@@ -187,9 +189,9 @@ fun MainAppScreen(
                             icon = {
                                 Icon(
                                     Icons.Default.CollectionsBookmark,
-                                    contentDescription = "Products"
+                                    contentDescription = "Products",
                                 )
-                            }
+                            },
                         )
 
                         NavigationBarItem(
@@ -202,13 +204,13 @@ fun MainAppScreen(
                             icon = {
                                 Icon(
                                     Icons.Default.Person,
-                                    contentDescription = "Profile"
+                                    contentDescription = "Profile",
                                 )
-                            }
+                            },
                         )
                     }
                 }
-            }
+            },
         ) { innerPadding ->
             NavDisplay(
                 backStack = backStack,
@@ -220,30 +222,32 @@ fun MainAppScreen(
                 modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
                 transitionSpec = {
                     slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start) togetherWith
-                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start)
+                        slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start)
                 },
                 popTransitionSpec = {
                     slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End) togetherWith
-                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
+                        slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
                 },
                 predictivePopTransitionSpec = {
                     slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End) togetherWith
-                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
+                        slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
                 },
-                entryDecorators = listOf(
-                    rememberSaveableStateHolderNavEntryDecorator(),
-                ),
-                entryProvider = entryProvider {
-                    authModuleRouteResolver()
-                    homeModuleRouteResolver()
-                    partnerModuleRouteResolver()
-                    scanModuleRouteResolver()
-                    productModuleRouteResolver()
-                    profileModuleRouteResolver()
-                    tacModuleRouteResolver()
-                    notificationModuleRouteResolver()
-                    faqModuleRouteResolver()
-                }
+                entryDecorators =
+                    listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                    ),
+                entryProvider =
+                    entryProvider {
+                        authModuleRouteResolver()
+                        homeModuleRouteResolver()
+                        partnerModuleRouteResolver()
+                        scanModuleRouteResolver()
+                        productModuleRouteResolver()
+                        profileModuleRouteResolver()
+                        tacModuleRouteResolver()
+                        notificationModuleRouteResolver()
+                        faqModuleRouteResolver()
+                    },
             )
         }
     }

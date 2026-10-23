@@ -28,13 +28,14 @@ fun Modifier.viewEnable(enable: Boolean) =
 fun Modifier.addIf(
     condition: Boolean,
     action: @Composable Modifier.() -> (Modifier),
-): Modifier = composed {
-    if (condition) {
-        action.invoke(this)
-    } else {
-        this
+): Modifier =
+    composed {
+        if (condition) {
+            action.invoke(this)
+        } else {
+            this
+        }
     }
-}
 
 fun Modifier.onClickSemantics(onClick: (() -> Unit)?) =
     if (onClick != null) {

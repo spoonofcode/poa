@@ -59,7 +59,7 @@ fun StandardRangeSlider(
                 onStartPositionChange(sliderPosition.start.toInt())
                 onEndPositionChange(sliderPosition.endInclusive.toInt())
             },
-            valueRange = minValue..maxValue
+            valueRange = minValue..maxValue,
         )
 
         SpacerVerticalBetweenFields()

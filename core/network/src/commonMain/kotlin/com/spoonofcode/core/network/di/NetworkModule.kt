@@ -14,12 +14,13 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val networkModule: Module = module {
-    singleOf(::RemoteRefreshTokenDataSource)
-    single { NetworkConfigImpl() } bind NetworkConfig::class
-    single<POALogger> { KermitLogger }
-    single {
-        HttpClientFactory(get(), get(), get()).create()
+val networkModule: Module =
+    module {
+        singleOf(::RemoteRefreshTokenDataSource)
+        single { NetworkConfigImpl() } bind NetworkConfig::class
+        single<POALogger> { KermitLogger }
+        single {
+            HttpClientFactory(get(), get(), get()).create()
+        }
+        factoryOf(::HttpLogoutHandler) bind LogoutHandler::class
     }
-    factoryOf(::HttpLogoutHandler) bind LogoutHandler::class
-}

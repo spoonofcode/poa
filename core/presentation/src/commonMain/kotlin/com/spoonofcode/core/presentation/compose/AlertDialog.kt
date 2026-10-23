@@ -21,14 +21,14 @@ fun StandardAlertDialog(
         confirmButton = {
             PrimaryButton(
                 text = confirmButtonText,
-                onClick = confirmAction
+                onClick = confirmAction,
             )
         },
         dismissButton = {
             SecondaryButton(
                 text = dismissButtonText,
-                onClick = dismissAction
+                onClick = dismissAction,
             )
-        }
+        },
     )
 }

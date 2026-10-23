@@ -28,16 +28,17 @@ fun SelectableChipsGroup(
     onOptionClick: (String) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
     ) {
         Text(label)
         Spacer(modifier = Modifier.height(8.dp))
 
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             options.forEach { option ->
                 val isSelected = option in selectedOptions
@@ -46,15 +47,18 @@ fun SelectableChipsGroup(
                     selected = isSelected,
                     onClick = { onOptionClick(option) },
                     label = { TextLM(option) },
-                    leadingIcon = if (isSelected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = null,
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else null
+                    leadingIcon =
+                        if (isSelected) {
+                            {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            }
+                        } else {
+                            null
+                        },
                 )
             }
         }
@@ -65,7 +69,7 @@ fun SelectableChipsGroup(
 fun HorizontalScrollableFilterChipRow(
     categories: List<String>,
     selectedCategories: Set<String>,
-    onCategorySelected: (String) -> Unit
+    onCategorySelected: (String) -> Unit,
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -82,20 +86,28 @@ fun HorizontalScrollableFilterChipRow(
                     TextLLB(text = category)
                 },
                 shape = MaterialTheme.shapes.medium,
-                border = if (isSelected) null else FilterChipDefaults.filterChipBorder(
-                    enabled = true,
-                    selected = false,
-                    borderColor = MaterialTheme.colorScheme.outlineVariant
-                ),
-                leadingIcon = if (isSelected) {
-                    {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = null,
-                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                border =
+                    if (isSelected) {
+                        null
+                    } else {
+                        FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = false,
+                            borderColor = MaterialTheme.colorScheme.outlineVariant,
                         )
-                    }
-                } else null
+                    },
+                leadingIcon =
+                    if (isSelected) {
+                        {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(FilterChipDefaults.IconSize),
+                            )
+                        }
+                    } else {
+                        null
+                    },
             )
         }
     }

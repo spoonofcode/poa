@@ -5,14 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import com.spoonofcode.core.presentation.Res
+import com.spoonofcode.core.presentation.time_is_up
+import com.spoonofcode.core.presentation.time_remaining
 import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.jetbrains.compose.resources.stringResource
-import com.spoonofcode.core.presentation.Res
-import com.spoonofcode.core.presentation.time_is_up
-import com.spoonofcode.core.presentation.time_remaining
 import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO
@@ -39,7 +39,7 @@ private fun CountdownUntil(
     expirationDate: LocalDateTime,
     timeZone: TimeZone = TimeZone.currentSystemDefault(),
     tickMillis: Long = 1_000L,
-    content: @Composable (formatted: String, remaining: Duration, isFinished: Boolean) -> Unit
+    content: @Composable (formatted: String, remaining: Duration, isFinished: Boolean) -> Unit,
 ) {
     // Convert once
     val targetInstant = remember(expirationDate, timeZone) { expirationDate.toInstant(timeZone) }
@@ -47,7 +47,7 @@ private fun CountdownUntil(
     val remaining by produceState(
         initialValue = (targetInstant - Clock.System.now()).coerceAtLeast(ZERO),
         key1 = targetInstant,
-        key2 = tickMillis
+        key2 = tickMillis,
     ) {
         while (true) {
             val now = Clock.System.now()

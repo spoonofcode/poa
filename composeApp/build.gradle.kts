@@ -118,10 +118,8 @@ android {
             } else {
                 signingConfig = null
             }
-
         }
     }
-
 }
 
 dependencies {
