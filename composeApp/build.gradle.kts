@@ -1,7 +1,7 @@
 plugins {
+    alias(libs.plugins.convention.cmp.application)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.google.services)
-    alias(libs.plugins.convention.cmp.application)
 }
 
 kotlin {

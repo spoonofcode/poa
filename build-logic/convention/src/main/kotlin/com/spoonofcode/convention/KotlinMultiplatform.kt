@@ -7,6 +7,8 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 internal fun Project.configureKotlinMultiplatform() {
     configureAndroidTarget()
     configureIosTargets(baseName = pathToFrameworkName())
+    // Configure Ktlint for code style checking and formatting
+    configureKtlint()
 
     extensions.configure<KotlinMultiplatformExtension> {
         applyHierarchyTemplate()

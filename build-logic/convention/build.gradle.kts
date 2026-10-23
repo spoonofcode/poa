@@ -13,6 +13,7 @@ dependencies {
     compileOnly(libs.compose.gradle.plugin)
     
     implementation(libs.kover.gradle.plugin)
+    implementation(libs.ktlint.gradle.plugin)
     
     implementation(libs.buildkonfig.gradle.plugin)
     implementation(libs.buildkonfig.compiler)
