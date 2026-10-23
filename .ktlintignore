@@ -1,3 +1,0 @@
-# Ignore all build and generated directories from ktlint checks
-**/build/**
-**/generated/**
