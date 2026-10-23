@@ -6,12 +6,9 @@ import com.spoonofcode.core.firebase.domain.repository.FirebaseMessagingReposito
 internal class FirebaseMessagingRepositoryImpl(
     private val remoteFirebaseMessagingDataSource: RemoteFirebaseMessagingDataSource,
 ) : FirebaseMessagingRepository {
-    override suspend fun getMessageToken(): Result<String> =
-        remoteFirebaseMessagingDataSource.getMessageToken()
+    override suspend fun getMessageToken(): Result<String> = remoteFirebaseMessagingDataSource.getMessageToken()
 
-    override suspend fun subscribeToTopic(topic: String): Result<Unit> =
-        remoteFirebaseMessagingDataSource.subscribeToTopic(topic)
+    override suspend fun subscribeToTopic(topic: String): Result<Unit> = remoteFirebaseMessagingDataSource.subscribeToTopic(topic)
 
-    override suspend fun unsubscribeFromTopic(topic: String): Result<Unit> =
-        remoteFirebaseMessagingDataSource.unsubscribeFromTopic(topic)
+    override suspend fun unsubscribeFromTopic(topic: String): Result<Unit> = remoteFirebaseMessagingDataSource.unsubscribeFromTopic(topic)
 }

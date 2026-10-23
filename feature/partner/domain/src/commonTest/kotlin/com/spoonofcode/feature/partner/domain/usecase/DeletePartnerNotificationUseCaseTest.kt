@@ -14,7 +14,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DeletePartnerNotificationUseCaseTest : BaseTest() {
-
     private lateinit var deletePartnerNotificationUseCase: DeletePartnerNotificationUseCase
     private lateinit var notificationRepository: PartnerNotificationRepository
 
@@ -32,26 +31,28 @@ class DeletePartnerNotificationUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success when notification is deleted`() = runTest {
-        val notificationId = "1"
-        everySuspend { notificationRepository.deleteNotification(notificationId) } returns Result.success(Unit)
+    fun `invoke returns success when notification is deleted`() =
+        runTest {
+            val notificationId = "1"
+            everySuspend { notificationRepository.deleteNotification(notificationId) } returns Result.success(Unit)
 
-        val result = deletePartnerNotificationUseCase(notificationId)
+            val result = deletePartnerNotificationUseCase(notificationId)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { notificationRepository.deleteNotification(notificationId) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { notificationRepository.deleteNotification(notificationId) }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val notificationId = "1"
-        val exception = Exception("Delete failed")
-        everySuspend { notificationRepository.deleteNotification(notificationId) } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val notificationId = "1"
+            val exception = Exception("Delete failed")
+            everySuspend { notificationRepository.deleteNotification(notificationId) } returns Result.failure(exception)
 
-        val result = deletePartnerNotificationUseCase(notificationId)
+            val result = deletePartnerNotificationUseCase(notificationId)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { notificationRepository.deleteNotification(notificationId) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { notificationRepository.deleteNotification(notificationId) }
+        }
 }

@@ -5,7 +5,9 @@ import kotlinx.datetime.LocalDateTime
 
 interface PartnerNotificationRepository {
     suspend fun getNotifications(): Result<List<PartnerNotification>>
+
     suspend fun getNotification(notificationId: String): Result<PartnerNotification>
+
     suspend fun deleteNotification(notificationId: String): Result<Unit>
 
     suspend fun createNotification(

@@ -16,13 +16,14 @@ class SendNotificationUseCase(
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-    ): Result<Unit> = notificationRepository.create(
-        title = title,
-        text = text,
-        link = link,
-        topics = topics,
-        deliveryDateTime = deliveryDateTime,
-        expirationDateTime = expirationDateTime,
-        ownerId = sessionRepository.getSessionUserId(),
-    )
+    ): Result<Unit> =
+        notificationRepository.create(
+            title = title,
+            text = text,
+            link = link,
+            topics = topics,
+            deliveryDateTime = deliveryDateTime,
+            expirationDateTime = expirationDateTime,
+            ownerId = sessionRepository.getSessionUserId(),
+        )
 }

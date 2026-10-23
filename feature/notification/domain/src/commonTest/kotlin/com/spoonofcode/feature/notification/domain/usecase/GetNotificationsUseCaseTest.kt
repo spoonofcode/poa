@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetNotificationsUseCaseTest : BaseTest() {
-
     private lateinit var getNotificationsUseCase: GetNotificationsUseCase
     private lateinit var notificationRepository: NotificationRepository
 
@@ -33,23 +32,25 @@ class GetNotificationsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with sorted notifications`() = runTest {
-        val result = getNotificationsUseCase()
+    fun `invoke returns success with sorted notifications`() =
+        runTest {
+            val result = getNotificationsUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(NotificationMockData.NOTIFICATIONS, result.getOrNull())
-        verifySuspend { notificationRepository.readAll() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(NotificationMockData.NOTIFICATIONS, result.getOrNull())
+            verifySuspend { notificationRepository.readAll() }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val exception = Exception("Error reading notifications")
-        everySuspend { notificationRepository.readAll() } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val exception = Exception("Error reading notifications")
+            everySuspend { notificationRepository.readAll() } returns Result.failure(exception)
 
-        val result = getNotificationsUseCase()
+            val result = getNotificationsUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { notificationRepository.readAll() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { notificationRepository.readAll() }
+        }
 }

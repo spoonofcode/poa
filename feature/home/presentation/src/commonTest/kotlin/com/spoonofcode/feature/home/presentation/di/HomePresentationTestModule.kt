@@ -10,16 +10,17 @@ import com.spoonofcode.feature.partner.data.test.di.partnerDataTestModule
 import com.spoonofcode.feature.partner.domain.di.partnerDomainModule
 import org.koin.dsl.module
 
-val homePresentationTestModule = module {
-    includes(
-        loggingModule,
-        homeDataTestModule,
-        homeDomainModule,
-        homePresentationModule,
-        notificationDomainModule,
-        notificationDataTestModule,
-        partnerDomainModule,
-        partnerDataTestModule,
-        firebaseDataTestModule,
-    )
-}
+val homePresentationTestModule =
+    module {
+        includes(
+            loggingModule,
+            homeDataTestModule,
+            homeDomainModule,
+            homePresentationModule,
+            notificationDomainModule,
+            notificationDataTestModule,
+            partnerDomainModule,
+            partnerDataTestModule,
+            firebaseDataTestModule,
+        )
+    }

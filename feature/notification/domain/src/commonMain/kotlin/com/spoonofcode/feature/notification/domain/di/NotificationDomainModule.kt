@@ -10,19 +10,20 @@ import com.spoonofcode.feature.notification.domain.usecase.UpdateNotificationSet
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val notificationDomainModule = module {
-    factoryOf(::SendNotificationUseCase)
-    factoryOf(::GetNotificationsUseCase)
-    factoryOf(::GetNotificationByIdUseCase)
-    factoryOf(::GetNotificationSettingsUseCase)
-    factory {
-        UpdateNotificationSettingsUseCase(
-            sessionRepository = get(),
-            notificationRepository = get(),
-            firebaseMessagingRepository = get(),
-            topicSyncHandlers = getAll<NotificationTopicSyncHandler>(),
-            poaLogger = get()
-        )
+val notificationDomainModule =
+    module {
+        factoryOf(::SendNotificationUseCase)
+        factoryOf(::GetNotificationsUseCase)
+        factoryOf(::GetNotificationByIdUseCase)
+        factoryOf(::GetNotificationSettingsUseCase)
+        factory {
+            UpdateNotificationSettingsUseCase(
+                sessionRepository = get(),
+                notificationRepository = get(),
+                firebaseMessagingRepository = get(),
+                topicSyncHandlers = getAll<NotificationTopicSyncHandler>(),
+                poaLogger = get(),
+            )
+        }
+        factoryOf(::MarkNotificationAsReadUseCase)
     }
-    factoryOf(::MarkNotificationAsReadUseCase)
-}

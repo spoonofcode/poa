@@ -16,14 +16,15 @@ class LoginRequestCodeUseCase(
         email: String,
     ): Result<Unit> {
         val recaptchaToken = client.execute(action = RECAPTCHA_LOGIN_ACTION)
-        val platformString = when (platform.platformType) {
-            PlatformType.Android -> "android"
-            PlatformType.iOS -> "web"
-        }
+        val platformString =
+            when (platform.platformType) {
+                PlatformType.ANDROID -> "android"
+                PlatformType.IOS -> "web"
+            }
         return loginRepository.requestCode(
             email = email,
             platform = platformString,
-            recaptchaToken = recaptchaToken
+            recaptchaToken = recaptchaToken,
         )
     }
 }

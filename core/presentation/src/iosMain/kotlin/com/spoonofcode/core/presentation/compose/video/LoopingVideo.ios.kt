@@ -1,13 +1,29 @@
 package com.spoonofcode.core.presentation.compose.video
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.UIKitView
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.cValue
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import platform.AVFoundation.*
+import platform.AVFoundation.AVLayerVideoGravityResizeAspectFill
+import platform.AVFoundation.AVPlayer
+import platform.AVFoundation.AVPlayerActionAtItemEndNone
+import platform.AVFoundation.AVPlayerItemDidPlayToEndTimeNotification
+import platform.AVFoundation.AVPlayerItemStatusFailed
+import platform.AVFoundation.AVPlayerItemStatusReadyToPlay
+import platform.AVFoundation.actionAtItemEnd
+import platform.AVFoundation.currentItem
+import platform.AVFoundation.muted
+import platform.AVFoundation.pause
+import platform.AVFoundation.play
+import platform.AVFoundation.replaceCurrentItemWithPlayerItem
+import platform.AVFoundation.seekToTime
 import platform.AVKit.AVPlayerViewController
 import platform.CoreMedia.CMTime
 import platform.Foundation.NSNotificationCenter
@@ -22,7 +38,7 @@ actual fun LoopingVideo(
     autoPlay: Boolean,
     mute: Boolean,
     onLoadingChanged: (Boolean) -> Unit,
-    onError: (Exception) -> Unit
+    onError: (Exception) -> Unit,
 ) {
     if (url.isEmpty()) return
     val nsUrl = remember(url) { NSURL.URLWithString(url) } ?: return
@@ -35,7 +51,7 @@ actual fun LoopingVideo(
             autoPlay = autoPlay,
             mute = mute,
             onLoadingChanged = onLoadingChanged,
-            onError = onError
+            onError = onError,
         )
     }
 }
@@ -48,21 +64,23 @@ private fun LoopingVideoInternal(
     autoPlay: Boolean,
     mute: Boolean,
     onLoadingChanged: (Boolean) -> Unit,
-    onError: (Exception) -> Unit
+    onError: (Exception) -> Unit,
 ) {
-    val player = remember(nsUrl) {
-        AVPlayer(uRL = nsUrl).apply {
-            actionAtItemEnd = AVPlayerActionAtItemEndNone
+    val player =
+        remember(nsUrl) {
+            AVPlayer(uRL = nsUrl).apply {
+                actionAtItemEnd = AVPlayerActionAtItemEndNone
+            }
         }
-    }
 
-    val controller = remember(player) {
-        AVPlayerViewController().apply {
-            this.player = player
-            this.showsPlaybackControls = false
-            this.videoGravity = AVLayerVideoGravityResizeAspectFill
+    val controller =
+        remember(player) {
+            AVPlayerViewController().apply {
+                this.player = player
+                this.showsPlaybackControls = false
+                this.videoGravity = AVLayerVideoGravityResizeAspectFill
+            }
         }
-    }
 
     // Loading monitoring
     LaunchedEffect(player) {
@@ -89,21 +107,23 @@ private fun LoopingVideoInternal(
     // Looping and Cleanup
     DisposableEffect(player) {
         val notificationCenter = NSNotificationCenter.defaultCenter
-        val observer = notificationCenter.addObserverForName(
-            name = AVPlayerItemDidPlayToEndTimeNotification,
-            `object` = player.currentItem,
-            queue = NSOperationQueue.mainQueue
-        ) { _ ->
-            player.seekToTime(
-                time = cValue<CMTime> {
-                    value = 0
-                    timescale = 1
-                    flags = 1u
-                    epoch = 0
-                }
-            )
-            player.play()
-        }
+        val observer =
+            notificationCenter.addObserverForName(
+                name = AVPlayerItemDidPlayToEndTimeNotification,
+                `object` = player.currentItem,
+                queue = NSOperationQueue.mainQueue,
+            ) { _ ->
+                player.seekToTime(
+                    time =
+                        cValue<CMTime> {
+                            value = 0
+                            timescale = 1
+                            flags = 1u
+                            epoch = 0
+                        },
+                )
+                player.play()
+            }
 
         onDispose {
             notificationCenter.removeObserver(observer)
@@ -123,6 +143,6 @@ private fun LoopingVideoInternal(
     UIKitView(
         modifier = modifier,
         factory = { controller.view },
-        update = { /* Parameters supported by effects */ }
+        update = { /* Parameters supported by effects */ },
     )
 }

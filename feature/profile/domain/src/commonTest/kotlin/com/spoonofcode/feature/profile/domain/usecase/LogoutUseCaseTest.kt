@@ -8,10 +8,8 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 class LogoutUseCaseTest : BaseTest() {
-
     private lateinit var logoutUseCase: LogoutUseCase
     private lateinit var sessionRepository: SessionRepository
 
@@ -29,9 +27,10 @@ class LogoutUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke clears session successfully`() = runTest {
-        logoutUseCase()
+    fun `invoke clears session successfully`() =
+        runTest {
+            logoutUseCase()
 
-        verifySuspend { sessionRepository.clearSession() }
-    }
+            verifySuspend { sessionRepository.clearSession() }
+        }
 }

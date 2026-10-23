@@ -9,15 +9,16 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import org.koin.dsl.module
 
-val authDomainTestModule = module {
-    includes(
-        authDataTestModule,
-        authDomainModule,
-    )
-    single { getPlatform() }
-    single<RecaptchaClient> {
-        mock {
-            everySuspend { execute(any()) } returns "test recaptcha token"
+val authDomainTestModule =
+    module {
+        includes(
+            authDataTestModule,
+            authDomainModule,
+        )
+        single { getPlatform() }
+        single<RecaptchaClient> {
+            mock {
+                everySuspend { execute(any()) } returns "test recaptcha token"
+            }
         }
     }
-}

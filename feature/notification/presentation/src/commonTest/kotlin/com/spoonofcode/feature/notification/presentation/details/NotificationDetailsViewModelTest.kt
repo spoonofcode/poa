@@ -19,7 +19,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NotificationDetailsViewModelTest : BaseViewModelTest() {
-
     private val navigationParamNotificationId = "1"
 
     private lateinit var viewModel: NotificationDetailsViewModel
@@ -39,27 +38,30 @@ class NotificationDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(NOTIFICATION_1, notification)
-            }
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(NOTIFICATION_1, notification)
+                }
 
-            verifySuspend { notificationRepository.read(navigationParamNotificationId) }
-            verifySuspend { notificationRepository.markAsRead(navigationParamNotificationId) }
+                verifySuspend { notificationRepository.read(navigationParamNotificationId) }
+                verifySuspend { notificationRepository.markAsRead(navigationParamNotificationId) }
+            }
         }
-    }
 
     @Test
-    fun `initial view - error`() = runTest {
-        everySuspend { notificationRepository.read(navigationParamNotificationId) } returns Result.failure(
-            Exception("Test error"),
-        )
+    fun `initial view - error`() =
+        runTest {
+            everySuspend { notificationRepository.read(navigationParamNotificationId) } returns
+                Result.failure(
+                    Exception("Test error"),
+                )
 
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitErrorState()
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitErrorState()
+            }
         }
-    }
 }

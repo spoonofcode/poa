@@ -11,13 +11,13 @@ import org.koin.compose.viewmodel.koinViewModel
 fun EntryProviderScope<NavKey>.profileModuleRouteResolver() {
     viewModelEntry<ProfileModuleRoute.ProfileDetails> {
         ProfileDetailsScreen(
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(),
         )
     }
 
     viewModelEntry<ProfileModuleRoute.ProfileEdit> {
         ProfileEditScreen(
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(),
         )
     }
 }

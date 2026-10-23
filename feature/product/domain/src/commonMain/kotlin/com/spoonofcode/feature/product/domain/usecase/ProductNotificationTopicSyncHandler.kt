@@ -12,16 +12,15 @@ class ProductNotificationTopicSyncHandler(
     private val firebaseMessagingRepository: FirebaseMessagingRepository,
     private val poaLogger: POALogger,
 ) : NotificationTopicSyncHandler {
-
-    override suspend fun syncTopics(settings: NotificationSettings): Result<Unit> {
-        return try {
+    override suspend fun syncTopics(settings: NotificationSettings): Result<Unit> =
+        try {
             val products = productRepository.getUserProducts().getOrThrow()
 
             val partnerIds = products.mapNotNull { it.partnerId }.distinct()
             partnerIds.forEach { id ->
                 handleTopicSubscription(
                     isEnabled = settings.isNotificationsFromPartnersEnabled,
-                    topic = getPartnerTopic(id)
+                    topic = getPartnerTopic(id),
                 ).getOrThrow()
             }
 
@@ -29,28 +28,27 @@ class ProductNotificationTopicSyncHandler(
             seriesIds.forEach { id ->
                 handleTopicSubscription(
                     isEnabled = settings.isNotificationsMyProductSeriesEnabled,
-                    topic = getSerieTopic(id)
+                    topic = getSerieTopic(id),
                 ).getOrThrow()
             }
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }
-    }
 
-    private suspend fun handleTopicSubscription(isEnabled: Boolean, topic: String): Result<Unit> {
-        return if (isEnabled) {
+    private suspend fun handleTopicSubscription(
+        isEnabled: Boolean,
+        topic: String,
+    ): Result<Unit> =
+        if (isEnabled) {
             poaLogger.debug("Subscribing to topic: $topic")
             firebaseMessagingRepository.subscribeToTopic(topic)
         } else {
             poaLogger.debug("Unsubscribing from topic: $topic")
             firebaseMessagingRepository.unsubscribeFromTopic(topic)
         }
-    }
 
-    private fun getPartnerTopic(partnerId: String): String =
-        NotificationType.partner.createTopic(partnerId)
+    private fun getPartnerTopic(partnerId: String): String = NotificationType.PARTNER.createTopic(partnerId)
 
-    private fun getSerieTopic(seriesId: String): String =
-        NotificationType.serie.createTopic(seriesId)
+    private fun getSerieTopic(seriesId: String): String = NotificationType.SERIE.createTopic(seriesId)
 }

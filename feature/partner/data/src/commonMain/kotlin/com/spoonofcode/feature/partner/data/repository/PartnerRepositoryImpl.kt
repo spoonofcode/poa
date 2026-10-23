@@ -15,9 +15,7 @@ internal class PartnerRepositoryImpl(
     private val remotePartnerDataSource: RemotePartnerDataSource,
     private val remotePartnerCategoryDataSource: RemotePartnerCategoryDataSource,
 ) : PartnerRepository {
-
-    override suspend fun getPartner(partnerId: String): Result<Partner> =
-        remotePartnerDataSource.read(partnerId).map { it.toPartner() }
+    override suspend fun getPartner(partnerId: String): Result<Partner> = remotePartnerDataSource.read(partnerId).map { it.toPartner() }
 
     override suspend fun updatePartner(
         partnerId: String,
@@ -30,20 +28,21 @@ internal class PartnerRepositoryImpl(
         instagramLink: String?,
         facebookLink: String?,
         youtubeLink: String?,
-        xLink: String?
-    ): Result<Unit> = remotePartnerDataSource.update(
-        partnerId = partnerId,
-        name = name,
-        partnerCategory = partnerCategory,
-        email = email,
-        description = description,
-        imageLink = imageLink,
-        websiteLink = websiteLink,
-        instagramLink = instagramLink,
-        facebookLink = facebookLink,
-        youtubeLink = youtubeLink,
-        xLink = xLink,
-    )
+        xLink: String?,
+    ): Result<Unit> =
+        remotePartnerDataSource.update(
+            partnerId = partnerId,
+            name = name,
+            partnerCategory = partnerCategory,
+            email = email,
+            description = description,
+            imageLink = imageLink,
+            websiteLink = websiteLink,
+            instagramLink = instagramLink,
+            facebookLink = facebookLink,
+            youtubeLink = youtubeLink,
+            xLink = xLink,
+        )
 
     override suspend fun getPartners(): Result<List<Partner>> =
         remotePartnerDataSource.readAll().map { response ->

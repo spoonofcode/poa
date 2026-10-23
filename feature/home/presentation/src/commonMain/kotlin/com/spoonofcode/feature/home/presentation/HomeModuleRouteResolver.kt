@@ -8,7 +8,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun EntryProviderScope<NavKey>.homeModuleRouteResolver() {
     entry<HomeModuleRoute.Home> {
         HomeScreen(
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(),
         )
     }
 }

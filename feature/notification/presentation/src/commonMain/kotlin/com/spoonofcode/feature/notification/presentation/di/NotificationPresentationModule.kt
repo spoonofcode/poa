@@ -9,10 +9,11 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val notificationPresentationModule = module {
-    singleOf(::NotificationEventBus)
-    viewModelOf(::NotificationOverviewViewModel)
-    viewModelOf(::NotificationChannelViewModel)
-    viewModelOf(::NotificationDetailsViewModel)
-    viewModelOf(::NotificationSettingsViewModel)
-}
+val notificationPresentationModule =
+    module {
+        singleOf(::NotificationEventBus)
+        viewModelOf(::NotificationOverviewViewModel)
+        viewModelOf(::NotificationChannelViewModel)
+        viewModelOf(::NotificationDetailsViewModel)
+        viewModelOf(::NotificationSettingsViewModel)
+    }

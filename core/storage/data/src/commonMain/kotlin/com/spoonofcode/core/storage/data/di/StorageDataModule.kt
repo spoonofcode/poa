@@ -5,6 +5,7 @@ import org.koin.dsl.module
 
 expect val platformStorageDataModule: Module
 
-val storageDataModule: Module = module {
-    includes(platformStorageDataModule)
-}
+val storageDataModule: Module =
+    module {
+        includes(platformStorageDataModule)
+    }

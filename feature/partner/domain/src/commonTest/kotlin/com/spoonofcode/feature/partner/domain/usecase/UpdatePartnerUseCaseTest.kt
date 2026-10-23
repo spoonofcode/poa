@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class UpdatePartnerUseCaseTest : BaseTest() {
-
     private lateinit var updatePartnerUseCase: UpdatePartnerUseCase
     private lateinit var partnerRepository: PartnerRepository
 
@@ -33,67 +32,69 @@ class UpdatePartnerUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke calls repository updatePartner with partner properties`() = runTest {
-        val partner = PartnerMockData.PARTNER_1
-        everySuspend {
-            partnerRepository.updatePartner(
-                partner.id,
-                name = partner.name,
-                partnerCategory = partner.partnerCategory,
-                email = partner.email,
-                description = partner.description,
-                imageLink = partner.imageLink,
-                websiteLink = partner.websiteLink,
-                instagramLink = partner.instagramLink,
-                facebookLink = partner.facebookLink,
-                youtubeLink = partner.youtubeLink,
-                xLink = partner.xLink
-            )
-        } returns Result.success(Unit)
+    fun `invoke calls repository updatePartner with partner properties`() =
+        runTest {
+            val partner = PartnerMockData.PARTNER_1
+            everySuspend {
+                partnerRepository.updatePartner(
+                    partner.id,
+                    name = partner.name,
+                    partnerCategory = partner.partnerCategory,
+                    email = partner.email,
+                    description = partner.description,
+                    imageLink = partner.imageLink,
+                    websiteLink = partner.websiteLink,
+                    instagramLink = partner.instagramLink,
+                    facebookLink = partner.facebookLink,
+                    youtubeLink = partner.youtubeLink,
+                    xLink = partner.xLink,
+                )
+            } returns Result.success(Unit)
 
-        val result = updatePartnerUseCase(partner)
+            val result = updatePartnerUseCase(partner)
 
-        assertTrue(result.isSuccess)
-        verifySuspend {
-            partnerRepository.updatePartner(
-                partner.id,
-                name = partner.name,
-                partnerCategory = partner.partnerCategory,
-                email = partner.email,
-                description = partner.description,
-                imageLink = partner.imageLink,
-                websiteLink = partner.websiteLink,
-                instagramLink = partner.instagramLink,
-                facebookLink = partner.facebookLink,
-                youtubeLink = partner.youtubeLink,
-                xLink = partner.xLink
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend {
+                partnerRepository.updatePartner(
+                    partner.id,
+                    name = partner.name,
+                    partnerCategory = partner.partnerCategory,
+                    email = partner.email,
+                    description = partner.description,
+                    imageLink = partner.imageLink,
+                    websiteLink = partner.websiteLink,
+                    instagramLink = partner.instagramLink,
+                    facebookLink = partner.facebookLink,
+                    youtubeLink = partner.youtubeLink,
+                    xLink = partner.xLink,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val partner = PartnerMockData.PARTNER_1
-        val exception = Exception("Update failed")
-        everySuspend {
-            partnerRepository.updatePartner(
-                partner.id,
-                name = partner.name,
-                partnerCategory = partner.partnerCategory,
-                email = partner.email,
-                description = partner.description,
-                imageLink = partner.imageLink,
-                websiteLink = partner.websiteLink,
-                instagramLink = partner.instagramLink,
-                facebookLink = partner.facebookLink,
-                youtubeLink = partner.youtubeLink,
-                xLink = partner.xLink
-            )
-        } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val partner = PartnerMockData.PARTNER_1
+            val exception = Exception("Update failed")
+            everySuspend {
+                partnerRepository.updatePartner(
+                    partner.id,
+                    name = partner.name,
+                    partnerCategory = partner.partnerCategory,
+                    email = partner.email,
+                    description = partner.description,
+                    imageLink = partner.imageLink,
+                    websiteLink = partner.websiteLink,
+                    instagramLink = partner.instagramLink,
+                    facebookLink = partner.facebookLink,
+                    youtubeLink = partner.youtubeLink,
+                    xLink = partner.xLink,
+                )
+            } returns Result.failure(exception)
 
-        val result = updatePartnerUseCase(partner)
+            val result = updatePartnerUseCase(partner)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+        }
 }

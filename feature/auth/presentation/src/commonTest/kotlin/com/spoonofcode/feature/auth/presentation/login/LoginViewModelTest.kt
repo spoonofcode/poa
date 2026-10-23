@@ -26,7 +26,6 @@ import kotlin.test.assertTrue
 import com.spoonofcode.core.presentation.Res as CoreRes
 
 class LoginViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: LoginViewModel
     private lateinit var loginRepository: LoginRepository
 
@@ -44,126 +43,134 @@ class LoginViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            with(viewState.awaitContentState()) {
-                assertEquals("", email)
-                assertFalse(isSignInButtonLoading)
-                assertFalse(isSignInGoogleButtonLoading)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                with(viewState.awaitContentState()) {
+                    assertEquals("", email)
+                    assertFalse(isSignInButtonLoading)
+                    assertFalse(isSignInGoogleButtonLoading)
+                }
             }
         }
-    }
 
     @Test
-    fun `change email`() = runTest {
-        val email = "test@example.com"
-        runVmTest(viewModel) {
-            onAction(LoginViewAction.ChangeEmail(email))
+    fun `change email`() =
+        runTest {
+            val email = "test@example.com"
+            runVmTest(viewModel) {
+                onAction(LoginViewAction.ChangeEmail(email))
 
-            with(viewState.awaitContentState()) {
-                assertEquals(email, this.email)
+                with(viewState.awaitContentState()) {
+                    assertEquals(email, this.email)
+                }
             }
         }
-    }
 
     @Test
-    fun `sign in with Google success`() = runTest {
-        val token = "google-id-token"
-        runVmTest(viewModel) {
-            onAction(LoginViewAction.SignInWithGoogle(GoogleAccount(idToken = token)))
+    fun `sign in with Google success`() =
+        runTest {
+            val token = "google-id-token"
+            runVmTest(viewModel) {
+                onAction(LoginViewAction.SignInWithGoogle(GoogleAccount(idToken = token)))
 
-            with(viewState.awaitContentState()) {
-                assertTrue(isSignInGoogleButtonLoading)
-            }
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSignInGoogleButtonLoading)
+                }
 
-            verifySuspend { loginRepository.loginWithGoogle(token) }
-            verifySuspend {
-                viewModelNavigator.replaceAll(
-                    listOf(
-                        HomeModuleRoute.Home,
-                        NotificationModuleRoute.NotificationSettings(backNavigationEnabled = false),
-                        TACModuleRoute.TAC(backNavigationEnabled = false),
+                verifySuspend { loginRepository.loginWithGoogle(token) }
+                verifySuspend {
+                    viewModelNavigator.replaceAll(
+                        listOf(
+                            HomeModuleRoute.Home,
+                            NotificationModuleRoute.NotificationSettings(backNavigationEnabled = false),
+                            TACModuleRoute.TAC(backNavigationEnabled = false),
+                        ),
                     )
+                }
+            }
+        }
+
+    @Test
+    fun `sign in with Google error`() =
+        runTest {
+            everySuspend { loginRepository.loginWithGoogle(any()) } returns
+                Result.failure(
+                    Exception("Google login error"),
                 )
+
+            val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+
+            runVmTest(viewModel) {
+                onAction(LoginViewAction.SignInWithGoogle(GoogleAccount(idToken = "token")))
+
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSignInGoogleButtonLoading)
+                }
+                with(viewState.awaitContentState()) {
+                    assertFalse(isSignInGoogleButtonLoading)
+                }
+                assertEquals(
+                    expected = expectedErrorMessage,
+                    actual = snackbarEvent.awaitItem().message,
+                )
+
+                verifySuspend { loginRepository.loginWithGoogle(any()) }
             }
         }
-    }
 
     @Test
-    fun `sign in with Google error`() = runTest {
-        everySuspend { loginRepository.loginWithGoogle(any()) } returns Result.failure(
-            Exception("Google login error")
-        )
+    fun `sign in with code success`() =
+        runTest {
+            val email = "test@example.com"
+            runVmTest(viewModel) {
+                onAction(LoginViewAction.ChangeEmail(email))
+                onAction(LoginViewAction.SignInWithCode)
 
-        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+                with(viewState.awaitContentState()) {
+                    assertEquals(email, this.email)
+                }
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSignInButtonLoading)
+                }
 
-        runVmTest(viewModel) {
-            onAction(LoginViewAction.SignInWithGoogle(GoogleAccount(idToken = "token")))
-
-            with(viewState.awaitContentState()) {
-                assertTrue(isSignInGoogleButtonLoading)
+                verifySuspend { loginRepository.requestCode(email = email, platform = any(), recaptchaToken = any()) }
+                verifySuspend {
+                    viewModelNavigator.push(AuthModuleRoute.LoginCode(email = email))
+                }
             }
-            with(viewState.awaitContentState()) {
-                assertFalse(isSignInGoogleButtonLoading)
-            }
-            assertEquals(
-                expected = expectedErrorMessage,
-                actual = snackbarEvent.awaitItem().message
-            )
-
-            verifySuspend { loginRepository.loginWithGoogle(any()) }
         }
-    }
 
     @Test
-    fun `sign in with code success`() = runTest {
-        val email = "test@example.com"
-        runVmTest(viewModel) {
-            onAction(LoginViewAction.ChangeEmail(email))
-            onAction(LoginViewAction.SignInWithCode)
+    fun `sign in with code error`() =
+        runTest {
+            everySuspend { loginRepository.requestCode(any(), any(), any()) } returns
+                Result.failure(
+                    Exception("Request code error"),
+                )
 
-            with(viewState.awaitContentState()) {
-                assertEquals(email, this.email)
-            }
-            with(viewState.awaitContentState()) {
-                assertTrue(isSignInButtonLoading)
-            }
+            val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+            val email = "test@example.com"
 
-            verifySuspend { loginRepository.requestCode(email = email, platform = any(), recaptchaToken = any()) }
-            verifySuspend {
-                viewModelNavigator.push(AuthModuleRoute.LoginCode(email = email))
+            runVmTest(viewModel) {
+                onAction(LoginViewAction.ChangeEmail(email))
+                onAction(LoginViewAction.SignInWithCode)
+
+                with(viewState.awaitContentState()) {
+                    assertEquals(email, this.email)
+                }
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSignInButtonLoading)
+                }
+                with(viewState.awaitContentState()) {
+                    assertFalse(isSignInButtonLoading)
+                }
+                assertEquals(
+                    expected = expectedErrorMessage,
+                    actual = snackbarEvent.awaitItem().message,
+                )
+
+                verifySuspend { loginRepository.requestCode(any(), any(), any()) }
             }
         }
-    }
-
-    @Test
-    fun `sign in with code error`() = runTest {
-        everySuspend { loginRepository.requestCode(any(), any(), any()) } returns Result.failure(
-            Exception("Request code error")
-        )
-
-        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
-        val email = "test@example.com"
-
-        runVmTest(viewModel) {
-            onAction(LoginViewAction.ChangeEmail(email))
-            onAction(LoginViewAction.SignInWithCode)
-
-            with(viewState.awaitContentState()) {
-                assertEquals(email, this.email)
-            }
-            with(viewState.awaitContentState()) {
-                assertTrue(isSignInButtonLoading)
-            }
-            with(viewState.awaitContentState()) {
-                assertFalse(isSignInButtonLoading)
-            }
-            assertEquals(
-                expected = expectedErrorMessage,
-                actual = snackbarEvent.awaitItem().message
-            )
-
-            verifySuspend { loginRepository.requestCode(any(), any(), any()) }
-        }
-    }
 }

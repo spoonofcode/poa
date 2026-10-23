@@ -16,7 +16,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class LoginCodeUseCaseTest : BaseTest() {
-
     private lateinit var loginCodeUseCase: LoginCodeUseCase
     private lateinit var loginRepository: LoginRepository
     private lateinit var sessionRepository: SessionRepository
@@ -36,35 +35,37 @@ class LoginCodeUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success and initializes session`() = runTest {
-        val email = "test@example.com"
-        val code = "123456"
+    fun `invoke returns success and initializes session`() =
+        runTest {
+            val email = "test@example.com"
+            val code = "123456"
 
-        val result = loginCodeUseCase(email, code)
+            val result = loginCodeUseCase(email, code)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { loginRepository.loginWithCode(email, code) }
-        verifySuspend {
-            sessionRepository.initSession(
-                accessToken = LoginMockData.LOGIN_1.accessToken,
-                refreshToken = LoginMockData.LOGIN_1.refreshToken,
-                userId = LoginMockData.LOGIN_1.id,
-                userEmail = LoginMockData.LOGIN_1.email,
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend { loginRepository.loginWithCode(email, code) }
+            verifySuspend {
+                sessionRepository.initSession(
+                    accessToken = LoginMockData.LOGIN_1.accessToken,
+                    refreshToken = LoginMockData.LOGIN_1.refreshToken,
+                    userId = LoginMockData.LOGIN_1.id,
+                    userEmail = LoginMockData.LOGIN_1.email,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val email = "test@example.com"
-        val code = "123456"
-        val exception = Exception("Invalid code")
-        everySuspend { loginRepository.loginWithCode(email, code) } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val email = "test@example.com"
+            val code = "123456"
+            val exception = Exception("Invalid code")
+            everySuspend { loginRepository.loginWithCode(email, code) } returns Result.failure(exception)
 
-        val result = loginCodeUseCase(email, code)
+            val result = loginCodeUseCase(email, code)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { loginRepository.loginWithCode(email, code) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { loginRepository.loginWithCode(email, code) }
+        }
 }

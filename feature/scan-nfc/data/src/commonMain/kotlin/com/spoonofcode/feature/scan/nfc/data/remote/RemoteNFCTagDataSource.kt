@@ -23,11 +23,12 @@ internal class RemoteNFCTagDataSource(
     private val poaLogger: POALogger,
 ) {
     suspend fun readNFCTagPublicId(url: String): Result<NFCTagResponse> {
-        val formattedUrl = if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            "https://$url"
-        } else {
-            url
-        }.filterNot { it.isWhitespace() || it.isISOControl() }
+        val formattedUrl =
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                "https://$url"
+            } else {
+                url
+            }.filterNot { it.isWhitespace() || it.isISOControl() }
 
         poaLogger.info("RemoteNFCTagDataSource: Reading NFC tag from URL: $formattedUrl")
 
@@ -41,29 +42,30 @@ internal class RemoteNFCTagDataSource(
         urlString: String = "",
         method: HttpMethod,
         requestBody: Any? = null,
-    ): Result<T> = withContext(dispatcherProvider.io()) {
-        try {
-            val requestBuilder: HttpRequestBuilder.() -> Unit = {
-                contentType(ContentType.Application.Json)
-                url(urlString)
+    ): Result<T> =
+        withContext(dispatcherProvider.io()) {
+            try {
+                val requestBuilder: HttpRequestBuilder.() -> Unit = {
+                    contentType(ContentType.Application.Json)
+                    url(urlString)
 
-                this.method = method
+                    this.method = method
 
-                requestBody?.let {
-                    setBody(it)
+                    requestBody?.let {
+                        setBody(it)
+                    }
                 }
-            }
 
-            val response = httpClient.request(requestBuilder)
-            val resultBody = responseOrException(response).body(typeInfo<T>()) as T
-            
-            poaLogger.debug("RemoteNFCTagDataSource: Request successful for $urlString")
-            Result.success(resultBody)
-        } catch (e: Exception) {
-            poaLogger.error("RemoteNFCTagDataSource: Request failed for $urlString", e)
-            Result.failure(e)
+                val response = httpClient.request(requestBuilder)
+                val resultBody = responseOrException(response).body(typeInfo<T>()) as T
+
+                poaLogger.debug("RemoteNFCTagDataSource: Request successful for $urlString")
+                Result.success(resultBody)
+            } catch (e: Exception) {
+                poaLogger.error("RemoteNFCTagDataSource: Request failed for $urlString", e)
+                Result.failure(e)
+            }
         }
-    }
 
     fun responseOrException(response: HttpResponse): HttpResponse {
         return when (response.status) {
@@ -78,7 +80,5 @@ internal class RemoteNFCTagDataSource(
         }
     }
 
-    private fun unhandledException(response: HttpResponse): HttpResponse {
-        throw Exception("Unhandled Error $response")
-    }
+    private fun unhandledException(response: HttpResponse): HttpResponse = throw Exception("Unhandled Error $response")
 }

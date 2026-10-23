@@ -8,7 +8,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun EntryProviderScope<NavKey>.faqModuleRouteResolver() {
     entry<FAQModuleRoute.FAQ> {
         FAQScreen(
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(),
         )
     }
 }

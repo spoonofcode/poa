@@ -21,10 +21,10 @@ import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
 import com.spoonofcode.core.presentation.compose.CircleImage
 import com.spoonofcode.core.presentation.compose.LabeledDivider
+import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.core.presentation.compose.Paddings
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
-import com.spoonofcode.core.presentation.compose.OutlinedTextFieldStandard
 import com.spoonofcode.core.presentation.compose.TextHL
 import com.spoonofcode.feature.auth.presentation.Res
 import com.spoonofcode.feature.auth.presentation.email
@@ -41,9 +41,10 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    backNavigationEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        backNavigationEnable = false,
+    )
 
 @Composable
 internal fun LoginScreen(
@@ -67,11 +68,12 @@ private fun ColumnScope.Content(
     onAction: (LoginViewAction) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(
-            top = Paddings.screenPadding,
-        ),
+        modifier =
+            Modifier.fillMaxSize().padding(
+                top = Paddings.screenPadding,
+            ),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CircleImage(imageRes = Res.drawable.taggy_go_logo)
         SpacerVerticalBetweenFields()
@@ -88,7 +90,7 @@ private fun ColumnScope.Content(
         text = stringResource(resource = Res.string.sign_in),
         enabled = viewState.isSignInButtonEnable,
         isLoading = viewState.isSignInButtonLoading,
-        onClick = { onAction(LoginViewAction.SignInWithCode) }
+        onClick = { onAction(LoginViewAction.SignInWithCode) },
     )
 
     // TODO #275 Fix login with google account
@@ -114,7 +116,7 @@ private fun GoogleSignInButton(
         val coroutineScope = rememberCoroutineScope()
 
         LabeledDivider(
-            text = stringResource(resource = Res.string.or)
+            text = stringResource(resource = Res.string.or),
         )
 
         PrimaryButton(
@@ -125,7 +127,7 @@ private fun GoogleSignInButton(
                     val googleAccount = googleAuthUiProvider.signIn()
                     onGoogleSignInResult(googleAccount)
                 }
-            }
+            },
         )
     }
 }

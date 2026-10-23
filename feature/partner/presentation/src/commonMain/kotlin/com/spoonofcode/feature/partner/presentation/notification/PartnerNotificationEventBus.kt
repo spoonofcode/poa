@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 
 sealed class PartnerNotificationEvent {
     data object PartnerNotificationAdded : PartnerNotificationEvent()
+
     data object PartnerNotificationDeleted : PartnerNotificationEvent()
+
     data object PartnerNotificationUpdated : PartnerNotificationEvent()
 }
 

@@ -46,21 +46,20 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
-    private val _isOnline = MutableStateFlow(false)
+    private val isOnline = MutableStateFlow(false)
 
     private val _viewContentState =
         MutableStateFlow(
             if (initialViewState is ViewState.Content) initialViewState.data else null,
         )
-    protected val viewContentState: StateFlow<VS?> = _viewContentState.asStateFlow()
+    val viewContentState: StateFlow<VS?> = _viewContentState.asStateFlow()
 
     private enum class ViewStatus { INITIAL, LOADING, ERROR, CONTENT }
 
-    private val _viewStatus =
+    private val viewStatus =
         MutableStateFlow(
             if (initialViewState is ViewState.Content) ViewStatus.CONTENT else ViewStatus.INITIAL,
         )
-    private val viewStatus = _viewStatus.asStateFlow()
 
     val viewState: StateFlow<ViewState<VS>> =
         combine(
@@ -76,6 +75,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
                 }
             }
         }.stateInWhileSubscribed(
+            scope = viewModelScope,
             initialValue = initialViewState,
             onStart = {
                 isUiSubscribed = true
@@ -114,12 +114,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
                             if (hasInitialized) { // Avoid showing snackbar on initial value
                                 showSnackbar(SnackbarEvent.Online)
                             }
-                            _isOnline.value = true
+                            isOnline.value = true
                             hasInitialized = true
                         }
 
                         is Connectivity.Status.Disconnected -> {
-                            _isOnline.value = false
+                            isOnline.value = false
                             showSnackbar(SnackbarEvent.Offline)
                             hasInitialized = true
                         }
@@ -180,17 +180,17 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     protected fun showLoadingView() {
         poaLogger.debug("${this::class.simpleName}: Showing Loading View")
-        _viewStatus.value = ViewStatus.LOADING
+        viewStatus.value = ViewStatus.LOADING
     }
 
     protected fun showErrorView() {
         poaLogger.debug("${this::class.simpleName}: Showing Error View")
-        _viewStatus.value = ViewStatus.ERROR
+        viewStatus.value = ViewStatus.ERROR
     }
 
     protected fun showContentView() {
         poaLogger.debug("${this::class.simpleName}: Showing Content View")
-        _viewStatus.value = ViewStatus.CONTENT
+        viewStatus.value = ViewStatus.CONTENT
     }
 
     protected fun showErrorSnackbar(message: UiText) {

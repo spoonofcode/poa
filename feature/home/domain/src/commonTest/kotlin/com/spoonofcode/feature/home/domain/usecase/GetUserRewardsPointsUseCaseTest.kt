@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetUserRewardsPointsUseCaseTest : BaseTest() {
-
     private lateinit var getUserRewardsPointsUseCase: GetUserRewardsPointsUseCase
     private lateinit var rewardRepository: RewardRepository
 
@@ -33,23 +32,25 @@ class GetUserRewardsPointsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with reward points`() = runTest {
-        val result = getUserRewardsPointsUseCase()
+    fun `invoke returns success with reward points`() =
+        runTest {
+            val result = getUserRewardsPointsUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(TOTAL_POINTS, result.getOrNull())
-        verifySuspend { rewardRepository.getUserRewardsPoints() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(TOTAL_POINTS, result.getOrNull())
+            verifySuspend { rewardRepository.getUserRewardsPoints() }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val exception = Exception("Error getting reward points")
-        everySuspend { rewardRepository.getUserRewardsPoints() } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val exception = Exception("Error getting reward points")
+            everySuspend { rewardRepository.getUserRewardsPoints() } returns Result.failure(exception)
 
-        val result = getUserRewardsPointsUseCase()
+            val result = getUserRewardsPointsUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { rewardRepository.getUserRewardsPoints() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { rewardRepository.getUserRewardsPoints() }
+        }
 }

@@ -41,12 +41,11 @@ internal class ProfileDetailsViewModel(
                     setContentState(
                         ProfileDetailsViewState(
                             profile = it,
-                            partnerPanelVisible = it.roles.contains(PARTNER_ROLE)
-                        )
+                            partnerPanelVisible = it.roles.contains(PARTNER_ROLE),
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }

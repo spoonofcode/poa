@@ -8,4 +8,3 @@ import com.spoonofcode.feature.notification.domain.model.Notification
 internal data class NotificationOverviewViewState(
     val notifications: List<Notification>,
 ) : BaseViewState()
-

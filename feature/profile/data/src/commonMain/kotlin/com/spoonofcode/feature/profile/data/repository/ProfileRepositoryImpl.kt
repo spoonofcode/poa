@@ -8,9 +8,7 @@ import com.spoonofcode.feature.profile.domain.repository.ProfileRepository
 internal class ProfileRepositoryImpl(
     private val remoteProfileDataSource: RemoteProfileDataSource,
 ) : ProfileRepository {
-
-    override suspend fun readUserProfile(): Result<Profile> =
-        remoteProfileDataSource.readUserProfile().map { it.toProfile() }
+    override suspend fun readUserProfile(): Result<Profile> = remoteProfileDataSource.readUserProfile().map { it.toProfile() }
 
     override suspend fun updateUserProfile(): Result<Unit> {
         TODO("Not yet implemented")

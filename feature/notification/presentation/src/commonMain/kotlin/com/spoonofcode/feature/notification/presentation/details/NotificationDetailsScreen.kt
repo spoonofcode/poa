@@ -33,9 +33,10 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notification),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notification),
+    )
 
 @Composable
 internal fun NotificationDetailsScreen(
@@ -62,11 +63,11 @@ private fun ColumnScope.Content(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         NotificationCard(
             notification = notification,
-            onOpenLink = { uriHandler.openUri(it) }
+            onOpenLink = { uriHandler.openUri(it) },
         )
     }
 }
@@ -74,17 +75,18 @@ private fun ColumnScope.Content(
 @Composable
 private fun NotificationCard(
     notification: Notification,
-    onOpenLink: (String) -> Unit = {}
+    onOpenLink: (String) -> Unit = {},
 ) {
     ElevatedCard {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         ) {
             TextTLB(
                 text = notification.title,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             SpacerVerticalBetweenFields()
@@ -98,14 +100,14 @@ private fun NotificationCard(
                 SpacerVerticalBetweenFields()
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     TextBMB(
                         text = stringResource(Res.string.will_expire_in),
                         color = MaterialTheme.colorScheme.error,
                     )
                     CountdownTimer(
-                        targetTimeMillis = expiresAt.toMillis()
+                        targetTimeMillis = expiresAt.toMillis(),
                     )
                 }
             }
@@ -117,7 +119,7 @@ private fun NotificationCard(
                     PrimaryButton(
                         text = stringResource(Res.string.open_link),
                         onClick = { onOpenLink(link) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
         }
@@ -129,22 +131,24 @@ private fun NotificationCard(
 @Composable
 private fun NotificationDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            NotificationDetailsViewState(
-                notification = Notification(
-                    id = "1",
-                    title = "Notification title 1",
-                    text = "Notification text 1",
-                    link = "Notification link 1",
-                    deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    state = "pending",
-                    topics = listOf("global"),
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                NotificationDetailsViewState(
+                    notification =
+                        Notification(
+                            id = "1",
+                            title = "Notification title 1",
+                            text = "Notification text 1",
+                            link = "Notification link 1",
+                            deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            state = "pending",
+                            topics = listOf("global"),
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

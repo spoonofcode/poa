@@ -16,6 +16,7 @@ internal fun Project.configureKtlint() {
         filter {
             exclude("**/generated/**")
             exclude("**/build/**")
+            exclude { element -> element.file.path.contains("build/") }
         }
     }
 }

@@ -17,9 +17,8 @@ internal class LoginViewModel(
     private val loginGoogleUseCase: LoginGoogleUseCase,
     private val loginRequestCodeUseCase: LoginRequestCodeUseCase,
 ) : BaseViewModel<LoginViewState, LoginViewAction, Nothing>(
-    initialViewState = ViewState.Content(LoginViewState()),
-) {
-
+        initialViewState = ViewState.Content(LoginViewState()),
+    ) {
     override fun onAction(action: LoginViewAction) {
         when (action) {
             is LoginViewAction.ChangeEmail -> changeEmail(action.email)
@@ -60,12 +59,12 @@ internal class LoginViewModel(
                         listOf(
                             HomeModuleRoute.Home,
                             NotificationModuleRoute.NotificationSettings(
-                                backNavigationEnabled = false
+                                backNavigationEnabled = false,
                             ),
                             TACModuleRoute.TAC(
-                                backNavigationEnabled = false
+                                backNavigationEnabled = false,
                             ),
-                        )
+                        ),
                     )
                 }.onFailure {
                     updateContentState { copy(isSignInGoogleButtonLoading = false) }
@@ -73,6 +72,4 @@ internal class LoginViewModel(
                 }
         }
     }
-
-
 }

@@ -28,8 +28,8 @@ internal class ScanViewModel(
     private fun initView() {
         setContentState(
             ScanViewState(
-                platformType = platform.platformType
-            )
+                platformType = platform.platformType,
+            ),
         )
         showContentView()
     }
@@ -47,11 +47,10 @@ internal class ScanViewModel(
                                     viewModelNavigator.push(
                                         ProductModuleRoute.ProductDetails(
                                             productId = product.id,
-                                        )
+                                        ),
                                     )
                                     showContentView()
-                                }
-                                .onFailure {
+                                }.onFailure {
                                     showErrorView()
                                 }
                         } else {
@@ -81,12 +80,11 @@ internal class ScanViewModel(
         private const val POA_TEST_DOMAIN_NAME = "pow-test1-960238188791.europe-west1.run.app"
         private val VALID_NFC_TAG_TYPES = setOf("nft", "unique_item", "redirect")
 
-        fun transformUrl(originalUrl: String): String {
-            return if (originalUrl.contains(POA_AUTH_DOMAIN_NAME)) {
+        fun transformUrl(originalUrl: String): String =
+            if (originalUrl.contains(POA_AUTH_DOMAIN_NAME)) {
                 originalUrl.replace(POA_AUTH_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
             } else {
                 originalUrl.replace(POA_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
             }
-        }
     }
 }

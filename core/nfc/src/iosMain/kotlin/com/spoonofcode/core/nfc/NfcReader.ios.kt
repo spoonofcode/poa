@@ -2,12 +2,30 @@ package com.spoonofcode.core.nfc
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import kotlinx.cinterop.*
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.get
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import platform.CoreNFC.*
-import platform.Foundation.*
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.reinterpret
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import platform.CoreNFC.NFCNDEFMessage
+import platform.CoreNFC.NFCNDEFPayload
+import platform.CoreNFC.NFCNDEFReaderSession
+import platform.CoreNFC.NFCNDEFReaderSessionDelegateProtocol
+import platform.Foundation.NSData
+import platform.Foundation.NSError
+import platform.Foundation.NSString
+import platform.Foundation.NSUTF8StringEncoding
+import platform.Foundation.create
 import platform.darwin.NSObject
 
 // ---------- small platform helpers ----------

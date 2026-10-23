@@ -33,10 +33,11 @@ import com.spoonofcode.feature.partner.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.my_customers),
-    verticalScrollEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.my_customers),
+        verticalScrollEnable = false,
+    )
 
 @Composable
 internal fun PartnerCustomerOverviewScreen(
@@ -60,7 +61,7 @@ private fun ColumnScope.Content(
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements),
-        modifier = Modifier.weight(1f)
+        modifier = Modifier.weight(1f),
     ) {
         items(viewState.customers) { customer ->
             val checkedCustomer =
@@ -70,7 +71,7 @@ private fun ColumnScope.Content(
                 item = customer,
                 onClick = {
                     onAction(
-                        PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id)
+                        PartnerCustomerOverviewViewAction.CheckedCustomer(customer.id),
                     )
                 },
                 checkedCustomer = checkedCustomer,
@@ -81,7 +82,7 @@ private fun ColumnScope.Content(
     PrimaryButton(
         enabled = viewState.checkedUserIds.isNotEmpty(),
         text = stringResource(resource = Res.string.send_notification),
-        onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) }
+        onClick = { onAction(PartnerCustomerOverviewViewAction.NavigateToNotification) },
     )
 }
 
@@ -92,11 +93,11 @@ private fun CustomerItem(
     checkedCustomer: Boolean,
 ) {
     ElevatedCard(
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         ) {
             CircleImage(
                 imageRes = Res.drawable.taggy_go_logo,
@@ -113,7 +114,7 @@ private fun CustomerItem(
 
             Checkbox(
                 checked = checkedCustomer,
-                onCheckedChange = { onClick() }
+                onCheckedChange = { onClick() },
             )
         }
     }
@@ -124,17 +125,19 @@ private fun CustomerItem(
 @Composable
 private fun PartnerCustomerOverviewScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            PartnerCustomerOverviewViewState(
-                customers = listOf(
-                    Customer(
-                        id = "1",
-                        email = "william.henry.harrison@example-pet-store.com",
-                        name = "Test",
-                    ),
+        viewState =
+            ViewState.Content(
+                PartnerCustomerOverviewViewState(
+                    customers =
+                        listOf(
+                            Customer(
+                                id = "1",
+                                email = "william.henry.harrison@example-pet-store.com",
+                                name = "Test",
+                            ),
+                        ),
                 ),
-            )
-        ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

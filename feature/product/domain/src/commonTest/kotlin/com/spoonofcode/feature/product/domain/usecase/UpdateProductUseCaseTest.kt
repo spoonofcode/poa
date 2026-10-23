@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class UpdateProductUseCaseTest : BaseTest() {
-
     private lateinit var updateProductUseCase: UpdateProductUseCase
     private lateinit var productRepository: ProductRepository
 
@@ -33,48 +32,52 @@ class UpdateProductUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success when productRepository updates successfully`() = runTest {
-        val productId = "1"
-        val productType = ProductType.ITEM
-        val customLink = "https://custom.link"
-        everySuspend {
-            productRepository.updateProductItem(
-                productId,
-                customLink
-            )
-        } returns Result.success(Unit)
+    fun `invoke returns success when productRepository updates successfully`() =
+        runTest {
+            val productId = "1"
+            val productType = ProductType.ITEM
+            val customLink = "https://custom.link"
+            everySuspend {
+                productRepository.updateProductItem(
+                    productId,
+                    customLink,
+                )
+            } returns Result.success(Unit)
 
-        val result = updateProductUseCase(
-            id = productId,
-            productType = productType,
-            customLink = customLink
-        )
+            val result =
+                updateProductUseCase(
+                    id = productId,
+                    productType = productType,
+                    customLink = customLink,
+                )
 
-        assertTrue(result.isSuccess)
-        verifySuspend { productRepository.updateProductItem(productId, customLink) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { productRepository.updateProductItem(productId, customLink) }
+        }
 
     @Test
-    fun `invoke returns failure when productRepository fails`() = runTest {
-        val productId = "1"
-        val productType = ProductType.ITEM
-        val customLink = "https://custom.link"
-        val exception = Exception("Update failed")
-        everySuspend {
-            productRepository.updateProductItem(
-                productId,
-                customLink,
-            )
-        } returns Result.failure(exception)
+    fun `invoke returns failure when productRepository fails`() =
+        runTest {
+            val productId = "1"
+            val productType = ProductType.ITEM
+            val customLink = "https://custom.link"
+            val exception = Exception("Update failed")
+            everySuspend {
+                productRepository.updateProductItem(
+                    productId,
+                    customLink,
+                )
+            } returns Result.failure(exception)
 
-        val result = updateProductUseCase(
-            id = productId,
-            productType = productType,
-            customLink = customLink
-        )
+            val result =
+                updateProductUseCase(
+                    id = productId,
+                    productType = productType,
+                    customLink = customLink,
+                )
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { productRepository.updateProductItem(productId, customLink) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { productRepository.updateProductItem(productId, customLink) }
+        }
 }

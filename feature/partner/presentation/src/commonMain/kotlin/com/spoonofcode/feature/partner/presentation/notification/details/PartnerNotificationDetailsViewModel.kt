@@ -69,8 +69,8 @@ internal class PartnerNotificationDetailsViewModel(
                     PartnerNotificationDetailsViewState(
                         notification = notification,
                         notificationType = getNotificationType(notification.topics.toSet()),
-                        selectedNames = getSelectedNames(notification.topics, customers)
-                    )
+                        selectedNames = getSelectedNames(notification.topics, customers),
+                    ),
                 )
                 showContentView()
             } else {
@@ -80,9 +80,9 @@ internal class PartnerNotificationDetailsViewModel(
     }
 
     private fun getNotificationType(selectedTopics: Set<String>): PartnerNotificationType {
-        val firstTopic = selectedTopics.firstOrNull() ?: return PartnerNotificationType.global
+        val firstTopic = selectedTopics.firstOrNull() ?: return PartnerNotificationType.GLOBAL
         val typePrefix = firstTopic.substringBefore("_")
-        return PartnerNotificationType.fromString(typePrefix) ?: PartnerNotificationType.global
+        return PartnerNotificationType.fromString(typePrefix) ?: PartnerNotificationType.GLOBAL
     }
 
     private fun deleteNotification() {
@@ -124,21 +124,25 @@ internal class PartnerNotificationDetailsViewModel(
                     notificationId = notification.id,
                     selectedTopics = notification.topics.toSet(),
                     selectedNames = currentContentState().selectedNames,
-                )
+                ),
             )
         }
     }
 
-    private fun getSelectedNames(topics: List<String>, customers: List<Customer>): Set<String> {
-        val userPrefix = PartnerNotificationType.user.name
-        val seriePrefix = PartnerNotificationType.serie.name
+    private fun getSelectedNames(
+        topics: List<String>,
+        customers: List<Customer>,
+    ): Set<String> {
+        val userPrefix = PartnerNotificationType.USER.name
+        val seriePrefix = PartnerNotificationType.SERIE.name
 
         return when {
             topics.any { it.startsWith(userPrefix) } -> {
-                val cleanIds = topics
-                    .filter { it.startsWith(userPrefix) }
-                    .map { it.removePrefix(userPrefix).replace("_", "") }
-                    .toSet()
+                val cleanIds =
+                    topics
+                        .filter { it.startsWith(userPrefix) }
+                        .map { it.removePrefix(userPrefix).replace("_", "") }
+                        .toSet()
 
                 customers
                     .filter { it.id in cleanIds }

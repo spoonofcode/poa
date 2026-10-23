@@ -2,7 +2,6 @@ package com.spoonofcode.feature.product.presentation.series.overview
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
-import com.spoonofcode.core.presentation.compose.snackbar.SnackbarEvent
 import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.appnavigation.PartnerModuleRoute
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
@@ -31,11 +30,10 @@ internal class ProductSeriesOverviewViewModel(
                     setContentState(
                         ProductSeriesOverviewViewState(
                             productSeries = it,
-                        )
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -59,11 +57,14 @@ internal class ProductSeriesOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 PartnerModuleRoute.PartnerNotificationEdit(
-                    selectedTopics = currentContentState().checkedProductSeriesNames.map {
-                        PartnerNotificationType.serie.createTopic(it)
-                    }.toSet(),
+                    selectedTopics =
+                        currentContentState()
+                            .checkedProductSeriesNames
+                            .map {
+                                PartnerNotificationType.SERIE.createTopic(it)
+                            }.toSet(),
                     selectedNames = currentContentState().checkedProductSeriesNames,
-                )
+                ),
             )
         }
     }

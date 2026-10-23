@@ -34,9 +34,10 @@ import com.spoonofcode.feature.partner.presentation.partner
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.partner),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.partner),
+    )
 
 @Composable
 internal fun PartnerDetailsScreen(
@@ -61,23 +62,24 @@ private fun ColumnScope.Content(
     val partner = requireNotNull(viewState.partner)
     ElevatedCard {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16 / 9f)
-                .background(MaterialTheme.colorScheme.surfaceVariant),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(16 / 9f)
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentAlignment = Alignment.Center,
         ) {
             ImageLink(
                 imageLink = partner.imageLink,
                 textOnFailure = partner.name,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }
 
     Column(
         modifier = Modifier.padding(top = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         // 2. Name & Info
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -85,7 +87,7 @@ private fun ColumnScope.Content(
                 text = partner.name,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             partner.email?.let {
                 TextBM(
@@ -98,18 +100,19 @@ private fun ColumnScope.Content(
         partner.description?.let { desc ->
             DescriptionCard(
                 title = stringResource(Res.string.about_partner),
-                description = desc
+                description = desc,
             )
         }
 
         // 4. Social Icons Section
         ElevatedCard {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 SocialIcons(
                     websiteUrl = partner.websiteLink,
@@ -128,23 +131,25 @@ private fun ColumnScope.Content(
 @Composable
 private fun PartnerDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            PartnerDetailsViewState(
-                partner = Partner(
-                    id = "550e8400-e29b-41d4-a716-446655440001",
-                    name = "Beauty Saute",
-                    partnerCategory = "Regular",
-                    email = "beauty.saute@gmail.com",
-                    description = "Beauty Sautè to więcej niż odzież – to filozofia.",
-                    imageLink = "https://beautysaute.pl/environment/cache/images/0_0_storefrontImages_11a16d30-d85a-422f-917d-195c30274147.png",
-                    websiteLink = "https://beautysaute.pl/",
-                    instagramLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
-                    facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
-                    youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
-                    xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                PartnerDetailsViewState(
+                    partner =
+                        Partner(
+                            id = "550e8400-e29b-41d4-a716-446655440001",
+                            name = "Beauty Saute",
+                            partnerCategory = "Regular",
+                            email = "beauty.saute@gmail.com",
+                            description = "Beauty Sautè to więcej niż odzież – to filozofia.",
+                            imageLink = "https://beautysaute.pl/environment/cache/images/0_0_storefrontImages_11a16d30-d85a-422f-917d-195c30274147.png",
+                            websiteLink = "https://beautysaute.pl/",
+                            instagramLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                            facebookLink = "https://www.facebook.com/profile.php?id=61568636916637",
+                            youtubeLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                            xLink = "https://www.instagram.com/beauty_saute_fashion/?igsh=Y3FxN2U3bDRya2F0&utm_source=qr#",
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

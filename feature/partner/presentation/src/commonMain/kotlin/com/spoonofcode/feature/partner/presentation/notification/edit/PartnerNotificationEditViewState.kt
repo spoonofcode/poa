@@ -17,14 +17,22 @@ internal data class PartnerNotificationEditViewState(
     val title: String = "",
     val text: String = "",
     val link: String = "",
-    val minDeliveryDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
-    val deliveryDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
-    val expirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(ONE_DAY, DateTimeUnit.DAY),
-    val minExpirationDateTime: LocalDateTime = LocalDateTimeUtils.now()
-        .plus(ONE_DAY, DateTimeUnit.DAY),
+    val minDeliveryDateTime: LocalDateTime =
+        LocalDateTimeUtils
+            .now()
+            .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
+    val deliveryDateTime: LocalDateTime =
+        LocalDateTimeUtils
+            .now()
+            .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
+    val expirationDateTime: LocalDateTime =
+        LocalDateTimeUtils
+            .now()
+            .plus(ONE_DAY, DateTimeUnit.DAY),
+    val minExpirationDateTime: LocalDateTime =
+        LocalDateTimeUtils
+            .now()
+            .plus(ONE_DAY, DateTimeUnit.DAY),
     val isSendNotificationDialogVisible: Boolean = false,
     val isSendNotificationButtonLoading: Boolean = false,
     val isExpirationDateTimeEnable: Boolean = false,

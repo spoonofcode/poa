@@ -6,12 +6,12 @@ class GetPartnersFilteredByPartnerCategoryUseCase {
     operator fun invoke(
         partnerCategories: Set<String>,
         partners: List<Partner>,
-    ): List<Partner> = if (partnerCategories.isEmpty()) {
-        partners
-    } else {
-        partners.filter { partner ->
-            partnerCategories.contains(partner.partnerCategory)
+    ): List<Partner> =
+        if (partnerCategories.isEmpty()) {
+            partners
+        } else {
+            partners.filter { partner ->
+                partnerCategories.contains(partner.partnerCategory)
+            }
         }
-    }
 }
-

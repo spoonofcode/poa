@@ -16,9 +16,10 @@ import com.spoonofcode.core.presentation.compose.TextLS
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.terms_and_conditions),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.terms_and_conditions),
+    )
 
 @Composable
 internal fun TACScreen(
@@ -40,7 +41,7 @@ internal fun TACScreen(
 @Composable
 private fun ColumnScope.Content(
     viewState: TACViewState,
-    onAction: (TACViewAction) -> Unit
+    onAction: (TACViewAction) -> Unit,
 ) {
     TextHSB(stringResource(Res.string.terms_and_conditions_description))
 
@@ -71,7 +72,7 @@ private fun ColumnScope.Content(
         text = stringResource(resource = Res.string.save_changes),
         enabled = viewState.isSaveChangesButtonEnable,
         isLoading = viewState.isSaveChangesButtonLoading,
-        onClick = { onAction(TACViewAction.SaveChanges) }
+        onClick = { onAction(TACViewAction.SaveChanges) },
     )
 }
 
@@ -80,14 +81,15 @@ private fun ColumnScope.Content(
 @Composable
 private fun TACScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            TACViewState(
-                isPrivacyPolicyAccepted = false,
-                isTermsAndConditionsAccepted = false,
-                privacyPolicyLink = "",
-                marketingLink = ""
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                TACViewState(
+                    isPrivacyPolicyAccepted = false,
+                    isTermsAndConditionsAccepted = false,
+                    privacyPolicyLink = "",
+                    marketingLink = "",
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

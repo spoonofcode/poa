@@ -7,6 +7,6 @@ class GetNFCTagUseCase(
     private val nfcTagRepository: NFCTagRepository,
 ) {
     suspend operator fun invoke(
-        url: String
+        url: String,
     ): Result<NFCTag> = nfcTagRepository.getNFCTAg(url = url)
 }

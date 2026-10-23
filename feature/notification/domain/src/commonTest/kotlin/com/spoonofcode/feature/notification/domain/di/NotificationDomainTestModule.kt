@@ -5,11 +5,12 @@ import com.spoonofcode.core.logging.di.loggingModule
 import com.spoonofcode.feature.notification.data.test.di.notificationDataTestModule
 import org.koin.dsl.module
 
-val notificationDomainTestModule = module {
-    includes(
-        loggingModule,
-        firebaseDataTestModule,
-        notificationDataTestModule,
-        notificationDomainModule,
-    )
-}
+val notificationDomainTestModule =
+    module {
+        includes(
+            loggingModule,
+            firebaseDataTestModule,
+            notificationDataTestModule,
+            notificationDomainModule,
+        )
+    }

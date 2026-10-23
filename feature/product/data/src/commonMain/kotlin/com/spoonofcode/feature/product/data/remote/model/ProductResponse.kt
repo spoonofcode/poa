@@ -26,9 +26,9 @@ internal data class ProductResponse(
     @SerialName("image_link")
     val imageLink: String? = null,
     @SerialName("video_link")
-    val videoLink: String? =null,
+    val videoLink: String? = null,
     @SerialName("custom_link")
     val customLink: String? = null,
     @SerialName("redirect_link")
     val redirectLink: String? = null,
-    )
+)

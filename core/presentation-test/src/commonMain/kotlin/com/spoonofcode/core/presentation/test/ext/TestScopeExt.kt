@@ -24,9 +24,10 @@ class VmTestScope<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, V
     private val backgroundScope: CoroutineScope,
     private val testScheduler: TestCoroutineScheduler,
 ) {
-    fun <T> Flow<T>.test(): ReceiveTurbine<T> = with(turbineContext) {
-        testIn(backgroundScope)
-    }
+    fun <T> Flow<T>.test(): ReceiveTurbine<T> =
+        with(turbineContext) {
+            testIn(backgroundScope)
+        }
 
     fun onAction(action: VA) {
         viewModel.onAction(action)
@@ -41,7 +42,7 @@ class VmTestScope<VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, V
 suspend fun <VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, VM : BaseViewModel<VS, VA, VE>> TestScope.runVmTest(
     viewModel: VM,
     expectMostRecentItem: Boolean = true,
-    block: suspend VmTestScope<VS, VA, VE, VM>.() -> Unit
+    block: suspend VmTestScope<VS, VA, VE, VM>.() -> Unit,
 ) {
     turbineScope {
         val viewStateTurbine = viewModel.viewState.testIn(backgroundScope)
@@ -53,15 +54,16 @@ suspend fun <VS : BaseViewState, VA : BaseViewAction, VE : BaseViewEvent, VM : B
             viewStateTurbine.expectMostRecentItem()
         }
 
-        val scope = VmTestScope(
-            viewModel = viewModel,
-            viewState = viewStateTurbine,
-            viewEvent = viewEventTurbine,
-            snackbarEvent = snackBarEventTurbine,
-            turbineContext = this,
-            backgroundScope = backgroundScope,
-            testScheduler = testScheduler,
-        )
+        val scope =
+            VmTestScope(
+                viewModel = viewModel,
+                viewState = viewStateTurbine,
+                viewEvent = viewEventTurbine,
+                snackbarEvent = snackBarEventTurbine,
+                turbineContext = this,
+                backgroundScope = backgroundScope,
+                testScheduler = testScheduler,
+            )
 
         scope.block()
 

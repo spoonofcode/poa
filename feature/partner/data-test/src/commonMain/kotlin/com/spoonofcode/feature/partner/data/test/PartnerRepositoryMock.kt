@@ -11,25 +11,26 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
-internal fun partnerRepositoryMock() = mock<PartnerRepository> {
-    everySuspend { getPartner(any()) } returns Result.success(PARTNER_1)
-    everySuspend {
-        updatePartner(
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-            any(),
-        )
-    } returns Result.success(Unit)
-    everySuspend { getPartners() } returns Result.success(PARTNERS)
-    everySuspend { getCategories() } returns Result.success(PARTNER_CATEGORIES)
-    everySuspend { getPartnerSeries() } returns Result.success(PRODUCT_SERIES_LIST)
-    everySuspend { getPartnerCustomers() } returns Result.success(CUSTOMERS)
-}
+internal fun partnerRepositoryMock() =
+    mock<PartnerRepository> {
+        everySuspend { getPartner(any()) } returns Result.success(PARTNER_1)
+        everySuspend {
+            updatePartner(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+            )
+        } returns Result.success(Unit)
+        everySuspend { getPartners() } returns Result.success(PARTNERS)
+        everySuspend { getCategories() } returns Result.success(PARTNER_CATEGORIES)
+        everySuspend { getPartnerSeries() } returns Result.success(PRODUCT_SERIES_LIST)
+        everySuspend { getPartnerCustomers() } returns Result.success(CUSTOMERS)
+    }

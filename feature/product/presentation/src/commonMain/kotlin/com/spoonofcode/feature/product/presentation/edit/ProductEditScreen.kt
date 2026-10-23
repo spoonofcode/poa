@@ -32,9 +32,10 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.edit_product),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.edit_product),
+    )
 
 @Composable
 internal fun ProductEditScreen(
@@ -62,7 +63,7 @@ private fun ColumnScope.Content(
     if (product.videoLink != null) {
         VideoAnimation(
             videoLink = product.videoLink!!,
-            imageLink = product.imageLink
+            imageLink = product.imageLink,
         )
     } else {
         product.imageLink?.let { ImageLink(imageLink = it) }
@@ -70,7 +71,7 @@ private fun ColumnScope.Content(
 
     Column(
         modifier = Modifier.padding(top = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         product.seriesName?.let {
             TextLLB(
@@ -81,14 +82,14 @@ private fun ColumnScope.Content(
         product.name?.let {
             TextHSB(
                 text = it,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
 
         product.description?.let {
             DescriptionCard(
                 title = stringResource(Res.string.about_product),
-                description = it
+                description = it,
             )
         }
 
@@ -125,23 +126,25 @@ private fun ColumnScope.Content(
 @Composable
 private fun ProductEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            ProductEditViewState(
-                product = Product(
-                    id = "1",
-                    productType = ProductType.ITEM,
-                    ownerEmail = "user1@exmaple.com",
-                    partnerId = "1",
-                    name = "Product #1",
-                    description = "Przykładowy opis wydarzenia nr 1",
-                    seriesId = "1",
-                    seriesName = "Series 1",
-                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
-                    imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
-                    customLink = "https://beautysaute.pl/",
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                ProductEditViewState(
+                    product =
+                        Product(
+                            id = "1",
+                            productType = ProductType.ITEM,
+                            ownerEmail = "user1@exmaple.com",
+                            partnerId = "1",
+                            name = "Product #1",
+                            description = "Przykładowy opis wydarzenia nr 1",
+                            seriesId = "1",
+                            seriesName = "Series 1",
+                            createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                            imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
+                            customLink = "https://beautysaute.pl/",
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

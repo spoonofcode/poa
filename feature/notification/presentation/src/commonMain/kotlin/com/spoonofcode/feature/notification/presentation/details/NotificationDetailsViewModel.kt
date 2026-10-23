@@ -28,14 +28,13 @@ internal class NotificationDetailsViewModel(
                 .onSuccess {
                     setContentState(
                         NotificationDetailsViewState(
-                            notification = it
-                        )
+                            notification = it,
+                        ),
                     )
                     markNotificationAsReadUseCase(notificationId = notificationId)
                     notificationEventBus.emitOverview(NotificationEvent.NotificationRead)
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }

@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetNFCTagUseCaseTest : BaseTest() {
-
     private lateinit var getNFCTagUseCase: GetNFCTagUseCase
     private lateinit var nfcTagRepository: NFCTagRepository
 
@@ -33,28 +32,30 @@ class GetNFCTagUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with NFC tag`() = runTest {
-        val url = "https://example.com/nfc/123"
-        val expectedTag = NFCTag(publicId = "123", tagType = "nft")
-        everySuspend { nfcTagRepository.getNFCTAg(url) } returns Result.success(expectedTag)
+    fun `invoke returns success with NFC tag`() =
+        runTest {
+            val url = "https://example.com/nfc/123"
+            val expectedTag = NFCTag(publicId = "123", tagType = "nft")
+            everySuspend { nfcTagRepository.getNFCTAg(url) } returns Result.success(expectedTag)
 
-        val result = getNFCTagUseCase(url)
+            val result = getNFCTagUseCase(url)
 
-        assertTrue(result.isSuccess)
-        assertEquals(expectedTag, result.getOrNull())
-        verifySuspend { nfcTagRepository.getNFCTAg(url) }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(expectedTag, result.getOrNull())
+            verifySuspend { nfcTagRepository.getNFCTAg(url) }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val url = "invalid_url"
-        val exception = Exception("Tag not found")
-        everySuspend { nfcTagRepository.getNFCTAg(url) } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val url = "invalid_url"
+            val exception = Exception("Tag not found")
+            everySuspend { nfcTagRepository.getNFCTAg(url) } returns Result.failure(exception)
 
-        val result = getNFCTagUseCase(url)
+            val result = getNFCTagUseCase(url)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { nfcTagRepository.getNFCTAg(url) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { nfcTagRepository.getNFCTAg(url) }
+        }
 }

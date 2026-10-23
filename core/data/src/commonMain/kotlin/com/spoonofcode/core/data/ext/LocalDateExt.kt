@@ -7,17 +7,18 @@ import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 import kotlin.time.Instant
 
-val DEFAULT_DATE_FORMAT = LocalDate.Format {
-    date(
-        LocalDate.Format {
-            dayOfMonth()
-            char('-')
-            monthNumber()
-            char('-')
-            year()
-        }
-    )
-}
+val DEFAULT_DATE_FORMAT =
+    LocalDate.Format {
+        date(
+            LocalDate.Format {
+                dayOfMonth()
+                char('-')
+                monthNumber()
+                char('-')
+                year()
+            },
+        )
+    }
 
 fun LocalDate.formatedLocalDate(): String = this.format(DEFAULT_DATE_FORMAT)
 

@@ -8,7 +8,5 @@ class GetPartnerUseCase(
     private val partnerRepository: PartnerRepository,
     private val sessionRepository: SessionRepository,
 ) {
-    suspend operator fun invoke(): Result<Partner> =
-        partnerRepository.getPartner(sessionRepository.getSessionUserId())
+    suspend operator fun invoke(): Result<Partner> = partnerRepository.getPartner(sessionRepository.getSessionUserId())
 }
-

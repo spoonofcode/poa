@@ -7,13 +7,11 @@ import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 class GetNewPartnersUseCase(
     private val partnerRepository: PartnerRepository,
 ) {
-    suspend operator fun invoke(limit: Int = 3): Result<List<Partner>> {
-        return partnerRepository.getPartners().map { partners ->
+    suspend operator fun invoke(limit: Int = 3): Result<List<Partner>> =
+        partnerRepository.getPartners().map { partners ->
             partners
                 .filterNot { it.imageLink.isNullOrEmpty() }
                 .shuffled()
                 .take(limit)
         }
-    }
 }
-

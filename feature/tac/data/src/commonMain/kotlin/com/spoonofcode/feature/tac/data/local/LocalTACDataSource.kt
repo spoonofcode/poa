@@ -12,24 +12,24 @@ internal class LocalTACDataSource(
     private val dispatcherProvider: DispatcherProvider,
     private val poaLogger: POALogger,
 ) {
-
-    suspend fun getTACSettings(): TACSettings {
-        return withContext(dispatcherProvider.io()) {
+    suspend fun getTACSettings(): TACSettings =
+        withContext(dispatcherProvider.io()) {
             poaLogger.debug("LocalTACDataSource: Fetching TAC settings from local storage")
             TACSettings(
-                isPrivacyPolicyAccepted = kSafe.get(
-                    key = Keys.Settings.PRIVACY_POLICY_ACCEPTED,
-                    defaultValue = false
-                ),
-                isTermsAndConditionsAccepted = kSafe.get(
-                    key = Keys.Settings.TERMS_AND_CONDITIONS_ACCEPTED,
-                    defaultValue = false
-                ),
+                isPrivacyPolicyAccepted =
+                    kSafe.get(
+                        key = Keys.Settings.PRIVACY_POLICY_ACCEPTED,
+                        defaultValue = false,
+                    ),
+                isTermsAndConditionsAccepted =
+                    kSafe.get(
+                        key = Keys.Settings.TERMS_AND_CONDITIONS_ACCEPTED,
+                        defaultValue = false,
+                    ),
                 privacyPolicyLink = PRIVACY_POLICY_LINK,
                 marketingLink = MARKETING_LINK,
             )
         }
-    }
 
     suspend fun setTACSettings(
         isPrivacyPolicyAccepted: Boolean,
