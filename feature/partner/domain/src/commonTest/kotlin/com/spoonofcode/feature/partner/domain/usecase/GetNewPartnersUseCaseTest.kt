@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetNewPartnersUseCaseTest : BaseTest() {
-
     private lateinit var getNewPartnersUseCase: GetNewPartnersUseCase
     private lateinit var partnerRepository: PartnerRepository
 
@@ -33,26 +32,28 @@ class GetNewPartnersUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns filtered and limited list of partners`() = runTest {
-        val partners = PartnerMockData.PARTNERS
-        everySuspend { partnerRepository.getPartners() } returns Result.success(partners)
+    fun `invoke returns filtered and limited list of partners`() =
+        runTest {
+            val partners = PartnerMockData.PARTNERS
+            everySuspend { partnerRepository.getPartners() } returns Result.success(partners)
 
-        val result = getNewPartnersUseCase(limit = 1)
+            val result = getNewPartnersUseCase(limit = 1)
 
-        assertTrue(result.isSuccess)
-        assertEquals(1, result.getOrNull()?.size)
-        verifySuspend { partnerRepository.getPartners() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(1, result.getOrNull()?.size)
+            verifySuspend { partnerRepository.getPartners() }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val exception = Exception("Failed to get partners")
-        everySuspend { partnerRepository.getPartners() } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val exception = Exception("Failed to get partners")
+            everySuspend { partnerRepository.getPartners() } returns Result.failure(exception)
 
-        val result = getNewPartnersUseCase()
+            val result = getNewPartnersUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { partnerRepository.getPartners() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { partnerRepository.getPartners() }
+        }
 }

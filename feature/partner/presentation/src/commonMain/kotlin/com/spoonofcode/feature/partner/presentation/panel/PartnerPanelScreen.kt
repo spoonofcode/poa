@@ -27,9 +27,10 @@ import com.spoonofcode.feature.partner.presentation.send_notification
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.partner_panel),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.partner_panel),
+    )
 
 @Composable
 internal fun PartnerPanelScreen(
@@ -53,33 +54,33 @@ private fun ColumnScope.Content(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         IconTextButton(
             icon = Icons.Default.Person,
             text = stringResource(resource = Res.string.partner_info),
             onClick = { onAction(PartnerPanelViewAction.NavigateToPartnerEdit) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         IconTextButton(
             icon = Icons.AutoMirrored.Filled.Send,
             text = stringResource(resource = Res.string.send_notification),
             onClick = { onAction(PartnerPanelViewAction.NavigateToNotificationType) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         IconTextButton(
             enabled = true,
             icon = Icons.Default.Notifications,
             text = stringResource(resource = Res.string.my_notifications),
             onClick = { onAction(PartnerPanelViewAction.NavigateToPartnerNotifications) },
-            modifier = Modifier.weight(0.5f)
+            modifier = Modifier.weight(0.5f),
         )
 
         IconTextButton(
@@ -87,7 +88,7 @@ private fun ColumnScope.Content(
             icon = Icons.Default.BarChart,
             text = stringResource(resource = Res.string.reports),
             onClick = { },
-            modifier = Modifier.weight(0.5f)
+            modifier = Modifier.weight(0.5f),
         )
     }
 }

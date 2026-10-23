@@ -29,10 +29,11 @@ internal class HttpClientFactory(
         return HttpClient {
             install(ContentNegotiation) {
                 json(
-                    json = Json {
-                        encodeDefaults = true
-                        ignoreUnknownKeys = true
-                    },
+                    json =
+                        Json {
+                            encodeDefaults = true
+                            ignoreUnknownKeys = true
+                        },
                 )
             }
             install(HttpTimeout) {
@@ -40,11 +41,12 @@ internal class HttpClientFactory(
                 requestTimeoutMillis = 20_000L
             }
             install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        poaLogger.debug(message)
+                logger =
+                    object : Logger {
+                        override fun log(message: String) {
+                            poaLogger.debug(message)
+                        }
                     }
-                }
                 level = LogLevel.ALL
             }
             install(WebSockets) {
@@ -73,16 +75,22 @@ internal class HttpClientFactory(
                     refreshTokens {
                         poaLogger.debug("HttpClientFactory: refreshTokens triggered for URL: ${response.request.url}")
 
-                        if (response.request.url.encodedPath.contains("api/login") ||
-                            response.request.url.encodedPath.contains("api/refresh")
+                        if (response.request.url.encodedPath
+                                .contains("api/login") ||
+                            response.request.url.encodedPath
+                                .contains("api/refresh")
                         ) {
-                            poaLogger.debug("HttpClientFactory: Skipping refresh tokens for auth endpoint: ${response.request.url.encodedPath}")
+                            poaLogger.debug(
+                                "HttpClientFactory: Skipping refresh tokens for auth endpoint: ${response.request.url.encodedPath}",
+                            )
                             return@refreshTokens null
                         }
 
-                        val refreshToken = sessionRepository.getSessionRefreshToken()
-                            ?.takeIf { it.isNotBlank() }
-                            ?: oldTokens?.refreshToken?.takeIf { it.isNotBlank() }
+                        val refreshToken =
+                            sessionRepository
+                                .getSessionRefreshToken()
+                                ?.takeIf { it.isNotBlank() }
+                                ?: oldTokens?.refreshToken?.takeIf { it.isNotBlank() }
 
                         if (refreshToken.isNullOrBlank()) {
                             poaLogger.warn("HttpClientFactory: Refresh token is null or blank. Clearing session.")
@@ -92,17 +100,19 @@ internal class HttpClientFactory(
 
                         poaLogger.debug("HttpClientFactory: Refreshing tokens using RemoteRefreshTokenDataSource...")
                         var bearerTokens: BearerTokens? = null
-                        remoteRefreshTokenDataSource.create(refreshToken)
+                        remoteRefreshTokenDataSource
+                            .create(refreshToken)
                             .onSuccess { (newAccessToken, newRefreshToken) ->
                                 poaLogger.debug("HttpClientFactory: Token refresh successful. Updating session tokens.")
                                 sessionRepository.updateSessionTokens(
                                     accessToken = newAccessToken,
                                     refreshToken = newRefreshToken,
                                 )
-                                bearerTokens = BearerTokens(
-                                    accessToken = newAccessToken,
-                                    refreshToken = newRefreshToken,
-                                )
+                                bearerTokens =
+                                    BearerTokens(
+                                        accessToken = newAccessToken,
+                                        refreshToken = newRefreshToken,
+                                    )
                             }.onFailure { error ->
                                 poaLogger.error(
                                     message = "HttpClientFactory: Token refresh failed: ${error.message}",

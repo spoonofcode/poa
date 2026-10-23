@@ -19,7 +19,7 @@ internal class LocalSessionDataSource(
         withContext(dispatcherProvider.io()) {
             poaLogger.debug(
                 "LocalSessionDataSource: Initializing local session for userId: $userId " +
-                    "(accessToken present=${accessToken.isNotBlank()}, refreshToken present=${refreshToken.isNotBlank()})"
+                    "(accessToken present=${accessToken.isNotBlank()}, refreshToken present=${refreshToken.isNotBlank()})",
             )
             kSafe.clearAll()
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
@@ -36,7 +36,7 @@ internal class LocalSessionDataSource(
         withContext(dispatcherProvider.io()) {
             poaLogger.debug(
                 "LocalSessionDataSource: Updating session tokens in local storage " +
-                    "(accessToken present=${accessToken.isNotBlank()}, refreshToken present=${refreshToken.isNotBlank()})"
+                    "(accessToken present=${accessToken.isNotBlank()}, refreshToken present=${refreshToken.isNotBlank()})",
             )
             kSafe.put(Keys.Session.ACCESS_TOKEN, accessToken)
             kSafe.put(Keys.Session.REFRESH_TOKEN, refreshToken)
@@ -66,7 +66,7 @@ internal class LocalSessionDataSource(
         withContext(dispatcherProvider.io()) {
             poaLogger.debug("LocalSessionDataSource: Getting session user ID")
             requireNotNull(
-                kSafe.get<String?>(Keys.Session.USER_ID, null)
+                kSafe.get<String?>(Keys.Session.USER_ID, null),
             ) { "User ID cannot be null" }
         }
 
@@ -74,7 +74,7 @@ internal class LocalSessionDataSource(
         withContext(dispatcherProvider.io()) {
             poaLogger.debug("LocalSessionDataSource: Getting session user email")
             requireNotNull(
-                kSafe.get<String?>(Keys.Session.USER_EMAIL, null)
+                kSafe.get<String?>(Keys.Session.USER_EMAIL, null),
             ) { "User Email cannot be null" }
         }
 

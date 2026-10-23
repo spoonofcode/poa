@@ -1,7 +1,7 @@
 package com.spoonofcode.core.presentation.compose
 
-import androidx.activity.compose.BackHandler as AndroidXBackHandler
 import androidx.compose.runtime.Composable
+import androidx.activity.compose.BackHandler as AndroidXBackHandler
 
 @Composable
 actual fun BackHandler(

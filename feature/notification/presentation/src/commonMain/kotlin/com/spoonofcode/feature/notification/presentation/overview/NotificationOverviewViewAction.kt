@@ -2,6 +2,8 @@ package com.spoonofcode.feature.notification.presentation.overview
 
 import com.spoonofcode.core.presentation.base.BaseViewAction
 
-internal sealed interface NotificationOverviewViewAction: BaseViewAction {
-    data class SelectNotification(val notificationId: String) : NotificationOverviewViewAction
+internal sealed interface NotificationOverviewViewAction : BaseViewAction {
+    data class SelectNotification(
+        val notificationId: String,
+    ) : NotificationOverviewViewAction
 }

@@ -7,7 +7,8 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-actual val platformAuthPresentationModule = module {
-    factoryOf(::GoogleAuthProvider) bind GoogleAuthProvider::class
-    factoryOf(::GoogleLogoutHandler) bind LogoutHandler::class
-}
+actual val platformAuthPresentationModule =
+    module {
+        factoryOf(::GoogleAuthProvider) bind GoogleAuthProvider::class
+        factoryOf(::GoogleLogoutHandler) bind LogoutHandler::class
+    }

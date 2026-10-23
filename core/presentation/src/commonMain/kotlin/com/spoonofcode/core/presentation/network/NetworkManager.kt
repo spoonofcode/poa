@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.SharedFlow
 
 interface NetworkManager {
     suspend fun isOnline(): Boolean
+
     fun observeNetworkState(): SharedFlow<Connectivity.Status>
 }

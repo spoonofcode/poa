@@ -9,8 +9,9 @@ import dev.mokkery.mock
 
 val TOTAL_POINTS = 1000
 
-internal fun userRepositoryMock() = mock<RewardRepository> {
-    everySuspend { addRewardToUser(any()) } returns Result.success(Unit)
-    everySuspend { getUserDailyCheckInStatus() } returns Result.success(DAILY_CHECK_IN_STATUS_1)
-    everySuspend { getUserRewardsPoints() } returns Result.success(TOTAL_POINTS)
-}
+internal fun userRepositoryMock() =
+    mock<RewardRepository> {
+        everySuspend { addRewardToUser(any()) } returns Result.success(Unit)
+        everySuspend { getUserDailyCheckInStatus() } returns Result.success(DAILY_CHECK_IN_STATUS_1)
+        everySuspend { getUserRewardsPoints() } returns Result.success(TOTAL_POINTS)
+    }

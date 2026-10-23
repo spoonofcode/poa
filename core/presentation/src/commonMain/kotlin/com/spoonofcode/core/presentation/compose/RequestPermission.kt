@@ -16,24 +16,24 @@ fun RequestPermission(
     onGrantedAction: () -> Unit,
     onShowRationalAction: () -> Unit,
 ) {
-
     val lifecycleOwner = LocalLifecycleOwner.current
 
     DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                when (val status = notificationPermissionState.status) {
-                    PermissionStatus.Granted -> onGrantedAction()
-                    is PermissionStatus.Denied -> {
-                        if (status.shouldShowRationale) {
-                            onShowRationalAction()
-                        } else {
-                            notificationPermissionState.launchPermissionRequest()
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    when (val status = notificationPermissionState.status) {
+                        PermissionStatus.Granted -> onGrantedAction()
+                        is PermissionStatus.Denied -> {
+                            if (status.shouldShowRationale) {
+                                onShowRationalAction()
+                            } else {
+                                notificationPermissionState.launchPermissionRequest()
+                            }
                         }
                     }
                 }
             }
-        }
         lifecycleOwner.lifecycle.addObserver(observer)
 
         onDispose {

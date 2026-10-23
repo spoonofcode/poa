@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetTACSettingsUseCaseTest : BaseTest() {
-
     private lateinit var getTACSettingsUseCase: GetTACSettingsUseCase
     private lateinit var tacRepository: TACRepository
 
@@ -33,23 +32,25 @@ class GetTACSettingsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with tac settings`() = runTest {
-        val result = getTACSettingsUseCase()
+    fun `invoke returns success with tac settings`() =
+        runTest {
+            val result = getTACSettingsUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(TACMockData.SETTINGS_1, result.getOrNull())
-        verifySuspend { tacRepository.getTACSettings() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(TACMockData.SETTINGS_1, result.getOrNull())
+            verifySuspend { tacRepository.getTACSettings() }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val exception = Exception("Repository error")
-        everySuspend { tacRepository.getTACSettings() } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val exception = Exception("Repository error")
+            everySuspend { tacRepository.getTACSettings() } returns Result.failure(exception)
 
-        val result = getTACSettingsUseCase()
+            val result = getTACSettingsUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { tacRepository.getTACSettings() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { tacRepository.getTACSettings() }
+        }
 }

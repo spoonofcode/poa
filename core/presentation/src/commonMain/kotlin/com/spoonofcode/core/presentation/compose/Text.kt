@@ -205,12 +205,10 @@ fun TextHSB(
 }
 
 @Composable
-fun TextHM(
-    text: String,
-) {
+fun TextHM(text: String) {
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineMedium
+        style = MaterialTheme.typography.headlineMedium,
     )
 }
 
@@ -228,12 +226,10 @@ fun TextHMB(
 }
 
 @Composable
-fun TextHL(
-    text: String,
-) {
+fun TextHL(text: String) {
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineLarge
+        style = MaterialTheme.typography.headlineLarge,
     )
 }
 
@@ -251,19 +247,15 @@ fun TextHLB(
 }
 
 @Composable
-fun TextBS(
-    text: String,
-) {
+fun TextBS(text: String) {
     Text(
         text = text,
-        style = MaterialTheme.typography.bodySmall
+        style = MaterialTheme.typography.bodySmall,
     )
 }
 
 @Composable
-fun TextBSB(
-    text: String,
-) {
+fun TextBSB(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.bodySmall,
@@ -283,7 +275,7 @@ fun TextBM(
         maxLines = maxLines,
         overflow = overflow,
         color = color,
-        style = MaterialTheme.typography.bodyMedium
+        style = MaterialTheme.typography.bodyMedium,
     )
 }
 
@@ -335,7 +327,7 @@ fun TextLS(
     Text(
         text = text,
         color = color,
-        style = MaterialTheme.typography.labelSmall
+        style = MaterialTheme.typography.labelSmall,
     )
 }
 

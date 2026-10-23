@@ -10,15 +10,12 @@ import com.spoonofcode.feature.partner.presentation.PartnerEventBus
 import com.spoonofcode.feature.partner.presentation.Res
 import com.spoonofcode.feature.partner.presentation.partner_data_updated
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 internal class PartnerPanelViewModel(
     private val partnerEventBus: PartnerEventBus,
-) :
-    BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction, Nothing>(
+) : BaseViewModel<PartnerPanelViewState, PartnerPanelViewAction, Nothing>(
         initialViewState = ViewState.Content(PartnerPanelViewState),
     ) {
-
     init {
         observePartnerEvents()
     }

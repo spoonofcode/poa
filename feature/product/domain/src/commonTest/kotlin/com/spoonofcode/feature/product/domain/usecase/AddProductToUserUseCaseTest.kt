@@ -18,7 +18,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AddProductToUserUseCaseTest : BaseTest() {
-
     private lateinit var addProductToUserUseCase: AddProductToUserUseCase
     private lateinit var productRepository: ProductRepository
     private lateinit var notificationRepository: NotificationRepository
@@ -40,61 +39,67 @@ class AddProductToUserUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success without productSerieId`() = runTest {
-        val productId = "1"
-        everySuspend { productRepository.addProductToUser(productId) } returns Result.success(Unit)
+    fun `invoke returns success without productSerieId`() =
+        runTest {
+            val productId = "1"
+            everySuspend { productRepository.addProductToUser(productId) } returns Result.success(Unit)
 
-        val result = addProductToUserUseCase(productId)
+            val result = addProductToUserUseCase(productId)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { productRepository.addProductToUser(productId) }
-    }
-
-    @Test
-    fun `invoke returns success and subscribes to topic when productSerieId provided and notifications enabled`() = runTest {
-        val productId = "1"
-        val serieId = "series_1"
-        val topic = NotificationType.serie.createTopic(serieId)
-
-        everySuspend { productRepository.addProductToUser(productId) } returns Result.success(Unit)
-        everySuspend { notificationRepository.getNotificationSettings() } returns Result.success(
-            NotificationSettings(isNotificationsMyProductSeriesEnabled = true)
-        )
-        everySuspend { firebaseMessagingRepository.subscribeToTopic(topic) } returns Result.success(Unit)
-
-        val result = addProductToUserUseCase(productId, serieId)
-
-        assertTrue(result.isSuccess)
-        verifySuspend { productRepository.addProductToUser(productId) }
-        verifySuspend { firebaseMessagingRepository.subscribeToTopic(topic) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { productRepository.addProductToUser(productId) }
+        }
 
     @Test
-    fun `invoke returns success and does not subscribe when notifications disabled`() = runTest {
-        val productId = "1"
-        val serieId = "series_1"
+    fun `invoke returns success and subscribes to topic when productSerieId provided and notifications enabled`() =
+        runTest {
+            val productId = "1"
+            val serieId = "series_1"
+            val topic = NotificationType.SERIE.createTopic(serieId)
 
-        everySuspend { productRepository.addProductToUser(productId) } returns Result.success(Unit)
-        everySuspend { notificationRepository.getNotificationSettings() } returns Result.success(
-            NotificationSettings(isNotificationsMyProductSeriesEnabled = false)
-        )
+            everySuspend { productRepository.addProductToUser(productId) } returns Result.success(Unit)
+            everySuspend { notificationRepository.getNotificationSettings() } returns
+                Result.success(
+                    NotificationSettings(isNotificationsMyProductSeriesEnabled = true),
+                )
+            everySuspend { firebaseMessagingRepository.subscribeToTopic(topic) } returns Result.success(Unit)
 
-        val result = addProductToUserUseCase(productId, serieId)
+            val result = addProductToUserUseCase(productId, serieId)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { productRepository.addProductToUser(productId) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { productRepository.addProductToUser(productId) }
+            verifySuspend { firebaseMessagingRepository.subscribeToTopic(topic) }
+        }
 
     @Test
-    fun `invoke returns failure when productRepository fails`() = runTest {
-        val productId = "1"
-        val exception = Exception("Failed to add product")
-        everySuspend { productRepository.addProductToUser(productId) } returns Result.failure(exception)
+    fun `invoke returns success and does not subscribe when notifications disabled`() =
+        runTest {
+            val productId = "1"
+            val serieId = "series_1"
 
-        val result = addProductToUserUseCase(productId)
+            everySuspend { productRepository.addProductToUser(productId) } returns Result.success(Unit)
+            everySuspend { notificationRepository.getNotificationSettings() } returns
+                Result.success(
+                    NotificationSettings(isNotificationsMyProductSeriesEnabled = false),
+                )
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { productRepository.addProductToUser(productId) }
-    }
+            val result = addProductToUserUseCase(productId, serieId)
+
+            assertTrue(result.isSuccess)
+            verifySuspend { productRepository.addProductToUser(productId) }
+        }
+
+    @Test
+    fun `invoke returns failure when productRepository fails`() =
+        runTest {
+            val productId = "1"
+            val exception = Exception("Failed to add product")
+            everySuspend { productRepository.addProductToUser(productId) } returns Result.failure(exception)
+
+            val result = addProductToUserUseCase(productId)
+
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { productRepository.addProductToUser(productId) }
+        }
 }

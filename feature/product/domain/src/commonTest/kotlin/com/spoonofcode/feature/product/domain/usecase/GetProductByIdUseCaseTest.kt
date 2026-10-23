@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetProductByIdUseCaseTest : BaseTest() {
-
     private lateinit var getProductByIdUseCase: GetProductByIdUseCase
     private lateinit var productRepository: ProductRepository
 
@@ -33,25 +32,27 @@ class GetProductByIdUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with product`() = runTest {
-        val productId = ProductMockData.PRODUCT_1.id
-        val result = getProductByIdUseCase(productId)
+    fun `invoke returns success with product`() =
+        runTest {
+            val productId = ProductMockData.PRODUCT_1.id
+            val result = getProductByIdUseCase(productId)
 
-        assertTrue(result.isSuccess)
-        assertEquals(ProductMockData.PRODUCT_1, result.getOrNull())
-        verifySuspend { productRepository.getProduct(productId) }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(ProductMockData.PRODUCT_1, result.getOrNull())
+            verifySuspend { productRepository.getProduct(productId) }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val productId = "invalid_id"
-        val exception = Exception("Product not found")
-        everySuspend { productRepository.getProduct(productId) } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val productId = "invalid_id"
+            val exception = Exception("Product not found")
+            everySuspend { productRepository.getProduct(productId) } returns Result.failure(exception)
 
-        val result = getProductByIdUseCase(productId)
+            val result = getProductByIdUseCase(productId)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { productRepository.getProduct(productId) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { productRepository.getProduct(productId) }
+        }
 }

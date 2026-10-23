@@ -22,6 +22,8 @@ internal fun Project.configureKotlinAndroid(
             isCoreLibraryDesugaringEnabled = true
         }
 
+        configureAndroidLint(this)
+
         configureKotlin()
 
         dependencies {

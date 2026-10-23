@@ -53,19 +53,20 @@ fun SocialIcons(
     spacing: Dp = 16.dp,
     shape: Shape = MaterialTheme.shapes.medium, // More modern than perfect circle
 ) {
-    val items = buildList {
-        if (!websiteUrl.isNullOrBlank()) add(SocialItem.Web(websiteUrl))
-        if (!instagramUrl.isNullOrBlank()) add(SocialItem.Instagram(instagramUrl))
-        if (!facebookUrl.isNullOrBlank()) add(SocialItem.Facebook(facebookUrl))
-        if (!youtubeUrl.isNullOrBlank()) add(SocialItem.YouTube(youtubeUrl))
-        if (!xUrl.isNullOrBlank()) add(SocialItem.X(xUrl))
-    }
+    val items =
+        buildList {
+            if (!websiteUrl.isNullOrBlank()) add(SocialItem.Web(websiteUrl))
+            if (!instagramUrl.isNullOrBlank()) add(SocialItem.Instagram(instagramUrl))
+            if (!facebookUrl.isNullOrBlank()) add(SocialItem.Facebook(facebookUrl))
+            if (!youtubeUrl.isNullOrBlank()) add(SocialItem.YouTube(youtubeUrl))
+            if (!xUrl.isNullOrBlank()) add(SocialItem.X(xUrl))
+        }
     if (items.isEmpty()) return
 
     Row(
         modifier = modifier.padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(spacing),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         items.forEach { item ->
             SocialIcon(
@@ -81,30 +82,49 @@ fun SocialIcons(
     }
 }
 
-private sealed class SocialItem(val url: String, val label: String) {
-    class Web(url: String) : SocialItem(url, "Website")
-    class Instagram(url: String) : SocialItem(url, "Instagram")
-    class Facebook(url: String) : SocialItem(url, "Facebook")
-    class YouTube(url: String) : SocialItem(url, "YouTube")
-    class X(url: String) : SocialItem(url, "X (Twitter)")
+private sealed class SocialItem(
+    val url: String,
+    val label: String,
+) {
+    class Web(
+        url: String,
+    ) : SocialItem(url, "Website")
+
+    class Instagram(
+        url: String,
+    ) : SocialItem(url, "Instagram")
+
+    class Facebook(
+        url: String,
+    ) : SocialItem(url, "Facebook")
+
+    class YouTube(
+        url: String,
+    ) : SocialItem(url, "YouTube")
+
+    class X(
+        url: String,
+    ) : SocialItem(url, "X (Twitter)")
 }
 
 @Composable
-private fun SocialItem.icon(): ImageVector = when (this) {
-    is SocialItem.Web -> FontAwesomeIcons.Brands.Wordpress
-    is SocialItem.Instagram -> FontAwesomeIcons.Brands.Instagram
-    is SocialItem.Facebook -> FontAwesomeIcons.Brands.Facebook
-    is SocialItem.YouTube -> FontAwesomeIcons.Brands.Youtube
-    is SocialItem.X -> FontAwesomeIcons.Brands.Twitter
-}
+private fun SocialItem.icon(): ImageVector =
+    when (this) {
+        is SocialItem.Web -> FontAwesomeIcons.Brands.Wordpress
+        is SocialItem.Instagram -> FontAwesomeIcons.Brands.Instagram
+        is SocialItem.Facebook -> FontAwesomeIcons.Brands.Facebook
+        is SocialItem.YouTube -> FontAwesomeIcons.Brands.Youtube
+        is SocialItem.X -> FontAwesomeIcons.Brands.Twitter
+    }
 
-private fun SocialItem.brandColor(): Color = when (this) {
-    is SocialItem.Web -> Color(0xFF21759B)
-    is SocialItem.Instagram -> Color(0xFFE1306C)
-    is SocialItem.Facebook -> Color(0xFF1877F2)
-    is SocialItem.YouTube -> Color(0xFFFF0000)
-    is SocialItem.X -> Color(0xFF000000)
-}
+private fun SocialItem.brandColor(): Color =
+    when (this) {
+        is SocialItem.Web -> Color(0xFF21759B)
+        is SocialItem.Instagram -> Color(0xFFE1306C)
+        is SocialItem.Facebook -> Color(0xFF1877F2)
+        is SocialItem.YouTube -> Color(0xFFFF0000)
+        is SocialItem.X -> Color(0xFF000000)
+    }
 
 @Composable
 private fun SocialIcon(
@@ -120,47 +140,48 @@ private fun SocialIcon(
     val urlOpener = remember { getUrlOpener() }
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    
+
     val scale by animateFloatAsState(
         targetValue = if (pressed) 0.92f else 1f,
-        label = "pressScale"
+        label = "pressScale",
     )
 
     val containerColor by animateColorAsState(
         targetValue = if (pressed) brandColor.copy(alpha = 0.25f) else brandColor.copy(alpha = 0.12f),
-        label = "containerColor"
+        label = "containerColor",
     )
 
     Surface(
-        modifier = modifier
-            .size(size)
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-            }
-            .clip(shape)
-            .clickable(
-                interactionSource = interaction,
-                indication = null, // Custom scale animation used instead
-                role = Role.Button
-            ) { urlOpener.openUrl(url) }
-            .semantics { contentDescription = label },
+        modifier =
+            modifier
+                .size(size)
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                }.clip(shape)
+                .clickable(
+                    interactionSource = interaction,
+                    indication = null, // Custom scale animation used instead
+                    role = Role.Button,
+                ) { urlOpener.openUrl(url) }
+                .semantics { contentDescription = label },
         shape = shape,
         color = containerColor,
-        border = BorderStroke(
-            width = 1.dp,
-            color = brandColor.copy(alpha = 0.2f)
-        )
+        border =
+            BorderStroke(
+                width = 1.dp,
+                color = brandColor.copy(alpha = 0.2f),
+            ),
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = brandColor,
-                modifier = Modifier.size(iconSize)
+                modifier = Modifier.size(iconSize),
             )
         }
     }

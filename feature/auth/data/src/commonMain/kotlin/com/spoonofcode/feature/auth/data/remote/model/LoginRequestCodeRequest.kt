@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.auth.data.remote.model
 
-import com.spoonofcode.core.data.recaptchaName
 import com.spoonofcode.core.data.getPlatform
+import com.spoonofcode.core.data.recaptchaName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -15,7 +15,7 @@ import platform.WebKit.WKWebViewConfiguration
 @Composable
 actual fun MyWebView(
     url: String,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     // UIKitView is an experimental API that lets you embed native iOS views in Compose.
     // Make sure your Compose Multiplatform version supports it.

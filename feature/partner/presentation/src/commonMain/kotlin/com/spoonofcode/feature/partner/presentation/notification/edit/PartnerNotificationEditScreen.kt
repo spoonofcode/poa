@@ -2,7 +2,6 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
@@ -33,9 +32,10 @@ import com.spoonofcode.feature.partner.presentation.title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notification),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notification),
+    )
 
 @Composable
 internal fun PartnerNotificationEditScreen(
@@ -47,7 +47,7 @@ internal fun PartnerNotificationEditScreen(
         isViewEnable = { it.isViewEnable },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
-        }
+        },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -62,12 +62,13 @@ private fun ColumnScope.Content(
     onAction: (PartnerNotificationEditViewAction) -> Unit,
 ) {
     if (viewState.selectedTopics.isNotEmpty()) {
-        val title = when (viewState.notificationType) {
-            PartnerNotificationType.user -> stringResource(Res.string.selected_customers)
-            PartnerNotificationType.serie -> stringResource(Res.string.selected_series)
-            PartnerNotificationType.partner -> stringResource(Res.string.send_notification_to_all_my_clients)
-            else -> ""
-        }
+        val title =
+            when (viewState.notificationType) {
+                PartnerNotificationType.USER -> stringResource(Res.string.selected_customers)
+                PartnerNotificationType.SERIE -> stringResource(Res.string.selected_series)
+                PartnerNotificationType.PARTNER -> stringResource(Res.string.send_notification_to_all_my_clients)
+                else -> ""
+            }
 
         StaticSelectedItemsPanel(
             title = title,
@@ -97,8 +98,8 @@ private fun ColumnScope.Content(
         onValueChange = {
             onAction(
                 PartnerNotificationEditViewAction.ChangeDeliveryDateTime(
-                    it
-                )
+                    it,
+                ),
             )
         },
         isRequired = true,
@@ -111,8 +112,8 @@ private fun ColumnScope.Content(
         onValueChange = {
             onAction(
                 PartnerNotificationEditViewAction.ChangeExpirationDateTime(
-                    it
-                )
+                    it,
+                ),
             )
         },
         isRequired = true,
@@ -127,11 +128,12 @@ private fun ColumnScope.Content(
     SpacerWeight1(this)
 
     PrimaryButton(
-        text = if (viewState.notificationId == null) {
-            stringResource(resource = Res.string.send_notification)
-        } else {
-            stringResource(resource = Res.string.save_changes)
-        },
+        text =
+            if (viewState.notificationId == null) {
+                stringResource(resource = Res.string.send_notification)
+            } else {
+                stringResource(resource = Res.string.save_changes)
+            },
         onClick = { onAction(PartnerNotificationEditViewAction.SendNotification) },
         enabled = viewState.isSendNotificationEnabled,
         isLoading = viewState.isSendNotificationButtonLoading,
@@ -141,7 +143,7 @@ private fun ColumnScope.Content(
 @Composable
 private fun Dialogs(
     viewState: PartnerNotificationEditViewState,
-    onAction: (PartnerNotificationEditViewAction) -> Unit
+    onAction: (PartnerNotificationEditViewAction) -> Unit,
 ) {
     if (viewState.isSendNotificationDialogVisible) {
         StandardAlertDialog(
@@ -150,7 +152,7 @@ private fun Dialogs(
             confirmButtonText = stringResource(Res.string.send_notification),
             dismissButtonText = stringResource(Res.string.cancel),
             confirmAction = { onAction(PartnerNotificationEditViewAction.ConfirmSendNotification) },
-            dismissAction = { onAction(PartnerNotificationEditViewAction.CancelSendNotification) }
+            dismissAction = { onAction(PartnerNotificationEditViewAction.CancelSendNotification) },
         )
     }
 }
@@ -160,17 +162,18 @@ private fun Dialogs(
 @Composable
 private fun PartnerNotificationEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            PartnerNotificationEditViewState(
-                notificationType = PartnerNotificationType.global,
-                selectedTopics = emptySet(),
-                selectedNames = emptySet(),
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                PartnerNotificationEditViewState(
+                    notificationType = PartnerNotificationType.GLOBAL,
+                    selectedTopics = emptySet(),
+                    selectedNames = emptySet(),
+                ),
+            ),
         screenConfig = screenConfig(),
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
-        }
+        },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,

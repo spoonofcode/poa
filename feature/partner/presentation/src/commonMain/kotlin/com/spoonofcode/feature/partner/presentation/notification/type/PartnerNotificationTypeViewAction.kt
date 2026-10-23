@@ -4,7 +4,10 @@ import com.spoonofcode.core.presentation.base.BaseViewAction
 
 internal sealed interface PartnerNotificationTypeViewAction : BaseViewAction {
     data object SendNotificationToAllCustomers : PartnerNotificationTypeViewAction
+
     data object SendNotificationToSelectedPartnerCustomers : PartnerNotificationTypeViewAction
+
     data object SendNotificationToSelectedPartnerProductSeries : PartnerNotificationTypeViewAction
+
     data object SendNotificationToAllPartnerCustomers : PartnerNotificationTypeViewAction
 }

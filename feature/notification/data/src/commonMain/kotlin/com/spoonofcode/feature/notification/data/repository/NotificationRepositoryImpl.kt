@@ -21,15 +21,17 @@ internal class NotificationRepositoryImpl(
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
         ownerId: String,
-    ): Result<Unit> = remoteNotificationDataSource.create(
-        title = title,
-        text = text,
-        link = link,
-        topics = topics,
-        deliveryDateTime = deliveryDateTime.toZonedInstant(),
-        expirationDateTime = expirationDateTime.toZonedInstant(),
-        ownerId = ownerId,
-    ).map { Unit }
+    ): Result<Unit> =
+        remoteNotificationDataSource
+            .create(
+                title = title,
+                text = text,
+                link = link,
+                topics = topics,
+                deliveryDateTime = deliveryDateTime.toZonedInstant(),
+                expirationDateTime = expirationDateTime.toZonedInstant(),
+                ownerId = ownerId,
+            ).map { }
 
     override suspend fun update(
         notificationId: String,
@@ -40,20 +42,21 @@ internal class NotificationRepositoryImpl(
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
         ownerId: String,
-    ): Result<Unit> = remoteNotificationDataSource.update(
-        notificationId = notificationId,
-        title = title,
-        text = text,
-        link = link,
-        topics = topics,
-        deliveryDateTime = deliveryDateTime.toZonedInstant(),
-        expirationDateTime = expirationDateTime.toZonedInstant(),
-        ownerId = ownerId,
-    ).map { Unit }
+    ): Result<Unit> =
+        remoteNotificationDataSource.update(
+            notificationId = notificationId,
+            title = title,
+            text = text,
+            link = link,
+            topics = topics,
+            deliveryDateTime = deliveryDateTime.toZonedInstant(),
+            expirationDateTime = expirationDateTime.toZonedInstant(),
+            ownerId = ownerId,
+        )
 
     override suspend fun delete(notificationId: String): Result<Unit> =
         remoteNotificationDataSource.delete(
-            notificationId = notificationId
+            notificationId = notificationId,
         )
 
     override suspend fun read(notificationId: String): Result<Notification> =
@@ -62,34 +65,39 @@ internal class NotificationRepositoryImpl(
         }
 
     override suspend fun readAll(): Result<List<Notification>> =
-        remoteNotificationDataSource.readAll()
+        remoteNotificationDataSource
+            .readAll()
             .map { response ->
                 response.map {
                     it.toNotification().copy(isRead = isRead(it.id).getOrDefault(false))
                 }
             }
 
-    override suspend fun markAsRead(notificationId: String): Result<Unit> = runCatching {
-        localNotificationDataSource.markAsRead(notificationId = notificationId)
-    }
+    override suspend fun markAsRead(notificationId: String): Result<Unit> =
+        runCatching {
+            localNotificationDataSource.markAsRead(notificationId = notificationId)
+        }
 
-    override suspend fun isRead(notificationId: String): Result<Boolean> = runCatching {
-        localNotificationDataSource.isRead(notificationId = notificationId)
-    }
+    override suspend fun isRead(notificationId: String): Result<Boolean> =
+        runCatching {
+            localNotificationDataSource.isRead(notificationId = notificationId)
+        }
 
-    override suspend fun getNotificationSettings(): Result<NotificationSettings> = runCatching {
-        localNotificationDataSource.getNotificationSettings()
-    }
+    override suspend fun getNotificationSettings(): Result<NotificationSettings> =
+        runCatching {
+            localNotificationDataSource.getNotificationSettings()
+        }
 
     override suspend fun setNotificationSettings(
         notificationsPersonalizedEnabled: Boolean,
         notificationsFromPartnersEnabled: Boolean,
-        notificationsMyProductSeriesEnabled: Boolean
-    ): Result<Unit> = runCatching {
-        localNotificationDataSource.setNotificationSettings(
-            notificationsPersonalizedEnabled = notificationsPersonalizedEnabled,
-            notificationsFromPartnersEnabled = notificationsFromPartnersEnabled,
-            notificationsMyProductSeriesEnabled = notificationsMyProductSeriesEnabled,
-        )
-    }
+        notificationsMyProductSeriesEnabled: Boolean,
+    ): Result<Unit> =
+        runCatching {
+            localNotificationDataSource.setNotificationSettings(
+                notificationsPersonalizedEnabled = notificationsPersonalizedEnabled,
+                notificationsFromPartnersEnabled = notificationsFromPartnersEnabled,
+                notificationsMyProductSeriesEnabled = notificationsMyProductSeriesEnabled,
+            )
+        }
 }

@@ -18,9 +18,8 @@ import com.spoonofcode.feature.auth.presentation.model.GoogleAccount
 
 actual class GoogleAuthUiProvider(
     private val activityContext: Context,
-    private val credentialManager: CredentialManager
+    private val credentialManager: CredentialManager,
 ) {
-
     @RequiresPermission(Manifest.permission.CREDENTIAL_MANAGER_QUERY_CANDIDATE_CREDENTIALS)
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     actual suspend fun isGoogleAccountAvailable(): Boolean {
@@ -35,44 +34,52 @@ actual class GoogleAuthUiProvider(
         }
     }
 
-    actual suspend fun signIn(): GoogleAccount? = try {
-        val credential = credentialManager.getCredential(
-            context = activityContext,
-            request = getCredentialRequest()
-        ).credential
-        handleSignIn(credential)
-    } catch (exception: Exception) {
-        throw exception
-    }
+    actual suspend fun signIn(): GoogleAccount? =
+        try {
+            val credential =
+                credentialManager
+                    .getCredential(
+                        context = activityContext,
+                        request = getCredentialRequest(),
+                    ).credential
+            handleSignIn(credential)
+        } catch (exception: Exception) {
+            throw exception
+        }
 
     actual suspend fun signOut() {
         credentialManager.clearCredentialState(ClearCredentialStateRequest())
     }
 
-    private fun handleSignIn(credential: Credential): GoogleAccount? = when {
-        credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL -> {
-            try {
-                val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-                GoogleAccount(
-                    idToken = googleIdTokenCredential.idToken,
-                    displayName = googleIdTokenCredential.displayName ?: "",
-                    profileImageUrl = googleIdTokenCredential.profilePictureUri?.toString()
-                )
-            } catch (exception: GoogleIdTokenParsingException) {
-                throw exception
+    private fun handleSignIn(credential: Credential): GoogleAccount? =
+        when {
+            credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL -> {
+                try {
+                    val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                    GoogleAccount(
+                        idToken = googleIdTokenCredential.idToken,
+                        displayName = googleIdTokenCredential.displayName ?: "",
+                        profileImageUrl = googleIdTokenCredential.profilePictureUri?.toString(),
+                    )
+                } catch (exception: GoogleIdTokenParsingException) {
+                    throw exception
+                }
             }
+
+            else -> null
         }
 
-        else -> null
-    }
+    private fun getCredentialRequest(): GetCredentialRequest =
+        GetCredentialRequest
+            .Builder()
+            .addCredentialOption(getGoogleIdOption())
+            .build()
 
-    private fun getCredentialRequest(): GetCredentialRequest = GetCredentialRequest.Builder()
-        .addCredentialOption(getGoogleIdOption())
-        .build()
-
-    private fun getGoogleIdOption(): GetGoogleIdOption = GetGoogleIdOption.Builder()
-        .setFilterByAuthorizedAccounts(false)
-        .setAutoSelectEnabled(true)
-        .setServerClientId(BuildKonfig.GOOGLE_ID_SERVER_CLIENT_ID_WEB)
-        .build()
+    private fun getGoogleIdOption(): GetGoogleIdOption =
+        GetGoogleIdOption
+            .Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setAutoSelectEnabled(true)
+            .setServerClientId(BuildKonfig.GOOGLE_ID_SERVER_CLIENT_ID_WEB)
+            .build()
 }

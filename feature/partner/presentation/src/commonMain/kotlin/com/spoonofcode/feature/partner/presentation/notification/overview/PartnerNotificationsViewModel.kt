@@ -26,9 +26,10 @@ internal class PartnerNotificationsViewModel(
 
     override fun onAction(action: PartnerNotificationsViewAction) {
         when (action) {
-            is PartnerNotificationsViewAction.SelectNotification -> selectNotification(
-                notificationId = action.notificationId
-            )
+            is PartnerNotificationsViewAction.SelectNotification ->
+                selectNotification(
+                    notificationId = action.notificationId,
+                )
         }
     }
 
@@ -57,14 +58,14 @@ internal class PartnerNotificationsViewModel(
                 .onSuccess { partnerNotifications ->
                     setContentState(
                         PartnerNotificationsViewState(
-                            partnerNotifications = partnerNotifications.filterNot { notification ->
-                                notification.state == NOTIFICATION_CANCELED_STATE
-                            },
-                        )
+                            partnerNotifications =
+                                partnerNotifications.filterNot { notification ->
+                                    notification.state == NOTIFICATION_CANCELED_STATE
+                                },
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -74,8 +75,8 @@ internal class PartnerNotificationsViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 PartnerModuleRoute.PartnerNotificationDetails(
-                    notificationId = notificationId
-                )
+                    notificationId = notificationId,
+                ),
             )
         }
     }

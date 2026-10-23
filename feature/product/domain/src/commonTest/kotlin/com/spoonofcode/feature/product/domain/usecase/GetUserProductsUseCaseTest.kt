@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetUserProductsUseCaseTest : BaseTest() {
-
     private lateinit var getUserProductsUseCase: GetUserProductsUseCase
     private lateinit var productRepository: ProductRepository
 
@@ -33,23 +32,25 @@ class GetUserProductsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with user products`() = runTest {
-        val result = getUserProductsUseCase()
+    fun `invoke returns success with user products`() =
+        runTest {
+            val result = getUserProductsUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(ProductMockData.PRODUCTS, result.getOrNull())
-        verifySuspend { productRepository.getUserProducts() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(ProductMockData.PRODUCTS, result.getOrNull())
+            verifySuspend { productRepository.getUserProducts() }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val exception = Exception("Error getting user products")
-        everySuspend { productRepository.getUserProducts() } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val exception = Exception("Error getting user products")
+            everySuspend { productRepository.getUserProducts() } returns Result.failure(exception)
 
-        val result = getUserProductsUseCase()
+            val result = getUserProductsUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { productRepository.getUserProducts() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { productRepository.getUserProducts() }
+        }
 }

@@ -50,7 +50,7 @@ fun CircleIcon(
             imageVector = imageVector,
             contentDescription = null,
             tint = iconTint,
-            modifier = Modifier.size(imageSize * 0.5f)
+            modifier = Modifier.size(imageSize * 0.5f),
         )
     }
 }
@@ -59,48 +59,51 @@ fun CircleIcon(
 fun PulsatingIcon(
     iconRes: DrawableResource,
     sizeDp: Dp = 160.dp,
-    duration: Int = 650
+    duration: Int = 650,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "pulseTransition")
 
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
         targetValue = 1.15f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = duration, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "scaleAnim"
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = duration, easing = FastOutSlowInEasing),
+                repeatMode = RepeatMode.Reverse,
+            ),
+        label = "scaleAnim",
     )
 
     val alpha by infiniteTransition.animateFloat(
         initialValue = 1f,
         targetValue = 0.6f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = duration, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "alphaAnim"
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = duration, easing = FastOutSlowInEasing),
+                repeatMode = RepeatMode.Reverse,
+            ),
+        label = "alphaAnim",
     )
 
     Surface(
-        modifier = Modifier
-            .size(sizeDp),
+        modifier =
+            Modifier
+                .size(sizeDp),
         shape = CircleShape,
     ) {
         Image(
             painter = painterResource(resource = iconRes),
             contentDescription = null,
-            modifier = Modifier
-                .size(sizeDp)
-                .background(MaterialTheme.colorScheme.onBackground)
-                .graphicsLayer {
-                    scaleX = scale
-                    scaleY = scale
-                }
-                .alpha(alpha),
+            modifier =
+                Modifier
+                    .size(sizeDp)
+                    .background(MaterialTheme.colorScheme.onBackground)
+                    .graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                    }.alpha(alpha),
             contentScale = ContentScale.Crop,
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background),
         )
     }
 }
@@ -110,7 +113,7 @@ fun IconWithBadge(
     icon: ImageVector,
     contentDescription: String? = null,
     count: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BadgedBox(
         badge = {
@@ -120,12 +123,12 @@ fun IconWithBadge(
                 }
             }
         },
-        modifier = Modifier.padding(end = 12.dp)
+        modifier = Modifier.padding(end = 12.dp),
     ) {
         IconButton(onClick = onClick) {
             Icon(
                 imageVector = icon,
-                contentDescription = contentDescription
+                contentDescription = contentDescription,
             )
         }
     }

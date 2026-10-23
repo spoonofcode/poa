@@ -20,22 +20,23 @@ import com.spoonofcode.feature.partner.domain.usecase.UpdatePartnerUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val partnerDomainModule = module {
-    factoryOf(::DeletePartnerNotificationUseCase)
-    factoryOf(::GetPartnerByIdUseCase)
-    factoryOf(::GetPartnerCategoriesUseCase)
-    factoryOf(::GetPartnersFilteredByPartnerCategoryUseCase)
-    factoryOf(::GetPartnersFilteredByTextUseCase)
-    factoryOf(::GetPartnersUseCase)
-    factoryOf(::GetNewPartnersUseCase)
-    factoryOf(::GetPartnerProductSeriesUseCase)
-    factoryOf(::GetPartnerCustomersUseCase)
-    factoryOf(::GetPartnerUseCase)
-    factoryOf(::GetPartnerNotificationsUseCase)
-    factoryOf(::GetPartnerNotificationUseCase)
-    factoryOf(::CreatePartnerNotificationUseCase)
-    factoryOf(::PartnerSendNotificationUseCase)
-    factoryOf(::GetPartnerNotificationTopicUseCase)
-    factoryOf(::UpdatePartnerUseCase)
-    factoryOf(::UpdatePartnerNotificationUseCase)
-}
+val partnerDomainModule =
+    module {
+        factoryOf(::DeletePartnerNotificationUseCase)
+        factoryOf(::GetPartnerByIdUseCase)
+        factoryOf(::GetPartnerCategoriesUseCase)
+        factoryOf(::GetPartnersFilteredByPartnerCategoryUseCase)
+        factoryOf(::GetPartnersFilteredByTextUseCase)
+        factoryOf(::GetPartnersUseCase)
+        factoryOf(::GetNewPartnersUseCase)
+        factoryOf(::GetPartnerProductSeriesUseCase)
+        factoryOf(::GetPartnerCustomersUseCase)
+        factoryOf(::GetPartnerUseCase)
+        factoryOf(::GetPartnerNotificationsUseCase)
+        factoryOf(::GetPartnerNotificationUseCase)
+        factoryOf(::CreatePartnerNotificationUseCase)
+        factoryOf(::PartnerSendNotificationUseCase)
+        factoryOf(::GetPartnerNotificationTopicUseCase)
+        factoryOf(::UpdatePartnerUseCase)
+        factoryOf(::UpdatePartnerNotificationUseCase)
+    }

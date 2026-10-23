@@ -61,9 +61,10 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.product),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.product),
+    )
 
 @Composable
 internal fun ProductDetailsScreen(
@@ -90,7 +91,7 @@ internal fun ProductDetailsScreen(
         },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
-        }
+        },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -102,14 +103,14 @@ internal fun ProductDetailsScreen(
 @Composable
 private fun ColumnScope.Content(
     viewState: ProductDetailsViewState,
-    onAction: (ProductDetailsViewAction) -> Unit
+    onAction: (ProductDetailsViewAction) -> Unit,
 ) {
     val product = requireNotNull(viewState.product)
 
     if (!product.videoLink.isNullOrEmpty()) {
         VideoAnimation(
             videoLink = product.videoLink!!,
-            imageLink = product.imageLink
+            imageLink = product.imageLink,
         )
     } else {
         product.imageLink?.let { ImageLink(imageLink = it) }
@@ -117,14 +118,14 @@ private fun ColumnScope.Content(
 
     Column(
         modifier = Modifier.padding(top = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         product.seriesName?.let { TextLLB(text = it.uppercase()) }
 
         product.name?.let {
             TextHSB(
                 text = it,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
 
@@ -132,22 +133,22 @@ private fun ColumnScope.Content(
             Surface(
                 shape = RoundedCornerShape(8.dp),
                 color = MaterialTheme.colorScheme.secondaryContainer,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp),
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     Icon(
                         Icons.Default.QrCode,
                         contentDescription = null,
                         modifier = Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     )
                     TextLSB(
                         text = "TAG: $tag",
-                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
                     )
                 }
             }
@@ -156,7 +157,7 @@ private fun ColumnScope.Content(
         product.description?.let {
             DescriptionCard(
                 title = stringResource(Res.string.about_product),
-                description = it
+                description = it,
             )
         }
 
@@ -166,7 +167,7 @@ private fun ColumnScope.Content(
                     ClickableInfoRow(
                         text = stringResource(Res.string.learn_more),
                         url = product.customLink,
-                        icon = Icons.Default.Link
+                        icon = Icons.Default.Link,
                     )
                 }
             }
@@ -178,7 +179,7 @@ private fun ColumnScope.Content(
                     ClickableInfoRow(
                         text = stringResource(Res.string.learn_more),
                         url = product.redirectLink,
-                        icon = Icons.Default.Link
+                        icon = Icons.Default.Link,
                     )
                 }
             }
@@ -198,7 +199,7 @@ private fun ColumnScope.Content(
 @Composable
 private fun Dialogs(
     viewState: ProductDetailsViewState,
-    onAction: (ProductDetailsViewAction) -> Unit
+    onAction: (ProductDetailsViewAction) -> Unit,
 ) {
     if (viewState.isDeleteProductDialogVisible) {
         StandardAlertDialog(
@@ -207,7 +208,7 @@ private fun Dialogs(
             confirmButtonText = stringResource(Res.string.delete_product),
             dismissButtonText = stringResource(Res.string.cancel),
             confirmAction = { onAction(ProductDetailsViewAction.ConfirmDeleteProductFromProfile) },
-            dismissAction = { onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile) }
+            dismissAction = { onAction(ProductDetailsViewAction.CancelDeleteProductFromProfile) },
         )
     }
 }
@@ -227,7 +228,7 @@ private fun ProductBottomButton(
                 text = stringResource(Res.string.add_product),
                 onClick = addProductToProfile,
                 isLoading = isAddProductToProfileButtonLoading,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
 
@@ -236,23 +237,24 @@ private fun ProductBottomButton(
                 text = stringResource(Res.string.delete_product),
                 onClick = deleteProductFromProfile,
                 isLoading = isDeleteProductFromProfileButtonLoading,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error
-                ),
-                modifier = Modifier.padding(top = 8.dp)
+                colors =
+                    ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
 
         ProductStatus.OWNED_BY_OTHER -> {
             TextBMB(
                 text = stringResource(Res.string.product_already_assigned),
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
             )
             PrimaryButton(
                 text = stringResource(Res.string.send_message),
                 enabled = false,
                 onClick = onSendMessageClick,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
 
@@ -264,24 +266,25 @@ private fun ProductBottomButton(
 private fun ClickableInfoRow(
     text: String,
     url: String?,
-    icon: ImageVector
+    icon: ImageVector,
 ) {
     if (url.isNullOrBlank()) return
     val urlOpener = remember { getUrlOpener() }
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { urlOpener.openUrl(url) }
-            .padding(16.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable { urlOpener.openUrl(url) }
+                .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp),
         )
 
         Column(modifier = Modifier.weight(1f)) {
@@ -300,7 +303,7 @@ private fun ClickableInfoRow(
             imageVector = Icons.AutoMirrored.Filled.OpenInNew,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.outline,
-            modifier = Modifier.size(18.dp)
+            modifier = Modifier.size(18.dp),
         )
     }
 }
@@ -310,24 +313,26 @@ private fun ClickableInfoRow(
 @Composable
 private fun ProductDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            ProductDetailsViewState(
-                product = Product(
-                    id = "1",
-                    productType = ProductType.ITEM,
-                    ownerEmail = "user1@example.com",
-                    partnerId = "1",
-                    name = "Product #1",
-                    description = "Przykładowy opis wydarzenia nr 1",
-                    seriesId = "1",
-                    seriesName = "Series 1",
-                    createdAt = LocalDateTime(2023, 1, 1, 1, 1),
-                    imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
-                    customLink = "https://beautysaute.pl/",
+        viewState =
+            ViewState.Content(
+                ProductDetailsViewState(
+                    product =
+                        Product(
+                            id = "1",
+                            productType = ProductType.ITEM,
+                            ownerEmail = "user1@example.com",
+                            partnerId = "1",
+                            name = "Product #1",
+                            description = "Przykładowy opis wydarzenia nr 1",
+                            seriesId = "1",
+                            seriesName = "Series 1",
+                            createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                            imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
+                            customLink = "https://beautysaute.pl/",
+                        ),
+                    productStatus = ProductStatus.OWNED_BY_SELF,
                 ),
-                productStatus = ProductStatus.OWNED_BY_SELF,
-            )
-        ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

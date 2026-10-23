@@ -38,26 +38,27 @@ fun CheckboxTextLinkRow(
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold,
                     textDecoration = TextDecoration.Underline,
-                )
+                ),
             ) { append(linkText) }
             pop()
         }
 
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                enabled = enabled,
-                role = Role.Checkbox,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
-            ) { onCheckedChange(!checked) },
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(
+                    enabled = enabled,
+                    role = Role.Checkbox,
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { onCheckedChange(!checked) },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
             checked = checked,
             onCheckedChange = { onCheckedChange(it) },
-            enabled = enabled
+            enabled = enabled,
         )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -66,7 +67,7 @@ fun CheckboxTextLinkRow(
                 Text(
                     text = " *",
                     color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -78,8 +79,9 @@ fun CheckboxTextLinkRow(
         Text(
             text = annotated,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier
-                .clickable(onClick = { urlOpener.openUrl(linkUrl) })
+            modifier =
+                Modifier
+                    .clickable(onClick = { urlOpener.openUrl(linkUrl) }),
         )
     }
 }

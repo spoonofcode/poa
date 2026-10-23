@@ -37,13 +37,15 @@ internal class PartnerNotificationEditViewModel(
 
     override fun onAction(action: PartnerNotificationEditViewAction) {
         when (action) {
-            is PartnerNotificationEditViewAction.ChangeDeliveryDateTime -> changeDeliveryDateTime(
-                action.selectedDateTime
-            )
+            is PartnerNotificationEditViewAction.ChangeDeliveryDateTime ->
+                changeDeliveryDateTime(
+                    action.selectedDateTime,
+                )
 
-            is PartnerNotificationEditViewAction.ChangeExpirationDateTime -> changeExpirationDateTime(
-                action.selectedDateTime
-            )
+            is PartnerNotificationEditViewAction.ChangeExpirationDateTime ->
+                changeExpirationDateTime(
+                    action.selectedDateTime,
+                )
 
             is PartnerNotificationEditViewAction.ChangeLink -> changeLink(action.link)
             is PartnerNotificationEditViewAction.ChangeText -> changeText(action.text)
@@ -57,7 +59,7 @@ internal class PartnerNotificationEditViewModel(
     private fun initView(
         notificationId: String? = null,
         selectedTopics: Set<String>,
-        selectedNames: Set<String>
+        selectedNames: Set<String>,
     ) {
         showLoadingView()
         if (notificationId != null) {
@@ -74,12 +76,11 @@ internal class PartnerNotificationEditViewModel(
                                 text = notification.text,
                                 link = notification.link ?: "",
                                 deliveryDateTime = notification.deliveryDateTime,
-                                expirationDateTime = notification.expirationDateTime
-                            )
+                                expirationDateTime = notification.expirationDateTime,
+                            ),
                         )
                         showContentView()
-                    }
-                    .onFailure {
+                    }.onFailure {
                         showErrorView()
                     }
             }
@@ -89,16 +90,16 @@ internal class PartnerNotificationEditViewModel(
                     notificationType = getNotificationType(selectedTopics),
                     selectedTopics = selectedTopics,
                     selectedNames = selectedNames,
-                )
+                ),
             )
             showContentView()
         }
     }
 
     private fun getNotificationType(selectedTopics: Set<String>): PartnerNotificationType {
-        val firstTopic = selectedTopics.firstOrNull() ?: return PartnerNotificationType.global
+        val firstTopic = selectedTopics.firstOrNull() ?: return PartnerNotificationType.GLOBAL
         val typePrefix = firstTopic.substringBefore("_")
-        return PartnerNotificationType.fromString(typePrefix) ?: PartnerNotificationType.global
+        return PartnerNotificationType.fromString(typePrefix) ?: PartnerNotificationType.GLOBAL
     }
 
     private fun changeTitle(title: String) {
@@ -146,7 +147,7 @@ internal class PartnerNotificationEditViewModel(
                     link = currentState.link,
                     topics = currentState.selectedTopics.toList(),
                     deliveryDateTime = currentState.deliveryDateTime,
-                    expirationDateTime = currentState.expirationDateTime
+                    expirationDateTime = currentState.expirationDateTime,
                 ).onSuccess {
                     partnerNotificationEventBus.emitDetails(PartnerNotificationEvent.PartnerNotificationUpdated)
                     viewModelNavigator.pop()
@@ -161,7 +162,7 @@ internal class PartnerNotificationEditViewModel(
                     link = currentState.link,
                     topics = currentState.selectedTopics.toList(),
                     deliveryDateTime = currentState.deliveryDateTime,
-                    expirationDateTime = currentState.expirationDateTime
+                    expirationDateTime = currentState.expirationDateTime,
                 ).onSuccess {
                     partnerNotificationEventBus.emitOverview(PartnerNotificationEvent.PartnerNotificationAdded)
                     viewModelNavigator.replaceAll(
@@ -169,7 +170,7 @@ internal class PartnerNotificationEditViewModel(
                             ProfileModuleRoute.ProfileDetails,
                             PartnerModuleRoute.PartnerPanel,
                             PartnerModuleRoute.PartnerNotifications,
-                        )
+                        ),
                     )
                 }.onFailure { error ->
                     updateContentState { copy(isSendNotificationButtonLoading = false) }

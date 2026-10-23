@@ -7,6 +7,6 @@ class GetNotificationByIdUseCase(
     private val notificationRepository: NotificationRepository,
 ) {
     suspend operator fun invoke(
-        notificationId: String
+        notificationId: String,
     ): Result<Notification> = notificationRepository.read(notificationId = notificationId)
 }

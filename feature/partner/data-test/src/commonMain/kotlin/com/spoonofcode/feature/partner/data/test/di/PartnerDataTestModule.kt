@@ -4,11 +4,12 @@ import com.spoonofcode.feature.partner.data.test.partnerNotificationRepositoryMo
 import com.spoonofcode.feature.partner.data.test.partnerRepositoryMock
 import org.koin.dsl.module
 
-val partnerDataTestModule = module {
-    includes(
-        module {
-            single { partnerRepositoryMock() }
-            single { partnerNotificationRepositoryMock() }
-        },
-    )
-}
+val partnerDataTestModule =
+    module {
+        includes(
+            module {
+                single { partnerRepositoryMock() }
+                single { partnerNotificationRepositoryMock() }
+            },
+        )
+    }

@@ -34,10 +34,10 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.StandardAlertDialog
-import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.CircleImage
+import com.spoonofcode.core.presentation.compose.ElevatedCard
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TextBLB
 import com.spoonofcode.core.presentation.compose.TextHSB
 import com.spoonofcode.core.presentation.theme.metalGold
@@ -56,10 +56,11 @@ import com.spoonofcode.feature.profile.presentation.terms_and_conditions
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.profile),
-    backNavigationEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.profile),
+        backNavigationEnable = false,
+    )
 
 @Composable
 internal fun ProfileDetailsScreen(
@@ -70,7 +71,7 @@ internal fun ProfileDetailsScreen(
         screenConfig = screenConfig(),
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
-        }
+        },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -91,14 +92,14 @@ private fun ColumnScope.Content(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         CircleImage(
             imageRes = Res.drawable.taggy_go_logo,
-            backgroundColor = if (viewState.partnerPanelVisible) {
-                metalGold
-            } else {
-                MaterialTheme.colorScheme.surfaceVariant
-            }
+            backgroundColor =
+                if (viewState.partnerPanelVisible) {
+                    metalGold
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant
+                },
         )
 
         SpacerVerticalBetweenFields()
@@ -106,7 +107,7 @@ private fun ColumnScope.Content(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             TextHSB(
                 text = profile.email,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             SpacerVerticalBetweenFields()
 
@@ -136,7 +137,7 @@ private fun ColumnScope.Content(
             ChevronItem(
                 icon = Icons.Default.Person,
                 title = stringResource(Res.string.partner_panel),
-                onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) }
+                onClick = { onAction(ProfileDetailsViewAction.NavigateToPartnerPanel) },
             )
         }
     }
@@ -145,19 +146,19 @@ private fun ColumnScope.Content(
         ChevronItem(
             icon = Icons.Default.Notifications,
             title = stringResource(Res.string.notifications),
-            onClick = { onAction(ProfileDetailsViewAction.NavigateToNotificationSettings) }
+            onClick = { onAction(ProfileDetailsViewAction.NavigateToNotificationSettings) },
         )
         DividerItem()
         ChevronItem(
             icon = Icons.Default.Description,
             title = stringResource(Res.string.terms_and_conditions),
-            onClick = { onAction(ProfileDetailsViewAction.NavigateToTAC) }
+            onClick = { onAction(ProfileDetailsViewAction.NavigateToTAC) },
         )
         DividerItem()
         ChevronItem(
             icon = Icons.AutoMirrored.Filled.Help,
             title = stringResource(Res.string.faq),
-            onClick = { onAction(ProfileDetailsViewAction.NavigateToFAQ) }
+            onClick = { onAction(ProfileDetailsViewAction.NavigateToFAQ) },
         )
     }
 
@@ -167,7 +168,7 @@ private fun ColumnScope.Content(
             title = stringResource(Res.string.logout),
             titleColor = MaterialTheme.colorScheme.error,
             iconTint = MaterialTheme.colorScheme.error,
-            onClick = { onAction(ProfileDetailsViewAction.Logout) }
+            onClick = { onAction(ProfileDetailsViewAction.Logout) },
         )
     }
 
@@ -177,7 +178,7 @@ private fun ColumnScope.Content(
 @Composable
 private fun Dialogs(
     viewState: ProfileDetailsViewState,
-    onAction: (ProfileDetailsViewAction) -> Unit
+    onAction: (ProfileDetailsViewAction) -> Unit,
 ) {
     if (viewState.isLogoutDialogVisible) {
         StandardAlertDialog(
@@ -186,7 +187,7 @@ private fun Dialogs(
             confirmButtonText = stringResource(Res.string.logout),
             dismissButtonText = stringResource(Res.string.cancel),
             confirmAction = { onAction(ProfileDetailsViewAction.ConfirmLogout) },
-            dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) }
+            dismissAction = { onAction(ProfileDetailsViewAction.CancelLogout) },
         )
     }
 }
@@ -197,35 +198,37 @@ private fun ChevronItem(
     title: String,
     titleColor: Color = MaterialTheme.colorScheme.onSurface,
     iconTint: Color = MaterialTheme.colorScheme.onSurface,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 64.dp)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .heightIn(min = 64.dp)
+                .clickable(onClick = onClick)
+                .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Surface(
             modifier = Modifier.size(36.dp),
             shape = RoundedCornerShape(10.dp),
-            color = iconTint.copy(alpha = 0.15f)
+            color = iconTint.copy(alpha = 0.15f),
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
                     tint = iconTint,
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(20.dp),
                 )
             }
         }
 
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 16.dp, end = 8.dp)
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp, end = 8.dp),
         ) {
             TextBLB(
                 text = title,
@@ -237,7 +240,7 @@ private fun ChevronItem(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.outline,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(20.dp),
         )
     }
 }
@@ -247,7 +250,7 @@ private fun DividerItem() {
     HorizontalDivider(
         modifier = Modifier.padding(horizontal = 16.dp),
         thickness = 0.5.dp,
-        color = MaterialTheme.colorScheme.outlineVariant
+        color = MaterialTheme.colorScheme.outlineVariant,
     )
 }
 
@@ -256,16 +259,18 @@ private fun DividerItem() {
 @Composable
 private fun ProfileDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            ProfileDetailsViewState(
-                profile = Profile(
-                    id = "1",
-                    email = "exmaple.mail.1@gmail.com",
-                    roles = listOf("user", "partner"),
+        viewState =
+            ViewState.Content(
+                ProfileDetailsViewState(
+                    profile =
+                        Profile(
+                            id = "1",
+                            email = "exmaple.mail.1@gmail.com",
+                            roles = listOf("user", "partner"),
+                        ),
+                    partnerPanelVisible = true,
                 ),
-                partnerPanelVisible = true,
-            )
-        ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

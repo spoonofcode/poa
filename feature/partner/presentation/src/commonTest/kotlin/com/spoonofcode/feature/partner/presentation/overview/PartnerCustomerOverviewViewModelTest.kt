@@ -24,7 +24,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: PartnerCustomerOverviewViewModel
     private lateinit var partnerRepository: PartnerRepository
 
@@ -42,63 +41,68 @@ class PartnerCustomerOverviewViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(CUSTOMERS, customers)
-                assertTrue(checkedUserIds.isEmpty())
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(CUSTOMERS, customers)
+                    assertTrue(checkedUserIds.isEmpty())
+                }
             }
         }
-    }
 
     @Test
-    fun `initial view - error`() = runTest {
-        everySuspend { partnerRepository.getPartnerCustomers() } returns Result.failure(
-            Exception("Test error"),
-        )
-
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitErrorState()
-        }
-    }
-
-    @Test
-    fun `checked customer`() = runTest {
-        runVmTest(viewModel) {
-            onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(id = CUSTOMER_1.id))
-
-            with(viewState.awaitContentState()) {
-                assertEquals(setOf(CUSTOMER_1.id), checkedUserIds)
-            }
-
-            onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(id = CUSTOMER_1.id))
-
-            with(viewState.awaitContentState()) {
-                assertTrue(checkedUserIds.isEmpty())
-            }
-        }
-    }
-
-    @Test
-    fun `navigates to notification screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(id = CUSTOMER_1.id))
-            with(viewState.awaitContentState()) {
-                assertEquals(setOf(CUSTOMER_1.id), checkedUserIds)
-            }
-
-            onAction(PartnerCustomerOverviewViewAction.NavigateToNotification)
-
-            verifySuspend {
-                viewModelNavigator.push(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = setOf(PartnerNotificationType.user.createTopic(CUSTOMER_1.id)),
-                        selectedNames = setOf(CUSTOMER_1.name),
-                    ),
+    fun `initial view - error`() =
+        runTest {
+            everySuspend { partnerRepository.getPartnerCustomers() } returns
+                Result.failure(
+                    Exception("Test error"),
                 )
+
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitErrorState()
             }
         }
-    }
+
+    @Test
+    fun `checked customer`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(id = CUSTOMER_1.id))
+
+                with(viewState.awaitContentState()) {
+                    assertEquals(setOf(CUSTOMER_1.id), checkedUserIds)
+                }
+
+                onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(id = CUSTOMER_1.id))
+
+                with(viewState.awaitContentState()) {
+                    assertTrue(checkedUserIds.isEmpty())
+                }
+            }
+        }
+
+    @Test
+    fun `navigates to notification screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(PartnerCustomerOverviewViewAction.CheckedCustomer(id = CUSTOMER_1.id))
+                with(viewState.awaitContentState()) {
+                    assertEquals(setOf(CUSTOMER_1.id), checkedUserIds)
+                }
+
+                onAction(PartnerCustomerOverviewViewAction.NavigateToNotification)
+
+                verifySuspend {
+                    viewModelNavigator.push(
+                        PartnerModuleRoute.PartnerNotificationEdit(
+                            selectedTopics = setOf(PartnerNotificationType.USER.createTopic(CUSTOMER_1.id)),
+                            selectedNames = setOf(CUSTOMER_1.name),
+                        ),
+                    )
+                }
+            }
+        }
 }

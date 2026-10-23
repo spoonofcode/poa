@@ -1,8 +1,7 @@
 package com.spoonofcode.core.data.ext
 
 import com.spoonofcode.core.logging.KermitLogger
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -42,6 +41,7 @@ private const val DEBOUNCE_DELAY_MS = 500L
  * while forwarding successful completions or routine cancellations to the [onCompletion] hook.
  * 4. Configures sharing using [SharingStarted.WhileSubscribed] to efficiently survive configuration changes.
  *
+ * @param scope The [CoroutineScope] in which sharing is started.
  * @param initialValue The initial state of the flow.
  * @param stopTimeoutMillis The timeout in milliseconds before the upstream flow is stopped
  * after the last collector disappears. This delay is crucial for handling configuration changes
@@ -52,50 +52,48 @@ private const val DEBOUNCE_DELAY_MS = 500L
  * routinely. This action is bypassed if the flow terminates due to an unexpected error. Defaults to an empty action.
  * @param onStateChanged A suspend lambda triggered on every new state emission to handle or process the update.
  */
-context(viewModel: ViewModel)
 fun <T> Flow<T>.stateInWhileSubscribed(
+    scope: CoroutineScope,
     initialValue: T,
     stopTimeoutMillis: Long = DEFAULT_STOP_TIMEOUT_MILLIS,
     onStart: suspend () -> Unit = {},
     onStateChanged: suspend (T) -> Unit = {},
-    onCompletion: suspend (cause: Throwable?) -> Unit = {}, // Twoja własna akcja
-): StateFlow<T> = this
-    .onStart { onStart() }
-    .onEach { state ->
-        KermitLogger.debug("New flow state: $state")
-        onStateChanged(state)
-    }
-    .onCompletion { cause ->
-        if (cause != null && cause !is CancellationException) {
-            KermitLogger.error(
-                "Flow completed with an unexpected error: ${cause.message}",
-                cause
-            )
-        } else {
-            onCompletion(cause)
-        }
-    }
-    .stateIn(
-        scope = viewModel.viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
-        initialValue = initialValue
-    )
+    onCompletion: suspend (cause: Throwable?) -> Unit = {},
+): StateFlow<T> =
+    this
+        .onStart { onStart() }
+        .onEach { state ->
+            KermitLogger.debug("New flow state: $state")
+            onStateChanged(state)
+        }.onCompletion { cause ->
+            if (cause != null && cause !is CancellationException) {
+                KermitLogger.error(
+                    "Flow completed with an unexpected error: ${cause.message}",
+                    cause,
+                )
+            } else {
+                onCompletion(cause)
+            }
+        }.stateIn(
+            scope = scope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+            initialValue = initialValue,
+        )
 
-
-context(viewModel: ViewModel)
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 fun <VS : Any, P, R> Flow<VS>.observeSearch(
+    scope: CoroutineScope,
     debounceDelayMs: Long = DEBOUNCE_DELAY_MS,
     extractQuery: (VS) -> String,
     extractFilters: (VS) -> P,
     onLoading: () -> Unit,
     executeSearch: suspend (query: String, params: P) -> R,
-    onResult: (R) -> Unit
+    onResult: (R) -> Unit,
 ): Job {
     var isFirstEmission = true
     var lastQuery = ""
 
-    return viewModel.viewModelScope.launch {
+    return scope.launch {
         this@observeSearch
             .map { state -> extractQuery(state) to extractFilters(state) }
             .distinctUntilChanged()
@@ -112,15 +110,13 @@ fun <VS : Any, P, R> Flow<VS>.observeSearch(
                     queryChanged -> debounceDelayMs.milliseconds
                     else -> 0L.milliseconds
                 }
-            }
-            .flatMapLatest { (query, params) ->
+            }.flatMapLatest { (query, params) ->
                 flow {
                     emit(executeSearch(query, params))
                 }.onStart {
                     onLoading()
                 }
-            }
-            .collect { result ->
+            }.collect { result ->
                 onResult(result)
             }
     }

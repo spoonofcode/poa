@@ -6,8 +6,8 @@ class GetPartnersFilteredByTextUseCase {
     operator fun invoke(
         searchText: String,
         partners: List<Partner>,
-    ): List<Partner> = partners.filter { partner ->
-        partner.name.contains(searchText, ignoreCase = true)
-    }
+    ): List<Partner> =
+        partners.filter { partner ->
+            partner.name.contains(searchText, ignoreCase = true)
+        }
 }
-

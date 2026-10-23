@@ -25,9 +25,10 @@ import com.spoonofcode.feature.partner.presentation.youtube
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.partner),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.partner),
+    )
 
 @Composable
 internal fun PartnerEditScreen(
@@ -107,15 +108,17 @@ private fun ColumnScope.Content(
 @Composable
 private fun PartnerEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            PartnerEditViewState(
-                partner = Partner(
-                    id = "id",
-                    name = "name",
-                    partnerCategory = "partner category",
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                PartnerEditViewState(
+                    partner =
+                        Partner(
+                            id = "id",
+                            name = "name",
+                            partnerCategory = "partner category",
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

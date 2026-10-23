@@ -8,7 +8,7 @@ suspend fun <VS : BaseViewState> ReceiveTurbine<ViewState<VS>>.awaitInitialState
     val state = awaitItem()
     if (state !is ViewState.Initial) {
         throw AssertionError(
-            "Expected NewViewState.Initial, but received: ${state::class.simpleName}"
+            "Expected NewViewState.Initial, but received: ${state::class.simpleName}",
         )
     }
 }
@@ -17,7 +17,7 @@ suspend fun <VS : BaseViewState> ReceiveTurbine<ViewState<VS>>.awaitLoadingState
     val state = awaitItem()
     if (state !is ViewState.Loading) {
         throw AssertionError(
-            "Expected NewViewState.Loading, but received: ${state::class.simpleName}"
+            "Expected NewViewState.Loading, but received: ${state::class.simpleName}",
         )
     }
 }
@@ -26,7 +26,7 @@ suspend fun <VS : BaseViewState> ReceiveTurbine<ViewState<VS>>.awaitErrorState()
     val state = awaitItem()
     if (state !is ViewState.Error) {
         throw AssertionError(
-            "Expected NewViewState.Error, but received: ${state::class.simpleName}"
+            "Expected NewViewState.Error, but received: ${state::class.simpleName}",
         )
     }
 }
@@ -38,7 +38,7 @@ suspend inline fun <reified VS : BaseViewState> ReceiveTurbine<ViewState<VS>>.aw
     } else {
         throw AssertionError(
             "Expected NewViewState.Content with data type ${VS::class.simpleName}, " +
-                    "but received: ${state::class.simpleName}"
+                "but received: ${state::class.simpleName}",
         )
     }
 }

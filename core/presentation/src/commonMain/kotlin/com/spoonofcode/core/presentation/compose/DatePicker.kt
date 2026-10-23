@@ -48,7 +48,7 @@ fun StandardDatePicker(
     val isOpen = remember { mutableStateOf(false) }
 
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         OutlinedTextFieldStandard(
             value = date.value.formatedLocalDate(),
@@ -58,18 +58,19 @@ fun StandardDatePicker(
             isRequired = isRequired,
             trailingIcon = {
                 IconButton(
-                    onClick = {}
+                    onClick = {},
                 ) {
                     Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar")
                 }
-            }
+            },
         )
 
         // Transparent overlay to capture clicks
         Box(
-            modifier = Modifier
-                .matchParentSize()
-                .clickable(onClick = { isOpen.value = true })
+            modifier =
+                Modifier
+                    .matchParentSize()
+                    .clickable(onClick = { isOpen.value = true }),
         )
     }
 
@@ -79,9 +80,10 @@ fun StandardDatePicker(
                 isOpen.value = false
 
                 if (it != null) {
-                    date.value = Instant
-                        .fromEpochMilliseconds(it)
-                        .toZonedLocalDate()
+                    date.value =
+                        Instant
+                            .fromEpochMilliseconds(it)
+                            .toZonedLocalDate()
                 }
                 onValueChange(date.value)
             },
@@ -110,8 +112,8 @@ fun StandardDatePickerWithTimer(
                 onValueChange(
                     LocalDateTime(
                         date = it,
-                        time = value.time
-                    )
+                        time = value.time,
+                    ),
                 )
             },
             label = label,
@@ -140,21 +142,20 @@ private fun StandardDatePickerDialog(
     onAccept: (Long?) -> Unit,
     onCancel: () -> Unit,
     selectedDate: Long,
-    minDateUtcMillis: Long? = null
+    minDateUtcMillis: Long? = null,
 ) {
-
-    val state = rememberDatePickerState(
-        initialSelectedDateMillis = selectedDate,
-        selectableDates = if (minDateUtcMillis == null) {
-            DatePickerDefaults.AllDates
-        } else {
-            object : SelectableDates {
-                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                    return utcTimeMillis >= minDateUtcMillis
-                }
-            }
-        }
-    )
+    val state =
+        rememberDatePickerState(
+            initialSelectedDateMillis = selectedDate,
+            selectableDates =
+                if (minDateUtcMillis == null) {
+                    DatePickerDefaults.AllDates
+                } else {
+                    object : SelectableDates {
+                        override fun isSelectableDate(utcTimeMillis: Long): Boolean = utcTimeMillis >= minDateUtcMillis
+                    }
+                },
+        )
 
     DatePickerDialog(
         onDismissRequest = { },
@@ -167,7 +168,7 @@ private fun StandardDatePickerDialog(
             Button(onClick = onCancel) {
                 Text(stringResource(resource = Res.string.cancel))
             }
-        }
+        },
     ) {
         DatePicker(state = state)
     }

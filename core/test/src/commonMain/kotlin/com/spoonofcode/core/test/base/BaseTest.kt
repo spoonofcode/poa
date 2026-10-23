@@ -19,7 +19,6 @@ import org.koin.test.get
 
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class BaseTest : KoinTest {
-
     protected var modules: Array<Module> = emptyArray()
     protected val testDispatcher: TestDispatcher by lazy { StandardTestDispatcher() }
 
@@ -32,7 +31,7 @@ abstract class BaseTest : KoinTest {
                 module {
                     single<DispatcherProvider> { StandardTestDispatcherProvider(testDispatcher) }
                     single { sessionRepositoryMock() }
-                }
+                },
             )
         }
         Dispatchers.setMain(testDispatcher)

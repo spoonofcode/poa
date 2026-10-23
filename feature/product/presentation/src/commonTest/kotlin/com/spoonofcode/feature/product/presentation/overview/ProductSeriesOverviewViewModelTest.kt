@@ -27,7 +27,6 @@ import kotlin.test.assertTrue
 import com.spoonofcode.core.presentation.Res as CoreRes
 
 class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: ProductSeriesOverviewViewModel
     private lateinit var partnerRepository: PartnerRepository
 
@@ -45,85 +44,91 @@ class ProductSeriesOverviewViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(PRODUCT_SERIES_LIST, productSeries)
-                assertTrue(checkedProductSeriesNames.isEmpty())
-            }
-        }
-    }
-
-    @Test
-    fun `initial view - error`() = runTest {
-        everySuspend { partnerRepository.getPartnerSeries() } returns Result.failure(
-            Exception("Test error")
-        )
-
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitErrorState()
-        }
-    }
-
-    @Test
-    fun `checked product series`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = PRODUCT_SERIES_1.name))
-
-            with(viewState.awaitContentState()) {
-                assertEquals(setOf(PRODUCT_SERIES_1.name), checkedProductSeriesNames)
-            }
-
-            onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = PRODUCT_SERIES_1.name))
-
-            with(viewState.awaitContentState()) {
-                assertTrue(checkedProductSeriesNames.isEmpty())
-            }
-        }
-    }
-
-    @Test
-    fun `checked product series max limit`() = runTest {
-        val seriesNames = listOf("Series 1", "Series 2", "Series 3", "Series 4", "Series 5", "Series 6")
-        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
-
-        runVmTest(viewModel) {
-            seriesNames.take(5).forEach { name ->
-                onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = name))
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
                 with(viewState.awaitContentState()) {
-                    assertTrue(checkedProductSeriesNames.contains(name))
+                    assertEquals(PRODUCT_SERIES_LIST, productSeries)
+                    assertTrue(checkedProductSeriesNames.isEmpty())
                 }
             }
-
-            onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = seriesNames[5]))
-
-            assertEquals(
-                expected = expectedErrorMessage,
-                actual = snackbarEvent.awaitItem().message
-            )
         }
-    }
 
     @Test
-    fun `navigates to notification screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = PRODUCT_SERIES_1.name))
-            with(viewState.awaitContentState()) {
-                assertEquals(setOf(PRODUCT_SERIES_1.name), checkedProductSeriesNames)
+    fun `initial view - error`() =
+        runTest {
+            everySuspend { partnerRepository.getPartnerSeries() } returns
+                Result.failure(
+                    Exception("Test error"),
+                )
+
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitErrorState()
             }
+        }
 
-            onAction(ProductSeriesOverViewViewAction.NavigateToNotification)
+    @Test
+    fun `checked product series`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = PRODUCT_SERIES_1.name))
 
-            verifySuspend {
-                viewModelNavigator.push(
-                    PartnerModuleRoute.PartnerNotificationEdit(
-                        selectedTopics = setOf(PartnerNotificationType.serie.createTopic(PRODUCT_SERIES_1.name)),
-                        selectedNames = setOf(PRODUCT_SERIES_1.name),
-                    )
+                with(viewState.awaitContentState()) {
+                    assertEquals(setOf(PRODUCT_SERIES_1.name), checkedProductSeriesNames)
+                }
+
+                onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = PRODUCT_SERIES_1.name))
+
+                with(viewState.awaitContentState()) {
+                    assertTrue(checkedProductSeriesNames.isEmpty())
+                }
+            }
+        }
+
+    @Test
+    fun `checked product series max limit`() =
+        runTest {
+            val seriesNames = listOf("Series 1", "Series 2", "Series 3", "Series 4", "Series 5", "Series 6")
+            val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+
+            runVmTest(viewModel) {
+                seriesNames.take(5).forEach { name ->
+                    onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = name))
+                    with(viewState.awaitContentState()) {
+                        assertTrue(checkedProductSeriesNames.contains(name))
+                    }
+                }
+
+                onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = seriesNames[5]))
+
+                assertEquals(
+                    expected = expectedErrorMessage,
+                    actual = snackbarEvent.awaitItem().message,
                 )
             }
         }
-    }
+
+    @Test
+    fun `navigates to notification screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProductSeriesOverViewViewAction.CheckedProductSeries(name = PRODUCT_SERIES_1.name))
+                with(viewState.awaitContentState()) {
+                    assertEquals(setOf(PRODUCT_SERIES_1.name), checkedProductSeriesNames)
+                }
+
+                onAction(ProductSeriesOverViewViewAction.NavigateToNotification)
+
+                verifySuspend {
+                    viewModelNavigator.push(
+                        PartnerModuleRoute.PartnerNotificationEdit(
+                            selectedTopics = setOf(PartnerNotificationType.SERIE.createTopic(PRODUCT_SERIES_1.name)),
+                            selectedNames = setOf(PRODUCT_SERIES_1.name),
+                        ),
+                    )
+                }
+            }
+        }
 }

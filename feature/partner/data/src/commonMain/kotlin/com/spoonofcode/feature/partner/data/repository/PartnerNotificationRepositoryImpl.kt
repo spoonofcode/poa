@@ -10,17 +10,14 @@ import kotlinx.datetime.LocalDateTime
 internal class PartnerNotificationRepositoryImpl(
     private val remoteDataSource: RemotePartnerNotificationDataSource,
 ) : PartnerNotificationRepository {
-
     override suspend fun getNotifications(): Result<List<PartnerNotification>> =
         remoteDataSource.readAll().map { response ->
             response.map { it.toPartnerNotification() }
         }
 
-    override suspend fun getNotification(notificationId: String): Result<PartnerNotification> =
-        remoteDataSource.read(notificationId).map { it.toPartnerNotification() }
+    override suspend fun getNotification(notificationId: String): Result<PartnerNotification> = remoteDataSource.read(notificationId).map { it.toPartnerNotification() }
 
-    override suspend fun deleteNotification(notificationId: String): Result<Unit> =
-        remoteDataSource.delete(notificationId)
+    override suspend fun deleteNotification(notificationId: String): Result<Unit> = remoteDataSource.delete(notificationId)
 
     override suspend fun createNotification(
         title: String,
@@ -29,16 +26,17 @@ internal class PartnerNotificationRepositoryImpl(
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-        ownerId: String
-    ): Result<Unit> = remoteDataSource.create(
-        title = title,
-        text = text,
-        link = link,
-        topics = topics,
-        deliveryDateTime = deliveryDateTime.toZonedInstant(),
-        expirationDateTime = expirationDateTime.toZonedInstant(),
-        ownerId = ownerId,
-    )
+        ownerId: String,
+    ): Result<Unit> =
+        remoteDataSource.create(
+            title = title,
+            text = text,
+            link = link,
+            topics = topics,
+            deliveryDateTime = deliveryDateTime.toZonedInstant(),
+            expirationDateTime = expirationDateTime.toZonedInstant(),
+            ownerId = ownerId,
+        )
 
     override suspend fun updateNotification(
         notificationId: String,
@@ -48,15 +46,16 @@ internal class PartnerNotificationRepositoryImpl(
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-        ownerId: String
-    ): Result<Unit> = remoteDataSource.update(
-        notificationId = notificationId,
-        title = title,
-        text = text,
-        link = link,
-        topics = topics,
-        deliveryDateTime = deliveryDateTime.toZonedInstant(),
-        expirationDateTime = expirationDateTime.toZonedInstant(),
-        ownerId = ownerId,
-    )
+        ownerId: String,
+    ): Result<Unit> =
+        remoteDataSource.update(
+            notificationId = notificationId,
+            title = title,
+            text = text,
+            link = link,
+            topics = topics,
+            deliveryDateTime = deliveryDateTime.toZonedInstant(),
+            expirationDateTime = expirationDateTime.toZonedInstant(),
+            ownerId = ownerId,
+        )
 }

@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetPartnerCategoriesUseCaseTest : BaseTest() {
-
     private lateinit var getPartnerCategoriesUseCase: GetPartnerCategoriesUseCase
     private lateinit var partnerRepository: PartnerRepository
 
@@ -33,26 +32,28 @@ class GetPartnerCategoriesUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns partner categories from repository`() = runTest {
-        val categories = PartnerCategoriesMockData.PARTNER_CATEGORIES
-        everySuspend { partnerRepository.getCategories() } returns Result.success(categories)
+    fun `invoke returns partner categories from repository`() =
+        runTest {
+            val categories = PartnerCategoriesMockData.PARTNER_CATEGORIES
+            everySuspend { partnerRepository.getCategories() } returns Result.success(categories)
 
-        val result = getPartnerCategoriesUseCase()
+            val result = getPartnerCategoriesUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(categories, result.getOrNull())
-        verifySuspend { partnerRepository.getCategories() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(categories, result.getOrNull())
+            verifySuspend { partnerRepository.getCategories() }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val exception = Exception("Failed to get categories")
-        everySuspend { partnerRepository.getCategories() } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val exception = Exception("Failed to get categories")
+            everySuspend { partnerRepository.getCategories() } returns Result.failure(exception)
 
-        val result = getPartnerCategoriesUseCase()
+            val result = getPartnerCategoriesUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { partnerRepository.getCategories() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { partnerRepository.getCategories() }
+        }
 }

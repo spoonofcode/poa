@@ -10,7 +10,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetPartnersFilteredByPartnerCategoryUseCaseTest : BaseTest() {
-
     private lateinit var getPartnersFilteredByPartnerCategoryUseCase: GetPartnersFilteredByPartnerCategoryUseCase
 
     @BeforeTest
@@ -26,20 +25,22 @@ class GetPartnersFilteredByPartnerCategoryUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns all partners when categories set is empty`() = runTest {
-        val partners = PartnerMockData.PARTNERS
-        val result = getPartnersFilteredByPartnerCategoryUseCase(emptySet(), partners)
+    fun `invoke returns all partners when categories set is empty`() =
+        runTest {
+            val partners = PartnerMockData.PARTNERS
+            val result = getPartnersFilteredByPartnerCategoryUseCase(emptySet(), partners)
 
-        assertEquals(partners, result)
-    }
+            assertEquals(partners, result)
+        }
 
     @Test
-    fun `invoke filters partners matching selected categories`() = runTest {
-        val partners = PartnerMockData.PARTNERS
-        val category1 = PartnerMockData.PARTNER_1.partnerCategory
-        val result = getPartnersFilteredByPartnerCategoryUseCase(setOf(category1), partners)
+    fun `invoke filters partners matching selected categories`() =
+        runTest {
+            val partners = PartnerMockData.PARTNERS
+            val category1 = PartnerMockData.PARTNER_1.partnerCategory
+            val result = getPartnersFilteredByPartnerCategoryUseCase(setOf(category1), partners)
 
-        assertEquals(1, result.size)
-        assertEquals(PartnerMockData.PARTNER_1, result.first())
-    }
+            assertEquals(1, result.size)
+            assertEquals(PartnerMockData.PARTNER_1, result.first())
+        }
 }

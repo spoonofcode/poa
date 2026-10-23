@@ -5,16 +5,17 @@ import com.spoonofcode.core.network.model.RefreshRequest
 import com.spoonofcode.core.network.model.RefreshResponse
 import io.ktor.http.HttpMethod
 
-internal class RemoteRefreshTokenDataSource : RemoteBaseDataSource(
-    collectionName = "api/refresh",
-) {
-    suspend fun create(
-        refreshToken: String,
-    ): Result<RefreshResponse> = doRequest(
-        method = HttpMethod.Post,
-        requestBody = RefreshRequest(
-            refreshToken = refreshToken,
-        ),
-        markAsRefreshTokenRequest = true,
-    )
+internal class RemoteRefreshTokenDataSource :
+    RemoteBaseDataSource(
+        collectionName = "api/refresh",
+    ) {
+    suspend fun create(refreshToken: String): Result<RefreshResponse> =
+        doRequest(
+            method = HttpMethod.Post,
+            requestBody =
+                RefreshRequest(
+                    refreshToken = refreshToken,
+                ),
+            markAsRefreshTokenRequest = true,
+        )
 }

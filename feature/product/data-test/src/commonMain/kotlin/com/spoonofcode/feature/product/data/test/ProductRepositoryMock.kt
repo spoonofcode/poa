@@ -6,21 +6,22 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
-internal fun productRepositoryMock() = mock<ProductRepository> {
-    everySuspend { getProduct(any()) } returns Result.success(ProductMockData.PRODUCT_1)
-    everySuspend { getUserProducts() } returns Result.success(ProductMockData.PRODUCTS)
-    everySuspend { addProductToUser(any()) } returns Result.success(Unit)
-    everySuspend { deleteProductFromUser(any()) } returns Result.success(Unit)
-    everySuspend {
-        updateProductItem(
-            any(),
-            any(),
-        )
-    } returns Result.success(Unit)
-    everySuspend {
-        updateProductRedirect(
-            any(),
-            any(),
-        )
-    } returns Result.success(Unit)
-}
+internal fun productRepositoryMock() =
+    mock<ProductRepository> {
+        everySuspend { getProduct(any()) } returns Result.success(ProductMockData.PRODUCT_1)
+        everySuspend { getUserProducts() } returns Result.success(ProductMockData.PRODUCTS)
+        everySuspend { addProductToUser(any()) } returns Result.success(Unit)
+        everySuspend { deleteProductFromUser(any()) } returns Result.success(Unit)
+        everySuspend {
+            updateProductItem(
+                any(),
+                any(),
+            )
+        } returns Result.success(Unit)
+        everySuspend {
+            updateProductRedirect(
+                any(),
+                any(),
+            )
+        } returns Result.success(Unit)
+    }

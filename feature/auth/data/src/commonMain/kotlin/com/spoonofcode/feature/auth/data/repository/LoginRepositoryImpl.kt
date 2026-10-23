@@ -12,19 +12,27 @@ internal class LoginRepositoryImpl(
     private val remoteLoginGoogleDataSource: RemoteLoginGoogleDataSource,
     private val remoteLoginRequestCodeDataSource: RemoteLoginRequestCodeDataSource,
 ) : LoginRepository {
-
-    override suspend fun loginWithCode(email: String, loginCode: String): Result<Login> =
-        remoteLoginCodeDataSource.create(
-            email = email,
-            loginCode = loginCode,
-        ).map { response -> response.toLogin() }
+    override suspend fun loginWithCode(
+        email: String,
+        loginCode: String,
+    ): Result<Login> =
+        remoteLoginCodeDataSource
+            .create(
+                email = email,
+                loginCode = loginCode,
+            ).map { response -> response.toLogin() }
 
     override suspend fun loginWithGoogle(googleUserToken: String): Result<Login> =
-        remoteLoginGoogleDataSource.create(
-             googleUserToken = googleUserToken,
-         ).map { response -> response.toLogin() }
+        remoteLoginGoogleDataSource
+            .create(
+                googleUserToken = googleUserToken,
+            ).map { response -> response.toLogin() }
 
-    override suspend fun requestCode(email: String, platform: String, recaptchaToken: String): Result<Unit> =
+    override suspend fun requestCode(
+        email: String,
+        platform: String,
+        recaptchaToken: String,
+    ): Result<Unit> =
         remoteLoginRequestCodeDataSource.create(
             email = email,
             platform = platform,

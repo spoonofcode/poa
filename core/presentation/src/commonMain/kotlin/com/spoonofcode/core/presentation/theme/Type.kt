@@ -1,11 +1,9 @@
 package com.spoonofcode.core.presentation.theme
 
-
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import org.jetbrains.compose.resources.Font
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.roboto_bold
 import com.spoonofcode.core.presentation.roboto_extra_bold
@@ -14,17 +12,19 @@ import com.spoonofcode.core.presentation.roboto_light
 import com.spoonofcode.core.presentation.roboto_medium
 import com.spoonofcode.core.presentation.roboto_regular
 import com.spoonofcode.core.presentation.roboto_semi_bold
+import org.jetbrains.compose.resources.Font
 
 @Composable
-fun appFontFamily() = FontFamily(
-    Font(resource = Res.font.roboto_extra_light, weight = FontWeight.ExtraLight),
-    Font(resource = Res.font.roboto_light, weight = FontWeight.Light),
-    Font(resource = Res.font.roboto_regular, weight = FontWeight.Normal),
-    Font(resource = Res.font.roboto_medium, weight = FontWeight.Medium),
-    Font(resource = Res.font.roboto_semi_bold, weight = FontWeight.SemiBold),
-    Font(resource = Res.font.roboto_bold, weight = FontWeight.Bold),
-    Font(resource = Res.font.roboto_extra_bold, weight = FontWeight.ExtraBold),
-)
+fun appFontFamily() =
+    FontFamily(
+        Font(resource = Res.font.roboto_extra_light, weight = FontWeight.ExtraLight),
+        Font(resource = Res.font.roboto_light, weight = FontWeight.Light),
+        Font(resource = Res.font.roboto_regular, weight = FontWeight.Normal),
+        Font(resource = Res.font.roboto_medium, weight = FontWeight.Medium),
+        Font(resource = Res.font.roboto_semi_bold, weight = FontWeight.SemiBold),
+        Font(resource = Res.font.roboto_bold, weight = FontWeight.Bold),
+        Font(resource = Res.font.roboto_extra_bold, weight = FontWeight.ExtraBold),
+    )
 
 // Default Material 3 typography values-pl-en
 val baseline = Typography()
@@ -61,4 +61,3 @@ fun appTypography(): Typography {
         labelSmall = baseline.labelSmall.copy(fontFamily = fontFamily),
     )
 }
-

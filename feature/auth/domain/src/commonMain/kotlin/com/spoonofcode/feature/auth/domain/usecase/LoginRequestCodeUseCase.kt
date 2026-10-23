@@ -1,7 +1,7 @@
 package com.spoonofcode.feature.auth.domain.usecase
 
 import com.spoonofcode.core.data.Platform
-import com.spoonofcode.core.data.PlatformType
+import com.spoonofcode.core.data.recaptchaName
 import com.spoonofcode.core.recaptcha.RecaptchaClient
 import com.spoonofcode.feature.auth.domain.repository.LoginRepository
 
@@ -16,14 +16,10 @@ class LoginRequestCodeUseCase(
         email: String,
     ): Result<Unit> {
         val recaptchaToken = client.execute(action = RECAPTCHA_LOGIN_ACTION)
-        val platformString = when (platform.platformType) {
-            PlatformType.Android -> "android"
-            PlatformType.iOS -> "web"
-        }
         return loginRepository.requestCode(
             email = email,
-            platform = platformString,
-            recaptchaToken = recaptchaToken
+            platform = platform.platformType.recaptchaName,
+            recaptchaToken = recaptchaToken,
         )
     }
 }

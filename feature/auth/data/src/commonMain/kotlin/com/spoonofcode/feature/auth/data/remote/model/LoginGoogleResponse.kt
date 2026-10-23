@@ -10,12 +10,12 @@ internal data class LoginGoogleResponse(
     @SerialName("refresh_token")
     val refreshToken: String,
     @SerialName("user_profile")
-    val userProfile: UserProfile
+    val userProfile: UserProfile,
 ) {
     @Serializable
     data class UserProfile(
         val email: String,
         val id: String,
-        val roles: List<String> = emptyList()
+        val roles: List<String> = emptyList(),
     )
 }

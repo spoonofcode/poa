@@ -31,10 +31,11 @@ import com.spoonofcode.feature.product.presentation.taggy_go_logo
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.my_product_series),
-    verticalScrollEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.my_product_series),
+        verticalScrollEnable = false,
+    )
 
 @Composable
 internal fun ProductSeriesOverviewScreen(
@@ -58,7 +59,7 @@ private fun ColumnScope.Content(
 ) {
     LazyColumn(
         modifier = Modifier.weight(1f),
-        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements),
     ) {
         items(viewState.productSeries) { productSerie ->
             val checkedProductSeries =
@@ -69,8 +70,8 @@ private fun ColumnScope.Content(
                 onClick = {
                     onAction(
                         ProductSeriesOverViewViewAction.CheckedProductSeries(
-                            productSerie.name
-                        )
+                            productSerie.name,
+                        ),
                     )
                 },
                 checkedProductSeries = checkedProductSeries,
@@ -81,7 +82,7 @@ private fun ColumnScope.Content(
     PrimaryButton(
         enabled = viewState.checkedProductSeriesNames.isNotEmpty(),
         text = stringResource(resource = Res.string.send_notification),
-        onClick = { onAction(ProductSeriesOverViewViewAction.NavigateToNotification) }
+        onClick = { onAction(ProductSeriesOverViewViewAction.NavigateToNotification) },
     )
 }
 
@@ -92,11 +93,11 @@ private fun ProductSeriesItem(
     checkedProductSeries: Boolean,
 ) {
     ElevatedCard(
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         ) {
             CircleImage(
                 imageRes = Res.drawable.taggy_go_logo,
@@ -110,7 +111,7 @@ private fun ProductSeriesItem(
 
             Checkbox(
                 checked = checkedProductSeries,
-                onCheckedChange = { onClick() }
+                onCheckedChange = { onClick() },
             )
         }
     }
@@ -121,33 +122,35 @@ private fun ProductSeriesItem(
 @Composable
 private fun ProductSeriesOverviewScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            ProductSeriesOverviewViewState(
-                productSeries = listOf(
-                    ProductSeries(
-                        name = "Cyberpunk Genesis",
-                        fullName = "Cyberpunk Genesis Collectibles Series 2026",
-                        enabled = true,
-                        description = "Limitowana seria cyfrowych kart kolekcjonerskich inspirowana motywami cyberpunkowymi.",
-                        ownerEmail = "kontakt@cyberpunkseries.io",
-                        owner = "0x324123456789abcdef0123456789abcdef012345",
-                        redirectLink = "https://example.com/redirect",
-                        askContactMessage = "Skontaktuj się z nami, aby dowiedzieć się więcej o tej serii.",
-                        blockchain = "Ethereum",
-                        bannerIsOn = true,
-                        banner = "https://example.com/assets/banner-cyberpunk.jpg",
-                        message = "Dziękujemy za zainteresowanie naszą serią produktów!",
-                        partnerLink = "https://partner-store.com/cyberpunk",
-                        partnerLinkText = "Kup u oficjalnego partnera",
-                        x = "https://x.com/cyberpunk_series",
-                        instagram = "https://instagram.com/cyberpunk_series",
-                        youtube = "https://youtube.com/@CyberpunkSeriesOfficial",
-                        facebook = "https://facebook.com/CyberPunkSeries",
-                        tiktok = "https://tiktok.com/@cyberpunk_series",
-                    )
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                ProductSeriesOverviewViewState(
+                    productSeries =
+                        listOf(
+                            ProductSeries(
+                                name = "Cyberpunk Genesis",
+                                fullName = "Cyberpunk Genesis Collectibles Series 2026",
+                                enabled = true,
+                                description = "Limitowana seria cyfrowych kart kolekcjonerskich inspirowana motywami cyberpunkowymi.",
+                                ownerEmail = "kontakt@cyberpunkseries.io",
+                                owner = "0x324123456789abcdef0123456789abcdef012345",
+                                redirectLink = "https://example.com/redirect",
+                                askContactMessage = "Skontaktuj się z nami, aby dowiedzieć się więcej o tej serii.",
+                                blockchain = "Ethereum",
+                                bannerIsOn = true,
+                                banner = "https://example.com/assets/banner-cyberpunk.jpg",
+                                message = "Dziękujemy za zainteresowanie naszą serią produktów!",
+                                partnerLink = "https://partner-store.com/cyberpunk",
+                                partnerLinkText = "Kup u oficjalnego partnera",
+                                x = "https://x.com/cyberpunk_series",
+                                instagram = "https://instagram.com/cyberpunk_series",
+                                youtube = "https://youtube.com/@CyberpunkSeriesOfficial",
+                                facebook = "https://facebook.com/CyberPunkSeries",
+                                tiktok = "https://tiktok.com/@cyberpunk_series",
+                            ),
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

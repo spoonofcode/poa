@@ -6,6 +6,5 @@ import com.spoonofcode.feature.partner.domain.repository.PartnerNotificationRepo
 class GetPartnerNotificationUseCase(
     private val notificationRepository: PartnerNotificationRepository,
 ) {
-    suspend operator fun invoke(notificationId: String): Result<PartnerNotification> =
-        notificationRepository.getNotification(notificationId)
+    suspend operator fun invoke(notificationId: String): Result<PartnerNotification> = notificationRepository.getNotification(notificationId)
 }

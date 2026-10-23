@@ -43,38 +43,40 @@ fun PrimaryButton(
     fillMaxWidth: Boolean = true,
     isLoading: Boolean = false,
     onClick: () -> Unit,
-): Unit = Button(
-    modifier = modifier
-        .addIf(condition = fillMaxWidth) { fillMaxWidth() }
-        .heightIn(min = 48.dp),
-    shape = MaterialTheme.shapes.medium,
-    enabled = enabled && !isLoading,
-    onClick = onClick,
-) {
-    AnimatedContent(
-        targetState = isLoading,
-        transitionSpec = { fadeIn() togetherWith fadeOut() },
-        label = "ButtonLoadingTransition"
-    ) { loading ->
-        if (loading) {
-            CircularProgressIndicator(
-                modifier = Modifier.size(24.dp),
-                color = MaterialTheme.colorScheme.primary,
-                strokeWidth = 2.5.dp
-            )
-        } else {
-            if (leftIcon != null) {
-                Image(
-                    painter = painterResource(resource = leftIcon),
-                    contentDescription = null,
+): Unit =
+    Button(
+        modifier =
+            modifier
+                .addIf(condition = fillMaxWidth) { fillMaxWidth() }
+                .heightIn(min = 48.dp),
+        shape = MaterialTheme.shapes.medium,
+        enabled = enabled && !isLoading,
+        onClick = onClick,
+    ) {
+        AnimatedContent(
+            targetState = isLoading,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+            label = "ButtonLoadingTransition",
+        ) { loading ->
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    strokeWidth = 2.5.dp,
                 )
-                SpacerHorizontalBetweenFields()
-            }
+            } else {
+                if (leftIcon != null) {
+                    Image(
+                        painter = painterResource(resource = leftIcon),
+                        contentDescription = null,
+                    )
+                    SpacerHorizontalBetweenFields()
+                }
 
-            Text(text)
+                Text(text)
+            }
         }
     }
-}
 
 @Composable
 fun SecondaryButton(
@@ -86,8 +88,10 @@ fun SecondaryButton(
     onClick: () -> Unit,
 ): Unit =
     FilledTonalButton(
-        modifier = modifier.fillMaxWidth()
-            .heightIn(min = 48.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,
         colors = colors,
         onClick = onClick,
@@ -95,13 +99,13 @@ fun SecondaryButton(
         AnimatedContent(
             targetState = isLoading,
             transitionSpec = { fadeIn() togetherWith fadeOut() },
-            label = "ButtonLoadingTransition"
+            label = "ButtonLoadingTransition",
         ) { loading ->
             if (loading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(24.dp),
                     color = MaterialTheme.colorScheme.primary,
-                    strokeWidth = 2.5.dp
+                    strokeWidth = 2.5.dp,
                 )
             } else {
                 if (leftIcon != null) {
@@ -127,8 +131,10 @@ fun OutlinedButton(
     onClick: () -> Unit,
 ): Unit =
     androidx.compose.material3.OutlinedButton(
-        modifier = modifier.fillMaxWidth()
-            .heightIn(min = 48.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp),
         shape = MaterialTheme.shapes.medium,
         colors = colors,
         onClick = onClick,
@@ -136,13 +142,13 @@ fun OutlinedButton(
         AnimatedContent(
             targetState = isLoading,
             transitionSpec = { fadeIn() togetherWith fadeOut() },
-            label = "ButtonLoadingTransition"
+            label = "ButtonLoadingTransition",
         ) { loading ->
             if (loading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(24.dp),
                     color = MaterialTheme.colorScheme.primary,
-                    strokeWidth = 2.5.dp
+                    strokeWidth = 2.5.dp,
                 )
             } else {
                 if (leftIcon != null) {
@@ -169,10 +175,11 @@ fun IconTextButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .then(
-                if (square) Modifier.aspectRatio(1f) else Modifier
-            ),
+        modifier =
+            modifier
+                .then(
+                    if (square) Modifier.aspectRatio(1f) else Modifier,
+                ),
         shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(8.dp),
         enabled = enabled,
@@ -180,12 +187,12 @@ fun IconTextButton(
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = text,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(32.dp),
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(

@@ -15,7 +15,10 @@ object KermitLogger : POALogger {
         Logger.w(message)
     }
 
-    override fun error(message: String, throwable: Throwable?) {
+    override fun error(
+        message: String,
+        throwable: Throwable?,
+    ) {
         Logger.e(message, throwable)
     }
 }

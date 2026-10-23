@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetProfileUseCaseTest : BaseTest() {
-
     private lateinit var getProfileUseCase: GetProfileUseCase
     private lateinit var profileRepository: ProfileRepository
 
@@ -33,23 +32,25 @@ class GetProfileUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with profile`() = runTest {
-        val result = getProfileUseCase()
+    fun `invoke returns success with profile`() =
+        runTest {
+            val result = getProfileUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(ProfileMockData.PROFILE_1, result.getOrNull())
-        verifySuspend { profileRepository.readUserProfile() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(ProfileMockData.PROFILE_1, result.getOrNull())
+            verifySuspend { profileRepository.readUserProfile() }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val exception = Exception("Error reading profile")
-        everySuspend { profileRepository.readUserProfile() } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val exception = Exception("Error reading profile")
+            everySuspend { profileRepository.readUserProfile() } returns Result.failure(exception)
 
-        val result = getProfileUseCase()
+            val result = getProfileUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { profileRepository.readUserProfile() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { profileRepository.readUserProfile() }
+        }
 }
