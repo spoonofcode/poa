@@ -1,8 +1,8 @@
 import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import com.spoonofcode.convention.applyPlugin
+import com.spoonofcode.convention.configureKmpAndroidLibraryTarget
 import com.spoonofcode.convention.configureKotlinMultiplatform
 import com.spoonofcode.convention.libs
-import com.spoonofcode.convention.pathToPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -21,13 +21,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 targets
                     .withType(KotlinMultiplatformAndroidLibraryTarget::class.java)
                     .configureEach {
-                        compileSdk = libs.findVersion("android-compileSdk").get().toString().toInt()
-                        minSdk = libs.findVersion("android-minSdk").get().toString().toInt()
-                        namespace = this@with.pathToPackageName()
-
-                        androidResources {
-                            enable = true
-                        }
+                        configureKmpAndroidLibraryTarget(this)
                     }
 
                 sourceSets.getByName("commonTest").dependencies {
