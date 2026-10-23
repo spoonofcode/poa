@@ -11,6 +11,12 @@ val Project.libs: VersionCatalog
 val Project.applicationId: String
     get() = libs.findVersion("project-applicationId").get().toString()
 
+val Project.androidCompileSdk: Int
+    get() = libs.findVersion("android-compileSdk").get().toString().toInt()
+
+val Project.androidMinSdk: Int
+    get() = libs.findVersion("android-minSdk").get().toString().toInt()
+
 val Project.androidTargetSdk: Int
     get() = libs.findVersion("android-targetSdk").get().toString().toInt()
 

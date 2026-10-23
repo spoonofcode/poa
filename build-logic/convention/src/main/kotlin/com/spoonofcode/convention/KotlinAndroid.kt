@@ -1,6 +1,7 @@
 package com.spoonofcode.convention
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -12,9 +13,9 @@ internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension
 ) {
     with(commonExtension) {
-        compileSdk = libs.findVersion("android-compileSdk").get().toString().toInt()
+        compileSdk = androidCompileSdk
 
-        defaultConfig.minSdk = libs.findVersion("android-minSdk").get().toString().toInt()
+        defaultConfig.minSdk = androidMinSdk
 
         compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_21
@@ -30,6 +31,22 @@ internal fun Project.configureKotlinAndroid(
             "coreLibraryDesugaring"(libs.findLibrary("android-desugar-jdk-libs").get())
         }
     }
+}
+
+internal fun Project.configureKmpAndroidLibraryTarget(
+    target: KotlinMultiplatformAndroidLibraryTarget
+) {
+    with(target) {
+        compileSdk = androidCompileSdk
+        minSdk = androidMinSdk
+        namespace = this@configureKmpAndroidLibraryTarget.pathToPackageName()
+
+        androidResources {
+            enable = true
+        }
+    }
+
+    configureKotlin()
 }
 
 internal fun Project.configureKotlin() {
