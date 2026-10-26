@@ -1,5 +1,7 @@
 package com.spoonofcode.feature.partner.presentation.notification.edit
 
+import com.spoonofcode.core.data.ext.plus
+import com.spoonofcode.core.data.utils.LocalDateUtils
 import com.spoonofcode.core.presentation.default_error
 import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.core.presentation.test.base.BaseViewModelTest
@@ -17,7 +19,9 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.plus
 import org.koin.core.parameter.parametersOf
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -132,6 +136,67 @@ class PartnerNotificationEditViewModelTest : BaseViewModelTest() {
                 onAction(PartnerNotificationEditViewAction.ChangeLink("https://example.com"))
                 with(viewState.awaitContentState()) {
                     assertEquals("https://example.com", link)
+                    assertTrue(isLinkValid)
+                    assertTrue(isSendNotificationEnabled)
+                }
+            }
+        }
+
+    @Test
+    fun `change link to invalid disables send notification and sets link invalid`() =
+        runTest {
+            val args =
+                PartnerNotificationEditArgs(
+                    notificationId = null,
+                    selectedTopics = setOf("global"),
+                    selectedNames = setOf("Global"),
+                )
+            val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+            runVmTest(viewModel) {
+                onAction(PartnerNotificationEditViewAction.ChangeTitle("New Title"))
+                viewState.awaitContentState()
+
+                onAction(PartnerNotificationEditViewAction.ChangeText("New Text"))
+                with(viewState.awaitContentState()) {
+                    assertTrue(isLinkValid)
+                    assertTrue(isSendNotificationEnabled)
+                }
+
+                onAction(PartnerNotificationEditViewAction.ChangeLink("http://example.com"))
+                with(viewState.awaitContentState()) {
+                    assertEquals("http://example.com", link)
+                    assertFalse(isLinkValid)
+                    assertFalse(isSendNotificationEnabled)
+                }
+
+                onAction(PartnerNotificationEditViewAction.ChangeLink(""))
+                with(viewState.awaitContentState()) {
+                    assertEquals("", link)
+                    assertTrue(isLinkValid)
+                    assertTrue(isSendNotificationEnabled)
+                }
+            }
+        }
+
+    @Test
+    fun `max delivery date is limited to 29 days from today`() =
+        runTest {
+            val args =
+                PartnerNotificationEditArgs(
+                    notificationId = null,
+                    selectedTopics = setOf("global"),
+                    selectedNames = setOf("Global"),
+                )
+            val viewModel: PartnerNotificationEditViewModel = getKoin().get { parametersOf(args) }
+
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(
+                        LocalDateUtils.today().plus(29, DateTimeUnit.DAY),
+                        maxDeliveryDateTime.date,
+                    )
                 }
             }
         }

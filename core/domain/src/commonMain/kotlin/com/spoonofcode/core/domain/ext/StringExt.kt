@@ -9,3 +9,5 @@ fun String.isValidEmail(): Boolean {
     val trimmed = this.trim()
     return trimmed.isNotEmpty() && trimmed.length <= 254 && EMAIL_REGEX.matches(trimmed)
 }
+
+fun String.isValidHttpsUrl(): Boolean = this.trim().startsWith("https")

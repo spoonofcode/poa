@@ -95,6 +95,7 @@ private fun ColumnScope.Content(
         label = stringResource(resource = Res.string.delivery_date),
         value = viewState.deliveryDateTime,
         minDateTime = viewState.minDeliveryDateTime,
+        maxDateTime = viewState.maxDeliveryDateTime,
         onValueChange = {
             onAction(
                 PartnerNotificationEditViewAction.ChangeDeliveryDateTime(
@@ -123,6 +124,7 @@ private fun ColumnScope.Content(
         value = viewState.link,
         onValueChange = { onAction(PartnerNotificationEditViewAction.ChangeLink(it)) },
         label = stringResource(resource = Res.string.link),
+        isError = !viewState.isLinkValid,
     )
 
     SpacerWeight1(this)
