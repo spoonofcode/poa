@@ -12,7 +12,6 @@ interface NotificationRepository {
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-        ownerId: String,
     ): Result<Unit>
 
     suspend fun update(
@@ -23,7 +22,6 @@ interface NotificationRepository {
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-        ownerId: String,
     ): Result<Unit>
 
     suspend fun delete(notificationId: String): Result<Unit>

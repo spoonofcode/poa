@@ -20,7 +20,6 @@ internal class NotificationRepositoryImpl(
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-        ownerId: String,
     ): Result<Unit> =
         remoteNotificationDataSource
             .create(
@@ -30,7 +29,6 @@ internal class NotificationRepositoryImpl(
                 topics = topics,
                 deliveryDateTime = deliveryDateTime.toZonedInstant(),
                 expirationDateTime = expirationDateTime.toZonedInstant(),
-                ownerId = ownerId,
             ).map { }
 
     override suspend fun update(
@@ -41,7 +39,6 @@ internal class NotificationRepositoryImpl(
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-        ownerId: String,
     ): Result<Unit> =
         remoteNotificationDataSource.update(
             notificationId = notificationId,
@@ -51,7 +48,6 @@ internal class NotificationRepositoryImpl(
             topics = topics,
             deliveryDateTime = deliveryDateTime.toZonedInstant(),
             expirationDateTime = expirationDateTime.toZonedInstant(),
-            ownerId = ownerId,
         )
 
     override suspend fun delete(notificationId: String): Result<Unit> =
