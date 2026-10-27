@@ -36,7 +36,7 @@ jobs:
         run: ./gradlew ktlintCheck
 
   test:
-    name: Unit Tests
+    name: Unit Tests & Code Coverage
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -63,8 +63,8 @@ jobs:
           sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
           sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
 
-      - name: Run Unit Tests
-        run: ./gradlew testDevelopmentDebugUnitTest --continue
+      - name: Run Unit Tests & Generate Kover Coverage Report
+        run: ./gradlew testDevelopmentDebugUnitTest koverHtmlReport --continue
 
       - name: Upload Test Reports
         if: always()
@@ -72,6 +72,13 @@ jobs:
         with:
           name: unit-test-reports
           path: '**/build/reports/tests/'
+
+      - name: Upload Kover Coverage Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kover-coverage-reports
+          path: '**/build/reports/kover/'
 
   verify_build:
     name: Verification Build (PR Check)
