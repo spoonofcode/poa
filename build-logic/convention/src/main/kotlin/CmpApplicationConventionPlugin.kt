@@ -37,6 +37,19 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
                     versionName = target.projectVersionName
                 }
 
+                flavorDimensions.add("environment")
+                productFlavors {
+                    create("development") {
+                        dimension = "environment"
+                    }
+                    create("staging") {
+                        dimension = "environment"
+                    }
+                    create("production") {
+                        dimension = "environment"
+                    }
+                }
+
                 packaging {
                     resources {
                         excludes += "/META-INF/{AL2.0,LGPL2.1}"
