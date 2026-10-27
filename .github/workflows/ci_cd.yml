@@ -2,10 +2,10 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [ "develop", "main", "release/**" ]
+    branches: [ "develop", "release/**", "main" ]
     types: [ opened, synchronize, reopened ]
   push:
-    branches: [ "main" ]
+    branches: [ "develop", "release/**", "main" ]
     tags: [ "v*.*.*" ]
 
 concurrency:
@@ -99,6 +99,48 @@ jobs:
         with:
           name: TaggyGo-VerificationDebug-v${{ github.run_number }}
           path: composeApp/build/outputs/apk/development/debug/*.apk
+
+  staging_release:
+    name: Staging Release Build (QA)
+    runs-on: ubuntu-latest
+    needs: [lint, test, verify_build]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/'))
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Decode Google Services JSON
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+
+      - name: Decode Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
+
+      - name: Build Staging Release Bundle
+        env:
+          ANDROID_RELEASE_VERSION: ${{ github.run_number }}
+          KEYSTORE_PATH: ${{ github.workspace }}/release.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew :composeApp:bundleStagingRelease
+
+      - name: Upload Staging AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaggyGo-StagingRelease-v${{ github.run_number }}
+          path: composeApp/build/outputs/bundle/stagingRelease/*.aab
 
   production_release:
     name: Signed Production Build & Release

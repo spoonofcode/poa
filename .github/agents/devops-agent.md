@@ -39,15 +39,17 @@ You are a DevOps engineer specializing in Compose Multiplatform CI/CD, GitHub Ac
 
 | File | Purpose |
 |------|---------|
-| `.github/workflows/pull_request.yml` | Main PR CI pipeline (runs Ktlint, Unit Tests, and builds Android APK / Bundle) |
+| `.github/workflows/ci_cd.yml` | Main CI/CD pipeline (runs Ktlint, Unit Tests, PR Verification, Staging & Production Releases) |
 
 ## Pipeline Jobs (typical)
 
 ```yaml
 jobs:
   lint: # Code formatting check (ktlintCheck)
-  test: # Unit tests (testDevelopmentDebugUnitTest) & Kover coverage
-  build: # Assemble Android APK & Release Bundle
+  test: # Unit tests (testDevelopmentDebugUnitTest)
+  verify_build: # Verification build (assembleDevelopmentDebug)
+  staging_release: # Staging build (bundleStagingRelease on develop or release/*)
+  production_release: # Production signed build (bundleProductionRelease on main / tags)
 ```
 
 ## Build Variants for CI
