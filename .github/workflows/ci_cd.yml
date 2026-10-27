@@ -55,7 +55,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Google Services JSON
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+        run: |
+          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+          cp composeApp/google-services.json composeApp/src/google-services.json
+          cp composeApp/google-services.json composeApp/src/production/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
 
       - name: Run Unit Tests
         run: ./gradlew testDevelopmentDebugUnitTest --continue
@@ -87,7 +93,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Google Services JSON
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+        run: |
+          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+          cp composeApp/google-services.json composeApp/src/google-services.json
+          cp composeApp/google-services.json composeApp/src/production/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
 
       - name: Build Debug APK
         env:
@@ -122,7 +134,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Google Services JSON
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+        run: |
+          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+          cp composeApp/google-services.json composeApp/src/google-services.json
+          cp composeApp/google-services.json composeApp/src/production/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
 
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
@@ -164,7 +182,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Google Services JSON
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+        run: |
+          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+          cp composeApp/google-services.json composeApp/src/google-services.json
+          cp composeApp/google-services.json composeApp/src/production/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
+          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
 
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
