@@ -17,7 +17,6 @@ internal class RemoteNotificationDataSource :
         topics: List<String>,
         deliveryDateTime: Instant,
         expirationDateTime: Instant,
-        ownerId: String,
     ): Result<NotificationResponse> =
         doRequest(
             method = HttpMethod.Post,
@@ -29,7 +28,6 @@ internal class RemoteNotificationDataSource :
                     topics = topics,
                     deliveryDateTime = deliveryDateTime,
                     expirationDateTime = expirationDateTime,
-                    ownerId = ownerId,
                 ),
         )
 
@@ -41,7 +39,6 @@ internal class RemoteNotificationDataSource :
         topics: List<String>,
         deliveryDateTime: Instant,
         expirationDateTime: Instant,
-        ownerId: String,
     ): Result<Unit> =
         doRequest(
             urlPostfixPath = notificationId,
@@ -54,7 +51,6 @@ internal class RemoteNotificationDataSource :
                     topics = topics,
                     deliveryDateTime = deliveryDateTime,
                     expirationDateTime = expirationDateTime,
-                    ownerId = ownerId,
                 ),
         )
 

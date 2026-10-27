@@ -17,6 +17,4 @@ internal data class NotificationRequest(
     @SerialName("expiration_datetime")
     @Serializable(with = RFC1123InstantSerializer::class)
     val expirationDateTime: Instant,
-    @SerialName("owner_id")
-    val ownerId: String,
 )

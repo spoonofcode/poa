@@ -1,6 +1,5 @@
 package com.spoonofcode.feature.notification.domain.usecase
 
-import com.spoonofcode.core.session.domain.repository.SessionRepository
 import com.spoonofcode.core.test.base.BaseTest
 import com.spoonofcode.feature.notification.domain.di.notificationDomainTestModule
 import com.spoonofcode.feature.notification.domain.repository.NotificationRepository
@@ -18,14 +17,12 @@ import kotlin.test.assertTrue
 class SendNotificationUseCaseTest : BaseTest() {
     private lateinit var sendNotificationUseCase: SendNotificationUseCase
     private lateinit var notificationRepository: NotificationRepository
-    private lateinit var sessionRepository: SessionRepository
 
     @BeforeTest
     override fun beforeTest() {
         modules = arrayOf(notificationDomainTestModule)
         super.beforeTest()
         notificationRepository = getKoin().get()
-        sessionRepository = getKoin().get()
         sendNotificationUseCase = getSut()
     }
 
@@ -35,7 +32,7 @@ class SendNotificationUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke calls repository create with correct parameters including session userId`() =
+    fun `invoke calls repository create with correct parameters`() =
         runTest {
             val title = "Title"
             val text = "Text"
@@ -43,9 +40,7 @@ class SendNotificationUseCaseTest : BaseTest() {
             val topics = listOf("global")
             val deliveryDateTime = LocalDateTime(2023, 1, 1, 10, 0)
             val expirationDateTime = LocalDateTime(2023, 1, 2, 10, 0)
-            val userId = "user123"
 
-            everySuspend { sessionRepository.getSessionUserId() } returns userId
             everySuspend {
                 notificationRepository.create(
                     title = title,
@@ -54,7 +49,6 @@ class SendNotificationUseCaseTest : BaseTest() {
                     topics = topics,
                     deliveryDateTime = deliveryDateTime,
                     expirationDateTime = expirationDateTime,
-                    ownerId = userId,
                 )
             } returns Result.success(Unit)
 
@@ -77,7 +71,6 @@ class SendNotificationUseCaseTest : BaseTest() {
                     topics = topics,
                     deliveryDateTime = deliveryDateTime,
                     expirationDateTime = expirationDateTime,
-                    ownerId = userId,
                 )
             }
         }
@@ -90,10 +83,8 @@ class SendNotificationUseCaseTest : BaseTest() {
             val topics = listOf("global")
             val deliveryDateTime = LocalDateTime(2023, 1, 1, 10, 0)
             val expirationDateTime = LocalDateTime(2023, 1, 2, 10, 0)
-            val userId = "user123"
             val exception = Exception("Failed to send")
 
-            everySuspend { sessionRepository.getSessionUserId() } returns userId
             everySuspend {
                 notificationRepository.create(
                     title = title,
@@ -102,7 +93,6 @@ class SendNotificationUseCaseTest : BaseTest() {
                     topics = topics,
                     deliveryDateTime = deliveryDateTime,
                     expirationDateTime = expirationDateTime,
-                    ownerId = userId,
                 )
             } returns Result.failure(exception)
 
