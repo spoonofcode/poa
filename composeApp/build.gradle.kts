@@ -110,7 +110,6 @@ android {
             isDebuggable = true
         }
         getByName("release") {
-            // isMinifyEnabled = false
             isDebuggable = false
             // Dynamically assign the signing config based on the environment
             if (System.getenv("KEYSTORE_PATH") != null) {
