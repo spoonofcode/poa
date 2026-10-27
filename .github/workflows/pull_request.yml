@@ -1,9 +1,12 @@
-name: Pull Request CI
+name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [ "develop", "main" ]
+    branches: [ "develop", "main", "release/**" ]
     types: [ opened, synchronize, reopened ]
+  push:
+    branches: [ "main" ]
+    tags: [ "v*.*.*" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -64,9 +67,44 @@ jobs:
           name: unit-test-reports
           path: '**/build/reports/tests/'
 
-  build:
-    name: Build Android APK
+  verify_build:
+    name: Verification Build (PR Check)
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Decode Google Services JSON
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
+
+      - name: Build Debug APK
+        env:
+          ANDROID_RELEASE_VERSION: ${{ github.run_number }}
+        run: ./gradlew :composeApp:assembleDevelopmentDebug
+
+      - name: Upload Verification APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaggyGo-VerificationDebug-v${{ github.run_number }}
+          path: composeApp/build/outputs/apk/development/debug/*.apk
+
+  production_release:
+    name: Signed Production Build & Release
+    runs-on: ubuntu-latest
+    needs: [lint, test, verify_build]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -89,28 +127,17 @@ jobs:
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
 
-      - name: Build Debug APK
-        env:
-          ANDROID_RELEASE_VERSION: ${{ github.run_number }}
-        run: ./gradlew :composeApp:assembleDevelopmentDebug
-
-      - name: Build Release Bundle
+      - name: Build Signed Production Release Bundle
         env:
           ANDROID_RELEASE_VERSION: ${{ github.run_number }}
           KEYSTORE_PATH: ${{ github.workspace }}/release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew :composeApp:bundleDevelopmentRelease
+        run: ./gradlew :composeApp:bundleProductionRelease
 
-      - name: Upload APK Build Artifact
+      - name: Upload Production AAB Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TaggyGo-DevelopmentDebug-v${{ github.run_number }}
-          path: composeApp/build/outputs/apk/development/debug/*.apk
-
-      - name: Upload AAB Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TaggyGo-DevelopmentRelease-v${{ github.run_number }}
-          path: composeApp/build/outputs/bundle/developmentRelease/*.aab
+          name: TaggyGo-ProductionRelease-v${{ github.run_number }}
+          path: composeApp/build/outputs/bundle/productionRelease/*.aab
