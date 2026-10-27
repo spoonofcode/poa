@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import com.spoonofcode.core.data.ext.formatedLocalDate
 import com.spoonofcode.core.data.ext.isAfterToday
 import com.spoonofcode.core.data.ext.toZonedLocalDate
+import com.spoonofcode.core.data.ext.zonedEndOfDayInMillis
 import com.spoonofcode.core.data.ext.zonedStartOfDayInMillis
 import com.spoonofcode.core.data.utils.LocalDateUtils
 import com.spoonofcode.core.presentation.Res
@@ -31,16 +32,15 @@ import com.spoonofcode.core.presentation.cancel
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 @Composable
 fun StandardDatePicker(
     value: LocalDate = LocalDateUtils.today(),
     onValueChange: (LocalDate) -> Unit,
     label: String? = null,
     minDate: LocalDate? = null,
+    maxDate: LocalDate? = null,
     modifier: Modifier = Modifier.fillMaxWidth(),
     isRequired: Boolean = false,
 ) {
@@ -92,6 +92,7 @@ fun StandardDatePicker(
             },
             selectedDate = date.value.zonedStartOfDayInMillis(),
             minDateUtcMillis = minDate?.zonedStartOfDayInMillis(),
+            maxDateUtcMillis = maxDate?.zonedEndOfDayInMillis(),
         )
     }
 }
@@ -103,6 +104,7 @@ fun StandardDatePickerWithTimer(
     onValueChange: (LocalDateTime) -> Unit,
     label: String? = null,
     minDateTime: LocalDateTime? = null,
+    maxDateTime: LocalDateTime? = null,
     isRequired: Boolean = false,
 ) {
     Row {
@@ -118,6 +120,7 @@ fun StandardDatePickerWithTimer(
             },
             label = label,
             minDate = minDateTime?.date,
+            maxDate = maxDateTime?.date,
             modifier = Modifier.weight(1f),
             isRequired = isRequired,
         )
@@ -136,23 +139,27 @@ fun StandardDatePickerWithTimer(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 private fun StandardDatePickerDialog(
     onAccept: (Long?) -> Unit,
     onCancel: () -> Unit,
     selectedDate: Long,
     minDateUtcMillis: Long? = null,
+    maxDateUtcMillis: Long? = null,
 ) {
     val state =
         rememberDatePickerState(
             initialSelectedDateMillis = selectedDate,
             selectableDates =
-                if (minDateUtcMillis == null) {
+                if (minDateUtcMillis == null && maxDateUtcMillis == null) {
                     DatePickerDefaults.AllDates
                 } else {
                     object : SelectableDates {
-                        override fun isSelectableDate(utcTimeMillis: Long): Boolean = utcTimeMillis >= minDateUtcMillis
+                        override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                            val afterMin = minDateUtcMillis == null || utcTimeMillis >= minDateUtcMillis
+                            val beforeMax = maxDateUtcMillis == null || utcTimeMillis <= maxDateUtcMillis
+                            return afterMin && beforeMax
+                        }
                     }
                 },
         )

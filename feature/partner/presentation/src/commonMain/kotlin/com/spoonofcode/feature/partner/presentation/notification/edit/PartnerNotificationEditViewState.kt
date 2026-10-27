@@ -3,6 +3,7 @@ package com.spoonofcode.feature.partner.presentation.notification.edit
 import androidx.compose.runtime.Immutable
 import com.spoonofcode.core.data.ext.plus
 import com.spoonofcode.core.data.utils.LocalDateTimeUtils
+import com.spoonofcode.core.domain.ext.isValidHttpsUrl
 import com.spoonofcode.core.presentation.base.BaseViewState
 import com.spoonofcode.feature.partner.domain.model.PartnerNotificationType
 import kotlinx.datetime.DateTimeUnit
@@ -21,6 +22,10 @@ internal data class PartnerNotificationEditViewState(
         LocalDateTimeUtils
             .now()
             .plus(FIVE_MINUTES, DateTimeUnit.MINUTE),
+    val maxDeliveryDateTime: LocalDateTime =
+        LocalDateTimeUtils
+            .now()
+            .plus(TWENTY_NINE_DAYS, DateTimeUnit.DAY),
     val deliveryDateTime: LocalDateTime =
         LocalDateTimeUtils
             .now()
@@ -40,11 +45,15 @@ internal data class PartnerNotificationEditViewState(
     val isViewEnable: Boolean
         get() = !isSendNotificationButtonLoading
 
+    val isLinkValid: Boolean
+        get() = link.isEmpty() || link.isValidHttpsUrl()
+
     val isSendNotificationEnabled: Boolean
-        get() = title.isNotEmpty() && text.isNotEmpty()
+        get() = title.isNotEmpty() && text.isNotEmpty() && isLinkValid
 
     companion object {
         private const val FIVE_MINUTES = 5
         private const val ONE_DAY = 1
+        private const val TWENTY_NINE_DAYS = 29
     }
 }
