@@ -4,9 +4,9 @@ import com.spoonofcode.convention.applicationId
 import com.spoonofcode.convention.applyPlugin
 import com.spoonofcode.convention.configureAndroidCompose
 import com.spoonofcode.convention.configureComposeMultiplatform
-import com.spoonofcode.convention.configureKover
 import com.spoonofcode.convention.configureKotlinAndroid
 import com.spoonofcode.convention.configureKotlinMultiplatform
+import com.spoonofcode.convention.configureKover
 import com.spoonofcode.convention.projectVersionCode
 import com.spoonofcode.convention.projectVersionName
 import org.gradle.api.Plugin
@@ -41,12 +41,19 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
                 productFlavors {
                     create("development") {
                         dimension = "environment"
+                        applicationIdSuffix = ".dev"
+                        versionNameSuffix = "-dev"
+                        resValue(type = "string", name = "app_name", value = "Taggy Go [DEV]")
                     }
                     create("staging") {
                         dimension = "environment"
+                        applicationIdSuffix = ".staging"
+                        versionNameSuffix = "-staging"
+                        resValue(type = "string", name = "app_name", value = "Taggy Go [STAGE]")
                     }
                     create("production") {
                         dimension = "environment"
+                        resValue(type = "string", name = "app_name", value = "Taggy Go")
                     }
                 }
 

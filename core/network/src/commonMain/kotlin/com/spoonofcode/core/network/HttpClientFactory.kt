@@ -47,7 +47,7 @@ internal class HttpClientFactory(
                             poaLogger.debug(message)
                         }
                     }
-                level = LogLevel.ALL
+                level = if (BuildKonfig.ENABLE_LOGGING) LogLevel.ALL else LogLevel.NONE
             }
             install(WebSockets) {
                 pingIntervalMillis = 20_000L
