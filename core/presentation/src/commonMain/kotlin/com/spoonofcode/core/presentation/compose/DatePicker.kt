@@ -32,10 +32,8 @@ import com.spoonofcode.core.presentation.cancel
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 @Composable
 fun StandardDatePicker(
     value: LocalDate = LocalDateUtils.today(),
@@ -141,7 +139,6 @@ fun StandardDatePickerWithTimer(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 private fun StandardDatePickerDialog(
     onAccept: (Long?) -> Unit,
