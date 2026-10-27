@@ -52,12 +52,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Google Services JSON
-        env:
-          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
-        run: |
-          if [ -n "$GOOGLE_SERVICES_JSON_BASE64" ]; then
-            echo "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > composeApp/google-services.json
-          fi
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
 
       - name: Run Unit Tests
         run: ./gradlew testDevelopmentDebugUnitTest --continue
@@ -89,20 +84,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Google Services JSON
-        env:
-          GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
-        run: |
-          if [ -n "$GOOGLE_SERVICES_JSON_BASE64" ]; then
-            echo "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > composeApp/google-services.json
-          fi
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
 
       - name: Decode Keystore
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: |
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | base64 --decode > release.jks
-          fi
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
 
       - name: Build Debug APK
         env:
@@ -111,16 +96,12 @@ jobs:
 
       - name: Build Release Bundle
         env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           ANDROID_RELEASE_VERSION: ${{ github.run_number }}
           KEYSTORE_PATH: ${{ github.workspace }}/release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: |
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            ./gradlew :composeApp:bundleDevelopmentRelease
-          fi
+        run: ./gradlew :composeApp:bundleDevelopmentRelease
 
       - name: Upload APK Build Artifact
         uses: actions/upload-artifact@v4
@@ -129,9 +110,6 @@ jobs:
           path: composeApp/build/outputs/apk/development/debug/*.apk
 
       - name: Upload AAB Build Artifact
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        if: ${{ env.KEYSTORE_BASE64 != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: TaggyGo-DevelopmentRelease-v${{ github.run_number }}
