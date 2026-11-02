@@ -22,30 +22,30 @@ import org.koin.test.get
 abstract class BaseTest : KoinTest {
     protected var modules: Array<Module> = emptyArray()
     protected val testDispatcher: TestDispatcher by lazy { StandardTestDispatcher() }
-    private var _koinApp: KoinApplication? = null
+    private var koinApp: KoinApplication? = null
 
-    override fun getKoin(): Koin =
-        _koinApp?.koin ?: error("Koin is not initialized. Call super.beforeTest() first.")
+    override fun getKoin(): Koin = koinApp?.koin ?: error("Koin is not initialized. Call super.beforeTest() first.")
 
     open fun beforeTest() {
-        _koinApp = koinApplication {
-            allowOverride(true)
-            modules(
-                *modules,
-                testModule,
-                module {
-                    single<DispatcherProvider> { StandardTestDispatcherProvider(testDispatcher) }
-                    single { sessionRepositoryMock() }
-                },
-            )
-        }
+        koinApp =
+            koinApplication {
+                allowOverride(true)
+                modules(
+                    *modules,
+                    testModule,
+                    module {
+                        single<DispatcherProvider> { StandardTestDispatcherProvider(testDispatcher) }
+                        single { sessionRepositoryMock() }
+                    },
+                )
+            }
         Dispatchers.setMain(testDispatcher)
     }
 
     open fun afterTest() {
         Dispatchers.resetMain()
-        _koinApp?.close()
-        _koinApp = null
+        koinApp?.close()
+        koinApp = null
     }
 
     protected inline fun <reified T : Any> getSut(): T = get<T>()
