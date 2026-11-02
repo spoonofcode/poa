@@ -12,9 +12,8 @@ understand Kotlin, Jetpack Compose, Clean Architecture, and Compose Multiplatfor
 
 - **Tech Stack:** Kotlin 2.x + Jetpack Compose + Clean Architecture + MVVM/MVI
 - **Build Tool:** Gradle with Kotlin DSL
-- **Main Directories:** `poa/` (app), `core/` (core business logic), `feature/` (features), `docs/`
-  (documentation)
-- **Key Commands:** `./gradlew ktlintFormat detekt`, `./gradlew testDebugUnitTest`
+- **Main Directories:** `composeApp/` (app), `core/` (core business logic), `feature/` (features), `docs/` (documentation)
+- **Key Commands:** `./gradlew ktlintCheck`, `./gradlew testDevelopmentDebugUnitTest`
 - **Primary Branch:** `develop` (all PRs target this branch)
 
 ## Language Conventions
@@ -33,19 +32,19 @@ TODO THIS LATER:
 
 ```bash
 # Format & lint
-./gradlew ktlintFormat detekt --continue
+./gradlew ktlintCheck ktlintFormat --continue
 
 # Unit tests
-./gradlew testDebugUnitTest testDevelopmentDebugUnitTest --parallel --quiet
+./gradlew testDevelopmentDebugUnitTest --parallel --quiet
 
 # Clean build
 ./gradlew clean --continue
 
 # Assemble
-./gradlew :app:assembleDebug :app:assembleDevelopmentDebug --parallel
+./gradlew :composeApp:assembleDevelopmentDebug --parallel
 
 # Lint check
-./gradlew :poa:composeApp:lintDevelopmentRelease --continue
+./gradlew ktlintCheck --continue
 ```
 -->
 
@@ -99,12 +98,11 @@ For AI-assisted JIRA ticket creation and management, see [MCP Setup Guide](docs/
 ## Project Structure
 
 ```
-poa/ # Main app module
- composeApp/ # Application entry point
- feature/ # Feature modules (Clean Architecture)
-core/ # Core business logic
-build-logic/ # Build configuration, plugins
-docs/ # Documentation, ADRs
+composeApp/  # Application entry point
+feature/     # Feature modules (Clean Architecture)
+core/        # Core business logic & infrastructure
+build-logic/ # Build configuration & convention plugins
+docs/        # Documentation, ADRs
 ```
 
 ## Build Variants
@@ -125,7 +123,7 @@ docs/ # Documentation, ADRs
 | Async        | Coroutines + Flow             |
 | Navigation   | Navigation Compose 3          |
 | Testing      | JUnit 5 + Mokkery + Turbine   |
-| CI/CD        | Jenkins                       |
+| CI/CD        | GitHub Actions                |
 
 ## Code Style
 
@@ -231,8 +229,8 @@ TODO THIS LATER:
 ** Ask first:**
 - Before modifying database schemas or migrations
 - Before adding new dependencies to `build.gradle.kts`
-- Before changing CI/CD configuration (Jenkinsfile)
-- Before disabling lint/detekt warnings
+- Before changing CI/CD configuration (`.github/workflows/ci_cd.yml`)
+- Before disabling lint warnings
 
 ** Never do:**
 - Commit secrets, API keys, or credentials

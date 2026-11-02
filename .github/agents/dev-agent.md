@@ -15,17 +15,14 @@ TODO THIS LATER:
 # Format code before committing
 ./gradlew ktlintFormat
 
-# Check static analysis
-./gradlew detekt --continue
+# Check code style and formatting
+./gradlew ktlintCheck --continue
 
-# Build specific module
-./gradlew :poa:feature::assembleDebug
+# Build application module
+./gradlew :composeApp:assembleDevelopmentDebug
 
 # Run app in development mode
-./gradlew :poa:composeApp:installDevelopmentDebug
-
-# Check lint issues
-./gradlew :poa:composeApp:lintDevelopmentRelease --continue
+./gradlew :composeApp:installDevelopmentDebug
 ```
 -->
 
@@ -192,19 +189,18 @@ class FeatureViewModelTest : BaseViewModelTest() {
 
 Use `com.spoonofcode.core.logging.POALogger`.
 
-## Detekt
+## Code Formatting (Ktlint)
 
-- **Never add new entries to `detekt-baseline.xml`**
-- Fix issues instead of suppressing them
-- Run `./gradlew detekt` before committing
+- Run `./gradlew ktlintFormat` to auto-fix code formatting issues
+- Run `./gradlew ktlintCheck` before committing to verify formatting
 
 ## Pre-Commit Checklist
 
 - [ ] All TODOs for this ticket resolved or tracked
 - [ ] No uncommented/unused code
 - [ ] No debug statements with sensitive data
-- [ ] `./gradlew ktlintFormat detekt` passes
-- [ ] Unit tests pass (80%+ coverage)
+- [ ] `./gradlew ktlintCheck` passes
+- [ ] Unit tests pass (`./gradlew testDevelopmentDebugUnitTest`)
 
 ## Boundaries
 
