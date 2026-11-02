@@ -64,7 +64,7 @@ jobs:
           sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
 
       - name: Run Unit Tests & Generate Kover Coverage Report
-        run: ./gradlew testDevelopmentDebugUnitTest koverHtmlReport --continue
+        run: ./gradlew testDevelopmentDebugUnitTest koverHtmlReport --parallel --continue
 
       - name: Upload Test Reports
         if: always()
