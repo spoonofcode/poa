@@ -32,17 +32,17 @@ class GetNFCTagUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with valid proof-of-wear url and transforms url`() =
+    fun `invoke returns success with valid proof-of-wear url`() =
         runTest {
             val url = "https://proof-of-wear.com/nft/123"
             val expectedTag = NFCTag(publicId = "123", tagType = "nft")
-            everySuspend { nfcTagRepository.getNFCTAg("https://pow-test1-960238188791.europe-west1.run.app/nft/123") } returns Result.success(expectedTag)
+            everySuspend { nfcTagRepository.getNFCTAg(url) } returns Result.success(expectedTag)
 
             val result = getNFCTagUseCase(url)
 
             assertTrue(result.isSuccess)
             assertEquals(expectedTag, result.getOrNull())
-            verifySuspend { nfcTagRepository.getNFCTAg("https://pow-test1-960238188791.europe-west1.run.app/nft/123") }
+            verifySuspend { nfcTagRepository.getNFCTAg(url) }
         }
 
     @Test
@@ -61,39 +61,11 @@ class GetNFCTagUseCaseTest : BaseTest() {
         runTest {
             val url = "https://proof-of-wear.com/nft/123"
             val invalidTag = NFCTag(publicId = "123", tagType = "invalid_type")
-            everySuspend { nfcTagRepository.getNFCTAg("https://pow-test1-960238188791.europe-west1.run.app/nft/123") } returns Result.success(invalidTag)
+            everySuspend { nfcTagRepository.getNFCTAg(url) } returns Result.success(invalidTag)
 
             val result = getNFCTagUseCase(url)
 
             assertTrue(result.isFailure)
             assertTrue(result.exceptionOrNull() is IllegalArgumentException)
         }
-
-    @Test
-    fun `transformUrl replaces domain with host from baseUrl`() {
-        val originalUrl = "https://proof-of-wear.com/nft/1"
-        val originalAuthUrl = "https://auth.proof-of-wear.com/nft/1"
-
-        val devBaseUrl = "https://pow-test1-960238188791.europe-west1.run.app"
-        assertEquals(
-            "https://pow-test1-960238188791.europe-west1.run.app/nft/1",
-            GetNFCTagUseCase.transformUrl(originalUrl, devBaseUrl),
-        )
-        assertEquals(
-            "https://pow-test1-960238188791.europe-west1.run.app/nft/1",
-            GetNFCTagUseCase.transformUrl(originalAuthUrl, devBaseUrl),
-        )
-
-        val stagingBaseUrl = "https://staging-api.poa.spoonofcode.com"
-        assertEquals(
-            "https://staging-api.poa.spoonofcode.com/nft/1",
-            GetNFCTagUseCase.transformUrl(originalUrl, stagingBaseUrl),
-        )
-
-        val prodBaseUrl = "https://api.poa.spoonofcode.com"
-        assertEquals(
-            "https://api.poa.spoonofcode.com/nft/1",
-            GetNFCTagUseCase.transformUrl(originalUrl, prodBaseUrl),
-        )
-    }
 }

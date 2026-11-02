@@ -1,14 +1,11 @@
 package com.spoonofcode.feature.scan.nfc.domain.di
 
-import com.spoonofcode.core.network.NetworkConfig
-import com.spoonofcode.core.network.NetworkConfigImpl
 import com.spoonofcode.feature.scan.nfc.domain.model.NFCTag
 import com.spoonofcode.feature.scan.nfc.domain.repository.NFCTagRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val scanDomainTestModule =
@@ -16,7 +13,6 @@ val scanDomainTestModule =
         includes(
             scanDomainModule,
         )
-        single { NetworkConfigImpl() } bind NetworkConfig::class
         single<NFCTagRepository> {
             mock {
                 everySuspend { getNFCTAg(any()) } returns

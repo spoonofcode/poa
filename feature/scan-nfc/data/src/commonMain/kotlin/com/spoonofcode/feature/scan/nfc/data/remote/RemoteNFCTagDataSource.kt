@@ -3,6 +3,7 @@ package com.spoonofcode.feature.scan.nfc.data.remote
 import com.spoonofcode.core.data.coroutines.DispatcherProvider
 import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.network.HttpStatusCodes
+import com.spoonofcode.core.network.NetworkConfig
 import com.spoonofcode.feature.scan.nfc.data.model.NFCTagResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -21,13 +22,15 @@ internal class RemoteNFCTagDataSource(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,
     private val poaLogger: POALogger,
+    private val networkConfig: NetworkConfig,
 ) {
     suspend fun readNFCTagPublicId(url: String): Result<NFCTagResponse> {
+        val transformedUrl = transformUrl(url, networkConfig.baseUrl)
         val formattedUrl =
-            if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                "https://$url"
+            if (!transformedUrl.startsWith("http://") && !transformedUrl.startsWith("https://")) {
+                "https://$transformedUrl"
             } else {
-                url
+                transformedUrl
             }.filterNot { it.isWhitespace() || it.isISOControl() }
 
         poaLogger.info("RemoteNFCTagDataSource: Reading NFC tag from URL: $formattedUrl")
@@ -81,4 +84,25 @@ internal class RemoteNFCTagDataSource(
     }
 
     private fun unhandledException(response: HttpResponse): HttpResponse = throw Exception("Unhandled Error $response")
+
+    companion object {
+        private const val POA_DOMAIN_NAME = "proof-of-wear.com"
+        private const val POA_AUTH_DOMAIN_NAME = "auth.proof-of-wear.com"
+
+        fun transformUrl(originalUrl: String, baseUrl: String): String {
+            val targetHost =
+                baseUrl
+                    .removePrefix("https://")
+                    .removePrefix("http://")
+                    .substringBefore("/")
+
+            return if (originalUrl.contains(POA_AUTH_DOMAIN_NAME)) {
+                originalUrl.replace(POA_AUTH_DOMAIN_NAME, targetHost)
+            } else if (originalUrl.contains(POA_DOMAIN_NAME)) {
+                originalUrl.replace(POA_DOMAIN_NAME, targetHost)
+            } else {
+                originalUrl
+            }
+        }
+    }
 }
