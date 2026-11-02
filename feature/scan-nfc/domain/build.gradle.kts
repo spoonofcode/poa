@@ -5,6 +5,12 @@ plugins {
 
 kotlin {
     sourceSets {
+        commonMain {
+            dependencies {
+                implementation(projects.core.network)
+            }
+        }
+
         commonTest {
             dependencies {
                 implementation(projects.core.test)
