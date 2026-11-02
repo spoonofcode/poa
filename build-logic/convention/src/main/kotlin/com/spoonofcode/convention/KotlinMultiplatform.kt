@@ -12,6 +12,7 @@ internal fun Project.configureKotlinMultiplatform(
     }
     configureIosTargets(baseName = pathToFrameworkName())
     configureKtlint()
+    configureTesting()
 
     extensions.configure<KotlinMultiplatformExtension> {
         applyHierarchyTemplate()

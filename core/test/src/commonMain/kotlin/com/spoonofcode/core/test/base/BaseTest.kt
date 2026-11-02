@@ -10,9 +10,10 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
+import org.koin.core.Koin
+import org.koin.core.KoinApplication
 import org.koin.core.module.Module
+import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.get
@@ -21,9 +22,13 @@ import org.koin.test.get
 abstract class BaseTest : KoinTest {
     protected var modules: Array<Module> = emptyArray()
     protected val testDispatcher: TestDispatcher by lazy { StandardTestDispatcher() }
+    private var _koinApp: KoinApplication? = null
+
+    override fun getKoin(): Koin =
+        _koinApp?.koin ?: error("Koin is not initialized. Call super.beforeTest() first.")
 
     open fun beforeTest() {
-        startKoin {
+        _koinApp = koinApplication {
             allowOverride(true)
             modules(
                 *modules,
@@ -39,7 +44,8 @@ abstract class BaseTest : KoinTest {
 
     open fun afterTest() {
         Dispatchers.resetMain()
-        stopKoin()
+        _koinApp?.close()
+        _koinApp = null
     }
 
     protected inline fun <reified T : Any> getSut(): T = get<T>()
