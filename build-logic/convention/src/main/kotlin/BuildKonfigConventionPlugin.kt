@@ -1,53 +1,25 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
-import com.codingfeline.buildkonfig.gradle.BuildKonfigExtension
 import com.spoonofcode.convention.applyPlugin
-import com.spoonofcode.convention.pathToPackageName
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.configure
 
-class BuildKonfigConventionPlugin: Plugin<Project> {
+class BuildKonfigConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
             applyPlugin("buildkonfig")
 
-            extensions.configure<BuildKonfigExtension> {
-                packageName = target.pathToPackageName()
-                defaultConfigs {
-                    val recaptchaSiteKeyAndroid = gradleLocalProperties(rootDir, rootProject.providers)
-                        .getProperty("RECAPTCHA_SITE_KEY_ANDROID")
-                        ?: throw IllegalStateException(
-                            "Missing RECAPTCHA_SITE_KEY_ANDROID property in local.properties"
-                        )
-
-                    val recaptchaSiteKeyIOS = gradleLocalProperties(rootDir, rootProject.providers)
-                        .getProperty("RECAPTCHA_SITE_KEY_IOS")
-                        ?: throw IllegalStateException(
-                            "Missing RECAPTCHA_SITE_KEY_IOS property in local.properties"
-                        )
-
-                    val recaptchaSiteKeyWeb = gradleLocalProperties(rootDir, rootProject.providers)
-                        .getProperty("RECAPTCHA_SITE_KEY_WEB")
-                        ?: throw IllegalStateException(
-                            "Missing RECAPTCHA_SITE_KEY_WEB property in local.properties"
-                        )
-
-                    val googleIdServerClientId = gradleLocalProperties(rootDir, rootProject.providers)
-                        .getProperty("GOOGLE_ID_SERVER_CLIENT_ID_WEB")
-                        ?: throw IllegalStateException(
-                            "Missing GOOGLE_ID_SERVER_CLIENT_ID_WEB property in local.properties"
-                        )
-
-                    buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_ANDROID", recaptchaSiteKeyAndroid)
-                    buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_IOS", recaptchaSiteKeyIOS)
-                    buildConfigField(Type.STRING, "RECAPTCHA_SITE_KEY_WEB", recaptchaSiteKeyWeb)
-
-                    buildConfigField(Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_WEB", googleIdServerClientId)
+            // Auto-detect BuildKonfig flavor from running Gradle tasks (e.g. assembleProductionDebug -> production)
+            val taskNames = gradle.startParameter.taskNames
+            val activeFlavor = when {
+                taskNames.any { it.contains("Production", ignoreCase = true) } -> "production"
+                taskNames.any { it.contains("Staging", ignoreCase = true) } -> "staging"
+                taskNames.any { it.contains("Development", ignoreCase = true) } -> "development"
+                else -> {
+                    (findProperty("buildkonfig.flavor") as? String) ?: "development"
                 }
             }
+            extensions.extraProperties["buildkonfig.flavor"] = activeFlavor
         }
     }
 }

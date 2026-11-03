@@ -37,31 +37,26 @@ internal class ScanViewModel(
     private fun checkProduct(nfcTag: NfcTag) {
         viewModelScope.launch {
             showLoadingView()
-            val urlOnTag = nfcTag.ndef
-            if (urlOnTag?.contains(POA_DOMAIN_NAME) == true) {
-                getNFCTagUseCase(url = transformUrl(urlOnTag))
-                    .onSuccess { nfcTag ->
-                        if (nfcTag.tagType in VALID_NFC_TAG_TYPES) {
-                            getProductByIdUseCase(productId = nfcTag.publicId)
-                                .onSuccess { product ->
-                                    viewModelNavigator.push(
-                                        ProductModuleRoute.ProductDetails(
-                                            productId = product.id,
-                                        ),
-                                    )
-                                    showContentView()
-                                }.onFailure {
-                                    showErrorView()
-                                }
-                        } else {
-                            showProductNotFound()
+            getNFCTagUseCase(url = nfcTag.ndef)
+                .onSuccess { tag ->
+                    getProductByIdUseCase(productId = tag.publicId)
+                        .onSuccess { product ->
+                            viewModelNavigator.push(
+                                ProductModuleRoute.ProductDetails(
+                                    productId = product.id,
+                                ),
+                            )
+                            showContentView()
+                        }.onFailure {
+                            showErrorView()
                         }
-                    }.onFailure {
+                }.onFailure { error ->
+                    if (error is IllegalArgumentException) {
+                        showProductNotFound()
+                    } else {
                         showErrorView()
                     }
-            } else {
-                showProductNotFound()
-            }
+                }
         }
     }
 
@@ -72,19 +67,5 @@ internal class ScanViewModel(
 
     private fun scanAgain() {
         updateContentState { copy(isProductNotFoundViewVisible = false) }
-    }
-
-    companion object {
-        private const val POA_DOMAIN_NAME = "proof-of-wear.com"
-        private const val POA_AUTH_DOMAIN_NAME = "auth.proof-of-wear.com"
-        private const val POA_TEST_DOMAIN_NAME = "pow-test1-960238188791.europe-west1.run.app"
-        private val VALID_NFC_TAG_TYPES = setOf("nft", "unique_item", "redirect")
-
-        fun transformUrl(originalUrl: String): String =
-            if (originalUrl.contains(POA_AUTH_DOMAIN_NAME)) {
-                originalUrl.replace(POA_AUTH_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
-            } else {
-                originalUrl.replace(POA_DOMAIN_NAME, POA_TEST_DOMAIN_NAME)
-            }
     }
 }
