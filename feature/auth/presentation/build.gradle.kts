@@ -59,8 +59,10 @@ buildkonfig {
     packageName = "com.spoonofcode.feature.auth.presentation"
 
     val localProperties = gradleLocalProperties(rootDir, rootProject.providers)
-    val googleIdServerClientId = localProperties.getProperty("GOOGLE_ID_SERVER_CLIENT_ID_WEB")
-        ?: throw IllegalStateException("Missing GOOGLE_ID_SERVER_CLIENT_ID_WEB")
+    val googleIdServerClientId =
+        localProperties
+            .getProperty("GOOGLE_ID_SERVER_CLIENT_ID_WEB")
+            ?: throw IllegalStateException("Missing GOOGLE_ID_SERVER_CLIENT_ID_WEB")
 
     defaultConfigs {
         buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_WEB", googleIdServerClientId)
