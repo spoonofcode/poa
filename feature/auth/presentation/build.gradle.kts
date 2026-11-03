@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.convention.buildkonfig)
     alias(libs.plugins.convention.cmp.presentation)
@@ -51,4 +53,16 @@ compose.resources {
     publicResClass = true
     packageOfResClass = "com.spoonofcode.feature.auth.presentation"
     generateResClass = always
+}
+
+buildkonfig {
+    packageName = "com.spoonofcode.feature.auth.presentation"
+
+    val localProperties = gradleLocalProperties(rootDir, rootProject.providers)
+    val googleIdServerClientId = localProperties.getProperty("GOOGLE_ID_SERVER_CLIENT_ID_WEB")
+        ?: throw IllegalStateException("Missing GOOGLE_ID_SERVER_CLIENT_ID_WEB")
+
+    defaultConfigs {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_WEB", googleIdServerClientId)
+    }
 }
