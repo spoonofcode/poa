@@ -65,6 +65,10 @@ buildkonfig {
             ?: throw IllegalStateException("Missing GOOGLE_ID_SERVER_CLIENT_ID_WEB")
 
     defaultConfigs {
-        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "GOOGLE_ID_SERVER_CLIENT_ID_WEB", googleIdServerClientId)
+        buildConfigField(
+            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            name = "GOOGLE_ID_SERVER_CLIENT_ID_WEB",
+            value = googleIdServerClientId,
+        )
     }
 }

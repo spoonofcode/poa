@@ -33,7 +33,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Ktlint Check
-        run: ./gradlew ktlintCheck
+        run: ./gradlew --no-build-cache ktlintCheck
 
   test:
     name: Unit Tests & Code Coverage
