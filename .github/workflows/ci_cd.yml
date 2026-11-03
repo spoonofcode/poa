@@ -54,6 +54,15 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create local.properties
+        run: |
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
+          echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
+
       - name: Decode Google Services JSON
         run: |
           mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
@@ -99,6 +108,15 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create local.properties
+        run: |
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
+          echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
+
       - name: Decode Google Services JSON
         run: |
           mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
@@ -139,6 +157,15 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Create local.properties
+        run: |
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
+          echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
       - name: Decode Google Services JSON
         run: |
@@ -188,6 +215,15 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create local.properties
+        run: |
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
+          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
+          echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
+
       - name: Decode Google Services JSON
         run: |
           mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
@@ -209,7 +245,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew :composeApp:bundleProductionRelease
 
-      - name: Upload Production AAB Artifact
+      - name: Upload Production AAB Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: TaggyGo-ProductionRelease-v${{ github.run_number }}
