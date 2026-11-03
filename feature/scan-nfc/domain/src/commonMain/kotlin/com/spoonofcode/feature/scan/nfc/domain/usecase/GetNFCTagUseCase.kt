@@ -12,7 +12,8 @@ class GetNFCTagUseCase(
         if (url == null || !url.contains(POA_DOMAIN_NAME)) {
             return Result.failure(IllegalArgumentException("Invalid NFC tag URL or domain"))
         }
-        return nfcTagRepository.getNFCTAg(url = url)
+        return nfcTagRepository
+            .getNFCTAg(url = url)
             .mapCatching { tag ->
                 if (tag.tagType !in VALID_NFC_TAG_TYPES) {
                     throw IllegalArgumentException("Invalid NFC tag type: ${tag.tagType}")

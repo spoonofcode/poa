@@ -89,7 +89,10 @@ internal class RemoteNFCTagDataSource(
         private const val POA_DOMAIN_NAME = "proof-of-wear.com"
         private const val POA_AUTH_DOMAIN_NAME = "auth.proof-of-wear.com"
 
-        fun transformUrl(originalUrl: String, baseUrl: String): String {
+        fun transformUrl(
+            originalUrl: String,
+            baseUrl: String,
+        ): String {
             val targetHost =
                 baseUrl
                     .removePrefix("https://")
