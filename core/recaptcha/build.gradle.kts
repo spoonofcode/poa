@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-
 plugins {
     alias(libs.plugins.convention.buildkonfig)
     alias(libs.plugins.convention.kmp.library)
@@ -37,38 +35,17 @@ kotlin {
 buildkonfig {
     packageName = "com.spoonofcode.core.recaptcha"
 
-    val localProperties = gradleLocalProperties(rootDir, rootProject.providers)
-
-    val recaptchaDev =
-        localProperties
-            .getProperty("RECAPTCHA_SITE_KEY_ANDROID_POA_DEV")
-            ?: throw IllegalStateException("Missing RECAPTCHA_SITE_KEY_ANDROID_POA_DEV")
-
-    val recaptchaStage =
-        localProperties
-            .getProperty("RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE")
-            ?: throw IllegalStateException("Missing RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE")
-
-    val recaptchaProd =
-        localProperties
-            .getProperty("RECAPTCHA_SITE_KEY_ANDROID_POA_PROD")
-            ?: throw IllegalStateException("Missing RECAPTCHA_SITE_KEY_ANDROID_POA_PROD")
-
-    val recaptchaIOS =
-        localProperties
-            .getProperty("RECAPTCHA_SITE_KEY_IOS")
-            ?: throw IllegalStateException("Missing RECAPTCHA_SITE_KEY_IOS")
-
-    val recaptchaWeb =
-        localProperties
-            .getProperty("RECAPTCHA_SITE_KEY_WEB")
-            ?: throw IllegalStateException("Missing RECAPTCHA_SITE_KEY_WEB")
+    val recaptchaAndroidDev = "6LdxDkMsAAAAAF927MgxMhsyHubIMlRd9JzFbrb2"
+    val recaptchaAndroidStage = "6LcUEg0uAAAAAO2vBUZ4WxfL2bIqnMdRApYUb0Wo"
+    val recaptchaAndroidProd = "6LejYTUsAAAAAA-suNhCr1DkfzbpcHmZpXWIG-E3"
+    val recaptchaIOS = "6LdzDkMsAAAAAO5nqrMIeTsEx8iSXed0J4WjCMwb"
+    val recaptchaWeb = "6LeC-kUsAAAAABw2GVwnjheGhOBXThHtibkzwXrQ"
 
     defaultConfigs {
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_ANDROID",
-            value = recaptchaDev,
+            value = recaptchaAndroidDev,
         )
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
@@ -86,7 +63,7 @@ buildkonfig {
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_ANDROID",
-            value = recaptchaDev,
+            value = recaptchaAndroidDev,
         )
     }
 
@@ -94,7 +71,7 @@ buildkonfig {
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_ANDROID",
-            value = recaptchaStage,
+            value = recaptchaAndroidStage,
         )
     }
 
@@ -102,7 +79,7 @@ buildkonfig {
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_ANDROID",
-            value = recaptchaProd,
+            value = recaptchaAndroidProd,
         )
     }
 }
