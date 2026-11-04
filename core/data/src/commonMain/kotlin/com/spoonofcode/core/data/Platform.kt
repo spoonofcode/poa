@@ -16,6 +16,5 @@ val PlatformType.recaptchaName: String
     get() =
         when (this) {
             PlatformType.ANDROID -> "android"
-            // In CMP we use Web for iOS
-            PlatformType.IOS -> "web"
+            PlatformType.IOS -> "ios"
         }
