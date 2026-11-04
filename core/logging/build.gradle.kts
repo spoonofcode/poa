@@ -30,6 +30,6 @@ buildkonfig {
     }
 
     defaultConfigs("production") {
-        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN, "ENABLE_LOGGING", "false")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.BOOLEAN, "ENABLE_LOGGING", "true")
     }
 }

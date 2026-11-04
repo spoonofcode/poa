@@ -6,7 +6,7 @@ import co.touchlab.kermit.Severity
 object KermitLogger : POALogger {
     init {
         if (!BuildKonfig.ENABLE_LOGGING) {
-            Logger.setMinSeverity(Severity.Assert)
+            Logger.setMinSeverity(Severity.Error)
         } else {
             Logger.setMinSeverity(Severity.Verbose)
         }

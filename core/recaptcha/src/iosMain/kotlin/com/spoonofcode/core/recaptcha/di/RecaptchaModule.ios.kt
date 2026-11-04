@@ -1,5 +1,6 @@
 package com.spoonofcode.core.recaptcha.di
 
+import com.spoonofcode.core.logging.POALogger
 import com.spoonofcode.core.recaptcha.BuildKonfig
 import com.spoonofcode.core.recaptcha.IosRecaptchaPlatform
 import com.spoonofcode.core.recaptcha.RecaptchaPlatform
@@ -11,6 +12,7 @@ actual val platformRecaptchaModule =
         single {
             IosRecaptchaPlatform(
                 siteKey = BuildKonfig.RECAPTCHA_SITE_KEY_IOS,
+                poaLogger = get<POALogger>(),
             )
         } bind RecaptchaPlatform::class
     }

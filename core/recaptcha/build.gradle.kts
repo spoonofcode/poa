@@ -29,6 +29,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(projects.core.logging)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
             }
