@@ -34,11 +34,6 @@ jobs:
 
       - name: Create local.properties
         run: |
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
       - name: Run Ktlint Check
@@ -65,11 +60,6 @@ jobs:
 
       - name: Create local.properties
         run: |
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
       - name: Decode Google Services JSON
@@ -119,11 +109,6 @@ jobs:
 
       - name: Create local.properties
         run: |
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
       - name: Decode Google Services JSON
@@ -169,11 +154,6 @@ jobs:
 
       - name: Create local.properties
         run: |
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
       - name: Decode Google Services JSON
@@ -226,11 +206,6 @@ jobs:
 
       - name: Create local.properties
         run: |
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_DEV=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_DEV }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_STAGE }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_ANDROID_POA_PROD=${{ secrets.RECAPTCHA_SITE_KEY_ANDROID_POA_PROD }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_IOS=${{ secrets.RECAPTCHA_SITE_KEY_IOS }}" >> local.properties
-          echo "RECAPTCHA_SITE_KEY_WEB=${{ secrets.RECAPTCHA_SITE_KEY_WEB }}" >> local.properties
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
       - name: Decode Google Services JSON
