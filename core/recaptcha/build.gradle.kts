@@ -1,12 +1,35 @@
 plugins {
     alias(libs.plugins.convention.buildkonfig)
     alias(libs.plugins.convention.kmp.library)
+    alias(libs.plugins.kotlin.cocoapods)
 }
 
 kotlin {
+    cocoapods {
+        version = "1.0"
+        summary = "Recaptcha core module"
+        homepage = "https://github.com/spoonofcode/poa"
+        ios.deploymentTarget = "18.0"
+
+        pod("RecaptchaEnterpriseSDK")
+
+        framework {
+            baseName = "CoreRecaptcha"
+            isStatic = true
+        }
+
+        xcodeConfigurationToNativeBuildType["Debug-Development"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["Release-Development"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType["Debug-Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["Release-Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType["Debug-Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["Release-Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
+    }
+
     sourceSets {
         commonMain {
             dependencies {
+                implementation(projects.core.logging)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
             }
@@ -38,8 +61,9 @@ buildkonfig {
     val recaptchaAndroidDev = "6LdxDkMsAAAAAF927MgxMhsyHubIMlRd9JzFbrb2"
     val recaptchaAndroidStage = "6LcUEg0uAAAAAO2vBUZ4WxfL2bIqnMdRApYUb0Wo"
     val recaptchaAndroidProd = "6LejYTUsAAAAAA-suNhCr1DkfzbpcHmZpXWIG-E3"
-    val recaptchaIOS = "6LdzDkMsAAAAAO5nqrMIeTsEx8iSXed0J4WjCMwb"
-    val recaptchaWeb = "6LeC-kUsAAAAABw2GVwnjheGhOBXThHtibkzwXrQ"
+    val recaptchaIOSDev = "6LdzDkMsAAAAAO5nqrMIeTsEx8iSXed0J4WjCMwb"
+    val recaptchaIOSStage = "6LfzFRAuAAAAAHIrpbwBvSXWiDg9Zv2_EKky1oHz"
+    val recaptchaIOSProd = "6LdQ7TksAAAAALlZIObxZXjOQlDAEA8NlGN_Q_hM"
 
     defaultConfigs {
         buildConfigField(
@@ -50,12 +74,7 @@ buildkonfig {
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_IOS",
-            value = recaptchaIOS,
-        )
-        buildConfigField(
-            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
-            name = "RECAPTCHA_SITE_KEY_WEB",
-            value = recaptchaWeb,
+            value = recaptchaIOSDev,
         )
     }
 
@@ -65,6 +84,11 @@ buildkonfig {
             name = "RECAPTCHA_SITE_KEY_ANDROID",
             value = recaptchaAndroidDev,
         )
+        buildConfigField(
+            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            name = "RECAPTCHA_SITE_KEY_IOS",
+            value = recaptchaIOSDev,
+        )
     }
 
     defaultConfigs("staging") {
@@ -73,6 +97,11 @@ buildkonfig {
             name = "RECAPTCHA_SITE_KEY_ANDROID",
             value = recaptchaAndroidStage,
         )
+        buildConfigField(
+            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            name = "RECAPTCHA_SITE_KEY_IOS",
+            value = recaptchaIOSStage,
+        )
     }
 
     defaultConfigs("production") {
@@ -80,6 +109,11 @@ buildkonfig {
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_ANDROID",
             value = recaptchaAndroidProd,
+        )
+        buildConfigField(
+            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+            name = "RECAPTCHA_SITE_KEY_IOS",
+            value = recaptchaIOSProd,
         )
     }
 }
