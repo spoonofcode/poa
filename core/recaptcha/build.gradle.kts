@@ -38,8 +38,9 @@ buildkonfig {
     val recaptchaAndroidDev = "6LdxDkMsAAAAAF927MgxMhsyHubIMlRd9JzFbrb2"
     val recaptchaAndroidStage = "6LcUEg0uAAAAAO2vBUZ4WxfL2bIqnMdRApYUb0Wo"
     val recaptchaAndroidProd = "6LejYTUsAAAAAA-suNhCr1DkfzbpcHmZpXWIG-E3"
-    val recaptchaIOS = "6LdzDkMsAAAAAO5nqrMIeTsEx8iSXed0J4WjCMwb"
-    val recaptchaWeb = "6LeC-kUsAAAAABw2GVwnjheGhOBXThHtibkzwXrQ"
+    val recaptchaIOSDev = "6LdzDkMsAAAAAO5nqrMIeTsEx8iSXed0J4WjCMwb"
+    val recaptchaIOSProd = "6LdQ7TksAAAAALlZIObxZXjOQlDAEA8NlGN_Q_hM"
+    val recaptchaWebDev = "6LeC-kUsAAAAABw2GVwnjheGhOBXThHtibkzwXrQ"
 
     defaultConfigs {
         buildConfigField(
@@ -50,12 +51,12 @@ buildkonfig {
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_IOS",
-            value = recaptchaIOS,
+            value = recaptchaIOSDev,
         )
         buildConfigField(
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_WEB",
-            value = recaptchaWeb,
+            value = recaptchaWebDev,
         )
     }
 
