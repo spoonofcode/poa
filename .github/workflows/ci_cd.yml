@@ -168,8 +168,8 @@ jobs:
             echo "${{ secrets.GOOGLE_SERVICES_INFO_DEV_BASE64 }}" | base64 --decode > iosApp/Firebase/Development/GoogleService-Info.plist
           fi
 
-      - name: Generate Kotlin CocoaPods Podspec
-        run: ./gradlew podspec
+      - name: Generate Kotlin Framework & Podspec
+        run: ./gradlew podspec generateDummyFramework
 
       - name: Install CocoaPods
         run: |
@@ -186,11 +186,61 @@ jobs:
                      -destination 'generic/platform=iOS Simulator' \
                      clean build
 
+  auto_tag_release:
+    name: Auto Tag Release on Main
+    runs-on: ubuntu-latest
+    needs: [lint, test, verify_android_build, verify_ios_build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    outputs:
+      tag_created: ${{ steps.create_tag.outputs.tag_created }}
+      release_tag: ${{ steps.create_tag.outputs.release_tag }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Auto Create Git Tag from Release Branch PR
+        id: create_tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_BRANCH=$(gh pr list --state merged --limit 1 --json headRefName --jq '.[0].headRefName')
+          echo "Merged PR branch: $PR_BRANCH"
+
+          if [[ "$PR_BRANCH" =~ ^release/v?([0-9]+\.[0-9]+\.[0-9]+.*)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            TAG_NAME="v${VERSION}"
+            echo "Extracted release tag: $TAG_NAME"
+
+            if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+              echo "Tag $TAG_NAME already exists."
+              echo "tag_created=false" >> $GITHUB_OUTPUT
+              echo "release_tag=$TAG_NAME" >> $GITHUB_OUTPUT
+            else
+              echo "Creating and pushing tag $TAG_NAME..."
+              git config user.name "github-actions[bot]"
+              git config user.email "github-actions[bot]@users.noreply.github.com"
+              git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
+              git push origin "$TAG_NAME"
+              echo "tag_created=true" >> $GITHUB_OUTPUT
+              echo "release_tag=$TAG_NAME" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Branch $PR_BRANCH is not a release branch. Skipping auto-tagging."
+            echo "tag_created=false" >> $GITHUB_OUTPUT
+          fi
+
   production_android_release:
     name: Signed Production Build - Android
     runs-on: ubuntu-latest
-    needs: [lint, test, verify_android_build]
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: [lint, test, verify_android_build, auto_tag_release]
+    if: |
+      always() &&
+      needs.lint.result == 'success' &&
+      needs.test.result == 'success' &&
+      needs.verify_android_build.result == 'success' &&
+      (startsWith(github.ref, 'refs/tags/v') || needs.auto_tag_release.outputs.tag_created == 'true')
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -223,7 +273,7 @@ jobs:
 
       - name: Build Signed Production Release Bundle
         env:
-          ANDROID_RELEASE_VERSION: ${{ github.ref_name }}
+          ANDROID_RELEASE_VERSION: ${{ github.ref_name != 'main' && github.ref_name || needs.auto_tag_release.outputs.release_tag }}
           KEYSTORE_PATH: ${{ github.workspace }}/release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
@@ -233,14 +283,19 @@ jobs:
       - name: Upload Production AAB Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: TaggyGo-Android-Release-${{ github.ref_name }}
+          name: TaggyGo-Android-Release-${{ github.ref_name != 'main' && github.ref_name || needs.auto_tag_release.outputs.release_tag }}
           path: composeApp/build/outputs/bundle/productionRelease/*.aab
 
   production_ios_release:
     name: Signed Production Build - iOS
     runs-on: macos-14
-    needs: [lint, test, verify_ios_build]
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: [lint, test, verify_ios_build, auto_tag_release]
+    if: |
+      always() &&
+      needs.lint.result == 'success' &&
+      needs.test.result == 'success' &&
+      needs.verify_ios_build.result == 'success' &&
+      (startsWith(github.ref, 'refs/tags/v') || needs.auto_tag_release.outputs.tag_created == 'true')
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -268,8 +323,8 @@ jobs:
             echo "${{ secrets.GOOGLE_SERVICES_INFO_PROD_BASE64 }}" | base64 --decode > iosApp/Firebase/Production/GoogleService-Info.plist
           fi
 
-      - name: Generate Kotlin CocoaPods Podspec
-        run: ./gradlew podspec
+      - name: Generate Kotlin Framework & Podspec
+        run: ./gradlew podspec generateDummyFramework
 
       - name: Install CocoaPods
         run: |

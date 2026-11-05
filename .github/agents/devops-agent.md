@@ -49,8 +49,9 @@ jobs:
   test: # Unit tests (testDevelopmentDebugUnitTest)
   verify_android_build: # Verification build Android (assembleDevelopmentDebug)
   verify_ios_build: # Verification build iOS (xcodebuild Debug-Development)
-  production_android_release: # Production signed build Android (bundleProductionRelease on main / tags)
-  production_ios_release: # Production build iOS (xcodebuild Release-Production on main / tags)
+  auto_tag_release: # Auto-creates git tag (vX.Y.Z) on main from merged release/X.Y.Z PR
+  production_android_release: # Production signed build Android (bundleProductionRelease)
+  production_ios_release: # Production build iOS (xcodebuild Release-Production)
 ```
 
 ## Build Variants for CI
