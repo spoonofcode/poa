@@ -140,7 +140,7 @@ jobs:
 
   verify_ios_build:
     name: Verification Build - iOS (PR Check)
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -288,7 +288,7 @@ jobs:
 
   production_ios_release:
     name: Signed Production Build - iOS
-    runs-on: macos-14
+    runs-on: macos-15
     needs: [lint, test, verify_ios_build, auto_tag_release]
     if: |
       always() &&
