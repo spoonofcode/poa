@@ -39,7 +39,7 @@ You are a DevOps engineer specializing in Compose Multiplatform CI/CD, GitHub Ac
 
 | File | Purpose |
 |------|---------|
-| `.github/workflows/ci_cd.yml` | Main CI/CD pipeline (runs Ktlint, Unit Tests, PR Verification, Staging & Production Releases) |
+| `.github/workflows/ci_cd.yml` | Main CI/CD pipeline (runs Ktlint, Unit Tests, PR Verification, Production Release) |
 
 ## Pipeline Jobs (typical)
 
@@ -48,7 +48,6 @@ jobs:
   lint: # Code formatting check (ktlintCheck)
   test: # Unit tests (testDevelopmentDebugUnitTest)
   verify_build: # Verification build (assembleDevelopmentDebug)
-  staging_release: # Staging build (bundleStagingRelease on develop or release/*)
   production_release: # Production signed build (bundleProductionRelease on main / tags)
 ```
 
@@ -58,7 +57,6 @@ jobs:
 |---------|----------|
 | `developmentDebug` | Dev builds, fast iteration |
 | `developmentRelease` | Internal testing |
-| `stagingDebug` / `stagingRelease` | QA / Staging environment |
 | `productionDebug` / `productionRelease` | Play Store release |
 
 ## Versioning
@@ -74,7 +72,7 @@ jobs:
 |-------------|---------|---------|
 | Development | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-develop-SNAPSHOT` |
 | Feature | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-feature-login-SNAPSHOT` |
-| Staging (RC) | `X.Y.Z-rc#` | `5.20.0-rc1` |
+| Release (RC) | `X.Y.Z-rc#` | `5.20.0-rc1` |
 | Production | `X.Y.Z` | `5.20.0` |
 | Hotfix | `X.Y.Z` | `5.20.1` |
 

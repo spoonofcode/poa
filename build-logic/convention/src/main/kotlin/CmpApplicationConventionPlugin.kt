@@ -45,12 +45,7 @@ class CmpApplicationConventionPlugin : Plugin<Project> {
                         versionNameSuffix = "-dev"
                         resValue(type = "string", name = "app_name", value = "Taggy Go [DEV]")
                     }
-                    create("staging") {
-                        dimension = "environment"
-                        applicationIdSuffix = ".staging"
-                        versionNameSuffix = "-staging"
-                        resValue(type = "string", name = "app_name", value = "Taggy Go [STAGE]")
-                    }
+
                     create("production") {
                         dimension = "environment"
                         resValue(type = "string", name = "app_name", value = "Taggy Go")

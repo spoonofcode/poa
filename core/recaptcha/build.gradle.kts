@@ -20,8 +20,6 @@ kotlin {
 
         xcodeConfigurationToNativeBuildType["Debug-Development"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["Release-Development"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
-        xcodeConfigurationToNativeBuildType["Debug-Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
-        xcodeConfigurationToNativeBuildType["Release-Staging"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
         xcodeConfigurationToNativeBuildType["Debug-Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
         xcodeConfigurationToNativeBuildType["Release-Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
     }
@@ -59,10 +57,8 @@ buildkonfig {
     packageName = "com.spoonofcode.core.recaptcha"
 
     val recaptchaAndroidDev = "6LdxDkMsAAAAAF927MgxMhsyHubIMlRd9JzFbrb2"
-    val recaptchaAndroidStage = "6LcUEg0uAAAAAO2vBUZ4WxfL2bIqnMdRApYUb0Wo"
     val recaptchaAndroidProd = "6LejYTUsAAAAAA-suNhCr1DkfzbpcHmZpXWIG-E3"
     val recaptchaIOSDev = "6LdzDkMsAAAAAO5nqrMIeTsEx8iSXed0J4WjCMwb"
-    val recaptchaIOSStage = "6LfzFRAuAAAAAHIrpbwBvSXWiDg9Zv2_EKky1oHz"
     val recaptchaIOSProd = "6LdQ7TksAAAAALlZIObxZXjOQlDAEA8NlGN_Q_hM"
 
     defaultConfigs {
@@ -88,19 +84,6 @@ buildkonfig {
             type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
             name = "RECAPTCHA_SITE_KEY_IOS",
             value = recaptchaIOSDev,
-        )
-    }
-
-    defaultConfigs("staging") {
-        buildConfigField(
-            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
-            name = "RECAPTCHA_SITE_KEY_ANDROID",
-            value = recaptchaAndroidStage,
-        )
-        buildConfigField(
-            type = com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
-            name = "RECAPTCHA_SITE_KEY_IOS",
-            value = recaptchaIOSStage,
         )
     }
 

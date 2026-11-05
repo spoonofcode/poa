@@ -3,8 +3,6 @@ BUNDLE_ID=com.spoonofcode.poa
 APP_NAME=poa
 
 KOTLIN_FRAMEWORK_BUILD_TYPE[config=Debug-Development] = debug
-KOTLIN_FRAMEWORK_BUILD_TYPE[config=Debug-Staging] = debug
 KOTLIN_FRAMEWORK_BUILD_TYPE[config=Debug-Production] = debug
 KOTLIN_FRAMEWORK_BUILD_TYPE[config=Release-Development] = release
-KOTLIN_FRAMEWORK_BUILD_TYPE[config=Release-Staging] = release
 KOTLIN_FRAMEWORK_BUILD_TYPE[config=Release-Production] = release
