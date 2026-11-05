@@ -62,14 +62,23 @@ jobs:
         run: |
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
-      - name: Decode Google Services JSON
+      - name: Decode Firebase Configuration Secrets
         run: |
-          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
-          cp composeApp/google-services.json composeApp/src/google-services.json
-          cp composeApp/google-services.json composeApp/src/production/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
+          mkdir -p composeApp/src/development composeApp/src/production
+          mkdir -p iosApp/Firebase/Development iosApp/Firebase/Production
+
+          if [ -n "${{ secrets.GOOGLE_SERVICES_JSON_DEV_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_JSON_DEV_BASE64 }}" | base64 --decode > composeApp/src/development/google-services.json
+          fi
+          if [ -n "${{ secrets.GOOGLE_SERVICES_JSON_PROD_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_JSON_PROD_BASE64 }}" | base64 --decode > composeApp/src/production/google-services.json
+          fi
+          if [ -n "${{ secrets.GOOGLE_SERVICES_INFO_DEV_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_INFO_DEV_BASE64 }}" | base64 --decode > iosApp/Firebase/Development/GoogleService-Info.plist
+          fi
+          if [ -n "${{ secrets.GOOGLE_SERVICES_INFO_PROD_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_INFO_PROD_BASE64 }}" | base64 --decode > iosApp/Firebase/Production/GoogleService-Info.plist
+          fi
 
       - name: Run Unit Tests & Generate Kover Coverage Report
         run: ./gradlew testDevelopmentDebugUnitTest koverHtmlReport --parallel --continue
@@ -88,8 +97,8 @@ jobs:
           name: kover-coverage-reports
           path: '**/build/reports/kover/'
 
-  verify_build:
-    name: Verification Build (PR Check)
+  verify_android_build:
+    name: Verification Build - Android (PR Check)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -111,14 +120,12 @@ jobs:
         run: |
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
-      - name: Decode Google Services JSON
+      - name: Decode Firebase Configuration Secrets
         run: |
-          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
-          cp composeApp/google-services.json composeApp/src/google-services.json
-          cp composeApp/google-services.json composeApp/src/production/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
+          mkdir -p composeApp/src/development
+          if [ -n "${{ secrets.GOOGLE_SERVICES_JSON_DEV_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_JSON_DEV_BASE64 }}" | base64 --decode > composeApp/src/development/google-services.json
+          fi
 
       - name: Build Debug APK
         env:
@@ -131,11 +138,9 @@ jobs:
           name: TaggyGo-VerificationDebug-v${{ github.run_number }}
           path: composeApp/build/outputs/apk/development/debug/*.apk
 
-  staging_release:
-    name: Staging Release Build (QA)
-    runs-on: ubuntu-latest
-    needs: [lint, test, verify_build]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/'))
+  verify_ios_build:
+    name: Verification Build - iOS (PR Check)
+    runs-on: macos-15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -156,38 +161,86 @@ jobs:
         run: |
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
-      - name: Decode Google Services JSON
+      - name: Decode Firebase Configuration Secrets
         run: |
-          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
-          cp composeApp/google-services.json composeApp/src/google-services.json
-          cp composeApp/google-services.json composeApp/src/production/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
+          mkdir -p iosApp/Firebase/Development
+          if [ -n "${{ secrets.GOOGLE_SERVICES_INFO_DEV_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_INFO_DEV_BASE64 }}" | base64 --decode > iosApp/Firebase/Development/GoogleService-Info.plist
+          fi
 
-      - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
+      - name: Generate Kotlin Framework & Podspec
+        run: ./gradlew podspec generateDummyFramework
 
-      - name: Build Staging Release Bundle
+      - name: Install CocoaPods
+        run: |
+          cd iosApp
+          pod install
+
+      - name: Build iOS App (Simulator)
+        run: |
+          cd iosApp
+          xcodebuild -workspace iosApp.xcworkspace \
+                     -scheme "iosApp Dev" \
+                     -configuration Debug-Development \
+                     -sdk iphonesimulator \
+                     -destination 'generic/platform=iOS Simulator' \
+                     clean build
+
+  auto_tag_release:
+    name: Auto Tag Release on Main
+    runs-on: ubuntu-latest
+    needs: [lint, test, verify_android_build, verify_ios_build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    outputs:
+      tag_created: ${{ steps.create_tag.outputs.tag_created }}
+      release_tag: ${{ steps.create_tag.outputs.release_tag }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Auto Create Git Tag from Release Branch PR
+        id: create_tag
         env:
-          ANDROID_RELEASE_VERSION: ${{ github.run_number }}
-          KEYSTORE_PATH: ${{ github.workspace }}/release.jks
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew :composeApp:bundleStagingRelease
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_BRANCH=$(gh pr list --state merged --limit 1 --json headRefName --jq '.[0].headRefName')
+          echo "Merged PR branch: $PR_BRANCH"
 
-      - name: Upload Staging AAB Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TaggyGo-StagingRelease-v${{ github.run_number }}
-          path: composeApp/build/outputs/bundle/stagingRelease/*.aab
+          if [[ "$PR_BRANCH" =~ ^release/v?([0-9]+\.[0-9]+\.[0-9]+.*)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            TAG_NAME="v${VERSION}"
+            echo "Extracted release tag: $TAG_NAME"
 
-  production_release:
-    name: Signed Production Build & Release
+            if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+              echo "Tag $TAG_NAME already exists."
+              echo "tag_created=false" >> $GITHUB_OUTPUT
+              echo "release_tag=$TAG_NAME" >> $GITHUB_OUTPUT
+            else
+              echo "Creating and pushing tag $TAG_NAME..."
+              git config user.name "github-actions[bot]"
+              git config user.email "github-actions[bot]@users.noreply.github.com"
+              git tag -a "$TAG_NAME" -m "Release $TAG_NAME"
+              git push origin "$TAG_NAME"
+              echo "tag_created=true" >> $GITHUB_OUTPUT
+              echo "release_tag=$TAG_NAME" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Branch $PR_BRANCH is not a release branch. Skipping auto-tagging."
+            echo "tag_created=false" >> $GITHUB_OUTPUT
+          fi
+
+  production_android_release:
+    name: Signed Production Build - Android
     runs-on: ubuntu-latest
-    needs: [lint, test, verify_build]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    needs: [lint, test, verify_android_build, auto_tag_release]
+    if: |
+      always() &&
+      needs.lint.result == 'success' &&
+      needs.test.result == 'success' &&
+      needs.verify_android_build.result == 'success' &&
+      (startsWith(github.ref, 'refs/tags/v') || needs.auto_tag_release.outputs.tag_created == 'true')
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -208,21 +261,19 @@ jobs:
         run: |
           echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
 
-      - name: Decode Google Services JSON
+      - name: Decode Firebase Configuration Secrets
         run: |
-          mkdir -p composeApp/src/development composeApp/src/staging composeApp/src/production
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 --decode > composeApp/google-services.json
-          cp composeApp/google-services.json composeApp/src/google-services.json
-          cp composeApp/google-services.json composeApp/src/production/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.dev"/g' composeApp/google-services.json > composeApp/src/development/google-services.json
-          sed 's/"com.spoonofcode.poa"/"com.spoonofcode.poa.staging"/g' composeApp/google-services.json > composeApp/src/staging/google-services.json
+          mkdir -p composeApp/src/production
+          if [ -n "${{ secrets.GOOGLE_SERVICES_JSON_PROD_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_JSON_PROD_BASE64 }}" | base64 --decode > composeApp/src/production/google-services.json
+          fi
 
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.jks
 
       - name: Build Signed Production Release Bundle
         env:
-          ANDROID_RELEASE_VERSION: ${{ github.run_number }}
+          ANDROID_RELEASE_VERSION: ${{ github.ref_name != 'main' && github.ref_name || needs.auto_tag_release.outputs.release_tag }}
           KEYSTORE_PATH: ${{ github.workspace }}/release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
@@ -232,5 +283,60 @@ jobs:
       - name: Upload Production AAB Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: TaggyGo-ProductionRelease-v${{ github.run_number }}
+          name: TaggyGo-Android-Release-${{ github.ref_name != 'main' && github.ref_name || needs.auto_tag_release.outputs.release_tag }}
           path: composeApp/build/outputs/bundle/productionRelease/*.aab
+
+  production_ios_release:
+    name: Signed Production Build - iOS
+    runs-on: macos-15
+    needs: [lint, test, verify_ios_build, auto_tag_release]
+    if: |
+      always() &&
+      needs.lint.result == 'success' &&
+      needs.test.result == 'success' &&
+      needs.verify_ios_build.result == 'success' &&
+      (startsWith(github.ref, 'refs/tags/v') || needs.auto_tag_release.outputs.tag_created == 'true')
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Create local.properties
+        run: |
+          echo "GOOGLE_ID_SERVER_CLIENT_ID_WEB=${{ secrets.GOOGLE_ID_SERVER_CLIENT_ID_WEB }}" >> local.properties
+
+      - name: Decode Firebase Configuration Secrets
+        run: |
+          mkdir -p iosApp/Firebase/Production
+          if [ -n "${{ secrets.GOOGLE_SERVICES_INFO_PROD_BASE64 }}" ]; then
+            echo "${{ secrets.GOOGLE_SERVICES_INFO_PROD_BASE64 }}" | base64 --decode > iosApp/Firebase/Production/GoogleService-Info.plist
+          fi
+
+      - name: Generate Kotlin Framework & Podspec
+        run: ./gradlew podspec generateDummyFramework
+
+      - name: Install CocoaPods
+        run: |
+          cd iosApp
+          pod install
+
+      - name: Build Production iOS App
+        run: |
+          cd iosApp
+          xcodebuild -workspace iosApp.xcworkspace \
+                     -scheme "iosApp Prod" \
+                     -configuration Release-Production \
+                     -sdk iphoneos \
+                     CODE_SIGNING_ALLOWED=NO \
+                     clean build

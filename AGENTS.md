@@ -107,7 +107,7 @@ docs/        # Documentation, ADRs
 
 ## Build Variants
 
-- **Flavors:** `development`, `staging`, `production`
+- **Flavors:** `development`, `production`
 - **Build types:** `debug`, `release`
 - **Examples:** `developmentDebug`, `developmentRelease`, `productionRelease`
 
@@ -211,7 +211,7 @@ TODO THIS LATER:
 |--------------|-------------------------------|-------------------------------------|
 | Development  | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-develop-SNAPSHOT`       |
 | Feature      | `X.Y.Z-rc#-{branch}-SNAPSHOT` | `5.20.0-rc1-feature-login-SNAPSHOT` |
-| Staging (RC) | `X.Y.Z-rc#`                   | `5.20.0-rc1`                        |
+| Release (RC) | `X.Y.Z-rc#`                   | `5.20.0-rc1`                        |
 | Production   | `X.Y.Z`                       | `5.20.0`                            |
 | Hotfix       | `X.Y.Z`                       | `5.20.1`                            |
 

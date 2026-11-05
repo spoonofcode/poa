@@ -13,7 +13,6 @@ class BuildKonfigConventionPlugin : Plugin<Project> {
             val xcodeConfig = System.getenv("CONFIGURATION") ?: ""
             val activeFlavor = when {
                 taskNames.any { it.contains("Production", ignoreCase = true) } || xcodeConfig.contains("Production", ignoreCase = true) -> "production"
-                taskNames.any { it.contains("Staging", ignoreCase = true) } || xcodeConfig.contains("Staging", ignoreCase = true) -> "staging"
                 taskNames.any { it.contains("Development", ignoreCase = true) } || xcodeConfig.contains("Development", ignoreCase = true) -> "development"
                 else -> {
                     (findProperty("buildkonfig.flavor") as? String) ?: "development"
