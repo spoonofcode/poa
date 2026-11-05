@@ -47,8 +47,10 @@ You are a DevOps engineer specializing in Compose Multiplatform CI/CD, GitHub Ac
 jobs:
   lint: # Code formatting check (ktlintCheck)
   test: # Unit tests (testDevelopmentDebugUnitTest)
-  verify_build: # Verification build (assembleDevelopmentDebug)
-  production_release: # Production signed build (bundleProductionRelease on main / tags)
+  verify_android_build: # Verification build Android (assembleDevelopmentDebug)
+  verify_ios_build: # Verification build iOS (xcodebuild Debug-Development)
+  production_android_release: # Production signed build Android (bundleProductionRelease on main / tags)
+  production_ios_release: # Production build iOS (xcodebuild Release-Production on main / tags)
 ```
 
 ## Build Variants for CI
@@ -57,7 +59,7 @@ jobs:
 |---------|----------|
 | `developmentDebug` | Dev builds, fast iteration |
 | `developmentRelease` | Internal testing |
-| `productionDebug` / `productionRelease` | Play Store release |
+| `productionDebug` / `productionRelease` | Play Store / App Store release |
 
 ## Versioning
 
@@ -78,7 +80,9 @@ jobs:
 
 ## Secrets Management
 
-- Store in GitHub Secrets (`GOOGLE_SERVICES_JSON_BASE64`, `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`)
+- Store in GitHub Secrets:
+  - Android: `GOOGLE_SERVICES_JSON_DEV_BASE64`, `GOOGLE_SERVICES_JSON_PROD_BASE64`, `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`
+  - iOS: `GOOGLE_SERVICES_INFO_DEV_BASE64`, `GOOGLE_SERVICES_INFO_PROD_BASE64`
 - Access via `${{ secrets.SECRET_NAME }}` in GitHub Actions workflows
 - Never hardcode or log secrets
 - Use `local.properties` and `certificates/new-debug.keystore` for local dev
