@@ -6,12 +6,13 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 
-internal fun tacRepositoryMock() = mock<TACRepository> {
-    everySuspend { getTACSettings() } returns Result.success(TACMockData.SETTINGS_1)
-    everySuspend {
-        setTACSettings(
-            any(),
-            any(),
-        )
-    } returns Result.success(Unit)
-}
+internal fun tacRepositoryMock() =
+    mock<TACRepository> {
+        everySuspend { getTACSettings() } returns Result.success(TACMockData.SETTINGS_1)
+        everySuspend {
+            setTACSettings(
+                any(),
+                any(),
+            )
+        } returns Result.success(Unit)
+    }

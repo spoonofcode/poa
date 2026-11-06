@@ -46,11 +46,12 @@ data class StandardScreenConfig(
     val customBottomScaffoldInnerPadding: Dp? = null,
     val contentBackgroundColor: Color = Color.Unspecified,
     val bottomBarBackgroundColor: Color = Color.Unspecified,
-    val contentPadding: PaddingValues = PaddingValues(
-        start = Paddings.screenPadding,
-        end = Paddings.screenPadding,
-        bottom = Paddings.screenPadding,
-    )
+    val contentPadding: PaddingValues =
+        PaddingValues(
+            start = Paddings.screenPadding,
+            end = Paddings.screenPadding,
+            bottom = Paddings.screenPadding,
+        ),
 )
 
 @Composable
@@ -63,7 +64,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
     bottomBar: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
     dialogs: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
     bottomSheets: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
-    content: @Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit
+    content: @Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -87,7 +88,7 @@ fun <VM : BaseViewModel<VS, VA, VE>, VS : BaseViewState, VA : BaseViewAction, VE
                 Snackbar(snackbarData = it)
             }
         },
-        content = content
+        content = content,
     )
 }
 
@@ -105,11 +106,12 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
     dialogs: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
     bottomSheets: @Composable (viewState: VS, onAction: (VA) -> Unit) -> Unit = { _, _ -> },
     snackbarHost: @Composable () -> Unit = {},
-    content: @Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit
+    content: @Composable ColumnScope.(viewState: VS, onAction: (VA) -> Unit) -> Unit,
 ) {
-    val navBackAction = remember(navigationBackAction, onAction, navigateBack) {
-        navigationBackAction?.invoke(onAction) ?: { navigateBack() }
-    }
+    val navBackAction =
+        remember(navigationBackAction, onAction, navigateBack) {
+            navigationBackAction?.invoke(onAction) ?: { navigateBack() }
+        }
 
     val viewEnabled = (viewState as? ViewState.Content)?.data?.let(isViewEnable) ?: true
 
@@ -118,10 +120,11 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
     }
 
     Scaffold(
-        modifier = Modifier
-            .viewEnable(viewEnabled)
-            .addIf(screenConfig.respectScaffoldImePadding) { imePadding() }
-            .fillMaxSize(),
+        modifier =
+            Modifier
+                .viewEnable(viewEnabled)
+                .addIf(screenConfig.respectScaffoldImePadding) { imePadding() }
+                .fillMaxSize(),
         topBar = {
             val state = viewState
             if (state is ViewState.Content) {
@@ -129,10 +132,11 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
                     backNavigationEnable = screenConfig.backNavigationEnable && viewEnabled,
                     topAppBarTitle = screenConfig.topBarTitle ?: "",
                     navigationBackAction = navBackAction,
-                    iconBarActions = topBarActions(
-                        state.data,
-                        onAction
-                    )
+                    iconBarActions =
+                        topBarActions(
+                            state.data,
+                            onAction,
+                        ),
                 )
             }
         },
@@ -141,19 +145,20 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
                 bottomBar(it, onAction)
             }
         },
-        snackbarHost = snackbarHost
+        snackbarHost = snackbarHost,
     ) { innerPadding ->
         val layoutDirection = LocalLayoutDirection.current
         Box(
-            modifier = Modifier
-                .padding(
-                    start = innerPadding.calculateStartPadding(layoutDirection),
-                    top = innerPadding.calculateTopPadding(),
-                    end = innerPadding.calculateEndPadding(layoutDirection),
-                    bottom = screenConfig.customBottomScaffoldInnerPadding
-                        ?: innerPadding.calculateBottomPadding()
-                )
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .padding(
+                        start = innerPadding.calculateStartPadding(layoutDirection),
+                        top = innerPadding.calculateTopPadding(),
+                        end = innerPadding.calculateEndPadding(layoutDirection),
+                        bottom =
+                            screenConfig.customBottomScaffoldInnerPadding
+                                ?: innerPadding.calculateBottomPadding(),
+                    ).fillMaxSize(),
         ) {
             when (val state = viewState) {
                 ViewState.Initial -> {}
@@ -173,14 +178,14 @@ private fun <VS : BaseViewState, VA : BaseViewAction> StandardScaffold(
                     }
 
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(screenConfig.contentBackgroundColor)
-                            .addIf(screenConfig.verticalScrollEnable) {
-                                verticalScroll(scrollState)
-                            }
-                            .padding(screenConfig.contentPadding),
-                        verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding)
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .background(screenConfig.contentBackgroundColor)
+                                .addIf(screenConfig.verticalScrollEnable) {
+                                    verticalScroll(scrollState)
+                                }.padding(screenConfig.contentPadding),
+                        verticalArrangement = Arrangement.spacedBy(Paddings.fieldsPadding),
                     ) {
                         content(state.data, onAction)
                     }

@@ -12,34 +12,34 @@ sealed class SnackbarEvent(
     data object Offline : SnackbarEvent(
         message = UiText.DynamicString("No internet connection"),
         duration = SnackbarDuration.Indefinite,
-        type = SnackbarType.ERROR
+        type = SnackbarType.ERROR,
     )
 
     data object Online : SnackbarEvent(
         message = UiText.DynamicString("Internet connection restored"),
         duration = SnackbarDuration.Short,
-        type = SnackbarType.INFO
+        type = SnackbarType.INFO,
     )
 
     class Error(
         message: UiText,
         actionLabel: UiText? = UiText.DynamicString("OK"),
     ) : SnackbarEvent(
-        message = message,
-        actionLabel = actionLabel,
-        duration = SnackbarDuration.Indefinite,
-        type = SnackbarType.ERROR
-    )
+            message = message,
+            actionLabel = actionLabel,
+            duration = SnackbarDuration.Indefinite,
+            type = SnackbarType.ERROR,
+        )
 
     class Success(
         message: UiText,
         actionLabel: UiText? = UiText.DynamicString("OK"),
     ) : SnackbarEvent(
-        message = message,
-        actionLabel = actionLabel,
-        duration = SnackbarDuration.Short,
-        type = SnackbarType.SUCCESS
-    )
+            message = message,
+            actionLabel = actionLabel,
+            duration = SnackbarDuration.Short,
+            type = SnackbarType.SUCCESS,
+        )
 }
 
 enum class SnackbarType {

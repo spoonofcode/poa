@@ -21,9 +21,10 @@ object PreviewParameterData {
             roles = listOf("user"),
         )
 
-    val profile_2 = Profile(
-        id = "2",
-        email = "exmaple.mail.2@gmail.com",
-        roles = listOf("user","partner"),
-    )
+    val profile_2 =
+        Profile(
+            id = "2",
+            email = "exmaple.mail.2@gmail.com",
+            roles = listOf("user", "partner"),
+        )
 }

@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetPartnerByIdUseCaseTest : BaseTest() {
-
     private lateinit var getPartnerByIdUseCase: GetPartnerByIdUseCase
     private lateinit var partnerRepository: PartnerRepository
 
@@ -33,27 +32,29 @@ class GetPartnerByIdUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns partner when repository succeeds`() = runTest {
-        val partnerId = PartnerMockData.PARTNER_1.id
-        everySuspend { partnerRepository.getPartner(partnerId) } returns Result.success(PartnerMockData.PARTNER_1)
+    fun `invoke returns partner when repository succeeds`() =
+        runTest {
+            val partnerId = PartnerMockData.PARTNER_1.id
+            everySuspend { partnerRepository.getPartner(partnerId) } returns Result.success(PartnerMockData.PARTNER_1)
 
-        val result = getPartnerByIdUseCase(partnerId)
+            val result = getPartnerByIdUseCase(partnerId)
 
-        assertTrue(result.isSuccess)
-        assertEquals(PartnerMockData.PARTNER_1, result.getOrNull())
-        verifySuspend { partnerRepository.getPartner(partnerId) }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(PartnerMockData.PARTNER_1, result.getOrNull())
+            verifySuspend { partnerRepository.getPartner(partnerId) }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val partnerId = "invalid_id"
-        val exception = Exception("Partner not found")
-        everySuspend { partnerRepository.getPartner(partnerId) } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val partnerId = "invalid_id"
+            val exception = Exception("Partner not found")
+            everySuspend { partnerRepository.getPartner(partnerId) } returns Result.failure(exception)
 
-        val result = getPartnerByIdUseCase(partnerId)
+            val result = getPartnerByIdUseCase(partnerId)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { partnerRepository.getPartner(partnerId) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { partnerRepository.getPartner(partnerId) }
+        }
 }

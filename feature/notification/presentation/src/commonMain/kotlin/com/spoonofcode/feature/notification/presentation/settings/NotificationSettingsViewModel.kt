@@ -21,21 +21,25 @@ internal class NotificationSettingsViewModel(
     override fun onAction(action: NotificationSettingsViewAction) {
         when (action) {
             NotificationSettingsViewAction.SaveChanges -> saveChanges()
-            is NotificationSettingsViewAction.SwitchAllNotification -> switchAllNotification(
-                action.enable
-            )
+            is NotificationSettingsViewAction.SwitchAllNotification ->
+                switchAllNotification(
+                    action.enable,
+                )
 
-            is NotificationSettingsViewAction.SwitchNotificationsPersonalized -> switchNotificationsPersonalized(
-                action.enable
-            )
+            is NotificationSettingsViewAction.SwitchNotificationsPersonalized ->
+                switchNotificationsPersonalized(
+                    action.enable,
+                )
 
-            is NotificationSettingsViewAction.SwitchNotificationsFromPartners -> switchNotificationsFromPartners(
-                action.enable
-            )
+            is NotificationSettingsViewAction.SwitchNotificationsFromPartners ->
+                switchNotificationsFromPartners(
+                    action.enable,
+                )
 
-            is NotificationSettingsViewAction.SwitchNotificationsMyProductSeries -> switchNotificationsMyProductSeries(
-                action.enable
-            )
+            is NotificationSettingsViewAction.SwitchNotificationsMyProductSeries ->
+                switchNotificationsMyProductSeries(
+                    action.enable,
+                )
 
             NotificationSettingsViewAction.AcceptNotificationSettings -> acceptNotificationSettings()
             NotificationSettingsViewAction.ShowRationaleNotificationDialog -> showRationaleNotificationDialog()
@@ -51,7 +55,7 @@ internal class NotificationSettingsViewModel(
                     setContentState(
                         NotificationSettingsViewState(
                             notificationSettings = notificationSettings,
-                        )
+                        ),
                     )
                     showContentView()
                 }.onFailure {
@@ -63,11 +67,12 @@ internal class NotificationSettingsViewModel(
     private fun switchAllNotification(enable: Boolean) {
         updateContentState {
             copy(
-                notificationSettings = notificationSettings.copy(
-                    isNotificationsPersonalizedEnabled = enable,
-                    isNotificationsFromPartnersEnabled = enable,
-                    isNotificationsMyProductSeriesEnabled = enable,
-                )
+                notificationSettings =
+                    notificationSettings.copy(
+                        isNotificationsPersonalizedEnabled = enable,
+                        isNotificationsFromPartnersEnabled = enable,
+                        isNotificationsMyProductSeriesEnabled = enable,
+                    ),
             )
         }
     }
@@ -75,9 +80,10 @@ internal class NotificationSettingsViewModel(
     private fun switchNotificationsPersonalized(enable: Boolean) {
         updateContentState {
             copy(
-                notificationSettings = notificationSettings.copy(
-                    isNotificationsPersonalizedEnabled = enable,
-                )
+                notificationSettings =
+                    notificationSettings.copy(
+                        isNotificationsPersonalizedEnabled = enable,
+                    ),
             )
         }
     }
@@ -85,9 +91,10 @@ internal class NotificationSettingsViewModel(
     private fun switchNotificationsFromPartners(enable: Boolean) {
         updateContentState {
             copy(
-                notificationSettings = notificationSettings.copy(
-                    isNotificationsFromPartnersEnabled = enable,
-                )
+                notificationSettings =
+                    notificationSettings.copy(
+                        isNotificationsFromPartnersEnabled = enable,
+                    ),
             )
         }
     }
@@ -95,9 +102,10 @@ internal class NotificationSettingsViewModel(
     private fun switchNotificationsMyProductSeries(enable: Boolean) {
         updateContentState {
             copy(
-                notificationSettings = notificationSettings.copy(
-                    isNotificationsMyProductSeriesEnabled = enable,
-                )
+                notificationSettings =
+                    notificationSettings.copy(
+                        isNotificationsMyProductSeriesEnabled = enable,
+                    ),
             )
         }
     }
@@ -106,7 +114,7 @@ internal class NotificationSettingsViewModel(
         updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
             updateNotificationSettingsUseCase(
-                notificationSettings = currentContentState().notificationSettings
+                notificationSettings = currentContentState().notificationSettings,
             ).onSuccess {
                 notificationEventBus.emitOverview(NotificationEvent.SettingsUpdated)
                 viewModelNavigator.pop()

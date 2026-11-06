@@ -1,6 +1,5 @@
 package com.spoonofcode.feature.product.presentation
 
-
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.spoonofcode.core.presentation.navigation.viewModelEntry

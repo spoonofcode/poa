@@ -16,7 +16,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class LoginGoogleUseCaseTest : BaseTest() {
-
     private lateinit var loginGoogleUseCase: LoginGoogleUseCase
     private lateinit var loginRepository: LoginRepository
     private lateinit var sessionRepository: SessionRepository
@@ -36,33 +35,35 @@ class LoginGoogleUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success and initializes session`() = runTest {
-        val token = "google_token"
+    fun `invoke returns success and initializes session`() =
+        runTest {
+            val token = "google_token"
 
-        val result = loginGoogleUseCase(token)
+            val result = loginGoogleUseCase(token)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { loginRepository.loginWithGoogle(token) }
-        verifySuspend {
-            sessionRepository.initSession(
-                accessToken = LoginMockData.LOGIN_1.accessToken,
-                refreshToken = LoginMockData.LOGIN_1.refreshToken,
-                userId = LoginMockData.LOGIN_1.id,
-                userEmail = LoginMockData.LOGIN_1.email,
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend { loginRepository.loginWithGoogle(token) }
+            verifySuspend {
+                sessionRepository.initSession(
+                    accessToken = LoginMockData.LOGIN_1.accessToken,
+                    refreshToken = LoginMockData.LOGIN_1.refreshToken,
+                    userId = LoginMockData.LOGIN_1.id,
+                    userEmail = LoginMockData.LOGIN_1.email,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val token = "google_token"
-        val exception = Exception("Google login failed")
-        everySuspend { loginRepository.loginWithGoogle(token) } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val token = "google_token"
+            val exception = Exception("Google login failed")
+            everySuspend { loginRepository.loginWithGoogle(token) } returns Result.failure(exception)
 
-        val result = loginGoogleUseCase(token)
+            val result = loginGoogleUseCase(token)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { loginRepository.loginWithGoogle(token) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { loginRepository.loginWithGoogle(token) }
+        }
 }

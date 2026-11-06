@@ -1,10 +1,9 @@
 package com.spoonofcode.feature.home.domain.model
 
-
 enum class DailyRewardStatus {
     CLAIMED,
     AVAILABLE_TO_CLAIM,
-    LOCKED
+    LOCKED,
 }
 
 data class DailyReward(

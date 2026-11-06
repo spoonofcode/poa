@@ -25,25 +25,26 @@ fun TopBar(
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
         title = { topAppBarTitle?.let { TextTLB(it) } },
-        navigationIcon = if (backNavigationEnable) {
-            {
-                IconButton(onClick = navigationBackAction) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBackIos,
-                        contentDescription = "Back"
-                    )
+        navigationIcon =
+            if (backNavigationEnable) {
+                {
+                    IconButton(onClick = navigationBackAction) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBackIos,
+                            contentDescription = "Back",
+                        )
+                    }
                 }
-            }
-        } else {
-            {}
-        },
+            } else {
+                {}
+            },
         actions = {
             iconBarActions.forEach { iconBarAction ->
                 if (iconBarAction.badgeCount == null || iconBarAction.badgeCount == 0) {
                     IconButton(onClick = iconBarAction.onClick) {
                         Icon(
                             imageVector = iconBarAction.icon,
-                            contentDescription = iconBarAction.description
+                            contentDescription = iconBarAction.description,
                         )
                     }
                 } else {
@@ -51,11 +52,11 @@ fun TopBar(
                         icon = iconBarAction.icon,
                         contentDescription = iconBarAction.description,
                         count = iconBarAction.badgeCount,
-                        onClick = iconBarAction.onClick
+                        onClick = iconBarAction.onClick,
                     )
                 }
             }
-        }
+        },
     )
 }
 
@@ -64,5 +65,5 @@ data class TopBarAction(
     val icon: ImageVector,
     val description: String,
     val badgeCount: Int? = null,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
 )

@@ -9,7 +9,8 @@ import org.koin.core.component.KoinComponent
 internal class SessionRepositoryImpl(
     private val localSessionDataSource: LocalSessionDataSource,
     private val poaLogger: POALogger,
-) : SessionRepository, KoinComponent {
+) : SessionRepository,
+    KoinComponent {
     private val logoutHandlers: List<LogoutHandler> by lazy { getKoin().getAll<LogoutHandler>() }
 
     override suspend fun isSessionInitialized(): Boolean = getSessionAccessToken() != null
@@ -31,7 +32,7 @@ internal class SessionRepositoryImpl(
 
     override suspend fun updateSessionTokens(
         accessToken: String,
-        refreshToken: String
+        refreshToken: String,
     ) {
         localSessionDataSource.updateSessionTokens(
             accessToken = accessToken,
@@ -56,14 +57,11 @@ internal class SessionRepositoryImpl(
         poaLogger.info("SessionRepository: Session cleared")
     }
 
-    override suspend fun getSessionAccessToken(): String? =
-        localSessionDataSource.getSessionAccessToken()
+    override suspend fun getSessionAccessToken(): String? = localSessionDataSource.getSessionAccessToken()
 
-    override suspend fun getSessionRefreshToken(): String? =
-        localSessionDataSource.getSessionRefreshToken()
+    override suspend fun getSessionRefreshToken(): String? = localSessionDataSource.getSessionRefreshToken()
 
     override suspend fun getSessionUserId(): String = localSessionDataSource.getSessionUserId()
 
-    override suspend fun getSessionUserEmail(): String =
-        localSessionDataSource.getSessionUserEmail()
+    override suspend fun getSessionUserEmail(): String = localSessionDataSource.getSessionUserEmail()
 }

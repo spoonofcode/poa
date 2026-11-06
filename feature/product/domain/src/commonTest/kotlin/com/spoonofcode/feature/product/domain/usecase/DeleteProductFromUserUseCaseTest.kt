@@ -16,7 +16,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DeleteProductFromUserUseCaseTest : BaseTest() {
-
     private lateinit var deleteProductFromUserUseCase: DeleteProductFromUserUseCase
     private lateinit var productRepository: ProductRepository
     private lateinit var firebaseMessagingRepository: FirebaseMessagingRepository
@@ -36,42 +35,45 @@ class DeleteProductFromUserUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success without productSerieId`() = runTest {
-        val productId = "1"
-        everySuspend { productRepository.deleteProductFromUser(productId) } returns Result.success(Unit)
+    fun `invoke returns success without productSerieId`() =
+        runTest {
+            val productId = "1"
+            everySuspend { productRepository.deleteProductFromUser(productId) } returns Result.success(Unit)
 
-        val result = deleteProductFromUserUseCase(productId)
+            val result = deleteProductFromUserUseCase(productId)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { productRepository.deleteProductFromUser(productId) }
-    }
-
-    @Test
-    fun `invoke returns success and unsubscribes from topic when productSerieId provided`() = runTest {
-        val productId = "1"
-        val serieId = "series_1"
-        val topic = NotificationType.serie.createTopic(serieId)
-
-        everySuspend { productRepository.deleteProductFromUser(productId) } returns Result.success(Unit)
-        everySuspend { firebaseMessagingRepository.unsubscribeFromTopic(topic) } returns Result.success(Unit)
-
-        val result = deleteProductFromUserUseCase(productId, serieId)
-
-        assertTrue(result.isSuccess)
-        verifySuspend { productRepository.deleteProductFromUser(productId) }
-        verifySuspend { firebaseMessagingRepository.unsubscribeFromTopic(topic) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { productRepository.deleteProductFromUser(productId) }
+        }
 
     @Test
-    fun `invoke returns failure when productRepository fails`() = runTest {
-        val productId = "1"
-        val exception = Exception("Failed to delete product")
-        everySuspend { productRepository.deleteProductFromUser(productId) } returns Result.failure(exception)
+    fun `invoke returns success and unsubscribes from topic when productSerieId provided`() =
+        runTest {
+            val productId = "1"
+            val serieId = "series_1"
+            val topic = NotificationType.SERIE.createTopic(serieId)
 
-        val result = deleteProductFromUserUseCase(productId)
+            everySuspend { productRepository.deleteProductFromUser(productId) } returns Result.success(Unit)
+            everySuspend { firebaseMessagingRepository.unsubscribeFromTopic(topic) } returns Result.success(Unit)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { productRepository.deleteProductFromUser(productId) }
-    }
+            val result = deleteProductFromUserUseCase(productId, serieId)
+
+            assertTrue(result.isSuccess)
+            verifySuspend { productRepository.deleteProductFromUser(productId) }
+            verifySuspend { firebaseMessagingRepository.unsubscribeFromTopic(topic) }
+        }
+
+    @Test
+    fun `invoke returns failure when productRepository fails`() =
+        runTest {
+            val productId = "1"
+            val exception = Exception("Failed to delete product")
+            everySuspend { productRepository.deleteProductFromUser(productId) } returns Result.failure(exception)
+
+            val result = deleteProductFromUserUseCase(productId)
+
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { productRepository.deleteProductFromUser(productId) }
+        }
 }

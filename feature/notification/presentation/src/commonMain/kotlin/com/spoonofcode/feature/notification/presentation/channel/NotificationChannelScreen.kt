@@ -26,9 +26,10 @@ import com.spoonofcode.feature.notification.presentation.notification_tel_and_sm
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notification_channels),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notification_channels),
+    )
 
 @Composable
 internal fun NotificationChannelScreen(
@@ -52,7 +53,7 @@ private fun ColumnScope.Content(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         IconTextButton(
             icon = Icons.Default.Notifications,
@@ -72,7 +73,7 @@ private fun ColumnScope.Content(
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         IconTextButton(
             icon = Icons.Default.Sms,

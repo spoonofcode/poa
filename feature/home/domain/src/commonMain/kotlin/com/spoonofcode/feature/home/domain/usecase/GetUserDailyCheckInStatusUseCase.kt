@@ -6,6 +6,5 @@ import com.spoonofcode.feature.home.domain.repository.RewardRepository
 class GetUserDailyCheckInStatusUseCase(
     private val rewardRepository: RewardRepository,
 ) {
-    suspend operator fun invoke(): Result<DailyCheckInStatus> =
-        rewardRepository.getUserDailyCheckInStatus()
+    suspend operator fun invoke(): Result<DailyCheckInStatus> = rewardRepository.getUserDailyCheckInStatus()
 }

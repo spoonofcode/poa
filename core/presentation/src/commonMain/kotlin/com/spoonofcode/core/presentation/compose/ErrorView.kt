@@ -17,13 +17,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import com.spoonofcode.core.presentation.Res
 import com.spoonofcode.core.presentation.data_could_not_be_loaded
 import com.spoonofcode.core.presentation.reload
 import com.spoonofcode.core.presentation.taggy_go_logo
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorView(
@@ -37,18 +37,20 @@ fun ErrorView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Surface(
-            modifier = Modifier
-                .size(160.dp),
+            modifier =
+                Modifier
+                    .size(160.dp),
             shape = CircleShape,
         ) {
             Image(
                 painter = painterResource(resource = iconRes),
                 contentDescription = null,
-                modifier = Modifier
-                    .size(sizeDp)
-                    .background(MaterialTheme.colorScheme.onBackground),
+                modifier =
+                    Modifier
+                        .size(sizeDp)
+                        .background(MaterialTheme.colorScheme.onBackground),
                 contentScale = ContentScale.Crop,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background),
             )
         }
         SpacerVerticalBetweenFields()
@@ -59,7 +61,7 @@ fun ErrorView(
 
         SecondaryButton(
             text = stringResource(resource = Res.string.reload),
-            onClick = reload
+            onClick = reload,
         )
     }
 }

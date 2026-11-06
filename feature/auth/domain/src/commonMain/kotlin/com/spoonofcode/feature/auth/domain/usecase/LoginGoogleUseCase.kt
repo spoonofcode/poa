@@ -9,16 +9,16 @@ class LoginGoogleUseCase(
 ) {
     suspend operator fun invoke(
         googleIdToken: String,
-    ): Result<Unit> {
-        return loginRepository.loginWithGoogle(
-            googleUserToken = googleIdToken,
-        ).map { login ->
-            sessionRepository.initSession(
-                accessToken = login.accessToken,
-                refreshToken = login.refreshToken,
-                userId = login.id,
-                userEmail = login.email,
-            )
-        }
-    }
+    ): Result<Unit> =
+        loginRepository
+            .loginWithGoogle(
+                googleUserToken = googleIdToken,
+            ).map { login ->
+                sessionRepository.initSession(
+                    accessToken = login.accessToken,
+                    refreshToken = login.refreshToken,
+                    userId = login.id,
+                    userEmail = login.email,
+                )
+            }
 }

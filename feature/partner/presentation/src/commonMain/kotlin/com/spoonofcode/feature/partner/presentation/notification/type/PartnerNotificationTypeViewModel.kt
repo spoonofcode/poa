@@ -11,11 +11,9 @@ import kotlinx.coroutines.launch
 
 internal class PartnerNotificationTypeViewModel(
     private val getPartnerNotificationTopicUseCase: GetPartnerNotificationTopicUseCase,
-) :
-    BaseViewModel<PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction, Nothing>(
+) : BaseViewModel<PartnerNotificationTypeViewState, PartnerNotificationTypeViewAction, Nothing>(
         initialViewState = ViewState.Content(PartnerNotificationTypeViewState()),
     ) {
-
     override fun onAction(action: PartnerNotificationTypeViewAction) {
         when (action) {
             PartnerNotificationTypeViewAction.SendNotificationToAllCustomers -> sendNotificationToAllCustomers()
@@ -29,8 +27,8 @@ internal class PartnerNotificationTypeViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 PartnerModuleRoute.PartnerNotificationEdit(
-                    selectedTopics = setOf(PartnerNotificationType.global.name),
-                )
+                    selectedTopics = setOf(PartnerNotificationType.GLOBAL.name),
+                ),
             )
         }
     }
@@ -38,7 +36,7 @@ internal class PartnerNotificationTypeViewModel(
     private fun sendNotificationToSelectedPartnerCustomers() {
         viewModelScope.launch {
             viewModelNavigator.push(
-                PartnerModuleRoute.CustomerOverview
+                PartnerModuleRoute.CustomerOverview,
             )
         }
     }
@@ -54,8 +52,8 @@ internal class PartnerNotificationTypeViewModel(
             val partnerId = getPartnerNotificationTopicUseCase()
             viewModelNavigator.push(
                 PartnerModuleRoute.PartnerNotificationEdit(
-                    selectedTopics = setOf(PartnerNotificationType.partner.createTopic(partnerId))
-                )
+                    selectedTopics = setOf(PartnerNotificationType.PARTNER.createTopic(partnerId)),
+                ),
             )
         }
     }

@@ -8,5 +8,5 @@ internal data class UpdateUserProductRequest(
     @SerialName("custom_link")
     val customLink: String? = null,
     @SerialName("redirect_link")
-    val redirectLink: String? = null
+    val redirectLink: String? = null,
 )

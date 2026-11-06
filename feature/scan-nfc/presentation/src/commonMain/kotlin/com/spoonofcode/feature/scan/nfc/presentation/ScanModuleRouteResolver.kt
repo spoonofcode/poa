@@ -9,7 +9,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun EntryProviderScope<NavKey>.scanModuleRouteResolver() {
     viewModelEntry<ScanModuleRoute.Scan> {
         ScanScreen(
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(),
         )
     }
 }

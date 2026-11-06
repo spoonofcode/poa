@@ -7,8 +7,9 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val authDomainModule: Module = module {
-    factoryOf(::LoginGoogleUseCase)
-    factoryOf(::LoginCodeUseCase)
-    factoryOf(::LoginRequestCodeUseCase)
-}
+val authDomainModule: Module =
+    module {
+        factoryOf(::LoginGoogleUseCase)
+        factoryOf(::LoginCodeUseCase)
+        factoryOf(::LoginRequestCodeUseCase)
+    }

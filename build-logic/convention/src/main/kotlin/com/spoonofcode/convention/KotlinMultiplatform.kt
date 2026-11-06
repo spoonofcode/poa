@@ -4,9 +4,15 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal fun Project.configureKotlinMultiplatform() {
-    configureAndroidTarget()
+internal fun Project.configureKotlinMultiplatform(
+    includeAndroidTarget: Boolean = true
+) {
+    if (includeAndroidTarget) {
+        configureAndroidTarget()
+    }
     configureIosTargets(baseName = pathToFrameworkName())
+    configureKtlint()
+    configureTesting()
 
     extensions.configure<KotlinMultiplatformExtension> {
         applyHierarchyTemplate()

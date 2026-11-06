@@ -12,7 +12,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetPartnerNotificationTopicUseCaseTest : BaseTest() {
-
     private lateinit var getPartnerNotificationTopicUseCase: GetPartnerNotificationTopicUseCase
     private lateinit var sessionRepository: SessionRepository
 
@@ -30,12 +29,13 @@ class GetPartnerNotificationTopicUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns session user id as topic`() = runTest {
-        val userId = "user123"
-        everySuspend { sessionRepository.getSessionUserId() } returns userId
+    fun `invoke returns session user id as topic`() =
+        runTest {
+            val userId = "user123"
+            everySuspend { sessionRepository.getSessionUserId() } returns userId
 
-        val topic = getPartnerNotificationTopicUseCase()
+            val topic = getPartnerNotificationTopicUseCase()
 
-        assertEquals(userId, topic)
-    }
+            assertEquals(userId, topic)
+        }
 }

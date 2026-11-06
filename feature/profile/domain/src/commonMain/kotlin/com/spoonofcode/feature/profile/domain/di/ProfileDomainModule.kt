@@ -7,9 +7,10 @@ import com.spoonofcode.feature.profile.domain.usecase.UpdateProfileUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val profileDomainModule = module {
-    factoryOf(::GetProfileUseCase)
-    factoryOf(::DeleteAccountUseCase)
-    factoryOf(::UpdateProfileUseCase)
-    factoryOf(::LogoutUseCase)
-}
+val profileDomainModule =
+    module {
+        factoryOf(::GetProfileUseCase)
+        factoryOf(::DeleteAccountUseCase)
+        factoryOf(::UpdateProfileUseCase)
+        factoryOf(::LogoutUseCase)
+    }

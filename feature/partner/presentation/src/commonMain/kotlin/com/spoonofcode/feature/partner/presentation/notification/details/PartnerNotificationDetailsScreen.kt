@@ -40,9 +40,10 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notification),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notification),
+    )
 
 @Composable
 internal fun PartnerNotificationDetailsScreen(
@@ -67,7 +68,7 @@ internal fun PartnerNotificationDetailsScreen(
         },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
-        }
+        },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -83,12 +84,13 @@ private fun ColumnScope.Content(
 ) {
     viewState.notification.let {
         if (viewState.notification.topics.isNotEmpty()) {
-            val title = when (viewState.notificationType) {
-                PartnerNotificationType.user -> stringResource(Res.string.selected_customers)
-                PartnerNotificationType.serie -> stringResource(Res.string.selected_series)
-                PartnerNotificationType.partner -> stringResource(Res.string.send_notification_to_all_my_clients)
-                else -> ""
-            }
+            val title =
+                when (viewState.notificationType) {
+                    PartnerNotificationType.USER -> stringResource(Res.string.selected_customers)
+                    PartnerNotificationType.SERIE -> stringResource(Res.string.selected_series)
+                    PartnerNotificationType.PARTNER -> stringResource(Res.string.send_notification_to_all_my_clients)
+                    else -> ""
+                }
 
             StaticSelectedItemsPanel(
                 title = title,
@@ -98,29 +100,28 @@ private fun ColumnScope.Content(
 
         DescriptionCard(
             title = stringResource(Res.string.title),
-            description = it.title
+            description = it.title,
         )
-
 
         DescriptionCard(
             title = stringResource(Res.string.text),
-            description = viewState.notification.text
+            description = viewState.notification.text,
         )
 
         DescriptionCard(
             title = stringResource(Res.string.delivery_date),
-            description = viewState.notification.deliveryDateTime.formatedLocalDateTime()
+            description = viewState.notification.deliveryDateTime.formatedLocalDateTime(),
         )
 
         DescriptionCard(
             title = stringResource(Res.string.expiration_date),
-            description = viewState.notification.expirationDateTime.formatedLocalDateTime()
+            description = viewState.notification.expirationDateTime.formatedLocalDateTime(),
         )
 
         viewState.notification.link?.let { description ->
             DescriptionCard(
                 title = stringResource(Res.string.link),
-                description = description
+                description = description,
             )
         }
 
@@ -129,10 +130,11 @@ private fun ColumnScope.Content(
                 text = stringResource(Res.string.delete_notification),
                 onClick = { onAction(PartnerNotificationDetailsViewAction.DeleteNotification) },
                 isLoading = viewState.isDeleteNotificationButtonLoading,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error
-                ),
-                modifier = Modifier.padding(top = 8.dp)
+                colors =
+                    ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                modifier = Modifier.padding(top = 8.dp),
             )
         }
     }
@@ -141,7 +143,7 @@ private fun ColumnScope.Content(
 @Composable
 private fun Dialogs(
     viewState: PartnerNotificationDetailsViewState,
-    onAction: (PartnerNotificationDetailsViewAction) -> Unit
+    onAction: (PartnerNotificationDetailsViewAction) -> Unit,
 ) {
     if (viewState.isDeleteNotificationDialogVisible) {
         StandardAlertDialog(
@@ -150,7 +152,7 @@ private fun Dialogs(
             confirmButtonText = stringResource(Res.string.delete_notification),
             dismissButtonText = stringResource(Res.string.cancel),
             confirmAction = { onAction(PartnerNotificationDetailsViewAction.ConfirmDeleteNotification) },
-            dismissAction = { onAction(PartnerNotificationDetailsViewAction.CancelDeleteNotification) }
+            dismissAction = { onAction(PartnerNotificationDetailsViewAction.CancelDeleteNotification) },
         )
     }
 }
@@ -160,24 +162,26 @@ private fun Dialogs(
 @Composable
 private fun PartnerNotificationDetailsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            PartnerNotificationDetailsViewState(
-                notification = PartnerNotification(
-                    id = "1",
-                    title = "Title",
-                    text = "Text",
-                    deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                    state = "pending",
-                    topics = listOf("global"),
-                    ownerId = "owner"
+        viewState =
+            ViewState.Content(
+                PartnerNotificationDetailsViewState(
+                    notification =
+                        PartnerNotification(
+                            id = "1",
+                            title = "Title",
+                            text = "Text",
+                            deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                            state = "pending",
+                            topics = listOf("global"),
+                            ownerId = "owner",
+                        ),
+                    selectedNames = emptySet(),
+                    notificationType = PartnerNotificationType.GLOBAL,
                 ),
-                selectedNames = emptySet(),
-                notificationType = PartnerNotificationType.global,
-            )
-        ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

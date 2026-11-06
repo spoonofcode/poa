@@ -37,9 +37,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     protected val initialViewState: ViewState<VS> = ViewState.Initial,
     protected val viewStateStopTimeoutMillis: Long = DEFAULT_STOP_TIMEOUT_MILLIS,
     protected val autoReloadData: Boolean = false,
-) :
-    ViewModel() {
-
+) : ViewModel() {
     private var hasLoadedInitialData = false
 
     protected val viewModelNavigator: ViewModelNavigator by getKoin().inject()
@@ -48,48 +46,51 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     val navigationFlow = viewModelNavigator.navigationEvents
 
-    private val _isOnline = MutableStateFlow(false)
+    private val isOnline = MutableStateFlow(false)
 
-    private val _viewContentState = MutableStateFlow(
-        if (initialViewState is ViewState.Content) initialViewState.data else null
-    )
-    protected val viewContentState: StateFlow<VS?> = _viewContentState.asStateFlow()
+    private val _viewContentState =
+        MutableStateFlow(
+            if (initialViewState is ViewState.Content) initialViewState.data else null,
+        )
+    val viewContentState: StateFlow<VS?> = _viewContentState.asStateFlow()
 
     private enum class ViewStatus { INITIAL, LOADING, ERROR, CONTENT }
 
-    private val _viewStatus = MutableStateFlow(
-        if (initialViewState is ViewState.Content) ViewStatus.CONTENT else ViewStatus.INITIAL
-    )
-    private val viewStatus = _viewStatus.asStateFlow()
+    private val viewStatus =
+        MutableStateFlow(
+            if (initialViewState is ViewState.Content) ViewStatus.CONTENT else ViewStatus.INITIAL,
+        )
 
-    val viewState: StateFlow<ViewState<VS>> = combine(
-        viewContentState,
-        viewStatus
-    ) { content, status ->
-        when (status) {
-            ViewStatus.INITIAL -> initialViewState
-            ViewStatus.LOADING -> ViewState.Loading
-            ViewStatus.ERROR -> ViewState.Error
-            ViewStatus.CONTENT -> {
-                if (content != null) ViewState.Content(content) else initialViewState
+    val viewState: StateFlow<ViewState<VS>> =
+        combine(
+            viewContentState,
+            viewStatus,
+        ) { content, status ->
+            when (status) {
+                ViewStatus.INITIAL -> initialViewState
+                ViewStatus.LOADING -> ViewState.Loading
+                ViewStatus.ERROR -> ViewState.Error
+                ViewStatus.CONTENT -> {
+                    if (content != null) ViewState.Content(content) else initialViewState
+                }
             }
-        }
-    }.stateInWhileSubscribed(
-        initialValue = initialViewState,
-        onStart = {
-            isUiSubscribed = true
-            if (autoReloadData) {
-                onStartAction()
-            } else if (!hasLoadedInitialData) {
-                onStartAction()
-                hasLoadedInitialData = true
-            }
-        },
-        onCompletion = {
-            isUiSubscribed = false
-        },
-        stopTimeoutMillis = viewStateStopTimeoutMillis,
-    )
+        }.stateInWhileSubscribed(
+            scope = viewModelScope,
+            initialValue = initialViewState,
+            onStart = {
+                isUiSubscribed = true
+                if (autoReloadData) {
+                    onStartAction()
+                } else if (!hasLoadedInitialData) {
+                    onStartAction()
+                    hasLoadedInitialData = true
+                }
+            },
+            onCompletion = {
+                isUiSubscribed = false
+            },
+            stopTimeoutMillis = viewStateStopTimeoutMillis,
+        )
 
     private val _viewEvent = Channel<VE>(Channel.BUFFERED)
     val viewEvent = _viewEvent.receiveAsFlow()
@@ -103,7 +104,8 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     private fun observeNetworkState() {
         viewModelScope.launch {
             var hasInitialized = false
-            networkManager.observeNetworkState()
+            networkManager
+                .observeNetworkState()
                 .distinctUntilChangedBy { it.isConnected } // only online/offline changes
                 .debounce(500) // debounce to avoid rapid changes
                 .collect { status ->
@@ -112,12 +114,12 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
                             if (hasInitialized) { // Avoid showing snackbar on initial value
                                 showSnackbar(SnackbarEvent.Online)
                             }
-                            _isOnline.value = true
+                            isOnline.value = true
                             hasInitialized = true
                         }
 
                         is Connectivity.Status.Disconnected -> {
-                            _isOnline.value = false
+                            isOnline.value = false
                             showSnackbar(SnackbarEvent.Offline)
                             hasInitialized = true
                         }
@@ -138,6 +140,7 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
     }
 
     protected open val startAction: (() -> Unit)? get() = null
+
     internal fun onStartAction(manualStart: Boolean = false) {
         // Check isUiSubscribed to avoid double start action
         if (autoReloadData && manualStart && !isUiSubscribed) return
@@ -177,17 +180,17 @@ abstract class BaseViewModel<VS : BaseViewState, VA : BaseViewAction, VE : BaseV
 
     protected fun showLoadingView() {
         poaLogger.debug("${this::class.simpleName}: Showing Loading View")
-        _viewStatus.value = ViewStatus.LOADING
+        viewStatus.value = ViewStatus.LOADING
     }
 
     protected fun showErrorView() {
         poaLogger.debug("${this::class.simpleName}: Showing Error View")
-        _viewStatus.value = ViewStatus.ERROR
+        viewStatus.value = ViewStatus.ERROR
     }
 
     protected fun showContentView() {
         poaLogger.debug("${this::class.simpleName}: Showing Content View")
-        _viewStatus.value = ViewStatus.CONTENT
+        viewStatus.value = ViewStatus.CONTENT
     }
 
     protected fun showErrorSnackbar(message: UiText) {

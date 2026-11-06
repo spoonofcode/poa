@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -47,10 +46,11 @@ fun AutoImageSlider(
 ) {
     if (imageLinks.isEmpty()) return
 
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-        pageCount = { imageLinks.size }
-    )
+    val pagerState =
+        rememberPagerState(
+            initialPage = 0,
+            pageCount = { imageLinks.size },
+        )
 
     val scope = rememberCoroutineScope()
 
@@ -70,7 +70,7 @@ fun AutoImageSlider(
 
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         ElevatedCard(
             modifier = modifier.fillMaxWidth().height(180.dp),
@@ -89,29 +89,30 @@ fun AutoImageSlider(
         // Animated, clickable indicators
         Row(
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             repeat(imageLinks.size) { idx ->
                 val selected = pagerState.currentPage == idx
                 val dotSize by animateDpAsState(
                     targetValue = if (selected) indicatorSize * 1.4f else indicatorSize,
-                    label = "dotSize"
+                    label = "dotSize",
                 )
                 val dotColor by animateColorAsState(
                     targetValue = if (selected) activeColor else inactiveColor,
-                    label = "dotColor"
+                    label = "dotColor",
                 )
 
                 Box(
-                    modifier = Modifier
-                        .padding(horizontal = indicatorSpacing / 2)
-                        .size(dotSize)
-                        .clip(CircleShape)
-                        .background(dotColor)
-                        .clickable(
-                            indication = ripple(bounded = false),
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { scope.launch { pagerState.animateScrollToPage(idx) } }
+                    modifier =
+                        Modifier
+                            .padding(horizontal = indicatorSpacing / 2)
+                            .size(dotSize)
+                            .clip(CircleShape)
+                            .background(dotColor)
+                            .clickable(
+                                indication = ripple(bounded = false),
+                                interactionSource = remember { MutableInteractionSource() },
+                            ) { scope.launch { pagerState.animateScrollToPage(idx) } },
                 )
             }
         }

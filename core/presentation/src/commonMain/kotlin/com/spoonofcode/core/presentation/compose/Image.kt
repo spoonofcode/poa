@@ -36,26 +36,29 @@ fun CircleImage(
     backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
 ) {
     Box(
-        modifier = Modifier
-            .size(imageSize)
-            .clip(CircleShape)
-            .background(color = backgroundColor),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .size(imageSize)
+                .clip(CircleShape)
+                .background(color = backgroundColor),
+        contentAlignment = Alignment.Center,
     ) {
         Surface(
-            modifier = Modifier
-                .size(imageSize * 0.9f),
+            modifier =
+                Modifier
+                    .size(imageSize * 0.9f),
             shape = CircleShape,
         ) {
             Image(
                 painter = painterResource(resource = imageRes),
                 contentDescription = null,
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.onBackground)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp)),
+                modifier =
+                    Modifier
+                        .background(MaterialTheme.colorScheme.onBackground)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background),
             )
         }
     }
@@ -70,27 +73,28 @@ fun ImageLink(
     if (imageLink.isNullOrBlank()) {
         ImageFallback(
             textOnFailure = textOnFailure,
-            modifier = modifier
+            modifier = modifier,
         )
     } else {
         CoilImage(
             imageModel = { imageLink },
-            imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center
-            ),
+            imageOptions =
+                ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center,
+                ),
             modifier = modifier.clip(MaterialTheme.shapes.large),
             loading = {
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
                 }
             },
             failure = {
                 ImageFallback(textOnFailure = textOnFailure)
-            }
+            },
         )
     }
 }
@@ -103,25 +107,29 @@ private fun ImageFallback(
     val hasText = !textOnFailure.isNullOrEmpty()
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(
-                if (hasText) MaterialTheme.colorScheme.onBackground
-                else MaterialTheme.colorScheme.surfaceVariant
-            ),
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(
+                    if (hasText) {
+                        MaterialTheme.colorScheme.onBackground
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    },
+                ),
+        contentAlignment = Alignment.Center,
     ) {
         if (hasText) {
             TextTLB(
                 text = textOnFailure,
                 color = MaterialTheme.colorScheme.background,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
         } else {
             Icon(
                 imageVector = Icons.Default.BrokenImage,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

@@ -19,16 +19,17 @@ fun LabelSwitch(
     enabled: Boolean = true,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                enabled = enabled,
-                onClick = { onCheckedChange(!checked) }
-            ),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(
+                    enabled = enabled,
+                    onClick = { onCheckedChange(!checked) },
+                ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             TextBL(text = title)
             TextBS(text = description)
@@ -39,7 +40,7 @@ fun LabelSwitch(
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
-            enabled = enabled
+            enabled = enabled,
         )
     }
 }

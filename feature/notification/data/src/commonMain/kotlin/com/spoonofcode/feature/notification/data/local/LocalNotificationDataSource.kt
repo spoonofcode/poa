@@ -27,35 +27,37 @@ internal class LocalNotificationDataSource(
         }
     }
 
-    suspend fun isRead(notificationId: String): Boolean {
-        return kSafe.get<Set<String>>(Keys.READ_IDS, emptySet())
+    suspend fun isRead(notificationId: String): Boolean =
+        kSafe
+            .get<Set<String>>(Keys.READ_IDS, emptySet())
             .contains(notificationId)
-    }
 
-    suspend fun getNotificationSettings(): NotificationSettings {
-        return withContext(dispatcherProvider.io()) {
+    suspend fun getNotificationSettings(): NotificationSettings =
+        withContext(dispatcherProvider.io()) {
             poaLogger.debug("LocalNotificationDataSource: Fetching notification settings from local storage")
             NotificationSettings(
-                isNotificationsPersonalizedEnabled = kSafe.get(
-                    key = Keys.Settings.PERSONALIZED_ENABLED,
-                    defaultValue = false
-                ),
-                isNotificationsFromPartnersEnabled = kSafe.get(
-                    key = Keys.Settings.PARTNERS_ENABLED,
-                    defaultValue = false
-                ),
-                isNotificationsMyProductSeriesEnabled = kSafe.get(
-                    key = Keys.Settings.PRODUCT_SERIES_ENABLED,
-                    defaultValue = false
-                )
+                isNotificationsPersonalizedEnabled =
+                    kSafe.get(
+                        key = Keys.Settings.PERSONALIZED_ENABLED,
+                        defaultValue = false,
+                    ),
+                isNotificationsFromPartnersEnabled =
+                    kSafe.get(
+                        key = Keys.Settings.PARTNERS_ENABLED,
+                        defaultValue = false,
+                    ),
+                isNotificationsMyProductSeriesEnabled =
+                    kSafe.get(
+                        key = Keys.Settings.PRODUCT_SERIES_ENABLED,
+                        defaultValue = false,
+                    ),
             )
         }
-    }
 
     suspend fun setNotificationSettings(
         notificationsPersonalizedEnabled: Boolean,
         notificationsFromPartnersEnabled: Boolean,
-        notificationsMyProductSeriesEnabled: Boolean
+        notificationsMyProductSeriesEnabled: Boolean,
     ) {
         withContext(dispatcherProvider.io()) {
             poaLogger.info("LocalNotificationDataSource: Saving notification settings to local storage")

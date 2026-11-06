@@ -20,7 +20,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ScanViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: ScanViewModel
     private lateinit var productRepository: ProductRepository
 
@@ -38,59 +37,63 @@ class ScanViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(PlatformType.Android, platformType)
-                assertFalse(isProductNotFoundViewVisible)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(PlatformType.ANDROID, platformType)
+                    assertFalse(isProductNotFoundViewVisible)
+                }
             }
         }
-    }
 
     @Test
-    fun `check product success`() = runTest {
-        val tag = NfcTag(id = "1", techList = emptyList(), ndef = "https://proof-of-wear.com/nft/1")
+    fun `check product success`() =
+        runTest {
+            val tag = NfcTag(id = "1", techList = emptyList(), ndef = "https://proof-of-wear.com/nft/1")
 
-        runVmTest(viewModel) {
-            onAction(ScanViewAction.CheckProduct(tag))
+            runVmTest(viewModel) {
+                onAction(ScanViewAction.CheckProduct(tag))
 
-            verifySuspend { productRepository.getProduct(PRODUCT_1.id) }
-            verifySuspend {
-                viewModelNavigator.push(
-                    ProductModuleRoute.ProductDetails(productId = PRODUCT_1.id)
-                )
+                verifySuspend { productRepository.getProduct(PRODUCT_1.id) }
+                verifySuspend {
+                    viewModelNavigator.push(
+                        ProductModuleRoute.ProductDetails(productId = PRODUCT_1.id),
+                    )
+                }
             }
         }
-    }
 
     @Test
-    fun `check product not found invalid domain`() = runTest {
-        val tag = NfcTag(id = "1", techList = emptyList(), ndef = "https://invalid-domain.com")
+    fun `check product not found invalid domain`() =
+        runTest {
+            val tag = NfcTag(id = "1", techList = emptyList(), ndef = "https://invalid-domain.com")
 
-        runVmTest(viewModel) {
-            onAction(ScanViewAction.CheckProduct(tag))
+            runVmTest(viewModel) {
+                onAction(ScanViewAction.CheckProduct(tag))
 
-            with(viewState.awaitContentState()) {
-                assertTrue(isProductNotFoundViewVisible)
+                with(viewState.awaitContentState()) {
+                    assertTrue(isProductNotFoundViewVisible)
+                }
             }
         }
-    }
 
     @Test
-    fun `scan again`() = runTest {
-        val invalidTag = NfcTag(id = "1", techList = emptyList(), ndef = "https://invalid-domain.com")
+    fun `scan again`() =
+        runTest {
+            val invalidTag = NfcTag(id = "1", techList = emptyList(), ndef = "https://invalid-domain.com")
 
-        runVmTest(viewModel) {
-            onAction(ScanViewAction.CheckProduct(invalidTag))
-            with(viewState.awaitContentState()) {
-                assertTrue(isProductNotFoundViewVisible)
-            }
+            runVmTest(viewModel) {
+                onAction(ScanViewAction.CheckProduct(invalidTag))
+                with(viewState.awaitContentState()) {
+                    assertTrue(isProductNotFoundViewVisible)
+                }
 
-            onAction(ScanViewAction.ScanAgain)
-            with(viewState.awaitContentState()) {
-                assertFalse(isProductNotFoundViewVisible)
+                onAction(ScanViewAction.ScanAgain)
+                with(viewState.awaitContentState()) {
+                    assertFalse(isProductNotFoundViewVisible)
+                }
             }
         }
-    }
 }

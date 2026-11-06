@@ -20,12 +20,11 @@ internal class PartnerDetailsViewModel(
                 .onSuccess {
                     setContentState(
                         PartnerDetailsViewState(
-                            partner = it
-                        )
+                            partner = it,
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }

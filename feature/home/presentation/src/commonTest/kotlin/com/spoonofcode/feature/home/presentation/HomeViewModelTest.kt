@@ -22,7 +22,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class HomeViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: HomeViewModel
 
     @BeforeTest
@@ -38,58 +37,63 @@ class HomeViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitLoadingState()
-            with(viewState.awaitContentState()) {
-                assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
-                assertEquals(TOTAL_POINTS, totalPoints)
-                assertEquals(2, partnerImageLinks.size)
-                assertEquals(2, unreadNotificationsCount)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitLoadingState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
+                    assertEquals(TOTAL_POINTS, totalPoints)
+                    assertEquals(2, partnerImageLinks.size)
+                    assertEquals(2, unreadNotificationsCount)
+                }
             }
         }
-    }
 
     @Test
-    fun `initial view - error`() = runTest {
-        val rewardRepository: RewardRepository = getKoin().get()
-        everySuspend { rewardRepository.getUserDailyCheckInStatus() } returns Result.failure(
-            Exception("Test error"),
-        )
+    fun `initial view - error`() =
+        runTest {
+            val rewardRepository: RewardRepository = getKoin().get()
+            everySuspend { rewardRepository.getUserDailyCheckInStatus() } returns
+                Result.failure(
+                    Exception("Test error"),
+                )
 
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitLoadingState()
-            viewState.awaitErrorState()
-            snackbarEvent.awaitItem()
-        }
-    }
-
-    @Test
-    fun `daily check in`() = runTest {
-        val rewardRepository: RewardRepository = getKoin().get()
-
-        runVmTest(viewModel) {
-            onAction(HomeViewAction.DailyCheckIn)
-
-            viewState.awaitLoadingState()
-            with(viewState.awaitContentState()) {
-                assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
-            }
-
-            verifySuspend { rewardRepository.addRewardToUser(RewardType.DAILY_CHECK_IN) }
-        }
-    }
-
-    @Test
-    fun `navigate to notifications`() = runTest {
-        runVmTest(viewModel) {
-            onAction(HomeViewAction.NavigateToNotifications)
-
-            verifySuspend {
-                viewModelNavigator.push(NotificationModuleRoute.NotificationOverview)
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitLoadingState()
+                viewState.awaitErrorState()
+                snackbarEvent.awaitItem()
             }
         }
-    }
+
+    @Test
+    fun `daily check in`() =
+        runTest {
+            val rewardRepository: RewardRepository = getKoin().get()
+
+            runVmTest(viewModel) {
+                onAction(HomeViewAction.DailyCheckIn)
+
+                viewState.awaitLoadingState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(DAILY_CHECK_IN_STATUS_1, dailyCheckInStatus)
+                }
+
+                verifySuspend { rewardRepository.addRewardToUser(RewardType.DAILY_CHECK_IN) }
+            }
+        }
+
+    @Test
+    fun `navigate to notifications`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(HomeViewAction.NavigateToNotifications)
+
+                verifySuspend {
+                    viewModelNavigator.push(NotificationModuleRoute.NotificationOverview)
+                }
+            }
+        }
 }

@@ -48,14 +48,16 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notifications),
-    verticalScrollEnable = false,
-    contentPadding = PaddingValues(
-        start = Paddings.screenPadding,
-        end = Paddings.screenPadding,
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notifications),
+        verticalScrollEnable = false,
+        contentPadding =
+            PaddingValues(
+                start = Paddings.screenPadding,
+                end = Paddings.screenPadding,
+            ),
     )
-)
 
 @Composable
 internal fun NotificationOverviewScreen(
@@ -89,15 +91,16 @@ private fun NotificationTabs(
     notifications: List<Notification>,
     selectNotification: (String) -> Unit,
 ) {
-    val tabs = listOf(
-        TabItem(title = stringResource(Res.string.tab_new)),
-        TabItem(title = stringResource(Res.string.tab_already_read)),
-    )
+    val tabs =
+        listOf(
+            TabItem(title = stringResource(Res.string.tab_new)),
+            TabItem(title = stringResource(Res.string.tab_already_read)),
+        )
 
     var selectedTabIndex by remember { mutableStateOf(0) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         SecondaryTabRow(
             selectedTabIndex = selectedTabIndex,
@@ -120,21 +123,23 @@ private fun NotificationTabs(
     }
 }
 
-private data class TabItem(val title: String)
+private data class TabItem(
+    val title: String,
+)
 
 @Composable
 private fun NotificationTab(
     notifications: List<Notification>,
-    selectNotification: (String) -> Unit
+    selectNotification: (String) -> Unit,
 ) {
     SpacerVerticalBetweenFields()
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements),
     ) {
         items(notifications) { notification ->
             NotificationItem(
                 item = notification,
-                onClick = { selectNotification(notification.id) }
+                onClick = { selectNotification(notification.id) },
             )
         }
     }
@@ -146,23 +151,24 @@ private fun NotificationItem(
     onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .fillMaxWidth(),
     ) {
         ElevatedCard(
-            onClick = onClick
+            onClick = onClick,
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-
                     TextTM(
                         text = item.title,
                         maxLines = 1,
@@ -179,7 +185,7 @@ private fun NotificationItem(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
                 )
             }
         }
@@ -191,24 +197,26 @@ private fun NotificationItem(
 @Composable
 private fun NotificationOverviewScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            NotificationOverviewViewState(
-                notifications = listOf(
-                    Notification(
-                        id = "1",
-                        title = "Notification title 1",
-                        text = "Notification text 1",
-                        link = "Notification link 1",
-                        deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        state = "pending",
-                        topics = listOf("global"),
-                    )
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                NotificationOverviewViewState(
+                    notifications =
+                        listOf(
+                            Notification(
+                                id = "1",
+                                title = "Notification title 1",
+                                text = "Notification text 1",
+                                link = "Notification link 1",
+                                deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                state = "pending",
+                                topics = listOf("global"),
+                            ),
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

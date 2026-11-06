@@ -9,9 +9,10 @@ abstract class BaseViewModelTest : BaseTest() {
     protected lateinit var viewModelNavigator: ViewModelNavigator
 
     override fun beforeTest() {
-        modules = modules.plus(
-            presentationTestModule
-        )
+        modules =
+            modules.plus(
+                presentationTestModule,
+            )
         super.beforeTest()
         viewModelNavigator = get()
     }

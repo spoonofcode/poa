@@ -40,12 +40,12 @@ internal class LoginCodeViewModel(
                     listOf(
                         HomeModuleRoute.Home,
                         NotificationModuleRoute.NotificationSettings(
-                            backNavigationEnabled = false
+                            backNavigationEnabled = false,
                         ),
                         TACModuleRoute.TAC(
-                            backNavigationEnabled = false
+                            backNavigationEnabled = false,
                         ),
-                    )
+                    ),
                 )
             }.onFailure {
                 updateContentState { copy(isSignInWithCodeButtonLoading = false) }
@@ -58,7 +58,7 @@ internal class LoginCodeViewModel(
         setContentState(
             LoginCodeViewState(
                 email = email,
-            )
+            ),
         )
         showContentView()
     }

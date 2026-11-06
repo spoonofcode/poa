@@ -18,7 +18,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PartnerDetailsViewModelTest : BaseViewModelTest() {
-
     private val navigationParamPartnerId = PARTNER_1.id
 
     private lateinit var viewModel: PartnerDetailsViewModel
@@ -38,24 +37,27 @@ class PartnerDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(PARTNER_1, partner)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(PARTNER_1, partner)
+                }
             }
         }
-    }
 
     @Test
-    fun `initial view - error`() = runTest {
-        everySuspend { partnerRepository.getPartner(navigationParamPartnerId) } returns Result.failure(
-            Exception("Test error"),
-        )
+    fun `initial view - error`() =
+        runTest {
+            everySuspend { partnerRepository.getPartner(navigationParamPartnerId) } returns
+                Result.failure(
+                    Exception("Test error"),
+                )
 
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitErrorState()
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitErrorState()
+            }
         }
-    }
 }

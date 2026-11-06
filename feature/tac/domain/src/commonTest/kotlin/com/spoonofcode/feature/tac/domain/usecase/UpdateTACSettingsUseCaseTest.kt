@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class UpdateTACSettingsUseCaseTest : BaseTest() {
-
     private lateinit var updateTACSettingsUseCase: UpdateTACSettingsUseCase
     private lateinit var tacRepository: TACRepository
 
@@ -33,22 +32,24 @@ class UpdateTACSettingsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success when repository succeeds`() = runTest {
-        val result = updateTACSettingsUseCase(isPrivacyPolicyAccepted = true, isTermsAndConditionsAccepted = true)
+    fun `invoke returns success when repository succeeds`() =
+        runTest {
+            val result = updateTACSettingsUseCase(isPrivacyPolicyAccepted = true, isTermsAndConditionsAccepted = true)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { tacRepository.setTACSettings(isPrivacyPolicyAccepted = true, isTermsAndConditionsAccepted = true) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { tacRepository.setTACSettings(isPrivacyPolicyAccepted = true, isTermsAndConditionsAccepted = true) }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val exception = Exception("Save error")
-        everySuspend { tacRepository.setTACSettings(any(), any()) } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val exception = Exception("Save error")
+            everySuspend { tacRepository.setTACSettings(any(), any()) } returns Result.failure(exception)
 
-        val result = updateTACSettingsUseCase(isPrivacyPolicyAccepted = false, isTermsAndConditionsAccepted = false)
+            val result = updateTACSettingsUseCase(isPrivacyPolicyAccepted = false, isTermsAndConditionsAccepted = false)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { tacRepository.setTACSettings(isPrivacyPolicyAccepted = false, isTermsAndConditionsAccepted = false) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { tacRepository.setTACSettings(isPrivacyPolicyAccepted = false, isTermsAndConditionsAccepted = false) }
+        }
 }

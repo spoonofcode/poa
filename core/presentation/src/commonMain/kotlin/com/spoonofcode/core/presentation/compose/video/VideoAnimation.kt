@@ -22,7 +22,7 @@ import com.spoonofcode.core.presentation.compose.ImageLink
 @Composable
 fun VideoAnimation(
     videoLink: String,
-    imageLink: String? = null
+    imageLink: String? = null,
 ) {
     var isError by remember { mutableStateOf(false) }
     var isLoading by remember { mutableStateOf(true) }
@@ -31,15 +31,15 @@ fun VideoAnimation(
         if (!isError) {
             LoopingVideo(
                 url = videoLink,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(
-                        ratio = 1f,
-                        matchHeightConstraintsFirst = true
-                    )
-                    .clip(RoundedCornerShape(16.dp))
-                    .shadow(4.dp, RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(
+                            ratio = 1f,
+                            matchHeightConstraintsFirst = true,
+                        ).clip(RoundedCornerShape(16.dp))
+                        .shadow(4.dp, RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                 mute = true,
                 onLoadingChanged = {
                     isLoading = it
@@ -47,17 +47,18 @@ fun VideoAnimation(
                 onError = {
                     isError = true
                     isLoading = false
-                }
+                },
             )
         } else {
             imageLink?.let {
                 ImageLink(
                     imageLink = it,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(16.dp))
-                        .shadow(4.dp, RoundedCornerShape(16.dp))
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(16.dp))
+                            .shadow(4.dp, RoundedCornerShape(16.dp)),
                 )
             }
         }

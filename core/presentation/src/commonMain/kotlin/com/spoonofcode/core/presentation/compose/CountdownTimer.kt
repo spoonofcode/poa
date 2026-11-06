@@ -67,21 +67,24 @@ fun CountdownTimer(targetTimeMillis: Long) {
 }
 
 @Composable
-private fun CountdownUnit(value: Long, label: String) {
+private fun CountdownUnit(
+    value: Long,
+    label: String,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .background(
-                MaterialTheme.colorScheme.primary,
-                RoundedCornerShape(size = 8.dp)
-            )
-            .padding(horizontal = 12.dp, vertical = 8.dp)
+        modifier =
+            Modifier
+                .background(
+                    MaterialTheme.colorScheme.primary,
+                    RoundedCornerShape(size = 8.dp),
+                ).padding(horizontal = 12.dp, vertical = 8.dp),
     ) {
         Text(
             text = value.toString().padStart(2, '0'),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.onPrimary,
         )
         Text(text = label, fontSize = 10.sp, color = MaterialTheme.colorScheme.onPrimary)
     }

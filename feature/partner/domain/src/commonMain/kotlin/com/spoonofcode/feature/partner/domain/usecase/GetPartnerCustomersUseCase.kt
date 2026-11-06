@@ -1,7 +1,6 @@
 package com.spoonofcode.feature.partner.domain.usecase
 
 import com.spoonofcode.feature.partner.domain.model.Customer
-import com.spoonofcode.feature.partner.domain.model.ProductSeries
 import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 
 class GetPartnerCustomersUseCase(

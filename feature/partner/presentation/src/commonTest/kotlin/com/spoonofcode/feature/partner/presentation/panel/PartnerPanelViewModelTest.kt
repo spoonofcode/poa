@@ -12,7 +12,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class PartnerPanelViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: PartnerPanelViewModel
 
     @BeforeTest
@@ -28,36 +27,40 @@ class PartnerPanelViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitContentState()
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitContentState()
+            }
         }
-    }
 
     @Test
-    fun `navigate to partner edit screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
+    fun `navigate to partner edit screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(PartnerPanelViewAction.NavigateToPartnerEdit)
 
-            verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerEdit) }
+                verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerEdit) }
+            }
         }
-    }
 
     @Test
-    fun `navigate to notification type screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(PartnerPanelViewAction.NavigateToNotificationType)
+    fun `navigate to notification type screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(PartnerPanelViewAction.NavigateToNotificationType)
 
-            verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerNotificationType) }
+                verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerNotificationType) }
+            }
         }
-    }
 
     @Test
-    fun `navigate to partner notifications screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(PartnerPanelViewAction.NavigateToPartnerNotifications)
+    fun `navigate to partner notifications screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(PartnerPanelViewAction.NavigateToPartnerNotifications)
 
-            verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerNotifications) }
+                verifySuspend { viewModelNavigator.push(PartnerModuleRoute.PartnerNotifications) }
+            }
         }
-    }
 }

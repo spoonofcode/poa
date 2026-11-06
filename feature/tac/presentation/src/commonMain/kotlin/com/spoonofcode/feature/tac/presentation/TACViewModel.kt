@@ -34,7 +34,7 @@ internal class TACViewModel(
                             isTermsAndConditionsAccepted = tacSettings.isTermsAndConditionsAccepted,
                             privacyPolicyLink = tacSettings.privacyPolicyLink,
                             marketingLink = tacSettings.marketingLink,
-                        )
+                        ),
                     )
                     showContentView()
                 }.onFailure {

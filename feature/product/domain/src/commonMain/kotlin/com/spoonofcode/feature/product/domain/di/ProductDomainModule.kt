@@ -13,13 +13,14 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val productDomainModule = module {
-    factoryOf(::GetFilteredProductsByTextUseCase)
-    factoryOf(::GetProductByIdUseCase)
-    factoryOf(::UpdateProductUseCase)
-    factoryOf(::GetUserProductsUseCase)
-    factoryOf(::AddProductToUserUseCase)
-    factoryOf(::DeleteProductFromUserUseCase)
-    factoryOf(::GetProductStatusUseCase)
-    factoryOf(::ProductNotificationTopicSyncHandler) { bind<NotificationTopicSyncHandler>() }
-}
+val productDomainModule =
+    module {
+        factoryOf(::GetFilteredProductsByTextUseCase)
+        factoryOf(::GetProductByIdUseCase)
+        factoryOf(::UpdateProductUseCase)
+        factoryOf(::GetUserProductsUseCase)
+        factoryOf(::AddProductToUserUseCase)
+        factoryOf(::DeleteProductFromUserUseCase)
+        factoryOf(::GetProductStatusUseCase)
+        factoryOf(::ProductNotificationTopicSyncHandler) { bind<NotificationTopicSyncHandler>() }
+    }

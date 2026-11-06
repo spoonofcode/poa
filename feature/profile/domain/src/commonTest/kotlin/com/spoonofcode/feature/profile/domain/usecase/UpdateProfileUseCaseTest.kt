@@ -14,7 +14,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class UpdateProfileUseCaseTest : BaseTest() {
-
     private lateinit var updateProfileUseCase: UpdateProfileUseCase
     private lateinit var profileRepository: ProfileRepository
 
@@ -32,24 +31,26 @@ class UpdateProfileUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success when profileRepository updateUserProfile succeeds`() = runTest {
-        everySuspend { profileRepository.updateUserProfile() } returns Result.success(Unit)
+    fun `invoke returns success when profileRepository updateUserProfile succeeds`() =
+        runTest {
+            everySuspend { profileRepository.updateUserProfile() } returns Result.success(Unit)
 
-        val result = updateProfileUseCase()
+            val result = updateProfileUseCase()
 
-        assertTrue(result.isSuccess)
-        verifySuspend { profileRepository.updateUserProfile() }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { profileRepository.updateUserProfile() }
+        }
 
     @Test
-    fun `invoke returns failure when profileRepository updateUserProfile throws`() = runTest {
-        val exception = Exception("Update profile failed")
-        everySuspend { profileRepository.updateUserProfile() } returns Result.failure(exception)
+    fun `invoke returns failure when profileRepository updateUserProfile throws`() =
+        runTest {
+            val exception = Exception("Update profile failed")
+            everySuspend { profileRepository.updateUserProfile() } returns Result.failure(exception)
 
-        val result = updateProfileUseCase()
+            val result = updateProfileUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { profileRepository.updateUserProfile() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { profileRepository.updateUserProfile() }
+        }
 }

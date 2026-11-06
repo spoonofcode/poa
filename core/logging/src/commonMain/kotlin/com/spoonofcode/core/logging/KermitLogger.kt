@@ -1,21 +1,39 @@
 package com.spoonofcode.core.logging
 
 import co.touchlab.kermit.Logger
+import co.touchlab.kermit.Severity
 
 object KermitLogger : POALogger {
+    init {
+        if (!BuildKonfig.ENABLE_LOGGING) {
+            Logger.setMinSeverity(Severity.Error)
+        } else {
+            Logger.setMinSeverity(Severity.Verbose)
+        }
+    }
+
     override fun debug(message: String) {
-        Logger.d(message)
+        if (BuildKonfig.ENABLE_LOGGING) {
+            Logger.d(message)
+        }
     }
 
     override fun info(message: String) {
-        Logger.i(message)
+        if (BuildKonfig.ENABLE_LOGGING) {
+            Logger.i(message)
+        }
     }
 
     override fun warn(message: String) {
-        Logger.w(message)
+        if (BuildKonfig.ENABLE_LOGGING) {
+            Logger.w(message)
+        }
     }
 
-    override fun error(message: String, throwable: Throwable?) {
+    override fun error(
+        message: String,
+        throwable: Throwable?,
+    ) {
         Logger.e(message, throwable)
     }
 }

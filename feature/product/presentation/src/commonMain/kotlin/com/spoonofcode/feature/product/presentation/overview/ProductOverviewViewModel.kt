@@ -61,11 +61,10 @@ internal class ProductOverviewViewModel(
                         ProductOverviewViewState(
                             initProducts = it,
                             filteredProducts = it,
-                        )
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -74,10 +73,11 @@ internal class ProductOverviewViewModel(
     private fun changeSearchText(searchText: String) {
         viewModelScope.launch {
             val products = currentContentState().initProducts
-            val filteredProducts = getFilteredProductsByTextUseCase(
-                searchText = searchText,
-                products = products,
-            )
+            val filteredProducts =
+                getFilteredProductsByTextUseCase(
+                    searchText = searchText,
+                    products = products,
+                )
             updateContentState {
                 copy(
                     searchText = searchText,
@@ -90,7 +90,7 @@ internal class ProductOverviewViewModel(
     private fun selectProduct(productId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                ProductModuleRoute.ProductDetails(productId = productId)
+                ProductModuleRoute.ProductDetails(productId = productId),
             )
         }
     }

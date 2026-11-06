@@ -7,7 +7,8 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-actual val platformFirebaseDataModule = module {
-    singleOf(::RemoteFirebaseMessagingDataSource)
-    singleOf(::FirebaseMessagingRepositoryImpl) { bind<FirebaseMessagingRepository>() }
-}
+actual val platformFirebaseDataModule =
+    module {
+        singleOf(::RemoteFirebaseMessagingDataSource)
+        singleOf(::FirebaseMessagingRepositoryImpl) { bind<FirebaseMessagingRepository>() }
+    }

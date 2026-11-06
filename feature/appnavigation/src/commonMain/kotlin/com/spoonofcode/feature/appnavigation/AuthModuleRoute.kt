@@ -8,5 +8,7 @@ sealed class AuthModuleRoute : ModuleRoute() {
     object Login : AuthModuleRoute()
 
     @Serializable
-    data class LoginCode(val email: String) : AuthModuleRoute()
+    data class LoginCode(
+        val email: String,
+    ) : AuthModuleRoute()
 }

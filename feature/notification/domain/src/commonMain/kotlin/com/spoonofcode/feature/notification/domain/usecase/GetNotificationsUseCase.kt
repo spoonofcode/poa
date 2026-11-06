@@ -6,11 +6,13 @@ import com.spoonofcode.feature.notification.domain.repository.NotificationReposi
 class GetNotificationsUseCase(
     private val notificationRepository: NotificationRepository,
 ) {
-    suspend operator fun invoke(): Result<List<Notification>> = notificationRepository.readAll()
-        .map { notifications ->
-            notifications.sortedWith(
-                compareBy<Notification> { it.isRead } // Unread first (false < true)
-                    .thenByDescending { it.createdDataTime } // Newest first
-            )
-        }
+    suspend operator fun invoke(): Result<List<Notification>> =
+        notificationRepository
+            .readAll()
+            .map { notifications ->
+                notifications.sortedWith(
+                    compareBy<Notification> { it.isRead } // Unread first (false < true)
+                        .thenByDescending { it.createdDataTime }, // Newest first
+                )
+            }
 }

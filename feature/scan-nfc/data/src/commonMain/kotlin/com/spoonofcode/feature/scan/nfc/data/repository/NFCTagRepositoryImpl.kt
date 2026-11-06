@@ -8,6 +8,5 @@ import com.spoonofcode.feature.scan.nfc.domain.repository.NFCTagRepository
 internal class NFCTagRepositoryImpl(
     private val remoteNFCTagDataSource: RemoteNFCTagDataSource,
 ) : NFCTagRepository {
-    override suspend fun getNFCTAg(url: String): Result<NFCTag> =
-        remoteNFCTagDataSource.readNFCTagPublicId(url).map { it.toTag() }
+    override suspend fun getNFCTAg(url: String): Result<NFCTag> = remoteNFCTagDataSource.readNFCTagPublicId(url).map { it.toTag() }
 }

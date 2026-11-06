@@ -2,8 +2,8 @@ package com.spoonofcode.poa.app.di
 
 import com.spoonofcode.core.data.coroutines.di.coroutinesModule
 import com.spoonofcode.core.data.getPlatform
-import com.spoonofcode.core.logging.di.loggingModule
 import com.spoonofcode.core.firebase.data.di.firebaseDataModule
+import com.spoonofcode.core.logging.di.loggingModule
 import com.spoonofcode.core.network.di.networkModule
 import com.spoonofcode.core.presentation.di.presentationModule
 import com.spoonofcode.core.recaptcha.di.recaptchaModule
@@ -39,54 +39,46 @@ import com.spoonofcode.poa.app.AppViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val appModule = module {
-    includes(
-        // core
-        loggingModule,
-        coroutinesModule,
-        firebaseDataModule,
-        presentationModule,
-        networkModule,
-        recaptchaModule,
-        sessionDataModule,
-        sessionDomainModule,
-        storageDataModule,
-
-        // features
-        homeDataModule,
-        homeDomainModule,
-        homePresentationModule,
-
-        authDataModule,
-        authDomainModule,
-        authPresentationModule,
-
-        faqPresentationModule,
-
-        partnerDataModule,
-        partnerDomainModule,
-        partnerPresentationModule,
-
-        profileDataModule,
-        profileDomainModule,
-        profilePresentationModule,
-
-        productDataModule,
-        productDomainModule,
-        productPresentationModule,
-
-        notificationDataModule,
-        notificationDomainModule,
-        notificationPresentationModule,
-
-        scanDataModule,
-        scanDomainModule,
-        scanPresentationModule,
-
-        tacDataModule,
-        tacDomainModule,
-        tacPresentationModule,
-    )
-    single { getPlatform() }
-    viewModelOf(::AppViewModel)
-}
+val appModule =
+    module {
+        includes(
+            // core
+            loggingModule,
+            coroutinesModule,
+            firebaseDataModule,
+            presentationModule,
+            networkModule,
+            recaptchaModule,
+            sessionDataModule,
+            sessionDomainModule,
+            storageDataModule,
+            // features
+            homeDataModule,
+            homeDomainModule,
+            homePresentationModule,
+            authDataModule,
+            authDomainModule,
+            authPresentationModule,
+            faqPresentationModule,
+            partnerDataModule,
+            partnerDomainModule,
+            partnerPresentationModule,
+            profileDataModule,
+            profileDomainModule,
+            profilePresentationModule,
+            productDataModule,
+            productDomainModule,
+            productPresentationModule,
+            notificationDataModule,
+            notificationDomainModule,
+            notificationPresentationModule,
+            scanDataModule,
+            scanDomainModule,
+            scanPresentationModule,
+            tacDataModule,
+            tacDomainModule,
+            tacPresentationModule,
+        )
+        single { getPlatform() }
+        viewModelOf(::AppViewModel)
+    }

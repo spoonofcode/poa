@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 data class NfcTag(
     val id: String,
     val techList: List<String>,
-    val ndef: String? = null
+    val ndef: String? = null,
 )
 
 interface NfcReader {
@@ -18,9 +18,10 @@ interface NfcReader {
     val isScanning: StateFlow<Boolean>
 
     fun start()
+
     fun stop()
 }
 
-///** Factory to get the platform implementation. */
+// /** Factory to get the platform implementation. */
 @Composable
 expect fun rememberNfcReader(): NfcReader

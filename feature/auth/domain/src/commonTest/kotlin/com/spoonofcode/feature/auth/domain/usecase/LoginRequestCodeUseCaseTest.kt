@@ -17,7 +17,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class LoginRequestCodeUseCaseTest : BaseTest() {
-
     private lateinit var loginRequestCodeUseCase: LoginRequestCodeUseCase
     private lateinit var loginRepository: LoginRepository
     private lateinit var recaptchaClient: RecaptchaClient
@@ -39,49 +38,51 @@ class LoginRequestCodeUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success when recaptcha and loginRepository succeed`() = runTest {
-        val email = "test@example.com"
-        val recaptchaToken = "token123"
+    fun `invoke returns success when recaptcha and loginRepository succeed`() =
+        runTest {
+            val email = "test@example.com"
+            val recaptchaToken = "token123"
 
-        everySuspend { recaptchaClient.execute(any()) } returns recaptchaToken
-        everySuspend {
-            loginRepository.requestCode(
-                email = email,
-                platform = "android",
-                recaptchaToken = recaptchaToken,
-            )
-        } returns Result.success(Unit)
+            everySuspend { recaptchaClient.execute(any()) } returns recaptchaToken
+            everySuspend {
+                loginRepository.requestCode(
+                    email = email,
+                    platform = "android",
+                    recaptchaToken = recaptchaToken,
+                )
+            } returns Result.success(Unit)
 
-        val result = loginRequestCodeUseCase(email)
+            val result = loginRequestCodeUseCase(email)
 
-        assertTrue(result.isSuccess)
-        verifySuspend {
-            loginRepository.requestCode(
-                email = email,
-                platform = "android",
-                recaptchaToken = recaptchaToken,
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend {
+                loginRepository.requestCode(
+                    email = email,
+                    platform = "android",
+                    recaptchaToken = recaptchaToken,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val email = "test@example.com"
-        val recaptchaToken = "token123"
-        val exception = Exception("Failed to request code")
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val email = "test@example.com"
+            val recaptchaToken = "token123"
+            val exception = Exception("Failed to request code")
 
-        everySuspend { recaptchaClient.execute(any()) } returns recaptchaToken
-        everySuspend {
-            loginRepository.requestCode(
-                email = email,
-                platform = "android",
-                recaptchaToken = recaptchaToken,
-            )
-        } returns Result.failure(exception)
+            everySuspend { recaptchaClient.execute(any()) } returns recaptchaToken
+            everySuspend {
+                loginRepository.requestCode(
+                    email = email,
+                    platform = "android",
+                    recaptchaToken = recaptchaToken,
+                )
+            } returns Result.failure(exception)
 
-        val result = loginRequestCodeUseCase(email)
+            val result = loginRequestCodeUseCase(email)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+        }
 }

@@ -48,18 +48,19 @@ fun OutlinedTextFieldStandard(
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         label?.let { labelText ->
             Text(
-                text = buildAnnotatedString {
-                    append(labelText)
-                    if (isRequired) {
-                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
-                            append(" *")
+                text =
+                    buildAnnotatedString {
+                        append(labelText)
+                        if (isRequired) {
+                            withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                                append(" *")
+                            }
                         }
-                    }
-                },
+                    },
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
             )
@@ -70,18 +71,22 @@ fun OutlinedTextFieldStandard(
             modifier = modifier,
             enabled = enabled,
             readOnly = readOnly,
-            label = innerLabel?.let { labelText ->
-                {
-                    Text(text = buildAnnotatedString {
-                        append(labelText)
-                        if (isRequired) {
-                            withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
-                                append(" *")
-                            }
-                        }
-                    })
-                }
-            },
+            label =
+                innerLabel?.let { labelText ->
+                    {
+                        Text(
+                            text =
+                                buildAnnotatedString {
+                                    append(labelText)
+                                    if (isRequired) {
+                                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                                            append(" *")
+                                        }
+                                    }
+                                },
+                        )
+                    }
+                },
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             isError = isError,
@@ -114,24 +119,27 @@ fun OutlinedTextFieldPassword(
         trailingIcon = {
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(
-                    imageVector = if (passwordVisible) {
-                        Icons.Default.Visibility
-                    } else {
-                        Icons.Default.VisibilityOff
-                    },
-                    contentDescription = if (passwordVisible) {
-                        "Hide password"
-                    } else {
-                        "Show password"
-                    }
+                    imageVector =
+                        if (passwordVisible) {
+                            Icons.Default.Visibility
+                        } else {
+                            Icons.Default.VisibilityOff
+                        },
+                    contentDescription =
+                        if (passwordVisible) {
+                            "Hide password"
+                        } else {
+                            "Show password"
+                        },
                 )
             }
         },
-        visualTransformation = if (passwordVisible) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
+        visualTransformation =
+            if (passwordVisible) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
     )
 }
 
@@ -147,7 +155,7 @@ fun OutlinedTextFieldSearch(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
         },
         innerLabel = stringResource(resource = Res.string.search),

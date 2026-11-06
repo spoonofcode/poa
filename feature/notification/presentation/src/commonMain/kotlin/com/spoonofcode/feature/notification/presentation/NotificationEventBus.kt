@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 
 sealed class NotificationEvent {
     data object SettingsUpdated : NotificationEvent()
+
     data object NotificationRead : NotificationEvent()
 }
 

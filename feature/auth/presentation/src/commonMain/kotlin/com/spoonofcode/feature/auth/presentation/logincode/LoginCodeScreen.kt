@@ -25,9 +25,10 @@ import org.jetbrains.compose.resources.stringResource
 private const val VERIFICATION_CODE_LENGTH = 6
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.sign_in_with_code),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.sign_in_with_code),
+    )
 
 @Composable
 internal fun LoginCodeScreen(
@@ -51,13 +52,14 @@ private fun ColumnScope.Content(
     onAction: (LoginCodeViewAction) -> Unit,
 ) {
     Text(
-        text = buildAnnotatedString {
-            append(stringResource(resource = Res.string.one_time_code_info_prefix))
-            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                append(viewState.email)
-            }
-            append(stringResource(resource = Res.string.one_time_code_info_postfix))
-        },
+        text =
+            buildAnnotatedString {
+                append(stringResource(resource = Res.string.one_time_code_info_prefix))
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append(viewState.email)
+                }
+                append(stringResource(resource = Res.string.one_time_code_info_postfix))
+            },
         style = MaterialTheme.typography.bodyLarge,
     )
 
@@ -78,7 +80,7 @@ private fun ColumnScope.Content(
         text = stringResource(resource = Res.string.sign_in_with_code),
         enabled = viewState.isSignInWithCodeButtonEnable,
         isLoading = viewState.isSignInWithCodeButtonLoading,
-        onClick = { onAction(LoginCodeViewAction.SignInWithCode) }
+        onClick = { onAction(LoginCodeViewAction.SignInWithCode) },
     )
 }
 

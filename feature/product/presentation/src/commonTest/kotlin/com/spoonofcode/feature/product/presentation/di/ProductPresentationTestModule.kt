@@ -9,15 +9,16 @@ import com.spoonofcode.feature.product.data.test.di.productDataTestModule
 import com.spoonofcode.feature.product.domain.di.productDomainModule
 import org.koin.dsl.module
 
-val productPresentationTestModule = module {
-    includes(
-        loggingModule,
-        productDataTestModule,
-        productDomainModule,
-        productPresentationModule,
-        notificationDataTestModule,
-        firebaseDataTestModule,
-        partnerDataTestModule,
-        partnerDomainModule,
-    )
-}
+val productPresentationTestModule =
+    module {
+        includes(
+            loggingModule,
+            productDataTestModule,
+            productDomainModule,
+            productPresentationModule,
+            notificationDataTestModule,
+            firebaseDataTestModule,
+            partnerDataTestModule,
+            partnerDomainModule,
+        )
+    }

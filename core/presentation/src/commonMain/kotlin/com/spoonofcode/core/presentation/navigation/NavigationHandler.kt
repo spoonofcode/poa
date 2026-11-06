@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.SharedFlow
 @Composable
 fun NavigationHandler(
     navigationFlow: SharedFlow<NavigationEvent>,
-    backStack: NavBackStack<NavKey>
+    backStack: NavBackStack<NavKey>,
 ) {
     LaunchedEffect(true) {
         navigationFlow.collect { navigationEvent ->

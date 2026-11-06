@@ -6,7 +6,8 @@ import dev.mokkery.MockMode
 import dev.mokkery.mock
 import org.koin.dsl.module
 
-internal val presentationTestModule = module {
-    single { networkManagerMock() }
-    single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
-}
+internal val presentationTestModule =
+    module {
+        single { networkManagerMock() }
+        single { mock<ViewModelNavigator>(mode = MockMode.autofill) }
+    }

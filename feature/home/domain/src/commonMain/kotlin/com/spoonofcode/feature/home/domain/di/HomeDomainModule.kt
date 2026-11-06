@@ -6,8 +6,9 @@ import com.spoonofcode.feature.home.domain.usecase.GetUserRewardsPointsUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val homeDomainModule = module {
-    factoryOf(::AddRewardToUserUseCase)
-    factoryOf(::GetUserDailyCheckInStatusUseCase)
-    factoryOf(::GetUserRewardsPointsUseCase)
-}
+val homeDomainModule =
+    module {
+        factoryOf(::AddRewardToUserUseCase)
+        factoryOf(::GetUserDailyCheckInStatusUseCase)
+        factoryOf(::GetUserRewardsPointsUseCase)
+    }

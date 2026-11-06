@@ -6,7 +6,7 @@ import com.spoonofcode.core.session.domain.repository.LogoutHandler
 import kotlinx.cinterop.ExperimentalForeignApi
 
 class GoogleLogoutHandler(
-    private val poaLogger: POALogger
+    private val poaLogger: POALogger,
 ) : LogoutHandler {
     @OptIn(ExperimentalForeignApi::class)
     override suspend fun onLogout() {

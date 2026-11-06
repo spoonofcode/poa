@@ -38,12 +38,11 @@ internal class PartnerEditViewModel(
                 .onSuccess {
                     setContentState(
                         PartnerEditViewState(
-                            partner = it
-                        )
+                            partner = it,
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -84,8 +83,7 @@ internal class PartnerEditViewModel(
                 .onSuccess {
                     partnerEventBus.emitPartnerUpdated()
                     viewModelNavigator.pop()
-                }
-                .onFailure {
+                }.onFailure {
                     updateContentState { copy(isSaveChangesButtonLoading = false) }
                     it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
                 }

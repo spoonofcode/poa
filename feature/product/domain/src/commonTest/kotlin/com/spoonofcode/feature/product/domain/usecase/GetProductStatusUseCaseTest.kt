@@ -13,7 +13,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetProductStatusUseCaseTest : BaseTest() {
-
     private lateinit var getProductStatusUseCase: GetProductStatusUseCase
     private lateinit var sessionRepository: SessionRepository
 
@@ -31,31 +30,35 @@ class GetProductStatusUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns UNASSIGNED when ownerEmail is null`() = runTest {
-        val result = getProductStatusUseCase(null)
-        assertEquals(ProductStatus.UNASSIGNED, result)
-    }
+    fun `invoke returns UNASSIGNED when ownerEmail is null`() =
+        runTest {
+            val result = getProductStatusUseCase(null)
+            assertEquals(ProductStatus.UNASSIGNED, result)
+        }
 
     @Test
-    fun `invoke returns UNASSIGNED when ownerEmail is empty`() = runTest {
-        val result = getProductStatusUseCase("")
-        assertEquals(ProductStatus.UNASSIGNED, result)
-    }
+    fun `invoke returns UNASSIGNED when ownerEmail is empty`() =
+        runTest {
+            val result = getProductStatusUseCase("")
+            assertEquals(ProductStatus.UNASSIGNED, result)
+        }
 
     @Test
-    fun `invoke returns OWNED_BY_SELF when ownerEmail matches session user email`() = runTest {
-        val userEmail = "user@example.com"
-        everySuspend { sessionRepository.getSessionUserEmail() } returns userEmail
+    fun `invoke returns OWNED_BY_SELF when ownerEmail matches session user email`() =
+        runTest {
+            val userEmail = "user@example.com"
+            everySuspend { sessionRepository.getSessionUserEmail() } returns userEmail
 
-        val result = getProductStatusUseCase(userEmail)
-        assertEquals(ProductStatus.OWNED_BY_SELF, result)
-    }
+            val result = getProductStatusUseCase(userEmail)
+            assertEquals(ProductStatus.OWNED_BY_SELF, result)
+        }
 
     @Test
-    fun `invoke returns OWNED_BY_OTHER when ownerEmail differs from session user email`() = runTest {
-        everySuspend { sessionRepository.getSessionUserEmail() } returns "user@example.com"
+    fun `invoke returns OWNED_BY_OTHER when ownerEmail differs from session user email`() =
+        runTest {
+            everySuspend { sessionRepository.getSessionUserEmail() } returns "user@example.com"
 
-        val result = getProductStatusUseCase("other@example.com")
-        assertEquals(ProductStatus.OWNED_BY_OTHER, result)
-    }
+            val result = getProductStatusUseCase("other@example.com")
+            assertEquals(ProductStatus.OWNED_BY_OTHER, result)
+        }
 }

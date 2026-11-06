@@ -24,9 +24,10 @@ import com.spoonofcode.feature.profile.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.edit_profile),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.edit_profile),
+    )
 
 @Composable
 internal fun ProfileEditScreen(
@@ -78,15 +79,17 @@ private fun ColumnScope.Content(
 @Composable
 private fun ProfileEditScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            ProfileEditViewState(
-                profile = Profile(
-                    id = "1",
-                    email = "exmaple.mail.1@gmail.com",
-                    roles = listOf("user", "partner"),
+        viewState =
+            ViewState.Content(
+                ProfileEditViewState(
+                    profile =
+                        Profile(
+                            id = "1",
+                            email = "exmaple.mail.1@gmail.com",
+                            roles = listOf("user", "partner"),
+                        ),
                 ),
-            )
-        ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

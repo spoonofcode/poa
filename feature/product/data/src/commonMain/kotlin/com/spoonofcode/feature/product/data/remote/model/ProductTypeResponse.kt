@@ -9,5 +9,5 @@ internal enum class ProductTypeResponse {
     ITEM,
 
     @SerialName("redirect")
-    REDIRECT;
+    REDIRECT,
 }

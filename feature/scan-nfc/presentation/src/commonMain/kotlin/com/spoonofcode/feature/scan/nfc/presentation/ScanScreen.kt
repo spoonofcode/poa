@@ -44,11 +44,12 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.scan),
-    backNavigationEnable = false,
-    verticalScrollEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.scan),
+        backNavigationEnable = false,
+        verticalScrollEnable = false,
+    )
 
 @Composable
 internal fun ScanScreen(
@@ -72,7 +73,7 @@ private fun ColumnScope.Content(
 ) {
     if (viewState.isProductNotFoundViewVisible) {
         ProductNotFoundView(
-            reload = { onAction(ScanViewAction.ScanAgain) }
+            reload = { onAction(ScanViewAction.ScanAgain) },
         )
     } else {
         val reader: NfcReader = rememberNfcReader()
@@ -88,10 +89,11 @@ private fun ColumnScope.Content(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (isScanning) {
-                val scanInfoText = when (viewState.platformType) {
-                    PlatformType.Android -> stringResource(Res.string.scan_info_android)
-                    PlatformType.iOS -> stringResource(Res.string.scan_info_ios)
-                }
+                val scanInfoText =
+                    when (viewState.platformType) {
+                        PlatformType.ANDROID -> stringResource(Res.string.scan_info_android)
+                        PlatformType.IOS -> stringResource(Res.string.scan_info_ios)
+                    }
                 TextBL(
                     text = scanInfoText,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
@@ -107,10 +109,9 @@ private fun ColumnScope.Content(
             } else {
                 PrimaryButton(
                     text = stringResource(Res.string.start_scanning),
-                    onClick = { reader.start() }
+                    onClick = { reader.start() },
                 )
             }
-
         }
     }
 }
@@ -127,18 +128,20 @@ private fun ProductNotFoundView(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Surface(
-            modifier = Modifier
-                .size(160.dp),
+            modifier =
+                Modifier
+                    .size(160.dp),
             shape = CircleShape,
         ) {
             Image(
                 painter = painterResource(resource = iconRes),
                 contentDescription = null,
-                modifier = Modifier
-                    .size(sizeDp)
-                    .background(MaterialTheme.colorScheme.onBackground),
+                modifier =
+                    Modifier
+                        .size(sizeDp)
+                        .background(MaterialTheme.colorScheme.onBackground),
                 contentScale = ContentScale.Crop,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background)
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.background),
             )
         }
         SpacerVerticalBetweenFields()
@@ -149,7 +152,7 @@ private fun ProductNotFoundView(
 
         SecondaryButton(
             text = stringResource(resource = Res.string.scan_again),
-            onClick = reload
+            onClick = reload,
         )
     }
 }

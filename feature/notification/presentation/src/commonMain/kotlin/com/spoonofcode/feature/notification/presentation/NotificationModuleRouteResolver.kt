@@ -14,9 +14,10 @@ import org.koin.core.parameter.parametersOf
 fun EntryProviderScope<NavKey>.notificationModuleRouteResolver() {
     viewModelEntry<NotificationModuleRoute.NotificationDetails> {
         NotificationDetailsScreen(
-            viewModel = koinViewModel(
-                parameters = { parametersOf(it.notificationId) }
-            ),
+            viewModel =
+                koinViewModel(
+                    parameters = { parametersOf(it.notificationId) },
+                ),
         )
     }
     viewModelEntry<NotificationModuleRoute.NotificationOverview> {

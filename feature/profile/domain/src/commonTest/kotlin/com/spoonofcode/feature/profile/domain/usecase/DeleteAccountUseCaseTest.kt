@@ -10,7 +10,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class DeleteAccountUseCaseTest : BaseTest() {
-
     private lateinit var deleteAccountUseCase: DeleteAccountUseCase
     private lateinit var sessionRepository: SessionRepository
 
@@ -28,9 +27,10 @@ class DeleteAccountUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke calls clearSession on sessionRepository`() = runTest {
-        deleteAccountUseCase()
+    fun `invoke calls clearSession on sessionRepository`() =
+        runTest {
+            deleteAccountUseCase()
 
-        verifySuspend { sessionRepository.clearSession() }
-    }
+            verifySuspend { sessionRepository.clearSession() }
+        }
 }

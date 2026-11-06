@@ -10,15 +10,17 @@ class LoginCodeUseCase(
     suspend operator fun invoke(
         email: String,
         code: String,
-    ): Result<Unit> = loginRepository.loginWithCode(
-        email = email,
-        loginCode = code,
-    ).map { login ->
-        sessionRepository.initSession(
-            accessToken = login.accessToken,
-            refreshToken = login.refreshToken,
-            userId = login.id,
-            userEmail = login.email,
-        )
-    }
+    ): Result<Unit> =
+        loginRepository
+            .loginWithCode(
+                email = email,
+                loginCode = code,
+            ).map { login ->
+                sessionRepository.initSession(
+                    accessToken = login.accessToken,
+                    refreshToken = login.refreshToken,
+                    userId = login.id,
+                    userEmail = login.email,
+                )
+            }
 }

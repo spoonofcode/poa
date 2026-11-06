@@ -1,18 +1,15 @@
 package com.spoonofcode.feature.partner.domain.model
 
 enum class PartnerNotificationType {
-    global,
-    user,
-    serie,
-    partner;
+    GLOBAL,
+    USER,
+    SERIE,
+    PARTNER,
+    ;
 
-    fun createTopic(identifier: String): String {
-        return "${this.name}_$identifier"
-    }
+    fun createTopic(identifier: String): String = "${this.name.lowercase()}_$identifier"
 
     companion object {
-        fun fromString(value: String): PartnerNotificationType? {
-            return entries.find { it.name.equals(value, ignoreCase = true) }
-        }
+        fun fromString(value: String): PartnerNotificationType? = entries.find { it.name.lowercase().equals(value, ignoreCase = true) }
     }
 }

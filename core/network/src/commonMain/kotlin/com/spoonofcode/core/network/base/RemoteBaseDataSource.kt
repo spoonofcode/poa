@@ -34,46 +34,46 @@ abstract class RemoteBaseDataSource(
         queryParams: Map<String, Any> = emptyMap(),
         requestBody: Any? = null,
         markAsRefreshTokenRequest: Boolean = false,
-    ): Result<T> = withContext(dispatcherProvider.io()) {
-        val urlString =
-            if (urlPostfixPath.isNotEmpty())
-                "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
-            else
-                "${networkConfig.baseUrl}/$collectionName"
-
-        try {
-            poaLogger.debug("RemoteBaseDataSource: Request $method $urlString")
-
-            val requestBuilder: HttpRequestBuilder.() -> Unit = {
-                contentType(ContentType.Application.Json)
-                url(urlString)
-
-                queryParams.forEach { (key, value) -> parameter(key, value) }
-
-                this.method = method
-
-                requestBody?.let {
-                    setBody(it)
+    ): Result<T> =
+        withContext(dispatcherProvider.io()) {
+            val urlString =
+                if (urlPostfixPath.isNotEmpty()) {
+                    "${networkConfig.baseUrl}/$collectionName/$urlPostfixPath"
+                } else {
+                    "${networkConfig.baseUrl}/$collectionName"
                 }
-                if (markAsRefreshTokenRequest) {
-                    attributes.put(AuthCircuitBreaker, Unit)
+
+            try {
+                poaLogger.debug("RemoteBaseDataSource: Request $method $urlString")
+
+                val requestBuilder: HttpRequestBuilder.() -> Unit = {
+                    contentType(ContentType.Application.Json)
+                    url(urlString)
+
+                    queryParams.forEach { (key, value) -> parameter(key, value) }
+
+                    this.method = method
+
+                    requestBody?.let {
+                        setBody(it)
+                    }
+                    if (markAsRefreshTokenRequest) {
+                        attributes.put(AuthCircuitBreaker, Unit)
+                    }
                 }
+
+                val response = httpClient.request(requestBuilder)
+                val validatedResponse = responseOrException(response)
+
+                poaLogger.debug("RemoteBaseDataSource: Success $method $urlString")
+                Result.success(validatedResponse.body(typeInfo<T>()))
+            } catch (e: Exception) {
+                poaLogger.error("RemoteBaseDataSource: Error $method $urlString", e)
+                Result.failure(e)
             }
-
-            val response = httpClient.request(requestBuilder)
-            val validatedResponse = responseOrException(response)
-            
-            poaLogger.debug("RemoteBaseDataSource: Success $method $urlString")
-            Result.success(validatedResponse.body(typeInfo<T>()))
-        } catch (e: Exception) {
-            poaLogger.error("RemoteBaseDataSource: Error $method $urlString", e)
-            Result.failure(e)
         }
-    }
 
-    private fun unhandledException(response: HttpResponse): HttpResponse {
-        throw Exception("Unhandled Error $response")
-    }
+    private fun unhandledException(response: HttpResponse): HttpResponse = throw Exception("Unhandled Error $response")
 
     fun responseOrException(response: HttpResponse): HttpResponse {
         return when (response.status) {

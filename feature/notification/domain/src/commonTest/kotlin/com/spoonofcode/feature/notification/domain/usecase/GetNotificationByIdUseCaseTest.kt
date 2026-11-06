@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetNotificationByIdUseCaseTest : BaseTest() {
-
     private lateinit var getNotificationByIdUseCase: GetNotificationByIdUseCase
     private lateinit var notificationRepository: NotificationRepository
 
@@ -33,25 +32,27 @@ class GetNotificationByIdUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success with notification`() = runTest {
-        val id = NotificationMockData.NOTIFICATION_1.id
-        val result = getNotificationByIdUseCase(id)
+    fun `invoke returns success with notification`() =
+        runTest {
+            val id = NotificationMockData.NOTIFICATION_1.id
+            val result = getNotificationByIdUseCase(id)
 
-        assertTrue(result.isSuccess)
-        assertEquals(NotificationMockData.NOTIFICATION_1, result.getOrNull())
-        verifySuspend { notificationRepository.read(id) }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(NotificationMockData.NOTIFICATION_1, result.getOrNull())
+            verifySuspend { notificationRepository.read(id) }
+        }
 
     @Test
-    fun `invoke returns failure when repository throws`() = runTest {
-        val id = "invalid_id"
-        val exception = Exception("Notification not found")
-        everySuspend { notificationRepository.read(id) } returns Result.failure(exception)
+    fun `invoke returns failure when repository throws`() =
+        runTest {
+            val id = "invalid_id"
+            val exception = Exception("Notification not found")
+            everySuspend { notificationRepository.read(id) } returns Result.failure(exception)
 
-        val result = getNotificationByIdUseCase(id)
+            val result = getNotificationByIdUseCase(id)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { notificationRepository.read(id) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { notificationRepository.read(id) }
+        }
 }

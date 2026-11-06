@@ -5,7 +5,8 @@ import com.spoonofcode.feature.tac.domain.usecase.UpdateTACSettingsUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-val tacDomainModule = module {
-    factoryOf(::GetTACSettingsUseCase)
-    factoryOf(::UpdateTACSettingsUseCase)
-}
+val tacDomainModule =
+    module {
+        factoryOf(::GetTACSettingsUseCase)
+        factoryOf(::UpdateTACSettingsUseCase)
+    }

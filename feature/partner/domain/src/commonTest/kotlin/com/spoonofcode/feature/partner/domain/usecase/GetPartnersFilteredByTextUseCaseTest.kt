@@ -11,7 +11,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetPartnersFilteredByTextUseCaseTest : BaseTest() {
-
     private lateinit var getPartnersFilteredByTextUseCase: GetPartnersFilteredByTextUseCase
 
     @BeforeTest
@@ -27,19 +26,21 @@ class GetPartnersFilteredByTextUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns partners matching search text ignore case`() = runTest {
-        val partners = PartnerMockData.PARTNERS
-        val result = getPartnersFilteredByTextUseCase("beauty", partners)
+    fun `invoke returns partners matching search text ignore case`() =
+        runTest {
+            val partners = PartnerMockData.PARTNERS
+            val result = getPartnersFilteredByTextUseCase("beauty", partners)
 
-        assertEquals(1, result.size)
-        assertEquals(PartnerMockData.PARTNER_1, result.first())
-    }
+            assertEquals(1, result.size)
+            assertEquals(PartnerMockData.PARTNER_1, result.first())
+        }
 
     @Test
-    fun `invoke returns empty list when no partner matches`() = runTest {
-        val partners = PartnerMockData.PARTNERS
-        val result = getPartnersFilteredByTextUseCase("nonexisting", partners)
+    fun `invoke returns empty list when no partner matches`() =
+        runTest {
+            val partners = PartnerMockData.PARTNERS
+            val result = getPartnersFilteredByTextUseCase("nonexisting", partners)
 
-        assertTrue(result.isEmpty())
-    }
+            assertTrue(result.isEmpty())
+        }
 }

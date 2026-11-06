@@ -14,7 +14,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class MarkNotificationAsReadUseCaseTest : BaseTest() {
-
     private lateinit var markNotificationAsReadUseCase: MarkNotificationAsReadUseCase
     private lateinit var notificationRepository: NotificationRepository
 
@@ -32,26 +31,28 @@ class MarkNotificationAsReadUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns success when repository marks as read`() = runTest {
-        val notificationId = "1"
-        everySuspend { notificationRepository.markAsRead(notificationId) } returns Result.success(Unit)
+    fun `invoke returns success when repository marks as read`() =
+        runTest {
+            val notificationId = "1"
+            everySuspend { notificationRepository.markAsRead(notificationId) } returns Result.success(Unit)
 
-        val result = markNotificationAsReadUseCase(notificationId)
+            val result = markNotificationAsReadUseCase(notificationId)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { notificationRepository.markAsRead(notificationId) }
-    }
+            assertTrue(result.isSuccess)
+            verifySuspend { notificationRepository.markAsRead(notificationId) }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val notificationId = "1"
-        val exception = Exception("Failed to mark as read")
-        everySuspend { notificationRepository.markAsRead(notificationId) } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val notificationId = "1"
+            val exception = Exception("Failed to mark as read")
+            everySuspend { notificationRepository.markAsRead(notificationId) } returns Result.failure(exception)
 
-        val result = markNotificationAsReadUseCase(notificationId)
+            val result = markNotificationAsReadUseCase(notificationId)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { notificationRepository.markAsRead(notificationId) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { notificationRepository.markAsRead(notificationId) }
+        }
 }

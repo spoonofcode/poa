@@ -37,14 +37,14 @@ import platform.UIKit.UIImage
 class IosImageDecoder(
     private val source: SourceFetchResult,
 ) : Decoder {
-
     override suspend fun decode(): DecodeResult? {
         val bytes = source.source.source().readByteArray()
         if (bytes.isEmpty()) return null
 
-        val nsData = bytes.usePinned { pinned ->
-            NSData.create(bytes = pinned.addressOf(0), length = bytes.size.toULong())
-        }
+        val nsData =
+            bytes.usePinned { pinned ->
+                NSData.create(bytes = pinned.addressOf(0), length = bytes.size.toULong())
+            }
 
         val uiImage = UIImage.imageWithData(nsData) ?: return null
         val cgImage = uiImage.CGImage ?: return null
@@ -58,20 +58,21 @@ class IosImageDecoder(
         val bytesPerRow = bytesPerPixel * width
         val rawData = ByteArray(bytesPerRow * height)
 
-        val createdContext = rawData.usePinned { pinned ->
-            CGBitmapContextCreate(
-                data = pinned.addressOf(0),
-                width = width.toULong(),
-                height = height.toULong(),
-                bitsPerComponent = 8u,
-                bytesPerRow = bytesPerRow.toULong(),
-                space = colorSpace,
-                bitmapInfo = CGImageAlphaInfo.kCGImageAlphaPremultipliedLast.value or kCGBitmapByteOrder32Big,
-            )
-        } ?: run {
-            CGColorSpaceRelease(colorSpace)
-            return null
-        }
+        val createdContext =
+            rawData.usePinned { pinned ->
+                CGBitmapContextCreate(
+                    data = pinned.addressOf(0),
+                    width = width.toULong(),
+                    height = height.toULong(),
+                    bitsPerComponent = 8u,
+                    bytesPerRow = bytesPerRow.toULong(),
+                    space = colorSpace,
+                    bitmapInfo = CGImageAlphaInfo.kCGImageAlphaPremultipliedLast.value or kCGBitmapByteOrder32Big,
+                )
+            } ?: run {
+                CGColorSpaceRelease(colorSpace)
+                return null
+            }
 
         CGContextDrawImage(
             createdContext,
@@ -81,19 +82,22 @@ class IosImageDecoder(
         CGContextRelease(createdContext)
         CGColorSpaceRelease(colorSpace)
 
-        val skiaImage = Image.makeRaster(
-            imageInfo = ImageInfo(
-                colorInfo = ColorInfo(
-                    colorType = ColorType.RGBA_8888,
-                    alphaType = ColorAlphaType.PREMUL,
-                    colorSpace = null,
-                ),
-                width = width,
-                height = height,
-            ),
-            bytes = rawData,
-            rowBytes = bytesPerRow,
-        )
+        val skiaImage =
+            Image.makeRaster(
+                imageInfo =
+                    ImageInfo(
+                        colorInfo =
+                            ColorInfo(
+                                colorType = ColorType.RGBA_8888,
+                                alphaType = ColorAlphaType.PREMUL,
+                                colorSpace = null,
+                            ),
+                        width = width,
+                        height = height,
+                    ),
+                bytes = rawData,
+                rowBytes = bytesPerRow,
+            )
 
         val bitmap = Bitmap.makeFromImage(skiaImage)
 
@@ -115,10 +119,10 @@ class IosImageDecoder(
 @OptIn(DelicateCoilApi::class)
 fun setupIosCoilImageLoader() {
     SingletonImageLoader.setUnsafe(
-        ImageLoader.Builder(PlatformContext.INSTANCE)
+        ImageLoader
+            .Builder(PlatformContext.INSTANCE)
             .components {
                 add(IosImageDecoder.Factory())
-            }
-            .build(),
+            }.build(),
     )
 }

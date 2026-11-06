@@ -28,9 +28,7 @@ data class CustomSnackbarVisuals(
 ) : SnackbarVisuals
 
 @Composable
-fun Snackbar(
-    snackbarData: SnackbarData
-) {
+fun Snackbar(snackbarData: SnackbarData) {
     val visuals = snackbarData.visuals
     if (visuals is CustomSnackbarVisuals) {
         // Our custom visuals
@@ -44,7 +42,7 @@ fun Snackbar(
                         TextBM(text = actionLabel)
                     }
                 }
-            }
+            },
         ) {
             TextBM(text = visuals.message)
         }
@@ -59,7 +57,7 @@ fun Snackbar(
 @Composable
 fun setSnackbarHostState(
     snackbarHostState: SnackbarHostState,
-    snackbarEvent: Flow<SnackbarEvent>
+    snackbarEvent: Flow<SnackbarEvent>,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -68,7 +66,7 @@ fun setSnackbarHostState(
             coroutineScope.launch {
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    snackbarEvent
+                    snackbarEvent,
                 )
             }
         }
@@ -76,15 +74,17 @@ fun setSnackbarHostState(
 }
 
 @Composable
-private fun getContainerColor(type: SnackbarType): Color = when (type) {
-    SnackbarType.INFO -> MaterialTheme.colorScheme.surfaceVariant
-    SnackbarType.ERROR -> MaterialTheme.colorScheme.onErrorContainer
-    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.secondaryContainer
-}
+private fun getContainerColor(type: SnackbarType): Color =
+    when (type) {
+        SnackbarType.INFO -> MaterialTheme.colorScheme.surfaceVariant
+        SnackbarType.ERROR -> MaterialTheme.colorScheme.onErrorContainer
+        SnackbarType.SUCCESS -> MaterialTheme.colorScheme.secondaryContainer
+    }
 
 @Composable
-private fun getContentColor(type: SnackbarType): Color = when (type) {
-    SnackbarType.INFO -> MaterialTheme.colorScheme.onSurfaceVariant
-    SnackbarType.ERROR -> MaterialTheme.colorScheme.onError
-    SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondaryContainer
-}
+private fun getContentColor(type: SnackbarType): Color =
+    when (type) {
+        SnackbarType.INFO -> MaterialTheme.colorScheme.onSurfaceVariant
+        SnackbarType.ERROR -> MaterialTheme.colorScheme.onError
+        SnackbarType.SUCCESS -> MaterialTheme.colorScheme.onSecondaryContainer
+    }

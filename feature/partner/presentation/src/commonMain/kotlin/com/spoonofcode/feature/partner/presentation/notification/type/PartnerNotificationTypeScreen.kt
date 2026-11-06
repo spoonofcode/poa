@@ -27,9 +27,10 @@ import com.spoonofcode.feature.partner.presentation.to_selected_series
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notification_type),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notification_type),
+    )
 
 @Composable
 internal fun PartnerNotificationTypeScreen(
@@ -53,7 +54,7 @@ private fun ColumnScope.Content(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         IconTextButton(
             icon = Icons.Default.Groups,
@@ -73,20 +74,20 @@ private fun ColumnScope.Content(
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         IconTextButton(
             icon = Icons.Default.PersonSearch,
             text = stringResource(resource = Res.string.to_selected_customers),
             onClick = { onAction(PartnerNotificationTypeViewAction.SendNotificationToSelectedPartnerCustomers) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         IconTextButton(
             icon = Icons.Default.WebStories,
             text = stringResource(resource = Res.string.to_selected_series),
             onClick = { onAction(PartnerNotificationTypeViewAction.SendNotificationToSelectedPartnerProductSeries) },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 }

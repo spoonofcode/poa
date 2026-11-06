@@ -18,7 +18,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class UpdateNotificationSettingsUseCaseTest : BaseTest() {
-
     private lateinit var updateNotificationSettingsUseCase: UpdateNotificationSettingsUseCase
     private lateinit var notificationRepository: NotificationRepository
     private lateinit var firebaseMessagingRepository: FirebaseMessagingRepository
@@ -40,95 +39,101 @@ class UpdateNotificationSettingsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke subscribes to user topic and sets notification settings when personalized notifications enabled`() = runTest {
-        val userId = "user123"
-        val userTopic = NotificationType.user.createTopic(userId)
-        val settings = NotificationSettings(
-            isNotificationsPersonalizedEnabled = true,
-            isNotificationsFromPartnersEnabled = true,
-            isNotificationsMyProductSeriesEnabled = true,
-        )
+    fun `invoke subscribes to user topic and sets notification settings when personalized notifications enabled`() =
+        runTest {
+            val userId = "user123"
+            val userTopic = NotificationType.USER.createTopic(userId)
+            val settings =
+                NotificationSettings(
+                    isNotificationsPersonalizedEnabled = true,
+                    isNotificationsFromPartnersEnabled = true,
+                    isNotificationsMyProductSeriesEnabled = true,
+                )
 
-        everySuspend { sessionRepository.getSessionUserId() } returns userId
-        everySuspend { firebaseMessagingRepository.subscribeToTopic(userTopic) } returns Result.success(Unit)
-        everySuspend {
-            notificationRepository.setNotificationSettings(
-                notificationsPersonalizedEnabled = true,
-                notificationsFromPartnersEnabled = true,
-                notificationsMyProductSeriesEnabled = true,
-            )
-        } returns Result.success(Unit)
+            everySuspend { sessionRepository.getSessionUserId() } returns userId
+            everySuspend { firebaseMessagingRepository.subscribeToTopic(userTopic) } returns Result.success(Unit)
+            everySuspend {
+                notificationRepository.setNotificationSettings(
+                    notificationsPersonalizedEnabled = true,
+                    notificationsFromPartnersEnabled = true,
+                    notificationsMyProductSeriesEnabled = true,
+                )
+            } returns Result.success(Unit)
 
-        val result = updateNotificationSettingsUseCase(settings)
+            val result = updateNotificationSettingsUseCase(settings)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { firebaseMessagingRepository.subscribeToTopic(userTopic) }
-        verifySuspend {
-            notificationRepository.setNotificationSettings(
-                notificationsPersonalizedEnabled = true,
-                notificationsFromPartnersEnabled = true,
-                notificationsMyProductSeriesEnabled = true,
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend { firebaseMessagingRepository.subscribeToTopic(userTopic) }
+            verifySuspend {
+                notificationRepository.setNotificationSettings(
+                    notificationsPersonalizedEnabled = true,
+                    notificationsFromPartnersEnabled = true,
+                    notificationsMyProductSeriesEnabled = true,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke unsubscribes from user topic when personalized notifications disabled`() = runTest {
-        val userId = "user123"
-        val userTopic = NotificationType.user.createTopic(userId)
-        val settings = NotificationSettings(
-            isNotificationsPersonalizedEnabled = false,
-            isNotificationsFromPartnersEnabled = false,
-            isNotificationsMyProductSeriesEnabled = false,
-        )
+    fun `invoke unsubscribes from user topic when personalized notifications disabled`() =
+        runTest {
+            val userId = "user123"
+            val userTopic = NotificationType.USER.createTopic(userId)
+            val settings =
+                NotificationSettings(
+                    isNotificationsPersonalizedEnabled = false,
+                    isNotificationsFromPartnersEnabled = false,
+                    isNotificationsMyProductSeriesEnabled = false,
+                )
 
-        everySuspend { sessionRepository.getSessionUserId() } returns userId
-        everySuspend { firebaseMessagingRepository.unsubscribeFromTopic(userTopic) } returns Result.success(Unit)
-        everySuspend {
-            notificationRepository.setNotificationSettings(
-                notificationsPersonalizedEnabled = false,
-                notificationsFromPartnersEnabled = false,
-                notificationsMyProductSeriesEnabled = false,
-            )
-        } returns Result.success(Unit)
+            everySuspend { sessionRepository.getSessionUserId() } returns userId
+            everySuspend { firebaseMessagingRepository.unsubscribeFromTopic(userTopic) } returns Result.success(Unit)
+            everySuspend {
+                notificationRepository.setNotificationSettings(
+                    notificationsPersonalizedEnabled = false,
+                    notificationsFromPartnersEnabled = false,
+                    notificationsMyProductSeriesEnabled = false,
+                )
+            } returns Result.success(Unit)
 
-        val result = updateNotificationSettingsUseCase(settings)
+            val result = updateNotificationSettingsUseCase(settings)
 
-        assertTrue(result.isSuccess)
-        verifySuspend { firebaseMessagingRepository.unsubscribeFromTopic(userTopic) }
-        verifySuspend {
-            notificationRepository.setNotificationSettings(
-                notificationsPersonalizedEnabled = false,
-                notificationsFromPartnersEnabled = false,
-                notificationsMyProductSeriesEnabled = false,
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend { firebaseMessagingRepository.unsubscribeFromTopic(userTopic) }
+            verifySuspend {
+                notificationRepository.setNotificationSettings(
+                    notificationsPersonalizedEnabled = false,
+                    notificationsFromPartnersEnabled = false,
+                    notificationsMyProductSeriesEnabled = false,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val userId = "user123"
-        val userTopic = NotificationType.user.createTopic(userId)
-        val settings = NotificationSettings(
-            isNotificationsPersonalizedEnabled = true,
-            isNotificationsFromPartnersEnabled = true,
-            isNotificationsMyProductSeriesEnabled = true,
-        )
-        val exception = Exception("Failed to set settings")
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val userId = "user123"
+            val userTopic = NotificationType.USER.createTopic(userId)
+            val settings =
+                NotificationSettings(
+                    isNotificationsPersonalizedEnabled = true,
+                    isNotificationsFromPartnersEnabled = true,
+                    isNotificationsMyProductSeriesEnabled = true,
+                )
+            val exception = Exception("Failed to set settings")
 
-        everySuspend { sessionRepository.getSessionUserId() } returns userId
-        everySuspend { firebaseMessagingRepository.subscribeToTopic(userTopic) } returns Result.success(Unit)
-        everySuspend {
-            notificationRepository.setNotificationSettings(
-                notificationsPersonalizedEnabled = true,
-                notificationsFromPartnersEnabled = true,
-                notificationsMyProductSeriesEnabled = true,
-            )
-        } returns Result.failure(exception)
+            everySuspend { sessionRepository.getSessionUserId() } returns userId
+            everySuspend { firebaseMessagingRepository.subscribeToTopic(userTopic) } returns Result.success(Unit)
+            everySuspend {
+                notificationRepository.setNotificationSettings(
+                    notificationsPersonalizedEnabled = true,
+                    notificationsFromPartnersEnabled = true,
+                    notificationsMyProductSeriesEnabled = true,
+                )
+            } returns Result.failure(exception)
 
-        val result = updateNotificationSettingsUseCase(settings)
+            val result = updateNotificationSettingsUseCase(settings)
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+        }
 }

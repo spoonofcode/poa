@@ -16,7 +16,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class CreatePartnerNotificationUseCaseTest : BaseTest() {
-
     private lateinit var createPartnerNotificationUseCase: CreatePartnerNotificationUseCase
     private lateinit var notificationRepository: PartnerNotificationRepository
     private lateinit var sessionRepository: SessionRepository
@@ -36,83 +35,87 @@ class CreatePartnerNotificationUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke calls repository createNotification with correct parameters including session userId`() = runTest {
-        val title = "Title"
-        val text = "Text"
-        val link = "https://example.com"
-        val topics = listOf("global")
-        val deliveryDateTime = LocalDateTime(2023, 1, 1, 10, 0)
-        val expirationDateTime = LocalDateTime(2023, 1, 2, 10, 0)
-        val ownerId = "owner123"
+    fun `invoke calls repository createNotification with correct parameters including session userId`() =
+        runTest {
+            val title = "Title"
+            val text = "Text"
+            val link = "https://example.com"
+            val topics = listOf("global")
+            val deliveryDateTime = LocalDateTime(2023, 1, 1, 10, 0)
+            val expirationDateTime = LocalDateTime(2023, 1, 2, 10, 0)
+            val ownerId = "owner123"
 
-        everySuspend { sessionRepository.getSessionUserId() } returns ownerId
-        everySuspend {
-            notificationRepository.createNotification(
-                title = title,
-                text = text,
-                link = link,
-                topics = topics,
-                deliveryDateTime = deliveryDateTime,
-                expirationDateTime = expirationDateTime,
-                ownerId = ownerId,
-            )
-        } returns Result.success(Unit)
+            everySuspend { sessionRepository.getSessionUserId() } returns ownerId
+            everySuspend {
+                notificationRepository.createNotification(
+                    title = title,
+                    text = text,
+                    link = link,
+                    topics = topics,
+                    deliveryDateTime = deliveryDateTime,
+                    expirationDateTime = expirationDateTime,
+                    ownerId = ownerId,
+                )
+            } returns Result.success(Unit)
 
-        val result = createPartnerNotificationUseCase(
-            title = title,
-            text = text,
-            link = link,
-            topics = topics,
-            deliveryDateTime = deliveryDateTime,
-            expirationDateTime = expirationDateTime,
-        )
+            val result =
+                createPartnerNotificationUseCase(
+                    title = title,
+                    text = text,
+                    link = link,
+                    topics = topics,
+                    deliveryDateTime = deliveryDateTime,
+                    expirationDateTime = expirationDateTime,
+                )
 
-        assertTrue(result.isSuccess)
-        verifySuspend {
-            notificationRepository.createNotification(
-                title = title,
-                text = text,
-                link = link,
-                topics = topics,
-                deliveryDateTime = deliveryDateTime,
-                expirationDateTime = expirationDateTime,
-                ownerId = ownerId,
-            )
+            assertTrue(result.isSuccess)
+            verifySuspend {
+                notificationRepository.createNotification(
+                    title = title,
+                    text = text,
+                    link = link,
+                    topics = topics,
+                    deliveryDateTime = deliveryDateTime,
+                    expirationDateTime = expirationDateTime,
+                    ownerId = ownerId,
+                )
+            }
         }
-    }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val title = "Title"
-        val text = "Text"
-        val topics = listOf("global")
-        val deliveryDateTime = LocalDateTime(2023, 1, 1, 10, 0)
-        val expirationDateTime = LocalDateTime(2023, 1, 2, 10, 0)
-        val ownerId = "owner123"
-        val exception = Exception("Create failed")
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val title = "Title"
+            val text = "Text"
+            val topics = listOf("global")
+            val deliveryDateTime = LocalDateTime(2023, 1, 1, 10, 0)
+            val expirationDateTime = LocalDateTime(2023, 1, 2, 10, 0)
+            val ownerId = "owner123"
+            val exception = Exception("Create failed")
 
-        everySuspend { sessionRepository.getSessionUserId() } returns ownerId
-        everySuspend {
-            notificationRepository.createNotification(
-                title = title,
-                text = text,
-                link = null,
-                topics = topics,
-                deliveryDateTime = deliveryDateTime,
-                expirationDateTime = expirationDateTime,
-                ownerId = ownerId,
-            )
-        } returns Result.failure(exception)
+            everySuspend { sessionRepository.getSessionUserId() } returns ownerId
+            everySuspend {
+                notificationRepository.createNotification(
+                    title = title,
+                    text = text,
+                    link = null,
+                    topics = topics,
+                    deliveryDateTime = deliveryDateTime,
+                    expirationDateTime = expirationDateTime,
+                    ownerId = ownerId,
+                )
+            } returns Result.failure(exception)
 
-        val result = createPartnerNotificationUseCase(
-            title = title,
-            text = text,
-            topics = topics,
-            deliveryDateTime = deliveryDateTime,
-            expirationDateTime = expirationDateTime,
-        )
+            val result =
+                createPartnerNotificationUseCase(
+                    title = title,
+                    text = text,
+                    topics = topics,
+                    deliveryDateTime = deliveryDateTime,
+                    expirationDateTime = expirationDateTime,
+                )
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+        }
 }

@@ -7,6 +7,6 @@ class GetProductByIdUseCase(
     private val productRepository: ProductRepository,
 ) {
     suspend operator fun invoke(
-        productId: String
+        productId: String,
     ): Result<Product> = productRepository.getProduct(productId = productId)
 }

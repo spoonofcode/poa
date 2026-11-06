@@ -1,7 +1,7 @@
 plugins {
+    alias(libs.plugins.convention.cmp.application)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.google.services)
-    alias(libs.plugins.convention.cmp.application)
 }
 
 kotlin {
@@ -19,6 +19,11 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
+
+        xcodeConfigurationToNativeBuildType["Debug-Development"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["Release-Development"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
+        xcodeConfigurationToNativeBuildType["Debug-Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["Release-Production"] = org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType.RELEASE
     }
 
     sourceSets {
@@ -89,11 +94,14 @@ android {
         versionName = System.getenv("ANDROID_RELEASE_VERSION") ?: "1.0"
     }
     signingConfigs {
-        create("customDebug") {
-            storeFile = file("certificates/new-debug.keystore")
-            storePassword = "poa123"
-            keyAlias = "newdebugkey"
-            keyPassword = "poa123"
+        val customDebugFile = file("certificates/new-debug.keystore")
+        if (customDebugFile.exists()) {
+            create("customDebug") {
+                storeFile = customDebugFile
+                storePassword = "poa123"
+                keyAlias = "newdebugkey"
+                keyPassword = "poa123"
+            }
         }
         if (System.getenv("KEYSTORE_PATH") != null) {
             create("ci") {
@@ -106,11 +114,12 @@ android {
     }
     buildTypes {
         getByName("debug") {
-            signingConfig = signingConfigs.getByName("customDebug")
+            if (signingConfigs.findByName("customDebug") != null) {
+                signingConfig = signingConfigs.getByName("customDebug")
+            }
             isDebuggable = true
         }
         getByName("release") {
-            // isMinifyEnabled = false
             isDebuggable = false
             // Dynamically assign the signing config based on the environment
             if (System.getenv("KEYSTORE_PATH") != null) {
@@ -118,10 +127,8 @@ android {
             } else {
                 signingConfig = null
             }
-
         }
     }
-
 }
 
 dependencies {

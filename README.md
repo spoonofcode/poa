@@ -1,65 +1,97 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Taggy Go - Compose Multiplatform Application
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+This is a Kotlin Multiplatform project targeting Android and iOS.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+- `/composeApp` contains the shared code for your Compose Multiplatform application.
+  - `commonMain` is for code shared across all targets.
+  - Platform-specific folders (`androidMain`, `iosMain`) are for target-specific calls (e.g., Apple frameworks or Android integrations).
+- `/iosApp` contains the iOS application entry point and SwiftUI code.
 
+Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html).
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+---
 
-LIBRARIES USED:
-* HTTP client - Ktor (https://ktor.io/docs/client-create-multiplatform-application.html)
-* Depency Injection - Koin (https://insert-koin.io/)
-* Notificaiton - Firebase Cloud Messaging (https://firebase.google.com/docs/reference/fcm/rest)
-* Code coverage - Kover (https://github.com/Kotlin/kotlinx-kover)
-* Mocks - Mokkery (https://github.com/mokkery/mokkery)
-* Unit testing - Turbine (https://github.com/cashapp/turbine)
-* Navigation - Voyager (https://github.com/adrielcafe/voyager)
-* UI - Material Design (https://m3.material.io/)
-* Network monitoring - Connectivity (https://github.com/jordond/connectivity)
-* Storage - KSafe (https://github.com/ioannisa/KSafe)
-* Google auth(https://developers.google.com/identity/protocols/oauth2?hl=pl)
+## Libraries & Tech Stack
 
-HELPFUL MATERIALS !!!
+Here is a breakdown of the key libraries and dependencies used in the project, verified against `libs.versions.toml` and categorized by their domain:
 
-KMP:
-* https://github.com/terrakok/kmp-awesome?tab=readme-ov-file
+### 1. UI & Compose Multiplatform
+- **Jetpack Compose Multiplatform** (`org.jetbrains.compose`) – Declarative UI framework shared between Android and iOS.
+- **Navigation 3 & Navigation Compose** (`androidx.navigation3`, `org.jetbrains.androidx.navigation:navigation-compose`) – Modern routing and navigation infrastructure.
+- **Landscapist Coil 3** (`landscapist-coil3`) – Image loading and caching library for Compose.
+- **Compottie** (`compottie`) – Lottie animations renderer for Compose Multiplatform.
+- **Calf Permissions** (`calf-permissions`) – Multiplatform permission handling.
+- **Compose Icons** (`compose-icons`) – Extended icon packs.
 
-Google Auth:
-* https://medium.com/@arezoo.nazerdeylami/implementing-google-sign-in-with-kotlin-and-compose-multiplatform-8fad1898b866
-* https://euryperez.dev/compose-multiplatform-login-with-google-cc3217a99349
-* https://github.com/ktorio/ktor-documentation/blob/3.0.0/codeSnippets/snippets/auth-oauth-google/src/main/kotlin/com/example/oauth/google/Application.kt
-* https://hyperskill.org/learn/step/29293#configuring-oauth-in-ktor
+### 2. Architecture & Dependency Injection
+- **Clean Architecture** – Separation of concerns (Presentation, Domain, Data layers).
+- **Koin** (`io.insert-koin`) – Lightweight dependency injection framework (`koin-core`, `koin-compose-viewmodel`, `koin-android`).
+- **Kotlinx Coroutines & Flow** (`kotlinx-coroutines`) – Asynchronous programming and reactive data streams.
+- **Kotlinx Serialization** (`kotlinx-serialization-json`) – JSON serialization and deserialization.
 
-Exposed:
-* https://ohadshai.medium.com/bits-and-blobs-of-kotlin-exposed-jdbc-framework-f1ee56dc8840
-* https://brightinventions.pl/blog/exposed-in-your-project-part-2-dao/
+### 3. Networking, Storage & Utilities
+- **Ktor Client** (`io.ktor`) – Multiplatform HTTP client supporting OkHttp (Android) and iOS with Content Negotiation, Auth, and Logging.
+- **KSafe** (`ksafe`) – Secure local key-value storage.
+- **Connectivity** (`dev.jordond.connectivity`) – Network connectivity monitoring for multiplatform.
+- **Kermit** (`co.touchlab:kermit`) – Multiplatform logging utility.
+- **BuildKonfig** (`buildkonfig`) – Build configuration and environment constants generation.
 
-UI
-* https://www.youtube.com/watch?v=Uea9BF9--u8
-*
+### 4. Firebase & Google Services
+- **Firebase Cloud Messaging (FCM)** (`firebase-bom`, `firebase-messaging`) – Push notifications.
+- **Google ID & AndroidX Credentials** (`google-id`, `androidx-credentials`) – Secure authentication and Credential Manager support.
+- **Recaptcha** (`recaptcha`) – Bot protection and security verification.
 
-## Release process
+### 5. Media & Playback
+- **AndroidX Media3 ExoPlayer** (`androidx.media3`) – Media playback capabilities and UI compose integration.
 
+### 6. Testing & Quality Assurance
+- **Mokkery** (`dev.mokkery`) – Multiplatform mocking library for Kotlin.
+- **Turbine** (`app.cash.turbine`) – Testing library for Kotlinx Coroutines `Flow`.
+- **Kotlin Test** (`kotlin.test`) – Core multiplatform testing assertions.
+- **Kover** (`kotlinx-kover`) – Code coverage tool.
+- **Detekt & Ktlint** – Static code analysis and formatting.
 
-### Access
+---
 
-Closed release is available only for internal testers specified in the email list 
+## Helpful Resources & References
 
-1. Head to https://play.google.com/console/u/0/developers/5036164779071112166/app/4975523113161887458/closed-testing?releaseType=defaultReleases
+### Kotlin Multiplatform
+- [KMP Awesome List](https://github.com/terrakok/kmp-awesome?tab=readme-ov-file)
+
+### Authentication & Google Auth
+- [Google Sign-In with Kotlin and CMP](https://medium.com/@arezoo.nazerdeylami/implementing-google-sign-in-with-kotlin-and-compose-multiplatform-8fad1898b866)
+- [Compose Multiplatform Login with Google](https://euryperez.dev/compose-multiplatform-login-with-google-cc3217a99349)
+
+---
+
+## Release Process (Google Play Console)
+
+### Closed Testing Access
+1. Head to [Google Play Console Closed Testing](https://play.google.com/console/u/0/developers/5036164779071112166/app/4975523113161887458/closed-testing)
 2. Choose active track - "Manage track"
 3. Select testers tab
 4. Add email address to active email list
-5. If not activated yet choose "copy link" to add app to your google account
+5. Use the copy link to add app to your Google account if not activated yet.
 
-### New version of closed release
-
+### New Version Release
 1. Select active track - "Manage track"
 2. Select "Create new release"
-3. Upload *.aab signed package generated by PR
+3. Upload signed `.aab` package generated by PR/CI.
+
+---
+
+## Documentation & AI Agents
+
+- **[AGENTS.md](AGENTS.md)** - Root instructions for AI agents and development guidelines.
+- **[Agent Usage Guide](docs/AGENT_USAGE_GUIDE.md)** - How to effectively use custom AI agents.
+- **[MCP Setup Guide](docs/MCP_SETUP.md)** - Configure AI assistants with JIRA integration.
+
+### Available AI Agents
+| Agent | Purpose |
+|-------|---------|
+| `@dev-agent` | Implement features and fix bugs |
+| `@test-agent` | Write comprehensive tests with 80%+ coverage |
+| `@docs-agent` | Create documentation, ADRs, and README files |
+| `@architect-agent` | Plan development and make architectural decisions |
+| `@security-agent` | Review security vulnerabilities and compliance |
+| `@devops-agent` | Maintain CI/CD pipelines and builds |

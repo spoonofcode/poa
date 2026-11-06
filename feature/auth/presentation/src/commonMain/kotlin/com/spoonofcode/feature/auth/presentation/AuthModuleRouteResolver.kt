@@ -12,14 +12,15 @@ import org.koin.core.parameter.parametersOf
 fun EntryProviderScope<NavKey>.authModuleRouteResolver() {
     viewModelEntry<AuthModuleRoute.Login> {
         LoginScreen(
-            viewModel = koinViewModel()
+            viewModel = koinViewModel(),
         )
     }
     viewModelEntry<AuthModuleRoute.LoginCode> {
         LoginCodeScreen(
-            viewModel = koinViewModel(
-                parameters = { parametersOf(it.email) }
-            )
+            viewModel =
+                koinViewModel(
+                    parameters = { parametersOf(it.email) },
+                ),
         )
     }
 }

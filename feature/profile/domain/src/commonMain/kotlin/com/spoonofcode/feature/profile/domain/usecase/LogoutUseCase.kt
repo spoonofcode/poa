@@ -2,7 +2,6 @@ package com.spoonofcode.feature.profile.domain.usecase
 
 import com.spoonofcode.core.session.domain.repository.SessionRepository
 
-
 class LogoutUseCase(
     private val sessionRepository: SessionRepository,
 ) {

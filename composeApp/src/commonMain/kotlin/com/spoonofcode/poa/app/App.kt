@@ -14,7 +14,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun App(
     notificationId: String?,
-    viewModel: AppViewModel = koinViewModel()
+    viewModel: AppViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -27,10 +27,11 @@ fun App(
 
                 is AppViewState.LoggedIn, is AppViewState.LoggedOut -> {
                     MainAppScreen(
-                        initialRoutes = getStartRoutes(
-                            sessionInitialized = currentState is AppViewState.LoggedIn,
-                            notificationId = notificationId
-                        )
+                        initialRoutes =
+                            getStartRoutes(
+                                sessionInitialized = currentState is AppViewState.LoggedIn,
+                                notificationId = notificationId,
+                            ),
                     )
                 }
             }
@@ -40,7 +41,7 @@ fun App(
 
 private fun getStartRoutes(
     sessionInitialized: Boolean,
-    notificationId: String?
+    notificationId: String?,
 ): List<NavKey> =
     if (sessionInitialized) {
         if (notificationId.isNullOrEmpty()) {
@@ -50,7 +51,7 @@ private fun getStartRoutes(
                 HomeModuleRoute.Home,
                 NotificationModuleRoute.NotificationOverview,
                 NotificationModuleRoute.NotificationDetails(
-                    notificationId = notificationId
+                    notificationId = notificationId,
                 ),
             )
         }

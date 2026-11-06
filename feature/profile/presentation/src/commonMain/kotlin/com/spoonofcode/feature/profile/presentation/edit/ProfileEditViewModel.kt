@@ -2,9 +2,12 @@ package com.spoonofcode.feature.profile.presentation.edit
 
 import androidx.lifecycle.viewModelScope
 import com.spoonofcode.core.presentation.base.BaseViewModel
+import com.spoonofcode.core.presentation.default_error
+import com.spoonofcode.core.presentation.helpers.UiText
 import com.spoonofcode.feature.profile.domain.usecase.GetProfileUseCase
 import com.spoonofcode.feature.profile.domain.usecase.UpdateProfileUseCase
 import kotlinx.coroutines.launch
+import com.spoonofcode.core.presentation.Res as CoreRes
 
 internal class ProfileEditViewModel(
     private val getProfileUseCase: GetProfileUseCase,
@@ -29,33 +32,30 @@ internal class ProfileEditViewModel(
                     setContentState(
                         ProfileEditViewState(
                             profile = it,
-                        )
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
     }
 
     private fun changeCustomLink(link: String) {
-//        val currentProfile = currentContentState().profile
-//        updateContentState { ProfileEditViewState(profile = currentProfile?.copy(customLink = link)) }
+        val currentProfile = currentContentState().profile
+        updateContentState { ProfileEditViewState(profile = currentProfile.copy(email = link)) }
     }
 
     private fun saveChanges() {
         updateContentState { copy(isSaveChangesButtonLoading = true) }
         viewModelScope.launch {
-            val profile = requireNotNull(currentContentState().profile)
-            // TODO Fix this usecase
-//                updateProfileUseCase(
-//                    profileRequest = ProfileRequest(
-//                        userId = profile.id,
-//                        customLink = profile.customLink,
-//                    )
-//                )
-            viewModelNavigator.pop()
+            updateProfileUseCase()
+                .onSuccess {
+                    viewModelNavigator.pop()
+                }.onFailure {
+                    updateContentState { copy(isSaveChangesButtonLoading = false) }
+                    showErrorSnackbar(UiText.Resource(CoreRes.string.default_error))
+                }
         }
     }
 }

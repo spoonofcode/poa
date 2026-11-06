@@ -11,11 +11,12 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val partnerDataModule = module {
-    singleOf(::RemotePartnerDataSource)
-    singleOf(::RemotePartnerCategoryDataSource)
-    singleOf(::RemotePartnerNotificationDataSource)
+val partnerDataModule =
+    module {
+        singleOf(::RemotePartnerDataSource)
+        singleOf(::RemotePartnerCategoryDataSource)
+        singleOf(::RemotePartnerNotificationDataSource)
 
-    singleOf(::PartnerRepositoryImpl).bind<PartnerRepository>()
-    singleOf(::PartnerNotificationRepositoryImpl).bind<PartnerNotificationRepository>()
-}
+        singleOf(::PartnerRepositoryImpl).bind<PartnerRepository>()
+        singleOf(::PartnerNotificationRepositoryImpl).bind<PartnerNotificationRepository>()
+    }

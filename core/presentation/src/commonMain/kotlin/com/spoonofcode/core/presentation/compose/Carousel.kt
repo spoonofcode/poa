@@ -44,27 +44,29 @@ fun CustomCarousel(
         ) { i ->
             val item = items[i]
             ElevatedCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(221.dp)
-                    .padding(16.dp)
-                    .clickable {
-                        onItemClick(item.sportEventId)
-                    },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(221.dp)
+                        .padding(16.dp)
+                        .clickable {
+                            onItemClick(item.sportEventId)
+                        },
             ) {
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                     Image(
                         painter = painterResource(resource = item.imageResId),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .fillMaxWidth(),
                     )
 
                     Column(
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(8.dp),
                     ) {
                         TextBLB(
                             text = item.title,

@@ -12,9 +12,7 @@ import com.spoonofcode.feature.product.presentation.ProductEvent
 import com.spoonofcode.feature.product.presentation.ProductEventBus
 import com.spoonofcode.feature.product.presentation.Res
 import com.spoonofcode.feature.product.presentation.product_updated
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 
 internal class ProductDetailsViewModel(
     private val productId: String,
@@ -48,7 +46,6 @@ internal class ProductDetailsViewModel(
                 if (event is ProductEvent.ProductUpdated) {
                     initView(productId)
                     showSuccessSnackbar(UiText.Resource(Res.string.product_updated))
-
                 }
             }
         }
@@ -64,11 +61,10 @@ internal class ProductDetailsViewModel(
                         ProductDetailsViewState(
                             product = product,
                             productStatus = productStatus,
-                        )
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -84,7 +80,7 @@ internal class ProductDetailsViewModel(
             ).onSuccess {
                 productEventBus.emitOverview(ProductEvent.ProductAdded)
                 viewModelNavigator.replaceAll(
-                    listOf(ProductModuleRoute.ProductOverview)
+                    listOf(ProductModuleRoute.ProductOverview),
                 )
             }.onFailure {
                 updateContentState { copy(isAddProductToProfileButtonLoading = false) }
@@ -120,15 +116,13 @@ internal class ProductDetailsViewModel(
             deleteProductFromUserUseCase(
                 productId = product.id,
                 productSerieId = product.seriesId,
-            )
-                .onSuccess {
-                    productEventBus.emitOverview(ProductEvent.ProductDeleted)
-                    viewModelNavigator.pop()
-                }
-                .onFailure {
-                    updateContentState { copy(isDeleteProductFromProfileButtonLoading = false) }
-                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
-                }
+            ).onSuccess {
+                productEventBus.emitOverview(ProductEvent.ProductDeleted)
+                viewModelNavigator.pop()
+            }.onFailure {
+                updateContentState { copy(isDeleteProductFromProfileButtonLoading = false) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
+            }
         }
     }
 }

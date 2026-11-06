@@ -24,7 +24,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class TACViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: TACViewModel
     private lateinit var tacRepository: TACRepository
 
@@ -42,96 +41,102 @@ class TACViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            assertEquals(
-                expected = TACViewState(
-                    isPrivacyPolicyAccepted = TACMockData.SETTINGS_1.isPrivacyPolicyAccepted,
-                    isTermsAndConditionsAccepted = TACMockData.SETTINGS_1.isTermsAndConditionsAccepted,
-                    privacyPolicyLink = TACMockData.SETTINGS_1.privacyPolicyLink,
-                    marketingLink = TACMockData.SETTINGS_1.marketingLink,
-                ),
-                actual = viewState.awaitContentState()
-            )
-        }
-    }
-
-    @Test
-    fun `initial view - error`() = runTest {
-        everySuspend { tacRepository.getTACSettings() } returns Result.failure(Exception("Backend exception"))
-
-        val expectedMessage = UiText.Resource(Res.string.default_error)
-
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitErrorState()
-            assertEquals(
-                expected = expectedMessage,
-                actual = snackbarEvent.awaitItem().message
-            )
-        }
-    }
-
-    @Test
-    fun `change privacy policy`() = runTest {
-        runVmTest(viewModel) {
-            onAction(TACViewAction.ChangePrivacyPolicy(accepted = false))
-
-            with(viewState.awaitContentState()) {
-                assertFalse(isPrivacyPolicyAccepted)
-            }
-
-        }
-    }
-
-    @Test
-    fun `change terms and conditions`() = runTest {
-        runVmTest(viewModel) {
-            onAction(TACViewAction.ChangeTermsAndConditions(accepted = false))
-
-            with(viewState.awaitContentState()) {
-                assertFalse(isTermsAndConditionsAccepted)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                assertEquals(
+                    expected =
+                        TACViewState(
+                            isPrivacyPolicyAccepted = TACMockData.SETTINGS_1.isPrivacyPolicyAccepted,
+                            isTermsAndConditionsAccepted = TACMockData.SETTINGS_1.isTermsAndConditionsAccepted,
+                            privacyPolicyLink = TACMockData.SETTINGS_1.privacyPolicyLink,
+                            marketingLink = TACMockData.SETTINGS_1.marketingLink,
+                        ),
+                    actual = viewState.awaitContentState(),
+                )
             }
         }
-    }
 
     @Test
-    fun `save changes`() = runTest {
-        runVmTest(viewModel) {
-            onAction(TACViewAction.SaveChanges)
-            with(viewState.awaitContentState()) {
-                assertTrue(isSaveChangesButtonLoading)
-            }
+    fun `initial view - error`() =
+        runTest {
+            everySuspend { tacRepository.getTACSettings() } returns Result.failure(Exception("Backend exception"))
 
-            verifySuspend { viewModelNavigator.pop() }
+            val expectedMessage = UiText.Resource(Res.string.default_error)
+
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitErrorState()
+                assertEquals(
+                    expected = expectedMessage,
+                    actual = snackbarEvent.awaitItem().message,
+                )
+            }
         }
-    }
 
     @Test
-    fun `save changes - backend error`() = runTest {
-        val expectedMessage = UiText.Resource(Res.string.default_error)
-        everySuspend {
-            tacRepository.setTACSettings(
-                isPrivacyPolicyAccepted = any(),
-                isTermsAndConditionsAccepted = any()
-            )
-        } returns Result.failure(Exception("Backend exception"))
+    fun `change privacy policy`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(TACViewAction.ChangePrivacyPolicy(accepted = false))
 
-        runVmTest(viewModel) {
-            onAction(TACViewAction.SaveChanges)
-            with(viewState.awaitContentState()) {
-                assertTrue(isSaveChangesButtonLoading)
+                with(viewState.awaitContentState()) {
+                    assertFalse(isPrivacyPolicyAccepted)
+                }
             }
-
-            with(viewState.awaitContentState()) {
-                assertFalse(isSaveChangesButtonLoading)
-            }
-
-            assertEquals(
-                expected = expectedMessage,
-                actual = snackbarEvent.awaitItem().message,
-            )
         }
-    }
+
+    @Test
+    fun `change terms and conditions`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(TACViewAction.ChangeTermsAndConditions(accepted = false))
+
+                with(viewState.awaitContentState()) {
+                    assertFalse(isTermsAndConditionsAccepted)
+                }
+            }
+        }
+
+    @Test
+    fun `save changes`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(TACViewAction.SaveChanges)
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSaveChangesButtonLoading)
+                }
+
+                verifySuspend { viewModelNavigator.pop() }
+            }
+        }
+
+    @Test
+    fun `save changes - backend error`() =
+        runTest {
+            val expectedMessage = UiText.Resource(Res.string.default_error)
+            everySuspend {
+                tacRepository.setTACSettings(
+                    isPrivacyPolicyAccepted = any(),
+                    isTermsAndConditionsAccepted = any(),
+                )
+            } returns Result.failure(Exception("Backend exception"))
+
+            runVmTest(viewModel) {
+                onAction(TACViewAction.SaveChanges)
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSaveChangesButtonLoading)
+                }
+
+                with(viewState.awaitContentState()) {
+                    assertFalse(isSaveChangesButtonLoading)
+                }
+
+                assertEquals(
+                    expected = expectedMessage,
+                    actual = snackbarEvent.awaitItem().message,
+                )
+            }
+        }
 }

@@ -37,11 +37,12 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.my_products),
-    verticalScrollEnable = false,
-    backNavigationEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.my_products),
+        verticalScrollEnable = false,
+        backNavigationEnable = false,
+    )
 
 @Composable
 internal fun ProductOverviewScreen(
@@ -72,7 +73,7 @@ private fun ColumnScope.Content(
 
     ProductGrid(
         products = viewState.filteredProducts,
-        onProductClick = { onAction(ProductOverviewViewAction.SelectProduct(it.id)) }
+        onProductClick = { onAction(ProductOverviewViewAction.SelectProduct(it.id)) },
     )
 }
 
@@ -86,7 +87,7 @@ private fun ProductGrid(
         columns = GridCells.Fixed(2),
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(products, key = { it.id }) { product ->
             ProductCard(
@@ -106,20 +107,22 @@ private fun ProductCard(
         onClick = onClick,
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .background(MaterialTheme.colorScheme.surfaceVariant),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentAlignment = Alignment.Center,
         ) {
             product.imageLink?.let { ImageLink(imageLink = it) }
         }
 
         Column(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier =
+                Modifier
+                    .padding(12.dp)
+                    .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             product.seriesName?.let {
                 TextLSB(
@@ -145,40 +148,43 @@ private fun ProductCard(
 @Composable
 private fun ProductOverviewScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            ProductOverviewViewState(
-                initProducts = listOf(
-                    Product(
-                        id = "1",
-                        productType = ProductType.ITEM,
-                        ownerEmail = "user1@example.com",
-                        partnerId = "1",
-                        name = "Product #1",
-                        description = "Przykładowy opis wydarzenia nr 1",
-                        seriesId = "1",
-                        seriesName = "Series 1",
-                        createdAt = LocalDateTime(2023, 1, 1, 1, 1),
-                        imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
-                        customLink = "https://beautysaute.pl/",
-                    ),
+        viewState =
+            ViewState.Content(
+                ProductOverviewViewState(
+                    initProducts =
+                        listOf(
+                            Product(
+                                id = "1",
+                                productType = ProductType.ITEM,
+                                ownerEmail = "user1@example.com",
+                                partnerId = "1",
+                                name = "Product #1",
+                                description = "Przykładowy opis wydarzenia nr 1",
+                                seriesId = "1",
+                                seriesName = "Series 1",
+                                createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                                imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
+                                customLink = "https://beautysaute.pl/",
+                            ),
+                        ),
+                    filteredProducts =
+                        listOf(
+                            Product(
+                                id = "1",
+                                productType = ProductType.ITEM,
+                                ownerEmail = "user1@example.com",
+                                partnerId = "1",
+                                name = "Product #1",
+                                description = "Przykładowy opis wydarzenia nr 1",
+                                seriesId = "1",
+                                seriesName = "Series 1",
+                                createdAt = LocalDateTime(2023, 1, 1, 1, 1),
+                                imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
+                                customLink = "https://beautysaute.pl/",
+                            ),
+                        ),
                 ),
-                filteredProducts = listOf(
-                    Product(
-                        id = "1",
-                        productType = ProductType.ITEM,
-                        ownerEmail = "user1@example.com",
-                        partnerId = "1",
-                        name = "Product #1",
-                        description = "Przykładowy opis wydarzenia nr 1",
-                        seriesId = "1",
-                        seriesName = "Series 1",
-                        createdAt = LocalDateTime(2023, 1, 1, 1, 1),
-                        imageLink = "https://beautysaute.pl/environment/cache/images/750_750_productGfx_261/bluza-damska-z-kapturem-ocieplana-bordo.webp",
-                        customLink = "https://beautysaute.pl/",
-                    ),
-                ),
-            )
-        ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

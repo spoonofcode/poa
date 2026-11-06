@@ -23,7 +23,6 @@ import kotlin.test.assertTrue
 import com.spoonofcode.core.presentation.Res as CoreRes
 
 class NotificationSettingsViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: NotificationSettingsViewModel
     private lateinit var notificationRepository: NotificationRepository
 
@@ -41,71 +40,76 @@ class NotificationSettingsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(NotificationSettings(), notificationSettings)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(NotificationSettings(), notificationSettings)
+                }
             }
         }
-    }
 
     @Test
-    fun `switch all notifications`() = runTest {
-        runVmTest(viewModel) {
-            onAction(NotificationSettingsViewAction.SwitchAllNotification(enable = true))
+    fun `switch all notifications`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(NotificationSettingsViewAction.SwitchAllNotification(enable = true))
 
-            with(viewState.awaitContentState()) {
-                assertTrue(notificationSettings.isNotificationsPersonalizedEnabled)
-                assertTrue(notificationSettings.isNotificationsFromPartnersEnabled)
-                assertTrue(notificationSettings.isNotificationsMyProductSeriesEnabled)
+                with(viewState.awaitContentState()) {
+                    assertTrue(notificationSettings.isNotificationsPersonalizedEnabled)
+                    assertTrue(notificationSettings.isNotificationsFromPartnersEnabled)
+                    assertTrue(notificationSettings.isNotificationsMyProductSeriesEnabled)
+                }
             }
         }
-    }
 
     @Test
-    fun `save changes success`() = runTest {
-        runVmTest(viewModel) {
-            onAction(NotificationSettingsViewAction.SaveChanges)
+    fun `save changes success`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(NotificationSettingsViewAction.SaveChanges)
 
-            with(viewState.awaitContentState()) {
-                assertTrue(isSaveChangesButtonLoading)
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSaveChangesButtonLoading)
+                }
+
+                verifySuspend { notificationRepository.setNotificationSettings(any(), any(), any()) }
+                verifySuspend { viewModelNavigator.pop() }
             }
-
-            verifySuspend { notificationRepository.setNotificationSettings(any(), any(), any()) }
-            verifySuspend { viewModelNavigator.pop() }
         }
-    }
 
     @Test
-    fun `save changes error`() = runTest {
-        everySuspend {
-            notificationRepository.setNotificationSettings(
-                any(),
-                any(),
-                any()
-            )
-        } returns Result.failure(
-            Exception("Backend exception"),
-        )
+    fun `save changes error`() =
+        runTest {
+            everySuspend {
+                notificationRepository.setNotificationSettings(
+                    any(),
+                    any(),
+                    any(),
+                )
+            } returns
+                Result.failure(
+                    Exception("Backend exception"),
+                )
 
-        val expectedMessage = UiText.Resource(CoreRes.string.default_error)
+            val expectedMessage = UiText.Resource(CoreRes.string.default_error)
 
-        runVmTest(viewModel) {
-            onAction(NotificationSettingsViewAction.SaveChanges)
+            runVmTest(viewModel) {
+                onAction(NotificationSettingsViewAction.SaveChanges)
 
-            with(viewState.awaitContentState()) {
-                assertTrue(isSaveChangesButtonLoading)
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSaveChangesButtonLoading)
+                }
+                with(viewState.awaitContentState()) {
+                    assertFalse(isSaveChangesButtonLoading)
+                }
+                assertEquals(
+                    expected = expectedMessage,
+                    actual = snackbarEvent.awaitItem().message,
+                )
+
+                verifySuspend { notificationRepository.setNotificationSettings(any(), any(), any()) }
             }
-            with(viewState.awaitContentState()) {
-                assertFalse(isSaveChangesButtonLoading)
-            }
-            assertEquals(
-                expected = expectedMessage,
-                actual = snackbarEvent.awaitItem().message,
-            )
-
-            verifySuspend { notificationRepository.setNotificationSettings(any(), any(), any()) }
         }
-    }
 }

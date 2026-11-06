@@ -14,7 +14,7 @@ fun LabeledDivider(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         HorizontalDivider(
             modifier = Modifier.weight(1f),

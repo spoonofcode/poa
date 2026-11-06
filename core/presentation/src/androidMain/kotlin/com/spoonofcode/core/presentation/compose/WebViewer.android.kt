@@ -11,7 +11,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 actual fun MyWebView(
     url: String,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     AndroidView(
         modifier = modifier.fillMaxSize(),
@@ -27,6 +27,6 @@ actual fun MyWebView(
                 // Load the requested URL
                 loadUrl(url)
             }
-        }
+        },
     )
 }

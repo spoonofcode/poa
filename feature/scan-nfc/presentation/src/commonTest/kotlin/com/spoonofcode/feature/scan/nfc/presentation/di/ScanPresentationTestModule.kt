@@ -12,23 +12,25 @@ import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import org.koin.dsl.module
 
-val scanPresentationTestModule = module {
-    includes(
-        loggingModule,
-        productDataTestModule,
-        productDomainModule,
-        scanDomainModule,
-        scanPresentationModule,
-    )
-    single { getPlatform() }
-    single<NFCTagRepository> {
-        mock {
-            everySuspend { getNFCTAg(any()) } returns Result.success(
-                com.spoonofcode.feature.scan.nfc.domain.model.NFCTag(
-                    publicId = com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1.id,
-                    tagType = "nft",
-                )
-            )
+val scanPresentationTestModule =
+    module {
+        includes(
+            loggingModule,
+            productDataTestModule,
+            productDomainModule,
+            scanDomainModule,
+            scanPresentationModule,
+        )
+        single { getPlatform() }
+        single<NFCTagRepository> {
+            mock {
+                everySuspend { getNFCTAg(any()) } returns
+                    Result.success(
+                        com.spoonofcode.feature.scan.nfc.domain.model.NFCTag(
+                            publicId = com.spoonofcode.feature.product.data.test.ProductMockData.PRODUCT_1.id,
+                            tagType = "nft",
+                        ),
+                    )
+            }
         }
     }
-}

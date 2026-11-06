@@ -50,14 +50,16 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.my_notifications),
-    verticalScrollEnable = false,
-    contentPadding = PaddingValues(
-        start = Paddings.screenPadding,
-        end = Paddings.screenPadding,
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.my_notifications),
+        verticalScrollEnable = false,
+        contentPadding =
+            PaddingValues(
+                start = Paddings.screenPadding,
+                end = Paddings.screenPadding,
+            ),
     )
-)
 
 @Composable
 internal fun PartnerNotificationsScreen(
@@ -91,15 +93,16 @@ private fun NotificationTabs(
     notifications: List<PartnerNotification>,
     selectNotification: (String) -> Unit,
 ) {
-    val tabs = listOf(
-        TabItem(title = stringResource(Res.string.tab_pending)),
-        TabItem(title = stringResource(Res.string.tab_already_sent)),
-    )
+    val tabs =
+        listOf(
+            TabItem(title = stringResource(Res.string.tab_pending)),
+            TabItem(title = stringResource(Res.string.tab_already_sent)),
+        )
 
     var selectedTabIndex by remember { mutableStateOf(0) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         SecondaryTabRow(
             selectedTabIndex = selectedTabIndex,
@@ -112,12 +115,14 @@ private fun NotificationTabs(
                 )
             }
         }
-        val notificationsPending = notifications.filterNot {
-            it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
-        }
-        val notificationsAlreadySent = notifications.filter {
-            it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
-        }
+        val notificationsPending =
+            notifications.filterNot {
+                it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
+            }
+        val notificationsAlreadySent =
+            notifications.filter {
+                it.deliveryDateTime.toMillis() < Clock.System.now().toEpochMilliseconds()
+            }
 
         when (selectedTabIndex) {
             0 -> NotificationTab(notificationsPending, selectNotification)
@@ -126,21 +131,23 @@ private fun NotificationTabs(
     }
 }
 
-private data class TabItem(val title: String)
+private data class TabItem(
+    val title: String,
+)
 
 @Composable
 private fun NotificationTab(
     notifications: List<PartnerNotification>,
-    selectNotification: (String) -> Unit
+    selectNotification: (String) -> Unit,
 ) {
     SpacerVerticalBetweenFields()
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements)
+        verticalArrangement = Arrangement.spacedBy(spaceBetweenListElements),
     ) {
         items(notifications) { notification ->
             NotificationItem(
                 item = notification,
-                onClick = { selectNotification(notification.id) }
+                onClick = { selectNotification(notification.id) },
             )
         }
     }
@@ -152,23 +159,24 @@ private fun NotificationItem(
     onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .fillMaxWidth(),
     ) {
         ElevatedCard(
-            onClick = onClick
+            onClick = onClick,
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-
                     TextTM(
                         text = item.title,
                         maxLines = 1,
@@ -185,7 +193,7 @@ private fun NotificationItem(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
                 )
             }
         }
@@ -197,24 +205,26 @@ private fun NotificationItem(
 @Composable
 private fun PartnerNotificationsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            PartnerNotificationsViewState(
-                partnerNotifications = listOf(
-                    PartnerNotification(
-                        id = "1",
-                        title = "Title",
-                        text = "Text",
-                        deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
-                        state = "pending",
-                        topics = listOf("global"),
-                        ownerId = "owner"
-                    )
-                )
-            )
-        ),
+        viewState =
+            ViewState.Content(
+                PartnerNotificationsViewState(
+                    partnerNotifications =
+                        listOf(
+                            PartnerNotification(
+                                id = "1",
+                                title = "Title",
+                                text = "Text",
+                                deliveryDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                createdDataTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                modificationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                expirationDateTime = LocalDateTime(2023, 1, 1, 1, 1),
+                                state = "pending",
+                                topics = listOf("global"),
+                                ownerId = "owner",
+                            ),
+                        ),
+                ),
+            ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

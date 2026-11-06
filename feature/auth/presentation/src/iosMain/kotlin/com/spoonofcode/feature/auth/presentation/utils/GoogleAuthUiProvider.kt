@@ -8,19 +8,14 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 actual class GoogleAuthUiProvider {
-
     @OptIn(ExperimentalForeignApi::class)
-    actual suspend fun isGoogleAccountAvailable(): Boolean {
-        return true
-    }
-
+    actual suspend fun isGoogleAccountAvailable(): Boolean = true
 
     @OptIn(ExperimentalForeignApi::class)
     actual suspend fun signIn(): GoogleAccount? =
         suspendCoroutine { continutation ->
             val rootViewController =
                 UIApplication.sharedApplication.keyWindow?.rootViewController
-
 
             if (rootViewController == null) {
                 continutation.resume(null)
@@ -44,7 +39,6 @@ actual class GoogleAuthUiProvider {
                     }
             }
         }
-
 
     @OptIn(ExperimentalForeignApi::class)
     actual suspend fun signOut() {

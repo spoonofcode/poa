@@ -9,7 +9,8 @@ import org.koin.dsl.module
 
 expect val platformRecaptchaModule: Module
 
-val recaptchaModule: Module = module {
-    includes(platformRecaptchaModule)
-    singleOf(::RecaptchaClientImpl).bind(RecaptchaClient::class)
-}
+val recaptchaModule: Module =
+    module {
+        includes(platformRecaptchaModule)
+        singleOf(::RecaptchaClientImpl).bind(RecaptchaClient::class)
+    }

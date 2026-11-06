@@ -15,9 +15,7 @@ fun SpacerVerticalBetweenFields(): Unit = Spacer(modifier = Modifier.height(Padd
 fun SpacerHorizontalBetweenFields(): Unit = Spacer(modifier = Modifier.width(Paddings.fieldsPadding))
 
 @Composable
-fun SpacerWeight1(rowScope: RowScope): Unit =
-    with(rowScope) { Spacer(modifier = Modifier.weight(1f)) }
+fun SpacerWeight1(rowScope: RowScope): Unit = with(rowScope) { Spacer(modifier = Modifier.weight(1f)) }
 
 @Composable
-fun SpacerWeight1(columnScope: ColumnScope): Unit =
-    with(columnScope) { Spacer(modifier = Modifier.weight(1f)) }
+fun SpacerWeight1(columnScope: ColumnScope): Unit = with(columnScope) { Spacer(modifier = Modifier.weight(1f)) }

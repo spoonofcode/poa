@@ -34,12 +34,11 @@ internal class ProductEditViewModel(
                 .onSuccess {
                     setContentState(
                         ProductEditViewState(
-                            product = it
-                        )
+                            product = it,
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -64,15 +63,13 @@ internal class ProductEditViewModel(
                 productType = product.productType,
                 customLink = product.customLink,
                 redirectLink = product.redirectLink,
-            )
-                .onSuccess {
-                    productEventBus.emitDetails(ProductEvent.ProductUpdated)
-                    viewModelNavigator.pop()
-                }
-                .onFailure {
-                    updateContentState { copy(isSaveChangesButtonLoading = false) }
-                    it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
-                }
+            ).onSuccess {
+                productEventBus.emitDetails(ProductEvent.ProductUpdated)
+                viewModelNavigator.pop()
+            }.onFailure {
+                updateContentState { copy(isSaveChangesButtonLoading = false) }
+                it.message?.let { message -> showErrorSnackbar(UiText.DynamicString(message)) }
+            }
         }
     }
 }

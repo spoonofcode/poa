@@ -24,13 +24,12 @@ class AddProductToUserUseCase(
             (notificationRepository.getNotificationSettings().getOrNull()?.isNotificationsMyProductSeriesEnabled == true)
         ) {
             firebaseMessagingRepository.subscribeToTopic(
-                topic = getSerieTopic(seriesId = productSerieId)
+                topic = getSerieTopic(seriesId = productSerieId),
             )
         } else {
             Result.success(Unit)
         }
     }
 
-    private fun getSerieTopic(seriesId: String): String =
-        NotificationType.serie.createTopic(seriesId)
+    private fun getSerieTopic(seriesId: String): String = NotificationType.SERIE.createTopic(seriesId)
 }

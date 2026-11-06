@@ -5,6 +5,5 @@ import com.spoonofcode.feature.partner.domain.repository.PartnerNotificationRepo
 class DeletePartnerNotificationUseCase(
     private val notificationRepository: PartnerNotificationRepository,
 ) {
-    suspend operator fun invoke(notificationId: String): Result<Unit> =
-        notificationRepository.deleteNotification(notificationId)
+    suspend operator fun invoke(notificationId: String): Result<Unit> = notificationRepository.deleteNotification(notificationId)
 }

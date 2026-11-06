@@ -18,12 +18,12 @@ import com.spoonofcode.core.presentation.base.StandardScreen
 import com.spoonofcode.core.presentation.base.StandardScreenConfig
 import com.spoonofcode.core.presentation.base.StandardScreenPreview
 import com.spoonofcode.core.presentation.base.ViewState
-import com.spoonofcode.core.presentation.compose.StandardAlertDialog
+import com.spoonofcode.core.presentation.compose.LabelSwitch
 import com.spoonofcode.core.presentation.compose.PrimaryButton
 import com.spoonofcode.core.presentation.compose.RequestPermission
 import com.spoonofcode.core.presentation.compose.SpacerVerticalBetweenFields
 import com.spoonofcode.core.presentation.compose.SpacerWeight1
-import com.spoonofcode.core.presentation.compose.LabelSwitch
+import com.spoonofcode.core.presentation.compose.StandardAlertDialog
 import com.spoonofcode.core.presentation.compose.TextBL
 import com.spoonofcode.core.presentation.compose.TextTM
 import com.spoonofcode.feature.notification.domain.model.NotificationSettings
@@ -48,10 +48,11 @@ import com.spoonofcode.feature.notification.presentation.save_changes
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.notifications_settings),
-    verticalScrollEnable = false,
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.notifications_settings),
+        verticalScrollEnable = false,
+    )
 
 @Composable
 internal fun NotificationSettingsScreen(
@@ -64,7 +65,7 @@ internal fun NotificationSettingsScreen(
         isViewEnable = { it.isViewEnable },
         dialogs = { viewState, onAction ->
             Dialogs(viewState, onAction)
-        }
+        },
     ) { viewState, onAction ->
         Content(
             viewState = viewState,
@@ -79,14 +80,15 @@ private fun ColumnScope.Content(
     viewState: NotificationSettingsViewState,
     onAction: (NotificationSettingsViewAction) -> Unit,
 ) {
-    val notificationPermissionState = rememberPermissionState(
-        Permission.Notification
-    )
+    val notificationPermissionState =
+        rememberPermissionState(
+            Permission.Notification,
+        )
 
     RequestPermission(
         notificationPermissionState = notificationPermissionState,
         onGrantedAction = { onAction(NotificationSettingsViewAction.AcceptNotificationSettings) },
-        onShowRationalAction = { onAction(NotificationSettingsViewAction.ShowRationaleNotificationDialog) }
+        onShowRationalAction = { onAction(NotificationSettingsViewAction.ShowRationaleNotificationDialog) },
     )
 
     if (notificationPermissionState.status.isGranted) {
@@ -99,8 +101,8 @@ private fun ColumnScope.Content(
             onCheckedChange = {
                 onAction(
                     NotificationSettingsViewAction.SwitchAllNotification(
-                        it
-                    )
+                        it,
+                    ),
                 )
             },
         )
@@ -112,8 +114,8 @@ private fun ColumnScope.Content(
             onCheckedChange = {
                 onAction(
                     NotificationSettingsViewAction.SwitchNotificationsPersonalized(
-                        it
-                    )
+                        it,
+                    ),
                 )
             },
         )
@@ -125,8 +127,8 @@ private fun ColumnScope.Content(
             onCheckedChange = {
                 onAction(
                     NotificationSettingsViewAction.SwitchNotificationsFromPartners(
-                        it
-                    )
+                        it,
+                    ),
                 )
             },
         )
@@ -138,19 +140,18 @@ private fun ColumnScope.Content(
             onCheckedChange = {
                 onAction(
                     NotificationSettingsViewAction.SwitchNotificationsMyProductSeries(
-                        it
-                    )
+                        it,
+                    ),
                 )
             },
         )
-
 
         SpacerWeight1(this)
 
         PrimaryButton(
             text = stringResource(Res.string.save_changes),
             isLoading = viewState.isSaveChangesButtonLoading,
-            onClick = { onAction(NotificationSettingsViewAction.SaveChanges) }
+            onClick = { onAction(NotificationSettingsViewAction.SaveChanges) },
         )
     } else {
         Column(
@@ -167,7 +168,7 @@ private fun ColumnScope.Content(
                 text = stringResource(resource = Res.string.open_app_settings),
                 onClick = {
                     notificationPermissionState.openAppSettings()
-                }
+                },
             )
         }
     }
@@ -177,11 +178,12 @@ private fun ColumnScope.Content(
 @Composable
 private fun Dialogs(
     viewState: NotificationSettingsViewState,
-    onAction: (NotificationSettingsViewAction) -> Unit
+    onAction: (NotificationSettingsViewAction) -> Unit,
 ) {
-    val notificationPermissionState = rememberPermissionState(
-        Permission.Notification
-    )
+    val notificationPermissionState =
+        rememberPermissionState(
+            Permission.Notification,
+        )
 
     if (viewState.isRationaleNotificationDialogVisible) {
         StandardAlertDialog(
@@ -193,7 +195,7 @@ private fun Dialogs(
                 onAction(NotificationSettingsViewAction.CloseRationaleNotificationDialog)
                 notificationPermissionState.launchPermissionRequest()
             },
-            dismissAction = { onAction(NotificationSettingsViewAction.CloseRationaleNotificationDialog) }
+            dismissAction = { onAction(NotificationSettingsViewAction.CloseRationaleNotificationDialog) },
         )
     }
 }
@@ -203,15 +205,17 @@ private fun Dialogs(
 @Composable
 private fun NotificationSettingsScreenContentPreview() {
     StandardScreenPreview(
-        viewState = ViewState.Content(
-            NotificationSettingsViewState(
-                notificationSettings = NotificationSettings(
-                    isNotificationsPersonalizedEnabled = true,
-                    isNotificationsFromPartnersEnabled = true,
-                    isNotificationsMyProductSeriesEnabled = true,
-                )
+        viewState =
+            ViewState.Content(
+                NotificationSettingsViewState(
+                    notificationSettings =
+                        NotificationSettings(
+                            isNotificationsPersonalizedEnabled = true,
+                            isNotificationsFromPartnersEnabled = true,
+                            isNotificationsMyProductSeriesEnabled = true,
+                        ),
+                ),
             ),
-        ),
         screenConfig = screenConfig(),
     ) { viewState, onAction ->
         Content(

@@ -22,9 +22,10 @@ internal class NotificationOverviewViewModel(
 
     override fun onAction(action: NotificationOverviewViewAction) {
         when (action) {
-            is NotificationOverviewViewAction.SelectNotification -> selectNotification(
-                notificationId = action.notificationId
-            )
+            is NotificationOverviewViewAction.SelectNotification ->
+                selectNotification(
+                    notificationId = action.notificationId,
+                )
         }
     }
 
@@ -36,11 +37,10 @@ internal class NotificationOverviewViewModel(
                     setContentState(
                         NotificationOverviewViewState(
                             notifications = it,
-                        )
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -49,7 +49,7 @@ internal class NotificationOverviewViewModel(
     private fun selectNotification(notificationId: String) {
         viewModelScope.launch {
             viewModelNavigator.push(
-                NotificationModuleRoute.NotificationDetails(notificationId = notificationId)
+                NotificationModuleRoute.NotificationDetails(notificationId = notificationId),
             )
         }
     }

@@ -26,7 +26,6 @@ import kotlin.test.assertTrue
 import com.spoonofcode.core.presentation.Res as CoreRes
 
 class LoginCodeViewModelTest : BaseViewModelTest() {
-
     private val navigationParamEmail = "test@example.com"
 
     private lateinit var viewModel: LoginCodeViewModel
@@ -46,84 +45,89 @@ class LoginCodeViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(navigationParamEmail, email)
-                assertEquals("", code)
-                assertFalse(isSignInWithCodeButtonLoading)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(navigationParamEmail, email)
+                    assertEquals("", code)
+                    assertFalse(isSignInWithCodeButtonLoading)
+                }
             }
         }
-    }
 
     @Test
-    fun `change code`() = runTest {
-        val code = "123456"
-        runVmTest(viewModel) {
-            onAction(LoginCodeViewAction.ChangeCode(code))
+    fun `change code`() =
+        runTest {
+            val code = "123456"
+            runVmTest(viewModel) {
+                onAction(LoginCodeViewAction.ChangeCode(code))
 
-            with(viewState.awaitContentState()) {
-                assertEquals(code, this.code)
+                with(viewState.awaitContentState()) {
+                    assertEquals(code, this.code)
+                }
             }
         }
-    }
 
     @Test
-    fun `sign in with code success`() = runTest {
-        val code = "123456"
-        runVmTest(viewModel) {
-            onAction(LoginCodeViewAction.ChangeCode(code))
-            onAction(LoginCodeViewAction.SignInWithCode)
+    fun `sign in with code success`() =
+        runTest {
+            val code = "123456"
+            runVmTest(viewModel) {
+                onAction(LoginCodeViewAction.ChangeCode(code))
+                onAction(LoginCodeViewAction.SignInWithCode)
 
-            with(viewState.awaitContentState()) {
-                assertEquals(code, this.code)
-            }
-            with(viewState.awaitContentState()) {
-                assertTrue(isSignInWithCodeButtonLoading)
-            }
+                with(viewState.awaitContentState()) {
+                    assertEquals(code, this.code)
+                }
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSignInWithCodeButtonLoading)
+                }
 
-            verifySuspend { loginRepository.loginWithCode(email = navigationParamEmail, loginCode = code) }
-            verifySuspend {
-                viewModelNavigator.replaceAll(
-                    listOf(
-                        HomeModuleRoute.Home,
-                        NotificationModuleRoute.NotificationSettings(backNavigationEnabled = false),
-                        TACModuleRoute.TAC(backNavigationEnabled = false),
+                verifySuspend { loginRepository.loginWithCode(email = navigationParamEmail, loginCode = code) }
+                verifySuspend {
+                    viewModelNavigator.replaceAll(
+                        listOf(
+                            HomeModuleRoute.Home,
+                            NotificationModuleRoute.NotificationSettings(backNavigationEnabled = false),
+                            TACModuleRoute.TAC(backNavigationEnabled = false),
+                        ),
                     )
-                )
+                }
             }
         }
-    }
 
     @Test
-    fun `sign in with code error`() = runTest {
-        everySuspend { loginRepository.loginWithCode(any(), any()) } returns Result.failure(
-            Exception("Login code error")
-        )
+    fun `sign in with code error`() =
+        runTest {
+            everySuspend { loginRepository.loginWithCode(any(), any()) } returns
+                Result.failure(
+                    Exception("Login code error"),
+                )
 
-        val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
-        val code = "123456"
+            val expectedErrorMessage = UiText.Resource(CoreRes.string.default_error)
+            val code = "123456"
 
-        runVmTest(viewModel) {
-            onAction(LoginCodeViewAction.ChangeCode(code))
-            onAction(LoginCodeViewAction.SignInWithCode)
+            runVmTest(viewModel) {
+                onAction(LoginCodeViewAction.ChangeCode(code))
+                onAction(LoginCodeViewAction.SignInWithCode)
 
-            with(viewState.awaitContentState()) {
-                assertEquals(code, this.code)
+                with(viewState.awaitContentState()) {
+                    assertEquals(code, this.code)
+                }
+                with(viewState.awaitContentState()) {
+                    assertTrue(isSignInWithCodeButtonLoading)
+                }
+                with(viewState.awaitContentState()) {
+                    assertFalse(isSignInWithCodeButtonLoading)
+                }
+                assertEquals(
+                    expected = expectedErrorMessage,
+                    actual = snackbarEvent.awaitItem().message,
+                )
+
+                verifySuspend { loginRepository.loginWithCode(any(), any()) }
             }
-            with(viewState.awaitContentState()) {
-                assertTrue(isSignInWithCodeButtonLoading)
-            }
-            with(viewState.awaitContentState()) {
-                assertFalse(isSignInWithCodeButtonLoading)
-            }
-            assertEquals(
-                expected = expectedErrorMessage,
-                actual = snackbarEvent.awaitItem().message
-            )
-
-            verifySuspend { loginRepository.loginWithCode(any(), any()) }
         }
-    }
 }

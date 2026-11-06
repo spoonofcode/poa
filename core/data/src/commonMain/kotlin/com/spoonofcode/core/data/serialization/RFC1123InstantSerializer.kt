@@ -14,7 +14,6 @@ import kotlinx.serialization.encoding.Encoder
 import kotlin.time.Instant
 
 object RFC1123InstantSerializer : KSerializer<Instant> {
-
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("Rfc1123Instant", PrimitiveKind.STRING)
 
@@ -27,10 +26,14 @@ object RFC1123InstantSerializer : KSerializer<Instant> {
         }
     }
 
-    override fun serialize(encoder: Encoder, value: Instant) {
-        val text = DateTimeComponents.Formats.RFC_1123.format {
-            setDateTimeOffset(value, value.offsetIn(TimeZone.UTC))
-        }
+    override fun serialize(
+        encoder: Encoder,
+        value: Instant,
+    ) {
+        val text =
+            DateTimeComponents.Formats.RFC_1123.format {
+                setDateTimeOffset(value, value.offsetIn(TimeZone.UTC))
+            }
         encoder.encodeString(text)
     }
 }

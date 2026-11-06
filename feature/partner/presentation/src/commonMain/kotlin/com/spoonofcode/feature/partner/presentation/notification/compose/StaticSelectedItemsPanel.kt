@@ -32,21 +32,23 @@ fun StaticSelectedItemsPanel(
     if (items.isEmpty()) return
 
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             TextTM(text = title)
 
             Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                modifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .padding(horizontal = 10.dp, vertical = 4.dp),
             ) {
                 TextLM(text = items.size.toString())
             }
@@ -57,7 +59,7 @@ fun StaticSelectedItemsPanel(
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             items.forEach { id ->
                 StaticChip(
@@ -71,16 +73,16 @@ fun StaticSelectedItemsPanel(
 @Composable
 private fun StaticChip(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         shape = CircleShape,
         tonalElevation = 1.dp,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
         ) {
             TextLL(text = text)
         }

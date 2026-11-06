@@ -9,12 +9,13 @@ import org.koin.dsl.module
 
 expect val platformAuthPresentationModule: Module
 
-val authPresentationModule: Module = module {
-    includes(
-        platformAuthPresentationModule,
-        authDomainModule,
-    )
+val authPresentationModule: Module =
+    module {
+        includes(
+            platformAuthPresentationModule,
+            authDomainModule,
+        )
 
-    viewModelOf(::LoginViewModel)
-    viewModelOf(::LoginCodeViewModel)
-}
+        viewModelOf(::LoginViewModel)
+        viewModelOf(::LoginCodeViewModel)
+    }

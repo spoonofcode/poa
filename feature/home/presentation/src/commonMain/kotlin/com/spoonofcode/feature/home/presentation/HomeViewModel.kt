@@ -39,36 +39,41 @@ internal class HomeViewModel(
             val partnersDeferred = async { getNewPartnersUseCase() }
             val notificationsDeferred = async { getNotificationsUseCase() }
 
-            val result = runCatching {
-                val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
-                val totalPoints = totalPointsDeferred.await().getOrThrow()
-                val partnerImageLinks = partnersDeferred.await().getOrThrow()
-                    .mapNotNull { partner -> partner.imageLink }
-                val unreadNotificationsCount =
-                    notificationsDeferred.await().getOrNull()?.count { !it.isRead } ?: 0
+            val result =
+                runCatching {
+                    val dailyCheckInStatus = dailyCheckInStatusDeferred.await().getOrThrow()
+                    val totalPoints = totalPointsDeferred.await().getOrThrow()
+                    val partnerImageLinks =
+                        partnersDeferred
+                            .await()
+                            .getOrThrow()
+                            .mapNotNull { partner -> partner.imageLink }
+                    val unreadNotificationsCount =
+                        notificationsDeferred.await().getOrNull()?.count { !it.isRead } ?: 0
 
-                Quadruple(
-                    dailyCheckInStatus,
-                    totalPoints,
-                    partnerImageLinks,
-                    unreadNotificationsCount
-                )
-            }
-
-            result.onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks, unreadCount) ->
-                setContentState(
-                    HomeViewState(
-                        dailyCheckInStatus = dailyCheckInStatus,
-                        totalPoints = totalPoints,
-                        partnerImageLinks = partnerImageLinks,
-                        unreadNotificationsCount = unreadCount,
+                    Quadruple(
+                        dailyCheckInStatus,
+                        totalPoints,
+                        partnerImageLinks,
+                        unreadNotificationsCount,
                     )
-                )
-                showContentView()
-            }.onFailure {
-                showErrorView()
-                showErrorSnackbar(UiText.DynamicString("ERROR: $it"))
-            }
+                }
+
+            result
+                .onSuccess { (dailyCheckInStatus, totalPoints, partnerImageLinks, unreadCount) ->
+                    setContentState(
+                        HomeViewState(
+                            dailyCheckInStatus = dailyCheckInStatus,
+                            totalPoints = totalPoints,
+                            partnerImageLinks = partnerImageLinks,
+                            unreadNotificationsCount = unreadCount,
+                        ),
+                    )
+                    showContentView()
+                }.onFailure {
+                    showErrorView()
+                    showErrorSnackbar(UiText.DynamicString("ERROR: $it"))
+                }
         }
     }
 
@@ -79,9 +84,8 @@ internal class HomeViewModel(
                 .onSuccess {
 //                    showSuccessSnackbar(UiText.Resource("Reward collected!"))
                     initView()
-                }
-                .onFailure {
-                    showErrorSnackbar(UiText.DynamicString( "Error collecting reward: ${it.message}"))
+                }.onFailure {
+                    showErrorSnackbar(UiText.DynamicString("Error collecting reward: ${it.message}"))
                 }
         }
     }
@@ -96,6 +100,6 @@ internal class HomeViewModel(
         val first: A,
         val second: B,
         val third: C,
-        val fourth: D
+        val fourth: D,
     )
 }

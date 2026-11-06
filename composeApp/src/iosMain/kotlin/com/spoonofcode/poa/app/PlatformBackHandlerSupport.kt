@@ -12,22 +12,24 @@ import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
 
 @Composable
 actual fun PlatformBackHandlerSupport(content: @Composable () -> Unit) {
-    val hostDefaultProvider = remember {
-        object : HostDefaultProvider {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T> getHostDefault(key: HostDefaultKey<T>): T = null as T
+    val hostDefaultProvider =
+        remember {
+            object : HostDefaultProvider {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T> getHostDefault(key: HostDefaultKey<T>): T = null as T
+            }
         }
-    }
 
-    val navigationEventDispatcherOwner = remember {
-        object : NavigationEventDispatcherOwner {
-            override val navigationEventDispatcher = NavigationEventDispatcher()
+    val navigationEventDispatcherOwner =
+        remember {
+            object : NavigationEventDispatcherOwner {
+                override val navigationEventDispatcher = NavigationEventDispatcher()
+            }
         }
-    }
 
     CompositionLocalProvider(
         LocalHostDefaultProvider provides hostDefaultProvider,
-        LocalNavigationEventDispatcherOwner provides navigationEventDispatcherOwner
+        LocalNavigationEventDispatcherOwner provides navigationEventDispatcherOwner,
     ) {
         content()
     }

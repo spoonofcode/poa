@@ -20,7 +20,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NotificationOverviewViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: NotificationOverviewViewModel
     private lateinit var notificationRepository: NotificationRepository
 
@@ -38,37 +37,41 @@ class NotificationOverviewViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `initial view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            with(viewState.awaitContentState()) {
-                assertEquals(NOTIFICATIONS, notifications)
+    fun `initial view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                with(viewState.awaitContentState()) {
+                    assertEquals(NOTIFICATIONS, notifications)
+                }
             }
         }
-    }
 
     @Test
-    fun `initial view - error`() = runTest {
-        everySuspend { notificationRepository.readAll() } returns Result.failure(
-            Exception("Test error"),
-        )
-
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            viewState.awaitErrorState()
-        }
-    }
-
-    @Test
-    fun `select notification`() = runTest {
-        runVmTest(viewModel) {
-            onAction(NotificationOverviewViewAction.SelectNotification(notificationId = NOTIFICATION_1.id))
-
-            verifySuspend {
-                viewModelNavigator.push(
-                    NotificationModuleRoute.NotificationDetails(notificationId = NOTIFICATION_1.id),
+    fun `initial view - error`() =
+        runTest {
+            everySuspend { notificationRepository.readAll() } returns
+                Result.failure(
+                    Exception("Test error"),
                 )
+
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                viewState.awaitErrorState()
             }
         }
-    }
+
+    @Test
+    fun `select notification`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(NotificationOverviewViewAction.SelectNotification(notificationId = NOTIFICATION_1.id))
+
+                verifySuspend {
+                    viewModelNavigator.push(
+                        NotificationModuleRoute.NotificationDetails(notificationId = NOTIFICATION_1.id),
+                    )
+                }
+            }
+        }
 }

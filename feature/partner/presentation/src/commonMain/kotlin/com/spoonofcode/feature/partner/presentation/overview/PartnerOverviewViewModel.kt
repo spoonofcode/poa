@@ -44,7 +44,7 @@ internal class PartnerOverviewViewModel(
                         initPartners = partners,
                         filteredPartners = partners,
                         partnerCategories = categories,
-                    )
+                    ),
                 )
                 showContentView()
             }.onFailure {
@@ -55,11 +55,12 @@ internal class PartnerOverviewViewModel(
 
     private fun clickCategory(categoryName: String) {
         updateContentState {
-            val newSelectedCategories = if (selectedPartnerCategories.contains(categoryName)) {
-                selectedPartnerCategories - categoryName
-            } else {
-                selectedPartnerCategories + categoryName
-            }
+            val newSelectedCategories =
+                if (selectedPartnerCategories.contains(categoryName)) {
+                    selectedPartnerCategories - categoryName
+                } else {
+                    selectedPartnerCategories + categoryName
+                }
             copy(selectedPartnerCategories = newSelectedCategories)
         }
         applyFilters()
@@ -75,15 +76,17 @@ internal class PartnerOverviewViewModel(
 
         var filtered = currentState.initPartners
 
-        filtered = getPartnersFilteredByTextUseCase(
-            searchText = currentState.searchText,
-            partners = filtered
-        )
+        filtered =
+            getPartnersFilteredByTextUseCase(
+                searchText = currentState.searchText,
+                partners = filtered,
+            )
 
-        filtered = getPartnersFilteredByPartnerCategoryUseCase(
-            partnerCategories = currentState.selectedPartnerCategories,
-            partners = filtered
-        )
+        filtered =
+            getPartnersFilteredByPartnerCategoryUseCase(
+                partnerCategories = currentState.selectedPartnerCategories,
+                partners = filtered,
+            )
 
         updateContentState { copy(filteredPartners = filtered) }
     }

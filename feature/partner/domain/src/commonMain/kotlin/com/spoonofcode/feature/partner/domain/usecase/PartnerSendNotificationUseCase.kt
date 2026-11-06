@@ -15,13 +15,14 @@ class PartnerSendNotificationUseCase(
         topics: List<String>,
         deliveryDateTime: LocalDateTime,
         expirationDateTime: LocalDateTime,
-    ): Result<Unit> = notificationRepository.createNotification(
-        title = title,
-        text = text,
-        link = link,
-        topics = topics,
-        deliveryDateTime = deliveryDateTime,
-        expirationDateTime = expirationDateTime,
-        ownerId = sessionRepository.getSessionUserId(),
-    )
+    ): Result<Unit> =
+        notificationRepository.createNotification(
+            title = title,
+            text = text,
+            link = link,
+            topics = topics,
+            deliveryDateTime = deliveryDateTime,
+            expirationDateTime = expirationDateTime,
+            ownerId = sessionRepository.getSessionUserId(),
+        )
 }

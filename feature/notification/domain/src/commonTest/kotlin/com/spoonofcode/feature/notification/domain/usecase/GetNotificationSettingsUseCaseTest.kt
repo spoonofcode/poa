@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetNotificationSettingsUseCaseTest : BaseTest() {
-
     private lateinit var getNotificationSettingsUseCase: GetNotificationSettingsUseCase
     private lateinit var notificationRepository: NotificationRepository
 
@@ -33,26 +32,28 @@ class GetNotificationSettingsUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns notification settings from repository`() = runTest {
-        val expectedSettings = NotificationSettings(isNotificationsPersonalizedEnabled = true)
-        everySuspend { notificationRepository.getNotificationSettings() } returns Result.success(expectedSettings)
+    fun `invoke returns notification settings from repository`() =
+        runTest {
+            val expectedSettings = NotificationSettings(isNotificationsPersonalizedEnabled = true)
+            everySuspend { notificationRepository.getNotificationSettings() } returns Result.success(expectedSettings)
 
-        val result = getNotificationSettingsUseCase()
+            val result = getNotificationSettingsUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(expectedSettings, result.getOrNull())
-        verifySuspend { notificationRepository.getNotificationSettings() }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(expectedSettings, result.getOrNull())
+            verifySuspend { notificationRepository.getNotificationSettings() }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val exception = Exception("Failed to get settings")
-        everySuspend { notificationRepository.getNotificationSettings() } returns Result.failure(exception)
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val exception = Exception("Failed to get settings")
+            everySuspend { notificationRepository.getNotificationSettings() } returns Result.failure(exception)
 
-        val result = getNotificationSettingsUseCase()
+            val result = getNotificationSettingsUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { notificationRepository.getNotificationSettings() }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { notificationRepository.getNotificationSettings() }
+        }
 }

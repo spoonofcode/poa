@@ -12,9 +12,10 @@ import com.spoonofcode.core.presentation.compose.TextTL
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-private fun screenConfig(): StandardScreenConfig = StandardScreenConfig().copy(
-    topBarTitle = stringResource(Res.string.faq),
-)
+private fun screenConfig(): StandardScreenConfig =
+    StandardScreenConfig().copy(
+        topBarTitle = stringResource(Res.string.faq),
+    )
 
 @Composable
 internal fun FAQScreen(

@@ -24,7 +24,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ProfileDetailsViewModelTest : BaseViewModelTest() {
-
     private lateinit var viewModel: ProfileDetailsViewModel
 
     @BeforeTest
@@ -40,67 +39,75 @@ class ProfileDetailsViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `init view`() = runTest {
-        runVmTest(viewModel, expectMostRecentItem = false) {
-            viewState.awaitInitialState()
-            assertEquals(
-                expected = ProfileDetailsViewState(
-                    profile = PROFILE_1,
-                    partnerPanelVisible = true,
-                ),
-                actual = viewState.awaitContentState()
-            )
-        }
-    }
-
-    @Test
-    fun `confirm logout success`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.ConfirmLogout)
-            viewState.awaitLoadingState()
-            verifySuspend { viewModelNavigator.replaceAll(listOf(AuthModuleRoute.Login)) }
-        }
-    }
-
-    @Test
-    fun `navigates to edit profile screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.NavigateToEditProfile)
-            verifySuspend { viewModelNavigator.push(screen = ProfileModuleRoute.ProfileEdit) }
-        }
-    }
-
-    @Test
-    fun `navigates to faq screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.NavigateToFAQ)
-            verifySuspend { viewModelNavigator.push(screen = FAQModuleRoute.FAQ) }
-        }
-    }
-
-    @Test
-    fun `navigates to notification screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
-            verifySuspend {
-                viewModelNavigator.push(screen = NotificationModuleRoute.NotificationChannel)
+    fun `init view`() =
+        runTest {
+            runVmTest(viewModel, expectMostRecentItem = false) {
+                viewState.awaitInitialState()
+                assertEquals(
+                    expected =
+                        ProfileDetailsViewState(
+                            profile = PROFILE_1,
+                            partnerPanelVisible = true,
+                        ),
+                    actual = viewState.awaitContentState(),
+                )
             }
         }
-    }
 
     @Test
-    fun `navigates to partner panel screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
-            verifySuspend { viewModelNavigator.push(screen = PartnerModuleRoute.PartnerPanel) }
+    fun `confirm logout success`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProfileDetailsViewAction.ConfirmLogout)
+                viewState.awaitLoadingState()
+                verifySuspend { viewModelNavigator.replaceAll(listOf(AuthModuleRoute.Login)) }
+            }
         }
-    }
 
     @Test
-    fun `navigates to tac screen`() = runTest {
-        runVmTest(viewModel) {
-            onAction(ProfileDetailsViewAction.NavigateToTAC)
-            verifySuspend { viewModelNavigator.push(screen = TACModuleRoute.TAC()) }
+    fun `navigates to edit profile screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProfileDetailsViewAction.NavigateToEditProfile)
+                verifySuspend { viewModelNavigator.push(screen = ProfileModuleRoute.ProfileEdit) }
+            }
         }
-    }
+
+    @Test
+    fun `navigates to faq screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProfileDetailsViewAction.NavigateToFAQ)
+                verifySuspend { viewModelNavigator.push(screen = FAQModuleRoute.FAQ) }
+            }
+        }
+
+    @Test
+    fun `navigates to notification screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProfileDetailsViewAction.NavigateToNotificationSettings)
+                verifySuspend {
+                    viewModelNavigator.push(screen = NotificationModuleRoute.NotificationChannel)
+                }
+            }
+        }
+
+    @Test
+    fun `navigates to partner panel screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProfileDetailsViewAction.NavigateToPartnerPanel)
+                verifySuspend { viewModelNavigator.push(screen = PartnerModuleRoute.PartnerPanel) }
+            }
+        }
+
+    @Test
+    fun `navigates to tac screen`() =
+        runTest {
+            runVmTest(viewModel) {
+                onAction(ProfileDetailsViewAction.NavigateToTAC)
+                verifySuspend { viewModelNavigator.push(screen = TACModuleRoute.TAC()) }
+            }
+        }
 }

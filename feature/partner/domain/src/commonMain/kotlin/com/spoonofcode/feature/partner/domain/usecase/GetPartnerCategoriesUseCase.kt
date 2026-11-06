@@ -6,6 +6,5 @@ import com.spoonofcode.feature.partner.domain.repository.PartnerRepository
 class GetPartnerCategoriesUseCase(
     private val partnerRepository: PartnerRepository,
 ) {
-    suspend operator fun invoke(): Result<List<PartnerCategory>> =
-        partnerRepository.getCategories()
+    suspend operator fun invoke(): Result<List<PartnerCategory>> = partnerRepository.getCategories()
 }

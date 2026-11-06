@@ -30,11 +30,10 @@ internal class PartnerCustomerOverviewViewModel(
                     setContentState(
                         PartnerCustomerOverviewViewState(
                             customers = it,
-                        )
+                        ),
                     )
                     showContentView()
-                }
-                .onFailure {
+                }.onFailure {
                     showErrorView()
                 }
         }
@@ -58,13 +57,19 @@ internal class PartnerCustomerOverviewViewModel(
         viewModelScope.launch {
             viewModelNavigator.push(
                 PartnerModuleRoute.PartnerNotificationEdit(
-                    selectedTopics = currentContentState().checkedUserIds.map {
-                        PartnerNotificationType.user.createTopic(it)
-                    }.toSet(),
-                    selectedNames = currentContentState().customers
-                        .filter { it.id in currentContentState().checkedUserIds }
-                        .map { it.name }.toSet()
-                )
+                    selectedTopics =
+                        currentContentState()
+                            .checkedUserIds
+                            .map {
+                                PartnerNotificationType.USER.createTopic(it)
+                            }.toSet(),
+                    selectedNames =
+                        currentContentState()
+                            .customers
+                            .filter { it.id in currentContentState().checkedUserIds }
+                            .map { it.name }
+                            .toSet(),
+                ),
             )
         }
     }

@@ -11,7 +11,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetFilteredProductsByTextUseCaseTest : BaseTest() {
-
     private lateinit var getFilteredProductsByTextUseCase: GetFilteredProductsByTextUseCase
 
     @BeforeTest
@@ -27,27 +26,30 @@ class GetFilteredProductsByTextUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns products matching search text ignore case`() = runTest {
-        val products = ProductMockData.PRODUCTS
-        val result = getFilteredProductsByTextUseCase("product #1", products)
+    fun `invoke returns products matching search text ignore case`() =
+        runTest {
+            val products = ProductMockData.PRODUCTS
+            val result = getFilteredProductsByTextUseCase("product #1", products)
 
-        assertEquals(1, result.size)
-        assertEquals(ProductMockData.PRODUCT_1, result.first())
-    }
-
-    @Test
-    fun `invoke returns empty list when no products match`() = runTest {
-        val products = ProductMockData.PRODUCTS
-        val result = getFilteredProductsByTextUseCase("nonexisting", products)
-
-        assertTrue(result.isEmpty())
-    }
+            assertEquals(1, result.size)
+            assertEquals(ProductMockData.PRODUCT_1, result.first())
+        }
 
     @Test
-    fun `invoke returns all products when search text matches all`() = runTest {
-        val products = ProductMockData.PRODUCTS
-        val result = getFilteredProductsByTextUseCase("Product", products)
+    fun `invoke returns empty list when no products match`() =
+        runTest {
+            val products = ProductMockData.PRODUCTS
+            val result = getFilteredProductsByTextUseCase("nonexisting", products)
 
-        assertEquals(2, result.size)
-    }
+            assertTrue(result.isEmpty())
+        }
+
+    @Test
+    fun `invoke returns all products when search text matches all`() =
+        runTest {
+            val products = ProductMockData.PRODUCTS
+            val result = getFilteredProductsByTextUseCase("Product", products)
+
+            assertEquals(2, result.size)
+        }
 }

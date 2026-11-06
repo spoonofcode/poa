@@ -16,7 +16,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetPartnerUseCaseTest : BaseTest() {
-
     private lateinit var getPartnerUseCase: GetPartnerUseCase
     private lateinit var partnerRepository: PartnerRepository
     private lateinit var sessionRepository: SessionRepository
@@ -36,33 +35,35 @@ class GetPartnerUseCaseTest : BaseTest() {
     }
 
     @Test
-    fun `invoke returns partner for session user id`() = runTest {
-        val userId = "user123"
-        val partner = PartnerMockData.PARTNER_1
+    fun `invoke returns partner for session user id`() =
+        runTest {
+            val userId = "user123"
+            val partner = PartnerMockData.PARTNER_1
 
-        everySuspend { sessionRepository.getSessionUserId() } returns userId
-        everySuspend { partnerRepository.getPartner(userId) } returns Result.success(partner)
+            everySuspend { sessionRepository.getSessionUserId() } returns userId
+            everySuspend { partnerRepository.getPartner(userId) } returns Result.success(partner)
 
-        val result = getPartnerUseCase()
+            val result = getPartnerUseCase()
 
-        assertTrue(result.isSuccess)
-        assertEquals(partner, result.getOrNull())
-        verifySuspend { sessionRepository.getSessionUserId() }
-        verifySuspend { partnerRepository.getPartner(userId) }
-    }
+            assertTrue(result.isSuccess)
+            assertEquals(partner, result.getOrNull())
+            verifySuspend { sessionRepository.getSessionUserId() }
+            verifySuspend { partnerRepository.getPartner(userId) }
+        }
 
     @Test
-    fun `invoke returns failure when repository fails`() = runTest {
-        val userId = "user123"
-        val exception = Exception("Partner not found")
+    fun `invoke returns failure when repository fails`() =
+        runTest {
+            val userId = "user123"
+            val exception = Exception("Partner not found")
 
-        everySuspend { sessionRepository.getSessionUserId() } returns userId
-        everySuspend { partnerRepository.getPartner(userId) } returns Result.failure(exception)
+            everySuspend { sessionRepository.getSessionUserId() } returns userId
+            everySuspend { partnerRepository.getPartner(userId) } returns Result.failure(exception)
 
-        val result = getPartnerUseCase()
+            val result = getPartnerUseCase()
 
-        assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-        verifySuspend { partnerRepository.getPartner(userId) }
-    }
+            assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+            verifySuspend { partnerRepository.getPartner(userId) }
+        }
 }
