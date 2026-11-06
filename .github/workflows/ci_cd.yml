@@ -352,6 +352,31 @@ jobs:
             -authenticationKeyIssuerID "${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}" \
             -authenticationKeyPath "${{ github.workspace }}/AuthKey.p8"
 
+      - name: Export and Upload to App Store Connect
+        run: |
+          cat << EOF > exportOptions.plist
+          {
+            "method": "app-store",
+            "signingStyle": "automatic",
+            "destination": "export"
+          }
+          EOF
+
+          xcodebuild -exportArchive \
+            -archivePath "${{ github.workspace }}/build/iosApp.xcarchive" \
+            -exportPath "${{ github.workspace }}/build/ipa" \
+            -exportOptionsPlist exportOptions.plist \
+            -allowProvisioningUpdates \
+            -authenticationKeyID "${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}" \
+            -authenticationKeyPath "${{ github.workspace }}/AuthKey.p8"
+
+          xcrun altool --upload-app \
+            --type ios \
+            --file "${{ github.workspace }}/build/ipa/"*.ipa \
+            --apiKey "${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}" \
+            --apiIssuer "${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}"
+
       - name: Upload Production iOS Archive Artifacts
         uses: actions/upload-artifact@v4
         with:

@@ -54,26 +54,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		42799AB246E5F90AF97AA0EF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F223D77706B4C5D012EB7A73 /* Pods_iosApp.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7555FF72242A565900829871 = {
-			isa = PBXGroup;
-			children = (
-				2F120B302F9E168300B8D9E5 /* Firebase */,
-				AB1DB47929225F7C00F7AF9C /* Configuration */,
-				7555FF7D242A565900829871 /* iosApp */,
-				7555FF7C242A565900829871 /* Products */,
-				42799AB246E5F90AF97AA0EF /* Frameworks */,
-				DDE37E36D0EBD8B30172250E /* Pods */,
-			);
-			sourceTree = "<group>";
-		};
 		2F120B302F9E168300B8D9E5 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +77,26 @@
 				2F120B392F9E168300B8D9ED /* GoogleService-Info.plist */,
 			);
 			path = Production;
+			sourceTree = "<group>";
+		};
+		42799AB246E5F90AF97AA0EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F223D77706B4C5D012EB7A73 /* Pods_iosApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7555FF72242A565900829871 = {
+			isa = PBXGroup;
+			children = (
+				2F120B302F9E168300B8D9E5 /* Firebase */,
+				AB1DB47929225F7C00F7AF9C /* Configuration */,
+				7555FF7D242A565900829871 /* iosApp */,
+				7555FF7C242A565900829871 /* Products */,
+				42799AB246E5F90AF97AA0EF /* Frameworks */,
+				DDE37E36D0EBD8B30172250E /* Pods */,
+			);
 			sourceTree = "<group>";
 		};
 		7555FF7C242A565900829871 /* Products */ = {
@@ -213,6 +213,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2F120B332F9E168300B8D9E7 /* Setup Firebase GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Firebase GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "case \"${CONFIGURATION}\" in\n  *\"Development\"*|*\"development\"*)\n    FLAVOR=\"Development\"\n    ;;\n  *\"Production\"*|*\"production\"*)\n    FLAVOR=\"Production\"\n    ;;\n  *)\n    FLAVOR=\"Development\"\n    ;;\nesac\n\nGOOGLESERVICE_INFO_PLIST=\"${PROJECT_DIR}/Firebase/${FLAVOR}/GoogleService-Info.plist\"\n\nif [ -f \"${GOOGLESERVICE_INFO_PLIST}\" ]; then\n    echo \"Copying ${GOOGLESERVICE_INFO_PLIST} to ${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\n    cp \"${GOOGLESERVICE_INFO_PLIST}\" \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nelse\n    echo \"error: GoogleService-Info.plist not found for flavor ${FLAVOR} at ${GOOGLESERVICE_INFO_PLIST}\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		59DC7B387EE2B805FAB2773F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -243,9 +262,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -260,9 +283,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -287,25 +314,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
 		};
-		2F120B332F9E168300B8D9E7 /* Setup Firebase GoogleService-Info.plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Setup Firebase GoogleService-Info.plist";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "case \"${CONFIGURATION}\" in\n  *\"Development\"*|*\"development\"*)\n    FLAVOR=\"Development\"\n    ;;\n  *\"Production\"*|*\"production\"*)\n    FLAVOR=\"Production\"\n    ;;\n  *)\n    FLAVOR=\"Development\"\n    ;;\nesac\n\nGOOGLESERVICE_INFO_PLIST=\"${PROJECT_DIR}/Firebase/${FLAVOR}/GoogleService-Info.plist\"\n\nif [ -f \"${GOOGLESERVICE_INFO_PLIST}\" ]; then\n    echo \"Copying ${GOOGLESERVICE_INFO_PLIST} to ${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\n    cp \"${GOOGLESERVICE_INFO_PLIST}\" \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\"\nelse\n    echo \"error: GoogleService-Info.plist not found for flavor ${FLAVOR} at ${GOOGLESERVICE_INFO_PLIST}\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -321,7 +329,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-
 		2F1E57F8309A8009007EA41C /* Debug-Production */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB3632DC29227652001CCB65 /* Config.xcconfig */;
@@ -432,7 +439,6 @@
 			};
 			name = "Debug-Production";
 		};
-
 		2F1E57FC309A808E007EA41C /* Release-Production */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB3632DC29227652001CCB65 /* Config.xcconfig */;
