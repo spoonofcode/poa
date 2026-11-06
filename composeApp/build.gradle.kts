@@ -90,8 +90,18 @@ kotlin {
 
 android {
     defaultConfig {
-        versionCode = (System.getenv("ANDROID_RELEASE_VERSION") ?: "1").toInt()
-        versionName = System.getenv("ANDROID_RELEASE_VERSION") ?: "1.0"
+        val releaseVersion = System.getenv("ANDROID_RELEASE_VERSION") ?: "1"
+        versionName = releaseVersion
+        versionCode =
+            if (releaseVersion.contains(".")) {
+                val parts = releaseVersion.removePrefix("v").split(".")
+                val major = parts.getOrNull(0)?.toIntOrNull() ?: 1
+                val minor = parts.getOrNull(1)?.toIntOrNull() ?: 0
+                val patch = parts.getOrNull(2)?.toIntOrNull() ?: 0
+                major * 10000 + minor * 100 + patch
+            } else {
+                releaseVersion.toIntOrNull() ?: 1
+            }
     }
     signingConfigs {
         val customDebugFile = file("certificates/new-debug.keystore")
