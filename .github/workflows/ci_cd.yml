@@ -334,12 +334,19 @@ jobs:
           cd iosApp
           pod install
 
-      - name: Build Production iOS App
+      - name: Archive Production iOS App
         run: |
           cd iosApp
-          xcodebuild -workspace iosApp.xcworkspace \
-                     -scheme "iosApp Prod" \
-                     -configuration Release-Production \
-                     -sdk iphoneos \
-                     CODE_SIGNING_ALLOWED=NO \
-                     clean build
+          xcodebuild archive \
+            -workspace iosApp.xcworkspace \
+            -scheme "iosApp Prod" \
+            -configuration Release-Production \
+            -sdk iphoneos \
+            -archivePath "${{ github.workspace }}/build/iosApp.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Upload Production iOS Archive Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaggyGo-iOS-Release-${{ github.ref_name != 'main' && github.ref_name || needs.auto_tag_release.outputs.release_tag }}
+          path: build/iosApp.xcarchive
