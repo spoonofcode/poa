@@ -326,6 +326,10 @@ jobs:
             echo "${{ secrets.GOOGLE_SERVICES_INFO_PROD_BASE64 }}" | base64 --decode > iosApp/Firebase/Production/GoogleService-Info.plist
           fi
 
+      - name: Setup App Store Connect API Key
+        run: |
+          echo "${{ secrets.APP_STORE_CONNECT_API_PRIVATE_KEY_BASE64 }}" | base64 --decode > ${{ github.workspace }}/AuthKey.p8
+
       - name: Generate Kotlin Framework & Podspec
         run: ./gradlew podspec generateDummyFramework
 
@@ -334,7 +338,7 @@ jobs:
           cd iosApp
           pod install
 
-      - name: Archive Production iOS App
+      - name: Archive Production iOS App with API Key
         run: |
           cd iosApp
           xcodebuild archive \
@@ -343,9 +347,12 @@ jobs:
             -configuration Release-Production \
             -sdk iphoneos \
             -archivePath "${{ github.workspace }}/build/iosApp.xcarchive" \
-            CODE_SIGNING_ALLOWED=NO
+            -allowProvisioningUpdates \
+            -authenticationKeyID "${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}" \
+            -authenticationKeyPath "${{ github.workspace }}/AuthKey.p8"
 
-      - name: Upload Production iOS Archive Artifact
+      - name: Upload Production iOS Archive Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: TaggyGo-iOS-Release-${{ github.ref_name != 'main' && github.ref_name || needs.auto_tag_release.outputs.release_tag }}
