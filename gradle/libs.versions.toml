@@ -4,8 +4,8 @@ android-compileSdk = "37"
 android-minSdk = "30"
 android-targetSdk = "37"
 project-applicationId = "com.spoonofcode.poa"
-project-versionCode = "1"
-project-versionName = "1.0"
+project-versionCode = "10001"
+project-versionName = "1.0.1"
 
 # --- Build Tools ---
 agp = "9.2.1"
