@@ -132,7 +132,7 @@ android {
         getByName("release") {
             isDebuggable = false
             ndk {
-                debugSymbolLevel = "FULL"
+                debugSymbolLevel = "full"
             }
             // Dynamically assign the signing config based on the environment
             if (System.getenv("KEYSTORE_PATH") != null) {
